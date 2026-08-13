@@ -1,0 +1,33 @@
+# Evaluación {.unnumbered}
+
+Evaluación continua **40 %** + examen final **60 %**. Hace falta un **5/10 en el examen
+final** para promediar. Asistencia obligatoria (80 %).
+
+| Actividad | Peso | Cuándo |
+|---|---|---|
+| Parcial 1 | 20 % | semana 7, S1 |
+| Proyecto con agentes de IA | 20 % | semanas 12-13 |
+| Examen final | 60 % | convocatoria ordinaria |
+
+Los parciales **no son liberatorios**.
+
+## Estructura de los exámenes
+
+El parcial y el final tienen **la misma arquitectura**, para que el parcial sea un ensayo
+de verdad:
+
+| Bloque | Peso | Qué se pide |
+|---|---|---|
+| A | 30 % | preguntas conceptuales cortas (*define*, *explica*, *razona*, *analiza*) |
+| B | 25 % | **una demostración**, elegida entre las del [índice de resultados](indice-resultados.qmd) |
+| C | 25 % | cálculo a mano sobre una tabla pequeña |
+| D | 20 % | *«este script tiene errores»*: encontrarlos y justificarlos |
+
+En el bloque D se plantan ocho errores y se puntúan **los seis mejor justificados**: se
+premia la justificación, no la lista.
+
+## Qué es examinable como demostración
+
+Todo lo que aparece con el marco verde de *Demostración* en los apuntes. La lista completa,
+con su número y su capítulo, está en el [índice de resultados](indice-resultados.qmd) y se
+publica en la semana 4 — antes del parcial.

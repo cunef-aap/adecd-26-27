@@ -1,0 +1,51 @@
+# Cálculo y álgebra que va a necesitar {.unnumbered}
+
+Dos páginas. Todo lo que este curso da por sabido en matemáticas. Si algo de aquí le
+suena lejano, lo repasa ahora y no vuelve a ser un problema.
+
+## Álgebra lineal
+
+**Producto matriz-vector.** Si $\mathbf{X}$ es $n\times m$ y $\mathbf{v}$ es $m\times 1$,
+entonces $\mathbf{X}\mathbf{v}$ es $n\times 1$ y su fila $i$ es
+$\sum_{j} x_{ij}v_j$.
+
+**Traspuesta.** $(\mathbf{A}\mathbf{B})^{\mathsf{T}} = \mathbf{B}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}$.
+
+**Norma euclídea.** $\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_j v_j^2$.
+Es cero si y solo si $\mathbf{v} = \mathbf{0}$. *(Esta última frase hace todo el trabajo del capítulo 4.)*
+
+**Dependencia lineal.** Una columna de $\mathbf{X}$ es combinación lineal de las demás si
+existe $\mathbf{v} \neq \mathbf{0}$ con $\mathbf{X}\mathbf{v} = \mathbf{0}$. Cuando no
+existe tal $\mathbf{v}$, decimos que $\mathbf{X}$ tiene **rango completo por columnas**.
+
+## Cálculo
+
+**Derivada parcial.** Se deriva respecto de una variable tratando las demás como
+constantes.
+
+**Gradiente.** El vector de todas las parciales. Apunta en la dirección de máximo
+crecimiento.
+
+**Regla de la cadena.** $\frac{d}{dw} g(h(w)) = g'(h(w))\,h'(w)$.
+
+**Dos identidades que usaremos sin parar** (capítulo 4):
+$$\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
+  \nabla(\mathbf{w}^{\mathsf{T}}\mathbf{A}\mathbf{w}) = 2\mathbf{A}\mathbf{w} \ \ (\mathbf{A}\text{ simétrica}).$$
+
+**Condición de primer orden.** En un mínimo, el gradiente se anula. El recíproco es falso.
+
+## Probabilidad
+
+Densidad, esperanza, varianza. Densidad normal. Que $\mathbb{E}$ es lineal y
+$\operatorname{Var}(aX) = a^2\operatorname{Var}(X)$. Independencia.
+
+## Diagnóstico (15 minutos, no cuenta para la nota)
+
+1. Escriba la traspuesta de $\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6\end{pmatrix}$.
+2. Con $\mathbf{X} = \begin{pmatrix} 1 & 0 \\ 1 & 1 \\ 1 & 2\end{pmatrix}$, calcule
+   $\mathbf{X}^{\mathsf{T}}\mathbf{X}$.
+3. ¿Cuánto vale $\partial/\partial w$ de $\mathbf{w}^{\mathsf{T}}\mathbf{w}$?
+4. Si $f(x,y) = x^2\sin y + y^3$, calcule $\partial f/\partial x$ y $\partial f/\partial y$.
+5. Exhiba un $\mathbf{v}\neq\mathbf{0}$ con $\mathbf{X}\mathbf{v}=\mathbf{0}$ para
+   $\mathbf{X} = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$.
+6. Si $Z\sim\mathcal{N}(0,1)$, ¿cuánto vale $\mathbb{E}[3Z+2]$? ¿Y $\operatorname{Var}(3Z+2)$?

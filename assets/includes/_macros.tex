@@ -1,0 +1,129 @@
+% ============================================================================
+%  CONTRATO DE NOTACION — Aprendizaje Automatico: Prediccion (G244)
+%  Se incluye en TODOS los capitulos. No redefinir simbolos localmente.
+%
+%  Solo sobreviven al {{< include >}} dentro de $$...$$:
+%      \newcommand, \renewcommand, \DeclareMathOperator
+%  NO: \usepackage, \DeclarePairedDelimiter, \newenvironment.
+% ============================================================================
+
+% ---- EL INTERRUPTOR ---------------------------------------------------------
+% Todo coeficiente pasa por \coef. Cambiar w por \beta es UNA linea, no 15
+% ficheros. Se usa \boldsymbol (no \mathbf) para que funcione con griegas.
+\newcommand{\coef}{\boldsymbol{w}}
+\newcommand{\coefhat}{\hat{\boldsymbol{w}}}
+\newcommand{\coefj}{w_j}
+\newcommand{\coefzero}{w_0}
+\newcommand{\coefols}{\hat{\boldsymbol{w}}_{\mathrm{MCO}}}
+\newcommand{\coefridge}{\hat{\boldsymbol{w}}_{\lambda}}
+
+% ---- Datos y matriz de diseno ----------------------------------------------
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Xt}{\mathbf{X}^{\mathsf{T}}}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\yv}{\mathbf{y}}
+\newcommand{\Phimat}{\boldsymbol{\Phi}}
+\newcommand{\onesv}{\mathbf{1}}
+\newcommand{\zerov}{\mathbf{0}}
+\newcommand{\Id}{\mathbf{I}}
+\newcommand{\Zbf}{\mathbf{Z}}
+\newcommand{\Vbf}{\mathbf{V}}
+\newcommand{\Hess}{\nabla^2}
+\newcommand{\Hbf}{\mathbf{H}}
+\newcommand{\Wbf}{\mathbf{W}}
+
+% ---- Targets, residuos ------------------------------------------------------
+\newcommand{\yi}{y_i}
+\newcommand{\yhat}{\hat{y}}
+\newcommand{\yhati}{\hat{y}_i}
+\newcommand{\ybar}{\bar{y}}
+\newcommand{\resid}{\mathbf{r}}
+\newcommand{\residi}{r_i}
+
+% ---- Tamanos ----------------------------------------------------------------
+\newcommand{\nobs}{n}
+\newcommand{\nfeat}{p}
+\newcommand{\ntrain}{n_{\mathrm{ent}}}
+\newcommand{\nval}{n_{\mathrm{val}}}
+\newcommand{\ntest}{n_{\mathrm{test}}}
+\newcommand{\ncal}{n_{\mathrm{cal}}}
+
+% ---- Riesgo y perdidas ------------------------------------------------------
+% R = riesgo VERDADERO ; \Riskh = riesgo EMPIRICO. La distincion es del cap. 6.
+\newcommand{\Risk}{R}
+\newcommand{\Riskh}{\hat{R}}
+\newcommand{\loss}{\ell}
+\newcommand{\MSE}{\mathrm{ECM}}
+\newcommand{\RMSE}{\mathrm{RECM}}
+\newcommand{\MAE}{\mathrm{EAM}}
+\newcommand{\RSS}{\mathrm{SCR}}
+\newcommand{\SSE}{\mathrm{SCE}}
+\newcommand{\SST}{\mathrm{SCT}}
+\newcommand{\SSR}{\mathrm{SCReg}}
+\newcommand{\Rsq}{R^2}
+\newcommand{\CV}{\mathrm{VC}}
+
+% ---- Verosimilitud ----------------------------------------------------------
+\newcommand{\Lik}{L}
+\newcommand{\loglik}{\ell}
+\newcommand{\logliksp}{\ell_{\mathrm{p}}}
+\newcommand{\pdf}{p}
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Laplacedist}{\mathrm{Laplace}}
+\newcommand{\given}{\,\vert\,}
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}
+
+% ---- Escalares fijos --------------------------------------------------------
+\newcommand{\noise}{\sigma}
+\newcommand{\noisehat}{\hat{\sigma}}
+\newcommand{\lr}{\alpha}          % tasa de aprendizaje
+\newcommand{\reg}{\lambda}        % OJO: en scikit-learn esto se llama alpha=
+\newcommand{\defeq}{\coloneqq}
+
+% ---- Calculo ----------------------------------------------------------------
+\newcommand{\grad}{\nabla}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}{\mathrm{d}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% ---- Algebra ----------------------------------------------------------------
+\newcommand{\T}{^{\mathsf{T}}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\DeclareMathOperator{\rank}{rango}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\kernelop}{nuc}
+\DeclareMathOperator{\sign}{sign}
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Realn}{\mathbb{R}^{n}}
+\newcommand{\Realp}{\mathbb{R}^{p+1}}
+\newcommand{\Rbb}{\mathbb{R}}
+
+% ---- Probabilidad -----------------------------------------------------------
+\newcommand{\E}[1]{\mathbb{E}\!\left[ #1 \right]}
+\newcommand{\Var}[1]{\mathrm{Var}\!\left( #1 \right)}
+\newcommand{\Cov}[2]{\mathrm{Cov}\!\left( #1, #2 \right)}
+\newcommand{\Prob}[1]{\mathbb{P}\!\left( #1 \right)}
+\DeclareMathOperator{\med}{mediana}
+
+% ---- Conjuntos y modelos ----------------------------------------------------
+\newcommand{\data}{\mathcal{D}}
+\newcommand{\Dtrain}{\mathcal{D}_{\mathrm{ent}}}
+\newcommand{\Dval}{\mathcal{D}_{\mathrm{val}}}
+\newcommand{\Dtest}{\mathcal{D}_{\mathrm{test}}}
+\newcommand{\fold}[1]{\mathcal{F}_{#1}}
+\newcommand{\model}{f}
+\newcommand{\modelh}{\hat{f}}
+\newcommand{\nullmodel}{\bar{f}}
+\newcommand{\hyp}{\mathcal{F}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+
+% ---- Adelantos (definidos ya, usados a partir del cap. 8) -------------------
+\newcommand{\pos}[1]{\left( #1 \right)_{+}}
+\newcommand{\softthr}{S}
+\newcommand{\basis}{\varphi}
+\newcommand{\pinball}{\rho_{\tau}}

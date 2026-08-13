@@ -1,0 +1,21 @@
+/*-- scss:defaults --*/
+// Paleta CUNEF (de assets/cunef.sty)
+$cunef-naranja: #ff5700;
+$cunef-azul:    #151f6c;
+$cunef-fondo:   #f5f2ed;
+
+$base-color:       $cunef-azul;
+$link-color:       $cunef-naranja;
+$link-hover-color: $cunef-azul;
+$sidebar-bg:       #ffffff;
+$navbar-bg:        #ffffff;
+$body-color:       #1a292c;
+
+$font-size-root:         1.05em;
+$font-size-sidebar-link: 1.15 * $font-size-root;
+$code-block-bg-alpha:    -0.8;
+
+/*-- scss:rules --*/
+.sidebar-item-text { font-size: $font-size-sidebar-link; }
+div.sidebar-item-container .active { font-weight: bold; }
+.quarto-sidebar-header p { padding-bottom: 0em; margin-bottom: 0em; }

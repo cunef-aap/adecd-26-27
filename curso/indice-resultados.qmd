@@ -1,0 +1,46 @@
+# Índice de resultados {.unnumbered}
+
+Todos los resultados numerados del curso. **El bloque B de los exámenes sale de aquí**, y
+de ningún otro sitio.
+
+::: {.callout-note appearance="simple"}
+Se genera automáticamente con `scripts/check-numeracion.py` (pendiente, D13). De momento
+se mantiene a mano y solo cubre los capítulos publicados.
+:::
+
+## Capítulo 1 · Señal y ruido
+
+| Resultado | Se demuestra | Depende de |
+|---|---|---|
+| Def. datos y problema de predicción | — | |
+| Def. modelo señal + ruido | — | |
+| Def. error de entrenamiento y de test | — | |
+| Def. sobreajuste | — | |
+| **Teo. interpolación exacta** | **sí** (base de Lagrange) | — |
+| Def. densidad normal | — | |
+| Lema constante de normalización | ⬛ no | |
+| **Teo. traslación** | **sí** | densidad normal |
+| **Teo. escala** | **sí** | densidad normal |
+| Cor. estandarización | sí | traslación, escala |
+| **Teo. media y varianza** | **sí** | estandarización, normalización |
+| Cor. del ruido al objetivo | sí | traslación |
+| Def. modelo lineal-gaussiano | — | |
+| Def. verosimilitud | — | |
+| Lema el logaritmo preserva el argmax | sí | — |
+| Def. máxima verosimilitud | — | |
+
+## Capítulo 2 · Verosimilitud y MLE
+
+| Resultado | Se demuestra | Depende de |
+|---|---|---|
+| Def. riesgo empírico | — | |
+| Lema invarianza afín del argmin | sí | — |
+| **Lema el mejor modelo constante es la media** | **sí** | — |
+| **Teo. expansión de la log-verosimilitud** | **sí** | densidad normal |
+| **Cor. MLE = mínimos cuadrados** | **sí** | invarianza afín |
+| **Teo. perfilado de $\sigma$** | **sí** | expansión |
+| Cor. la log-verosimilitud perfilada | sí | perfilado |
+| Obs. sesgo de $\hat\sigma^2$ | ⬛ no | |
+| **Prop. ruido de Laplace ⟹ error absoluto** | **sí** | expansión |
+
+<!-- TODO(D13): completar capítulos 3-6 y automatizar la generación. -->

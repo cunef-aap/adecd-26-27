@@ -1,0 +1,14 @@
+.quarto/
+_freeze/
+.jupyter_cache
+_referencia/
+**/__pycache__
+**/*.pyc
+**/*.quarto_ipynb
+.DS_Store
+.vscode
+.luarc.json
+*.csv.gz
+datos/listings*.csv
+
+/.quarto/

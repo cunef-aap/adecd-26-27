@@ -1,0 +1,212 @@
+% ============================================================
+%  cunef.sty -- CUNEF Universidad LaTeX document style
+%  Visual identity only (logo, Aeonik font, corporate colours,
+%  section/box/code styling, cover + masthead).
+%
+%  REQUIRES XeLaTeX (fontspec). Compile with:
+%      latexmk -xelatex <file>.tex      (or:  xelatex <file> twice)
+%
+%  Needs alongside the main .tex (copied by the skill):
+%      cunef.sty, cunef-logo.png, fonts/  (the Aeonik .otf files)
+% ============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cunef}[2026/06/27 v1.0 CUNEF Universidad document style]
+
+% ---------- Packages ----------
+\RequirePackage{fontspec}
+\RequirePackage[a4paper,margin=2.15cm,top=2.05cm,bottom=2.05cm]{geometry}
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage{parskip}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{listings}
+\RequirePackage{lastpage}
+\RequirePackage{needspace}
+\RequirePackage{etoolbox}
+\RequirePackage{hyperref}   % load late
+\usetikzlibrary{calc}
+\setlength{\headheight}{22pt}
+\emergencystretch=2em
+
+% ---------- Aeonik font (Path is relative to the main .tex) ----------
+\setmainfont{Aeonik-Regular.otf}[
+  Path = fonts/,
+  BoldFont       = Aeonik-Bold.otf,
+  ItalicFont     = Aeonik-RegularItalic.otf,
+  BoldItalicFont = Aeonik-BoldItalic.otf
+]
+
+% ---------- CUNEF corporate colours ----------
+\definecolor{CUNEFOrange}{RGB}{255, 87, 0}
+\definecolor{CUNEFBlue}{RGB}{21, 31, 108}      % primary navy
+\definecolor{CUNEFGray}{RGB}{214, 209, 196}
+\definecolor{lightbg}{RGB}{245, 242, 237}
+\definecolor{rowgray}{RGB}{230, 226, 218}
+\definecolor{codebg}{RGB}{250, 248, 244}
+\colorlet{Front}{CUNEFBlue}                    % back-compat alias
+
+% ---------- Links ----------
+\hypersetup{
+  colorlinks = true,
+  urlcolor   = CUNEFOrange,
+  linkcolor  = CUNEFBlue,
+  citecolor  = CUNEFBlue,
+}
+\AtBeginDocument{\hypersetup{pdfauthor={CUNEF Universidad}}}
+
+% ---------- Section styling ----------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNEFBlue}}
+  {\thesection}{0.7em}{}[\vspace{-4pt}\color{CUNEFOrange}\rule{\linewidth}{1pt}\vspace{2pt}]
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNEFBlue}}
+  {\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUNEFBlue}}
+  {\thesubsubsection}{0.7em}{}
+
+% ---------- Lists, tables ----------
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.18}
+
+% ---------- Code listings ----------
+\lstdefinestyle{cunefcode}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  rulecolor=\color{CUNEFGray},
+  frame=single,
+  framerule=0.4pt,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  breaklines=true,
+  upquote=true,
+  tabsize=2,
+  commentstyle=\color{CUNEFBlue!70},
+  keywordstyle=\bfseries\color{CUNEFBlue},
+  stringstyle=\color{CUNEFOrange!80!black}
+}
+\lstset{style=cunefcode}
+
+% ---------- Inline macros ----------
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\todo}[1]{\textcolor{CUNEFOrange}{\textbf{#1}}}
+
+% ============================================================
+%  Document metadata (set in the preamble of your .tex)
+% ============================================================
+\newcommand{\cunef@title}{Document Title}
+\newcommand{\cunef@subtitle}{}
+\newcommand{\cunef@meta}{}
+\newcommand{\cunef@blurb}{}
+\newcommand{\cunef@runningtitle}{}
+
+\newcommand{\cuneftitle}[1]{\renewcommand{\cunef@title}{#1}}
+\newcommand{\cunefsubtitle}[1]{\renewcommand{\cunef@subtitle}{#1}}
+\newcommand{\cunefmeta}[1]{\renewcommand{\cunef@meta}{#1}}
+\newcommand{\cunefblurb}[1]{\renewcommand{\cunef@blurb}{#1}}
+\newcommand{\cunefrunningtitle}[1]{\renewcommand{\cunef@runningtitle}{#1}}
+\newcommand{\cuneflogo}{cunef-logo.png}
+
+% ============================================================
+%  Page styles
+%    cunefrunning -- long docs: orange head-rule, running title /
+%                    "CUNEF Universidad", footer "page of N".
+%    cunefplain   -- short docs: no head-rule, footer page no. +
+%                    "CUNEF Universidad".
+% ============================================================
+\fancypagestyle{cunefrunning}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0.6pt}%
+  \renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{CUNEFOrange}\leaders\hrule height \headrulewidth\hfill}}%
+  \fancyhead[L]{\small\color{CUNEFBlue}\textbf{\cunef@runningtitle}}%
+  \fancyhead[R]{\small\color{CUNEFOrange}\textbf{CUNEF Universidad}}%
+  \fancyfoot[C]{\small\color{CUNEFBlue}\thepage\ of \pageref*{LastPage}}%
+}
+\fancypagestyle{cunefplain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+  \fancyfoot[L]{\small\color{CUNEFBlue}\thepage}%
+  \fancyfoot[R]{\small\color{CUNEFOrange}\textbf{CUNEF Universidad}}%
+}
+
+% ============================================================
+%  \cunefmasthead -- SHORT documents
+%  Compact header on page 1: title (left) + logo (right),
+%  orange rule, optional meta line. Document continues below.
+% ============================================================
+\newcommand{\cunefmasthead}{%
+  \noindent
+  \begin{minipage}[c]{0.66\linewidth}
+    \raggedright
+    {\fontsize{21}{25}\selectfont\bfseries\color{CUNEFBlue}\cunef@title\par}%
+    \ifdefempty{\cunef@subtitle}{}{%
+      \vspace{3pt}{\fontsize{12}{15}\selectfont\color{CUNEFOrange}\cunef@subtitle\par}}%
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.30\linewidth}
+    \raggedleft\includegraphics[height=1.5cm]{\cuneflogo}%
+  \end{minipage}%
+  \par\vspace{6pt}
+  {\color{CUNEFOrange}\rule{\linewidth}{1pt}}\par
+  \ifdefempty{\cunef@meta}{}{%
+    \vspace{3pt}{\small\color{CUNEFBlue}\cunef@meta\par}}%
+  \vspace{10pt}
+}
+
+% ============================================================
+%  \cuneftitlepage -- LONG documents
+%  Full-bleed decorative cover: corporate background, two sets of
+%  concentric arcs, logo, title, subtitle, meta, bottom blurb.
+%  Ends the page itself (\clearpage).
+% ============================================================
+\newcommand{\cuneftitlepage}{%
+  \thispagestyle{empty}%
+  \newgeometry{margin=0pt}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[lightbg] (current page.south west) rectangle (current page.north east);
+    \begin{scope}
+      \clip (current page.south west) rectangle (current page.north east);
+      \foreach \r in {3.0,3.35,...,12.0}{
+        \draw[CUNEFOrange,line width=0.35pt,opacity=0.9]
+          ([xshift=3.0cm,yshift=2.6cm]current page.east) circle (\r cm);
+      }
+      \foreach \r in {3.0,3.35,...,9.4}{
+        \draw[CUNEFBlue,line width=0.35pt,opacity=0.85]
+          ([xshift=-2.0cm,yshift=-1.9cm]current page.south east) circle (\r cm);
+      }
+    \end{scope}
+    \node[anchor=north west] at ([xshift=1.05cm,yshift=-0.7cm]current page.north west){%
+      \includegraphics[height=2.4cm]{\cuneflogo}%
+    };
+    \node[anchor=west,text width=16.5cm,align=left]
+      at ([xshift=1.65cm,yshift=1.65cm]current page.west){%
+        {\fontsize{31}{37}\selectfont\bfseries\color{CUNEFBlue}\cunef@title\par}%
+        \ifdefempty{\cunef@subtitle}{}{%
+          \vspace{12pt}{\fontsize{14}{19}\selectfont\color{CUNEFOrange}\cunef@subtitle\par}}%
+        \ifdefempty{\cunef@meta}{}{%
+          \vspace{20pt}{\fontsize{10.5}{15}\selectfont\color{CUNEFBlue}\cunef@meta\par}}%
+    };
+    \ifdefempty{\cunef@blurb}{}{%
+      \node[anchor=south west,text width=15.5cm,align=left]
+        at ([xshift=1.65cm,yshift=1.15cm]current page.south west){%
+          {\small\color{CUNEFBlue}\cunef@blurb}%
+      };}%
+  \end{tikzpicture}%
+  \restoregeometry
+  \clearpage
+}
+
+\endinput

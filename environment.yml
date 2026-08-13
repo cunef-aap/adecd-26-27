@@ -1,0 +1,16 @@
+name: aap
+channels: [conda-forge]
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - statsmodels
+  - pytorch
+  - jupyter
+  - nbformat
+  - ipykernel
+  - jupyter-cache
+  - pyyaml

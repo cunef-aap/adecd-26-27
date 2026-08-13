@@ -1,0 +1,57 @@
+# Guía de la asignatura {.unnumbered}
+
+| | |
+|---|---|
+| Asignatura | Aprendizaje Automático: Predicción |
+| Código | G244 · 6 ECTS · obligatoria |
+| Titulación | Doble Grado en ADE y Ciencia de Datos |
+| Curso | 3.º · semestre 1 |
+| Profesor | Roi Naveiro (`roi.naveiro@cunef.edu`) |
+| Departamento | Métodos Cuantitativos |
+
+## Ritmo semanal
+
+Tres sesiones por semana, con papeles distintos:
+
+| | Sesión | Qué pasa |
+|---|---|---|
+| S1 | **Teoría** | La derivación, en pizarra. Sin ordenador |
+| S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
+| S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
+
+## Contrato de trabajo
+
+6 ECTS son 150 horas. Unas 67 son presenciales; el resto es suyo:
+
+| | h/semana |
+|---|---|
+| Completar el cuaderno tras el laboratorio | 1,5 |
+| Hoja de problemas | 1,5 |
+| Leer el capítulo | 1,0 |
+| Proyecto (solo semanas 9-13) | 1,5 |
+| **Total fuera de clase** | **~5,5** (7 en semanas de proyecto) |
+
+Si una semana no cabe en ese presupuesto, sobra materia, no falta tiempo. Díganmelo.
+
+## La derivación de la semana
+
+Cada S2 empieza con diez minutos en los que **una persona reproduce en la pizarra una
+demostración elegida al azar** de las ya vistas. No es una encerrona: la lista completa
+está publicada en el [índice de resultados](indice-resultados.qmd) desde el primer día.
+
+## Qué NO cubre esta asignatura
+
+Clasificación. Es la asignatura hermana, *Aprendizaje Automático: Clasificación* [G249],
+y comparte con esta buena parte del aparato. Aquí la regresión logística aparece una vez,
+como caso particular de los modelos lineales generalizados, y no se evalúa.
+
+Tampoco cubrimos inferencia sobre los coeficientes (errores estándar, contrastes,
+intervalos de confianza). Es una decisión deliberada, explicada en @rem-inferencia, y la
+deuda se paga en el capítulo 15 con intervalos de predicción.
+
+## Bibliografía
+
+- Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning*.
+- Bishop y Bishop, *Deep Learning: Foundations and Concepts*.
+- Deisenroth, Faisal y Ong, *Mathematics for Machine Learning*.
+- Chodrow, *Machine Learning* (notas del curso CSCI 0451).

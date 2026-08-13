@@ -1,0 +1,50 @@
+---
+title: 'Cuando el ruido no es gaussiano: GLM'
+subtitle: 'Volver al paso 1 de la receta y cambiar la distribución'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+::: {.callout-warning appearance="simple"}
+## Capítulo en construcción — semana 14
+Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
+completo desde el primer día.
+:::
+
+## Por qué estamos aquí
+
+<!-- TODO: un párrafo enlazando con el capítulo anterior. -->
+
+## De dónde sale el material
+
+- `curso-ml-R/Rmd/02-supervised` sl. 43-54 (logística, Newton-Raphson **derivado**, IRLS).
+- `curso-ml-R/Rmd/04-regression` sl. 3-6 (GLM, ejemplo Poisson).
+- ⚠ La regresión logística se menciona **una vez** como miembro Bernoulli del catálogo de
+  enlaces y **no se evalúa**: es de G249.
+
+## Resultados que deben aparecer
+
+- Si $y$ es un conteo, el modelo gaussiano predice negativos y asume varianza constante:
+  ambas cosas falsas.
+- Poisson con enlace logarítmico; log-verosimilitud y su gradiente $\Xt(\yv-\boldsymbol\mu)$
+  — **misma forma que @thm-gradiente-matricial**, otra $\mu$.
+- Desvianza como pérdida. Tabla de familias y enlaces (cierra @rem-catalogo).
+- Interpretación multiplicativa de los coeficientes.
+
+## Ejercicios
+
+<!-- TODO: 4-6 ejercicios con solución plegable. -->
+
+## Qué llevarte
+
+<!-- TODO: 3 viñetas. -->

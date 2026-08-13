@@ -1,0 +1,42 @@
+# Glosario y notación {.unnumbered}
+
+## Notación del curso
+
+| Objeto | Símbolo | Nota |
+|---|---|---|
+| observaciones / variables | $n$ / $p$ | el curso anterior escribía $m$ para las variables |
+| matriz de diseño | $\mathbf{X} \in \mathbb{R}^{n\times(p+1)}$ | primera columna de unos |
+| coeficientes | $\mathbf{w} = (w_0,\dots,w_p)^{\mathsf{T}}$ | |
+| variables expandidas | $\boldsymbol{\Phi}$ | capítulo 10 |
+| riesgo empírico | $\hat{R}(\mathbf{w})$ | **siempre** normalizado por $1/n$ |
+| riesgo verdadero | $R(f)$ | esperanza sobre datos nuevos |
+| escala del ruido | $\sigma$ | se estima (capítulo 2) |
+| tasa de aprendizaje | $\alpha$ | |
+| regularización | $\lambda$ | **scikit-learn la llama `alpha=`** |
+
+## $\mathbf{w}$ frente a $\boldsymbol{\beta}$
+
+En econometría y en el curso anterior los coeficientes se llaman $\beta$. Aquí se llaman
+$\mathbf{w}$, que es la notación de la literatura de aprendizaje automático y la de las
+fuentes que van a leer. **Es la misma cosa.**
+
+| Aquí | En econometría |
+|---|---|
+| $\mathbf{w}$ | $\boldsymbol{\beta}$ |
+| $\hat{\mathbf{w}}$ | $\hat{\boldsymbol{\beta}}$, $b$ |
+| $\hat{R}(\mathbf{w})$ | $\mathrm{SCR}/n$ |
+
+Que el símbolo sea distinto no es lo importante. Lo importante es que la **pregunta** es
+distinta: allí, cuánto vale el coeficiente; aquí, qué predice mejor fuera de la muestra.
+
+## Vocabulario ES/EN
+
+| Español | English | Uso |
+|---|---|---|
+| sobreajuste | *overfitting* | usamos ambos |
+| validación cruzada | *cross-validation* | |
+| fuga de información | *data leakage* | |
+| conjunto de entrenamiento / prueba | *training / test set* | |
+| variable ficticia | *dummy variable* | |
+| regresión contraída | *ridge regression* | decimos **ridge** |
+| instancia, atributo | *instance, feature* | vocabulario del curso anterior |

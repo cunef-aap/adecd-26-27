@@ -1,0 +1,106 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Aprendizaje Automático: Predicción"
+  subtitle: "G244 · Doble Grado ADE + Ciencia de Datos · CUNEF Universidad"
+  chapters:
+    - index.qmd
+    - part: "Fundamentos"
+      chapters:
+        - capitulos/01-senal-ruido.qmd
+        - capitulos/02-verosimilitud.qmd
+        - capitulos/03-gradientes.qmd
+        - capitulos/04-forma-matricial.qmd
+    - part: "Del dato crudo al modelo"
+      chapters:
+        - capitulos/05-datos.qmd
+        - capitulos/06-validacion.qmd
+    - part: "Complejidad y regularización"
+      chapters:
+        - capitulos/07-sesgo-varianza.qmd
+        - capitulos/08-regularizacion.qmd
+        - capitulos/09-seleccion.qmd
+    - part: "Modelos no lineales y basados en reglas"
+      chapters:
+        - capitulos/10-no-lineales.qmd
+        - capitulos/11-arboles.qmd
+        - capitulos/12-ensembles.qmd
+    - part: "Más allá del ruido gaussiano"
+      chapters:
+        - capitulos/13-proyecto.qmd
+        - capitulos/14-glm.qmd
+        - capitulos/15-decision.qmd
+    - part: "Problemas"
+      chapters:
+        - problemas/index.qmd
+  appendices:
+    - curso/guia.qmd
+    - curso/calendario.qmd
+    - curso/evaluacion.qmd
+    - curso/politica-ia.qmd
+    - curso/algebra.qmd
+    - curso/glosario.qmd
+    - curso/indice-resultados.qmd
+    - curso/trazabilidad.qmd
+  body-footer: |
+    <br><br><span style="color:grey;">&#169; Roi Naveiro, CUNEF Universidad, 2026</span>
+  sidebar:
+    search: true
+
+format:
+  html:
+    theme: [cosmo, assets/custom.scss]
+    css: assets/styles.css
+    number-depth: 0
+    reference-location: margin
+    fig-cap-location: margin
+    callout-icon: false
+    callout-appearance: minimal
+    highlight-style: atom-one
+    title-block: none
+    grid:
+      margin-width: 350px
+
+lang: es
+
+jupyter: aap
+
+execute:
+  # `freeze` es el mecanismo nativo de Quarto y no necesita jupyter-cache.
+  freeze: auto
+
+mermaid:
+  theme: neutral
+
+bibliography: referencias.bib
+
+# Entornos numerados en español. Quarto numera por capítulo en proyectos `book`.
+language:
+  crossref-def-title: "Definición"
+  crossref-thm-title: "Teorema"
+  crossref-lem-title: "Lema"
+  crossref-cor-title: "Corolario"
+  crossref-prp-title: "Proposición"
+  crossref-exm-title: "Ejemplo"
+  crossref-exr-title: "Ejercicio"
+  crossref-fig-title: "Figura"
+  crossref-eq-title: "Ecuación"
+  proof-title: "Demostración"
+  remark-title: "Observación"
+
+# Los bloques .sol / .trampa / .cajanegra son divs con estilo en assets/styles.css.
+# NO dependen de ninguna extensión, por lo que el sitio renderiza con cualquier Quarto.
+#
+# Opcional, cuando Quarto >= 1.5 esté instalado, para que las soluciones se plieguen:
+#   quarto add coatless-quarto/custom-callout
+# y descomentar:
+#
+# custom-callout:
+#   sol:       {icon-symbol: "📝", color: "pink"}
+#   trampa:    {icon-symbol: "⚠️", color: "orange"}
+#   cajanegra: {icon-symbol: "⬛", color: "grey"}
+# filters:
+#   - custom-callout
+#   - scripts/collapse-solucion.lua

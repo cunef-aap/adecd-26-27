@@ -1,0 +1,14 @@
+# Hoja 2 {.unnumbered}
+
+::: {.callout-warning appearance="simple"}
+En construcción. Los ejercicios base están al final del capítulo 2; esta hoja los amplía
+a 6-8 con solución.
+:::
+
+<!-- TODO: 6-8 ejercicios.
+     Mezcla objetivo por hoja:
+       2 de cálculo a mano (bloque C del examen),
+       2 de demostración corta (bloque B),
+       2 conceptuales con los verbos del banco (bloque A),
+       1 de "encuentra el error" en código impreso (bloque D).
+     Cada uno con ::: {.sol} plegable. -->

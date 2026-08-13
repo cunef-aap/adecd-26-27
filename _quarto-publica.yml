@@ -1,0 +1,4 @@
+format:
+  html:
+    filters:
+      - scripts/strip-delims.lua

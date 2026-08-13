@@ -1,0 +1,19 @@
+project:
+  type: website
+  output-dir: docs/live-notebooks
+
+format:
+  ipynb:
+    crossref: false
+    number-sections: false
+    number-figures: false
+
+filters:
+  - quarto
+  - scripts/strip-code.lua
+  - scripts/restore-cells.lua
+  - scripts/clean-eqref.lua
+
+wrap: none
+
+jupyter: aap

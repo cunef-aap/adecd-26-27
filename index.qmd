@@ -1,0 +1,42 @@
+# Bienvenida {.unnumbered}
+
+Apuntes de **Aprendizaje Automático: Predicción** (G244), asignatura obligatoria de tercer
+curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.
+
+## De qué va este curso
+
+De un problema muy concreto: predecir una magnitud numérica en observaciones que todavía
+no hemos visto. Y de una idea que se repite quince veces:
+
+> **(1)** escribe un modelo de datos `señal + ruido` → **(2)** escribe la verosimilitud →
+> **(3)** toma `−log` y obtén una pérdida → **(4)** minimízala → **(5)** valida con un
+> protocolo honesto y mide con una métrica que signifique algo.
+
+Esa receta se deriva entera, a mano, una vez (capítulos 2 a 4) y después se reutiliza:
+*ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
+variables; Poisson es el paso 1 con otro ruido; el *boosting* es el paso 4 en el espacio
+de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.
+
+## Cómo se usan estos apuntes
+
+- Cada capítulo se lee **antes** de la sesión de teoría.
+- Los resultados numerados se demuestran. Aquí **se demuestra todo lo que se enuncia**; lo
+  que no demostramos aparece marcado como ⬛ *caja negra*, y decimos por qué.
+- Cada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está
+  arriba del todo.
+- Al final de cada capítulo hay una ⚠️ *trampa*: un error realista, demostrado fallando.
+
+## Antes de la primera sesión
+
+Lea el anexo [Cálculo y álgebra que va a necesitar](curso/algebra.qmd) y haga el
+diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber
+dónde estamos.
+
+## Sobre estos apuntes
+
+La estructura y buena parte del enfoque de los capítulos 1 a 4 siguen de cerca las notas
+de [Phil Chodrow](https://www.philchodrow.prof/ml-notes-update/) para el curso CSCI 0451
+de Middlebury College, usadas con agradecimiento. Los capítulos 5 y 6, y todo el material
+de problemas y evaluación, son propios.
+
+Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad

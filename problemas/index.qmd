@@ -1,0 +1,19 @@
+# Hojas de problemas {.unnumbered}
+
+Una hoja por capítulo, para la sesión S2 (lápiz y papel). Las soluciones se publican
+después de la sesión.
+
+| Hoja | Capítulo | Estado |
+|---|---|---|
+| [1](hoja-01.qmd) | Señal y ruido | esqueleto |
+| [2](hoja-02.qmd) | Verosimilitud y MLE | esqueleto |
+| [3](hoja-03.qmd) | Gradientes | esqueleto |
+| [4](hoja-04.qmd) | Forma matricial | esqueleto |
+| [5](hoja-05.qmd) | Datos | esqueleto |
+| [6](hoja-06.qmd) | Validación y métricas | esqueleto |
+
+::: {.callout-note appearance="simple"}
+Este es el activo más caro de construir de todo el curso y el que ninguna de las dos
+fuentes aporta: Chodrow publica **tres** ejercicios en toda la primera mitad, y el curso
+anterior publicaba enunciados sin soluciones por política. Todo esto es material nuevo.
+:::

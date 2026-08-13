@@ -1,0 +1,14 @@
+# Entorno del curso. Tras `conda env create -f environment.yml`:
+#   conda activate aap
+#   python -m ipykernel install --user --name aap --display-name "Python (aap)"
+numpy>=2.1
+pandas>=2.2
+scipy>=1.14
+matplotlib>=3.9
+scikit-learn>=1.5
+statsmodels>=0.14
+torch>=2.4
+jupyter
+nbformat>=5.10
+ipykernel>=6.29
+jupyter-cache>=1.0

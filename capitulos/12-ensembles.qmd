@@ -1,0 +1,50 @@
+---
+title: 'Ensembles: bagging, random forest y boosting'
+subtitle: 'Promediar, descorrelacionar, y ajustar el residuo'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+::: {.callout-warning appearance="simple"}
+## Capítulo en construcción — semana 12
+Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
+completo desde el primer día.
+:::
+
+## Por qué estamos aquí
+
+<!-- TODO: un párrafo enlazando con el capítulo anterior. -->
+
+## De dónde sale el material
+
+- **`curso-ml-R/Rmd/06-trees`** — bagging, RF, AdaBoost, gradient boosting, importancia
+  por permutación, dependencia parcial. Material propio, con **tres demostraciones ya
+  escritas** (desigualdad del bagging; varianza de la media correlada; $E_{COM}=E_{PR}/M$).
+
+## Resultados que deben aparecer
+
+- **@lem-varianza-media-correlada ya está demostrado en el capítulo 6.** Aquí solo se
+  aplica: promediar mata el término $(1-\rho)/K$ pero $\rho$ es un suelo ⟹ hay que
+  descorrelacionar ⟹ de ahí sale \`max_features\`.
+- Muestras OOB como validación gratuita.
+- Boosting: el residuo **es** el gradiente negativo de la pérdida cuadrática respecto de la
+  predicción. Cierra el círculo con el capítulo 3.
+- ⚠ Frontera con G249: aquí solo en versión **regresión**.
+
+## Ejercicios
+
+<!-- TODO: 4-6 ejercicios con solución plegable. -->
+
+## Qué llevarte
+
+<!-- TODO: 3 viñetas. -->

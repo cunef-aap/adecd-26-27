@@ -1,0 +1,41 @@
+# Política de uso de IA generativa {.unnumbered}
+
+## Resumen
+
+| Contexto | ¿Se puede? |
+|---|---|
+| Exámenes (parcial y final) | **No.** Son en papel y sin dispositivos |
+| Hojas de problemas | Sí, y hay que decirlo |
+| Laboratorios | Sí |
+| Proyecto | **Sí, y es obligatorio documentarlo** |
+
+## Por qué no está prohibida
+
+Porque van a trabajar con estas herramientas y porque la guía docente incluye
+explícitamente una introducción a los agentes de IA para implementar modelos. Prohibirlas
+no les prepara para nada.
+
+## Por qué hay que documentarla
+
+Porque el objetivo del proyecto no es que el código exista, sino que ustedes sepan si el
+código es correcto. Un agente produce con enorme fluidez *pipelines* con fuga de
+información, argumentos inventados de scikit-learn y métricas de clasificación en
+problemas de regresión. Detectarlo es la competencia que se evalúa.
+
+## `BITACORA_IA.md`
+
+Entregable obligatorio del proyecto. Debe documentar:
+
+- Al menos **cinco interacciones** relevantes: qué se pidió, qué contestó, qué se hizo con
+  la respuesta.
+- Al menos **dos errores reales del agente**, cada uno con: cómo se detectó y cómo se
+  corrigió.
+
+Una bitácora sin errores documentados se lee como una bitácora no escrita, no como un
+agente perfecto.
+
+## Defensa individual
+
+En la defensa habrá al menos una pregunta dirigida a una persona concreta sobre una celda
+concreta de su propio repositorio. Quien no pueda explicar su propio código pierde hasta
+un 40 % de nota **individual**, sin que ello afecte a la del equipo.

@@ -1,0 +1,300 @@
+---
+title: 'Validación y métricas'
+subtitle: 'Cómo se estima el error que importa, y qué mide realmente cada métrica'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## Por qué estamos aquí
+
+El capítulo 1 demostró que el error de entrenamiento no significa nada. Cinco capítulos
+después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres
+cosas que casi ningún curso de este nivel demuestra: por qué el error de test es
+insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué $\Rsq$ puede
+salir negativo.
+
+::: {.callout-tip appearance="simple"}
+## Lo que usamos de antes
+@lem-media-optima, @def-fuga, @cor-residuos-ortogonales, @def-lineal-gaussiano.
+:::
+
+## El riesgo que de verdad importa
+
+::: {#def-riesgo-verdadero}
+## Riesgo verdadero
+
+$\Risk(\model) = \E{(Y - \model(X))^2}$, esperanza sobre una observación **nueva** de la
+misma distribución. Nótese la tipografía: $\Risk$ es el riesgo verdadero, $\Riskh$ el
+empírico. Todo el capítulo va de estimar el primero con el segundo.
+:::
+
+::: {#def-particion}
+## Entrenamiento, validación y test
+
+Tres papeles distintos: **entrenar** los parámetros, **elegir** entre modelos, y
+**reportar** una vez.
+:::
+
+::: {#thm-test-insesgado}
+## Insesgadez del error de test
+
+Si (i) $\modelh$ es **independiente** del conjunto de test y (ii) los puntos de test son
+iid de la misma distribución, entonces
+$\E{\Riskh_{\text{test}}(\modelh) \given \modelh} = \Risk(\modelh)$.
+:::
+
+::: {.proof}
+Linealidad de la esperanza sobre $\ntest$ términos idénticamente distribuidos. $\square$
+:::
+
+::: {.callout-important appearance="simple"}
+La demostración es una línea; **lo que importa son las hipótesis**. Violar (i) es fuga de
+información (@def-fuga). Violar (ii) es lo que hace un anfitrión con doce anuncios
+(@sec-grupos).
+:::
+
+::: {#prp-precision-test}
+## Precisión del error de test
+
+$\Var{\Riskh_{\text{test}}} = v/\ntest$ con $v$ la varianza de la pérdida puntual; el error
+estándar es $\sqrt{v/\ntest}$. De aquí se responde cuántos datos de test hacen falta.
+:::
+
+## Por qué el test se toca una vez
+
+::: {#thm-sesgo-seleccion}
+## Sesgo de selección
+
+$\displaystyle \E{\min_m \Riskh_m} \leq \min_m \E{\Riskh_m}$. Elegir el modelo con menor
+error de test hace que **ese número** sea optimista.
+:::
+
+::: {.proof}
+<!-- TODO(D10, 10 min). Dos líneas, sin Jensen:
+     sea m0 el índice que minimiza E[Riskh_m]. Para toda realización,
+     min_m Riskh_m <= Riskh_{m0}. Tomando esperanzas,
+     E[min_m Riskh_m] <= E[Riskh_{m0}] = min_m E[Riskh_m]. -->
+$\square$
+:::
+
+::: {#rem-consecuencias}
+## Consecuencias
+
+Los hiperparámetros se eligen en **validación**; el test se toca **una vez**. Esto explica
+por qué las tablas de clasificación públicas se degradan con el tiempo, y por qué el
+proyecto exige por escrito que el test se use una sola vez.
+:::
+
+## Validación cruzada
+
+::: {#def-cv}
+## Validación cruzada en $K$ bloques
+
+$\displaystyle \CV_K = \frac{1}{K}\sum_{k=1}^{K}\Riskh_k$, con $\Riskh_k$ el riesgo
+empírico sobre el bloque $k$ del modelo entrenado sin él.
+:::
+
+::: {.callout-warning appearance="simple"}
+## Precisión que casi nadie explicita
+
+$\frac{1}{K}\sum_k(\text{media del bloque})$ coincide con $\frac{1}{\nobs}\sum_i \loss_i$
+**solo si los bloques tienen el mismo tamaño**. `cross_val_score` hace lo primero.
+:::
+
+::: {#prp-sesgo-cv}
+## Sesgo de la validación cruzada
+
+Cada modelo se entrena con $\nobs(K-1)/K$ observaciones, luego $\CV_K$ estima el riesgo de
+un modelo entrenado con **menos** datos que el que finalmente se despliega: el sesgo es
+**pesimista** y decrece con $K$.
+:::
+
+::: {#lem-varianza-media-correlada}
+## Varianza de una media de variables correladas
+
+Si $Z_1,\dots,Z_K$ tienen varianza $v$ y correlación $\rho$ dos a dos, entonces
+$$\Var{\frac{1}{K}\sum_k Z_k} = \rho v + \frac{(1-\rho)v}{K}.$$
+:::
+
+::: {.proof}
+<!-- TODO(D10, 15 min). En pizarra hacerlo con K = 2, que es una línea y ya deja ver el
+     suelo rho*v. El caso general se demuestra en la semana 12, donde ES el argumento de
+     por qué hay que descorrelacionar los árboles de un random forest. -->
+$\square$
+:::
+
+::: {#cor-elegir-k}
+## Por qué $K=5$ o $K=10$
+
+Al crecer $K$ el sesgo baja (@prp-sesgo-cv), pero los conjuntos de entrenamiento se
+solapan más, $\rho$ crece y por @lem-varianza-media-correlada la varianza **no baja**:
+tiende a $\rho v$. Con $K=\nobs$ (LOOCV) el sesgo es mínimo, la varianza no se promedia y
+el coste es $\nobs$ ajustes. **No hay ningún teorema que fije $K$**: es un compromiso
+empírico, y decirlo es contenido, no laguna.
+:::
+
+::: {.callout-important appearance="simple"}
+@lem-varianza-media-correlada **es** el resultado que la semana 12 necesita para explicar
+`max_features` en un *random forest*. Demostrado aquí, esa semana ya está pagada.
+:::
+
+## Cuando la hipótesis iid es falsa {#sec-grupos}
+
+::: {#rem-grupos}
+## Grupos
+
+Un anfitrión con doce anuncios rompe la hipótesis (ii) de @thm-test-insesgado: hay filas
+de test dependientes de filas de entrenamiento. `GroupKFold` sobre `host_id` restaura la
+hipótesis, y **la diferencia medida entre ambos esquemas es la demostración empírica**.
+:::
+
+## Métricas
+
+::: {#def-metricas}
+## $\MAE$, $\MSE$, $\RMSE$
+
+Con unidades: si $y$ está en euros, $\MSE$ está en euros al cuadrado; $\RMSE$ y $\MAE$, en
+euros. Reportar un $\MSE$ «de 3.400» sin unidades no informa de nada.
+:::
+
+::: {#prp-rmse-mae}
+## $\RMSE \geq \MAE$ siempre
+
+:::
+
+::: {.proof}
+<!-- TODO(D10, 5 min): RMSE^2 - MAE^2 = (1/n) sum r^2 - ((1/n) sum |r|)^2 = Var(|r|) >= 0.
+     Ruta elegida sobre Cauchy-Schwarz: es probabilidad que sí tienen. -->
+$\square$
+:::
+
+::: {#rem-metrica-modelo}
+## Elegir métrica es elegir modelo
+
+$\MSE$ apunta a la **media** (@lem-media-optima); $\MAE$, a la **mediana**
+(@prp-laplace-mae). No son dos formas de medir lo mismo: estiman funcionales distintos de
+la distribución condicional.
+:::
+
+## $\Rsq$
+
+::: {#def-r2}
+## $\SSE$, $\SST$ y $\Rsq$
+
+$\SSE = \sum_i(\yi-\yhati)^2$, $\SST = \sum_i(\yi-\ybar)^2$, $\ \Rsq = 1 - \SSE/\SST$.
+:::
+
+::: {#thm-r2-comparacion}
+## $\Rsq$ compara contra el modelo de la media
+
+$\SST = \nobs\,\Riskh(\nullmodel)$ donde $\nullmodel \equiv \ybar$ es **el mejor modelo
+constante** (@lem-media-optima). Por tanto
+$$\Rsq = 1 - \frac{\Riskh(\modelh)}{\Riskh(\nullmodel)}:$$
+la fracción del riesgo del modelo nulo que el modelo consigue eliminar. $\Rsq=0$ significa
+«igual de bueno que la media»; $\Rsq=1$, predicción perfecta.
+:::
+
+::: {#thm-sct-descompone}
+## $\SST = \SSR + \SSE$ **en la muestra**
+
+Con mínimos cuadrados, término independiente y **sobre los datos de entrenamiento**,
+$\sum_i(\yi-\ybar)^2 = \sum_i(\yhati-\ybar)^2 + \sum_i(\yi-\yhati)^2$, de donde
+$0 \le \Rsq \le 1$.
+:::
+
+::: {.proof}
+<!-- TODO(D10, 15 min): sumar y restar y_i - ybar = (y_i - yhat_i) + (yhat_i - ybar);
+     el término cruzado es 2 r^T (X what - ybar 1) = 0 por @cor-residuos-ortogonales.
+     Es la MISMA técnica de @thm-identidad-fundamental: dígalo. -->
+$\square$
+:::
+
+::: {#thm-r2-negativo}
+## Fuera de la muestra $\Rsq$ puede ser negativo
+
+En test **falla @cor-residuos-ortogonales**, luego falla @thm-sct-descompone y $\Rsq$ no
+está acotado inferiormente. Además
+$$\Rsq_{\text{test}} < 0 \iff \SSE_{\text{test}} > \SST_{\text{test}} \iff \text{el modelo predice peor que la constante } \ybar.$$
+:::
+
+::: {.proof}
+<!-- TODO(D10, 15 min): (a) la equivalencia sale directa de @thm-r2-comparacion;
+     (b) dar un CONTRAEJEMPLO MINIMO de 3 puntos calculable a mano -> ítem de examen. -->
+$\square$
+:::
+
+::: {#rem-r2-avisos}
+## Tres avisos sobre $\Rsq$
+
+`r2_score` usa la media del vector $y$ que se le pasa, es decir la de **test**. $\Rsq$ es
+adimensional, luego **no es comparable entre conjuntos de datos** porque $\SST$ depende de
+$\Var{y}$. Y un $\Rsq$ alto no implica un modelo útil.
+:::
+
+## Laboratorio
+
+<!-- TODO(D11):
+     (a) KFold(shuffle=True, random_state=42) + cross_validate con 3 métricas sobre el
+         pipeline canónico del capítulo 5;
+     (b) k-fold escrito a mano en numpy y verificado contra sklearn;
+     (c) GroupKFold por host_id vs KFold ingenuo -> @rem-grupos MEDIDO. Es la mejor
+         demostración de fuga que tenemos sobre nuestros propios datos;
+     (d) un modelo con R^2 de test negativo, construido a propósito;
+     (e) curva de CV_K frente a K para ver @cor-elegir-k. -->
+
+## La trampa de esta semana
+
+::: {.trampa}
+## «He probado veinte modelos y me quedo con el mejor en test»
+
+Ese «mejor en test» ya no estima nada, por @thm-sesgo-seleccion. Con veinte modelos y un
+test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación;
+test, una vez.
+:::
+
+## Notación ↔ código
+
+| Matemáticas | Código |
+|---|---|
+| $\CV_K$ | `cross_val_score(pipe, X, y, cv=KFold(5, shuffle=True, random_state=42))` |
+| $\RMSE$ | `scoring="neg_root_mean_squared_error"` (¡signo cambiado!) |
+| $\Rsq$ | `r2_score(y_test, yhat)` |
+| grupos | `GroupKFold(n_splits=5).split(X, y, groups=host_id)` |
+
+## Ejercicios
+
+::: {#exr-metricas-mano}
+Sobre una tabla de seis filas, calcule a mano $\MAE$, $\MSE$, $\RMSE$ y $\Rsq$. Verifique
+@prp-rmse-mae.
+:::
+
+::: {#exr-r2-negativo}
+Construya tres puntos y un modelo lineal con $\Rsq_{\text{test}} < 0$. Explique en una
+frase qué le está diciendo ese número a quien lo lea.
+:::
+
+::: {#exr-cv-estimador}
+Dadas las pérdidas de tres bloques $(12{,}1;\ 9{,}8;\ 14{,}0)$ de tamaños $(40, 40, 41)$,
+calcule $\CV_3$ de las dos maneras de @def-cv y explique la diferencia.
+:::
+
+<!-- TODO(D11): 2-3 más. Uno debe pedir identificar la fuga en un script impreso. -->
+
+## Qué llevarte
+
+- El error de test es insesgado **solo** bajo dos hipótesis explícitas
+  (@thm-test-insesgado), y elegir con él las rompe (@thm-sesgo-seleccion).
+- $K=5$ o $10$ no es un teorema: es sesgo (@prp-sesgo-cv) contra varianza
+  (@lem-varianza-media-correlada) contra coste.
+- $\Rsq$ es una comparación contra la media (@thm-r2-comparacion); fuera de la muestra
+  puede ser negativo, y eso significa algo muy concreto (@thm-r2-negativo).

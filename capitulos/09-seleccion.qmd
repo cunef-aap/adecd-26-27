@@ -1,0 +1,47 @@
+---
+title: 'Selección de variables y reducción de dimensión'
+subtitle: 'Elegir un subconjunto no es lo mismo que construir menos variables'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+::: {.callout-warning appearance="simple"}
+## Capítulo en construcción — semana 9
+Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
+completo desde el primer día.
+:::
+
+## Por qué estamos aquí
+
+<!-- TODO: un párrafo enlazando con el capítulo anterior. -->
+
+## De dónde sale el material
+
+- `curso-ml-R/Rmd/04-regression`: best subset, stepwise, PCR, PLS (PCR **derivado**).
+- `curso-ml-R/Rmd/02-supervised` sl. 32-33 (maldición de la dimensionalidad).
+
+## Resultados que deben aparecer
+
+- $2^\nfeat$ subconjuntos; por qué seleccionar con el error de entrenamiento elige siempre
+  el modelo completo ($\Rsq$ monótono en $\nfeat$: dos líneas desde @thm-identidad-fundamental).
+- AIC y BIC como log-verosimilitud penalizada — conecta con @thm-loglik-mse.
+- Colinealidad y VIF; PCA (micro-derivación de la primera componente por Lagrange, opcional).
+- PCR y por qué a una regresión le importa PCA.
+
+## Ejercicios
+
+<!-- TODO: 4-6 ejercicios con solución plegable. -->
+
+## Qué llevarte
+
+<!-- TODO: 3 viñetas. -->
