@@ -1,0 +1,16 @@
+{
+  "python.defaultInterpreterPath": "/Users/roinaveiro/miniconda3/envs/aap/bin/python",
+  "jupyter.kernels.filter": [],
+  "files.associations": { "*.qmd": "quarto" },
+  "quarto.render.previewType": "internal",
+  "[quarto]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 92,
+    "editor.rulers": [92]
+  },
+  "files.exclude": {
+    "**/.quarto": true,
+    "**/_freeze": true,
+    "**/__pycache__": true
+  }
+}

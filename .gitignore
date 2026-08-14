@@ -6,7 +6,9 @@ _referencia/
 **/*.pyc
 **/*.quarto_ipynb
 .DS_Store
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 .luarc.json
 *.csv.gz
 datos/listings*.csv
