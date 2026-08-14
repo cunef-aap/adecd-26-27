@@ -1,6 +1,6 @@
 ---
 title: 'Regularización: ridge, lasso y el prior'
-subtitle: 'La semana con más contenido bayesiano del curso'
+subtitle: 'Ridge y lasso como estimación MAP; soft-thresholding'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -21,7 +21,7 @@ Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio
 completo desde el primer día.
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 <!-- TODO: un párrafo enlazando con el capítulo anterior. -->
 
@@ -48,6 +48,6 @@ completo desde el primer día.
 
 <!-- TODO: 4-6 ejercicios con solución plegable. -->
 
-## Qué llevarte
+## Resumen
 
 <!-- TODO: 3 viñetas. -->

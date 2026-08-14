@@ -384,17 +384,17 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#preparativos" id="toc-preparativos" class="nav-link" data-scroll-target="#preparativos">Preparativos</a></li>
   <li><a href="#ecuaciones-normales" id="toc-ecuaciones-normales" class="nav-link" data-scroll-target="#ecuaciones-normales">Ecuaciones normales</a></li>
   <li><a href="#óptimo-global-existencia-y-unicidad" id="toc-óptimo-global-existencia-y-unicidad" class="nav-link" data-scroll-target="#óptimo-global-existencia-y-unicidad">Óptimo global, existencia y unicidad</a></li>
   <li><a href="#coste-computacional" id="toc-coste-computacional" class="nav-link" data-scroll-target="#coste-computacional">Coste computacional</a></li>
   <li><a href="#la-conversación-pendiente-con-econometría" id="toc-la-conversación-pendiente-con-econometría" class="nav-link" data-scroll-target="#la-conversación-pendiente-con-econometría">La conversación pendiente con econometría</a></li>
   <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio">Laboratorio</a></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -404,7 +404,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/04-forma-matricial.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></h1>
-<p class="subtitle lead">De la condición de primer orden a las ecuaciones normales, y de ahí a la existencia y unicidad de la solución</p>
+<p class="subtitle lead">Ecuaciones normales, optimalidad global, existencia y unicidad</p>
 </div>
 
 
@@ -422,8 +422,8 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/04-forma-matricial.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Con una variable ya sabemos minimizar. Con <span class="math inline">\(p\)</span> variables hace falta álgebra matricial, y a cambio obtenemos algo que con una variable no se veía: <strong>una fórmula cerrada</strong>, y la respuesta exacta a cuándo existe y cuándo es única.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -435,7 +435,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>, <a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> (el motor), <a href="03-gradientes.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>3.4</span></a>.</p>
+<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>, <a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> (la condición que se anula en el mínimo), <a href="03-gradientes.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>3.4</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
@@ -444,7 +444,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Repaso de 20 minutos, sin disculpas
+<span class="screen-reader-only">Nota</span>Repaso previo (20 minutos)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -455,7 +455,7 @@ window.Quarto = {
 <section id="preparativos" class="level2">
 <h2 class="anchored" data-anchor-id="preparativos">Preparativos</h2>
 <div id="def-diseno" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 4.1 (Matriz de diseño)</strong></span> <span class="math inline">\(\mathbf{X}\in \mathbb{R}^{n\times (p+1)}\)</span> con <strong>primera columna de unos</strong>, de modo que <span class="math inline">\(x_{i0} = 1\)</span> y el término independiente queda absorbido en <span class="math inline">\(\boldsymbol{w}\)</span>. El <em>score</em> es <span class="math inline">\(s_i = \mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\)</span>. Convenio fijado aquí y no revisado nunca más.</p>
+<p><span class="theorem-title"><strong>Definición 4.1 (Matriz de diseño)</strong></span> <span class="math inline">\(\mathbf{X}\in \mathbb{R}^{n\times (p+1)}\)</span> con <strong>primera columna de unos</strong>, de modo que <span class="math inline">\(x_{i0} = 1\)</span> y el término independiente queda absorbido en <span class="math inline">\(\boldsymbol{w}\)</span>. El <em>score</em> es <span class="math inline">\(s_i = \mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\)</span>. Este convenio se mantiene en el resto del curso.</p>
 </div>
 <div id="prp-riesgo-matricial" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposición 4.1 (Riesgo en forma matricial)</strong></span> <span class="math inline">\(\displaystyle \hat{R}(\boldsymbol{w}) = \frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}- \mathbf{y} \right\rVert^2\)</span>.</p>
@@ -536,7 +536,7 @@ window.Quarto = {
         X w - y = X(w - what) + (X what - y).
      Desarrollar la norma al cuadrado. El término cruzado es
         2 (w - what)^T X^T (X what - y) = 0
-     por @thm-ecuaciones-normales. Tres líneas y se acabó. -->
+     por @thm-ecuaciones-normales. La demostración ocupa tres líneas. -->
 </div>
 <div id="cor-minimo-global" class="theorem corollary">
 <p><span class="theorem-title"><strong>Corolario 4.2 (Todo punto crítico es mínimo global)</strong></span> El segundo sumando de <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a> es <span class="math inline">\(\geq 0\)</span>, luego <span class="math inline">\(\hat{R}(\boldsymbol{w}) \geq \hat{R}(\hat{\boldsymbol{w}})\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
@@ -558,7 +558,7 @@ window.Quarto = {
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
 <!-- TODO(D6, 20 min). Dos partes.
      (a) nucleo: si X^T X v = 0 entonces v^T X^T X v = 0, es decir ||X v||^2 = 0,
-         luego X v = 0. El recíproco es inmediato. ESTA ES LA LINEA CLAVE DEL CAPITULO.
+         luego X v = 0. El recíproco es inmediato. Este paso es el que usa la identidad $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.
      (b) unicidad: por @eq-identidad, Riskh(w) = Riskh(what) si y solo si X(w-what)=0,
          o sea w - what en ker(X). -->
 </div>
@@ -585,7 +585,7 @@ window.Quarto = {
 <p><span class="theorem-title"><strong>Proposición 4.2 (¿Fórmula cerrada o gradiente?)</strong></span> Formar <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> cuesta <span class="math inline">\(O(np^2)\)</span>; resolver el sistema, <span class="math inline">\(O(p^3)\)</span>. Un paso de descenso cuesta <span class="math inline">\(O(np)\)</span>, y <span class="math inline">\(T\)</span> pasos <span class="math inline">\(O(Tnp)\)</span>. <strong>El gradiente gana cuando <span class="math inline">\(p^2 \gg Tn\)</span></strong>, o cuando <span class="math inline">\(\mathbf{X}\)</span> no cabe en memoria, o cuando los datos llegan en flujo.</p>
 </div>
 <div class="cajanegra">
-<p><strong>Nunca invertir la matriz</strong></p>
+<p><strong>Resolver el sistema en lugar de invertir la matriz</strong></p>
 <p>Se resuelve el sistema (<code>solve</code>, <code>lstsq</code>), no se calcula la inversa. El número de condición cumple <span class="math inline">\(\kappa(\mathbf{X}^{\mathsf{T}}\mathbf{X}) = \kappa(\mathbf{X})^2\)</span>, que <strong>enunciamos y no demostramos</strong>: en el laboratorio se ve numéricamente con una matriz casi colineal.</p>
 </div>
 </section>
@@ -596,7 +596,7 @@ window.Quarto = {
 <p>La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las <strong>predicciones</strong> mediante intervalos conformes, sin un solo valor <span class="math inline">\(p\)</span>.</p>
 </div>
 <!-- TODO(D6): proyectar un summary() de statsmodels sobre prostate.data, nombrar
-     Gauss-Markov y los contrastes t, y decir en voz alta qué lente adopta el curso. -->
+     Gauss-Markov y los contrastes t, y explicitar qué objetivo adopta el curso: predicción, no inferencia sobre los coeficientes. -->
 </section>
 <section id="laboratorio" class="level2">
 <h2 class="anchored" data-anchor-id="laboratorio">Laboratorio</h2>
@@ -608,11 +608,11 @@ window.Quarto = {
      (5) %timeit de (1) vs (3) al crecer p -> @prp-coste medido, no contado
      (6) demo de np.linalg.inv fallando en una X casi colineal -->
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong><code>np.linalg.inv(X.T @ X) @ X.T @ y</code></strong></p>
-<p>Funciona en clase y falla con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa <strong>no existe</strong> (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use <code>solve</code> o <code>lstsq</code>.</p>
+<p>Funciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa <strong>no existe</strong> (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use <code>solve</code> o <code>lstsq</code>.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -655,12 +655,12 @@ window.Quarto = {
 <!-- TODO(D7): 2-3 más. Uno debe pedir aplicar @eq-identidad para probar que dos
      soluciones distintas dan el mismo riesgo: prepara el capítulo 5 (trampa de la dummy). -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
 <li><span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span> sale de anular el gradiente (<a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>).</li>
 <li>La identidad <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a> da el <strong>mínimo global</strong> sin teoría de convexidad, y de regalo la unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>).</li>
-<li>Todo se apoya en una línea: <span class="math inline">\(\mathbf{v}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{v} = \left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span>.</li>
+<li>La existencia y unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>) y la convexidad (<a href="#thm-hessiano" class="quarto-xref">Teorema&nbsp;<span>4.5</span></a>) se apoyan en la igualdad <span class="math inline">\(\mathbf{v}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{v} = \left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span>.</li>
 </ul>
 
 

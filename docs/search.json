@@ -24,7 +24,7 @@
     "href": "index.html#cómo-se-usan-estos-apuntes",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Cómo se usan estos apuntes",
-    "text": "Cómo se usan estos apuntes\n\nCada capítulo se lee antes de la sesión de teoría.\nLos resultados van numerados y se demuestra todo lo que se enuncia. Lo poco que no, aparece bajo el rótulo fuera de alcance, con el motivo escrito.\nLas demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.\nCada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.\nAl final de cada capítulo hay una trampa: un error realista, demostrado fallando.",
+    "text": "Cómo se usan estos apuntes\n\nCada capítulo se lee antes de la sesión de teoría.\nLos resultados van numerados y se demuestra todo lo que se enuncia. Lo poco que no, aparece bajo el rótulo fuera de alcance, con el motivo escrito.\nLas demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.\nCada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.\nAl final de cada capítulo hay un apartado de errores frecuentes, con un error realista demostrado fallando.",
     "crumbs": [
       "Bienvenida"
     ]
@@ -54,15 +54,15 @@
     "href": "capitulos/01-senal-ruido.html",
     "title": "1  Señal y ruido",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nEste curso trata de un problema muy concreto: dado un conjunto de observaciones pasadas, predecir el valor de una magnitud numérica en observaciones que todavía no hemos visto. El precio de un piso que aún no se ha alquilado, la demanda de la semana que viene, el coste de un siniestro que aún no se ha declarado.\nConviene decir desde el primer día en qué se diferencia esto de lo que han visto en econometría. Allí la pregunta es ¿cuánto vale \\(w_j\\) y es significativo?. Aquí la pregunta es ¿qué \\(\\boldsymbol{w}\\) predice mejor fuera de la muestra?. Son preguntas distintas, con respuestas distintas, y un modelo bueno para una puede ser malo para la otra.\nEn este capítulo demostraremos dos cosas. La primera, que ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada (Teorema 1.1). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de verosimilitud, que es un problema que sabemos resolver.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nEste curso trata de un problema muy concreto: dado un conjunto de observaciones pasadas, predecir el valor de una magnitud numérica en observaciones que todavía no hemos visto. El precio de un piso que aún no se ha alquilado, la demanda de la semana que viene, el coste de un siniestro que aún no se ha declarado.\nConviene decir desde el primer día en qué se diferencia esto de lo que han visto en econometría. Allí la pregunta es ¿cuánto vale \\(w_j\\) y es significativo?. Aquí la pregunta es ¿qué \\(\\boldsymbol{w}\\) predice mejor fuera de la muestra?. Son preguntas distintas, con respuestas distintas, y un modelo bueno para una puede ser malo para la otra.\nEn este capítulo demostraremos dos cosas. La primera, que ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada (Teorema 1.1). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de verosimilitud, que es un problema que sabemos resolver.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Señal y ruido</span>"
     ]
   },
   {
-    "objectID": "capitulos/01-senal-ruido.html#por-qué-estamos-aquí",
-    "href": "capitulos/01-senal-ruido.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/01-senal-ruido.html#planteamiento",
+    "href": "capitulos/01-senal-ruido.html#planteamiento",
     "title": "1  Señal y ruido",
     "section": "",
     "text": "Un modelo que predice bien no explica nada por el hecho de predecir bien.",
@@ -87,7 +87,7 @@
     "href": "capitulos/01-senal-ruido.html#interpolar-no-es-aprender",
     "title": "1  Señal y ruido",
     "section": "Interpolar no es aprender",
-    "text": "Interpolar no es aprender\n\nDefinición 1.4 (Sobreajuste) Se produce sobreajuste cuando aumentar la complejidad del modelo mejora su error de entrenamiento y empeora su error de test.\n\nEl siguiente resultado no suele aparecer en los cursos introductorios.\n\nTeorema 1.1 (Interpolación exacta) Sean \\(x_1, \\dots, x_{n} \\in \\mathbb{R}\\) distintos dos a dos y sean \\(y_1, \\dots, y_{n} \\in \\mathbb{R}\\) cualesquiera. Entonces existe un polinomio \\(P\\) de grado \\(\\leq n- 1\\) tal que \\(P(x_i) = y_i\\) para todo \\(i\\); es decir, con error de entrenamiento exactamente cero.\n\n\nDemostración. Construimos la solución. Para cada \\(j\\) defínase la base de Lagrange \\[\n\\ell_j(x) = \\prod_{k \\neq j} \\frac{x - x_k}{x_j - x_k},\n\\] que está bien definida porque los \\(x_k\\) son distintos. Evaluando, si \\(i = j\\) todos los factores valen \\(1\\), y si \\(i \\neq j\\) el factor \\(k = i\\) se anula; por tanto \\(\\ell_j(x_i) = \\delta_{ij}\\). Tomando \\[\nP(x) = \\sum_{j=1}^{n} y_j\\, \\ell_j(x)\n\\] se obtiene \\(P(x_i) = \\sum_j y_j \\delta_{ij} = y_i\\). Cada \\(\\ell_j\\) tiene grado \\(n- 1\\), luego \\(P\\) también.\n\n\n\n\n\n\n\nImportanteConsecuencia\n\n\n\nUn error de entrenamiento de cero no es evidencia de nada: siempre se puede conseguir. Por tanto, una afirmación del tipo “nuestro modelo acierta el 100 %” no informa de nada mientras no se diga sobre qué datos se ha medido.\n\n\nVeámoslo. Interpolamos los 20 puntos y después generamos datos nuevos con la misma señal y ruido distinto.\n\nCódigo\nfrom scipy import interpolate\n\nf_int = interpolate.interp1d(x.numpy(), y.numpy(), kind=\"cubic\")\nx_denso = torch.linspace(0, 10, 200)\ny_int = f_int(x_denso.numpy())\n\nfig, ax = plt.subplots(1, 2, figsize=(10, 4), sharey=True)\nax[0].scatter(x.numpy(), y.numpy(), **kw_puntos)\nax[0].plot(x_denso.numpy(), y_int, color=\"#ff5700\", linestyle=\"--\", label=\"interpolador\")\nax[0].set(title=\"Datos de entrenamiento\", xlabel=\"$x$\", ylabel=\"$y$\")\nax[0].legend()\n\ny_nuevo = 2.0 * x_denso + 1.0 + torch.randn(200) * 3.0\nax[1].scatter(x_denso.numpy(), y_nuevo.numpy(), **kw_puntos)\nax[1].plot(x_denso.numpy(), y_int, color=\"#ff5700\", linestyle=\"--\", label=\"interpolador\")\nax[1].set(title=\"Datos nuevos, misma señal\", xlabel=\"$x$\")\nax[1].legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 1.2: El mismo interpolador: perfecto a la izquierda, inservible a la derecha.",
+    "text": "Interpolar no es aprender\n\nDefinición 1.4 (Sobreajuste) Se produce sobreajuste cuando aumentar la complejidad del modelo mejora su error de entrenamiento y empeora su error de test.\n\nEl siguiente resultado no suele aparecer en los cursos introductorios.\n\nTeorema 1.1 (Interpolación exacta) Sean \\(x_1, \\dots, x_{n} \\in \\mathbb{R}\\) distintos dos a dos y sean \\(y_1, \\dots, y_{n} \\in \\mathbb{R}\\) cualesquiera. Entonces existe un polinomio \\(P\\) de grado \\(\\leq n- 1\\) tal que \\(P(x_i) = y_i\\) para todo \\(i\\); es decir, con error de entrenamiento exactamente cero.\n\n\nDemostración. Construimos la solución. Para cada \\(j\\) defínase la base de Lagrange \\[\n\\ell_j(x) = \\prod_{k \\neq j} \\frac{x - x_k}{x_j - x_k},\n\\] que está bien definida porque los \\(x_k\\) son distintos. Evaluando, si \\(i = j\\) todos los factores valen \\(1\\), y si \\(i \\neq j\\) el factor \\(k = i\\) se anula; por tanto \\(\\ell_j(x_i) = \\delta_{ij}\\). Tomando \\[\nP(x) = \\sum_{j=1}^{n} y_j\\, \\ell_j(x)\n\\] se obtiene \\(P(x_i) = \\sum_j y_j \\delta_{ij} = y_i\\). Cada \\(\\ell_j\\) tiene grado \\(n- 1\\), luego \\(P\\) también.\n\n\n\n\n\n\n\nImportanteConsecuencia\n\n\n\nUn error de entrenamiento de cero no es evidencia de nada: siempre se puede conseguir. Por tanto, una afirmación del tipo “nuestro modelo acierta el 100 %” no informa de nada mientras no se diga sobre qué datos se ha medido.\n\n\nLo comprobamos numéricamente. Interpolamos los 20 puntos y después generamos datos nuevos con la misma señal y ruido distinto.\n\nCódigo\nfrom scipy import interpolate\n\nf_int = interpolate.interp1d(x.numpy(), y.numpy(), kind=\"cubic\")\nx_denso = torch.linspace(0, 10, 200)\ny_int = f_int(x_denso.numpy())\n\nfig, ax = plt.subplots(1, 2, figsize=(10, 4), sharey=True)\nax[0].scatter(x.numpy(), y.numpy(), **kw_puntos)\nax[0].plot(x_denso.numpy(), y_int, color=\"#ff5700\", linestyle=\"--\", label=\"interpolador\")\nax[0].set(title=\"Datos de entrenamiento\", xlabel=\"$x$\", ylabel=\"$y$\")\nax[0].legend()\n\ny_nuevo = 2.0 * x_denso + 1.0 + torch.randn(200) * 3.0\nax[1].scatter(x_denso.numpy(), y_nuevo.numpy(), **kw_puntos)\nax[1].plot(x_denso.numpy(), y_int, color=\"#ff5700\", linestyle=\"--\", label=\"interpolador\")\nax[1].set(title=\"Datos nuevos, misma señal\", xlabel=\"$x$\")\nax[1].legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 1.2: El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Señal y ruido</span>"
@@ -109,18 +109,18 @@
     "href": "capitulos/01-senal-ruido.html#sec-mle-teorema",
     "title": "1  Señal y ruido",
     "section": "Verosimilitud",
-    "text": "Verosimilitud\n\nDefinición 1.6 (Modelo lineal-gaussiano) Con \\(p= 1\\): \\(y_i\\sim \\mathcal{N}(w_0+ w_1 x_i,\\ \\sigma^2)\\), de forma independiente.\n\n\n\n\n\n\n\nNotaSobre la independencia\n\n\n\nIndependientes significa aquí condicionalmente a las \\(\\mathbf{x}_i\\). Es una hipótesis, no una verdad. En la Sección 6.5 del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.\n\n\n\nDefinición 1.7 (Verosimilitud y log-verosimilitud) \\[\nL(\\boldsymbol{w}) = \\prod_{i=1}^{n} p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right),\n\\qquad\n\\ell(\\boldsymbol{w}) = \\sum_{i=1}^{n} \\log p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right).\n\\]\n\n\nLema 1.2 (El logaritmo preserva el argmax) Si \\(g\\) es estrictamente creciente, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} g(L(\\boldsymbol{w})) = \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w})\\). En particular \\(\\mathop{\\mathrm{arg\\,max}}L= \\mathop{\\mathrm{arg\\,max}}\\ell= \\mathop{\\mathrm{arg\\,min}}(-\\ell)\\).\n\n\nDemostración. Si \\(\\boldsymbol{w}^{\\star}\\) maximiza \\(L\\) entonces \\(L(\\boldsymbol{w}) \\leq L(\\boldsymbol{w}^\\star)\\) para todo \\(\\boldsymbol{w}\\), y aplicando \\(g\\) creciente, \\(g(L(\\boldsymbol{w})) \\leq g(L(\\boldsymbol{w}^\\star))\\). El recíproco es idéntico usando que \\(g\\) es estrictamente creciente.\n\n\nDefinición 1.8 (Estimación máximo-verosímil) \\(\\hat{\\boldsymbol{w}}= \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w}) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left(-\\ell(\\boldsymbol{w})\\right)\\).\n\n\n\n\n\n\n\nTipConvenio: siempre minimizamos\n\n\n\nAunque el problema nazca como una maximización, en este curso siempre lo escribiremos como minimización. Es el convenio de toda la literatura de optimización y evita errores de signo en el capítulo 3.\n\n\n\n¿Y ahora cómo lo resolvemos?\nPor fuerza bruta, para ver que no escala.\n\ndef densidad_normal(x, mu, sigma):\n    return torch.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * (2 * torch.pi) ** 0.5)\n\n\ndef log_verosimilitud(w0, w1, x, y, sigma=3.0):\n    return densidad_normal(y, w0 + w1 * x, sigma).log().sum()\n\n\n\nCódigo\nrejilla_w0 = torch.linspace(-5, 5, 60)\nrejilla_w1 = torch.linspace(-1, 3, 60)\nL = torch.tensor([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])\n\nfig, ax = plt.subplots(figsize=(5.5, 4))\ncs = ax.contourf(rejilla_w1.numpy(), rejilla_w0.numpy(), L.numpy(), levels=30)\ni, j = divmod(int(L.argmax()), L.shape[1])\nax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color=\"#ff5700\", s=60, label=\"máximo en la rejilla\")\nax.scatter([2.0], [1.0], color=\"white\", marker=\"x\", s=60, label=\"verdad\")\nax.set(xlabel=\"$w_1$\", ylabel=\"$w_0$\")\nax.legend()\nplt.colorbar(cs, ax=ax, label=r\"$\\ell(w)$\")\nplt.show()\n\n\n\n\n\n\n\n\n\nCon dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con \\(p= 20\\) parámetros serían \\(60^{20}\\), más que átomos hay en la Vía Láctea. Hace falta cálculo, y eso es el capítulo 3.",
+    "text": "Verosimilitud\n\nDefinición 1.6 (Modelo lineal-gaussiano) Con \\(p= 1\\): \\(y_i\\sim \\mathcal{N}(w_0+ w_1 x_i,\\ \\sigma^2)\\), de forma independiente.\n\n\n\n\n\n\n\nNotaSobre la independencia\n\n\n\nIndependientes significa aquí condicionalmente a las \\(\\mathbf{x}_i\\). Es una hipótesis, no una verdad. En la Sección 6.5 del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.\n\n\n\nDefinición 1.7 (Verosimilitud y log-verosimilitud) \\[\nL(\\boldsymbol{w}) = \\prod_{i=1}^{n} p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right),\n\\qquad\n\\ell(\\boldsymbol{w}) = \\sum_{i=1}^{n} \\log p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right).\n\\]\n\n\nLema 1.2 (El logaritmo preserva el argmax) Si \\(g\\) es estrictamente creciente, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} g(L(\\boldsymbol{w})) = \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w})\\). En particular \\(\\mathop{\\mathrm{arg\\,max}}L= \\mathop{\\mathrm{arg\\,max}}\\ell= \\mathop{\\mathrm{arg\\,min}}(-\\ell)\\).\n\n\nDemostración. Si \\(\\boldsymbol{w}^{\\star}\\) maximiza \\(L\\) entonces \\(L(\\boldsymbol{w}) \\leq L(\\boldsymbol{w}^\\star)\\) para todo \\(\\boldsymbol{w}\\), y aplicando \\(g\\) creciente, \\(g(L(\\boldsymbol{w})) \\leq g(L(\\boldsymbol{w}^\\star))\\). El recíproco es idéntico usando que \\(g\\) es estrictamente creciente.\n\n\nDefinición 1.8 (Estimación máximo-verosímil) \\(\\hat{\\boldsymbol{w}}= \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w}) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left(-\\ell(\\boldsymbol{w})\\right)\\).\n\n\n\n\n\n\n\nTipConvenio: siempre minimizamos\n\n\n\nAunque el problema nazca como una maximización, en este curso siempre lo escribiremos como minimización. Es el convenio de toda la literatura de optimización y evita errores de signo en el capítulo 3.\n\n\n\nResolución por búsqueda en rejilla\nEmpezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.\n\ndef densidad_normal(x, mu, sigma):\n    return torch.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * (2 * torch.pi) ** 0.5)\n\n\ndef log_verosimilitud(w0, w1, x, y, sigma=3.0):\n    return densidad_normal(y, w0 + w1 * x, sigma).log().sum()\n\n\n\nCódigo\nrejilla_w0 = torch.linspace(-5, 5, 60)\nrejilla_w1 = torch.linspace(-1, 3, 60)\nL = torch.tensor([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])\n\nfig, ax = plt.subplots(figsize=(5.5, 4))\ncs = ax.contourf(rejilla_w1.numpy(), rejilla_w0.numpy(), L.numpy(), levels=30)\ni, j = divmod(int(L.argmax()), L.shape[1])\nax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color=\"#ff5700\", s=60, label=\"máximo en la rejilla\")\nax.scatter([2.0], [1.0], color=\"white\", marker=\"x\", s=60, label=\"verdad\")\nax.set(xlabel=\"$w_1$\", ylabel=\"$w_0$\")\nax.legend()\nplt.colorbar(cs, ax=ax, label=r\"$\\ell(w)$\")\nplt.show()\n\n\n\n\n\n\n\n\n\nCon dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con \\(p= 20\\) parámetros serían \\(60^{20}\\), un número de evaluaciones inabordable. Hace falta cálculo, y eso es el capítulo 3.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Señal y ruido</span>"
     ]
   },
   {
-    "objectID": "capitulos/01-senal-ruido.html#la-trampa-de-esta-semana",
-    "href": "capitulos/01-senal-ruido.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/01-senal-ruido.html#error-frecuente",
+    "href": "capitulos/01-senal-ruido.html#error-frecuente",
     "title": "1  Señal y ruido",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\n“Mi \\(R^2\\) de entrenamiento es 0,999”\nEs exactamente Teorema 1.1 en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es cuánto ajusta sino sobre qué datos se ha medido. Volveremos sobre esto con el aparato completo en el capítulo 6.",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\n“Mi \\(R^2\\) de entrenamiento es 0,999”\nEs exactamente Teorema 1.1 en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es cuánto ajusta sino sobre qué datos se ha medido. Volveremos sobre esto con el aparato completo en el capítulo 6.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Señal y ruido</span>"
@@ -149,11 +149,11 @@
     ]
   },
   {
-    "objectID": "capitulos/01-senal-ruido.html#qué-llevarte",
-    "href": "capitulos/01-senal-ruido.html#qué-llevarte",
+    "objectID": "capitulos/01-senal-ruido.html#resumen",
+    "href": "capitulos/01-senal-ruido.html#resumen",
     "title": "1  Señal y ruido",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\nError de entrenamiento cero se consigue siempre (Teorema 1.1) y por tanto no es evidencia de nada.\nSuponer una distribución para el ruido convierte el problema en uno de verosimilitud (Corolario 1.2).\nMaximizar la verosimilitud por fuerza bruta no escala. Necesitamos gradientes.",
+    "section": "Resumen",
+    "text": "Resumen\n\nError de entrenamiento cero se consigue siempre (Teorema 1.1) y por tanto no es evidencia de nada.\nSuponer una distribución para el ruido convierte el problema en uno de verosimilitud (Corolario 1.2).\nMaximizar la verosimilitud por fuerza bruta no escala. Necesitamos gradientes.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Señal y ruido</span>"
@@ -164,15 +164,15 @@
     "href": "capitulos/02-verosimilitud.html",
     "title": "2  Verosimilitud y máxima verosimilitud",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nEn el capítulo 1 supusimos ruido gaussiano y llegamos a que \\(y_i\\,\\vert\\,\\mathbf{x}_i \\sim\n\\mathcal{N}(f(\\mathbf{x}_i), \\sigma^2)\\). Aquí cobramos esa hipótesis: el error cuadrático medio no es una elección, es una consecuencia. Y de paso estimamos \\(\\sigma\\), que Chodrow trata como constante conocida y una cohorte de ADE no va a aceptar que lo sea.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nEn el capítulo 1 supusimos ruido gaussiano y llegamos a que \\(y_i\\,\\vert\\,\\mathbf{x}_i \\sim\n\\mathcal{N}(f(\\mathbf{x}_i), \\sigma^2)\\). Aquí extraemos las consecuencias de esa hipótesis: el error cuadrático medio no es una elección, es una consecuencia. Y de paso estimamos \\(\\sigma\\), que Chodrow trata como constante conocida aunque en la práctica \\(\\sigma\\) es desconocido y debe estimarse.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
     ]
   },
   {
-    "objectID": "capitulos/02-verosimilitud.html#por-qué-estamos-aquí",
-    "href": "capitulos/02-verosimilitud.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/02-verosimilitud.html#planteamiento",
+    "href": "capitulos/02-verosimilitud.html#planteamiento",
     "title": "2  Verosimilitud y máxima verosimilitud",
     "section": "",
     "text": "TipLo que usamos de antes\n\n\n\nDefinición 1.2, Corolario 1.2, Definición 1.7, Lema 1.2, Definición 1.8.",
@@ -186,7 +186,7 @@
     "href": "capitulos/02-verosimilitud.html#riesgo-empírico",
     "title": "2  Verosimilitud y máxima verosimilitud",
     "section": "Riesgo empírico",
-    "text": "Riesgo empírico\n\nDefinición 2.1 (Riesgo empírico) \\[\\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\sum_{i=1}^{n} \\left(y_i- \\hat{y}_i\\right)^2 .\\] El factor \\(1/n\\) forma parte de la definición y no se negocia en todo el curso.\n\n\nDefinición 2.2 (Residuo y suma de cuadrados) \\(r_i= y_i- \\hat{y}_i\\), \\(\\ \\mathrm{SCR}= \\sum_i r_i^2\\), y por tanto \\(\\hat{R}(\\boldsymbol{w}) = \\mathrm{SCR}/n\\).\n\n\nLema 2.1 (Invarianza afín del argmin) Si \\(a &gt; 0\\) entonces \\(\\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left( a\\, h(\\boldsymbol{w}) + b \\right) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} h(\\boldsymbol{w})\\).\n\n\nDemostración. \n\n\n\nLema 2.2 (El mejor modelo constante es la media) \\(\\displaystyle \\mathop{\\mathrm{arg\\,min}}_{c \\in \\mathbb{R}} \\sum_{i=1}^{n} (y_i- c)^2 = \\bar{y}\\).\n\n\nDemostración. \n\n\n\n\n\n\n\n\nLema 2.2 se usa tres veces más en el curso: en el capítulo 5 (imputación por la media), en el capítulo 6 (el modelo nulo contra el que compara \\(R^2\\)) y en la semana 11 (la constante óptima dentro de una hoja de un árbol).",
+    "text": "Riesgo empírico\n\nDefinición 2.1 (Riesgo empírico) \\[\\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\sum_{i=1}^{n} \\left(y_i- \\hat{y}_i\\right)^2 .\\] El factor \\(1/n\\) forma parte de la definición y se mantiene en todo el curso.\n\n\nDefinición 2.2 (Residuo y suma de cuadrados) \\(r_i= y_i- \\hat{y}_i\\), \\(\\ \\mathrm{SCR}= \\sum_i r_i^2\\), y por tanto \\(\\hat{R}(\\boldsymbol{w}) = \\mathrm{SCR}/n\\).\n\n\nLema 2.1 (Invarianza afín del argmin) Si \\(a &gt; 0\\) entonces \\(\\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left( a\\, h(\\boldsymbol{w}) + b \\right) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} h(\\boldsymbol{w})\\).\n\n\nDemostración. \n\n\n\nLema 2.2 (El modelo constante óptimo en error cuadrático es la media) \\(\\displaystyle \\mathop{\\mathrm{arg\\,min}}_{c \\in \\mathbb{R}} \\sum_{i=1}^{n} (y_i- c)^2 = \\bar{y}\\).\n\n\nDemostración. \n\n\n\n\n\n\n\n\nLema 2.2 se usa tres veces más en el curso: en el capítulo 5 (imputación por la media), en el capítulo 6 (el modelo nulo contra el que compara \\(R^2\\)) y en la semana 11 (la constante óptima dentro de una hoja de un árbol).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
@@ -196,8 +196,8 @@
     "objectID": "capitulos/02-verosimilitud.html#sec-teorema-central",
     "href": "capitulos/02-verosimilitud.html#sec-teorema-central",
     "title": "2  Verosimilitud y máxima verosimilitud",
-    "section": "El teorema central",
-    "text": "El teorema central\n\nTeorema 2.1 (Expansión de la log-verosimilitud) Bajo el modelo lineal-gaussiano de Definición 1.6, \\[\n\\ell(\\boldsymbol{w}, \\sigma) = -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{n}{2\\sigma^2}\\, \\hat{R}(\\boldsymbol{w}).\n\\tag{2.1}\\]\n\n\nDemostración. \n\n\n\nCorolario 2.1 (Máxima verosimilitud = mínimos cuadrados) Para \\(\\sigma\\) fijo, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} \\ell(\\boldsymbol{w},\\sigma) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\hat{R}(\\boldsymbol{w})\\).\n\n\nDemostración. Aplicar Lema 2.1 a \\(-\\ell\\), que es \\(\\hat{R}\\) multiplicado por \\(n/2\\sigma^2 &gt; 0\\) más una constante que no depende de \\(\\boldsymbol{w}\\).\n\n\n\n\n\n\n\nEl cuadrado del error no es un convenio: se deduce de haber supuesto ruido gaussiano. Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de Proposición 2.1.\n\n\n\n\nObservación 2.1 (La verosimilitud es condicional). \\(L= \\prod_i p(y_i\\,\\vert\\,\\mathbf{x}_i) \\cdot \\prod_i p(\\mathbf{x}_i)\\), y el segundo factor no depende de \\(\\boldsymbol{w}\\), luego sale del \\(\\mathop{\\mathrm{arg\\,max}}\\) por Lema 2.1. Por eso no modelizamos \\(\\mathbf{x}\\): no porque no importe, sino porque es irrelevante para \\(\\hat{\\boldsymbol{w}}\\).",
+    "section": "De la log-verosimilitud al riesgo empírico",
+    "text": "De la log-verosimilitud al riesgo empírico\n\nTeorema 2.1 (Expansión de la log-verosimilitud) Bajo el modelo lineal-gaussiano de Definición 1.6, \\[\n\\ell(\\boldsymbol{w}, \\sigma) = -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{n}{2\\sigma^2}\\, \\hat{R}(\\boldsymbol{w}).\n\\tag{2.1}\\]\n\n\nDemostración. \n\n\n\nCorolario 2.1 (Máxima verosimilitud = mínimos cuadrados) Para \\(\\sigma\\) fijo, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} \\ell(\\boldsymbol{w},\\sigma) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\hat{R}(\\boldsymbol{w})\\).\n\n\nDemostración. Aplicar Lema 2.1 a \\(-\\ell\\), que es \\(\\hat{R}\\) multiplicado por \\(n/2\\sigma^2 &gt; 0\\) más una constante que no depende de \\(\\boldsymbol{w}\\).\n\n\n\n\n\n\n\nEl cuadrado del error no es un convenio: se deduce de haber supuesto ruido gaussiano. Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de Proposición 2.1.\n\n\n\n\nObservación 2.1 (La verosimilitud es condicional). \\(L= \\prod_i p(y_i\\,\\vert\\,\\mathbf{x}_i) \\cdot \\prod_i p(\\mathbf{x}_i)\\), y el segundo factor no depende de \\(\\boldsymbol{w}\\), luego sale del \\(\\mathop{\\mathrm{arg\\,max}}\\) por Lema 2.1. Por eso no modelizamos \\(\\mathbf{x}\\): no porque no importe, sino porque es irrelevante para \\(\\hat{\\boldsymbol{w}}\\).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
@@ -208,7 +208,7 @@
     "href": "capitulos/02-verosimilitud.html#estimar-el-ruido",
     "title": "2  Verosimilitud y máxima verosimilitud",
     "section": "Estimar el ruido",
-    "text": "Estimar el ruido\n\nTeorema 2.2 (Perfilado de \\(\\sigma\\)) Para \\(\\boldsymbol{w}\\) fijo, el maximizador de Ecuación 2.1 en \\(\\sigma&gt; 0\\) es \\[\n\\hat{\\sigma}^2(\\boldsymbol{w}) = \\frac{1}{n}\\sum_{i=1}^{n} r_i^2 = \\hat{R}(\\boldsymbol{w}).\n\\]\n\n\nDemostración. \n\n\n\nCorolario 2.2 (Perfilar \\(\\sigma\\) no cambia \\(\\hat{\\boldsymbol{w}}\\)) \\(\\ell_{\\mathrm{p}}(\\boldsymbol{w}) = -\\frac{n}{2}\\left(\\log 2\\pi \\hat{R}(\\boldsymbol{w}) + 1\\right)\\) es estrictamente decreciente en \\(\\hat{R}\\), luego \\(\\mathop{\\mathrm{arg\\,max}}\\ell_{\\mathrm{p}}= \\mathop{\\mathrm{arg\\,min}}\\hat{R}\\); y \\(\\hat{\\sigma}^2 = \\mathrm{SCR}/n\\) evaluado en \\(\\hat{\\boldsymbol{w}}\\).\n\n\n\n\n\n\n\nNotaEl hilo de \\(\\hat{\\sigma}^2\\)\n\n\n\nEste número reaparece cuatro veces: aquí; en el capítulo 5, al devolver euros insesgados tras una transformación logarítmica; en el capítulo 7, como término de ruido irreducible de la descomposición sesgo-varianza; y en la semana 15, como referencia con la que juzgar la anchura de un intervalo.\n\n\n\nObservación 2.2 (\\(\\hat{\\sigma}^2\\) está sesgado a la baja). \\(\\mathbb{E}\\!\\left[ \\hat{\\sigma}^2 \\right] = \\frac{n- p- 1}{n}\\sigma^2\\). Se enuncia y no se demuestra: requiere matriz sombrero, traza e idempotencia, veinte minutos de álgebra que no enseñan aprendizaje automático. El corrector es \\(n/(n-p-1)\\) y lo demostraron en econometría.",
+    "text": "Estimar el ruido\n\nTeorema 2.2 (Perfilado de \\(\\sigma\\)) Para \\(\\boldsymbol{w}\\) fijo, el maximizador de Ecuación 2.1 en \\(\\sigma&gt; 0\\) es \\[\n\\hat{\\sigma}^2(\\boldsymbol{w}) = \\frac{1}{n}\\sum_{i=1}^{n} r_i^2 = \\hat{R}(\\boldsymbol{w}).\n\\]\n\n\nDemostración. \n\n\n\nCorolario 2.2 (Perfilar \\(\\sigma\\) no cambia \\(\\hat{\\boldsymbol{w}}\\)) \\(\\ell_{\\mathrm{p}}(\\boldsymbol{w}) = -\\frac{n}{2}\\left(\\log 2\\pi \\hat{R}(\\boldsymbol{w}) + 1\\right)\\) es estrictamente decreciente en \\(\\hat{R}\\), luego \\(\\mathop{\\mathrm{arg\\,max}}\\ell_{\\mathrm{p}}= \\mathop{\\mathrm{arg\\,min}}\\hat{R}\\); y \\(\\hat{\\sigma}^2 = \\mathrm{SCR}/n\\) evaluado en \\(\\hat{\\boldsymbol{w}}\\).\n\n\n\n\n\n\n\nNotaUsos posteriores de \\(\\hat{\\sigma}^2\\)\n\n\n\nEste número reaparece cuatro veces: aquí; en el capítulo 5, al devolver euros insesgados tras una transformación logarítmica; en el capítulo 7, como término de ruido irreducible de la descomposición sesgo-varianza; y en la semana 15, como referencia con la que juzgar la anchura de un intervalo.\n\n\n\nObservación 2.2 (\\(\\hat{\\sigma}^2\\) está sesgado a la baja). \\(\\mathbb{E}\\!\\left[ \\hat{\\sigma}^2 \\right] = \\frac{n- p- 1}{n}\\sigma^2\\). Se enuncia y no se demuestra: requiere matriz sombrero, traza e idempotencia, veinte minutos de álgebra que no enseñan aprendizaje automático. El corrector es \\(n/(n-p-1)\\) y lo demostraron en econometría.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
@@ -226,11 +226,11 @@
     ]
   },
   {
-    "objectID": "capitulos/02-verosimilitud.html#la-trampa-de-esta-semana",
-    "href": "capitulos/02-verosimilitud.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/02-verosimilitud.html#error-frecuente",
+    "href": "capitulos/02-verosimilitud.html#error-frecuente",
     "title": "2  Verosimilitud y máxima verosimilitud",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\n“Uso RMSE porque es lo estándar”\nElegir métrica es elegir modelo de ruido, y por tanto elegir qué funcional de la distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas pesadas, minimizar \\(\\mathrm{ECM}\\) estima la media de algo cuya media no interesa.",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\n“Uso RMSE porque es lo estándar”\nElegir una métrica equivale a elegir un modelo de ruido, y por tanto elegir qué funcional de la distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas pesadas, minimizar el \\(\\mathrm{ECM}\\) estima la media condicional, que puede no ser el funcional de interés.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
@@ -259,11 +259,11 @@
     ]
   },
   {
-    "objectID": "capitulos/02-verosimilitud.html#qué-llevarte",
-    "href": "capitulos/02-verosimilitud.html#qué-llevarte",
+    "objectID": "capitulos/02-verosimilitud.html#resumen",
+    "href": "capitulos/02-verosimilitud.html#resumen",
     "title": "2  Verosimilitud y máxima verosimilitud",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\n\\(\\ell= C - \\frac{n}{2\\sigma^2}\\hat{R}\\): mínimos cuadrados es un teorema (Teorema 2.1, Corolario 2.1).\n\\(\\sigma\\) no es un dato del problema: se estima, y vale \\(\\hat{\\sigma}^2 = \\mathrm{SCR}/n\\) (Teorema 2.2).\nCambiar el modelo de ruido cambia la pérdida (Proposición 2.1). La receta es una máquina, no un caso particular.",
+    "section": "Resumen",
+    "text": "Resumen\n\n\\(\\ell= C - \\frac{n}{2\\sigma^2}\\hat{R}\\): los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano (Teorema 2.1, Corolario 2.1).\n\\(\\sigma\\) no es un dato del problema: se estima, y vale \\(\\hat{\\sigma}^2 = \\mathrm{SCR}/n\\) (Teorema 2.2).\nCambiar el modelo de ruido cambia la pérdida (Proposición 2.1). La receta es una máquina, no un caso particular.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Verosimilitud y máxima verosimilitud</span>"
@@ -274,15 +274,15 @@
     "href": "capitulos/03-gradientes.html",
     "title": "3  Gradientes y descenso de gradiente",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nEl capítulo 2 dejó el problema planteado: minimizar \\(\\hat{R}(\\boldsymbol{w})\\). El capítulo 1 dejó claro que por fuerza bruta no se puede. Aquí construimos la herramienta.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nEl capítulo 2 dejó el problema planteado: minimizar \\(\\hat{R}(\\boldsymbol{w})\\). El capítulo 1 dejó claro que por fuerza bruta no se puede. Aquí construimos la herramienta.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
     ]
   },
   {
-    "objectID": "capitulos/03-gradientes.html#por-qué-estamos-aquí",
-    "href": "capitulos/03-gradientes.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/03-gradientes.html#planteamiento",
+    "href": "capitulos/03-gradientes.html#planteamiento",
     "title": "3  Gradientes y descenso de gradiente",
     "section": "",
     "text": "TipLo que usamos de antes\n\n\n\nDefinición 2.1, Teorema 2.1, Corolario 2.1.",
@@ -296,7 +296,7 @@
     "href": "capitulos/03-gradientes.html#derivadas-parciales-y-gradiente",
     "title": "3  Gradientes y descenso de gradiente",
     "section": "Derivadas parciales y gradiente",
-    "text": "Derivadas parciales y gradiente\n\nDefinición 3.1 (Derivada parcial) \\(\\displaystyle \\frac{\\partial f}{\\partial w_j}(\\boldsymbol{w}) = \\lim_{h \\to 0} \\frac{f(\\boldsymbol{w}+ h\\,\\mathbf{e}_j) - f(\\boldsymbol{w})}{h}\\).\n\n\nProposición 3.1 (Receta de cálculo) Para derivar respecto de \\(w_j\\), tratar las demás coordenadas como constantes y aplicar cálculo de una variable.\n\n\nDefinición 3.2 (Gradiente) \\(\\nabla f(\\boldsymbol{w}) = \\left( \\frac{\\partial f}{\\partial w_0}, \\dots, \\frac{\\partial f}{\\partial w_{p}} \\right)^{\\mathsf{T}}\\).\n\n\nProposición 3.2 (Aproximación de primer orden) \\(f(\\boldsymbol{w}+ h\\mathbf{u}) = f(\\boldsymbol{w}) + h\\, \\mathbf{u}^{\\mathsf{T}}\\nabla f(\\boldsymbol{w}) + o(h)\\).\n\n\nTeorema 3.1 (Dirección de máximo crecimiento) Entre los \\(\\mathbf{u}\\) con \\(\\left\\lVert \\mathbf{u} \\right\\rVert = 1\\), la derivada direccional \\(\\mathbf{u}^{\\mathsf{T}}\\nabla f\\) se maximiza en \\(\\mathbf{u}^\\star = \\nabla f/ \\left\\lVert \\nabla f \\right\\rVert\\).\n\n\nDemostración. \n\n\n\nObservación 3.1 (El gradiente es ortogonal a las curvas de nivel). Se enuncia y se dibuja; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Es intuición geométrica, no una herramienta que vayamos a usar.",
+    "text": "Derivadas parciales y gradiente\n\nDefinición 3.1 (Derivada parcial) \\(\\displaystyle \\frac{\\partial f}{\\partial w_j}(\\boldsymbol{w}) = \\lim_{h \\to 0} \\frac{f(\\boldsymbol{w}+ h\\,\\mathbf{e}_j) - f(\\boldsymbol{w})}{h}\\).\n\n\nProposición 3.1 (Receta de cálculo) Para derivar respecto de \\(w_j\\), tratar las demás coordenadas como constantes y aplicar cálculo de una variable.\n\n\nDefinición 3.2 (Gradiente) \\(\\nabla f(\\boldsymbol{w}) = \\left( \\frac{\\partial f}{\\partial w_0}, \\dots, \\frac{\\partial f}{\\partial w_{p}} \\right)^{\\mathsf{T}}\\).\n\n\nProposición 3.2 (Aproximación de primer orden) \\(f(\\boldsymbol{w}+ h\\mathbf{u}) = f(\\boldsymbol{w}) + h\\, \\mathbf{u}^{\\mathsf{T}}\\nabla f(\\boldsymbol{w}) + o(h)\\).\n\n\nTeorema 3.1 (Dirección de máximo crecimiento) Entre los \\(\\mathbf{u}\\) con \\(\\left\\lVert \\mathbf{u} \\right\\rVert = 1\\), la derivada direccional \\(\\mathbf{u}^{\\mathsf{T}}\\nabla f\\) se maximiza en \\(\\mathbf{u}^\\star = \\nabla f/ \\left\\lVert \\nabla f \\right\\rVert\\).\n\n\nDemostración. \n\n\n\nObservación 3.1 (El gradiente es ortogonal a las curvas de nivel). Se enuncia y se dibuja; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Sirve como apoyo geométrico y no se utiliza más adelante.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -329,7 +329,7 @@
     "href": "capitulos/03-gradientes.html#descenso-de-gradiente",
     "title": "3  Gradientes y descenso de gradiente",
     "section": "Descenso de gradiente",
-    "text": "Descenso de gradiente\n\nDefinición 3.4 (Descenso de gradiente) \\[\\boldsymbol{w}^{(t+1)} = \\boldsymbol{w}^{(t)} - \\alpha\\, \\nabla\\hat{R}\\!\\left(\\boldsymbol{w}^{(t)}\\right).\\]\n\n\n\n\n\n\n\nChodrow tiene una errata en su definición de momentum (Def. 11.2): escribe \\(\\boldsymbol{w}^{(t+1)}\\) a ambos lados. No la hereden si algún día lifteamos ese capítulo.\n\n\n\n\nProposición 3.3 (El descenso desciende) Si \\(\\nabla\\hat{R}(\\boldsymbol{w}) \\neq \\mathbf{0}\\), existe \\(\\bar{\\alpha} &gt; 0\\) tal que \\(\\hat{R}(\\boldsymbol{w}- \\alpha\\nabla\\hat{R}(\\boldsymbol{w})) &lt; \\hat{R}(\\boldsymbol{w})\\) para todo \\(\\alpha\\in (0, \\bar{\\alpha})\\).\n\n\nDemostración. \n\n\n\nProposición 3.4 (Caso cuadrático exacto: los tres regímenes) Si \\(\\hat{R}(w) = a(w - w^\\star)^2\\) con \\(a &gt; 0\\), entonces \\[w^{(t)} - w^\\star = (1 - 2\\alpha a)^t \\left( w^{(0)} - w^\\star \\right).\\] Converge si y solo si \\(0 &lt; \\alpha&lt; 1/a\\); monótonamente si \\(\\alpha&lt; 1/2a\\); oscilando si \\(1/2a &lt; \\alpha&lt; 1/a\\); diverge si \\(\\alpha&gt; 1/a\\).\n\n\nDemostración. \n\n\n\n\n\n\n\n\nProposición 3.4 se usa en el capítulo 5 para justificar la estandarización sin recurrir a autovalores.\n\n\n\n\nLo que no explicamos aquí\nTeoría de convergencia (suavidad de Lipschitz, tasas), momentum, Adam, planificadores de tasa de aprendizaje. Se nombran, se usan cuando haga falta, y se estudian en un curso de optimización.",
+    "text": "Descenso de gradiente\n\nDefinición 3.4 (Descenso de gradiente) \\[\\boldsymbol{w}^{(t+1)} = \\boldsymbol{w}^{(t)} - \\alpha\\, \\nabla\\hat{R}\\!\\left(\\boldsymbol{w}^{(t)}\\right).\\]\n\n\n\n\n\n\n\nChodrow tiene una errata en su definición de momentum (Def. 11.2): escribe \\(\\boldsymbol{w}^{(t+1)}\\) a ambos lados. Conviene corregirla si se reutiliza ese capítulo.\n\n\n\n\nProposición 3.3 (Decrecimiento del riesgo en cada paso) Si \\(\\nabla\\hat{R}(\\boldsymbol{w}) \\neq \\mathbf{0}\\), existe \\(\\bar{\\alpha} &gt; 0\\) tal que \\(\\hat{R}(\\boldsymbol{w}- \\alpha\\nabla\\hat{R}(\\boldsymbol{w})) &lt; \\hat{R}(\\boldsymbol{w})\\) para todo \\(\\alpha\\in (0, \\bar{\\alpha})\\).\n\n\nDemostración. \n\n\n\nProposición 3.4 (Caso cuadrático exacto: los tres regímenes) Si \\(\\hat{R}(w) = a(w - w^\\star)^2\\) con \\(a &gt; 0\\), entonces \\[w^{(t)} - w^\\star = (1 - 2\\alpha a)^t \\left( w^{(0)} - w^\\star \\right).\\] Converge si y solo si \\(0 &lt; \\alpha&lt; 1/a\\); monótonamente si \\(\\alpha&lt; 1/2a\\); oscilando si \\(1/2a &lt; \\alpha&lt; 1/a\\); diverge si \\(\\alpha&gt; 1/a\\).\n\n\nDemostración. \n\n\n\n\n\n\n\n\nProposición 3.4 se usa en el capítulo 5 para justificar la estandarización sin recurrir a autovalores.\n\n\n\n\nLo que no explicamos aquí\nTeoría de convergencia (suavidad de Lipschitz, tasas), momentum, Adam, planificadores de tasa de aprendizaje. Se nombran, se usan cuando haga falta, y se estudian en un curso de optimización.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -347,11 +347,11 @@
     ]
   },
   {
-    "objectID": "capitulos/03-gradientes.html#la-trampa-de-esta-semana",
-    "href": "capitulos/03-gradientes.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/03-gradientes.html#error-frecuente",
+    "href": "capitulos/03-gradientes.html#error-frecuente",
     "title": "3  Gradientes y descenso de gradiente",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\n“No converge, subo la tasa de aprendizaje”\nCasi siempre es lo contrario. Por Proposición 3.4, pasado \\(\\alpha= 1/a\\) el método diverge, y entre \\(1/2a\\) y \\(1/a\\) oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna \\(\\alpha\\) buena para todas a la vez: eso se arregla estandarizando, no tocando \\(\\alpha\\).",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\n“No converge, subo la tasa de aprendizaje”\nNormalmente el problema es el opuesto. Por Proposición 3.4, pasado \\(\\alpha= 1/a\\) el método diverge, y entre \\(1/2a\\) y \\(1/a\\) oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna \\(\\alpha\\) buena para todas a la vez: eso se arregla estandarizando, no tocando \\(\\alpha\\).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -380,11 +380,11 @@
     ]
   },
   {
-    "objectID": "capitulos/03-gradientes.html#qué-llevarte",
-    "href": "capitulos/03-gradientes.html#qué-llevarte",
+    "objectID": "capitulos/03-gradientes.html#resumen",
+    "href": "capitulos/03-gradientes.html#resumen",
     "title": "3  Gradientes y descenso de gradiente",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\nLa condición de primer orden (Teorema 3.2) es lo que convierte “minimizar” en “resolver una ecuación”. De ella sale todo el capítulo 4.\nEl descenso siempre desciende para \\(\\alpha\\) suficientemente pequeña (Proposición 3.3), y en el caso cuadrático sabemos exactamente cuánto (Proposición 3.4).",
+    "section": "Resumen",
+    "text": "Resumen\n\nLa condición de primer orden (Teorema 3.2) es lo que convierte “minimizar” en “resolver una ecuación”. De ella sale todo el capítulo 4.\nEl descenso siempre desciende para \\(\\alpha\\) suficientemente pequeña (Proposición 3.3), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita (Proposición 3.4).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -395,18 +395,18 @@
     "href": "capitulos/04-forma-matricial.html",
     "title": "4  Forma matricial y ecuaciones normales",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nCon una variable ya sabemos minimizar. Con \\(p\\) variables hace falta álgebra matricial, y a cambio obtenemos algo que con una variable no se veía: una fórmula cerrada, y la respuesta exacta a cuándo existe y cuándo es única.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nCon una variable ya sabemos minimizar. Con \\(p\\) variables hace falta álgebra matricial, y a cambio obtenemos algo que con una variable no se veía: una fórmula cerrada, y la respuesta exacta a cuándo existe y cuándo es única.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
     ]
   },
   {
-    "objectID": "capitulos/04-forma-matricial.html#por-qué-estamos-aquí",
-    "href": "capitulos/04-forma-matricial.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/04-forma-matricial.html#planteamiento",
+    "href": "capitulos/04-forma-matricial.html#planteamiento",
     "title": "4  Forma matricial y ecuaciones normales",
     "section": "",
-    "text": "TipLo que usamos de antes\n\n\n\nDefinición 2.1, Teorema 3.2 (el motor), Definición 3.4.\n\n\n\n\n\n\n\n\nNotaRepaso de 20 minutos, sin disculpas\n\n\n\nProducto matriz-vector, traspuesta, norma euclídea, y qué significa que una columna sea combinación lineal de las demás. Está en el anexo Cálculo y álgebra, publicado antes de esta sesión y de lectura obligatoria previa.",
+    "text": "TipLo que usamos de antes\n\n\n\nDefinición 2.1, Teorema 3.2 (la condición que se anula en el mínimo), Definición 3.4.\n\n\n\n\n\n\n\n\nNotaRepaso previo (20 minutos)\n\n\n\nProducto matriz-vector, traspuesta, norma euclídea, y qué significa que una columna sea combinación lineal de las demás. Está en el anexo Cálculo y álgebra, publicado antes de esta sesión y de lectura obligatoria previa.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -417,7 +417,7 @@
     "href": "capitulos/04-forma-matricial.html#preparativos",
     "title": "4  Forma matricial y ecuaciones normales",
     "section": "Preparativos",
-    "text": "Preparativos\n\nDefinición 4.1 (Matriz de diseño) \\(\\mathbf{X}\\in \\mathbb{R}^{n\\times (p+1)}\\) con primera columna de unos, de modo que \\(x_{i0} = 1\\) y el término independiente queda absorbido en \\(\\boldsymbol{w}\\). El score es \\(s_i = \\mathbf{x}_i^{\\mathsf{T}}\\boldsymbol{w}\\). Convenio fijado aquí y no revisado nunca más.\n\n\nProposición 4.1 (Riesgo en forma matricial) \\(\\displaystyle \\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\left\\lVert \\mathbf{X}\\boldsymbol{w}- \\mathbf{y} \\right\\rVert^2\\).\n\n\nLema 4.1 (\\(\\nabla(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}) = \\mathbf{a}\\))  \n\n\nLema 4.2 (\\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}) = 2\\mathbf{A}\\boldsymbol{w}\\) para \\(\\mathbf{A}\\) simétrica)  \n\n\nDemostración. \n\n\n\n\n\n\n\n\nLema 4.1 y Lema 4.2 son cálculo, no aprendizaje automático. Van al anexo y se piden como trabajo previo; en clase se usan.\n\n\n\n\nObservación 4.1. \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es simétrica y de tamaño \\((p+1)\\times(p+1)\\), no \\(n\\times n\\).",
+    "text": "Preparativos\n\nDefinición 4.1 (Matriz de diseño) \\(\\mathbf{X}\\in \\mathbb{R}^{n\\times (p+1)}\\) con primera columna de unos, de modo que \\(x_{i0} = 1\\) y el término independiente queda absorbido en \\(\\boldsymbol{w}\\). El score es \\(s_i = \\mathbf{x}_i^{\\mathsf{T}}\\boldsymbol{w}\\). Este convenio se mantiene en el resto del curso.\n\n\nProposición 4.1 (Riesgo en forma matricial) \\(\\displaystyle \\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\left\\lVert \\mathbf{X}\\boldsymbol{w}- \\mathbf{y} \\right\\rVert^2\\).\n\n\nLema 4.1 (\\(\\nabla(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}) = \\mathbf{a}\\))  \n\n\nLema 4.2 (\\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}) = 2\\mathbf{A}\\boldsymbol{w}\\) para \\(\\mathbf{A}\\) simétrica)  \n\n\nDemostración. \n\n\n\n\n\n\n\n\nLema 4.1 y Lema 4.2 son cálculo, no aprendizaje automático. Van al anexo y se piden como trabajo previo; en clase se usan.\n\n\n\n\nObservación 4.1. \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es simétrica y de tamaño \\((p+1)\\times(p+1)\\), no \\(n\\times n\\).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -450,7 +450,7 @@
     "href": "capitulos/04-forma-matricial.html#coste-computacional",
     "title": "4  Forma matricial y ecuaciones normales",
     "section": "Coste computacional",
-    "text": "Coste computacional\n\nProposición 4.2 (¿Fórmula cerrada o gradiente?) Formar \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) cuesta \\(O(np^2)\\); resolver el sistema, \\(O(p^3)\\). Un paso de descenso cuesta \\(O(np)\\), y \\(T\\) pasos \\(O(Tnp)\\). El gradiente gana cuando \\(p^2 \\gg Tn\\), o cuando \\(\\mathbf{X}\\) no cabe en memoria, o cuando los datos llegan en flujo.\n\n\nNunca invertir la matriz\nSe resuelve el sistema (solve, lstsq), no se calcula la inversa. El número de condición cumple \\(\\kappa(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}) = \\kappa(\\mathbf{X})^2\\), que enunciamos y no demostramos: en el laboratorio se ve numéricamente con una matriz casi colineal.",
+    "text": "Coste computacional\n\nProposición 4.2 (¿Fórmula cerrada o gradiente?) Formar \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) cuesta \\(O(np^2)\\); resolver el sistema, \\(O(p^3)\\). Un paso de descenso cuesta \\(O(np)\\), y \\(T\\) pasos \\(O(Tnp)\\). El gradiente gana cuando \\(p^2 \\gg Tn\\), o cuando \\(\\mathbf{X}\\) no cabe en memoria, o cuando los datos llegan en flujo.\n\n\nResolver el sistema en lugar de invertir la matriz\nSe resuelve el sistema (solve, lstsq), no se calcula la inversa. El número de condición cumple \\(\\kappa(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}) = \\kappa(\\mathbf{X})^2\\), que enunciamos y no demostramos: en el laboratorio se ve numéricamente con una matriz casi colineal.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -479,11 +479,11 @@
     ]
   },
   {
-    "objectID": "capitulos/04-forma-matricial.html#la-trampa-de-esta-semana",
-    "href": "capitulos/04-forma-matricial.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/04-forma-matricial.html#error-frecuente",
+    "href": "capitulos/04-forma-matricial.html#error-frecuente",
     "title": "4  Forma matricial y ecuaciones normales",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\nnp.linalg.inv(X.T @ X) @ X.T @ y\nFunciona en clase y falla con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa no existe (Teorema 4.4) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use solve o lstsq.",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\nnp.linalg.inv(X.T @ X) @ X.T @ y\nFunciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa no existe (Teorema 4.4) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use solve o lstsq.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -512,11 +512,11 @@
     ]
   },
   {
-    "objectID": "capitulos/04-forma-matricial.html#qué-llevarte",
-    "href": "capitulos/04-forma-matricial.html#qué-llevarte",
+    "objectID": "capitulos/04-forma-matricial.html#resumen",
+    "href": "capitulos/04-forma-matricial.html#resumen",
     "title": "4  Forma matricial y ecuaciones normales",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\n\\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\hat{\\boldsymbol{w}}= \\mathbf{X}^{\\mathsf{T}}\\mathbf{y}\\) sale de anular el gradiente (Teorema 4.2).\nLa identidad Ecuación 4.1 da el mínimo global sin teoría de convexidad, y de regalo la unicidad (Teorema 4.4).\nTodo se apoya en una línea: \\(\\mathbf{v}^{\\mathsf{T}}\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\mathbf{v} = \\left\\lVert \\mathbf{X}\\mathbf{v} \\right\\rVert^2\\).",
+    "section": "Resumen",
+    "text": "Resumen\n\n\\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\hat{\\boldsymbol{w}}= \\mathbf{X}^{\\mathsf{T}}\\mathbf{y}\\) sale de anular el gradiente (Teorema 4.2).\nLa identidad Ecuación 4.1 da el mínimo global sin teoría de convexidad, y de regalo la unicidad (Teorema 4.4).\nLa existencia y unicidad (Teorema 4.4) y la convexidad (Teorema 4.5) se apoyan en la igualdad \\(\\mathbf{v}^{\\mathsf{T}}\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\mathbf{v} = \\left\\lVert \\mathbf{X}\\mathbf{v} \\right\\rVert^2\\).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -527,15 +527,15 @@
     "href": "capitulos/05-datos.html",
     "title": "5  De los datos crudos a la matriz de diseño",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nHasta ahora \\(\\mathbf{X}\\) nos venía dada. En la práctica \\(\\mathbf{X}\\) se construye, y casi todas las decisiones de esa construcción tienen consecuencias matemáticas exactas. Este capítulo demuestra cinco.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nHasta ahora \\(\\mathbf{X}\\) nos venía dada. En la práctica \\(\\mathbf{X}\\) se construye, y casi todas las decisiones de esa construcción tienen consecuencias matemáticas exactas. Este capítulo demuestra cinco.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>De los datos crudos a la matriz de diseño</span>"
     ]
   },
   {
-    "objectID": "capitulos/05-datos.html#por-qué-estamos-aquí",
-    "href": "capitulos/05-datos.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/05-datos.html#planteamiento",
+    "href": "capitulos/05-datos.html#planteamiento",
     "title": "5  De los datos crudos a la matriz de diseño",
     "section": "",
     "text": "TipLo que usamos de antes\n\n\n\nLema 2.2, Teorema 2.2, Teorema 4.4, Teorema 4.3, Proposición 3.4.",
@@ -593,7 +593,7 @@
     "href": "capitulos/05-datos.html#transformar-el-objetivo",
     "title": "5  De los datos crudos a la matriz de diseño",
     "section": "Transformar el objetivo",
-    "text": "Transformar el objetivo\n\nProposición 5.5 (Tomar logaritmos es cambiar el modelo de ruido) \\(\\log y = f(\\mathbf{x}) + \\varepsilon\\) equivale a \\(y = e^{f(\\mathbf{x})}\\cdot \\eta\\) con \\(\\eta = e^{\\varepsilon}\\) lognormal: el ruido aditivo en logaritmos es proporcional en euros.\n\n\nTeorema 5.2 (Sesgo de retransformación) Si \\(Z \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(\\mathbb{E}\\!\\left[ e^{Z} \\right] = e^{\\mu + \\sigma^2/2}\\).\n\n\nDemostración. \n\n\n\nCorolario 5.2 (\\(e^{\\hat{y}}\\) es la mediana, no la media) Las transformaciones crecientes preservan cuantiles, luego \\(\\mathop{\\mathrm{mediana}}(e^Z) = e^{\\mu}\\). Devolver euros insesgados en media exige multiplicar por \\(e^{\\hat{\\sigma}^2/2}\\), con \\(\\hat{\\sigma}^2\\) de Teorema 2.2. Como \\(e^{\\hat{\\sigma}^2/2} &gt; 1\\), el error de exponenciar sin corregir es sistemático y siempre a la baja.\n\n\n\n\n\n\n\nTercera aparición de \\(\\hat{\\sigma}^2\\). Y la primera con consecuencias en euros: un modelo de precios que exponencia sin corregir infravalora todas las predicciones, siempre en la misma dirección.\n\n\n\n\nProposición 5.6 (Mínimos cuadrados en logaritmos ≈ error relativo) \\(\\log(y/\\hat{y}) \\approx (y - \\hat{y})/\\hat{y}\\) para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error relativo. Esa es la razón para tomar logaritmos de un precio; no “normalizar”.",
+    "text": "Transformar el objetivo\n\nProposición 5.5 (Tomar logaritmos es cambiar el modelo de ruido) \\(\\log y = f(\\mathbf{x}) + \\varepsilon\\) equivale a \\(y = e^{f(\\mathbf{x})}\\cdot \\eta\\) con \\(\\eta = e^{\\varepsilon}\\) lognormal: el ruido aditivo en logaritmos es proporcional en euros.\n\n\nTeorema 5.2 (Sesgo de retransformación) Si \\(Z \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(\\mathbb{E}\\!\\left[ e^{Z} \\right] = e^{\\mu + \\sigma^2/2}\\).\n\n\nDemostración. \n\n\n\nCorolario 5.2 (\\(e^{\\hat{y}}\\) es la mediana, no la media) Las transformaciones crecientes preservan cuantiles, luego \\(\\mathop{\\mathrm{mediana}}(e^Z) = e^{\\mu}\\). Devolver euros insesgados en media exige multiplicar por \\(e^{\\hat{\\sigma}^2/2}\\), con \\(\\hat{\\sigma}^2\\) de Teorema 2.2. Como \\(e^{\\hat{\\sigma}^2/2} &gt; 1\\), el error de exponenciar sin corregir es sistemático y siempre a la baja.\n\n\n\n\n\n\n\n\\(\\hat{\\sigma}^2\\) vuelve a aparecer aquí, ahora con efecto directo sobre la predicción en euros:: un modelo de precios que exponencia sin corregir infravalora todas las predicciones, siempre en la misma dirección.\n\n\n\n\nProposición 5.6 (Mínimos cuadrados en logaritmos ≈ error relativo) \\(\\log(y/\\hat{y}) \\approx (y - \\hat{y})/\\hat{y}\\) para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error relativo. Esa es la razón para tomar logaritmos de un precio; no “normalizar”.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>De los datos crudos a la matriz de diseño</span>"
@@ -633,11 +633,11 @@
     ]
   },
   {
-    "objectID": "capitulos/05-datos.html#la-trampa-de-esta-semana",
-    "href": "capitulos/05-datos.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/05-datos.html#error-frecuente",
+    "href": "capitulos/05-datos.html#error-frecuente",
     "title": "5  De los datos crudos a la matriz de diseño",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\nStandardScaler().fit_transform(X) antes de train_test_split\nEl error más caro del curso y el que más nota cuesta en el proyecto. La media y la desviación típica del escalador se han calculado con los datos de test, así que el error de test ya no estima nada (Definición 5.2). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\nStandardScaler().fit_transform(X) antes de train_test_split\nEs un error frecuente y con consecuencias importantes en el proyecto. La media y la desviación típica del escalador se han calculado con los datos de test, así que el error de test ya no estima nada (Definición 5.2). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>De los datos crudos a la matriz de diseño</span>"
@@ -666,11 +666,11 @@
     ]
   },
   {
-    "objectID": "capitulos/05-datos.html#qué-llevarte",
-    "href": "capitulos/05-datos.html#qué-llevarte",
+    "objectID": "capitulos/05-datos.html#resumen",
+    "href": "capitulos/05-datos.html#resumen",
     "title": "5  De los datos crudos a la matriz de diseño",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\nEl preprocesado es parte del modelo (Definición 5.1); ajustarlo con datos de test es fuga (Definición 5.2).\nLa trampa de la variable ficticia no es una regla práctica: es Teorema 4.4 aplicado a one-hot (Teorema 5.1).\nExponenciar una predicción hecha en logaritmos sin corregir por \\(e^{\\hat{\\sigma}^2/2}\\) infravalora siempre (Corolario 5.2).",
+    "section": "Resumen",
+    "text": "Resumen\n\nEl preprocesado es parte del modelo (Definición 5.1); ajustarlo con datos de test es fuga (Definición 5.2).\nLa trampa de la variable ficticia no es una regla práctica: es Teorema 4.4 aplicado a one-hot (Teorema 5.1).\nExponenciar una predicción hecha en logaritmos sin corregir por \\(e^{\\hat{\\sigma}^2/2}\\) infravalora siempre (Corolario 5.2).",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>De los datos crudos a la matriz de diseño</span>"
@@ -681,15 +681,15 @@
     "href": "capitulos/06-validacion.html",
     "title": "6  Validación y métricas",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\nEl capítulo 1 demostró que el error de entrenamiento no significa nada. Cinco capítulos después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres cosas que casi ningún curso de este nivel demuestra: por qué el error de test es insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué \\(R^2\\) puede salir negativo.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\nEl capítulo 1 mostró que el error de entrenamiento subestima el riesgo del modelo. Cinco capítulos después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres cosas que casi ningún curso de este nivel demuestra: por qué el error de test es insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué \\(R^2\\) puede salir negativo.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
     ]
   },
   {
-    "objectID": "capitulos/06-validacion.html#por-qué-estamos-aquí",
-    "href": "capitulos/06-validacion.html#por-qué-estamos-aquí",
+    "objectID": "capitulos/06-validacion.html#planteamiento",
+    "href": "capitulos/06-validacion.html#planteamiento",
     "title": "6  Validación y métricas",
     "section": "",
     "text": "TipLo que usamos de antes\n\n\n\nLema 2.2, Definición 5.2, Corolario 4.1, Definición 1.6.",
@@ -736,7 +736,7 @@
     "href": "capitulos/06-validacion.html#sec-grupos",
     "title": "6  Validación y métricas",
     "section": "Cuando la hipótesis iid es falsa",
-    "text": "Cuando la hipótesis iid es falsa\n\nObservación 6.2 (Grupos). Un anfitrión con doce anuncios rompe la hipótesis (ii) de Teorema 6.1: hay filas de test dependientes de filas de entrenamiento. GroupKFold sobre host_id restaura la hipótesis, y la diferencia medida entre ambos esquemas es la demostración empírica.",
+    "text": "Cuando la hipótesis iid es falsa\n\nObservación 6.2 (Grupos). Un anfitrión con doce anuncios rompe la hipótesis (ii) de Teorema 6.1: hay filas de test dependientes de filas de entrenamiento. GroupKFold sobre host_id restaura la hipótesis, y la diferencia entre las estimaciones de error de ambos esquemas cuantifica el efecto de la dependencia entre filas.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -747,7 +747,7 @@
     "href": "capitulos/06-validacion.html#métricas",
     "title": "6  Validación y métricas",
     "section": "Métricas",
-    "text": "Métricas\n\nDefinición 6.4 (\\(\\mathrm{EAM}\\), \\(\\mathrm{ECM}\\), \\(\\mathrm{RECM}\\)) Con unidades: si \\(y\\) está en euros, \\(\\mathrm{ECM}\\) está en euros al cuadrado; \\(\\mathrm{RECM}\\) y \\(\\mathrm{EAM}\\), en euros. Reportar un \\(\\mathrm{ECM}\\) “de 3.400” sin unidades no informa de nada.\n\n\nProposición 6.3 (\\(\\mathrm{RECM}\\geq \\mathrm{EAM}\\) siempre)  \n\n\nDemostración. \n\n\n\nObservación 6.3 (Elegir métrica es elegir modelo). \\(\\mathrm{ECM}\\) apunta a la media (Lema 2.2); \\(\\mathrm{EAM}\\), a la mediana (Proposición 2.1). No son dos formas de medir lo mismo: estiman funcionales distintos de la distribución condicional.",
+    "text": "Métricas\n\nDefinición 6.4 (\\(\\mathrm{EAM}\\), \\(\\mathrm{ECM}\\), \\(\\mathrm{RECM}\\)) Con unidades: si \\(y\\) está en euros, \\(\\mathrm{ECM}\\) está en euros al cuadrado; \\(\\mathrm{RECM}\\) y \\(\\mathrm{EAM}\\), en euros. Un \\(\\mathrm{ECM}\\) de 3.400 no es interpretable si no se indican las unidades de \\(y\\).\n\n\nProposición 6.3 (\\(\\mathrm{RECM}\\geq \\mathrm{EAM}\\) siempre)  \n\n\nDemostración. \n\n\n\nObservación 6.3 (Elegir métrica es elegir modelo). \\(\\mathrm{ECM}\\) apunta a la media (Lema 2.2); \\(\\mathrm{EAM}\\), a la mediana (Proposición 2.1). No son dos formas de medir lo mismo: estiman funcionales distintos de la distribución condicional.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -776,11 +776,11 @@
     ]
   },
   {
-    "objectID": "capitulos/06-validacion.html#la-trampa-de-esta-semana",
-    "href": "capitulos/06-validacion.html#la-trampa-de-esta-semana",
+    "objectID": "capitulos/06-validacion.html#error-frecuente",
+    "href": "capitulos/06-validacion.html#error-frecuente",
     "title": "6  Validación y métricas",
-    "section": "La trampa de esta semana",
-    "text": "La trampa de esta semana\n\n“He probado veinte modelos y me quedo con el mejor en test”\nEse “mejor en test” ya no estima nada, por Teorema 6.2. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.",
+    "section": "Error frecuente",
+    "text": "Error frecuente\n\n“He probado veinte modelos y me quedo con el mejor en test”\nEse “mejor en test” ya no estima nada, por Teorema 6.2. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -791,7 +791,7 @@
     "href": "capitulos/06-validacion.html#notación-código",
     "title": "6  Validación y métricas",
     "section": "Notación ↔︎ código",
-    "text": "Notación ↔︎ código\n\n\n\n\n\n\n\nMatemáticas\nCódigo\n\n\n\n\n\\(\\mathrm{VC}_K\\)\ncross_val_score(pipe, X, y, cv=KFold(5, shuffle=True, random_state=42))\n\n\n\\(\\mathrm{RECM}\\)\nscoring=\"neg_root_mean_squared_error\" (¡signo cambiado!)\n\n\n\\(R^2\\)\nr2_score(y_test, yhat)\n\n\ngrupos\nGroupKFold(n_splits=5).split(X, y, groups=host_id)",
+    "text": "Notación ↔︎ código\n\n\n\n\n\n\n\nMatemáticas\nCódigo\n\n\n\n\n\\(\\mathrm{VC}_K\\)\ncross_val_score(pipe, X, y, cv=KFold(5, shuffle=True, random_state=42))\n\n\n\\(\\mathrm{RECM}\\)\nscoring=\"neg_root_mean_squared_error\" (sklearn devuelve el valor con signo negativo)\n\n\n\\(R^2\\)\nr2_score(y_test, yhat)\n\n\ngrupos\nGroupKFold(n_splits=5).split(X, y, groups=host_id)",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -809,11 +809,11 @@
     ]
   },
   {
-    "objectID": "capitulos/06-validacion.html#qué-llevarte",
-    "href": "capitulos/06-validacion.html#qué-llevarte",
+    "objectID": "capitulos/06-validacion.html#resumen",
+    "href": "capitulos/06-validacion.html#resumen",
     "title": "6  Validación y métricas",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte\n\nEl error de test es insesgado solo bajo dos hipótesis explícitas (Teorema 6.1), y elegir con él las rompe (Teorema 6.2).\n\\(K=5\\) o \\(10\\) no es un teorema: es sesgo (Proposición 6.2) contra varianza\n\ncontra coste.\n\n\\(R^2\\) es una comparación contra la media (Teorema 6.3); fuera de la muestra puede ser negativo, y eso significa algo muy concreto (Teorema 6.5).",
+    "section": "Resumen",
+    "text": "Resumen\n\nEl error de test es insesgado solo bajo dos hipótesis explícitas (Teorema 6.1), y elegir con él las rompe (Teorema 6.2).\n\\(K=5\\) o \\(10\\) no es un teorema: es sesgo (Proposición 6.2) contra varianza\n\ncontra coste.\n\n\\(R^2\\) es una comparación contra la media (Teorema 6.3); fuera de la muestra puede ser negativo, y eso significa algo muy concreto (Teorema 6.5).",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -824,7 +824,7 @@
     "href": "capitulos/07-sesgo-varianza.html",
     "title": "7  Sesgo, varianza y ruido",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Sesgo, varianza y ruido</span>"
@@ -864,11 +864,11 @@
     ]
   },
   {
-    "objectID": "capitulos/07-sesgo-varianza.html#qué-llevarte",
-    "href": "capitulos/07-sesgo-varianza.html#qué-llevarte",
+    "objectID": "capitulos/07-sesgo-varianza.html#resumen",
+    "href": "capitulos/07-sesgo-varianza.html#resumen",
     "title": "7  Sesgo, varianza y ruido",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Sesgo, varianza y ruido</span>"
@@ -879,7 +879,7 @@
     "href": "capitulos/08-regularizacion.html",
     "title": "8  Regularización: ridge, lasso y el prior",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Regularización: ridge, lasso y el prior</span>"
@@ -919,11 +919,11 @@
     ]
   },
   {
-    "objectID": "capitulos/08-regularizacion.html#qué-llevarte",
-    "href": "capitulos/08-regularizacion.html#qué-llevarte",
+    "objectID": "capitulos/08-regularizacion.html#resumen",
+    "href": "capitulos/08-regularizacion.html#resumen",
     "title": "8  Regularización: ridge, lasso y el prior",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Regularización: ridge, lasso y el prior</span>"
@@ -934,7 +934,7 @@
     "href": "capitulos/09-seleccion.html",
     "title": "9  Selección de variables y reducción de dimensión",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Selección de variables y reducción de dimensión</span>"
@@ -974,11 +974,11 @@
     ]
   },
   {
-    "objectID": "capitulos/09-seleccion.html#qué-llevarte",
-    "href": "capitulos/09-seleccion.html#qué-llevarte",
+    "objectID": "capitulos/09-seleccion.html#resumen",
+    "href": "capitulos/09-seleccion.html#resumen",
     "title": "9  Selección de variables y reducción de dimensión",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Selección de variables y reducción de dimensión</span>"
@@ -989,7 +989,7 @@
     "href": "capitulos/10-no-lineales.html",
     "title": "10  Métodos no lineales: bases, splines y núcleos",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Métodos no lineales: bases, splines y núcleos</span>"
@@ -1029,11 +1029,11 @@
     ]
   },
   {
-    "objectID": "capitulos/10-no-lineales.html#qué-llevarte",
-    "href": "capitulos/10-no-lineales.html#qué-llevarte",
+    "objectID": "capitulos/10-no-lineales.html#resumen",
+    "href": "capitulos/10-no-lineales.html#resumen",
     "title": "10  Métodos no lineales: bases, splines y núcleos",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Métodos no lineales: bases, splines y núcleos</span>"
@@ -1044,7 +1044,7 @@
     "href": "capitulos/11-arboles.html",
     "title": "11  Métodos basados en reglas: árboles de regresión",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Métodos basados en reglas: árboles de regresión</span>"
@@ -1084,11 +1084,11 @@
     ]
   },
   {
-    "objectID": "capitulos/11-arboles.html#qué-llevarte",
-    "href": "capitulos/11-arboles.html#qué-llevarte",
+    "objectID": "capitulos/11-arboles.html#resumen",
+    "href": "capitulos/11-arboles.html#resumen",
     "title": "11  Métodos basados en reglas: árboles de regresión",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Métodos basados en reglas: árboles de regresión</span>"
@@ -1099,7 +1099,7 @@
     "href": "capitulos/12-ensembles.html",
     "title": "12  Ensembles: bagging, random forest y boosting",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
@@ -1139,11 +1139,11 @@
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html#qué-llevarte",
-    "href": "capitulos/12-ensembles.html#qué-llevarte",
+    "objectID": "capitulos/12-ensembles.html#resumen",
+    "href": "capitulos/12-ensembles.html#resumen",
     "title": "12  Ensembles: bagging, random forest y boosting",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
@@ -1154,7 +1154,7 @@
     "href": "capitulos/13-proyecto.html",
     "title": "13  Entrega y defensa del proyecto",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Entrega y defensa del proyecto</span>"
@@ -1194,11 +1194,11 @@
     ]
   },
   {
-    "objectID": "capitulos/13-proyecto.html#qué-llevarte",
-    "href": "capitulos/13-proyecto.html#qué-llevarte",
+    "objectID": "capitulos/13-proyecto.html#resumen",
+    "href": "capitulos/13-proyecto.html#resumen",
     "title": "13  Entrega y defensa del proyecto",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Entrega y defensa del proyecto</span>"
@@ -1209,7 +1209,7 @@
     "href": "capitulos/14-glm.html",
     "title": "14  Cuando el ruido no es gaussiano: GLM",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
@@ -1249,11 +1249,11 @@
     ]
   },
   {
-    "objectID": "capitulos/14-glm.html#qué-llevarte",
-    "href": "capitulos/14-glm.html#qué-llevarte",
+    "objectID": "capitulos/14-glm.html#resumen",
+    "href": "capitulos/14-glm.html#resumen",
     "title": "14  Cuando el ruido no es gaussiano: GLM",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
@@ -1264,7 +1264,7 @@
     "href": "capitulos/15-decision.html",
     "title": "15  Del valor puntual a la decisión",
     "section": "",
-    "text": "Por qué estamos aquí\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
@@ -1304,11 +1304,11 @@
     ]
   },
   {
-    "objectID": "capitulos/15-decision.html#qué-llevarte",
-    "href": "capitulos/15-decision.html#qué-llevarte",
+    "objectID": "capitulos/15-decision.html#resumen",
+    "href": "capitulos/15-decision.html#resumen",
     "title": "15  Del valor puntual a la decisión",
-    "section": "Qué llevarte",
-    "text": "Qué llevarte",
+    "section": "Resumen",
+    "text": "Resumen",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
@@ -1341,7 +1341,7 @@
     "href": "curso/guia.html#ritmo-semanal",
     "title": "Guía de la asignatura",
     "section": "",
-    "text": "Sesión\nQué pasa\n\n\n\n\nS1\nTeoría\nLa derivación, en pizarra. Sin ordenador\n\n\nS2\nProblemas\nLápiz y papel. Empieza con la derivación de la semana\n\n\nS3\nLaboratorio\nSe completa en directo el cuaderno del capítulo",
+    "text": "Sesión\nContenido\n\n\n\n\nS1\nTeoría\nLa derivación, en pizarra. Sin ordenador\n\n\nS2\nProblemas\nLápiz y papel. Empieza con la derivación de la semana\n\n\nS3\nLaboratorio\nSe completa en directo el cuaderno del capítulo",
     "crumbs": [
       "Apéndices",
       "Guía de la asignatura"

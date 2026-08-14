@@ -1,6 +1,6 @@
 ---
 title: 'Validación y métricas'
-subtitle: 'Cómo se estima el error que importa, y qué mide realmente cada métrica'
+subtitle: 'Estimación del riesgo de generalización y significado de cada métrica'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -15,9 +15,9 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
-El capítulo 1 demostró que el error de entrenamiento no significa nada. Cinco capítulos
+El capítulo 1 mostró que el error de entrenamiento subestima el riesgo del modelo. Cinco capítulos
 después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres
 cosas que casi ningún curso de este nivel demuestra: por qué el error de test es
 insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué $\Rsq$ puede
@@ -155,7 +155,7 @@ empírico, y decirlo es contenido, no laguna.
 
 Un anfitrión con doce anuncios rompe la hipótesis (ii) de @thm-test-insesgado: hay filas
 de test dependientes de filas de entrenamiento. `GroupKFold` sobre `host_id` restaura la
-hipótesis, y **la diferencia medida entre ambos esquemas es la demostración empírica**.
+hipótesis, y la diferencia entre las estimaciones de error de ambos esquemas cuantifica el efecto de la dependencia entre filas.
 :::
 
 ## Métricas
@@ -164,7 +164,7 @@ hipótesis, y **la diferencia medida entre ambos esquemas es la demostración em
 ## $\MAE$, $\MSE$, $\RMSE$
 
 Con unidades: si $y$ está en euros, $\MSE$ está en euros al cuadrado; $\RMSE$ y $\MAE$, en
-euros. Reportar un $\MSE$ "de 3.400" sin unidades no informa de nada.
+euros. Un $\MSE$ de 3.400 no es interpretable si no se indican las unidades de $y$.
 :::
 
 ::: {#prp-rmse-mae}
@@ -252,7 +252,7 @@ $\Var{y}$. Y un $\Rsq$ alto no implica un modelo útil.
      (d) un modelo con R^2 de test negativo, construido a propósito;
      (e) curva de CV_K frente a K para ver @cor-elegir-k. -->
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **"He probado veinte modelos y me quedo con el mejor en test"**
@@ -267,7 +267,7 @@ test, una vez.
 | Matemáticas | Código |
 |---|---|
 | $\CV_K$ | `cross_val_score(pipe, X, y, cv=KFold(5, shuffle=True, random_state=42))` |
-| $\RMSE$ | `scoring="neg_root_mean_squared_error"` (¡signo cambiado!) |
+| $\RMSE$ | `scoring="neg_root_mean_squared_error"` (sklearn devuelve el valor con signo negativo) |
 | $\Rsq$ | `r2_score(y_test, yhat)` |
 | grupos | `GroupKFold(n_splits=5).split(X, y, groups=host_id)` |
 
@@ -290,7 +290,7 @@ calcule $\CV_3$ de las dos maneras de @def-cv y explique la diferencia.
 
 <!-- TODO(D11): 2-3 más. Uno debe pedir identificar la fuga en un script impreso. -->
 
-## Qué llevarte
+## Resumen
 
 - El error de test es insesgado **solo** bajo dos hipótesis explícitas
   (@thm-test-insesgado), y elegir con él las rompe (@thm-sesgo-seleccion).

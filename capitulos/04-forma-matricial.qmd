@@ -1,6 +1,6 @@
 ---
 title: 'Forma matricial y ecuaciones normales'
-subtitle: 'De la condición de primer orden a las ecuaciones normales, y de ahí a la existencia y unicidad de la solución'
+subtitle: 'Ecuaciones normales, optimalidad global, existencia y unicidad'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -15,7 +15,7 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 Con una variable ya sabemos minimizar. Con $\nfeat$ variables hace falta álgebra
 matricial, y a cambio obtenemos algo que con una variable no se veía: **una fórmula
@@ -23,11 +23,11 @@ cerrada**, y la respuesta exacta a cuándo existe y cuándo es única.
 
 ::: {.callout-tip appearance="simple"}
 ## Lo que usamos de antes
-@def-riesgo-empirico, @thm-condicion-primer-orden (el motor), @def-descenso.
+@def-riesgo-empirico, @thm-condicion-primer-orden (la condición que se anula en el mínimo), @def-descenso.
 :::
 
 ::: {.callout-note appearance="simple"}
-## Repaso de 20 minutos, sin disculpas
+## Repaso previo (20 minutos)
 Producto matriz-vector, traspuesta, norma euclídea, y qué significa que una columna sea
 combinación lineal de las demás. Está en el anexo [Cálculo y álgebra](../curso/algebra.qmd),
 publicado antes de esta sesión y de lectura obligatoria previa.
@@ -40,7 +40,7 @@ publicado antes de esta sesión y de lectura obligatoria previa.
 
 $\X \in \Real^{\nobs \times (\nfeat+1)}$ con **primera columna de unos**, de modo que
 $x_{i0} = 1$ y el término independiente queda absorbido en $\coef$. El *score* es
-$s_i = \xv_i\T\coef$. Convenio fijado aquí y no revisado nunca más.
+$s_i = \xv_i\T\coef$. Este convenio se mantiene en el resto del curso.
 :::
 
 ::: {#prp-riesgo-matricial}
@@ -138,7 +138,7 @@ $$ {#eq-identidad}
         X w - y = X(w - what) + (X what - y).
      Desarrollar la norma al cuadrado. El término cruzado es
         2 (w - what)^T X^T (X what - y) = 0
-     por @thm-ecuaciones-normales. Tres líneas y se acabó. -->
+     por @thm-ecuaciones-normales. La demostración ocupa tres líneas. -->
 
 :::
 
@@ -166,7 +166,7 @@ $$\coefhat = (\Xt\X)^{-1}\Xt\yv .$$
 ::: {.proof}
 <!-- TODO(D6, 20 min). Dos partes.
      (a) nucleo: si X^T X v = 0 entonces v^T X^T X v = 0, es decir ||X v||^2 = 0,
-         luego X v = 0. El recíproco es inmediato. ESTA ES LA LINEA CLAVE DEL CAPITULO.
+         luego X v = 0. El recíproco es inmediato. Este paso es el que usa la identidad $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.
      (b) unicidad: por @eq-identidad, Riskh(w) = Riskh(what) si y solo si X(w-what)=0,
          o sea w - what en ker(X). -->
 
@@ -207,7 +207,7 @@ llegan en flujo.
 :::
 
 ::: {.cajanegra}
-**Nunca invertir la matriz**
+**Resolver el sistema en lugar de invertir la matriz**
 
 Se resuelve el sistema (`solve`, `lstsq`), no se calcula la inversa. El número de
 condición cumple $\kappa(\Xt\X) = \kappa(\X)^2$, que **enunciamos y no demostramos**: en
@@ -231,7 +231,7 @@ La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las
 :::
 
 <!-- TODO(D6): proyectar un summary() de statsmodels sobre prostate.data, nombrar
-     Gauss-Markov y los contrastes t, y decir en voz alta qué lente adopta el curso. -->
+     Gauss-Markov y los contrastes t, y explicitar qué objetivo adopta el curso: predicción, no inferencia sobre los coeficientes. -->
 
 ## Laboratorio
 
@@ -243,12 +243,12 @@ La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las
      (5) %timeit de (1) vs (3) al crecer p -> @prp-coste medido, no contado
      (6) demo de np.linalg.inv fallando en una X casi colineal -->
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **`np.linalg.inv(X.T @ X) @ X.T @ y`**
 
-Funciona en clase y falla con datos reales. Dos motivos: si alguna columna es
+Funciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es
 combinación de las demás, la inversa **no existe** (@thm-existencia-unicidad) y NumPy
 devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el
 número de condición pierde precisión. Use `solve` o `lstsq`.
@@ -279,9 +279,9 @@ problema de mínimos cuadrados? ¿Cambian las predicciones?
 <!-- TODO(D7): 2-3 más. Uno debe pedir aplicar @eq-identidad para probar que dos
      soluciones distintas dan el mismo riesgo: prepara el capítulo 5 (trampa de la dummy). -->
 
-## Qué llevarte
+## Resumen
 
 - $\Xt\X\coefhat = \Xt\yv$ sale de anular el gradiente (@thm-ecuaciones-normales).
 - La identidad @eq-identidad da el **mínimo global** sin teoría de convexidad, y de
   regalo la unicidad (@thm-existencia-unicidad).
-- Todo se apoya en una línea: $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.
+- La existencia y unicidad (@thm-existencia-unicidad) y la convexidad (@thm-hessiano) se apoyan en la igualdad $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.

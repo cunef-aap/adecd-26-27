@@ -1,6 +1,6 @@
 ---
 title: 'Verosimilitud y máxima verosimilitud'
-subtitle: 'Mínimos cuadrados deja de ser un convenio y pasa a ser un teorema'
+subtitle: 'De la verosimilitud gaussiana a los mínimos cuadrados'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -15,12 +15,12 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 En el capítulo 1 supusimos ruido gaussiano y llegamos a que $\yi \given \xv_i \sim
-\Normal(\model(\xv_i), \noise^2)$. Aquí cobramos esa hipótesis: **el error cuadrático medio
+\Normal(\model(\xv_i), \noise^2)$. Aquí extraemos las consecuencias de esa hipótesis: **el error cuadrático medio
 no es una elección, es una consecuencia**. Y de paso estimamos $\noise$, que Chodrow
-trata como constante conocida y una cohorte de ADE no va a aceptar que lo sea.
+trata como constante conocida aunque en la práctica $\noise$ es desconocido y debe estimarse.
 
 ::: {.callout-tip appearance="simple"}
 ## Lo que usamos de antes
@@ -33,7 +33,7 @@ trata como constante conocida y una cohorte de ADE no va a aceptar que lo sea.
 ## Riesgo empírico
 
 $$\Riskh(\coef) = \frac{1}{\nobs}\sum_{i=1}^{\nobs} \left(\yi - \yhati\right)^2 .$$
-El factor $1/\nobs$ **forma parte de la definición** y no se negocia en todo el curso.
+El factor $1/\nobs$ forma parte de la definición y se mantiene en todo el curso.
 :::
 
 ::: {#def-residuo}
@@ -56,7 +56,7 @@ Si $a > 0$ entonces $\argmin_{\coef} \left( a\, h(\coef) + b \right) = \argmin_{
 :::
 
 ::: {#lem-media-optima}
-## El mejor modelo constante es la media
+## El modelo constante óptimo en error cuadrático es la media
 
 $\displaystyle \argmin_{c \in \Real} \sum_{i=1}^{\nobs} (\yi - c)^2 = \ybar$.
 :::
@@ -75,7 +75,7 @@ media), en el capítulo 6 (el modelo nulo contra el que compara $\Rsq$) y en la 
 (la constante óptima dentro de una hoja de un árbol).
 :::
 
-## El teorema central {#sec-teorema-central}
+## De la log-verosimilitud al riesgo empírico {#sec-teorema-central}
 
 ::: {#thm-loglik-mse}
 ## Expansión de la log-verosimilitud
@@ -87,12 +87,12 @@ $$ {#eq-loglik}
 :::
 
 ::: {.proof}
-<!-- TODO(D4, 25 min): LA DEMOSTRACION DEL CURSO. Escribirla entera, línea a línea:
+<!-- TODO(D4, 25 min): Demostración principal del capítulo; escribirla completa, paso a paso.:
      1. sustituir la densidad @eq-densidad-normal dentro del producto,
      2. log del producto -> suma,
      3. separar la constante de la suma,
      4. identificar sum (y_i - f(x_i))^2 = n * Riskh(w).
-     Sin saltos. Es la primera demostración larga que ven y marca el estándar. -->
+     Sin saltos: es la primera demostración larga del curso y fija el nivel de detalle esperado. -->
 
 :::
 
@@ -149,7 +149,7 @@ $\noisehat^2 = \RSS/\nobs$ evaluado en $\coefhat$.
 :::
 
 ::: {.callout-note appearance="simple"}
-## El hilo de $\noisehat^2$
+## Usos posteriores de $\noisehat^2$
 
 Este número reaparece cuatro veces: aquí; en el capítulo 5, al devolver euros insesgados
 tras una transformación logarítmica; en el capítulo 7, como término de ruido irreducible de
@@ -194,14 +194,14 @@ estimación máximo-verosímil equivale a **minimizar el error absoluto medio**.
 | Gamma | desvianza | un importe positivo | capítulo 14 |
 :::
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **"Uso RMSE porque es lo estándar"**
 
-Elegir métrica **es** elegir modelo de ruido, y por tanto elegir qué funcional de la
+Elegir una métrica equivale a elegir un modelo de ruido, y por tanto elegir qué funcional de la
 distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas
-pesadas, minimizar $\MSE$ estima la media de algo cuya media no interesa.
+pesadas, minimizar el $\MSE$ estima la media condicional, que puede no ser el funcional de interés.
 :::
 
 ## Notación ↔ código
@@ -230,9 +230,9 @@ $\noisehat$ en las unidades de `lpsa`.
      mano; uno conceptual sobre por qué C(sigma) no afecta al argmax en w pero sí al
      argmax en sigma. -->
 
-## Qué llevarte
+## Resumen
 
-- $\loglik = C - \frac{\nobs}{2\noise^2}\Riskh$: **mínimos cuadrados es un teorema**
+- $\loglik = C - \frac{\nobs}{2\noise^2}\Riskh$: los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano
   (@thm-loglik-mse, @cor-mle-minimos-cuadrados).
 - $\noise$ no es un dato del problema: se estima, y vale $\noisehat^2 = \RSS/\nobs$
   (@thm-perfilado-sigma).

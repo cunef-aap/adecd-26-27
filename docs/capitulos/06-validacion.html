@@ -384,7 +384,7 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#el-riesgo-de-generalización" id="toc-el-riesgo-de-generalización" class="nav-link" data-scroll-target="#el-riesgo-de-generalización">El riesgo de generalización</a></li>
   <li><a href="#por-qué-el-test-se-toca-una-vez" id="toc-por-qué-el-test-se-toca-una-vez" class="nav-link" data-scroll-target="#por-qué-el-test-se-toca-una-vez">Por qué el test se toca una vez</a></li>
   <li><a href="#validación-cruzada" id="toc-validación-cruzada" class="nav-link" data-scroll-target="#validación-cruzada">Validación cruzada</a></li>
@@ -392,10 +392,10 @@ window.Quarto = {
   <li><a href="#métricas" id="toc-métricas" class="nav-link" data-scroll-target="#métricas">Métricas</a></li>
   <li><a href="#r2" id="toc-r2" class="nav-link" data-scroll-target="#r2"><span class="math inline">\(R^2\)</span></a></li>
   <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio">Laboratorio</a></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -405,7 +405,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/06-validacion.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></h1>
-<p class="subtitle lead">Cómo se estima el error que importa, y qué mide realmente cada métrica</p>
+<p class="subtitle lead">Estimación del riesgo de generalización y significado de cada métrica</p>
 </div>
 
 
@@ -423,9 +423,9 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/06-validacion.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
-<p>El capítulo 1 demostró que el error de entrenamiento no significa nada. Cinco capítulos después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres cosas que casi ningún curso de este nivel demuestra: por qué el error de test es insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué <span class="math inline">\(R^2\)</span> puede salir negativo.</p>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
+<p>El capítulo 1 mostró que el error de entrenamiento subestima el riesgo del modelo. Cinco capítulos después seguimos sin una alternativa rigurosa. Aquí la construimos, y demostramos las tres cosas que casi ningún curso de este nivel demuestra: por qué el error de test es insesgado, por qué deja de serlo en cuanto se usa para elegir, y por qué <span class="math inline">\(R^2\)</span> puede salir negativo.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -531,13 +531,13 @@ window.Quarto = {
 <section id="sec-grupos" class="level2">
 <h2 class="anchored" data-anchor-id="sec-grupos">Cuando la hipótesis iid es falsa</h2>
 <div id="rem-grupos" class="proof remark">
-<p><span class="proof-title"><em>Observación 6.2</em> (Grupos). </span>Un anfitrión con doce anuncios rompe la hipótesis (ii) de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>: hay filas de test dependientes de filas de entrenamiento. <code>GroupKFold</code> sobre <code>host_id</code> restaura la hipótesis, y <strong>la diferencia medida entre ambos esquemas es la demostración empírica</strong>.</p>
+<p><span class="proof-title"><em>Observación 6.2</em> (Grupos). </span>Un anfitrión con doce anuncios rompe la hipótesis (ii) de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>: hay filas de test dependientes de filas de entrenamiento. <code>GroupKFold</code> sobre <code>host_id</code> restaura la hipótesis, y la diferencia entre las estimaciones de error de ambos esquemas cuantifica el efecto de la dependencia entre filas.</p>
 </div>
 </section>
 <section id="métricas" class="level2">
 <h2 class="anchored" data-anchor-id="métricas">Métricas</h2>
 <div id="def-metricas" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Reportar un <span class="math inline">\(\mathrm{ECM}\)</span> “de 3.400” sin unidades no informa de nada.</p>
+<p><span class="theorem-title"><strong>Definición 6.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Un <span class="math inline">\(\mathrm{ECM}\)</span> de 3.400 no es interpretable si no se indican las unidades de <span class="math inline">\(y\)</span>.</p>
 </div>
 <div id="prp-rmse-mae" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposición 6.3 (<span class="math inline">\(\mathrm{RECM}\geq \mathrm{EAM}\)</span> siempre)</strong></span> &nbsp;</p>
@@ -591,8 +591,8 @@ window.Quarto = {
      (d) un modelo con R^2 de test negativo, construido a propósito;
      (e) curva de CV_K frente a K para ver @cor-elegir-k. -->
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“He probado veinte modelos y me quedo con el mejor en test”</strong></p>
 <p>Ese “mejor en test” ya no estima nada, por <a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.</p>
@@ -618,7 +618,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\mathrm{RECM}\)</span></td>
-<td><code>scoring="neg_root_mean_squared_error"</code> (¡signo cambiado!)</td>
+<td><code>scoring="neg_root_mean_squared_error"</code> (sklearn devuelve el valor con signo negativo)</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(R^2\)</span></td>
@@ -644,8 +644,8 @@ window.Quarto = {
 </div>
 <!-- TODO(D11): 2-3 más. Uno debe pedir identificar la fuga en un script impreso. -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
 <li>El error de test es insesgado <strong>solo</strong> bajo dos hipótesis explícitas (<a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>), y elegir con él las rompe (<a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>).</li>
 <li><span class="math inline">\(K=5\)</span> o <span class="math inline">\(10\)</span> no es un teorema: es sesgo (<a href="#prp-sesgo-cv" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>) contra varianza

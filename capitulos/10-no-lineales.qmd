@@ -1,6 +1,6 @@
 ---
 title: 'Métodos no lineales: bases, splines y núcleos'
-subtitle: 'No lineal en x no significa no lineal en w'
+subtitle: 'Expansiones de base: el modelo sigue siendo lineal en los coeficientes'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -21,7 +21,7 @@ Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio
 completo desde el primer día.
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 <!-- TODO: un párrafo enlazando con el capítulo anterior. -->
 
@@ -42,6 +42,6 @@ completo desde el primer día.
 
 <!-- TODO: 4-6 ejercicios con solución plegable. -->
 
-## Qué llevarte
+## Resumen
 
 <!-- TODO: 3 viñetas. -->

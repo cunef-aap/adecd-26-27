@@ -1,6 +1,6 @@
 ---
 title: 'Sesgo, varianza y ruido'
-subtitle: 'Por qué el error de test tiene un suelo que ningún modelo cruza'
+subtitle: 'Descomposición del error en sesgo, varianza y ruido irreducible'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -21,7 +21,7 @@ Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio
 completo desde el primer día.
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 <!-- TODO: un párrafo enlazando con el capítulo anterior. -->
 
@@ -45,6 +45,6 @@ completo desde el primer día.
 
 <!-- TODO: 4-6 ejercicios con solución plegable. -->
 
-## Qué llevarte
+## Resumen
 
 <!-- TODO: 3 viñetas. -->

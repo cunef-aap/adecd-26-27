@@ -419,16 +419,16 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#derivadas-parciales-y-gradiente" id="toc-derivadas-parciales-y-gradiente" class="nav-link" data-scroll-target="#derivadas-parciales-y-gradiente">Derivadas parciales y gradiente</a></li>
   <li><a href="#puntos-críticos" id="toc-puntos-críticos" class="nav-link" data-scroll-target="#puntos-críticos">Puntos críticos</a></li>
   <li><a href="#el-gradiente-del-riesgo" id="toc-el-gradiente-del-riesgo" class="nav-link" data-scroll-target="#el-gradiente-del-riesgo">El gradiente del riesgo</a></li>
   <li><a href="#descenso-de-gradiente" id="toc-descenso-de-gradiente" class="nav-link" data-scroll-target="#descenso-de-gradiente">Descenso de gradiente</a></li>
   <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio">Laboratorio</a></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -438,7 +438,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/03-gradientes.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></h1>
-<p class="subtitle lead">Cómo se minimiza una función cuando la rejilla no cabe en el universo</p>
+<p class="subtitle lead">Minimización de funciones diferenciables mediante descenso de gradiente</p>
 </div>
 
 
@@ -456,8 +456,8 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/03-gradientes.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>El capítulo 2 dejó el problema planteado: minimizar <span class="math inline">\(\hat{R}(\boldsymbol{w})\)</span>. El capítulo 1 dejó claro que por fuerza bruta no se puede. Aquí construimos la herramienta.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -497,7 +497,7 @@ window.Quarto = {
      y aquí no hace falta. Nombrarla al final, en una línea, como el nombre del hecho. -->
 </div>
 <div id="rem-ortogonal" class="proof remark">
-<p><span class="proof-title"><em>Observación 3.1</em> (El gradiente es ortogonal a las curvas de nivel). </span>Se enuncia y se <strong>dibuja</strong>; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Es intuición geométrica, no una herramienta que vayamos a usar.</p>
+<p><span class="proof-title"><em>Observación 3.1</em> (El gradiente es ortogonal a las curvas de nivel). </span>Se enuncia y se <strong>dibuja</strong>; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Sirve como apoyo geométrico y no se utiliza más adelante.</p>
 </div>
 </section>
 <section id="puntos-críticos" class="level2">
@@ -513,7 +513,7 @@ window.Quarto = {
 <!-- TODO(D5, 10 min). Una línea por coordenada: t -> Riskh(w* + t e_j) tiene un mínimo
      local en t=0, luego por Fermat en una variable su derivada es 0, y esa derivada es
      la parcial j-ésima.
-     ESTE TEOREMA ES EL MOTOR DEL CAPITULO 4. Chodrow lo enuncia sin demostrar;
+     De este teorema se obtienen las ecuaciones normales del capítulo 4. Chodrow lo enuncia sin demostrar;
      nosotros lo demostramos porque de él salen las ecuaciones normales. -->
 </div>
 </section>
@@ -543,12 +543,12 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Chodrow tiene una errata en su definición de <em>momentum</em> (Def. 11.2): escribe <span class="math inline">\(\boldsymbol{w}^{(t+1)}\)</span> a ambos lados. No la hereden si algún día lifteamos ese capítulo.</p>
+<p>Chodrow tiene una errata en su definición de <em>momentum</em> (Def. 11.2): escribe <span class="math inline">\(\boldsymbol{w}^{(t+1)}\)</span> a ambos lados. Conviene corregirla si se reutiliza ese capítulo.</p>
 </div>
 </div>
 </div>
 <div id="prp-descenso-desciende" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.3 (El descenso desciende)</strong></span> Si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}) \neq \mathbf{0}\)</span>, existe <span class="math inline">\(\bar{\alpha} &gt; 0\)</span> tal que <span class="math inline">\(\hat{R}(\boldsymbol{w}- \alpha\nabla\hat{R}(\boldsymbol{w})) &lt; \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\alpha\in (0, \bar{\alpha})\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 3.3 (Decrecimiento del riesgo en cada paso)</strong></span> Si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}) \neq \mathbf{0}\)</span>, existe <span class="math inline">\(\bar{\alpha} &gt; 0\)</span> tal que <span class="math inline">\(\hat{R}(\boldsymbol{w}- \alpha\nabla\hat{R}(\boldsymbol{w})) &lt; \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\alpha\in (0, \bar{\alpha})\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -580,7 +580,7 @@ window.Quarto = {
 </section>
 <section id="laboratorio" class="level2">
 <h2 class="anchored" data-anchor-id="laboratorio">Laboratorio</h2>
-<div id="44850dc0" class="cell" data-execution_count="3">
+<div id="fbdaafcf" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -599,14 +599,14 @@ window.Quarto = {
      (a) grad_fn para el riesgo 1-D de @thm-gradiente-riesgo-1d sobre prostate.data;
      (b) curva de pérdida para alpha en {0.001, 0.01, 0.1, 1.0} -> los tres regímenes
          de @prp-caso-cuadratico, VERIFICADOS numéricamente;
-     (c) comprobación del gradiente con torch.autograd: la demostración hecha código;
-     (d) el mismo ajuste SIN estandarizar, para dejar sembrado el capítulo 5. -->
+     (c) comprobación numérica del gradiente con torch.autograd;
+     (d) el mismo ajuste sin estandarizar, como preparación del capítulo 5. -->
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“No converge, subo la tasa de aprendizaje”</strong></p>
-<p>Casi siempre es lo contrario. Por <a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>, pasado <span class="math inline">\(\alpha= 1/a\)</span> el método <strong>diverge</strong>, y entre <span class="math inline">\(1/2a\)</span> y <span class="math inline">\(1/a\)</span> oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna <span class="math inline">\(\alpha\)</span> buena para todas a la vez: eso se arregla estandarizando, no tocando <span class="math inline">\(\alpha\)</span>.</p>
+<p>Normalmente el problema es el opuesto. Por <a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>, pasado <span class="math inline">\(\alpha= 1/a\)</span> el método <strong>diverge</strong>, y entre <span class="math inline">\(1/2a\)</span> y <span class="math inline">\(1/a\)</span> oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna <span class="math inline">\(\alpha\)</span> buena para todas a la vez: eso se arregla estandarizando, no tocando <span class="math inline">\(\alpha\)</span>.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -649,11 +649,11 @@ window.Quarto = {
 <!-- TODO(D5): 2-3 ejercicios más, uno de ellos sobre por qué el recíproco de
      @thm-condicion-primer-orden es falso. -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
 <li>La condición de primer orden (<a href="#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>) es lo que convierte “minimizar” en “resolver una ecuación”. De ella sale todo el capítulo 4.</li>
-<li>El descenso siempre desciende para <span class="math inline">\(\alpha\)</span> suficientemente pequeña (<a href="#prp-descenso-desciende" class="quarto-xref">Proposición&nbsp;<span>3.3</span></a>), y en el caso cuadrático sabemos <strong>exactamente</strong> cuánto (<a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>).</li>
+<li>El descenso siempre desciende para <span class="math inline">\(\alpha\)</span> suficientemente pequeña (<a href="#prp-descenso-desciende" class="quarto-xref">Proposición&nbsp;<span>3.3</span></a>), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita (<a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>).</li>
 </ul>
 
 

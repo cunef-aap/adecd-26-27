@@ -1,6 +1,6 @@
 ---
 title: 'Gradientes y descenso de gradiente'
-subtitle: 'Cómo se minimiza una función cuando la rejilla no cabe en el universo'
+subtitle: 'Minimización de funciones diferenciables mediante descenso de gradiente'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -15,7 +15,7 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 El capítulo 2 dejó el problema planteado: minimizar $\Riskh(\coef)$. El capítulo 1 dejó
 claro que por fuerza bruta no se puede. Aquí construimos la herramienta.
@@ -70,7 +70,7 @@ $\mathbf{u}\T\grad \model$ se maximiza en $\mathbf{u}^\star = \grad \model / \no
 ## El gradiente es ortogonal a las curvas de nivel
 
 Se enuncia y se **dibuja**; no se demuestra (requiere curvas parametrizadas y regla de la
-cadena multivariante). Es intuición geométrica, no una herramienta que vayamos a usar.
+cadena multivariante). Sirve como apoyo geométrico y no se utiliza más adelante.
 :::
 
 ## Puntos críticos
@@ -94,7 +94,7 @@ $\grad \Riskh(\coef^\star) = \zerov$. **El recíproco es falso**: $\model(w)=w^3
 <!-- TODO(D5, 10 min). Una línea por coordenada: t -> Riskh(w* + t e_j) tiene un mínimo
      local en t=0, luego por Fermat en una variable su derivada es 0, y esa derivada es
      la parcial j-ésima.
-     ESTE TEOREMA ES EL MOTOR DEL CAPITULO 4. Chodrow lo enuncia sin demostrar;
+     De este teorema se obtienen las ecuaciones normales del capítulo 4. Chodrow lo enuncia sin demostrar;
      nosotros lo demostramos porque de él salen las ecuaciones normales. -->
 
 :::
@@ -128,11 +128,11 @@ $$\coef^{(t+1)} = \coef^{(t)} - \lr\, \grad \Riskh\!\left(\coef^{(t)}\right).$$
 
 ::: {.callout-warning appearance="simple"}
 Chodrow tiene una errata en su definición de *momentum* (Def. 11.2): escribe
-$\coef^{(t+1)}$ a ambos lados. No la hereden si algún día lifteamos ese capítulo.
+$\coef^{(t+1)}$ a ambos lados. Conviene corregirla si se reutiliza ese capítulo.
 :::
 
 ::: {#prp-descenso-desciende}
-## El descenso desciende
+## Decrecimiento del riesgo en cada paso
 
 Si $\grad \Riskh(\coef) \neq \zerov$, existe $\bar{\lr} > 0$ tal que
 $\Riskh(\coef - \lr \grad \Riskh(\coef)) < \Riskh(\coef)$ para todo $\lr \in (0, \bar{\lr})$.
@@ -196,15 +196,15 @@ class DescensoGradiente:
      (a) grad_fn para el riesgo 1-D de @thm-gradiente-riesgo-1d sobre prostate.data;
      (b) curva de pérdida para alpha en {0.001, 0.01, 0.1, 1.0} -> los tres regímenes
          de @prp-caso-cuadratico, VERIFICADOS numéricamente;
-     (c) comprobación del gradiente con torch.autograd: la demostración hecha código;
-     (d) el mismo ajuste SIN estandarizar, para dejar sembrado el capítulo 5. -->
+     (c) comprobación numérica del gradiente con torch.autograd;
+     (d) el mismo ajuste sin estandarizar, como preparación del capítulo 5. -->
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **"No converge, subo la tasa de aprendizaje"**
 
-Casi siempre es lo contrario. Por @prp-caso-cuadratico, pasado $\lr = 1/a$ el método
+Normalmente el problema es el opuesto. Por @prp-caso-cuadratico, pasado $\lr = 1/a$ el método
 **diverge**, y entre $1/2a$ y $1/a$ oscila mientras converge, que es justo lo que parece
 inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna $\lr$
 buena para todas a la vez: eso se arregla estandarizando, no tocando $\lr$.
@@ -233,10 +233,10 @@ monótonamente y el que diverge. Compruébelo numéricamente.
 <!-- TODO(D5): 2-3 ejercicios más, uno de ellos sobre por qué el recíproco de
      @thm-condicion-primer-orden es falso. -->
 
-## Qué llevarte
+## Resumen
 
 - La condición de primer orden (@thm-condicion-primer-orden) es lo que convierte
   "minimizar" en "resolver una ecuación". De ella sale todo el capítulo 4.
 - El descenso siempre desciende para $\lr$ suficientemente pequeña
-  (@prp-descenso-desciende), y en el caso cuadrático sabemos **exactamente** cuánto
+  (@prp-descenso-desciende), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita
   (@prp-caso-cuadratico).

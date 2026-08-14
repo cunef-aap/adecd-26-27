@@ -27,7 +27,7 @@ de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda vora
 - Las demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.
 - Cada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está
   arriba del todo.
-- Al final de cada capítulo hay una *trampa*: un error realista, demostrado fallando.
+- Al final de cada capítulo hay un apartado de errores frecuentes, con un error realista demostrado fallando.
 
 ## Antes de la primera sesión
 

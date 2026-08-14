@@ -1,6 +1,6 @@
 ---
 title: 'Señal y ruido'
-subtitle: 'Por qué predecir no es ajustar, y qué hace falta suponer para poder hacerlo'
+subtitle: 'Sobreajuste, modelo de ruido gaussiano y verosimilitud'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -16,7 +16,7 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 Este curso trata de un problema muy concreto: dado un conjunto de observaciones
 pasadas, predecir el valor de una magnitud numérica en observaciones que **todavía
@@ -159,7 +159,7 @@ Por tanto, una afirmación del tipo *"nuestro modelo acierta el 100 %"* no infor
 mientras no se diga sobre qué datos se ha medido.
 :::
 
-Veámoslo. Interpolamos los 20 puntos y después generamos datos nuevos con la **misma
+Lo comprobamos numéricamente. Interpolamos los 20 puntos y después generamos datos nuevos con la **misma
 señal y ruido distinto**.
 
 ::: {#fig-interpolacion}
@@ -186,7 +186,7 @@ ax[1].legend()
 plt.show()
 ```
 
-El mismo interpolador: perfecto a la izquierda, inservible a la derecha.
+El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).
 
 :::
 
@@ -338,9 +338,9 @@ como minimización. Es el convenio de toda la literatura de optimización y evit
 de signo en el capítulo 3.
 :::
 
-### ¿Y ahora cómo lo resolvemos?
+### Resolución por búsqueda en rejilla
 
-Por fuerza bruta, para ver que no escala.
+Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.
 
 ```{python}
 #---
@@ -371,10 +371,10 @@ plt.show()
 ```
 
 Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con $\nfeat = 20$
-parámetros serían $60^{20}$, más que átomos hay en la Vía Láctea. **Hace falta cálculo**,
+parámetros serían $60^{20}$, un número de evaluaciones inabordable. **Hace falta cálculo**,
 y eso es el capítulo 3.
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **"Mi $\Rsq$ de entrenamiento es 0,999"**
@@ -426,7 +426,7 @@ $\model(\xv_i)$.
      y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
      sobre por qué la independencia es una hipótesis. -->
 
-## Qué llevarte
+## Resumen
 
 - Error de entrenamiento cero se consigue **siempre** (@thm-interpolacion) y por tanto no
   es evidencia de nada.

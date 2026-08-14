@@ -1,6 +1,6 @@
 ---
 title: 'De los datos crudos a la matriz de diseño'
-subtitle: 'El capítulo "menos matemático" del curso resulta ser un corolario del capítulo 4'
+subtitle: 'Preprocesado, datos faltantes, escalado, variables categóricas y transformación del objetivo'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -15,7 +15,7 @@ import style
 ```
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 Hasta ahora $\X$ nos venía dada. En la práctica $\X$ **se construye**, y casi todas las
 decisiones de esa construcción tienen consecuencias matemáticas exactas. Este capítulo
@@ -189,7 +189,7 @@ exponenciar sin corregir es **sistemático y siempre a la baja**.
 :::
 
 ::: {.callout-note appearance="simple"}
-Tercera aparición de $\noisehat^2$. Y la primera con consecuencias en euros: un modelo de
+$\noisehat^2$ vuelve a aparecer aquí, ahora con efecto directo sobre la predicción en euros:: un modelo de
 precios que exponencia sin corregir **infravalora todas** las predicciones, siempre en la
 misma dirección.
 :::
@@ -236,14 +236,14 @@ error absoluto es $\abs{\residi}/\nobs$. Eliminar atípicos es **cambiar los dat
        1. "añade validación cruzada a este pipeline"  -> suele romper el pipeline
        2. "mejora el R²"                              -> suele ajustar sobre test
        3. "imputa los valores que faltan"             -> suele imputar antes de partir
-     El alumno tiene que CAZARLO, no ejecutarlo. -->
+     El ejercicio consiste en identificar el error del agente, no en ejecutar su código. -->
 
-## La trampa de esta semana
+## Error frecuente
 
 ::: {.trampa}
 **`StandardScaler().fit_transform(X)` antes de `train_test_split`**
 
-El error más caro del curso y el que más nota cuesta en el proyecto. La media y la
+Es un error frecuente y con consecuencias importantes en el proyecto. La media y la
 desviación típica del escalador se han calculado **con los datos de test**, así que el
 error de test ya no estima nada (@def-fuga). Se ve poco: el modelo simplemente parece un
 poco mejor de lo que es.
@@ -274,7 +274,7 @@ Dé la predicción en euros como mediana y como media. ¿Cuál reportaría a un 
 <!-- TODO(D9): 2-3 más, uno sobre imputación + indicador y otro sobre detectar fugas en
      código impreso. -->
 
-## Qué llevarte
+## Resumen
 
 - El preprocesado es **parte del modelo** (@def-pipeline); ajustarlo con datos de test es
   fuga (@def-fuga).

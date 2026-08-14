@@ -13,7 +13,7 @@
 
 Tres sesiones por semana, con papeles distintos:
 
-| | Sesión | Qué pasa |
+| | Sesión | Contenido |
 |---|---|---|
 | S1 | **Teoría** | La derivación, en pizarra. Sin ordenador |
 | S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |

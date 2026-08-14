@@ -21,7 +21,7 @@ Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio
 completo desde el primer día.
 :::
 
-## Por qué estamos aquí
+## Planteamiento
 
 <!-- TODO: un párrafo enlazando con el capítulo anterior. -->
 
@@ -45,6 +45,6 @@ completo desde el primer día.
 
 <!-- TODO: 4-6 ejercicios con solución plegable. -->
 
-## Qué llevarte
+## Resumen
 
 <!-- TODO: 3 viñetas. -->

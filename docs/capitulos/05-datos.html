@@ -384,7 +384,7 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#el-pipeline-es-parte-del-modelo" id="toc-el-pipeline-es-parte-del-modelo" class="nav-link" data-scroll-target="#el-pipeline-es-parte-del-modelo">El <em>pipeline</em> es parte del modelo</a></li>
   <li><a href="#datos-que-faltan" id="toc-datos-que-faltan" class="nav-link" data-scroll-target="#datos-que-faltan">Datos que faltan</a></li>
   <li><a href="#escalado" id="toc-escalado" class="nav-link" data-scroll-target="#escalado">Escalado</a></li>
@@ -393,10 +393,10 @@ window.Quarto = {
   <li><a href="#valores-extremos" id="toc-valores-extremos" class="nav-link" data-scroll-target="#valores-extremos">Valores extremos</a></li>
   <li><a href="#laboratorio-el-pipeline-canónico-del-curso" id="toc-laboratorio-el-pipeline-canónico-del-curso" class="nav-link" data-scroll-target="#laboratorio-el-pipeline-canónico-del-curso">Laboratorio: el <em>pipeline</em> canónico del curso</a></li>
   <li><a href="#higiene-de-agentes-de-ia-45-min" id="toc-higiene-de-agentes-de-ia-45-min" class="nav-link" data-scroll-target="#higiene-de-agentes-de-ia-45-min">Higiene de agentes de IA (45 min)</a></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -406,7 +406,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/05-datos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></h1>
-<p class="subtitle lead">El capítulo “menos matemático” del curso resulta ser un corolario del capítulo 4</p>
+<p class="subtitle lead">Preprocesado, datos faltantes, escalado, variables categóricas y transformación del objetivo</p>
 </div>
 
 
@@ -424,8 +424,8 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/05-datos.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Hasta ahora <span class="math inline">\(\mathbf{X}\)</span> nos venía dada. En la práctica <span class="math inline">\(\mathbf{X}\)</span> <strong>se construye</strong>, y casi todas las decisiones de esa construcción tienen consecuencias matemáticas exactas. Este capítulo demuestra cinco.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -550,7 +550,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Tercera aparición de <span class="math inline">\(\hat{\sigma}^2\)</span>. Y la primera con consecuencias en euros: un modelo de precios que exponencia sin corregir <strong>infravalora todas</strong> las predicciones, siempre en la misma dirección.</p>
+<p><span class="math inline">\(\hat{\sigma}^2\)</span> vuelve a aparecer aquí, ahora con efecto directo sobre la predicción en euros:: un modelo de precios que exponencia sin corregir <strong>infravalora todas</strong> las predicciones, siempre en la misma dirección.</p>
 </div>
 </div>
 </div>
@@ -588,13 +588,13 @@ window.Quarto = {
        1. "añade validación cruzada a este pipeline"  -> suele romper el pipeline
        2. "mejora el R²"                              -> suele ajustar sobre test
        3. "imputa los valores que faltan"             -> suele imputar antes de partir
-     El alumno tiene que CAZARLO, no ejecutarlo. -->
+     El ejercicio consiste en identificar el error del agente, no en ejecutar su código. -->
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong><code>StandardScaler().fit_transform(X)</code> antes de <code>train_test_split</code></strong></p>
-<p>El error más caro del curso y el que más nota cuesta en el proyecto. La media y la desviación típica del escalador se han calculado <strong>con los datos de test</strong>, así que el error de test ya no estima nada (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.</p>
+<p>Es un error frecuente y con consecuencias importantes en el proyecto. La media y la desviación típica del escalador se han calculado <strong>con los datos de test</strong>, así que el error de test ya no estima nada (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -637,8 +637,8 @@ window.Quarto = {
 <!-- TODO(D9): 2-3 más, uno sobre imputación + indicador y otro sobre detectar fugas en
      código impreso. -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
 <li>El preprocesado es <strong>parte del modelo</strong> (<a href="#def-pipeline" class="quarto-xref">Definición&nbsp;<span>5.1</span></a>); ajustarlo con datos de test es fuga (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>).</li>
 <li>La trampa de la variable ficticia no es una regla práctica: es <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a> aplicado a <em>one-hot</em> (<a href="#thm-trampa-dummy" class="quarto-xref">Teorema&nbsp;<span>5.1</span></a>).</li>

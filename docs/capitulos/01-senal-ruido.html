@@ -419,18 +419,18 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#datos-señal-y-ruido" id="toc-datos-señal-y-ruido" class="nav-link" data-scroll-target="#datos-señal-y-ruido">Datos, señal y ruido</a></li>
   <li><a href="#interpolar-no-es-aprender" id="toc-interpolar-no-es-aprender" class="nav-link" data-scroll-target="#interpolar-no-es-aprender">Interpolar no es aprender</a></li>
   <li><a href="#modelizar-el-ruido" id="toc-modelizar-el-ruido" class="nav-link" data-scroll-target="#modelizar-el-ruido">Modelizar el ruido</a></li>
   <li><a href="#sec-mle-teorema" id="toc-sec-mle-teorema" class="nav-link" data-scroll-target="#sec-mle-teorema">Verosimilitud</a>
   <ul class="collapse">
-  <li><a href="#y-ahora-cómo-lo-resolvemos" id="toc-y-ahora-cómo-lo-resolvemos" class="nav-link" data-scroll-target="#y-ahora-cómo-lo-resolvemos">¿Y ahora cómo lo resolvemos?</a></li>
+  <li><a href="#resolución-por-búsqueda-en-rejilla" id="toc-resolución-por-búsqueda-en-rejilla" class="nav-link" data-scroll-target="#resolución-por-búsqueda-en-rejilla">Resolución por búsqueda en rejilla</a></li>
   </ul></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -440,7 +440,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></h1>
-<p class="subtitle lead">Por qué predecir no es ajustar, y qué hace falta suponer para poder hacerlo</p>
+<p class="subtitle lead">Sobreajuste, modelo de ruido gaussiano y verosimilitud</p>
 </div>
 
 
@@ -458,8 +458,8 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/01-senal-ruido.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Este curso trata de un problema muy concreto: dado un conjunto de observaciones pasadas, predecir el valor de una magnitud numérica en observaciones que <strong>todavía no hemos visto</strong>. El precio de un piso que aún no se ha alquilado, la demanda de la semana que viene, el coste de un siniestro que aún no se ha declarado.</p>
 <p>Conviene decir desde el primer día en qué se diferencia esto de lo que han visto en econometría. Allí la pregunta es <em>¿cuánto vale <span class="math inline">\(w_j\)</span> y es significativo?</em>. Aquí la pregunta es <em>¿qué <span class="math inline">\(\boldsymbol{w}\)</span> predice mejor fuera de la muestra?</em>. Son preguntas distintas, con respuestas distintas, y un modelo bueno para una puede ser malo para la otra.</p>
 <blockquote class="blockquote">
@@ -473,7 +473,7 @@ window.Quarto = {
 <p><span class="theorem-title"><strong>Definición 1.1 (Datos y problema de predicción)</strong></span> Un conjunto de datos es <span class="math inline">\(\mathcal{D}= \{(\mathbf{x}_i, y_i)\}_{i=1}^{n}\)</span> con <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{p}\)</span> y <span class="math inline">\(y_i\in \mathbb{R}\)</span>. El problema de predicción consiste en elegir una función <span class="math inline">\(f: \mathbb{R}^{p} \to \mathbb{R}\)</span> que prediga bien <span class="math inline">\(y\)</span> en observaciones <strong>no vistas</strong>.</p>
 </div>
 <p>La condición que importa en <a href="#def-datos" class="quarto-xref">Definición&nbsp;<span>1.1</span></a> es <em>no vistas</em>: las observaciones sobre las que se mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición el problema es trivial.</p>
-<div id="a6fbf530" class="cell" data-execution_count="3">
+<div id="f3e44a3a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
@@ -482,7 +482,7 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="1c6f849e" class="cell" data-execution_count="4">
+<div id="524cd76c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.0</span>            <span class="co"># la verdad que NO conocemos</span></span>
@@ -506,7 +506,7 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="9fe5c87d" class="cell" data-execution_count="5">
+<div id="96f54ea1" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -573,7 +573,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <p>Un error de entrenamiento de cero <strong>no es evidencia de nada</strong>: siempre se puede conseguir. Por tanto, una afirmación del tipo <em>“nuestro modelo acierta el 100 %”</em> no informa de nada mientras no se diga sobre qué datos se ha medido.</p>
 </div>
 </div>
-<p>Veámoslo. Interpolamos los 20 puntos y después generamos datos nuevos con la <strong>misma señal y ruido distinto</strong>.</p>
+<p>Lo comprobamos numéricamente. Interpolamos los 20 puntos y después generamos datos nuevos con la <strong>misma señal y ruido distinto</strong>.</p>
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
@@ -598,7 +598,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="c35360d0" class="cell" data-execution_count="6">
+<div id="4824a864" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -609,7 +609,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 </div>
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1.2: El mismo interpolador: perfecto a la izquierda, inservible a la derecha.
+Figura&nbsp;1.2: El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).
 </figcaption>
 </figure>
 </div>
@@ -716,10 +716,10 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <p>Aunque el problema nazca como una maximización, en este curso <strong>siempre</strong> lo escribiremos como minimización. Es el convenio de toda la literatura de optimización y evita errores de signo en el capítulo 3.</p>
 </div>
 </div>
-<section id="y-ahora-cómo-lo-resolvemos" class="level3">
-<h3 class="anchored" data-anchor-id="y-ahora-cómo-lo-resolvemos">¿Y ahora cómo lo resolvemos?</h3>
-<p>Por fuerza bruta, para ver que no escala.</p>
-<div id="68e1bf23" class="cell" data-execution_count="7">
+<section id="resolución-por-búsqueda-en-rejilla" class="level3">
+<h3 class="anchored" data-anchor-id="resolución-por-búsqueda-en-rejilla">Resolución por búsqueda en rejilla</h3>
+<p>Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.</p>
+<div id="58e29599" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -727,7 +727,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_verosimilitud(w0, w1, x, y, sigma<span class="op">=</span><span class="fl">3.0</span>):</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma).log().<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="b0304dde" class="cell" data-execution_count="8">
+<div id="f298e161" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
@@ -752,11 +752,11 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 </div>
 </div>
 </div>
-<p>Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con <span class="math inline">\(p= 20\)</span> parámetros serían <span class="math inline">\(60^{20}\)</span>, más que átomos hay en la Vía Láctea. <strong>Hace falta cálculo</strong>, y eso es el capítulo 3.</p>
+<p>Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con <span class="math inline">\(p= 20\)</span> parámetros serían <span class="math inline">\(60^{20}\)</span>, un número de evaluaciones inabordable. <strong>Hace falta cálculo</strong>, y eso es el capítulo 3.</p>
 </section>
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“Mi <span class="math inline">\(R^2\)</span> de entrenamiento es 0,999”</strong></p>
 <p>Es exactamente <a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a> en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es <em>cuánto ajusta</em> sino <em>sobre qué datos se ha medido</em>. Volveremos sobre esto con el aparato completo en el capítulo 6.</p>
@@ -825,8 +825,8 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
      y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
      sobre por qué la independencia es una hipótesis. -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
 <li>Error de entrenamiento cero se consigue <strong>siempre</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>) y por tanto no es evidencia de nada.</li>
 <li>Suponer una distribución para el ruido convierte el problema en uno de <strong>verosimilitud</strong> (<a href="#cor-target" class="quarto-xref">Corolario&nbsp;<span>1.2</span></a>).</li>

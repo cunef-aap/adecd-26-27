@@ -384,15 +384,15 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
+  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
   <li><a href="#riesgo-empírico" id="toc-riesgo-empírico" class="nav-link" data-scroll-target="#riesgo-empírico">Riesgo empírico</a></li>
-  <li><a href="#sec-teorema-central" id="toc-sec-teorema-central" class="nav-link" data-scroll-target="#sec-teorema-central">El teorema central</a></li>
+  <li><a href="#sec-teorema-central" id="toc-sec-teorema-central" class="nav-link" data-scroll-target="#sec-teorema-central">De la log-verosimilitud al riesgo empírico</a></li>
   <li><a href="#estimar-el-ruido" id="toc-estimar-el-ruido" class="nav-link" data-scroll-target="#estimar-el-ruido">Estimar el ruido</a></li>
   <li><a href="#otro-ruido-otra-pérdida" id="toc-otro-ruido-otra-pérdida" class="nav-link" data-scroll-target="#otro-ruido-otra-pérdida">Otro ruido, otra pérdida</a></li>
-  <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
+  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -402,7 +402,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/02-verosimilitud.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></h1>
-<p class="subtitle lead">Mínimos cuadrados deja de ser un convenio y pasa a ser un teorema</p>
+<p class="subtitle lead">De la verosimilitud gaussiana a los mínimos cuadrados</p>
 </div>
 
 
@@ -420,10 +420,10 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/02-verosimilitud.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="por-qué-estamos-aquí" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
+<section id="planteamiento" class="level2">
+<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>En el capítulo 1 supusimos ruido gaussiano y llegamos a que <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim
-\mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>. Aquí cobramos esa hipótesis: <strong>el error cuadrático medio no es una elección, es una consecuencia</strong>. Y de paso estimamos <span class="math inline">\(\sigma\)</span>, que Chodrow trata como constante conocida y una cohorte de ADE no va a aceptar que lo sea.</p>
+\mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>. Aquí extraemos las consecuencias de esa hipótesis: <strong>el error cuadrático medio no es una elección, es una consecuencia</strong>. Y de paso estimamos <span class="math inline">\(\sigma\)</span>, que Chodrow trata como constante conocida aunque en la práctica <span class="math inline">\(\sigma\)</span> es desconocido y debe estimarse.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -441,7 +441,7 @@ window.Quarto = {
 <section id="riesgo-empírico" class="level2">
 <h2 class="anchored" data-anchor-id="riesgo-empírico">Riesgo empírico</h2>
 <div id="def-riesgo-empirico" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 2.1 (Riesgo empírico)</strong></span> <span class="math display">\[\hat{R}(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} \left(y_i- \hat{y}_i\right)^2 .\]</span> El factor <span class="math inline">\(1/n\)</span> <strong>forma parte de la definición</strong> y no se negocia en todo el curso.</p>
+<p><span class="theorem-title"><strong>Definición 2.1 (Riesgo empírico)</strong></span> <span class="math display">\[\hat{R}(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} \left(y_i- \hat{y}_i\right)^2 .\]</span> El factor <span class="math inline">\(1/n\)</span> forma parte de la definición y se mantiene en todo el curso.</p>
 </div>
 <div id="def-residuo" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 2.2 (Residuo y suma de cuadrados)</strong></span> <span class="math inline">\(r_i= y_i- \hat{y}_i\)</span>, <span class="math inline">\(\ \mathrm{SCR}= \sum_i r_i^2\)</span>, y por tanto <span class="math inline">\(\hat{R}(\boldsymbol{w}) = \mathrm{SCR}/n\)</span>.</p>
@@ -456,7 +456,7 @@ window.Quarto = {
      poder citarlo por número. -->
 </div>
 <div id="lem-media-optima" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 2.2 (El mejor modelo constante es la media)</strong></span> <span class="math inline">\(\displaystyle \mathop{\mathrm{arg\,min}}_{c \in \mathbb{R}} \sum_{i=1}^{n} (y_i- c)^2 = \bar{y}\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 2.2 (El modelo constante óptimo en error cuadrático es la media)</strong></span> <span class="math inline">\(\displaystyle \mathop{\mathrm{arg\,min}}_{c \in \mathbb{R}} \sum_{i=1}^{n} (y_i- c)^2 = \bar{y}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -477,7 +477,7 @@ window.Quarto = {
 </div>
 </section>
 <section id="sec-teorema-central" class="level2">
-<h2 class="anchored" data-anchor-id="sec-teorema-central">El teorema central</h2>
+<h2 class="anchored" data-anchor-id="sec-teorema-central">De la log-verosimilitud al riesgo empírico</h2>
 <div id="thm-loglik-mse" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2.1 (Expansión de la log-verosimilitud)</strong></span> Bajo el modelo lineal-gaussiano de <a href="01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, <span id="eq-loglik"><span class="math display">\[
 \ell(\boldsymbol{w}, \sigma) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{n}{2\sigma^2}\, \hat{R}(\boldsymbol{w}).
@@ -485,12 +485,12 @@ window.Quarto = {
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 25 min): LA DEMOSTRACION DEL CURSO. Escribirla entera, línea a línea:
+<!-- TODO(D4, 25 min): Demostración principal del capítulo; escribirla completa, paso a paso.:
      1. sustituir la densidad @eq-densidad-normal dentro del producto,
      2. log del producto -> suma,
      3. separar la constante de la suma,
      4. identificar sum (y_i - f(x_i))^2 = n * Riskh(w).
-     Sin saltos. Es la primera demostración larga que ven y marca el estándar. -->
+     Sin saltos: es la primera demostración larga del curso y fija el nivel de detalle esperado. -->
 </div>
 <div id="cor-mle-minimos-cuadrados" class="theorem corollary">
 <p><span class="theorem-title"><strong>Corolario 2.1 (Máxima verosimilitud = mínimos cuadrados)</strong></span> Para <span class="math inline">\(\sigma\)</span> fijo, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} \ell(\boldsymbol{w},\sigma) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \hat{R}(\boldsymbol{w})\)</span>.</p>
@@ -536,7 +536,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>El hilo de <span class="math inline">\(\hat{\sigma}^2\)</span>
+<span class="screen-reader-only">Nota</span>Usos posteriores de <span class="math inline">\(\hat{\sigma}^2\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -604,11 +604,11 @@ window.Quarto = {
 </table>
 </div>
 </section>
-<section id="la-trampa-de-esta-semana" class="level2">
-<h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
+<section id="error-frecuente" class="level2">
+<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“Uso RMSE porque es lo estándar”</strong></p>
-<p>Elegir métrica <strong>es</strong> elegir modelo de ruido, y por tanto elegir qué funcional de la distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas pesadas, minimizar <span class="math inline">\(\mathrm{ECM}\)</span> estima la media de algo cuya media no interesa.</p>
+<p>Elegir una métrica equivale a elegir un modelo de ruido, y por tanto elegir qué funcional de la distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas pesadas, minimizar el <span class="math inline">\(\mathrm{ECM}\)</span> estima la media condicional, que puede no ser el funcional de interés.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -652,10 +652,10 @@ window.Quarto = {
      mano; uno conceptual sobre por qué C(sigma) no afecta al argmax en w pero sí al
      argmax en sigma. -->
 </section>
-<section id="qué-llevarte" class="level2">
-<h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li><span class="math inline">\(\ell= C - \frac{n}{2\sigma^2}\hat{R}\)</span>: <strong>mínimos cuadrados es un teorema</strong> (<a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>, <a href="#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>).</li>
+<li><span class="math inline">\(\ell= C - \frac{n}{2\sigma^2}\hat{R}\)</span>: los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano (<a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>, <a href="#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>).</li>
 <li><span class="math inline">\(\sigma\)</span> no es un dato del problema: se estima, y vale <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> (<a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>2.2</span></a>).</li>
 <li>Cambiar el modelo de ruido cambia la pérdida (<a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a>). La receta es una máquina, no un caso particular.</li>
 </ul>
