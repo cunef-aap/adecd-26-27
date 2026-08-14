@@ -351,7 +351,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cálculo y álgebra que va a necesitar</span></a>
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -385,7 +385,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#por-qué-estamos-aquí" id="toc-por-qué-estamos-aquí" class="nav-link active" data-scroll-target="#por-qué-estamos-aquí">Por qué estamos aquí</a></li>
-  <li><a href="#el-riesgo-que-de-verdad-importa" id="toc-el-riesgo-que-de-verdad-importa" class="nav-link" data-scroll-target="#el-riesgo-que-de-verdad-importa">El riesgo que de verdad importa</a></li>
+  <li><a href="#el-riesgo-de-generalización" id="toc-el-riesgo-de-generalización" class="nav-link" data-scroll-target="#el-riesgo-de-generalización">El riesgo de generalización</a></li>
   <li><a href="#por-qué-el-test-se-toca-una-vez" id="toc-por-qué-el-test-se-toca-una-vez" class="nav-link" data-scroll-target="#por-qué-el-test-se-toca-una-vez">Por qué el test se toca una vez</a></li>
   <li><a href="#validación-cruzada" id="toc-validación-cruzada" class="nav-link" data-scroll-target="#validación-cruzada">Validación cruzada</a></li>
   <li><a href="#sec-grupos" id="toc-sec-grupos" class="nav-link" data-scroll-target="#sec-grupos">Cuando la hipótesis iid es falsa</a></li>
@@ -440,8 +440,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="el-riesgo-que-de-verdad-importa" class="level2">
-<h2 class="anchored" data-anchor-id="el-riesgo-que-de-verdad-importa">El riesgo que de verdad importa</h2>
+<section id="el-riesgo-de-generalización" class="level2">
+<h2 class="anchored" data-anchor-id="el-riesgo-de-generalización">El riesgo de generalización</h2>
 <div id="def-riesgo-verdadero" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 6.1 (Riesgo verdadero)</strong></span> <span class="math inline">\(R(f) = \mathbb{E}\!\left[ (Y - f(X))^2 \right]\)</span>, esperanza sobre una observación <strong>nueva</strong> de la misma distribución. Nótese la tipografía: <span class="math inline">\(R\)</span> es el riesgo verdadero, <span class="math inline">\(\hat{R}\)</span> el empírico. Todo el capítulo va de estimar el primero con el segundo.</p>
 </div>
@@ -460,7 +460,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>La demostración es una línea; <strong>lo que importa son las hipótesis</strong>. Violar (i) es fuga de información (<a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Violar (ii) es lo que hace un anfitrión con doce anuncios (<a href="#sec-grupos" class="quarto-xref"><span>Sección 6.5</span></a>).</p>
+<p>La demostración es inmediata; las hipótesis, no. Incumplir (i) es fuga de información (<a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Incumplir (ii) es lo que ocurre con un anfitrión que tiene doce anuncios (<a href="#sec-grupos" class="quarto-xref"><span>Sección 6.5</span></a>).</p>
 </div>
 </div>
 </div>
@@ -495,7 +495,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>Precisión que casi nadie explicita
+<span class="screen-reader-only">Advertencia</span>Una precisión sobre el promedio
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -537,7 +537,7 @@ window.Quarto = {
 <section id="métricas" class="level2">
 <h2 class="anchored" data-anchor-id="métricas">Métricas</h2>
 <div id="def-metricas" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Reportar un <span class="math inline">\(\mathrm{ECM}\)</span> «de 3.400» sin unidades no informa de nada.</p>
+<p><span class="theorem-title"><strong>Definición 6.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Reportar un <span class="math inline">\(\mathrm{ECM}\)</span> “de 3.400” sin unidades no informa de nada.</p>
 </div>
 <div id="prp-rmse-mae" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposición 6.3 (<span class="math inline">\(\mathrm{RECM}\geq \mathrm{EAM}\)</span> siempre)</strong></span> &nbsp;</p>
@@ -557,7 +557,7 @@ window.Quarto = {
 <p><span class="theorem-title"><strong>Definición 6.5 (<span class="math inline">\(\mathrm{SCE}\)</span>, <span class="math inline">\(\mathrm{SCT}\)</span> y <span class="math inline">\(R^2\)</span>)</strong></span> <span class="math inline">\(\mathrm{SCE}= \sum_i(y_i-\hat{y}_i)^2\)</span>, <span class="math inline">\(\mathrm{SCT}= \sum_i(y_i-\bar{y})^2\)</span>, <span class="math inline">\(\ R^2= 1 - \mathrm{SCE}/\mathrm{SCT}\)</span>.</p>
 </div>
 <div id="thm-r2-comparacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.3 (<span class="math inline">\(R^2\)</span> compara contra el modelo de la media)</strong></span> <span class="math inline">\(\mathrm{SCT}= n\,\hat{R}(\bar{f})\)</span> donde <span class="math inline">\(\bar{f}\equiv \bar{y}\)</span> es <strong>el mejor modelo constante</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>). Por tanto <span class="math display">\[R^2= 1 - \frac{\hat{R}(\hat{f})}{\hat{R}(\bar{f})}:\]</span> la fracción del riesgo del modelo nulo que el modelo consigue eliminar. <span class="math inline">\(R^2=0\)</span> significa «igual de bueno que la media»; <span class="math inline">\(R^2=1\)</span>, predicción perfecta.</p>
+<p><span class="theorem-title"><strong>Teorema 6.3 (<span class="math inline">\(R^2\)</span> compara contra el modelo de la media)</strong></span> <span class="math inline">\(\mathrm{SCT}= n\,\hat{R}(\bar{f})\)</span> donde <span class="math inline">\(\bar{f}\equiv \bar{y}\)</span> es <strong>el mejor modelo constante</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>). Por tanto <span class="math display">\[R^2= 1 - \frac{\hat{R}(\hat{f})}{\hat{R}(\bar{f})}:\]</span> la fracción del riesgo del modelo nulo que el modelo consigue eliminar. <span class="math inline">\(R^2=0\)</span> significa “igual de bueno que la media”; <span class="math inline">\(R^2=1\)</span>, predicción perfecta.</p>
 </div>
 <div id="thm-sct-descompone" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 6.4 (<span class="math inline">\(\mathrm{SCT}= \mathrm{SCReg}+ \mathrm{SCE}\)</span> <strong>en la muestra</strong>)</strong></span> Con mínimos cuadrados, término independiente y <strong>sobre los datos de entrenamiento</strong>, <span class="math inline">\(\sum_i(y_i-\bar{y})^2 = \sum_i(\hat{y}_i-\bar{y})^2 + \sum_i(y_i-\hat{y}_i)^2\)</span>, de donde <span class="math inline">\(0 \le R^2\le 1\)</span>.</p>
@@ -566,7 +566,7 @@ window.Quarto = {
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
 <!-- TODO(D10, 15 min): sumar y restar y_i - ybar = (y_i - yhat_i) + (yhat_i - ybar);
      el término cruzado es 2 r^T (X what - ybar 1) = 0 por @cor-residuos-ortogonales.
-     Es la MISMA técnica de @thm-identidad-fundamental: dígalo. -->
+     Es la misma técnica de @thm-identidad-fundamental; conviene señalarlo en clase. -->
 </div>
 <div id="thm-r2-negativo" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 6.5 (Fuera de la muestra <span class="math inline">\(R^2\)</span> puede ser negativo)</strong></span> En test <strong>falla <a href="04-forma-matricial.html#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>4.1</span></a></strong>, luego falla <a href="#thm-sct-descompone" class="quarto-xref">Teorema&nbsp;<span>6.4</span></a> y <span class="math inline">\(R^2\)</span> no está acotado inferiormente. Además <span class="math display">\[R^2_{\text{test}} &lt; 0 \iff \mathrm{SCE}_{\text{test}} &gt; \mathrm{SCT}_{\text{test}} \iff \text{el modelo predice peor que la constante } \bar{y}.\]</span></p>
@@ -594,8 +594,8 @@ window.Quarto = {
 <section id="la-trampa-de-esta-semana" class="level2">
 <h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
 <div class="trampa">
-<p><strong>«He probado veinte modelos y me quedo con el mejor en test»</strong></p>
-<p>Ese «mejor en test» ya no estima nada, por <a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.</p>
+<p><strong>“He probado veinte modelos y me quedo con el mejor en test”</strong></p>
+<p>Ese “mejor en test” ya no estima nada, por <a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">

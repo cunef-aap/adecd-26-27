@@ -93,12 +93,10 @@ Sustituir en @thm-ecuaciones-normales.
 :::
 
 ::: {.callout-important appearance="simple"}
-## Corrige una idea falsa muy extendida
-
-Para **mínimos cuadrados**, estandarizar es un asunto *numérico*, no estadístico: no
-cambia las predicciones. En *ridge* (capítulo 8) pasará a ser **estadístico**, porque la
-penalización no es invariante a escala. Ese contraste es lo que convierte «estandarizar»
-de costumbre en decisión razonada.
+Para **mínimos cuadrados**, estandarizar es un asunto *numérico* y no estadístico: no
+cambia las predicciones. En *ridge* (capítulo 8) sí pasa a ser estadístico, porque la
+penalización no es invariante a escala. Conviene tener presente esa diferencia antes de
+estandarizar por costumbre.
 :::
 
 ::: {#prp-condicionamiento}
@@ -152,10 +150,10 @@ $\X\mathbf{v} = \zerov$.
 :::
 
 ::: {.callout-important appearance="simple"}
-Este par de resultados es **el mejor argumento de predicción frente a inferencia de todo
-el curso**, y ocurre sobre un `OneHotEncoder` que van a escribir esa misma tarde: el mismo
-modelo, igual de bueno prediciendo, con infinitos vectores de coeficientes distintos.
-Cualquier lectura «económica» de esos coeficientes es una lectura de un número arbitrario.
+Estos dos resultados ilustran la diferencia entre predicción e inferencia sobre un caso
+concreto, el de un `OneHotEncoder`: el mismo modelo, con la misma capacidad predictiva, y
+con infinitos vectores de coeficientes distintos. Una interpretación económica de esos
+coeficientes sería, por tanto, la interpretación de un número arbitrario.
 :::
 
 ## Transformar el objetivo
@@ -201,7 +199,7 @@ misma dirección.
 
 $\log(y/\yhat) \approx (y - \yhat)/\yhat$ para errores pequeños, luego minimizar el error
 cuadrático en logaritmos equivale aproximadamente a minimizar el error **relativo**. *Esa*
-es la razón para tomar logaritmos de un precio; no «normalizar».
+es la razón para tomar logaritmos de un precio; no "normalizar".
 :::
 
 ## Valores extremos
@@ -211,8 +209,7 @@ es la razón para tomar logaritmos de un precio; no «normalizar».
 
 La influencia de una observación en $\Riskh$ es $\residi^2/\nobs$, **no acotada**; bajo
 error absoluto es $\abs{\residi}/\nobs$. Eliminar atípicos es **cambiar los datos**;
-@prp-laplace-mae es **cambiar el modelo**. La segunda opción es honesta y casi nadie la
-considera.
+@prp-laplace-mae es **cambiar el modelo**. La segunda alternativa es poco habitual.
 :::
 
 ## Laboratorio: el *pipeline* canónico del curso

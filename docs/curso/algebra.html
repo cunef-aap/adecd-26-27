@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Cálculo y álgebra que va a necesitar – Aprendizaje Automático: Predicción</title>
+<title>Cálculo y álgebra que vas a necesitar – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/algebra.html">Cálculo y álgebra que va a necesitar</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/algebra.html">Cálculo y álgebra que vas a necesitar</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -351,7 +351,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Cálculo y álgebra que va a necesitar</span></a>
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -394,9 +394,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/algebra.html">Cálculo y álgebra que va a necesitar</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/algebra.html">Cálculo y álgebra que vas a necesitar</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Cálculo y álgebra que va a necesitar</h1>
+<h1 class="title">Cálculo y álgebra que vas a necesitar</h1>
 </div>
 
 
@@ -413,12 +413,12 @@ window.Quarto = {
 </header>
 
 
-<p>Dos páginas. Todo lo que este curso da por sabido en matemáticas. Si algo de aquí le suena lejano, lo repasa ahora y no vuelve a ser un problema.</p>
+<p>Dos páginas con lo que este curso da por sabido en matemáticas. Si algo de aquí te suena lejano, conviene repasarlo antes de la primera sesión.</p>
 <section id="álgebra-lineal" class="level2">
 <h2 class="anchored" data-anchor-id="álgebra-lineal">Álgebra lineal</h2>
 <p><strong>Producto matriz-vector.</strong> Si <span class="math inline">\(\mathbf{X}\)</span> es <span class="math inline">\(n\times m\)</span> y <span class="math inline">\(\mathbf{v}\)</span> es <span class="math inline">\(m\times 1\)</span>, entonces <span class="math inline">\(\mathbf{X}\mathbf{v}\)</span> es <span class="math inline">\(n\times 1\)</span> y su fila <span class="math inline">\(i\)</span> es <span class="math inline">\(\sum_{j} x_{ij}v_j\)</span>.</p>
 <p><strong>Traspuesta.</strong> <span class="math inline">\((\mathbf{A}\mathbf{B})^{\mathsf{T}} = \mathbf{B}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}\)</span>.</p>
-<p><strong>Norma euclídea.</strong> <span class="math inline">\(\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_j v_j^2\)</span>. Es cero si y solo si <span class="math inline">\(\mathbf{v} = \mathbf{0}\)</span>. <em>(Esta última frase hace todo el trabajo del capítulo 4.)</em></p>
+<p><strong>Norma euclídea.</strong> <span class="math inline">\(\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_j v_j^2\)</span>. Es cero si y solo si <span class="math inline">\(\mathbf{v} = \mathbf{0}\)</span>. Esta propiedad se usa en el capítulo 4 para caracterizar cuándo la solución de mínimos cuadrados es única.</p>
 <p><strong>Dependencia lineal.</strong> Una columna de <span class="math inline">\(\mathbf{X}\)</span> es combinación lineal de las demás si existe <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> con <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Cuando no existe tal <span class="math inline">\(\mathbf{v}\)</span>, decimos que <span class="math inline">\(\mathbf{X}\)</span> tiene <strong>rango completo por columnas</strong>.</p>
 </section>
 <section id="cálculo" class="level2">
@@ -426,7 +426,7 @@ window.Quarto = {
 <p><strong>Derivada parcial.</strong> Se deriva respecto de una variable tratando las demás como constantes.</p>
 <p><strong>Gradiente.</strong> El vector de todas las parciales. Apunta en la dirección de máximo crecimiento.</p>
 <p><strong>Regla de la cadena.</strong> <span class="math inline">\(\frac{d}{dw} g(h(w)) = g'(h(w))\,h'(w)\)</span>.</p>
-<p><strong>Dos identidades que usaremos sin parar</strong> (capítulo 4): <span class="math display">\[\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
+<p><strong>Dos identidades que usaremos con frecuencia</strong> (capítulo 4): <span class="math display">\[\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
   \nabla(\mathbf{w}^{\mathsf{T}}\mathbf{A}\mathbf{w}) = 2\mathbf{A}\mathbf{w} \ \ (\mathbf{A}\text{ simétrica}).\]</span></p>
 <p><strong>Condición de primer orden.</strong> En un mínimo, el gradiente se anula. El recíproco es falso.</p>
 </section>

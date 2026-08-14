@@ -21,7 +21,7 @@ Tres sesiones por semana, con papeles distintos:
 
 ## Contrato de trabajo
 
-6 ECTS son 150 horas. Unas 67 son presenciales; el resto es suyo:
+6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:
 
 | | h/semana |
 |---|---|
@@ -31,13 +31,13 @@ Tres sesiones por semana, con papeles distintos:
 | Proyecto (solo semanas 9-13) | 1,5 |
 | **Total fuera de clase** | **~5,5** (7 en semanas de proyecto) |
 
-Si una semana no cabe en ese presupuesto, sobra materia, no falta tiempo. Díganmelo.
+Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 
 ## La derivación de la semana
 
 Cada S2 empieza con diez minutos en los que **una persona reproduce en la pizarra una
-demostración elegida al azar** de las ya vistas. No es una encerrona: la lista completa
-está publicada en el [índice de resultados](indice-resultados.qmd) desde el primer día.
+demostración elegida al azar** de las ya vistas. La lista completa está publicada en el
+[índice de resultados](indice-resultados.qmd) desde el primer día.
 
 ## Qué NO cubre esta asignatura
 
@@ -46,8 +46,8 @@ y comparte con esta buena parte del aparato. Aquí la regresión logística apar
 como caso particular de los modelos lineales generalizados, y no se evalúa.
 
 Tampoco cubrimos inferencia sobre los coeficientes (errores estándar, contrastes,
-intervalos de confianza). Es una decisión deliberada, explicada en @rem-inferencia, y la
-deuda se paga en el capítulo 15 con intervalos de predicción.
+intervalos de confianza). Es una decisión deliberada, explicada en @rem-inferencia. El
+capítulo 15 sí trata la incertidumbre, pero sobre las predicciones, mediante intervalos.
 
 ## Actividades formativas y metodologías docentes
 
@@ -73,8 +73,8 @@ La guía docente no permite el uso de móviles ni de otros dispositivos electró
 aula salvo indicación del profesor. En esta asignatura, esa indicación es explícita:
 
 - **S3 (laboratorio): portátil obligatorio.**
-- **S1 (teoría) y S2 (problemas): sin dispositivos.** No es una formalidad — la S2 es el
-  ensayo del examen final, que es en papel.
+- **S1 (teoría) y S2 (problemas): sin dispositivos.** La S2 es el ensayo del examen final,
+  que se hace en papel.
 
 ## Bibliografía
 
@@ -86,14 +86,14 @@ La de la guía docente oficial:
 - Boehmke y Greenwell, *Hands-On Machine Learning*. CRC Press.
 - Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning*. Springer.
 
-Complementaria, y la que de verdad se parece a estos apuntes:
+Complementaria, y más próxima al enfoque de estos apuntes:
 
-- Chodrow, *Machine Learning* — notas del curso CSCI 0451, Middlebury College.
+- Chodrow, *Machine Learning*: notas del curso CSCI 0451, Middlebury College.
   <https://www.philchodrow.prof/ml-notes-update/>
-- Bishop y Bishop, *Deep Learning: Foundations and Concepts*. Springer. Es la puesta al
-  día de PRML y la referencia natural para el enfoque probabilístico de estos apuntes.
+- Bishop y Bishop, *Deep Learning: Foundations and Concepts*. Springer. Es la versión
+  actualizada de PRML y sigue el mismo enfoque probabilístico que estos apuntes.
 
 ::: {.callout-note appearance="simple"}
 Aviso sobre la bibliografía oficial: Boehmke y Greenwell es un libro **de R**, y esta
-asignatura es de Python. Úsenlo por los conceptos, no por el código.
+asignatura es de Python. Conviene usarlo por los conceptos y no por el código.
 :::

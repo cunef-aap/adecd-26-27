@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 10
+## Capítulo en construcción, semana 10
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::

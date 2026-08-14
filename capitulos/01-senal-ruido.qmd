@@ -26,8 +26,7 @@ semana que viene, el coste de un siniestro que aún no se ha declarado.
 Conviene decir desde el primer día en qué se diferencia esto de lo que han visto en
 econometría. Allí la pregunta es *¿cuánto vale $\coefj$ y es significativo?*. Aquí la
 pregunta es *¿qué $\coef$ predice mejor fuera de la muestra?*. Son preguntas distintas,
-con respuestas distintas, y a veces el mejor modelo para una es un mal modelo para la
-otra. Escríbanlo en el margen:
+con respuestas distintas, y un modelo bueno para una puede ser malo para la otra.
 
 > Un modelo que predice bien no explica nada por el hecho de predecir bien.
 
@@ -47,8 +46,9 @@ y $\yi \in \Real$. El problema de predicción consiste en elegir una función
 $\model: \Real^{\nfeat} \to \Real$ que prediga bien $y$ en observaciones **no vistas**.
 :::
 
-La palabra que hace todo el trabajo en @def-datos es *no vistas*. Sin ella el problema
-es trivial, como veremos enseguida.
+La condición que importa en @def-datos es *no vistas*: las observaciones sobre las que se
+mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición
+el problema es trivial.
 
 ```{python}
 #| code-fold: true
@@ -100,8 +100,7 @@ $$ {#eq-senal-ruido}
 A $\model$ la llamamos **señal** y a $\varepsilon_i$ **ruido**.
 :::
 
-Lo que queremos aprender es $\model$, **no** los valores $\yi$. La distinción parece
-pedante y es el capítulo entero.
+Lo que queremos aprender es $\model$, **no** los valores $\yi$.
 
 ::: {#def-errores}
 ## Error de entrenamiento y error de test
@@ -126,8 +125,7 @@ Se produce **sobreajuste** cuando aumentar la complejidad del modelo mejora su e
 entrenamiento y **empeora** su error de test.
 :::
 
-El siguiente resultado es la razón de ser de la asignatura. No aparece en la mayoría de
-los cursos introductorios, y es de una línea.
+El siguiente resultado no suele aparecer en los cursos introductorios.
 
 ::: {#thm-interpolacion}
 ## Interpolación exacta
@@ -154,11 +152,11 @@ $\nobs - 1$, luego $P$ también.
 :::
 
 ::: {.callout-important appearance="simple"}
-## La consecuencia, dicha en voz alta
+## Consecuencia
 
-Un error de entrenamiento de cero **no es evidencia de nada**. Siempre se puede
-conseguir. Cualquier titular de la forma *«nuestro modelo acierta el 100 %»* que no
-diga sobre qué datos se ha medido es, en el mejor de los casos, ruido.
+Un error de entrenamiento de cero **no es evidencia de nada**: siempre se puede conseguir.
+Por tanto, una afirmación del tipo *"nuestro modelo acierta el 100 %"* no informa de nada
+mientras no se diga sobre qué datos se ha medido.
 :::
 
 Veámoslo. Interpolamos los 20 puntos y después generamos datos nuevos con la **misma
@@ -264,7 +262,7 @@ Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y 
 :::
 
 ::: {.proof}
-<!-- TODO(D3, 25 min). RUTA OBLIGATORIA — no hacerlo desde cero o pasa de M a L:
+<!-- TODO(D3, 25 min). RUTA OBLIGATORIA: no hacerlo desde cero o pasa de M a L:
      1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
         eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
      2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
@@ -283,9 +281,9 @@ $\yi \given \xv_i \sim \Normal(\model(\xv_i), \noise^2)$.
 @thm-traslacion con $c = \model(\xv_i)$.
 :::
 
-Este corolario de una línea es la bisagra del curso: convierte una **hipótesis sobre los
-errores** en una **distribución para los datos**, y una distribución para los datos es
-algo a lo que se le puede calcular la verosimilitud.
+El corolario convierte una hipótesis sobre los **errores** en una distribución para los
+**datos**. A una distribución se le puede calcular la verosimilitud, y eso es lo que
+haremos a continuación.
 
 ## Verosimilitud {#sec-mle-teorema}
 
@@ -296,10 +294,10 @@ Con $\nfeat = 1$: $\yi \sim \Normal(\coefzero + w_1 x_i,\ \noise^2)$, de forma i
 :::
 
 ::: {.callout-note appearance="simple"}
-## La hipótesis que casi nadie enuncia
+## Sobre la independencia
 
-*Independientes* aquí significa condicionalmente a las $\xv_i$. Es una hipótesis, no una
-verdad. En la @sec-grupos del capítulo 6 veremos qué pasa cuando es falsa: un mismo
+*Independientes* significa aquí condicionalmente a las $\xv_i$. Es una hipótesis, no una
+verdad. En la @sec-grupos del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo
 anfitrión con doce anuncios en Madrid la rompe.
 :::
 
@@ -379,7 +377,7 @@ y eso es el capítulo 3.
 ## La trampa de esta semana
 
 ::: {.trampa}
-**«Mi $\Rsq$ de entrenamiento es 0,999»**
+**"Mi $\Rsq$ de entrenamiento es 0,999"**
 
 Es exactamente @thm-interpolacion en acción. Añadan grados de libertad suficientes y
 cualquiera consigue ese número. La pregunta correcta no es *cuánto ajusta* sino
@@ -413,9 +411,9 @@ interpolador de Lagrange y compruebe que pasa por los tres puntos.
 :::
 
 ::: {#exr-titulares}
-Tres titulares de prensa afirman: (a) «el modelo predice el impago con un 99 % de
-acierto»; (b) «hemos reducido el error a cero»; (c) «validado sobre 10 millones de
-registros». Para cada uno, diga qué información falta para poder juzgarlo.
+Tres titulares de prensa afirman: (a) "el modelo predice el impago con un 99 % de
+acierto"; (b) "hemos reducido el error a cero"; (c) "validado sobre 10 millones de
+registros". Para cada uno, diga qué información falta para poder juzgarlo.
 :::
 
 ::: {#exr-ruido}

@@ -33,8 +33,8 @@ Cada capítulo es **un solo fichero** `.qmd` del que salen dos artefactos:
 
 | Perfil | Salida | Qué hace con los bloques `#---` |
 |---|---|---|
-| `publica` | `docs/` — el sitio | borra solo las líneas marcadoras; **el código se ve entero** |
-| `notebooks`| `docs/live-notebooks/` — `.ipynb` | sustituye el bloque por `# TODO: completar en clase` |
+| `publica` | `docs/` (el sitio) | borra solo las líneas marcadoras; **el código se ve entero** |
+| `notebooks`| `docs/live-notebooks/` (`.ipynb`) | sustituye el bloque por `# TODO: completar en clase` |
 
 Así, lo que se completa en directo en el laboratorio y lo que queda publicado como
 referencia **no pueden desincronizarse**: son el mismo fichero.
@@ -48,7 +48,7 @@ w = np.linalg.solve(X.T @ X, X.T @ y)
 ```
 ```
 
-⚠️ Los centinelas tienen que ir emparejados. `make check` lo comprueba; un número impar
+OJO: los centinelas tienen que ir emparejados. `make check` lo comprueba; un número impar
 borraría en silencio el código de un capítulo entero.
 
 ## Estructura
@@ -69,7 +69,7 @@ _referencia/   material de consulta, no se publica (ignorado por git)
 - **Notación**: todo símbolo sale de `assets/includes/_macros.tex`. Los coeficientes se
   escriben con la macro `\coef`, de modo que cambiar `w` por `β` es una línea, no quince
   ficheros.
-- **Se demuestra todo lo que se enuncia.** Lo que no, va marcado como ⬛ *caja negra*, con
+- **Se demuestra todo lo que se enuncia.** Lo que no, va marcado como *fuera de alcance*, con
   el motivo.
 - **Ningún cuaderno descarga datos al renderizar.** Todo se espeja en `datos/` con fecha y
   licencia.

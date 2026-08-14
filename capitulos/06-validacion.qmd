@@ -28,7 +28,7 @@ salir negativo.
 @lem-media-optima, @def-fuga, @cor-residuos-ortogonales, @def-lineal-gaussiano.
 :::
 
-## El riesgo que de verdad importa
+## El riesgo de generalización
 
 ::: {#def-riesgo-verdadero}
 ## Riesgo verdadero
@@ -58,8 +58,8 @@ Linealidad de la esperanza sobre $\ntest$ términos idénticamente distribuidos.
 :::
 
 ::: {.callout-important appearance="simple"}
-La demostración es una línea; **lo que importa son las hipótesis**. Violar (i) es fuga de
-información (@def-fuga). Violar (ii) es lo que hace un anfitrión con doce anuncios
+La demostración es inmediata; las hipótesis, no. Incumplir (i) es fuga de información
+(@def-fuga). Incumplir (ii) es lo que ocurre con un anfitrión que tiene doce anuncios
 (@sec-grupos).
 :::
 
@@ -105,7 +105,7 @@ empírico sobre el bloque $k$ del modelo entrenado sin él.
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Precisión que casi nadie explicita
+## Una precisión sobre el promedio
 
 $\frac{1}{K}\sum_k(\text{media del bloque})$ coincide con $\frac{1}{\nobs}\sum_i \loss_i$
 **solo si los bloques tienen el mismo tamaño**. `cross_val_score` hace lo primero.
@@ -164,7 +164,7 @@ hipótesis, y **la diferencia medida entre ambos esquemas es la demostración em
 ## $\MAE$, $\MSE$, $\RMSE$
 
 Con unidades: si $y$ está en euros, $\MSE$ está en euros al cuadrado; $\RMSE$ y $\MAE$, en
-euros. Reportar un $\MSE$ «de 3.400» sin unidades no informa de nada.
+euros. Reportar un $\MSE$ "de 3.400" sin unidades no informa de nada.
 :::
 
 ::: {#prp-rmse-mae}
@@ -201,7 +201,7 @@ $\SST = \nobs\,\Riskh(\nullmodel)$ donde $\nullmodel \equiv \ybar$ es **el mejor
 constante** (@lem-media-optima). Por tanto
 $$\Rsq = 1 - \frac{\Riskh(\modelh)}{\Riskh(\nullmodel)}:$$
 la fracción del riesgo del modelo nulo que el modelo consigue eliminar. $\Rsq=0$ significa
-«igual de bueno que la media»; $\Rsq=1$, predicción perfecta.
+"igual de bueno que la media"; $\Rsq=1$, predicción perfecta.
 :::
 
 ::: {#thm-sct-descompone}
@@ -215,7 +215,7 @@ $0 \le \Rsq \le 1$.
 ::: {.proof}
 <!-- TODO(D10, 15 min): sumar y restar y_i - ybar = (y_i - yhat_i) + (yhat_i - ybar);
      el término cruzado es 2 r^T (X what - ybar 1) = 0 por @cor-residuos-ortogonales.
-     Es la MISMA técnica de @thm-identidad-fundamental: dígalo. -->
+     Es la misma técnica de @thm-identidad-fundamental; conviene señalarlo en clase. -->
 
 :::
 
@@ -255,9 +255,9 @@ $\Var{y}$. Y un $\Rsq$ alto no implica un modelo útil.
 ## La trampa de esta semana
 
 ::: {.trampa}
-**«He probado veinte modelos y me quedo con el mejor en test»**
+**"He probado veinte modelos y me quedo con el mejor en test"**
 
-Ese «mejor en test» ya no estima nada, por @thm-sesgo-seleccion. Con veinte modelos y un
+Ese "mejor en test" ya no estima nada, por @thm-sesgo-seleccion. Con veinte modelos y un
 test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación;
 test, una vez.
 :::

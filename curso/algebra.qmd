@@ -1,7 +1,7 @@
-# Cálculo y álgebra que va a necesitar {.unnumbered}
+# Cálculo y álgebra que vas a necesitar {.unnumbered}
 
-Dos páginas. Todo lo que este curso da por sabido en matemáticas. Si algo de aquí le
-suena lejano, lo repasa ahora y no vuelve a ser un problema.
+Dos páginas con lo que este curso da por sabido en matemáticas. Si algo de aquí te suena
+lejano, conviene repasarlo antes de la primera sesión.
 
 ## Álgebra lineal
 
@@ -12,7 +12,8 @@ $\sum_{j} x_{ij}v_j$.
 **Traspuesta.** $(\mathbf{A}\mathbf{B})^{\mathsf{T}} = \mathbf{B}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}$.
 
 **Norma euclídea.** $\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_j v_j^2$.
-Es cero si y solo si $\mathbf{v} = \mathbf{0}$. *(Esta última frase hace todo el trabajo del capítulo 4.)*
+Es cero si y solo si $\mathbf{v} = \mathbf{0}$. Esta propiedad se usa en el capítulo 4 para
+caracterizar cuándo la solución de mínimos cuadrados es única.
 
 **Dependencia lineal.** Una columna de $\mathbf{X}$ es combinación lineal de las demás si
 existe $\mathbf{v} \neq \mathbf{0}$ con $\mathbf{X}\mathbf{v} = \mathbf{0}$. Cuando no
@@ -28,7 +29,7 @@ crecimiento.
 
 **Regla de la cadena.** $\frac{d}{dw} g(h(w)) = g'(h(w))\,h'(w)$.
 
-**Dos identidades que usaremos sin parar** (capítulo 4):
+**Dos identidades que usaremos con frecuencia** (capítulo 4):
 $$\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
   \nabla(\mathbf{w}^{\mathsf{T}}\mathbf{A}\mathbf{w}) = 2\mathbf{A}\mathbf{w} \ \ (\mathbf{A}\text{ simétrica}).$$
 

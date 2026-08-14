@@ -3,8 +3,9 @@
 
 .PHONY: check sitio notebooks preview publicar datos limpiar
 
-check:                       ## centinelas #--- emparejados en todos los .qmd
+check:                       ## centinelas emparejados + reglas mecánicas de estilo
 	python scripts/check-centinelas.py
+	python scripts/check-estilo.py
 
 sitio: check                 ## renderiza el sitio a docs/
 	quarto render --profile publica

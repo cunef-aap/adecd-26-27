@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 14
+## Capítulo en construcción, semana 14
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::
@@ -37,7 +37,7 @@ completo desde el primer día.
 - Si $y$ es un conteo, el modelo gaussiano predice negativos y asume varianza constante:
   ambas cosas falsas.
 - Poisson con enlace logarítmico; log-verosimilitud y su gradiente $\Xt(\yv-\boldsymbol\mu)$
-  — **misma forma que @thm-gradiente-matricial**, otra $\mu$.
+  **misma forma que @thm-gradiente-matricial**, otra $\mu$.
 - Desvianza como pérdida. Tabla de familias y enlaces (cierra @rem-catalogo).
 - Interpretación multiplicativa de los coeficientes.
 

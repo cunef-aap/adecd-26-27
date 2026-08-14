@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 9
+## Capítulo en construcción, semana 9
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::
@@ -34,7 +34,7 @@ completo desde el primer día.
 
 - $2^\nfeat$ subconjuntos; por qué seleccionar con el error de entrenamiento elige siempre
   el modelo completo ($\Rsq$ monótono en $\nfeat$: dos líneas desde @thm-identidad-fundamental).
-- AIC y BIC como log-verosimilitud penalizada — conecta con @thm-loglik-mse.
+- AIC y BIC como log-verosimilitud penalizada: conecta con @thm-loglik-mse.
 - Colinealidad y VIF; PCA (micro-derivación de la primera componente por Lagrange, opcional).
 - PCR y por qué a una regresión le importa PCA.
 

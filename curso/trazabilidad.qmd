@@ -2,8 +2,8 @@
 
 Correspondencia entre el temario oficial de G244, los resultados de aprendizaje y las
 semanas de este curso. Sirve para dos cosas: que cualquier revisor pueda comprobar la
-cobertura, y que la pregunta *«¿por qué tantas demostraciones?»* tenga respuesta escrita
-— **H1 y H4 la piden literalmente**.
+cobertura, y que la pregunta *"¿por qué tantas demostraciones?"* tenga respuesta escrita
+**H1 y H4 la piden literalmente**.
 
 ## Temario
 

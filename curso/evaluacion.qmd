@@ -14,7 +14,7 @@ el mundo**, incluidos repetidores y estudiantes de intercambio.
 
 ## Cómo sale la nota de actas
 
-Estas reglas son de la guía docente, no mías. Léanlas una vez y no vuelvan a preguntarlas.
+Estas reglas proceden de la guía docente oficial.
 
 | Situación | Nota en actas |
 |---|---|
@@ -31,21 +31,21 @@ El examen final es **de cátedra**: evalúa todos los contenidos del programa.
 
 ## Estructura de los exámenes
 
-El parcial y el final tienen **la misma arquitectura**, para que el parcial sea un ensayo
-de verdad:
+El parcial y el examen final tienen la misma estructura, de modo que el parcial funcione
+como ensayo del final:
 
 | Bloque | Peso | Qué se pide |
 |---|---|---|
 | A | 30 % | preguntas conceptuales cortas (*define*, *explica*, *razona*, *analiza*) |
 | B | 25 % | **una demostración**, elegida entre las del [índice de resultados](indice-resultados.qmd) |
 | C | 25 % | cálculo a mano sobre una tabla pequeña |
-| D | 20 % | *«este script tiene errores»*: encontrarlos y justificarlos |
+| D | 20 % | *"este script tiene errores"*: encontrarlos y justificarlos |
 
-En el bloque D se plantan ocho errores y se puntúan **los seis mejor justificados**: se
-premia la justificación, no la lista.
+En el bloque D se plantan ocho errores y se puntúan los seis mejor justificados. La
+puntuación depende de la justificación y no del número de errores señalados.
 
 ## Qué es examinable como demostración
 
 Todo lo que aparece con el marco verde de *Demostración* en los apuntes. La lista completa,
 con su número y su capítulo, está en el [índice de resultados](indice-resultados.qmd) y se
-publica en la semana 4 — antes del parcial.
+publica en la semana 4, tres semanas antes del parcial.

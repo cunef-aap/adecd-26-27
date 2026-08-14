@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 11
+## Capítulo en construcción, semana 11
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::
@@ -27,7 +27,7 @@ completo desde el primer día.
 
 ## De dónde sale el material
 
-- **`curso-ml-R/Rmd/06-trees`** — material propio (Gallego y Naveiro). CART completo.
+- **`curso-ml-R/Rmd/06-trees`**: material propio (Gallego y Naveiro). CART completo.
   **Ojo:** Notación $\beta/\gamma/\Theta$: pasar a la del curso.
 
 ## Resultados que deben aparecer

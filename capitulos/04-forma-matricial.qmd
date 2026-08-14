@@ -1,6 +1,6 @@
 ---
 title: 'Forma matricial y ecuaciones normales'
-subtitle: 'Una sola identidad, $\mathbf{v}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{v} = \lVert \mathbf{X}\mathbf{v}\rVert^2$, sostiene el capítulo entero'
+subtitle: 'De la condición de primer orden a las ecuaciones normales, y de ahí a la existencia y unicidad de la solución'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -82,7 +82,7 @@ $\displaystyle \grad \Riskh(\coef) = \frac{2}{\nobs}\,\Xt(\X\coef - \yv)$.
 :::
 
 ::: {.proof}
-<!-- TODO(D6, 20 min). RUTA OBLIGATORIA — desarrollar
+<!-- TODO(D6, 20 min). RUTA OBLIGATORIA: desarrollar
         ||Xw - y||^2 = w^T X^T X w - 2 w^T X^T y + y^T y
      y aplicar @lem-grad-lineal y @lem-grad-cuadratica. Es la ruta de econometría, que
      ya conocen, y regala el hessiano de @thm-hessiano.
@@ -117,9 +117,9 @@ $\onesv\T\resid = \sum_i \residi$ porque la primera columna de $\X$ es de unos.
 :::
 
 ::: {.callout-important appearance="simple"}
-@cor-residuos-ortogonales parece un tecnicismo y es la pieza que hace funcionar
-@thm-sct-descompone en el capítulo 6 — y, al fallar fuera de la muestra, la que explica
-por qué $\Rsq$ puede salir negativo.
+@cor-residuos-ortogonales se utiliza en el capítulo 6 para demostrar
+@thm-sct-descompone. Fuera de la muestra deja de cumplirse, y de ahí que $\Rsq$ pueda
+salir negativo.
 :::
 
 ## Óptimo global, existencia y unicidad
@@ -150,8 +150,8 @@ $\Riskh(\coef) \geq \Riskh(\coefhat)$ para todo $\coef$.
 :::
 
 ::: {.callout-important appearance="simple"}
-Fíjense en lo que acaba de pasar: hemos demostrado **optimalidad global sin una sola
-palabra sobre convexidad**. Sumar y restar ha hecho todo el trabajo.
+Obsérvese que la optimalidad global se ha obtenido sin usar la convexidad. El argumento
+se reduce a sumar y restar un término.
 :::
 
 ::: {#thm-existencia-unicidad}

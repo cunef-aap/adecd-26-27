@@ -17,8 +17,8 @@
 ## $\mathbf{w}$ frente a $\boldsymbol{\beta}$
 
 En econometría y en el curso anterior los coeficientes se llaman $\beta$. Aquí se llaman
-$\mathbf{w}$, que es la notación de la literatura de aprendizaje automático y la de las
-fuentes que van a leer. **Es la misma cosa.**
+$\mathbf{w}$, que es la notación habitual en la literatura de aprendizaje automático y la
+de las fuentes de referencia del curso. Designan el mismo objeto.
 
 | Aquí | En econometría |
 |---|---|
@@ -26,8 +26,8 @@ fuentes que van a leer. **Es la misma cosa.**
 | $\hat{\mathbf{w}}$ | $\hat{\boldsymbol{\beta}}$, $b$ |
 | $\hat{R}(\mathbf{w})$ | $\mathrm{SCR}/n$ |
 
-Que el símbolo sea distinto no es lo importante. Lo importante es que la **pregunta** es
-distinta: allí, cuánto vale el coeficiente; aquí, qué predice mejor fuera de la muestra.
+Además del símbolo, cambia la pregunta: en econometría, cuánto vale el coeficiente; aquí,
+qué valores predicen mejor fuera de la muestra.
 
 ## Vocabulario ES/EN
 

@@ -12,30 +12,30 @@ se mantiene a mano y solo cubre los capítulos publicados.
 
 | Resultado | Se demuestra | Depende de |
 |---|---|---|
-| Def. datos y problema de predicción | — | |
-| Def. modelo señal + ruido | — | |
-| Def. error de entrenamiento y de test | — | |
-| Def. sobreajuste | — | |
-| **Teo. interpolación exacta** | **sí** (base de Lagrange) | — |
-| Def. densidad normal | — | |
+| Def. datos y problema de predicción |  | |
+| Def. modelo señal + ruido |  | |
+| Def. error de entrenamiento y de test |  | |
+| Def. sobreajuste |  | |
+| **Teo. interpolación exacta** | **sí** (base de Lagrange) |  |
+| Def. densidad normal |  | |
 | Lema constante de normalización | no (fuera de alcance) | |
 | **Teo. traslación** | **sí** | densidad normal |
 | **Teo. escala** | **sí** | densidad normal |
 | Cor. estandarización | sí | traslación, escala |
 | **Teo. media y varianza** | **sí** | estandarización, normalización |
 | Cor. del ruido al objetivo | sí | traslación |
-| Def. modelo lineal-gaussiano | — | |
-| Def. verosimilitud | — | |
-| Lema el logaritmo preserva el argmax | sí | — |
-| Def. máxima verosimilitud | — | |
+| Def. modelo lineal-gaussiano |  | |
+| Def. verosimilitud |  | |
+| Lema el logaritmo preserva el argmax | sí |  |
+| Def. máxima verosimilitud |  | |
 
 ## Capítulo 2 · Verosimilitud y MLE
 
 | Resultado | Se demuestra | Depende de |
 |---|---|---|
-| Def. riesgo empírico | — | |
-| Lema invarianza afín del argmin | sí | — |
-| **Lema el mejor modelo constante es la media** | **sí** | — |
+| Def. riesgo empírico |  | |
+| Lema invarianza afín del argmin | sí |  |
+| **Lema el mejor modelo constante es la media** | **sí** |  |
 | **Teo. expansión de la log-verosimilitud** | **sí** | densidad normal |
 | **Cor. MLE = mínimos cuadrados** | **sí** | invarianza afín |
 | **Teo. perfilado de $\sigma$** | **sí** | expansión |

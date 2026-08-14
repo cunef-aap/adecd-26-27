@@ -70,10 +70,9 @@ $\displaystyle \argmin_{c \in \Real} \sum_{i=1}^{\nobs} (\yi - c)^2 = \ybar$.
 :::
 
 ::: {.callout-important appearance="simple"}
-@lem-media-optima se usa **tres veces más** en el curso: en el capítulo 5 (imputación por
-la media), en el capítulo 6 (el modelo nulo contra el que compara $\Rsq$) y en la semana 11
-(la constante óptima dentro de una hoja de un árbol). Es la inversión más rentable del
-capítulo.
+@lem-media-optima se usa tres veces más en el curso: en el capítulo 5 (imputación por la
+media), en el capítulo 6 (el modelo nulo contra el que compara $\Rsq$) y en la semana 11
+(la constante óptima dentro de una hoja de un árbol).
 :::
 
 ## El teorema central {#sec-teorema-central}
@@ -88,7 +87,7 @@ $$ {#eq-loglik}
 :::
 
 ::: {.proof}
-<!-- TODO(D4, 25 min) — LA DEMOSTRACION DEL CURSO. Escribirla entera, línea a línea:
+<!-- TODO(D4, 25 min): LA DEMOSTRACION DEL CURSO. Escribirla entera, línea a línea:
      1. sustituir la densidad @eq-densidad-normal dentro del producto,
      2. log del producto -> suma,
      3. separar la constante de la suma,
@@ -109,10 +108,8 @@ $\nobs/2\noise^2 > 0$ más una constante que no depende de $\coef$.
 :::
 
 ::: {.callout-important appearance="simple"}
-## Dígalo en voz alta
-
-Nadie decidió usar el cuadrado del error. **El cuadrado se deduce de haber supuesto ruido
-gaussiano.** Cambien el ruido y cambia la pérdida: eso es @prp-laplace-mae.
+El cuadrado del error no es un convenio: **se deduce de haber supuesto ruido gaussiano**.
+Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de @prp-laplace-mae.
 :::
 
 ::: {#rem-condicional}
@@ -154,10 +151,10 @@ $\noisehat^2 = \RSS/\nobs$ evaluado en $\coefhat$.
 ::: {.callout-note appearance="simple"}
 ## El hilo de $\noisehat^2$
 
-Este número reaparece **cuatro veces**: aquí; en el capítulo 5 al devolver euros
-insesgados tras una transformación logarítmica; en el capítulo 7 como el término de ruido
-irreducible de la descomposición sesgo-varianza; y en la semana 15 como el suelo contra
-el que se juzga la anchura de un intervalo. Denle un nombre y guárdenlo.
+Este número reaparece cuatro veces: aquí; en el capítulo 5, al devolver euros insesgados
+tras una transformación logarítmica; en el capítulo 7, como término de ruido irreducible de
+la descomposición sesgo-varianza; y en la semana 15, como referencia con la que juzgar la
+anchura de un intervalo.
 :::
 
 ::: {#rem-sesgo-sigma}
@@ -200,7 +197,7 @@ estimación máximo-verosímil equivale a **minimizar el error absoluto medio**.
 ## La trampa de esta semana
 
 ::: {.trampa}
-**«Uso RMSE porque es lo estándar»**
+**"Uso RMSE porque es lo estándar"**
 
 Elegir métrica **es** elegir modelo de ruido, y por tanto elegir qué funcional de la
 distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas
@@ -213,7 +210,7 @@ pesadas, minimizar $\MSE$ estima la media de algo cuya media no interesa.
 |---|---|
 | $\Riskh(\coef)$ | `mean_squared_error(y, yhat)` |
 | $\RSS$ | `((y - yhat)**2).sum()` |
-| $\noisehat^2$ | `resid.var(ddof=0)` — ojo, `ddof=0`, no `1` |
+| $\noisehat^2$ | `resid.var(ddof=0)` (ojo, `ddof=0`, no `1`) |
 | $\loglik$ | `dist.log_prob(y).sum()` |
 
 ## Ejercicios

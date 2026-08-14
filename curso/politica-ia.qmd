@@ -11,16 +11,15 @@
 
 ## Por qué no está prohibida
 
-Porque van a trabajar con estas herramientas y porque la guía docente incluye
-explícitamente una introducción a los agentes de IA para implementar modelos. Prohibirlas
-no les prepara para nada.
+Porque forman parte del trabajo habitual con modelos y porque la guía docente incluye
+explícitamente una introducción a los agentes de IA para su implementación.
 
 ## Por qué hay que documentarla
 
-Porque el objetivo del proyecto no es que el código exista, sino que ustedes sepan si el
-código es correcto. Un agente produce con enorme fluidez *pipelines* con fuga de
-información, argumentos inventados de scikit-learn y métricas de clasificación en
-problemas de regresión. Detectarlo es la competencia que se evalúa.
+El objetivo del proyecto no es que el código exista, sino saber si es correcto. Un agente
+produce con facilidad *pipelines* con fuga de información, argumentos de scikit-learn que
+no existen y métricas de clasificación en problemas de regresión. Detectar esos fallos es
+la competencia que se evalúa.
 
 ## `BITACORA_IA.md`
 
@@ -31,8 +30,7 @@ Entregable obligatorio del proyecto. Debe documentar:
 - Al menos **dos errores reales del agente**, cada uno con: cómo se detectó y cómo se
   corrigió.
 
-Una bitácora sin errores documentados se lee como una bitácora no escrita, no como un
-agente perfecto.
+Una bitácora sin errores documentados se interpreta como una bitácora incompleta.
 
 ## Defensa individual
 

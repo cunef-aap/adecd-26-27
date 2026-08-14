@@ -5,14 +5,16 @@ curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.
 
 ## De qué va este curso
 
-De un problema muy concreto: predecir una magnitud numérica en observaciones que todavía
-no hemos visto. Y de una idea que se repite quince veces:
+De un problema concreto: predecir una magnitud numérica en observaciones que todavía no
+hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince
+capítulos:
 
 > **(1)** escribe un modelo de datos `señal + ruido` → **(2)** escribe la verosimilitud →
-> **(3)** toma `−log` y obtén una pérdida → **(4)** minimízala → **(5)** valida con un
-> protocolo honesto y mide con una métrica que signifique algo.
+> **(3)** toma `−log` y obtén una pérdida → **(4)** minimízala → **(5)** valida sin
+> reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del
+> problema.
 
-Esa receta se deriva entera, a mano, una vez (capítulos 2 a 4) y después se reutiliza:
+Ese esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
 *ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
 variables; Poisson es el paso 1 con otro ruido; el *boosting* es el paso 4 en el espacio
 de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.
@@ -29,9 +31,9 @@ de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda vora
 
 ## Antes de la primera sesión
 
-Lea el anexo [Cálculo y álgebra que va a necesitar](curso/algebra.qmd) y haga el
+Lee el anexo [Cálculo y álgebra que vas a necesitar](curso/algebra.qmd) y haz el
 diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber
-dónde estamos.
+de qué punto partimos.
 
 ## Sobre estos apuntes
 

@@ -160,8 +160,8 @@ $1/2a < \lr < 1/a$; diverge si $\lr > 1/a$.
 :::
 
 ::: {.callout-important appearance="simple"}
-@prp-caso-cuadratico no es una curiosidad: es el andamio con el que el **capítulo 5**
-justifica la estandarización sin necesidad de autovalores. No la corten.
+@prp-caso-cuadratico se usa en el capítulo 5 para justificar la estandarización sin
+recurrir a autovalores.
 :::
 
 ::: {.cajanegra}
@@ -202,7 +202,7 @@ class DescensoGradiente:
 ## La trampa de esta semana
 
 ::: {.trampa}
-**«No converge, subo la tasa de aprendizaje»**
+**"No converge, subo la tasa de aprendizaje"**
 
 Casi siempre es lo contrario. Por @prp-caso-cuadratico, pasado $\lr = 1/a$ el método
 **diverge**, y entre $1/2a$ y $1/a$ oscila mientras converge, que es justo lo que parece
@@ -236,7 +236,7 @@ monótonamente y el que diverge. Compruébelo numéricamente.
 ## Qué llevarte
 
 - La condición de primer orden (@thm-condicion-primer-orden) es lo que convierte
-  «minimizar» en «resolver una ecuación». De ella sale todo el capítulo 4.
+  "minimizar" en "resolver una ecuación". De ella sale todo el capítulo 4.
 - El descenso siempre desciende para $\lr$ suficientemente pequeña
   (@prp-descenso-desciende), y en el caso cuadrático sabemos **exactamente** cuánto
   (@prp-caso-cuadratico).

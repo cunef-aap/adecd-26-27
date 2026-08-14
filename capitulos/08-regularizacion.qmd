@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 8
+## Capítulo en construcción, semana 8
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::
@@ -27,7 +27,7 @@ completo desde el primer día.
 
 ## De dónde sale el material
 
-- **`curso-ml-R/Rmd/04-regression`** — la mina principal. Lasso, ridge, elastic net, la
+- **`curso-ml-R/Rmd/04-regression`**: la mina principal. Lasso, ridge, elastic net, la
   interpretación bayesiana, y sobre todo el **descenso coordinado con el operador
   soft-thresholding, derivado paso a paso con análisis de subdiferencial**. Ya en español,
   ya en notación \`w\`.

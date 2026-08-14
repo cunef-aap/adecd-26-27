@@ -16,7 +16,7 @@ import style
 :::
 
 ::: {.callout-warning appearance="simple"}
-## Capítulo en construcción — semana 7
+## Capítulo en construcción, semana 7
 Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
 completo desde el primer día.
 :::
@@ -27,7 +27,7 @@ completo desde el primer día.
 
 ## De dónde sale el material
 
-- Chodrow `chapters/07-bias-variance.qmd` — descomposición completa, con la forma
+- Chodrow `chapters/07-bias-variance.qmd`: descomposición completa, con la forma
   *no condicionada* $E = \Var{\hat{Y}} + (\hat\mu-\mu)^2 + \Var{Y}$. Más simple que la de ISLR/ESL;
   elegir una y avisar de que verán la otra.
 - `curso-ml-R/Rmd/02-supervised` sl. 15-16 (descomposición del error: optimización /

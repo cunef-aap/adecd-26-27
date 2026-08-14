@@ -351,7 +351,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cálculo y álgebra que va a necesitar</span></a>
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -480,17 +480,14 @@ window.Quarto = {
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Sustituir en <a href="04-forma-matricial.html#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>.</p>
 </div>
-<div class="callout callout-style-simple callout-important no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Corrige una idea falsa muy extendida
+<div class="callout-body-container">
+<p>Para <strong>mínimos cuadrados</strong>, estandarizar es un asunto <em>numérico</em> y no estadístico: no cambia las predicciones. En <em>ridge</em> (capítulo 8) sí pasa a ser estadístico, porque la penalización no es invariante a escala. Conviene tener presente esa diferencia antes de estandarizar por costumbre.</p>
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Para <strong>mínimos cuadrados</strong>, estandarizar es un asunto <em>numérico</em>, no estadístico: no cambia las predicciones. En <em>ridge</em> (capítulo 8) pasará a ser <strong>estadístico</strong>, porque la penalización no es invariante a escala. Ese contraste es lo que convierte «estandarizar» de costumbre en decisión razonada.</p>
 </div>
 </div>
 <div id="prp-condicionamiento" class="theorem proposition">
@@ -525,7 +522,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Este par de resultados es <strong>el mejor argumento de predicción frente a inferencia de todo el curso</strong>, y ocurre sobre un <code>OneHotEncoder</code> que van a escribir esa misma tarde: el mismo modelo, igual de bueno prediciendo, con infinitos vectores de coeficientes distintos. Cualquier lectura «económica» de esos coeficientes es una lectura de un número arbitrario.</p>
+<p>Estos dos resultados ilustran la diferencia entre predicción e inferencia sobre un caso concreto, el de un <code>OneHotEncoder</code>: el mismo modelo, con la misma capacidad predictiva, y con infinitos vectores de coeficientes distintos. Una interpretación económica de esos coeficientes sería, por tanto, la interpretación de un número arbitrario.</p>
 </div>
 </div>
 </div>
@@ -558,13 +555,13 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-log-error-relativo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.6 (Mínimos cuadrados en logaritmos ≈ error relativo)</strong></span> <span class="math inline">\(\log(y/\hat{y}) \approx (y - \hat{y})/\hat{y}\)</span> para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error <strong>relativo</strong>. <em>Esa</em> es la razón para tomar logaritmos de un precio; no «normalizar».</p>
+<p><span class="theorem-title"><strong>Proposición 5.6 (Mínimos cuadrados en logaritmos ≈ error relativo)</strong></span> <span class="math inline">\(\log(y/\hat{y}) \approx (y - \hat{y})/\hat{y}\)</span> para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error <strong>relativo</strong>. <em>Esa</em> es la razón para tomar logaritmos de un precio; no “normalizar”.</p>
 </div>
 </section>
 <section id="valores-extremos" class="level2">
 <h2 class="anchored" data-anchor-id="valores-extremos">Valores extremos</h2>
 <div id="rem-atipicos" class="proof remark">
-<p><span class="proof-title"><em>Observación 5.1</em> (Atípicos y el modelo de ruido). </span>La influencia de una observación en <span class="math inline">\(\hat{R}\)</span> es <span class="math inline">\(r_i^2/n\)</span>, <strong>no acotada</strong>; bajo error absoluto es <span class="math inline">\(\left\lvert r_i \right\rvert/n\)</span>. Eliminar atípicos es <strong>cambiar los datos</strong>; <a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a> es <strong>cambiar el modelo</strong>. La segunda opción es honesta y casi nadie la considera.</p>
+<p><span class="proof-title"><em>Observación 5.1</em> (Atípicos y el modelo de ruido). </span>La influencia de una observación en <span class="math inline">\(\hat{R}\)</span> es <span class="math inline">\(r_i^2/n\)</span>, <strong>no acotada</strong>; bajo error absoluto es <span class="math inline">\(\left\lvert r_i \right\rvert/n\)</span>. Eliminar atípicos es <strong>cambiar los datos</strong>; <a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a> es <strong>cambiar el modelo</strong>. La segunda alternativa es poco habitual.</p>
 </div>
 </section>
 <section id="laboratorio-el-pipeline-canónico-del-curso" class="level2">

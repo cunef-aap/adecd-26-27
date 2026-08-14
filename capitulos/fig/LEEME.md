@@ -12,4 +12,4 @@ hasta resolver dos cosas:
    Llevan marca ICMAT y hay que quitarla: `logo.png` y todo lo que use el ámbar `#FFAA00`.
 
 Mientras tanto, este curso genera sus figuras con código, que es lo que pide el punto 3
-de la definición de «capítulo terminado».
+de la definición de "capítulo terminado".
