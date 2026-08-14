@@ -32,7 +32,7 @@ completo desde el primer día.
   soft-thresholding, derivado paso a paso con análisis de subdiferencial**. Ya en español,
   ya en notación \`w\`.
 - Chodrow `chapters/06-regularization.qmd` para la motivación desde bases y validación.
-- ⚠ Autoría: Alberto Torres Barrán. Pedir permiso antes de publicar prosa literal.
+- **Ojo:** Autoría: Alberto Torres Barrán. Pedir permiso antes de publicar prosa literal.
 
 ## Resultados que deben aparecer
 

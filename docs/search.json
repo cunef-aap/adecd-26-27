@@ -890,7 +890,7 @@
     "href": "capitulos/08-regularizacion.html#de-dónde-sale-el-material",
     "title": "8  Regularización: ridge, lasso y el prior",
     "section": "De dónde sale el material",
-    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/04-regression — la mina principal. Lasso, ridge, elastic net, la interpretación bayesiana, y sobre todo el descenso coordinado con el operador soft-thresholding, derivado paso a paso con análisis de subdiferencial. Ya en español, ya en notación `w`.\nChodrow chapters/06-regularization.qmd para la motivación desde bases y validación.\n⚠ Autoría: Alberto Torres Barrán. Pedir permiso antes de publicar prosa literal.",
+    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/04-regression — la mina principal. Lasso, ridge, elastic net, la interpretación bayesiana, y sobre todo el descenso coordinado con el operador soft-thresholding, derivado paso a paso con análisis de subdiferencial. Ya en español, ya en notación `w`.\nChodrow chapters/06-regularization.qmd para la motivación desde bases y validación.\nOjo: Autoría: Alberto Torres Barrán. Pedir permiso antes de publicar prosa literal.",
     "crumbs": [
       "Complejidad y regularización",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Regularización: ridge, lasso y el prior</span>"
@@ -1055,7 +1055,7 @@
     "href": "capitulos/11-arboles.html#de-dónde-sale-el-material",
     "title": "11  Métodos basados en reglas: árboles de regresión",
     "section": "De dónde sale el material",
-    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/06-trees — material propio (Gallego y Naveiro). CART completo. ⚠ Notación \\(\\beta/\\gamma/\\Theta\\): pasar a la del curso.",
+    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/06-trees — material propio (Gallego y Naveiro). CART completo. Ojo: Notación \\(\\beta/\\gamma/\\Theta\\): pasar a la del curso.",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Métodos basados en reglas: árboles de regresión</span>"
@@ -1121,7 +1121,7 @@
     "href": "capitulos/12-ensembles.html#resultados-que-deben-aparecer",
     "title": "12  Ensembles: bagging, random forest y boosting",
     "section": "Resultados que deben aparecer",
-    "text": "Resultados que deben aparecer\n\nLema 6.1 ya está demostrado en el capítulo 6. Aquí solo se aplica: promediar mata el término \\((1-\\rho)/K\\) pero \\(\\rho\\) es un suelo ⟹ hay que descorrelacionar ⟹ de ahí sale `max_features`.\nMuestras OOB como validación gratuita.\nBoosting: el residuo es el gradiente negativo de la pérdida cuadrática respecto de la predicción. Cierra el círculo con el capítulo 3.\n⚠ Frontera con G249: aquí solo en versión regresión.",
+    "text": "Resultados que deben aparecer\n\nLema 6.1 ya está demostrado en el capítulo 6. Aquí solo se aplica: promediar mata el término \\((1-\\rho)/K\\) pero \\(\\rho\\) es un suelo ⟹ hay que descorrelacionar ⟹ de ahí sale `max_features`.\nMuestras OOB como validación gratuita.\nBoosting: el residuo es el gradiente negativo de la pérdida cuadrática respecto de la predicción. Cierra el círculo con el capítulo 3.\nOjo: Frontera con G249: aquí solo en versión regresión.",
     "crumbs": [
       "Modelos no lineales y basados en reglas",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
@@ -1220,7 +1220,7 @@
     "href": "capitulos/14-glm.html#de-dónde-sale-el-material",
     "title": "14  Cuando el ruido no es gaussiano: GLM",
     "section": "De dónde sale el material",
-    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/02-supervised sl. 43-54 (logística, Newton-Raphson derivado, IRLS).\ncurso-ml-R/Rmd/04-regression sl. 3-6 (GLM, ejemplo Poisson).\n⚠ La regresión logística se menciona una vez como miembro Bernoulli del catálogo de enlaces y no se evalúa: es de G249.",
+    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/02-supervised sl. 43-54 (logística, Newton-Raphson derivado, IRLS).\ncurso-ml-R/Rmd/04-regression sl. 3-6 (GLM, ejemplo Poisson).\nOjo: La regresión logística se menciona una vez como miembro Bernoulli del catálogo de enlaces y no se evalúa: es de G249.",
     "crumbs": [
       "Más allá del ruido gaussiano",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
@@ -1638,7 +1638,7 @@
     "href": "curso/indice-resultados.html#capítulo-1-señal-y-ruido",
     "title": "Índice de resultados",
     "section": "",
-    "text": "Resultado\nSe demuestra\nDepende de\n\n\n\n\nDef. datos y problema de predicción\n—\n\n\n\nDef. modelo señal + ruido\n—\n\n\n\nDef. error de entrenamiento y de test\n—\n\n\n\nDef. sobreajuste\n—\n\n\n\nTeo. interpolación exacta\nsí (base de Lagrange)\n—\n\n\nDef. densidad normal\n—\n\n\n\nLema constante de normalización\n⬛ no\n\n\n\nTeo. traslación\nsí\ndensidad normal\n\n\nTeo. escala\nsí\ndensidad normal\n\n\nCor. estandarización\nsí\ntraslación, escala\n\n\nTeo. media y varianza\nsí\nestandarización, normalización\n\n\nCor. del ruido al objetivo\nsí\ntraslación\n\n\nDef. modelo lineal-gaussiano\n—\n\n\n\nDef. verosimilitud\n—\n\n\n\nLema el logaritmo preserva el argmax\nsí\n—\n\n\nDef. máxima verosimilitud\n—",
+    "text": "Resultado\nSe demuestra\nDepende de\n\n\n\n\nDef. datos y problema de predicción\n—\n\n\n\nDef. modelo señal + ruido\n—\n\n\n\nDef. error de entrenamiento y de test\n—\n\n\n\nDef. sobreajuste\n—\n\n\n\nTeo. interpolación exacta\nsí (base de Lagrange)\n—\n\n\nDef. densidad normal\n—\n\n\n\nLema constante de normalización\nno (fuera de alcance)\n\n\n\nTeo. traslación\nsí\ndensidad normal\n\n\nTeo. escala\nsí\ndensidad normal\n\n\nCor. estandarización\nsí\ntraslación, escala\n\n\nTeo. media y varianza\nsí\nestandarización, normalización\n\n\nCor. del ruido al objetivo\nsí\ntraslación\n\n\nDef. modelo lineal-gaussiano\n—\n\n\n\nDef. verosimilitud\n—\n\n\n\nLema el logaritmo preserva el argmax\nsí\n—\n\n\nDef. máxima verosimilitud\n—",
     "crumbs": [
       "Apéndices",
       "Índice de resultados"
@@ -1649,7 +1649,7 @@
     "href": "curso/indice-resultados.html#capítulo-2-verosimilitud-y-mle",
     "title": "Índice de resultados",
     "section": "Capítulo 2 · Verosimilitud y MLE",
-    "text": "Capítulo 2 · Verosimilitud y MLE\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. riesgo empírico\n—\n\n\n\nLema invarianza afín del argmin\nsí\n—\n\n\nLema el mejor modelo constante es la media\nsí\n—\n\n\nTeo. expansión de la log-verosimilitud\nsí\ndensidad normal\n\n\nCor. MLE = mínimos cuadrados\nsí\ninvarianza afín\n\n\nTeo. perfilado de \\(\\sigma\\)\nsí\nexpansión\n\n\nCor. la log-verosimilitud perfilada\nsí\nperfilado\n\n\nObs. sesgo de \\(\\hat\\sigma^2\\)\n⬛ no\n\n\n\nProp. ruido de Laplace ⟹ error absoluto\nsí\nexpansión",
+    "text": "Capítulo 2 · Verosimilitud y MLE\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. riesgo empírico\n—\n\n\n\nLema invarianza afín del argmin\nsí\n—\n\n\nLema el mejor modelo constante es la media\nsí\n—\n\n\nTeo. expansión de la log-verosimilitud\nsí\ndensidad normal\n\n\nCor. MLE = mínimos cuadrados\nsí\ninvarianza afín\n\n\nTeo. perfilado de \\(\\sigma\\)\nsí\nexpansión\n\n\nCor. la log-verosimilitud perfilada\nsí\nperfilado\n\n\nObs. sesgo de \\(\\hat\\sigma^2\\)\nno (fuera de alcance)\n\n\n\nProp. ruido de Laplace ⟹ error absoluto\nsí\nexpansión",
     "crumbs": [
       "Apéndices",
       "Índice de resultados"

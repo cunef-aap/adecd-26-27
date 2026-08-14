@@ -28,7 +28,7 @@ completo desde el primer día.
 ## De dónde sale el material
 
 - **`curso-ml-R/Rmd/06-trees`** — material propio (Gallego y Naveiro). CART completo.
-  ⚠ Notación $\beta/\gamma/\Theta$: pasar a la del curso.
+  **Ojo:** Notación $\beta/\gamma/\Theta$: pasar a la del curso.
 
 ## Resultados que deben aparecer
 

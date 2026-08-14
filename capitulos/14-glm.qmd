@@ -29,7 +29,7 @@ completo desde el primer día.
 
 - `curso-ml-R/Rmd/02-supervised` sl. 43-54 (logística, Newton-Raphson **derivado**, IRLS).
 - `curso-ml-R/Rmd/04-regression` sl. 3-6 (GLM, ejemplo Poisson).
-- ⚠ La regresión logística se menciona **una vez** como miembro Bernoulli del catálogo de
+- **Ojo:** La regresión logística se menciona **una vez** como miembro Bernoulli del catálogo de
   enlaces y **no se evalúa**: es de G249.
 
 ## Resultados que deben aparecer

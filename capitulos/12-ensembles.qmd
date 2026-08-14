@@ -39,7 +39,7 @@ completo desde el primer día.
 - Muestras OOB como validación gratuita.
 - Boosting: el residuo **es** el gradiente negativo de la pérdida cuadrática respecto de la
   predicción. Cierra el círculo con el capítulo 3.
-- ⚠ Frontera con G249: aquí solo en versión **regresión**.
+- **Ojo:** Frontera con G249: aquí solo en versión **regresión**.
 
 ## Ejercicios
 

@@ -18,7 +18,7 @@ se mantiene a mano y solo cubre los capítulos publicados.
 | Def. sobreajuste | — | |
 | **Teo. interpolación exacta** | **sí** (base de Lagrange) | — |
 | Def. densidad normal | — | |
-| Lema constante de normalización | ⬛ no | |
+| Lema constante de normalización | no (fuera de alcance) | |
 | **Teo. traslación** | **sí** | densidad normal |
 | **Teo. escala** | **sí** | densidad normal |
 | Cor. estandarización | sí | traslación, escala |
@@ -40,7 +40,7 @@ se mantiene a mano y solo cubre los capítulos publicados.
 | **Cor. MLE = mínimos cuadrados** | **sí** | invarianza afín |
 | **Teo. perfilado de $\sigma$** | **sí** | expansión |
 | Cor. la log-verosimilitud perfilada | sí | perfilado |
-| Obs. sesgo de $\hat\sigma^2$ | ⬛ no | |
+| Obs. sesgo de $\hat\sigma^2$ | no (fuera de alcance) | |
 | **Prop. ruido de Laplace ⟹ error absoluto** | **sí** | expansión |
 
 <!-- TODO(D13): completar capítulos 3-6 y automatizar la generación. -->
