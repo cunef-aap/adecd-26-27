@@ -54,7 +54,7 @@ $\E{\Riskh_{\text{test}}(\modelh) \given \modelh} = \Risk(\modelh)$.
 :::
 
 ::: {.proof}
-Linealidad de la esperanza sobre $\ntest$ términos idénticamente distribuidos. $\square$
+Linealidad de la esperanza sobre $\ntest$ términos idénticamente distribuidos.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -84,7 +84,7 @@ error de test hace que **ese número** sea optimista.
      sea m0 el índice que minimiza E[Riskh_m]. Para toda realización,
      min_m Riskh_m <= Riskh_{m0}. Tomando esperanzas,
      E[min_m Riskh_m] <= E[Riskh_{m0}] = min_m E[Riskh_m]. -->
-$\square$
+
 :::
 
 ::: {#rem-consecuencias}
@@ -130,7 +130,7 @@ $$\Var{\frac{1}{K}\sum_k Z_k} = \rho v + \frac{(1-\rho)v}{K}.$$
 <!-- TODO(D10, 15 min). En pizarra hacerlo con K = 2, que es una línea y ya deja ver el
      suelo rho*v. El caso general se demuestra en la semana 12, donde ES el argumento de
      por qué hay que descorrelacionar los árboles de un random forest. -->
-$\square$
+
 :::
 
 ::: {#cor-elegir-k}
@@ -175,7 +175,7 @@ euros. Reportar un $\MSE$ «de 3.400» sin unidades no informa de nada.
 ::: {.proof}
 <!-- TODO(D10, 5 min): RMSE^2 - MAE^2 = (1/n) sum r^2 - ((1/n) sum |r|)^2 = Var(|r|) >= 0.
      Ruta elegida sobre Cauchy-Schwarz: es probabilidad que sí tienen. -->
-$\square$
+
 :::
 
 ::: {#rem-metrica-modelo}
@@ -216,7 +216,7 @@ $0 \le \Rsq \le 1$.
 <!-- TODO(D10, 15 min): sumar y restar y_i - ybar = (y_i - yhat_i) + (yhat_i - ybar);
      el término cruzado es 2 r^T (X what - ybar 1) = 0 por @cor-residuos-ortogonales.
      Es la MISMA técnica de @thm-identidad-fundamental: dígalo. -->
-$\square$
+
 :::
 
 ::: {#thm-r2-negativo}
@@ -230,7 +230,7 @@ $$\Rsq_{\text{test}} < 0 \iff \SSE_{\text{test}} > \SST_{\text{test}} \iff \text
 ::: {.proof}
 <!-- TODO(D10, 15 min): (a) la equivalencia sale directa de @thm-r2-comparacion;
      (b) dar un CONTRAEJEMPLO MINIMO de 3 puntos calculable a mano -> ítem de examen. -->
-$\square$
+
 :::
 
 ::: {#rem-r2-avisos}
@@ -255,7 +255,7 @@ $\Var{y}$. Y un $\Rsq$ alto no implica un modelo útil.
 ## La trampa de esta semana
 
 ::: {.trampa}
-## «He probado veinte modelos y me quedo con el mejor en test»
+**«He probado veinte modelos y me quedo con el mejor en test»**
 
 Ese «mejor en test» ya no estima nada, por @thm-sesgo-seleccion. Con veinte modelos y un
 test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación;

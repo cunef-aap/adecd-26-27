@@ -48,6 +48,8 @@ book:
     <br><br><span style="color:grey;">&#169; Roi Naveiro, CUNEF Universidad, 2026</span>
   sidebar:
     search: true
+    logo: assets/img/cunef-logo.png
+    logo-alt: "CUNEF Universidad"
 
 format:
   html:
@@ -61,7 +63,9 @@ format:
     highlight-style: atom-one
     title-block: none
     grid:
-      margin-width: 350px
+      body-width: 760px
+      margin-width: 340px
+      sidebar-width: 275px
 
 lang: es
 

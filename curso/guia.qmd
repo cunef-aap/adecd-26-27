@@ -49,9 +49,51 @@ Tampoco cubrimos inferencia sobre los coeficientes (errores estándar, contraste
 intervalos de confianza). Es una decisión deliberada, explicada en @rem-inferencia, y la
 deuda se paga en el capítulo 15 con intervalos de predicción.
 
+## Actividades formativas y metodologías docentes
+
+Las de la guía docente oficial, y dónde caen en este curso:
+
+| | Actividad formativa | Aquí |
+|---|---|---|
+| AF1 | Clase magistral o teórica | sesión **S1** de cada semana |
+| AF2 | Clase práctica | sesiones **S2** (problemas) y **S3** (laboratorio) |
+| AF3 | Realización de trabajos | el proyecto con agentes de IA (semanas 8-13) |
+| AF4 | Tutorías | seguimiento del proyecto; *checkpoint* evaluado en la semana 11 |
+| AF5 | Estudio independiente | ~5,5 h/semana, según el contrato de trabajo de arriba |
+| AF6 | Pruebas de evaluación | parcial 1, defensa del proyecto y examen final |
+
+Metodologías docentes: **MD1** clase magistral · **MD2** clase práctica · **MD3** tutorías.
+
+## Asistencia y dispositivos
+
+La asistencia es **obligatoria** en primera matrícula. Una asistencia inferior al **80 %**
+implica la pérdida del derecho a examen en la convocatoria ordinaria.
+
+La guía docente no permite el uso de móviles ni de otros dispositivos electrónicos en el
+aula salvo indicación del profesor. En esta asignatura, esa indicación es explícita:
+
+- **S3 (laboratorio): portátil obligatorio.**
+- **S1 (teoría) y S2 (problemas): sin dispositivos.** No es una formalidad — la S2 es el
+  ensayo del examen final, que es en papel.
+
 ## Bibliografía
 
-- Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning*.
-- Bishop y Bishop, *Deep Learning: Foundations and Concepts*.
-- Deisenroth, Faisal y Ong, *Mathematics for Machine Learning*.
-- Chodrow, *Machine Learning* (notas del curso CSCI 0451).
+La de la guía docente oficial:
+
+- C. M. Bishop, *Pattern Recognition and Machine Learning*. Springer.
+- A. Giussani, *Applied Machine Learning with Python*. Bocconi University Press.
+- Deisenroth, Faisal y Ong, *Mathematics for Machine Learning*. Cambridge University Press.
+- Boehmke y Greenwell, *Hands-On Machine Learning*. CRC Press.
+- Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning*. Springer.
+
+Complementaria, y la que de verdad se parece a estos apuntes:
+
+- Chodrow, *Machine Learning* — notas del curso CSCI 0451, Middlebury College.
+  <https://www.philchodrow.prof/ml-notes-update/>
+- Bishop y Bishop, *Deep Learning: Foundations and Concepts*. Springer. Es la puesta al
+  día de PRML y la referencia natural para el enfoque probabilístico de estos apuntes.
+
+::: {.callout-note appearance="simple"}
+Aviso sobre la bibliografía oficial: Boehmke y Greenwell es un libro **de R**, y esta
+asignatura es de Python. Úsenlo por los conceptos, no por el código.
+:::

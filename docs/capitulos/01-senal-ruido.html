@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.319">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Aprendizaje Automático: Predicción - 1&nbsp; Señal y ruido</title>
+<title>1&nbsp; Señal y ruido – Aprendizaje Automático: Predicción</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -21,6 +27,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -66,53 +73,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../capitulos/02-verosimilitud.html" rel="next">
 <link href="../index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-56210221a811a62f3964318d438e7f14.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -122,8 +165,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/img/cunef-logo.png" alt="CUNEF Universidad" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/img/cunef-logo.png" alt="CUNEF Universidad" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Aprendizaje Automático: Predicción</a> 
     </div>
@@ -143,9 +190,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Fundamentos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -178,9 +225,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Del dato crudo al modelo</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -201,9 +248,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Complejidad y regularización</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -230,9 +277,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Modelos no lineales y basados en reglas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -259,9 +306,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Más allá del ruido gaussiano</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +335,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Problemas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -305,9 +352,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -365,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -376,16 +423,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#datos-señal-y-ruido" id="toc-datos-señal-y-ruido" class="nav-link" data-scroll-target="#datos-señal-y-ruido">Datos, señal y ruido</a></li>
   <li><a href="#interpolar-no-es-aprender" id="toc-interpolar-no-es-aprender" class="nav-link" data-scroll-target="#interpolar-no-es-aprender">Interpolar no es aprender</a></li>
   <li><a href="#modelizar-el-ruido" id="toc-modelizar-el-ruido" class="nav-link" data-scroll-target="#modelizar-el-ruido">Modelizar el ruido</a></li>
-  <li><a href="#no-lo-demostramos" id="toc-no-lo-demostramos" class="nav-link" data-scroll-target="#no-lo-demostramos">No lo demostramos</a></li>
   <li><a href="#sec-mle-teorema" id="toc-sec-mle-teorema" class="nav-link" data-scroll-target="#sec-mle-teorema">Verosimilitud</a>
   <ul class="collapse">
   <li><a href="#y-ahora-cómo-lo-resolvemos" id="toc-y-ahora-cómo-lo-resolvemos" class="nav-link" data-scroll-target="#y-ahora-cómo-lo-resolvemos">¿Y ahora cómo lo resolvemos?</a></li>
   </ul></li>
   <li><a href="#la-trampa-de-esta-semana" id="toc-la-trampa-de-esta-semana" class="nav-link" data-scroll-target="#la-trampa-de-esta-semana">La trampa de esta semana</a></li>
-  <li><a href="#mi-r2-de-entrenamiento-es-0999" id="toc-mi-r2-de-entrenamiento-es-0999" class="nav-link" data-scroll-target="#mi-r2-de-entrenamiento-es-0999">«Mi <span class="math inline">\(R^2\)</span> de entrenamiento es 0,999»</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#solución-del-exr-lagrange" id="toc-solución-del-exr-lagrange" class="nav-link" data-scroll-target="#solución-del-exr-lagrange">Solución del Ejercicio&nbsp;<span>1.1</span></a></li>
   <li><a href="#qué-llevarte" id="toc-qué-llevarte" class="nav-link" data-scroll-target="#qué-llevarte">Qué llevarte</a></li>
   </ul>
 </nav>
@@ -393,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></h1>
 <p class="subtitle lead">Por qué predecir no es ajustar, y qué hace falta suponer para poder hacerlo</p>
@@ -409,9 +453,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
-<p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/x.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
+
+<p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/01-senal-ruido.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
 <section id="por-qué-estamos-aquí" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-estamos-aquí">Por qué estamos aquí</h2>
 <p>Este curso trata de un problema muy concreto: dado un conjunto de observaciones pasadas, predecir el valor de una magnitud numérica en observaciones que <strong>todavía no hemos visto</strong>. El precio de un piso que aún no se ha alquilado, la demanda de la semana que viene, el coste de un siniestro que aún no se ha declarado.</p>
@@ -419,63 +465,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Un modelo que predice bien no explica nada por el hecho de predecir bien.</p>
 </blockquote>
-<p>En este capítulo demostraremos dos cosas. La primera, que <strong>ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada</strong> (<a href="#thm-interpolacion">Teorema&nbsp;<span>1.1</span></a>). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver.</p>
+<p>En este capítulo demostraremos dos cosas. La primera, que <strong>ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver.</p>
 </section>
 <section id="datos-señal-y-ruido" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="datos-señal-y-ruido">Datos, señal y ruido</h2>
 <div id="def-datos" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.1 (Datos y problema de predicción) </strong></span>Un conjunto de datos es <span class="math inline">\(\mathcal{D}= \{(\mathbf{x}_i, y_i)\}_{i=1}^{n}\)</span> con <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{p}\)</span> y <span class="math inline">\(y_i\in \mathbb{R}\)</span>. El problema de predicción consiste en elegir una función <span class="math inline">\(f: \mathbb{R}^{p} \to \mathbb{R}\)</span> que prediga bien <span class="math inline">\(y\)</span> en observaciones <strong>no vistas</strong>.</p>
+<p><span class="theorem-title"><strong>Definición 1.1 (Datos y problema de predicción)</strong></span> Un conjunto de datos es <span class="math inline">\(\mathcal{D}= \{(\mathbf{x}_i, y_i)\}_{i=1}^{n}\)</span> con <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{p}\)</span> y <span class="math inline">\(y_i\in \mathbb{R}\)</span>. El problema de predicción consiste en elegir una función <span class="math inline">\(f: \mathbb{R}^{p} \to \mathbb{R}\)</span> que prediga bien <span class="math inline">\(y\)</span> en observaciones <strong>no vistas</strong>.</p>
 </div>
-<p>La palabra que hace todo el trabajo en <a href="#def-datos">Definición&nbsp;<span>1.1</span></a> es <em>no vistas</em>. Sin ella el problema es trivial, como veremos enseguida.</p>
-<div class="cell" data-execution_count="3">
-<details>
+<p>La palabra que hace todo el trabajo en <a href="#def-datos" class="quarto-xref">Definición&nbsp;<span>1.1</span></a> es <em>no vistas</em>. Sin ella el problema es trivial, como veremos enseguida.</p>
+<div id="6b13cd7b" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<div id="124719a6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.0</span>            <span class="co"># la verdad que NO conocemos</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> torch.randn(n) <span class="op">*</span> <span class="fl">3.0</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="fig-senal-ruido" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<div class="cell" data-execution_count="5">
-<details>
+<details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"Señal: $f(x_i) = 2x_i + 1$"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"Señal: </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs"> = 2x_i </span><span class="op">+</span><span class="vs"> 1</span><span class="dv">$</span><span class="vs">"</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="op">=</span> <span class="vs">r"Ruido: $\epsilon_i$"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="op">=</span> <span class="vs">r"Ruido: </span><span class="dv">$</span><span class="er">\</span><span class="vs">epsilon_i</span><span class="dv">$</span><span class="vs">"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ax.plot([x[i].item()] <span class="op">*</span> <span class="dv">2</span>, [senal[i].item(), y[i].item()],</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"#ff5700"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, linewidth<span class="op">=</span><span class="fl">0.9</span>, label<span class="op">=</span>etiqueta)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="dd486a8e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<div>
+<figure class="figure">
+<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="690" height="488"></p>
+</figure>
 </div>
 </div>
-<p></p><figcaption class="figure-caption margin-caption">Figura&nbsp;1.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).</figcaption><p></p>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).
+</figcaption>
 </figure>
 </div>
 <div id="def-senal-ruido" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.2 (Modelo señal + ruido) </strong></span><span id="eq-senal-ruido"><span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 1.2 (Modelo señal + ruido)</strong></span> <span id="eq-senal-ruido"><span class="math display">\[
 y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \mathbb{E}\!\left[ \varepsilon_i \right] = 0.
 \tag{1.1}\]</span></span></p>
 <p>A <span class="math inline">\(f\)</span> la llamamos <strong>señal</strong> y a <span class="math inline">\(\varepsilon_i\)</span> <strong>ruido</strong>.</p>
 </div>
 <p>Lo que queremos aprender es <span class="math inline">\(f\)</span>, <strong>no</strong> los valores <span class="math inline">\(y_i\)</span>. La distinción parece pedante y es el capítulo entero.</p>
 <div id="def-errores" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.3 (Error de entrenamiento y error de test) </strong></span>Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 1.3 (Error de entrenamiento y error de test)</strong></span> Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
 \hat{R}_{\mathcal{S}}(\hat{f}) = \frac{1}{\left\lvert \mathcal{S} \right\rvert} \sum_{i \in \mathcal{S}} \left( y_i- \hat{f}(\mathbf{x}_i) \right)^2 .
 \]</span></p>
 </div>
@@ -485,7 +539,7 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>De momento el cuadrado es una elección arbitraria: lo estamos <strong>midiendo</strong>, no justificando. En <a href="#sec-mle-teorema"><span>Sección&nbsp;1.6</span></a> demostraremos que se deduce de suponer ruido gaussiano.</p>
+<p>De momento el cuadrado es una elección arbitraria: lo estamos <strong>midiendo</strong>, no justificando. En <a href="#sec-mle-teorema" class="quarto-xref"><span>Sección 1.5</span></a> demostraremos que se deduce de suponer ruido gaussiano.</p>
 </div>
 </div>
 </div>
@@ -493,18 +547,18 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 <section id="interpolar-no-es-aprender" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="interpolar-no-es-aprender">Interpolar no es aprender</h2>
 <div id="def-sobreajuste" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.4 (Sobreajuste) </strong></span>Se produce <strong>sobreajuste</strong> cuando aumentar la complejidad del modelo mejora su error de entrenamiento y <strong>empeora</strong> su error de test.</p>
+<p><span class="theorem-title"><strong>Definición 1.4 (Sobreajuste)</strong></span> Se produce <strong>sobreajuste</strong> cuando aumentar la complejidad del modelo mejora su error de entrenamiento y <strong>empeora</strong> su error de test.</p>
 </div>
 <p>El siguiente resultado es la razón de ser de la asignatura. No aparece en la mayoría de los cursos introductorios, y es de una línea.</p>
 <div id="thm-interpolacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta) </strong></span>Sean <span class="math inline">\(x_1, \dots, x_{n} \in \mathbb{R}\)</span> <strong>distintos dos a dos</strong> y sean <span class="math inline">\(y_1, \dots, y_{n} \in \mathbb{R}\)</span> cualesquiera. Entonces existe un polinomio <span class="math inline">\(P\)</span> de grado <span class="math inline">\(\leq n- 1\)</span> tal que <span class="math inline">\(P(x_i) = y_i\)</span> para todo <span class="math inline">\(i\)</span>; es decir, con error de entrenamiento <strong>exactamente cero</strong>.</p>
+<p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1, \dots, x_{n} \in \mathbb{R}\)</span> <strong>distintos dos a dos</strong> y sean <span class="math inline">\(y_1, \dots, y_{n} \in \mathbb{R}\)</span> cualesquiera. Entonces existe un polinomio <span class="math inline">\(P\)</span> de grado <span class="math inline">\(\leq n- 1\)</span> tal que <span class="math inline">\(P(x_i) = y_i\)</span> para todo <span class="math inline">\(i\)</span>; es decir, con error de entrenamiento <strong>exactamente cero</strong>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span>Construimos la solución. Para cada <span class="math inline">\(j\)</span> defínase la <em>base de Lagrange</em> <span class="math display">\[
+<p><span class="proof-title"><em>Demostración</em>. </span>Construimos la solución. Para cada <span class="math inline">\(j\)</span> defínase la <em>base de Lagrange</em> <span class="math display">\[
 \ell_j(x) = \prod_{k \neq j} \frac{x - x_k}{x_j - x_k},
 \]</span> que está bien definida porque los <span class="math inline">\(x_k\)</span> son distintos. Evaluando, si <span class="math inline">\(i = j\)</span> todos los factores valen <span class="math inline">\(1\)</span>, y si <span class="math inline">\(i \neq j\)</span> el factor <span class="math inline">\(k = i\)</span> se anula; por tanto <span class="math inline">\(\ell_j(x_i) = \delta_{ij}\)</span>. Tomando <span class="math display">\[
 P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
-\]</span> se obtiene <span class="math inline">\(P(x_i) = \sum_j y_j \delta_{ij} = y_i\)</span>. Cada <span class="math inline">\(\ell_j\)</span> tiene grado <span class="math inline">\(n- 1\)</span>, luego <span class="math inline">\(P\)</span> también. <span class="math inline">\(\square\)</span></p>
+\]</span> se obtiene <span class="math inline">\(P(x_i) = \sum_j y_j \delta_{ij} = y_i\)</span>. Cada <span class="math inline">\(\ell_j\)</span> tiene grado <span class="math inline">\(n- 1\)</span>, luego <span class="math inline">\(P\)</span> también.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -512,7 +566,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-La consecuencia, dicha en voz alta
+<span class="screen-reader-only">Importante</span>La consecuencia, dicha en voz alta
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -520,12 +574,9 @@ La consecuencia, dicha en voz alta
 </div>
 </div>
 <p>Veámoslo. Interpolamos los 20 puntos y después generamos datos nuevos con la <strong>misma señal y ruido distinto</strong>.</p>
-<div id="fig-interpolacion" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<div class="cell" data-execution_count="6">
-<details>
+<details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>f_int <span class="op">=</span> interpolate.interp1d(x.numpy(), y.numpy(), kind<span class="op">=</span><span class="st">"cubic"</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">200</span>)</span>
@@ -542,77 +593,86 @@ La consecuencia, dicha en voz alta
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x_denso.numpy(), y_int, color<span class="op">=</span><span class="st">"#ff5700"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"interpolador"</span>)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Datos nuevos, misma señal"</span>, xlabel<span class="op">=</span><span class="st">"$x$"</span>)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].legend()</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="ec7c02ba" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<p><img src="01-senal-ruido_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<div>
+<figure class="figure">
+<p><img src="01-senal-ruido_files/figure-html/cell-7-output-1.png" class="figure-img" width="1093" height="517"></p>
+</figure>
 </div>
 </div>
-<p></p><figcaption class="figure-caption margin-caption">Figura&nbsp;1.2: El mismo interpolador: perfecto a la izquierda, inservible a la derecha.</figcaption><p></p>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.2: El mismo interpolador: perfecto a la izquierda, inservible a la derecha.
+</figcaption>
 </figure>
 </div>
 </section>
 <section id="modelizar-el-ruido" class="level2">
 <h2 class="anchored" data-anchor-id="modelizar-el-ruido">Modelizar el ruido</h2>
-<p>Si queremos aprender <span class="math inline">\(f\)</span> en <a href="#eq-senal-ruido">Ecuación&nbsp;<span>1.1</span></a>, necesitamos poder hablar matemáticamente de <span class="math inline">\(\varepsilon_i\)</span>. Supondremos que el ruido es gaussiano.</p>
+<p>Si queremos aprender <span class="math inline">\(f\)</span> en <a href="#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>, necesitamos poder hablar matemáticamente de <span class="math inline">\(\varepsilon_i\)</span>. Supondremos que el ruido es gaussiano.</p>
 <div id="def-normal" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.5 (Densidad normal) </strong></span><span id="eq-densidad-normal"><span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 1.5 (Densidad normal)</strong></span> <span id="eq-densidad-normal"><span class="math display">\[
 p(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right).
 \tag{1.2}\]</span></span></p>
 </div>
 <div id="lem-normalizacion" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 1.1 (Constante de normalización) </strong></span><span class="math inline">\(\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \mathrm{d}z = \sqrt{2\pi}\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 1.1 (Constante de normalización)</strong></span> <span class="math inline">\(\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \mathrm{d}z = \sqrt{2\pi}\)</span>.</p>
 </div>
-</section>
-<section id="no-lo-demostramos" class="level2 cajanegra">
-<h2 class="anchored" data-anchor-id="no-lo-demostramos">No lo demostramos</h2>
+<div class="cajanegra">
+<p><strong>No lo demostramos</strong></p>
 <p>La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.</p>
-</section>
+</div>
 <div id="thm-traslacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.2 (Traslación) </strong></span>Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 1.2 (Traslación)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="#eq-densidad-normal">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
 </div>
 <div id="thm-escala" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.3 (Escala) </strong></span>Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 1.3 (Escala)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span></p>
 <!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
      Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
      en este curso y lo van a necesitar otra vez en 5.12. -->
-<p><span class="math inline">\(\square\)</span></p>
 </div>
 <div id="cor-estandarizacion" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 1.1 (Estandarización) </strong></span>Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(Z = (\varepsilon - \mu)/\sigma\sim \mathcal{N}(0,1)\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 1.1 (Estandarización)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(Z = (\varepsilon - \mu)/\sigma\sim \mathcal{N}(0,1)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span>Aplicar <a href="#thm-escala">Teorema&nbsp;<span>1.3</span></a> con <span class="math inline">\(a = 1/\sigma\)</span> y después <a href="#thm-traslacion">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = -\mu/\sigma\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>1.3</span></a> con <span class="math inline">\(a = 1/\sigma\)</span> y después <a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = -\mu/\sigma\)</span>.</p>
 </div>
 <div id="thm-momentos" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.4 (Media y varianza) </strong></span>Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right] = \mu\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon \right) = \sigma^2\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 1.4 (Media y varianza)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right] = \mu\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon \right) = \sigma^2\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span></p>
 <!-- TODO(D3, 25 min). RUTA OBLIGATORIA — no hacerlo desde cero o pasa de M a L:
      1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
         eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
      2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
      3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
-<p><span class="math inline">\(\square\)</span></p>
 </div>
 <div id="cor-target" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 1.2 (Del modelo de ruido a la distribución del objetivo) </strong></span><span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span> si y solo si <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim \mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 1.2 (Del modelo de ruido a la distribución del objetivo)</strong></span> <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span> si y solo si <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim \mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span><a href="#thm-traslacion">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = f(\mathbf{x}_i)\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span><a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = f(\mathbf{x}_i)\)</span>.</p>
 </div>
 <p>Este corolario de una línea es la bisagra del curso: convierte una <strong>hipótesis sobre los errores</strong> en una <strong>distribución para los datos</strong>, y una distribución para los datos es algo a lo que se le puede calcular la verosimilitud.</p>
+</section>
 <section id="sec-mle-teorema" class="level2">
 <h2 class="anchored" data-anchor-id="sec-mle-teorema">Verosimilitud</h2>
 <div id="def-lineal-gaussiano" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.6 (Modelo lineal-gaussiano) </strong></span>Con <span class="math inline">\(p= 1\)</span>: <span class="math inline">\(y_i\sim \mathcal{N}(w_0+ w_1 x_i,\ \sigma^2)\)</span>, de forma independiente.</p>
+<p><span class="theorem-title"><strong>Definición 1.6 (Modelo lineal-gaussiano)</strong></span> Con <span class="math inline">\(p= 1\)</span>: <span class="math inline">\(y_i\sim \mathcal{N}(w_0+ w_1 x_i,\ \sigma^2)\)</span>, de forma independiente.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -620,28 +680,28 @@ p(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\s
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-La hipótesis que casi nadie enuncia
+<span class="screen-reader-only">Nota</span>La hipótesis que casi nadie enuncia
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><em>Independientes</em> aquí significa condicionalmente a las <span class="math inline">\(\mathbf{x}_i\)</span>. Es una hipótesis, no una verdad. En la <a href="06-validacion.html#sec-grupos"><span>Sección&nbsp;6.6</span></a> del capítulo 6 veremos qué pasa cuando es falsa: un mismo anfitrión con doce anuncios en Madrid la rompe.</p>
+<p><em>Independientes</em> aquí significa condicionalmente a las <span class="math inline">\(\mathbf{x}_i\)</span>. Es una hipótesis, no una verdad. En la <a href="06-validacion.html#sec-grupos" class="quarto-xref"><span>Sección 6.5</span></a> del capítulo 6 veremos qué pasa cuando es falsa: un mismo anfitrión con doce anuncios en Madrid la rompe.</p>
 </div>
 </div>
 <div id="def-verosimilitud" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.7 (Verosimilitud y log-verosimilitud) </strong></span><span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 1.7 (Verosimilitud y log-verosimilitud)</strong></span> <span class="math display">\[
 L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right),
 \qquad
 \ell(\boldsymbol{w}) = \sum_{i=1}^{n} \log p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right).
 \]</span></p>
 </div>
 <div id="lem-log-argmax" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 1.2 (El logaritmo preserva el argmax) </strong></span>Si <span class="math inline">\(g\)</span> es estrictamente creciente, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} g(L(\boldsymbol{w})) = \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w})\)</span>. En particular <span class="math inline">\(\mathop{\mathrm{arg\,max}}L= \mathop{\mathrm{arg\,max}}\ell= \mathop{\mathrm{arg\,min}}(-\ell)\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 1.2 (El logaritmo preserva el argmax)</strong></span> Si <span class="math inline">\(g\)</span> es estrictamente creciente, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} g(L(\boldsymbol{w})) = \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w})\)</span>. En particular <span class="math inline">\(\mathop{\mathrm{arg\,max}}L= \mathop{\mathrm{arg\,max}}\ell= \mathop{\mathrm{arg\,min}}(-\ell)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Prueba</em>. </span>Si <span class="math inline">\(\boldsymbol{w}^{\star}\)</span> maximiza <span class="math inline">\(L\)</span> entonces <span class="math inline">\(L(\boldsymbol{w}) \leq L(\boldsymbol{w}^\star)\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>, y aplicando <span class="math inline">\(g\)</span> creciente, <span class="math inline">\(g(L(\boldsymbol{w})) \leq g(L(\boldsymbol{w}^\star))\)</span>. El recíproco es idéntico usando que <span class="math inline">\(g\)</span> es estrictamente creciente. <span class="math inline">\(\square\)</span></p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Si <span class="math inline">\(\boldsymbol{w}^{\star}\)</span> maximiza <span class="math inline">\(L\)</span> entonces <span class="math inline">\(L(\boldsymbol{w}) \leq L(\boldsymbol{w}^\star)\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>, y aplicando <span class="math inline">\(g\)</span> creciente, <span class="math inline">\(g(L(\boldsymbol{w})) \leq g(L(\boldsymbol{w}^\star))\)</span>. El recíproco es idéntico usando que <span class="math inline">\(g\)</span> es estrictamente creciente.</p>
 </div>
 <div id="def-mle" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.8 (Estimación máximo-verosímil) </strong></span><span class="math inline">\(\hat{\boldsymbol{w}}= \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w}) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left(-\ell(\boldsymbol{w})\right)\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 1.8 (Estimación máximo-verosímil)</strong></span> <span class="math inline">\(\hat{\boldsymbol{w}}= \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w}) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left(-\ell(\boldsymbol{w})\right)\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -649,7 +709,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Convenio: siempre minimizamos
+<span class="screen-reader-only">Tip</span>Convenio: siempre minimizamos
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -659,18 +719,18 @@ Convenio: siempre minimizamos
 <section id="y-ahora-cómo-lo-resolvemos" class="level3">
 <h3 class="anchored" data-anchor-id="y-ahora-cómo-lo-resolvemos">¿Y ahora cómo lo resolvemos?</h3>
 <p>Por fuerza bruta, para ver que no escala.</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
+<div id="dfbaf0c2" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_verosimilitud(w0, w1, x, y, sigma<span class="op">=</span><span class="fl">3.0</span>):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma).log().<span class="bu">sum</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma).log().<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="ef1b36f8" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rejilla_w1 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">60</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> torch.tensor([[log_verosimilitud(a, b, x, y) <span class="cf">for</span> b <span class="kw">in</span> rejilla_w1] <span class="cf">for</span> a <span class="kw">in</span> rejilla_w0])</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -681,11 +741,15 @@ Convenio: siempre minimizamos
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ax.scatter([<span class="fl">2.0</span>], [<span class="fl">1.0</span>], color<span class="op">=</span><span class="st">"white"</span>, marker<span class="op">=</span><span class="st">"x"</span>, s<span class="op">=</span><span class="dv">60</span>, label<span class="op">=</span><span class="st">"verdad"</span>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$w_1$"</span>, ylabel<span class="op">=</span><span class="st">"$w_0$"</span>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.colorbar(cs, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="vs">r"$\ell(w)$"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.colorbar(cs, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ell</span><span class="kw">(</span><span class="vs">w</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="01-senal-ruido_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="01-senal-ruido_files/figure-html/cell-9-output-1.png" class="figure-img" width="663" height="496"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con <span class="math inline">\(p= 20\)</span> parámetros serían <span class="math inline">\(60^{20}\)</span>, más que átomos hay en la Vía Láctea. <strong>Hace falta cálculo</strong>, y eso es el capítulo 3.</p>
@@ -693,14 +757,14 @@ Convenio: siempre minimizamos
 </section>
 <section id="la-trampa-de-esta-semana" class="level2">
 <h2 class="anchored" data-anchor-id="la-trampa-de-esta-semana">La trampa de esta semana</h2>
-</section>
-<section id="mi-r2-de-entrenamiento-es-0999" class="level2 trampa">
-<h2 class="anchored" data-anchor-id="mi-r2-de-entrenamiento-es-0999">«Mi <span class="math inline">\(R^2\)</span> de entrenamiento es 0,999»</h2>
-<p>Es exactamente <a href="#thm-interpolacion">Teorema&nbsp;<span>1.1</span></a> en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es <em>cuánto ajusta</em> sino <em>sobre qué datos se ha medido</em>. Volveremos sobre esto con el aparato completo en el capítulo 6.</p>
+<div class="trampa">
+<p><strong>«Mi <span class="math inline">\(R^2\)</span> de entrenamiento es 0,999»</strong></p>
+<p>Es exactamente <a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a> en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es <em>cuánto ajusta</em> sino <em>sobre qué datos se ha medido</em>. Volveremos sobre esto con el aparato completo en el capítulo 6.</p>
+</div>
 </section>
 <section id="notación-código" class="level2">
 <h2 class="anchored" data-anchor-id="notación-código">Notación ↔︎ código</h2>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Matemáticas</th>
@@ -745,28 +809,27 @@ Convenio: siempre minimizamos
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.1 </strong></span>Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construya explícitamente el polinomio interpolador de Lagrange y compruebe que pasa por los tres puntos.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1.1</strong></span> Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construya explícitamente el polinomio interpolador de Lagrange y compruebe que pasa por los tres puntos.</p>
 </div>
-</section>
-<section id="solución-del-exr-lagrange" class="level2 sol">
-<h2 class="anchored" data-anchor-id="solución-del-exr-lagrange">Solución del <a href="#exr-lagrange">Ejercicio&nbsp;<span>1.1</span></a></h2>
+<div class="sol">
 <!-- TODO(D3): escribir. Sale un polinomio de grado 2; el objetivo es que vean que
      la construcción es mecánica, no un teorema de existencia abstracto. -->
-</section>
+</div>
 <div id="exr-titulares" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.2 </strong></span>Tres titulares de prensa afirman: (a) «el modelo predice el impago con un 99 % de acierto»; (b) «hemos reducido el error a cero»; (c) «validado sobre 10 millones de registros». Para cada uno, diga qué información falta para poder juzgarlo.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1.2</strong></span> Tres titulares de prensa afirman: (a) «el modelo predice el impago con un 99 % de acierto»; (b) «hemos reducido el error a cero»; (c) «validado sobre 10 millones de registros». Para cada uno, diga qué información falta para poder juzgarlo.</p>
 </div>
 <div id="exr-ruido" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.3 </strong></span>Suponga <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escriba la log-verosimilitud de una única observación y dibuje, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1.3</strong></span> Suponga <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escriba la log-verosimilitud de una única observación y dibuje, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
 </div>
 <!-- TODO(D3): faltan 2 ejercicios más. Uno de simulación (generar datos con w conocido
      y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
      sobre por qué la independencia es una hipótesis. -->
+</section>
 <section id="qué-llevarte" class="level2">
 <h2 class="anchored" data-anchor-id="qué-llevarte">Qué llevarte</h2>
 <ul>
-<li>Error de entrenamiento cero se consigue <strong>siempre</strong> (<a href="#thm-interpolacion">Teorema&nbsp;<span>1.1</span></a>) y por tanto no es evidencia de nada.</li>
-<li>Suponer una distribución para el ruido convierte el problema en uno de <strong>verosimilitud</strong> (<a href="#cor-target">Corolario&nbsp;<span>1.2</span></a>).</li>
+<li>Error de entrenamiento cero se consigue <strong>siempre</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>) y por tanto no es evidencia de nada.</li>
+<li>Suponer una distribución para el ruido convierte el problema en uno de <strong>verosimilitud</strong> (<a href="#cor-target" class="quarto-xref">Corolario&nbsp;<span>1.2</span></a>).</li>
 <li>Maximizar la verosimilitud por fuerza bruta no escala. Necesitamos gradientes.</li>
 </ul>
 
@@ -775,43 +838,58 @@ Convenio: siempre minimizamos
 
 <p><br><br><span style="color:grey;">© Roi Naveiro, CUNEF Universidad, 2026</span></p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -819,207 +897,360 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiado");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiado");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-});
-</script>
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link">
+      <a href="../index.html" class="pagination-link" aria-label="Bienvenida">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bienvenida</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../capitulos/02-verosimilitud.html" class="pagination-link">
+      <a href="../capitulos/02-verosimilitud.html" class="pagination-link" aria-label="Verosimilitud y máxima verosimilitud">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

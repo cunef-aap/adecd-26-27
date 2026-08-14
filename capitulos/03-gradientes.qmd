@@ -63,7 +63,7 @@ $\mathbf{u}\T\grad \model$ se maximiza en $\mathbf{u}^\star = \grad \model / \no
 <!-- TODO(D5, 15 min). RUTA: usar u^T g = ||u|| ||g|| cos(theta), DEFINIENDO asi el
      ángulo en R^p, y maximizar cos(theta) = 1. NO invocar Cauchy-Schwarz: no lo tienen
      y aquí no hace falta. Nombrarla al final, en una línea, como el nombre del hecho. -->
-$\square$
+
 :::
 
 ::: {#rem-ortogonal}
@@ -96,7 +96,7 @@ $\grad \Riskh(\coef^\star) = \zerov$. **El recíproco es falso**: $\model(w)=w^3
      la parcial j-ésima.
      ESTE TEOREMA ES EL MOTOR DEL CAPITULO 4. Chodrow lo enuncia sin demostrar;
      nosotros lo demostramos porque de él salen las ecuaciones normales. -->
-$\square$
+
 :::
 
 ## El gradiente del riesgo
@@ -115,7 +115,7 @@ $$
 ::: {.proof}
 <!-- TODO(D5, 15 min): regla de la cadena término a término. Escribirlo completo:
      es la única vez que hacen esto a mano antes de pasar a forma matricial. -->
-$\square$
+
 :::
 
 ## Descenso de gradiente
@@ -142,7 +142,7 @@ $\Riskh(\coef - \lr \grad \Riskh(\coef)) < \Riskh(\coef)$ para todo $\lr \in (0,
 <!-- TODO(D5, 10 min): phi(alpha) = Riskh(w - alpha grad), y por @prp-primer-orden
      phi'(0) = -||grad Riskh(w)||^2 < 0. Una función con derivada negativa en 0
      decrece a la derecha de 0. -->
-$\square$
+
 :::
 
 ::: {#prp-caso-cuadratico}
@@ -156,7 +156,7 @@ $1/2a < \lr < 1/a$; diverge si $\lr > 1/a$.
 
 ::: {.proof}
 <!-- TODO(D5, 15 min): sustituir y iterar la recursión geométrica. Tres líneas. -->
-$\square$
+
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -165,7 +165,7 @@ justifica la estandarización sin necesidad de autovalores. No la corten.
 :::
 
 ::: {.cajanegra}
-## Lo que no explicamos aquí
+**Lo que no explicamos aquí**
 
 Teoría de convergencia (suavidad de Lipschitz, tasas), *momentum*, Adam,
 planificadores de tasa de aprendizaje. Se nombran, se usan cuando haga falta, y se
@@ -202,7 +202,7 @@ class DescensoGradiente:
 ## La trampa de esta semana
 
 ::: {.trampa}
-## «No converge, subo la tasa de aprendizaje»
+**«No converge, subo la tasa de aprendizaje»**
 
 Casi siempre es lo contrario. Por @prp-caso-cuadratico, pasado $\lr = 1/a$ el método
 **diverge**, y entre $1/2a$ y $1/a$ oscila mientras converge, que es justo lo que parece

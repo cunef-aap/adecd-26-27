@@ -1,120 +1,219 @@
 /* ===========================================================================
-   Entornos matemáticos — el sistema visual del curso.
-   Adaptado de PhilChodrow/ml-notes-update (assets/styles.css), con la
-   paleta CUNEF: naranja #FF5700, azul #151F6C.
-   Cada tipo de resultado tiene un color de borde FIJO. El alumno debe poder
-   reconocer "esto es una demostración" sin leer la palabra.
+   Entornos matemáticos y bloques del curso.
+
+   Principio: la distinción entre un teorema, una definición y una
+   demostración la lleva la TIPOGRAFÍA, no el color. Un solo filete gris para
+   todos los entornos numerados; el naranja se reserva para una única cosa en
+   toda la página. Sin emoji, sin rellenos de color, sin cajas redondeadas.
    =========================================================================== */
 
+/* --- Tipografía corporativa Aeonik ---------------------------------------
+   Va aquí y no en custom.scss: el SCSS se compila dentro del bundle del tema
+   y las rutas relativas dejan de apuntar a assets/. */
+@font-face {
+  font-family: "Aeonik";
+  src: url("fonts/Aeonik-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Aeonik";
+  src: url("fonts/Aeonik-RegularItalic.otf") format("opentype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Aeonik";
+  src: url("fonts/Aeonik-Medium.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Aeonik";
+  src: url("fonts/Aeonik-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
 :root {
-  --cunef-naranja: #ff5700;
-  --cunef-azul: #151f6c;
-  --cunef-gris: #d6d1c4;
-  --cunef-fondo: #f5f2ed;
+  --naranja: #ff5700;
+  --azul: #151f6c;
+  --tinta: #1b1d21;
+  --tinta-suave: #55585f;
+  --filete: #dcdcd8;
+  --filete-tenue: #ececea;
 }
 
-/* --- Contenedor genérico de teorema --------------------------------------- */
-.theorem {
-  border-left: thick solid #7d1919;
-  padding-left: 1rem;
-  margin-bottom: 1rem;
-}
-.theorem p { margin-bottom: 0rem; }
-
-/* Definiciones: azul CUNEF */
-.theorem.definition {
-  border-left: thick solid var(--cunef-azul);
-  padding-left: 1rem;
-  padding-bottom: 0rem;
-}
-
-/* Ejemplos: naranja CUNEF */
-.theorem.example {
-  border-left: thick solid var(--cunef-naranja);
-  padding-left: 1rem;
+/* --- Etiqueta común: versalitas espaciadas, Aeonik ------------------------ */
+.rotulo,
+.proof > p:first-child > .proof-title,
+.sol::before,
+.trampa::before,
+.cajanegra::before {
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  font-style: normal;
 }
 
-/* Demostraciones: verde. Es el color que más van a ver en este curso. */
-.proof {
-  border-left: thick solid #20895a;
-  padding-left: 1rem;
-}
-
-/* Ejercicios */
-.exercise,
+/* ===========================================================================
+   Entornos numerados (Teorema, Definición, Lema, Corolario, Proposición…)
+   =========================================================================== */
+.theorem,
+.theorem.definition,
+.theorem.example,
 .theorem.exercise {
-  background-color: #e4e4e431;
-  border-left: thick solid var(--cunef-gris);
-  padding-left: 1rem;
+  border: none;
+  background: none;
+  padding: 0 0 0 1.15rem;
+  border-left: 1px solid var(--filete);
+  margin: 1.7rem 0;
 }
 
-.box {
-  background-color: #e4e4e431;
-  border-top: thin solid #3b3b3b47;
-  border-bottom: thin solid #3b3b3b47;
+.theorem-title,
+.theorem-title strong {
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.94rem;
+  letter-spacing: 0.005em;
+  color: var(--azul);
 }
 
-/* --- Bloques propios del curso -------------------------------------------- */
-/* Divs con estilo, sin extensiones: renderizan con cualquier versión de Quarto. */
+/* El enunciado, en cursiva: convención de manual de matemáticas. */
+.theorem > p {
+  font-style: italic;
+  margin-bottom: 0.4rem;
+}
+.theorem > p .theorem-title { font-style: normal; }
+.theorem > p .math { font-style: normal; }
+
+/* Las definiciones enuncian, no afirman: van en redonda. */
+.theorem.definition > p { font-style: normal; }
+
+/* ===========================================================================
+   Demostraciones — el bloque más frecuente del curso.
+   Sin barra verde: sangría, rótulo en versalitas y ∎ al final.
+   =========================================================================== */
+.proof {
+  border: none;
+  background: none;
+  padding-left: 1.15rem;
+  margin: 1.1rem 0 1.9rem 0;
+  color: var(--tinta);
+}
+
+.proof > p:first-child > .proof-title {
+  color: var(--tinta-suave);
+}
+.proof > p:first-child > .proof-title em { font-style: normal; }
+
+.proof > p:last-child::after {
+  content: "\00a0\220E";          /* ∎ */
+  float: right;
+  color: var(--tinta-suave);
+}
+
+/* ===========================================================================
+   Bloques propios: Solución, Trampa, Fuera de alcance.
+   Los tres comparten estructura; solo la Trampa lleva color, porque es la
+   única que tiene que interrumpir la lectura.
+   =========================================================================== */
+.sol,
+.trampa,
+.cajanegra {
+  margin: 1.6rem 0;
+  padding-left: 1.15rem;
+  background: none;
+}
+
+.sol::before,
+.trampa::before,
+.cajanegra::before {
+  display: block;
+  margin-bottom: 0.45rem;
+}
 
 .sol {
-  border-left: thick solid #c251a5;
-  background-color: #c251a50d;
-  padding: 0.6rem 1rem;
-  margin-bottom: 1rem;
+  border-left: 1px solid var(--filete);
 }
 .sol::before {
-  content: "📝 Solución";
-  display: block;
-  font-weight: 600;
-  color: #c251a5;
-  margin-bottom: 0.3rem;
+  content: "Solución";
+  color: var(--tinta-suave);
 }
-.sol > h2 { display: none; }
 
 .trampa {
-  border-left: thick solid var(--cunef-naranja);
-  background-color: #ff57000d;
-  padding: 0.6rem 1rem;
-  margin-bottom: 1rem;
+  border-left: 2px solid var(--naranja);
 }
 .trampa::before {
-  content: "⚠️ La trampa";
-  display: block;
-  font-weight: 600;
-  color: var(--cunef-naranja);
-  margin-bottom: 0.3rem;
+  content: "La trampa";
+  color: var(--naranja);
 }
 
 .cajanegra {
-  border-left: thick solid #51514f;
-  background-color: #51514f0d;
-  padding: 0.6rem 1rem;
-  margin-bottom: 1rem;
+  border-left: 1px solid var(--filete-tenue);
+  color: var(--tinta-suave);
+  font-size: 0.94rem;
 }
 .cajanegra::before {
-  content: "⬛ Caja negra: esto no lo demostramos";
+  content: "Fuera de alcance";
+  color: var(--tinta-suave);
+}
+
+/* El título del bloque va como **negrita** en el primer párrafo, no como `##`:
+   un encabezado real se colaría en la tabla de contenidos como si fuese una
+   sección del capítulo. */
+.trampa > p:first-of-type > strong:first-child,
+.cajanegra > p:first-of-type > strong:first-child {
   display: block;
-  font-weight: 600;
-  color: #51514f;
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--tinta);
   margin-bottom: 0.3rem;
 }
+.cajanegra > p:first-of-type > strong:first-child { color: var(--tinta-suave); }
 
-/* --- Navegación ----------------------------------------------------------- */
-#TOC {
-  padding: 0.5em;
-  background-color: var(--cunef-fondo);
-  border-radius: 1em;
+/* Por si en algún capítulo queda un encabezado dentro de un bloque. */
+.sol > h2, .trampa > h2, .cajanegra > h2,
+.sol > h3, .trampa > h3, .cajanegra > h3 {
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--tinta);
+  border-top: none;
+  margin: 0 0 0.35rem 0;
+  padding-top: 0;
 }
-#toc-title { font-size: 0em; }
 
-#quarto-sidebar > div.sidebar-menu-container {
-  background-color: var(--cunef-fondo);
-  border-radius: 1em;
-  padding: 1em;
+/* ===========================================================================
+   Callouts nativos de Quarto — aplanados a la misma gramática visual
+   =========================================================================== */
+.callout {
+  border: none !important;
+  border-left: 1px solid var(--filete) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  margin: 1.6rem 0;
+  padding-left: 1.15rem;
+}
+.callout > .callout-header,
+.callout .callout-title-container {
+  background: none !important;
+  padding-left: 0 !important;
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--tinta);
+}
+.callout .callout-body-container { padding-left: 0 !important; }
+.callout .callout-body > :last-child { margin-bottom: 0; }
+
+/* Un aviso sí merece el acento. */
+.callout-warning, .callout-important {
+  border-left: 2px solid var(--naranja) !important;
 }
 
-/* --- Márgenes anchos, estilo Tufte ---------------------------------------- */
+/* ===========================================================================
+   Márgenes anchos, estilo Tufte
+   =========================================================================== */
 @media (min-width: 992px) {
   .margin-caption,
   div.aside,
@@ -125,27 +224,41 @@
   }
 }
 
-/* --- Tipografía corporativa ----------------------------------------------- */
-@font-face {
-  font-family: "Aeonik";
-  src: url("fonts/Aeonik-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-display: swap;
+/* ===========================================================================
+   Logo de CUNEF en la barra lateral
+   =========================================================================== */
+img.sidebar-logo {
+  display: block;              /* Quarto lo marca d-lg-inline: sin esto el margen inferior no aplica */
+  width: 132px;
+  max-width: 100%;
+  height: auto;
+  margin: 0.2rem 0 0.9rem 0;
 }
-@font-face {
-  font-family: "Aeonik";
-  src: url("fonts/Aeonik-Medium.otf") format("opentype");
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Aeonik";
-  src: url("fonts/Aeonik-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-display: swap;
-}
+/* Quarto emite dos <img> (variante clara y oscura) del mismo fichero. */
+img.sidebar-logo.dark-content { display: none; }
 
-h1, h2, h3, h4, .sidebar-title {
+.sidebar-header { padding-bottom: 0.2rem; }
+
+/* El título de la obra, bajo el logo: pequeño, sin subrayado, con filete de cierre */
+.sidebar-title {
+  font-size: 0.94rem;
+  line-height: 1.25;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--filete);
+  margin-bottom: 0.85rem;
+}
+.sidebar-title a {
+  color: var(--azul);
+  text-decoration: none;
+}
+.sidebar-title a:hover { color: var(--naranja); }
+
+/* ===========================================================================
+   Pie
+   =========================================================================== */
+.nav-footer, #quarto-content > footer {
+  border-top: 1px solid var(--filete-tenue);
   font-family: "Aeonik", system-ui, sans-serif;
-  color: var(--cunef-azul);
+  font-size: 0.78rem;
+  color: var(--tinta-suave);
 }

@@ -52,7 +52,7 @@ Si $a > 0$ entonces $\argmin_{\coef} \left( a\, h(\coef) + b \right) = \argmin_{
 <!-- TODO(D4, 5 min): tres líneas desde la definición de mínimo. Es trivial y hay que
      escribirlo igualmente, porque se usa CUATRO veces (2.6, 2.9, 6.16) y conviene
      poder citarlo por número. -->
-$\square$
+
 :::
 
 ::: {#lem-media-optima}
@@ -66,7 +66,7 @@ $\displaystyle \argmin_{c \in \Real} \sum_{i=1}^{\nobs} (\yi - c)^2 = \ybar$.
         sum (y_i - c)^2 = sum (y_i - ybar)^2 + n (ybar - c)^2
      se reutiliza literalmente en 6.17 (SCT = SCReg + SCE). Derivar también vale
      pero no deja nada guardado. -->
-$\square$
+
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -94,7 +94,7 @@ $$ {#eq-loglik}
      3. separar la constante de la suma,
      4. identificar sum (y_i - f(x_i))^2 = n * Riskh(w).
      Sin saltos. Es la primera demostración larga que ven y marca el estándar. -->
-$\square$
+
 :::
 
 ::: {#cor-mle-minimos-cuadrados}
@@ -105,7 +105,7 @@ Para $\noise$ fijo, $\argmax_{\coef} \loglik(\coef,\noise) = \argmin_{\coef} \Ri
 
 ::: {.proof}
 Aplicar @lem-invarianza-afin a $-\loglik$, que es $\Riskh$ multiplicado por
-$\nobs/2\noise^2 > 0$ más una constante que no depende de $\coef$. $\square$
+$\nobs/2\noise^2 > 0$ más una constante que no depende de $\coef$.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -140,7 +140,7 @@ $$
      Para la globalidad NO usar segunda derivada: basta con que el punto crítico es
      UNICO en (0, inf) y que l -> -inf cuando sigma -> 0+ y cuando sigma -> inf.
      Más corto y más honesto. -->
-$\square$
+
 :::
 
 ::: {#cor-loglik-perfilada}
@@ -183,7 +183,7 @@ estimación máximo-verosímil equivale a **minimizar el error absoluto medio**.
 <!-- TODO(D4, 10 min): mismo álgebra que @thm-loglik-mse con la densidad de Laplace.
      Deliberadamente idéntica en estructura: es la demostración de que el spine es una
      máquina y no un caso particular afortunado. -->
-$\square$
+
 :::
 
 ::: {#rem-catalogo}
@@ -200,7 +200,7 @@ $\square$
 ## La trampa de esta semana
 
 ::: {.trampa}
-## «Uso RMSE porque es lo estándar»
+**«Uso RMSE porque es lo estándar»**
 
 Elegir métrica **es** elegir modelo de ruido, y por tanto elegir qué funcional de la
 distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas

@@ -9,7 +9,25 @@ final** para promediar. Asistencia obligatoria (80 %).
 | Proyecto con agentes de IA | 20 % | semanas 12-13 |
 | Examen final | 60 % | convocatoria ordinaria |
 
-Los parciales **no son liberatorios**.
+Los parciales **no son liberatorios**. La evaluación continua es **obligatoria para todo
+el mundo**, incluidos repetidores y estudiantes de intercambio.
+
+## Cómo sale la nota de actas
+
+Estas reglas son de la guía docente, no mías. Léanlas una vez y no vuelvan a preguntarlas.
+
+| Situación | Nota en actas |
+|---|---|
+| Examen final **≥ 5** | 40 % continua + 60 % final |
+| Examen final **< 5** | la nota del examen final (la continua no rescata) |
+| No se presenta al examen final | la nota de la evaluación continua, ponderada al 40 % |
+| No ha calificado ninguna prueba | No Presentado |
+
+En **convocatoria extraordinaria**, la nota de evaluación continua puede sustituirse,
+cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
+final de la convocatoria ordinaria (60 %).
+
+El examen final es **de cátedra**: evalúa todos los contenidos del programa.
 
 ## Estructura de los exámenes
 

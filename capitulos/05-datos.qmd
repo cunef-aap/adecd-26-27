@@ -62,7 +62,7 @@ $\frac{\nobs_{\text{obs}}}{\nobs}\, s^2_{\text{obs}}$.
 ::: {.proof}
 <!-- TODO(D8, 10 min): cálculo directo. Las entradas imputadas contribuyen desviación
      CERO respecto de la media, que no cambia. -->
-$\square$
+
 :::
 
 ::: {#prp-indicador}
@@ -76,7 +76,7 @@ $\ybar_{\text{falta}}$.
 ::: {.proof}
 <!-- TODO(D8, 15 min): en esas filas el diseño es constante, luego las condiciones de
      primer orden se DESACOPLAN y el subproblema es el de @lem-media-optima. -->
-$\square$
+
 :::
 
 ## Escalado
@@ -89,7 +89,7 @@ $\tilde{\coef} = \mathbf{D}^{-1}\coefhat$ y **las predicciones son idénticas**.
 :::
 
 ::: {.proof}
-Sustituir en @thm-ecuaciones-normales. $\square$
+Sustituir en @thm-ecuaciones-normales.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -113,11 +113,11 @@ converge **en un paso** con $\lr = 1/2a$.
 :::
 
 ::: {.proof}
-Aplicar @prp-caso-cuadratico a cada coordenada por separado. $\square$
+Aplicar @prp-caso-cuadratico a cada coordenada por separado.
 :::
 
 ::: {.cajanegra}
-## El caso general
+**El caso general**
 Lo mismo se enuncia con el número de condición de $\Xt\X$ (cociente de autovalores). Se
 enuncia y se dibuja con elipses alargadas; no se demuestra.
 :::
@@ -135,7 +135,7 @@ $\rank\X \le \nfeat$ y, por @thm-existencia-unicidad, **el mínimo no es único*
 ::: {.proof}
 <!-- TODO(D8, 10 min): EXHIBIR el vector nulo. v tiene -1 en la coordenada del término
      independiente y +1 en cada dummy; entonces X v = 0 fila a fila. Nada abstracto. -->
-$\square$
+
 :::
 
 ::: {#cor-dummy-predicciones}
@@ -148,7 +148,7 @@ afectado. `drop='first'` o *ridge* restauran la unicidad.
 
 ::: {.proof}
 De @eq-identidad: $\Riskh(\coefhat + t\mathbf{v}) = \Riskh(\coefhat)$ porque
-$\X\mathbf{v} = \zerov$. $\square$
+$\X\mathbf{v} = \zerov$.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -178,7 +178,7 @@ Si $Z \sim \Normal(\mu, \noise^2)$ entonces $\E{e^{Z}} = e^{\mu + \noise^2/2}$.
 <!-- TODO(D8, 15 min): completar el cuadrado en el exponente de la integral
      int e^z p(z) dz y reconocer la densidad de una N(mu + sigma^2, sigma^2), que
      integra 1. Segundo uso del cambio de variable de @thm-escala. -->
-$\square$
+
 :::
 
 ::: {#cor-mediana-no-media}
@@ -244,7 +244,7 @@ considera.
 ## La trampa de esta semana
 
 ::: {.trampa}
-## `StandardScaler().fit_transform(X)` antes de `train_test_split`
+**`StandardScaler().fit_transform(X)` antes de `train_test_split`**
 
 El error más caro del curso y el que más nota cuesta en el proyecto. La media y la
 desviación típica del escalador se han calculado **con los datos de test**, así que el

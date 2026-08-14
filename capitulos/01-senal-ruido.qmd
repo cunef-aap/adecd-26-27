@@ -150,7 +150,7 @@ $$
 P(x) = \sum_{j=1}^{\nobs} y_j\, \ell_j(x)
 $$
 se obtiene $P(x_i) = \sum_j y_j \delta_{ij} = \yi$. Cada $\ell_j$ tiene grado
-$\nobs - 1$, luego $P$ también. $\square$
+$\nobs - 1$, luego $P$ también.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -212,7 +212,7 @@ $\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \dd z = \sqrt{2\pi}$.
 :::
 
 ::: {.cajanegra}
-## No lo demostramos
+**No lo demostramos**
 
 La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y
 no enseña nada de aprendizaje automático. Se acepta y se sigue.
@@ -230,7 +230,7 @@ Sea $W = \varepsilon + c$. Entonces
 $\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} = \int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$.
 El cambio de variable $u = x + c$ (con $\dd u = \dd x$) transforma la integral en
 $\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y por @eq-densidad-normal
-$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$. $\square$
+$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
 :::
 
 ::: {#thm-escala}
@@ -244,7 +244,7 @@ $a\varepsilon \sim \Normal(a\mu, a^2\noise^2)$.
 <!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
      Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
      en este curso y lo van a necesitar otra vez en 5.12. -->
-$\square$
+
 :::
 
 ::: {#cor-estandarizacion}
@@ -254,7 +254,7 @@ Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $Z = (\varepsilon - \mu)/\
 :::
 
 ::: {.proof}
-Aplicar @thm-escala con $a = 1/\noise$ y después @thm-traslacion con $c = -\mu/\noise$. $\square$
+Aplicar @thm-escala con $a = 1/\noise$ y después @thm-traslacion con $c = -\mu/\noise$.
 :::
 
 ::: {#thm-momentos}
@@ -269,7 +269,7 @@ Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y 
         eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
      2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
      3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
-$\square$
+
 :::
 
 ::: {#cor-target}
@@ -280,7 +280,7 @@ $\yi \given \xv_i \sim \Normal(\model(\xv_i), \noise^2)$.
 :::
 
 ::: {.proof}
-@thm-traslacion con $c = \model(\xv_i)$. $\square$
+@thm-traslacion con $c = \model(\xv_i)$.
 :::
 
 Este corolario de una línea es la bisagra del curso: convierte una **hipótesis sobre los
@@ -323,7 +323,7 @@ En particular $\argmax \Lik = \argmax \loglik = \argmin (-\loglik)$.
 ::: {.proof}
 Si $\coef^{\star}$ maximiza $\Lik$ entonces $\Lik(\coef) \leq \Lik(\coef^\star)$ para todo
 $\coef$, y aplicando $g$ creciente, $g(\Lik(\coef)) \leq g(\Lik(\coef^\star))$. El recíproco
-es idéntico usando que $g$ es estrictamente creciente. $\square$
+es idéntico usando que $g$ es estrictamente creciente.
 :::
 
 ::: {#def-mle}
@@ -379,7 +379,7 @@ y eso es el capítulo 3.
 ## La trampa de esta semana
 
 ::: {.trampa}
-## «Mi $\Rsq$ de entrenamiento es 0,999»
+**«Mi $\Rsq$ de entrenamiento es 0,999»**
 
 Es exactamente @thm-interpolacion en acción. Añadan grados de libertad suficientes y
 cualquiera consigue ese número. La pregunta correcta no es *cuánto ajusta* sino
@@ -406,7 +406,7 @@ interpolador de Lagrange y compruebe que pasa por los tres puntos.
 :::
 
 ::: {.sol}
-## Solución del @exr-lagrange
+
 
 <!-- TODO(D3): escribir. Sale un polinomio de grado 2; el objetivo es que vean que
      la construcción es mecánica, no un teorema de existencia abstracto. -->

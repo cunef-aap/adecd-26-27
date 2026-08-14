@@ -61,7 +61,7 @@ $\displaystyle \Riskh(\coef) = \frac{1}{\nobs}\norm{\X\coef - \yv}^2$.
 <!-- TODO(D6, 15 min): desarrollar la suma doble, derivar respecto de w_j y RECOGER LOS
      DOS TERMINOS en los que aparece j (el de la fila y el de la columna). Ese "dos"
      es de donde sale el 2. En el caso general el resultado es (A + A^T) w. -->
-$\square$
+
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -88,7 +88,7 @@ $\displaystyle \grad \Riskh(\coef) = \frac{2}{\nobs}\,\Xt(\X\coef - \yv)$.
      ya conocen, y regala el hessiano de @thm-hessiano.
      NO usar la ruta de Chodrow (regla de la cadena multivariante), y NO hacer la
      reconciliación entrywise<->vectorial con deltas de Kronecker: está cortada. -->
-$\square$
+
 :::
 
 ::: {#thm-ecuaciones-normales}
@@ -100,7 +100,7 @@ Si $\coefhat$ minimiza $\Riskh$, entonces $\Xt\X\coefhat = \Xt\yv$.
 ::: {.proof}
 @thm-condicion-primer-orden aplicado a @thm-gradiente-matricial: en un mínimo el gradiente
 se anula, y $\frac{2}{\nobs}\Xt(\X\coefhat - \yv) = \zerov$ equivale a
-$\Xt\X\coefhat = \Xt\yv$. $\square$
+$\Xt\X\coefhat = \Xt\yv$.
 :::
 
 ::: {#cor-residuos-ortogonales}
@@ -113,7 +113,7 @@ $\ybar$.
 
 ::: {.proof}
 Reescritura de @thm-ecuaciones-normales. La primera componente de $\Xt\resid$ es
-$\onesv\T\resid = \sum_i \residi$ porque la primera columna de $\X$ es de unos. $\square$
+$\onesv\T\resid = \sum_i \residi$ porque la primera columna de $\X$ es de unos.
 :::
 
 ::: {.callout-important appearance="simple"}
@@ -139,7 +139,7 @@ $$ {#eq-identidad}
      Desarrollar la norma al cuadrado. El término cruzado es
         2 (w - what)^T X^T (X what - y) = 0
      por @thm-ecuaciones-normales. Tres líneas y se acabó. -->
-$\square$
+
 :::
 
 ::: {#cor-minimo-global}
@@ -169,7 +169,7 @@ $$\coefhat = (\Xt\X)^{-1}\Xt\yv .$$
          luego X v = 0. El recíproco es inmediato. ESTA ES LA LINEA CLAVE DEL CAPITULO.
      (b) unicidad: por @eq-identidad, Riskh(w) = Riskh(what) si y solo si X(w-what)=0,
          o sea w - what en ker(X). -->
-$\square$
+
 :::
 
 ::: {#thm-hessiano}
@@ -185,7 +185,7 @@ solo si $\rank\X = \nfeat+1$.
 ::: {.proof}
 Derivar @thm-gradiente-matricial con @lem-grad-lineal y @lem-grad-cuadratica; la
 curvatura direccional es la misma línea $\norm{\X\mathbf{v}}^2$ de
-@thm-existencia-unicidad. $\square$
+@thm-existencia-unicidad.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -207,7 +207,7 @@ llegan en flujo.
 :::
 
 ::: {.cajanegra}
-## Nunca invertir la matriz
+**Nunca invertir la matriz**
 
 Se resuelve el sistema (`solve`, `lstsq`), no se calcula la inversa. El número de
 condición cumple $\kappa(\Xt\X) = \kappa(\X)^2$, que **enunciamos y no demostramos**: en
@@ -246,7 +246,7 @@ La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las
 ## La trampa de esta semana
 
 ::: {.trampa}
-## `np.linalg.inv(X.T @ X) @ X.T @ y`
+**`np.linalg.inv(X.T @ X) @ X.T @ y`**
 
 Funciona en clase y falla con datos reales. Dos motivos: si alguna columna es
 combinación de las demás, la inversa **no existe** (@thm-existencia-unicidad) y NumPy

@@ -1,21 +1,211 @@
 /*-- scss:defaults --*/
-// Paleta CUNEF (de assets/cunef.sty)
+// ===========================================================================
+//  Aprendizaje Automático: Predicción — identidad visual
+//
+//  Criterio: monografía académica, no documentación de software. Serif para el
+//  cuerpo (convive con las matemáticas de MathJax), Aeonik solo en títulos y
+//  navegación, UN único acento (naranja CUNEF) usado con cuentagotas, y filetes
+//  finos en lugar de barras de color y rellenos.
+// ===========================================================================
+
+// --- Paleta ---------------------------------------------------------------
 $cunef-naranja: #ff5700;
 $cunef-azul:    #151f6c;
-$cunef-fondo:   #f5f2ed;
 
-$base-color:       $cunef-azul;
-$link-color:       $cunef-naranja;
-$link-hover-color: $cunef-azul;
-$sidebar-bg:       #ffffff;
-$navbar-bg:        #ffffff;
-$body-color:       #1a292c;
+$tinta:         #1b1d21;   // cuerpo de texto
+$tinta-suave:   #55585f;   // texto secundario, pies de figura
+$filete:        #dcdcd8;   // hairlines
+$filete-tenue:  #ececea;
+$papel:         #ffffff;
 
-$font-size-root:         1.05em;
-$font-size-sidebar-link: 1.15 * $font-size-root;
-$code-block-bg-alpha:    -0.8;
+// --- Tipografía -----------------------------------------------------------
+// Serif del sistema: en macOS cae en Charter/Iowan; en el resto, Georgia.
+// Cero dependencias externas, cero peticiones de red.
+$font-family-serif: Charter, "Bitstream Charter", "Iowan Old Style",
+                    "Palatino Linotype", Palatino, "Sitka Text", Georgia, serif;
+$font-family-sans-serif: "Aeonik", -apple-system, BlinkMacSystemFont,
+                    "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-monospace: "SF Mono", "JetBrains Mono", "Menlo", Consolas, monospace;
+
+$font-family-base: $font-family-serif;
+$headings-font-family: $font-family-sans-serif;
+
+$font-size-root:   17px;
+$line-height-base: 1.62;
+$headings-font-weight: 500;
+$headings-color: $cunef-azul;
+
+// --- Color ----------------------------------------------------------------
+$body-bg:    $papel;
+$body-color: $tinta;
+
+$link-color:            $cunef-azul;
+$link-hover-color:      $cunef-naranja;
+$link-decoration:       underline;
+$link-decoration-color: $filete;
+
+$border-color: $filete;
+
+// --- Barra lateral --------------------------------------------------------
+$sidebar-bg: $papel;
+$navbar-bg:  $papel;
+
+// --- Código ---------------------------------------------------------------
+$code-color:     $tinta;
+$code-bg:        transparent;
+$code-block-bg:  #fbfbf9;
+$code-block-border-left: $filete;
+
+// --- Anchos ---------------------------------------------------------------
+// 760px con serif a 17px ≈ 70 caracteres por línea: la medida de lectura buena.
+$content-padding-top: 0;
+
 
 /*-- scss:rules --*/
-.sidebar-item-text { font-size: $font-size-sidebar-link; }
-div.sidebar-item-container .active { font-weight: bold; }
-.quarto-sidebar-header p { padding-bottom: 0em; margin-bottom: 0em; }
+// ===========================================================================
+//  Jerarquía de títulos
+//  Un solo acento por página: el filete naranja bajo el título del capítulo.
+// ===========================================================================
+h1.title {
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+
+.quarto-title .subtitle,
+p.subtitle {
+  font-family: $font-family-serif;
+  font-style: italic;
+  font-size: 1.06rem;
+  color: $tinta-suave;
+  margin-top: 0;
+  padding-bottom: 1.1rem;
+  border-bottom: 2px solid $cunef-naranja;
+  display: inline-block;
+}
+
+h2 {
+  font-size: 1.32rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-top: 2.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid $filete;
+}
+
+h3 {
+  font-size: 1.08rem;
+  font-weight: 500;
+  margin-top: 1.9rem;
+  color: $tinta;
+}
+
+// ===========================================================================
+//  Cuerpo
+// ===========================================================================
+p { margin-bottom: 1.05rem; }
+
+blockquote {
+  border-left: 2px solid $cunef-naranja;
+  padding-left: 1.1rem;
+  margin-left: 0;
+  font-style: italic;
+  color: $tinta;
+}
+
+strong { font-weight: 600; }
+
+// ===========================================================================
+//  Navegación: sin cajas grises redondeadas
+// ===========================================================================
+#quarto-sidebar,
+#quarto-sidebar > div.sidebar-menu-container {
+  background-color: $papel;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.sidebar-item-text {
+  font-family: $font-family-sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.sidebar navchapters .sidebar-item-section > .sidebar-item-container,
+.sidebar-item-container .active { font-weight: 500; color: $cunef-azul; }
+
+.sidebar-title { font-family: $font-family-sans-serif; font-weight: 500; }
+
+#TOC, #quarto-margin-sidebar {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  border-left: 1px solid $filete-tenue;
+  padding-left: 1rem;
+}
+
+#toc-title {
+  font-family: $font-family-sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: $tinta-suave;
+  font-weight: 500;
+}
+
+nav[role="doc-toc"] ul > li > a {
+  font-family: $font-family-sans-serif;
+  font-size: 0.82rem;
+  border-left: none;
+}
+
+// ===========================================================================
+//  Tablas: filetes, sin cebra
+// ===========================================================================
+table {
+  font-family: $font-family-sans-serif;
+  font-size: 0.88rem;
+}
+thead th {
+  border-bottom: 1px solid $tinta !important;
+  border-top: none !important;
+  font-weight: 500;
+  text-transform: none;
+}
+tbody tr { border-bottom: 1px solid $filete-tenue; }
+tbody tr:last-child { border-bottom: 1px solid $filete; }
+table > :not(caption) > * > * { background-color: transparent !important; }
+
+// ===========================================================================
+//  Código
+// ===========================================================================
+div.sourceCode {
+  border: none;
+  border-left: 2px solid $filete;
+  border-radius: 0;
+  background-color: $code-block-bg;
+}
+pre code { font-size: 0.82rem; line-height: 1.5; }
+code:not(pre code) {
+  font-size: 0.86em;
+  color: $cunef-azul;
+  background: transparent;
+  padding: 0;
+}
+
+// ===========================================================================
+//  Figuras y márgenes
+// ===========================================================================
+figcaption, .figure-caption, .margin-caption {
+  font-family: $font-family-serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: $tinta-suave;
+  line-height: 1.45;
+}
+
+.column-margin, aside:not(.footnotes):not(.sidebar) {
+  font-size: 0.83rem;
+  color: $tinta-suave;
+}
