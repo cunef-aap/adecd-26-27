@@ -24,7 +24,7 @@
     "href": "index.html#cómo-se-usan-estos-apuntes",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Cómo se usan estos apuntes",
-    "text": "Cómo se usan estos apuntes\n\nCada capítulo se lee antes de la sesión de teoría.\nLos resultados numerados se demuestran. Aquí se demuestra todo lo que se enuncia; lo que no demostramos aparece marcado como ⬛ caja negra, y decimos por qué.\nCada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.\nAl final de cada capítulo hay una ⚠️ trampa: un error realista, demostrado fallando.",
+    "text": "Cómo se usan estos apuntes\n\nCada capítulo se lee antes de la sesión de teoría.\nLos resultados van numerados y se demuestra todo lo que se enuncia. Lo poco que no, aparece bajo el rótulo fuera de alcance, con el motivo escrito.\nLas demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.\nCada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.\nAl final de cada capítulo hay una trampa: un error realista, demostrado fallando.",
     "crumbs": [
       "Bienvenida"
     ]
