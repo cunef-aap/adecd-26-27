@@ -1,0 +1,91 @@
+# Repaso de probabilidad {.unnumbered}
+
+Lo que este curso da por sabido de probabilidad, con las demostraciones de las propiedades
+de la gaussiana que se usan en el capítulo 1. No se ven en clase: se dan por conocidas de
+Estadística y se dejan aquí escritas para poder consultarlas.
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
+
+## La distribución normal
+
+La densidad se define en @def-normal. Las cuatro propiedades siguientes son las únicas que
+usamos.
+
+::: {#lem-normalizacion}
+## Constante de normalización
+
+$\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \dd z = \sqrt{2\pi}$.
+:::
+
+::: {.cajanegra}
+**No lo demostramos**
+
+La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y
+no enseña nada de aprendizaje automático. Se acepta y se sigue.
+:::
+
+::: {#thm-traslacion}
+## Traslación
+
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ y $c \in \Real$, entonces
+$\varepsilon + c \sim \Normal(\mu + c, \noise^2)$.
+:::
+
+::: {.proof}
+Sea $W = \varepsilon + c$. Entonces
+$\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} = \int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$.
+El cambio de variable $u = x + c$ (con $\dd u = \dd x$) transforma la integral en
+$\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y por @eq-densidad-normal
+$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
+:::
+
+::: {#thm-escala}
+## Escala
+
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ y $a \neq 0$, entonces
+$a\varepsilon \sim \Normal(a\mu, a^2\noise^2)$.
+:::
+
+::: {.proof}
+<!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
+     Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
+     en este curso y lo van a necesitar otra vez en 5.12. -->
+
+:::
+
+::: {#cor-estandarizacion}
+## Estandarización
+
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $Z = (\varepsilon - \mu)/\noise \sim \Normal(0,1)$.
+:::
+
+::: {.proof}
+Aplicar @thm-escala con $a = 1/\noise$ y después @thm-traslacion con $c = -\mu/\noise$.
+:::
+
+::: {#thm-momentos}
+## Media y varianza
+
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y $\Var{\varepsilon} = \noise^2$.
+:::
+
+::: {.proof}
+<!-- TODO(D3, 25 min). RUTA OBLIGATORIA: no hacerlo desde cero o pasa de M a L:
+     1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
+        eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
+     2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
+     3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
+
+:::
+
+
+## Qué hay que saber traer de Estadística
+
+- Densidad, esperanza y varianza de una variable continua.
+- Linealidad de la esperanza, y $\Var{aX} = a^2\Var{X}$.
+- Independencia, y que la densidad conjunta de variables independientes es el producto de
+  las densidades. Esto último es lo que hace que la verosimilitud sea un producto.

@@ -1,0 +1,218 @@
+---
+title: 'Presentación'
+subtitle: 'Qué vamos a estudiar, cómo se trabaja y cómo se evalúa'
+---
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
+
+## ¿Qué es el aprendizaje automático?
+
+Un conjunto de métodos para construir, a partir de datos, funciones que predicen. La
+palabra que hace el trabajo es *predicen*: no describen los datos que ya tenemos, sino que
+asignan un valor a observaciones que todavía no hemos visto.
+
+## Tipos de problemas
+
+El primer corte es por lo que sabemos de los datos:
+
+- **Aprendizaje supervisado**: cada observación viene con una respuesta conocida, y
+  queremos predecir esa respuesta en observaciones nuevas.
+- **Aprendizaje no supervisado**: no hay respuesta, y buscamos estructura.
+- **Aprendizaje por refuerzo**: un agente actúa, recibe una recompensa y aprende de ella.
+
+Dentro del supervisado, el segundo corte es por el tipo de respuesta:
+
+- **Regresión**: la respuesta es un número. El precio de un piso, la demanda de la semana
+  que viene, el coste de un siniestro.
+- **Clasificación**: la respuesta es una categoría. Si un cliente impaga o no.
+
+**Esta asignatura trata el aprendizaje supervisado con respuesta numérica.** La
+clasificación es la asignatura hermana, *Aprendizaje Automático: Clasificación* [G249],
+que comparte con esta buena parte del aparato.
+
+## Predicción no es inferencia
+
+Es la distinción que organiza el curso, y conviene tenerla clara desde el primer día.
+
+|  | Econometría | Esta asignatura |
+|---|---|---|
+| Pregunta | ¿cuánto vale $\coefj$ y es significativo? | ¿qué $\coef$ predice mejor fuera de la muestra? |
+| Objeto de interés | el coeficiente | la predicción |
+| Criterio | insesgadez, error estándar | error sobre datos no vistos |
+
+Son preguntas distintas y llevan a modelos distintos. En el capítulo 8 veremos un método,
+la regularización, que **sesga los coeficientes a propósito** porque a cambio predice
+mejor. Desde la óptica de la inferencia eso sería un defecto; desde la nuestra, el
+objetivo.
+
+No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de
+confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero
+sobre las predicciones.
+
+## El esquema del curso
+
+Hay un único método, y se repite quince veces:
+
+1. Escribe un modelo de datos: **señal más ruido**.
+2. Escribe la **verosimilitud** de ese modelo.
+3. Toma $-\log$ y obtén una **pérdida**.
+4. **Minimízala**, en forma cerrada o por descenso de gradiente.
+5. **Valida** sin reutilizar los datos de ajuste y mide con una métrica interpretable.
+
+Ese esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
+*ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
+variables; Poisson es el paso 1 con otro ruido; el *boosting* es el paso 4 en el espacio
+de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.
+
+## Programa
+
+| Tema oficial | Capítulos |
+|---|---|
+| 1. Introducción al aprendizaje automático | 1, 2 y el estado del arte del 15 |
+| 2. Metodologías para predicción | 5 (datos), 9 (reducción y selección), 6 (validación y métricas) |
+| 3. Algoritmos para predicción | 3 y 4 (descenso de gradiente), 2, 4, 8 y 14 (lineales), 10 (no lineales), 11 y 12 (basados en reglas) |
+| 4. Implementación y aplicación | los quince laboratorios; casos de uso en 12, 14 y 15 |
+| Complemento: agentes de IA | 5, 10, 12 y el proyecto |
+
+## Cómo se trabaja
+
+Tres sesiones por semana, con papeles distintos:
+
+| | Sesión | Qué se hace |
+|---|---|---|
+| S1 | **Teoría** | Una demostración, en pizarra. Sin ordenador |
+| S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
+| S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
+
+**Se demuestra todo lo que se enuncia.** Es la diferencia principal con el curso anterior,
+y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo
+poco que no demostramos aparece marcado como *fuera de alcance*, con el motivo escrito.
+
+Cada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una
+demostración elegida al azar **entre las de las tres últimas semanas**. La lista completa
+está publicada en el [índice de resultados](../curso/indice-resultados.qmd) desde el
+primer día.
+
+### Contrato de trabajo
+
+6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:
+
+| | h/semana |
+|---|---|
+| Completar el cuaderno tras el laboratorio | 1,5 |
+| Hoja de problemas | 1,0 |
+| Leer el capítulo | 1,0 |
+| Proyecto (solo semanas 9 a 13) | 1,5 |
+| **Total fuera de clase** | **~5,0** (6,5 en semanas de proyecto) |
+
+## Herramientas
+
+- **Python**, con `numpy`, `pandas`, `matplotlib` y `scikit-learn`. `statsmodels` en el
+  capítulo 14.
+- **`jax`** en los capítulos 3 y 4, solo para diferenciación automática: sirve para
+  comprobar que una derivada hecha a mano es correcta.
+- **Google Colab**, para no tener que instalar nada. Cada capítulo tiene un cuaderno con
+  huecos, enlazado arriba del todo.
+- **Herramientas de IA generativa** (Claude, ChatGPT y similares). Su uso está permitido y,
+  en el proyecto, es obligatorio documentarlo. Ver la
+  [política de uso de IA](../curso/politica-ia.qmd).
+
+## Datos de la asignatura
+
+- Asignatura: **Aprendizaje Automático: Predicción** (G244), 6 ECTS, obligatoria.
+- Titulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.
+- Profesor: **Roi Naveiro** ([roi.naveiro@cunef.edu](mailto:roi.naveiro@cunef.edu)).
+- Web del curso: <https://roinaveiro.github.io/aap-cunef/>
+
+### Horario y aulas
+
+<!-- PENDIENTE: rellenar cuando salga el horario oficial. -->
+
+| Sesión | Día | Hora | Aula |
+|---|---|---|---|
+| S1 · Teoría |  |  |  |
+| S2 · Problemas |  |  |  |
+| S3 · Laboratorio |  |  |  |
+
+La asistencia es **obligatoria** en primera matrícula. Una asistencia inferior al **80 %**
+implica la pérdida del derecho a examen en la convocatoria ordinaria.
+
+Sobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos
+en el aula salvo indicación del profesor. En esta asignatura, **portátil obligatorio en
+S3** y **sin dispositivos en S1 y S2**.
+
+### Tutorías
+
+<!-- PENDIENTE: rellenar. -->
+
+| Día | Hora | Lugar |
+|---|---|---|
+|  |  |  |
+
+## Evaluación
+
+La evaluación continua es **obligatoria para todo el mundo**, incluidos repetidores y
+estudiantes de intercambio. Los parciales **no son liberatorios**.
+
+| Actividad | Peso | Cuándo |
+|---|---|---|
+| Examen parcial 1 | 20 % | semana 7, sesión S3 |
+| Proyecto en colaboración con agentes de IA | 20 % | semanas 12 y 13 |
+| **Examen final** | **60 %** | convocatoria ordinaria |
+
+El examen final es de cátedra, evalúa todo el programa y requiere una **calificación
+mínima de 5 sobre 10** para poder aprobar.
+
+### Cómo sale la nota de actas
+
+| Situación | Nota en actas |
+|---|---|
+| Examen final $\geq 5$ | 40 % continua + 60 % final |
+| Examen final $< 5$ | la nota del examen final |
+| No se presenta al examen final | la nota de la continua, ponderada al 40 % |
+| No ha calificado ninguna prueba | No Presentado |
+
+En **convocatoria extraordinaria**, la nota de evaluación continua puede sustituirse,
+cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
+final de la convocatoria ordinaria (60 %).
+
+### Estructura de los exámenes
+
+El parcial y el final tienen la misma estructura, de modo que el parcial funcione como
+ensayo del final:
+
+| Bloque | Peso | Qué se pide |
+|---|---|---|
+| A | 30 % | Preguntas conceptuales cortas |
+| B | 25 % | **Una demostración**, del índice de resultados |
+| C | 25 % | Cálculo a mano sobre una tabla pequeña |
+| D | 20 % | *"Este script tiene errores"*: encontrarlos y justificarlos |
+
+## Bibliografía
+
+La de la guía docente oficial:
+
+- C. M. Bishop, *Pattern Recognition and Machine Learning*. Springer.
+- A. Giussani, *Applied Machine Learning with Python*. Bocconi University Press.
+- Deisenroth, Faisal y Ong, *Mathematics for Machine Learning*. Cambridge University Press.
+- Boehmke y Greenwell, *Hands-On Machine Learning*. CRC Press.
+- Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning*. Springer.
+
+Complementaria, y más próxima al enfoque de estos apuntes:
+
+- Chodrow, *Machine Learning*: notas del curso CSCI 0451, Middlebury College.
+  <https://www.philchodrow.prof/ml-notes-update/>
+- Bishop y Bishop, *Deep Learning: Foundations and Concepts*. Springer.
+
+Boehmke y Greenwell es un libro de R y esta asignatura es de Python. Conviene usarlo por
+los conceptos y no por el código.
+
+## Antes de la primera sesión de teoría
+
+Lee el anexo [Cálculo y álgebra que vas a necesitar](../curso/algebra.qmd) y haz el
+diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de
+qué punto partimos.

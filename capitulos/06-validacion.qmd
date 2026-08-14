@@ -126,11 +126,10 @@ Si $Z_1,\dots,Z_K$ tienen varianza $v$ y correlación $\rho$ dos a dos, entonces
 $$\Var{\frac{1}{K}\sum_k Z_k} = \rho v + \frac{(1-\rho)v}{K}.$$
 :::
 
-::: {.proof}
-<!-- TODO(D10, 15 min). En pizarra hacerlo con K = 2, que es una línea y ya deja ver el
-     suelo rho*v. El caso general se demuestra en la semana 12, donde ES el argumento de
-     por qué hay que descorrelacionar los árboles de un random forest. -->
-
+::: {.callout-note appearance="simple"}
+La demostración se hace en el capítulo 12, donde este mismo lema es el argumento de por
+qué hay que descorrelacionar los árboles de un *random forest*. Aquí solo usamos el
+enunciado. En pizarra basta comprobarlo con $K=2$, que es una línea.
 :::
 
 ::: {#cor-elegir-k}

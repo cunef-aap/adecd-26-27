@@ -7,6 +7,7 @@ book:
   subtitle: "G244 · Doble Grado ADE + Ciencia de Datos · CUNEF Universidad"
   chapters:
     - index.qmd
+    - capitulos/00-presentacion.qmd
     - part: "Fundamentos"
       chapters:
         - capitulos/01-senal-ruido.qmd
@@ -41,6 +42,7 @@ book:
     - curso/evaluacion.qmd
     - curso/politica-ia.qmd
     - curso/algebra.qmd
+    - curso/probabilidad.qmd
     - curso/glosario.qmd
     - curso/indice-resultados.qmd
     - curso/trazabilidad.qmd

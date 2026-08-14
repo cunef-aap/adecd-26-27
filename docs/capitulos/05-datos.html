@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; De los datos crudos a la matriz de diseño – Aprendizaje Automático: Predicción</title>
+<title>6&nbsp; De los datos crudos a la matriz de diseño – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/05-datos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/05-datos.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -153,6 +153,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -165,25 +171,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -200,13 +206,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,19 +229,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,19 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,19 +287,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -356,6 +362,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -392,7 +404,6 @@ window.Quarto = {
   <li><a href="#transformar-el-objetivo" id="toc-transformar-el-objetivo" class="nav-link" data-scroll-target="#transformar-el-objetivo">Transformar el objetivo</a></li>
   <li><a href="#valores-extremos" id="toc-valores-extremos" class="nav-link" data-scroll-target="#valores-extremos">Valores extremos</a></li>
   <li><a href="#laboratorio-el-pipeline-canónico-del-curso" id="toc-laboratorio-el-pipeline-canónico-del-curso" class="nav-link" data-scroll-target="#laboratorio-el-pipeline-canónico-del-curso">Laboratorio: el <em>pipeline</em> canónico del curso</a></li>
-  <li><a href="#higiene-de-agentes-de-ia-45-min" id="toc-higiene-de-agentes-de-ia-45-min" class="nav-link" data-scroll-target="#higiene-de-agentes-de-ia-45-min">Higiene de agentes de IA (45 min)</a></li>
   <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
   <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
@@ -403,9 +414,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/05-datos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/05-datos.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></h1>
 <p class="subtitle lead">Preprocesado, datos faltantes, escalado, variables categóricas y transformación del objetivo</p>
 </div>
 
@@ -437,26 +448,26 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>, <a href="02-verosimilitud.html#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>2.2</span></a>, <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>, <a href="04-forma-matricial.html#thm-identidad-fundamental" class="quarto-xref">Teorema&nbsp;<span>4.3</span></a>, <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>.</p>
+<p><a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a>, <a href="02-verosimilitud.html#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>, <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>, <a href="04-forma-matricial.html#thm-identidad-fundamental" class="quarto-xref">Teorema&nbsp;<span>5.3</span></a>, <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a>.</p>
 </div>
 </div>
 </section>
 <section id="el-pipeline-es-parte-del-modelo" class="level2">
 <h2 class="anchored" data-anchor-id="el-pipeline-es-parte-del-modelo">El <em>pipeline</em> es parte del modelo</h2>
 <div id="def-pipeline" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 5.1 (Una transformación ajustada con datos es parte del modelo)</strong></span> Un preprocesado es una función <span class="math inline">\(g_{\mathcal{D}}: \mathbb{R}^{p} \to \mathbb{R}^{p'}\)</span> que <strong>depende del conjunto <span class="math inline">\(\mathcal{D}\)</span> con el que se ajustó</strong>: medias, escalas, niveles observados, valores de imputación. No es una operación neutra sobre la tabla.</p>
+<p><span class="theorem-title"><strong>Definición 6.1 (Una transformación ajustada con datos es parte del modelo)</strong></span> Un preprocesado es una función <span class="math inline">\(g_{\mathcal{D}}: \mathbb{R}^{p} \to \mathbb{R}^{p'}\)</span> que <strong>depende del conjunto <span class="math inline">\(\mathcal{D}\)</span> con el que se ajustó</strong>: medias, escalas, niveles observados, valores de imputación. No es una operación neutra sobre la tabla.</p>
 </div>
 <div id="def-fuga" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 5.2 (Fuga de información)</strong></span> Hay <strong>fuga</strong> cuando el conjunto usado para ajustar <span class="math inline">\(g\)</span> interseca el conjunto usado para evaluar. Entonces falla la hipótesis (i) de <a href="06-validacion.html#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a> y el error de test deja de ser insesgado.</p>
+<p><span class="theorem-title"><strong>Definición 6.2 (Fuga de información)</strong></span> Hay <strong>fuga</strong> cuando el conjunto usado para ajustar <span class="math inline">\(g\)</span> interseca el conjunto usado para evaluar. Entonces falla la hipótesis (i) de <a href="06-validacion.html#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>7.1</span></a> y el error de test deja de ser insesgado.</p>
 </div>
 </section>
 <section id="datos-que-faltan" class="level2">
 <h2 class="anchored" data-anchor-id="datos-que-faltan">Datos que faltan</h2>
 <div id="def-mecanismos" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 5.3 (MCAR, MAR, MNAR)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definición 6.3 (MCAR, MAR, MNAR)</strong></span> &nbsp;</p>
 </div>
 <div id="prp-imputacion-varianza" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.1 (Imputar por la media contrae la varianza)</strong></span> Si se observan <span class="math inline">\(n_{\text{obs}}\)</span> de <span class="math inline">\(n\)</span> entradas y el resto se sustituye por <span class="math inline">\(\bar{x}_{\text{obs}}\)</span>, la varianza muestral de la columna imputada es <span class="math inline">\(\frac{n_{\text{obs}}}{n}\, s^2_{\text{obs}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 6.1 (Imputar por la media contrae la varianza)</strong></span> Si se observan <span class="math inline">\(n_{\text{obs}}\)</span> de <span class="math inline">\(n\)</span> entradas y el resto se sustituye por <span class="math inline">\(\bar{x}_{\text{obs}}\)</span>, la varianza muestral de la columna imputada es <span class="math inline">\(\frac{n_{\text{obs}}}{n}\, s^2_{\text{obs}}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -464,7 +475,7 @@ window.Quarto = {
      CERO respecto de la media, que no cambia. -->
 </div>
 <div id="prp-indicador" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.2 (Media más indicador = media del grupo)</strong></span> Con <span class="math inline">\(p=1\)</span>, imputar por la media <strong>y añadir la variable indicadora de ausencia</strong> hace que mínimos cuadrados asigne a las filas con dato faltante exactamente su propia media <span class="math inline">\(\bar{y}_{\text{falta}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 6.2 (Media más indicador = media del grupo)</strong></span> Con <span class="math inline">\(p=1\)</span>, imputar por la media <strong>y añadir la variable indicadora de ausencia</strong> hace que mínimos cuadrados asigne a las filas con dato faltante exactamente su propia media <span class="math inline">\(\bar{y}_{\text{falta}}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -475,10 +486,10 @@ window.Quarto = {
 <section id="escalado" class="level2">
 <h2 class="anchored" data-anchor-id="escalado">Escalado</h2>
 <div id="prp-invarianza-escala" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.3 (Mínimos cuadrados es invariante al reescalado)</strong></span> Si <span class="math inline">\(\tilde{\mathbf{X}} = \mathbf{X}\mathbf{D}\)</span> con <span class="math inline">\(\mathbf{D}\)</span> diagonal invertible, entonces <span class="math inline">\(\tilde{\boldsymbol{w}} = \mathbf{D}^{-1}\hat{\boldsymbol{w}}\)</span> y <strong>las predicciones son idénticas</strong>.</p>
+<p><span class="theorem-title"><strong>Proposición 6.3 (Mínimos cuadrados es invariante al reescalado)</strong></span> Si <span class="math inline">\(\tilde{\mathbf{X}} = \mathbf{X}\mathbf{D}\)</span> con <span class="math inline">\(\mathbf{D}\)</span> diagonal invertible, entonces <span class="math inline">\(\tilde{\boldsymbol{w}} = \mathbf{D}^{-1}\hat{\boldsymbol{w}}\)</span> y <strong>las predicciones son idénticas</strong>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Sustituir en <a href="04-forma-matricial.html#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Sustituir en <a href="04-forma-matricial.html#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>5.2</span></a>.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -491,10 +502,10 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-condicionamiento" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.4 (Estandarizar y velocidad de convergencia)</strong></span> Con columnas ortogonales y centradas, <span class="math inline">\(\hat{R}\)</span> se desacopla en cuadráticas unidimensionales de curvatura <span class="math inline">\(a_j = \frac{2}{n}\sum_i x_{ij}^2\)</span>. Por <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a> la estabilidad exige <span class="math inline">\(\alpha&lt; 1/a_{\max}\)</span>, mientras que la dirección lenta contrae al ritmo <span class="math inline">\(\left\lvert 1 - 2\alpha a_{\min} \right\rvert\)</span>: el número de iteraciones crece como <span class="math inline">\(a_{\max}/a_{\min} = (s_{\max}/s_{\min})^2\)</span>. Estandarizadas, <span class="math inline">\(a_1 = a_2\)</span> y el método converge <strong>en un paso</strong> con <span class="math inline">\(\alpha= 1/2a\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 6.4 (Estandarizar y velocidad de convergencia)</strong></span> Con columnas ortogonales y centradas, <span class="math inline">\(\hat{R}\)</span> se desacopla en cuadráticas unidimensionales de curvatura <span class="math inline">\(a_j = \frac{2}{n}\sum_i x_{ij}^2\)</span>. Por <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> la estabilidad exige <span class="math inline">\(\alpha&lt; 1/a_{\max}\)</span>, mientras que la dirección lenta contrae al ritmo <span class="math inline">\(\left\lvert 1 - 2\alpha a_{\min} \right\rvert\)</span>: el número de iteraciones crece como <span class="math inline">\(a_{\max}/a_{\min} = (s_{\max}/s_{\min})^2\)</span>. Estandarizadas, <span class="math inline">\(a_1 = a_2\)</span> y el método converge <strong>en un paso</strong> con <span class="math inline">\(\alpha= 1/2a\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a> a cada coordenada por separado.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> a cada coordenada por separado.</p>
 </div>
 <div class="cajanegra">
 <p><strong>El caso general</strong> Lo mismo se enuncia con el número de condición de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> (cociente de autovalores). Se enuncia y se dibuja con elipses alargadas; no se demuestra.</p>
@@ -503,7 +514,7 @@ window.Quarto = {
 <section id="variables-categóricas" class="level2">
 <h2 class="anchored" data-anchor-id="variables-categóricas">Variables categóricas</h2>
 <div id="thm-trampa-dummy" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 5.1 (La trampa de la variable ficticia es un teorema de rango)</strong></span> Si se codifican <span class="math inline">\(K\)</span> niveles con <span class="math inline">\(K\)</span> indicadoras <span class="math inline">\(d_1,\dots,d_K\)</span> <strong>y además</strong> hay columna de unos, entonces <span class="math inline">\(\sum_k d_k = \mathbf{1}\)</span>: las columnas son linealmente dependientes, luego <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}\le p\)</span> y, por <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>, <strong>el mínimo no es único</strong>.</p>
+<p><span class="theorem-title"><strong>Teorema 6.1 (La trampa de la variable ficticia es un teorema de rango)</strong></span> Si se codifican <span class="math inline">\(K\)</span> niveles con <span class="math inline">\(K\)</span> indicadoras <span class="math inline">\(d_1,\dots,d_K\)</span> <strong>y además</strong> hay columna de unos, entonces <span class="math inline">\(\sum_k d_k = \mathbf{1}\)</span>: las columnas son linealmente dependientes, luego <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}\le p\)</span> y, por <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>, <strong>el mínimo no es único</strong>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -511,10 +522,10 @@ window.Quarto = {
      independiente y +1 en cada dummy; entonces X v = 0 fila a fila. Nada abstracto. -->
 </div>
 <div id="cor-dummy-predicciones" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 5.1 (Predicciones únicas, coeficientes no)</strong></span> El conjunto de soluciones es <span class="math inline">\(\{\hat{\boldsymbol{w}}+ t\mathbf{v} : t \in \mathbb{R}\}\)</span> y <strong>todas producen las mismas predicciones</strong>. Interpretar los coeficientes es imposible; predecir no se ve afectado. <code>drop='first'</code> o <em>ridge</em> restauran la unicidad.</p>
+<p><span class="theorem-title"><strong>Corolario 6.1 (Predicciones únicas, coeficientes no)</strong></span> El conjunto de soluciones es <span class="math inline">\(\{\hat{\boldsymbol{w}}+ t\mathbf{v} : t \in \mathbb{R}\}\)</span> y <strong>todas producen las mismas predicciones</strong>. Interpretar los coeficientes es imposible; predecir no se ve afectado. <code>drop='first'</code> o <em>ridge</em> restauran la unicidad.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>De <a href="04-forma-matricial.html#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a>: <span class="math inline">\(\hat{R}(\hat{\boldsymbol{w}}+ t\mathbf{v}) = \hat{R}(\hat{\boldsymbol{w}})\)</span> porque <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>De <a href="04-forma-matricial.html#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>5.1</span></a>: <span class="math inline">\(\hat{R}(\hat{\boldsymbol{w}}+ t\mathbf{v}) = \hat{R}(\hat{\boldsymbol{w}})\)</span> porque <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -530,10 +541,10 @@ window.Quarto = {
 <section id="transformar-el-objetivo" class="level2">
 <h2 class="anchored" data-anchor-id="transformar-el-objetivo">Transformar el objetivo</h2>
 <div id="prp-log-multiplicativo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.5 (Tomar logaritmos es cambiar el modelo de ruido)</strong></span> <span class="math inline">\(\log y = f(\mathbf{x}) + \varepsilon\)</span> equivale a <span class="math inline">\(y = e^{f(\mathbf{x})}\cdot \eta\)</span> con <span class="math inline">\(\eta = e^{\varepsilon}\)</span> lognormal: el ruido aditivo en logaritmos es <strong>proporcional</strong> en euros.</p>
+<p><span class="theorem-title"><strong>Proposición 6.5 (Tomar logaritmos es cambiar el modelo de ruido)</strong></span> <span class="math inline">\(\log y = f(\mathbf{x}) + \varepsilon\)</span> equivale a <span class="math inline">\(y = e^{f(\mathbf{x})}\cdot \eta\)</span> con <span class="math inline">\(\eta = e^{\varepsilon}\)</span> lognormal: el ruido aditivo en logaritmos es <strong>proporcional</strong> en euros.</p>
 </div>
 <div id="thm-retransformacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 5.2 (Sesgo de retransformación)</strong></span> Si <span class="math inline">\(Z \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(\mathbb{E}\!\left[ e^{Z} \right] = e^{\mu + \sigma^2/2}\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 6.2 (Sesgo de retransformación)</strong></span> Si <span class="math inline">\(Z \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(\mathbb{E}\!\left[ e^{Z} \right] = e^{\mu + \sigma^2/2}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -542,7 +553,7 @@ window.Quarto = {
      integra 1. Segundo uso del cambio de variable de @thm-escala. -->
 </div>
 <div id="cor-mediana-no-media" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 5.2 (<span class="math inline">\(e^{\hat{y}}\)</span> es la mediana, no la media)</strong></span> Las transformaciones crecientes preservan cuantiles, luego <span class="math inline">\(\mathop{\mathrm{mediana}}(e^Z) = e^{\mu}\)</span>. Devolver euros insesgados <strong>en media</strong> exige multiplicar por <span class="math inline">\(e^{\hat{\sigma}^2/2}\)</span>, con <span class="math inline">\(\hat{\sigma}^2\)</span> de <a href="02-verosimilitud.html#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>2.2</span></a>. Como <span class="math inline">\(e^{\hat{\sigma}^2/2} &gt; 1\)</span>, el error de exponenciar sin corregir es <strong>sistemático y siempre a la baja</strong>.</p>
+<p><span class="theorem-title"><strong>Corolario 6.2 (<span class="math inline">\(e^{\hat{y}}\)</span> es la mediana, no la media)</strong></span> Las transformaciones crecientes preservan cuantiles, luego <span class="math inline">\(\mathop{\mathrm{mediana}}(e^Z) = e^{\mu}\)</span>. Devolver euros insesgados <strong>en media</strong> exige multiplicar por <span class="math inline">\(e^{\hat{\sigma}^2/2}\)</span>, con <span class="math inline">\(\hat{\sigma}^2\)</span> de <a href="02-verosimilitud.html#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>. Como <span class="math inline">\(e^{\hat{\sigma}^2/2} &gt; 1\)</span>, el error de exponenciar sin corregir es <strong>sistemático y siempre a la baja</strong>.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -555,13 +566,13 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-log-error-relativo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 5.6 (Mínimos cuadrados en logaritmos ≈ error relativo)</strong></span> <span class="math inline">\(\log(y/\hat{y}) \approx (y - \hat{y})/\hat{y}\)</span> para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error <strong>relativo</strong>. <em>Esa</em> es la razón para tomar logaritmos de un precio; no “normalizar”.</p>
+<p><span class="theorem-title"><strong>Proposición 6.6 (Mínimos cuadrados en logaritmos ≈ error relativo)</strong></span> <span class="math inline">\(\log(y/\hat{y}) \approx (y - \hat{y})/\hat{y}\)</span> para errores pequeños, luego minimizar el error cuadrático en logaritmos equivale aproximadamente a minimizar el error <strong>relativo</strong>. <em>Esa</em> es la razón para tomar logaritmos de un precio; no “normalizar”.</p>
 </div>
 </section>
 <section id="valores-extremos" class="level2">
 <h2 class="anchored" data-anchor-id="valores-extremos">Valores extremos</h2>
 <div id="rem-atipicos" class="proof remark">
-<p><span class="proof-title"><em>Observación 5.1</em> (Atípicos y el modelo de ruido). </span>La influencia de una observación en <span class="math inline">\(\hat{R}\)</span> es <span class="math inline">\(r_i^2/n\)</span>, <strong>no acotada</strong>; bajo error absoluto es <span class="math inline">\(\left\lvert r_i \right\rvert/n\)</span>. Eliminar atípicos es <strong>cambiar los datos</strong>; <a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a> es <strong>cambiar el modelo</strong>. La segunda alternativa es poco habitual.</p>
+<p><span class="proof-title"><em>Observación 6.1</em> (Atípicos y el modelo de ruido). </span>La influencia de una observación en <span class="math inline">\(\hat{R}\)</span> es <span class="math inline">\(r_i^2/n\)</span>, <strong>no acotada</strong>; bajo error absoluto es <span class="math inline">\(\left\lvert r_i \right\rvert/n\)</span>. Eliminar atípicos es <strong>cambiar los datos</strong>; <a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a> es <strong>cambiar el modelo</strong>. La segunda alternativa es poco habitual.</p>
 </div>
 </section>
 <section id="laboratorio-el-pipeline-canónico-del-curso" class="level2">
@@ -579,22 +590,25 @@ window.Quarto = {
          coeficientes distintos e idénticas predicciones;
      (c) @cor-mediana-no-media en euros sobre airbnb_madrid.csv;
      (d) @prp-condicionamiento: contar iteraciones con y sin estandarizar. -->
-</section>
-<section id="higiene-de-agentes-de-ia-45-min" class="level2">
-<h2 class="anchored" data-anchor-id="higiene-de-agentes-de-ia-45-min">Higiene de agentes de IA (45 min)</h2>
-<!-- TODO(D9). Se coloca AQUI, y no en la semana 13, porque el fallo caracteristico de
-     un agente sobre este material ES la fuga de informacion, y este es el capitulo de
-     la fuga. Tres tareas con trampa, con transcripciones reales grabadas en agosto:
-       1. "añade validación cruzada a este pipeline"  -> suele romper el pipeline
-       2. "mejora el R²"                              -> suele ajustar sobre test
-       3. "imputa los valores que faltan"             -> suele imputar antes de partir
-     El ejercicio consiste en identificar el error del agente, no en ejecutar su código. -->
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Sobre los agentes de IA
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El fallo característico de un agente sobre este material es exactamente la fuga de información de <a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>6.2</span></a>. El taller donde se practica está en el capítulo 10; conviene volver a esta sección cuando se llegue allí.</p>
+</div>
+</div>
 </section>
 <section id="error-frecuente" class="level2">
 <h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong><code>StandardScaler().fit_transform(X)</code> antes de <code>train_test_split</code></strong></p>
-<p>Es un error frecuente y con consecuencias importantes en el proyecto. La media y la desviación típica del escalador se han calculado <strong>con los datos de test</strong>, así que el error de test ya no estima nada (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.</p>
+<p>Es un error frecuente y con consecuencias importantes en el proyecto. La media y la desviación típica del escalador se han calculado <strong>con los datos de test</strong>, así que el error de test ya no estima nada (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>6.2</span></a>). Se ve poco: el modelo simplemente parece un poco mejor de lo que es.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -629,10 +643,10 @@ window.Quarto = {
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-dummy-rango" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5.1</strong></span> Con tres niveles y término independiente, escriba <span class="math inline">\(\mathbf{X}\)</span> para cinco observaciones, exhiba el vector <span class="math inline">\(\mathbf{v}\)</span> de <a href="#thm-trampa-dummy" class="quarto-xref">Teorema&nbsp;<span>5.1</span></a> y verifique <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Dé dos soluciones distintas del problema de mínimos cuadrados y compruebe que predicen igual.</p>
+<p><span class="theorem-title"><strong>Ejercicio 6.1</strong></span> Con tres niveles y término independiente, escriba <span class="math inline">\(\mathbf{X}\)</span> para cinco observaciones, exhiba el vector <span class="math inline">\(\mathbf{v}\)</span> de <a href="#thm-trampa-dummy" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a> y verifique <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Dé dos soluciones distintas del problema de mínimos cuadrados y compruebe que predicen igual.</p>
 </div>
 <div id="exr-retransformacion" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5.2</strong></span> Un modelo sobre <span class="math inline">\(\log(\text{precio})\)</span> predice <span class="math inline">\(\hat{y}= 4{,}5\)</span> con <span class="math inline">\(\hat{\sigma}^2 = 0{,}25\)</span>. Dé la predicción en euros como mediana y como media. ¿Cuál reportaría a un cliente y por qué?</p>
+<p><span class="theorem-title"><strong>Ejercicio 6.2</strong></span> Un modelo sobre <span class="math inline">\(\log(\text{precio})\)</span> predice <span class="math inline">\(\hat{y}= 4{,}5\)</span> con <span class="math inline">\(\hat{\sigma}^2 = 0{,}25\)</span>. Dé la predicción en euros como mediana y como media. ¿Cuál reportaría a un cliente y por qué?</p>
 </div>
 <!-- TODO(D9): 2-3 más, uno sobre imputación + indicador y otro sobre detectar fugas en
      código impreso. -->
@@ -640,9 +654,9 @@ window.Quarto = {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li>El preprocesado es <strong>parte del modelo</strong> (<a href="#def-pipeline" class="quarto-xref">Definición&nbsp;<span>5.1</span></a>); ajustarlo con datos de test es fuga (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>).</li>
-<li>La trampa de la variable ficticia no es una regla práctica: es <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a> aplicado a <em>one-hot</em> (<a href="#thm-trampa-dummy" class="quarto-xref">Teorema&nbsp;<span>5.1</span></a>).</li>
-<li>Exponenciar una predicción hecha en logaritmos sin corregir por <span class="math inline">\(e^{\hat{\sigma}^2/2}\)</span> infravalora <strong>siempre</strong> (<a href="#cor-mediana-no-media" class="quarto-xref">Corolario&nbsp;<span>5.2</span></a>).</li>
+<li>El preprocesado es <strong>parte del modelo</strong> (<a href="#def-pipeline" class="quarto-xref">Definición&nbsp;<span>6.1</span></a>); ajustarlo con datos de test es fuga (<a href="#def-fuga" class="quarto-xref">Definición&nbsp;<span>6.2</span></a>).</li>
+<li>La trampa de la variable ficticia no es una regla práctica: es <a href="04-forma-matricial.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a> aplicado a <em>one-hot</em> (<a href="#thm-trampa-dummy" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>).</li>
+<li>Exponenciar una predicción hecha en logaritmos sin corregir por <span class="math inline">\(e^{\hat{\sigma}^2/2}\)</span> infravalora <strong>siempre</strong> (<a href="#cor-mediana-no-media" class="quarto-xref">Corolario&nbsp;<span>6.2</span></a>).</li>
 </ul>
 
 
@@ -1052,12 +1066,12 @@ window.Quarto = {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../capitulos/04-forma-matricial.html" class="pagination-link" aria-label="Forma matricial y ecuaciones normales">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/06-validacion.html" class="pagination-link" aria-label="Validación y métricas">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

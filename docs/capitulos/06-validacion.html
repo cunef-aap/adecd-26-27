@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Validación y métricas – Aprendizaje Automático: Predicción</title>
+<title>7&nbsp; Validación y métricas – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/06-validacion.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/06-validacion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -153,6 +153,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -165,25 +171,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -200,13 +206,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,19 +229,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,19 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,19 +287,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -356,6 +362,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -402,9 +414,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/06-validacion.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/05-datos.html">Del dato crudo al modelo</a></li><li class="breadcrumb-item"><a href="../capitulos/06-validacion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></h1>
 <p class="subtitle lead">Estimación del riesgo de generalización y significado de cada métrica</p>
 </div>
 
@@ -436,20 +448,20 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>, <a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>, <a href="04-forma-matricial.html#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>4.1</span></a>, <a href="01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>.</p>
+<p><a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a>, <a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>6.2</span></a>, <a href="04-forma-matricial.html#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>5.1</span></a>, <a href="01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>2.6</span></a>.</p>
 </div>
 </div>
 </section>
 <section id="el-riesgo-de-generalización" class="level2">
 <h2 class="anchored" data-anchor-id="el-riesgo-de-generalización">El riesgo de generalización</h2>
 <div id="def-riesgo-verdadero" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.1 (Riesgo verdadero)</strong></span> <span class="math inline">\(R(f) = \mathbb{E}\!\left[ (Y - f(X))^2 \right]\)</span>, esperanza sobre una observación <strong>nueva</strong> de la misma distribución. Nótese la tipografía: <span class="math inline">\(R\)</span> es el riesgo verdadero, <span class="math inline">\(\hat{R}\)</span> el empírico. Todo el capítulo va de estimar el primero con el segundo.</p>
+<p><span class="theorem-title"><strong>Definición 7.1 (Riesgo verdadero)</strong></span> <span class="math inline">\(R(f) = \mathbb{E}\!\left[ (Y - f(X))^2 \right]\)</span>, esperanza sobre una observación <strong>nueva</strong> de la misma distribución. Nótese la tipografía: <span class="math inline">\(R\)</span> es el riesgo verdadero, <span class="math inline">\(\hat{R}\)</span> el empírico. Todo el capítulo va de estimar el primero con el segundo.</p>
 </div>
 <div id="def-particion" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.2 (Entrenamiento, validación y test)</strong></span> Tres papeles distintos: <strong>entrenar</strong> los parámetros, <strong>elegir</strong> entre modelos, y <strong>reportar</strong> una vez.</p>
+<p><span class="theorem-title"><strong>Definición 7.2 (Entrenamiento, validación y test)</strong></span> Tres papeles distintos: <strong>entrenar</strong> los parámetros, <strong>elegir</strong> entre modelos, y <strong>reportar</strong> una vez.</p>
 </div>
 <div id="thm-test-insesgado" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.1 (Insesgadez del error de test)</strong></span> Si (i) <span class="math inline">\(\hat{f}\)</span> es <strong>independiente</strong> del conjunto de test y (ii) los puntos de test son iid de la misma distribución, entonces <span class="math inline">\(\mathbb{E}\!\left[ \hat{R}_{\text{test}}(\hat{f}) \,\vert\,\hat{f} \right] = R(\hat{f})\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 7.1 (Insesgadez del error de test)</strong></span> Si (i) <span class="math inline">\(\hat{f}\)</span> es <strong>independiente</strong> del conjunto de test y (ii) los puntos de test son iid de la misma distribución, entonces <span class="math inline">\(\mathbb{E}\!\left[ \hat{R}_{\text{test}}(\hat{f}) \,\vert\,\hat{f} \right] = R(\hat{f})\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Linealidad de la esperanza sobre <span class="math inline">\(n_{\mathrm{test}}\)</span> términos idénticamente distribuidos.</p>
@@ -460,18 +472,18 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>La demostración es inmediata; las hipótesis, no. Incumplir (i) es fuga de información (<a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>5.2</span></a>). Incumplir (ii) es lo que ocurre con un anfitrión que tiene doce anuncios (<a href="#sec-grupos" class="quarto-xref"><span>Sección 6.5</span></a>).</p>
+<p>La demostración es inmediata; las hipótesis, no. Incumplir (i) es fuga de información (<a href="05-datos.html#def-fuga" class="quarto-xref">Definición&nbsp;<span>6.2</span></a>). Incumplir (ii) es lo que ocurre con un anfitrión que tiene doce anuncios (<a href="#sec-grupos" class="quarto-xref"><span>Sección 7.5</span></a>).</p>
 </div>
 </div>
 </div>
 <div id="prp-precision-test" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 6.1 (Precisión del error de test)</strong></span> <span class="math inline">\(\mathrm{Var}\!\left( \hat{R}_{\text{test}} \right) = v/n_{\mathrm{test}}\)</span> con <span class="math inline">\(v\)</span> la varianza de la pérdida puntual; el error estándar es <span class="math inline">\(\sqrt{v/n_{\mathrm{test}}}\)</span>. De aquí se responde cuántos datos de test hacen falta.</p>
+<p><span class="theorem-title"><strong>Proposición 7.1 (Precisión del error de test)</strong></span> <span class="math inline">\(\mathrm{Var}\!\left( \hat{R}_{\text{test}} \right) = v/n_{\mathrm{test}}\)</span> con <span class="math inline">\(v\)</span> la varianza de la pérdida puntual; el error estándar es <span class="math inline">\(\sqrt{v/n_{\mathrm{test}}}\)</span>. De aquí se responde cuántos datos de test hacen falta.</p>
 </div>
 </section>
 <section id="por-qué-el-test-se-toca-una-vez" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-el-test-se-toca-una-vez">Por qué el test se toca una vez</h2>
 <div id="thm-sesgo-seleccion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.2 (Sesgo de selección)</strong></span> <span class="math inline">\(\displaystyle \mathbb{E}\!\left[ \min_m \hat{R}_m \right] \leq \min_m \mathbb{E}\!\left[ \hat{R}_m \right]\)</span>. Elegir el modelo con menor error de test hace que <strong>ese número</strong> sea optimista.</p>
+<p><span class="theorem-title"><strong>Teorema 7.2 (Sesgo de selección)</strong></span> <span class="math inline">\(\displaystyle \mathbb{E}\!\left[ \min_m \hat{R}_m \right] \leq \min_m \mathbb{E}\!\left[ \hat{R}_m \right]\)</span>. Elegir el modelo con menor error de test hace que <strong>ese número</strong> sea optimista.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -481,13 +493,13 @@ window.Quarto = {
      E[min_m Riskh_m] <= E[Riskh_{m0}] = min_m E[Riskh_m]. -->
 </div>
 <div id="rem-consecuencias" class="proof remark">
-<p><span class="proof-title"><em>Observación 6.1</em> (Consecuencias). </span>Los hiperparámetros se eligen en <strong>validación</strong>; el test se toca <strong>una vez</strong>. Esto explica por qué las tablas de clasificación públicas se degradan con el tiempo, y por qué el proyecto exige por escrito que el test se use una sola vez.</p>
+<p><span class="proof-title"><em>Observación 7.1</em> (Consecuencias). </span>Los hiperparámetros se eligen en <strong>validación</strong>; el test se toca <strong>una vez</strong>. Esto explica por qué las tablas de clasificación públicas se degradan con el tiempo, y por qué el proyecto exige por escrito que el test se use una sola vez.</p>
 </div>
 </section>
 <section id="validación-cruzada" class="level2">
 <h2 class="anchored" data-anchor-id="validación-cruzada">Validación cruzada</h2>
 <div id="def-cv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.3 (Validación cruzada en <span class="math inline">\(K\)</span> bloques)</strong></span> <span class="math inline">\(\displaystyle \mathrm{VC}_K = \frac{1}{K}\sum_{k=1}^{K}\hat{R}_k\)</span>, con <span class="math inline">\(\hat{R}_k\)</span> el riesgo empírico sobre el bloque <span class="math inline">\(k\)</span> del modelo entrenado sin él.</p>
+<p><span class="theorem-title"><strong>Definición 7.3 (Validación cruzada en <span class="math inline">\(K\)</span> bloques)</strong></span> <span class="math inline">\(\displaystyle \mathrm{VC}_K = \frac{1}{K}\sum_{k=1}^{K}\hat{R}_k\)</span>, con <span class="math inline">\(\hat{R}_k\)</span> el riesgo empírico sobre el bloque <span class="math inline">\(k\)</span> del modelo entrenado sin él.</p>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -503,19 +515,23 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-sesgo-cv" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 6.2 (Sesgo de la validación cruzada)</strong></span> Cada modelo se entrena con <span class="math inline">\(n(K-1)/K\)</span> observaciones, luego <span class="math inline">\(\mathrm{VC}_K\)</span> estima el riesgo de un modelo entrenado con <strong>menos</strong> datos que el que finalmente se despliega: el sesgo es <strong>pesimista</strong> y decrece con <span class="math inline">\(K\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 7.2 (Sesgo de la validación cruzada)</strong></span> Cada modelo se entrena con <span class="math inline">\(n(K-1)/K\)</span> observaciones, luego <span class="math inline">\(\mathrm{VC}_K\)</span> estima el riesgo de un modelo entrenado con <strong>menos</strong> datos que el que finalmente se despliega: el sesgo es <strong>pesimista</strong> y decrece con <span class="math inline">\(K\)</span>.</p>
 </div>
 <div id="lem-varianza-media-correlada" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 6.1 (Varianza de una media de variables correladas)</strong></span> Si <span class="math inline">\(Z_1,\dots,Z_K\)</span> tienen varianza <span class="math inline">\(v\)</span> y correlación <span class="math inline">\(\rho\)</span> dos a dos, entonces <span class="math display">\[\mathrm{Var}\!\left( \frac{1}{K}\sum_k Z_k \right) = \rho v + \frac{(1-\rho)v}{K}.\]</span></p>
+<p><span class="theorem-title"><strong>Lema 7.1 (Varianza de una media de variables correladas)</strong></span> Si <span class="math inline">\(Z_1,\dots,Z_K\)</span> tienen varianza <span class="math inline">\(v\)</span> y correlación <span class="math inline">\(\rho\)</span> dos a dos, entonces <span class="math display">\[\mathrm{Var}\!\left( \frac{1}{K}\sum_k Z_k \right) = \rho v + \frac{(1-\rho)v}{K}.\]</span></p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D10, 15 min). En pizarra hacerlo con K = 2, que es una línea y ya deja ver el
-     suelo rho*v. El caso general se demuestra en la semana 12, donde ES el argumento de
-     por qué hay que descorrelacionar los árboles de un random forest. -->
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>La demostración se hace en el capítulo 12, donde este mismo lema es el argumento de por qué hay que descorrelacionar los árboles de un <em>random forest</em>. Aquí solo usamos el enunciado. En pizarra basta comprobarlo con <span class="math inline">\(K=2\)</span>, que es una línea.</p>
+</div>
+</div>
 </div>
 <div id="cor-elegir-k" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 6.1 (Por qué <span class="math inline">\(K=5\)</span> o <span class="math inline">\(K=10\)</span>)</strong></span> Al crecer <span class="math inline">\(K\)</span> el sesgo baja (<a href="#prp-sesgo-cv" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>), pero los conjuntos de entrenamiento se solapan más, <span class="math inline">\(\rho\)</span> crece y por 1 la varianza <strong>no baja</strong>: tiende a <span class="math inline">\(\rho v\)</span>. Con <span class="math inline">\(K=n\)</span> (LOOCV) el sesgo es mínimo, la varianza no se promedia y el coste es <span class="math inline">\(n\)</span> ajustes. <strong>No hay ningún teorema que fije <span class="math inline">\(K\)</span></strong>: es un compromiso empírico, y decirlo es contenido, no laguna.</p>
+<p><span class="theorem-title"><strong>Corolario 7.1 (Por qué <span class="math inline">\(K=5\)</span> o <span class="math inline">\(K=10\)</span>)</strong></span> Al crecer <span class="math inline">\(K\)</span> el sesgo baja (<a href="#prp-sesgo-cv" class="quarto-xref">Proposición&nbsp;<span>7.2</span></a>), pero los conjuntos de entrenamiento se solapan más, <span class="math inline">\(\rho\)</span> crece y por 1 la varianza <strong>no baja</strong>: tiende a <span class="math inline">\(\rho v\)</span>. Con <span class="math inline">\(K=n\)</span> (LOOCV) el sesgo es mínimo, la varianza no se promedia y el coste es <span class="math inline">\(n\)</span> ajustes. <strong>No hay ningún teorema que fije <span class="math inline">\(K\)</span></strong>: es un compromiso empírico, y decirlo es contenido, no laguna.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -531,16 +547,16 @@ window.Quarto = {
 <section id="sec-grupos" class="level2">
 <h2 class="anchored" data-anchor-id="sec-grupos">Cuando la hipótesis iid es falsa</h2>
 <div id="rem-grupos" class="proof remark">
-<p><span class="proof-title"><em>Observación 6.2</em> (Grupos). </span>Un anfitrión con doce anuncios rompe la hipótesis (ii) de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>: hay filas de test dependientes de filas de entrenamiento. <code>GroupKFold</code> sobre <code>host_id</code> restaura la hipótesis, y la diferencia entre las estimaciones de error de ambos esquemas cuantifica el efecto de la dependencia entre filas.</p>
+<p><span class="proof-title"><em>Observación 7.2</em> (Grupos). </span>Un anfitrión con doce anuncios rompe la hipótesis (ii) de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>7.1</span></a>: hay filas de test dependientes de filas de entrenamiento. <code>GroupKFold</code> sobre <code>host_id</code> restaura la hipótesis, y la diferencia entre las estimaciones de error de ambos esquemas cuantifica el efecto de la dependencia entre filas.</p>
 </div>
 </section>
 <section id="métricas" class="level2">
 <h2 class="anchored" data-anchor-id="métricas">Métricas</h2>
 <div id="def-metricas" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Un <span class="math inline">\(\mathrm{ECM}\)</span> de 3.400 no es interpretable si no se indican las unidades de <span class="math inline">\(y\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 7.4 (<span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span>)</strong></span> Con unidades: si <span class="math inline">\(y\)</span> está en euros, <span class="math inline">\(\mathrm{ECM}\)</span> está en euros al cuadrado; <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(\mathrm{EAM}\)</span>, en euros. Un <span class="math inline">\(\mathrm{ECM}\)</span> de 3.400 no es interpretable si no se indican las unidades de <span class="math inline">\(y\)</span>.</p>
 </div>
 <div id="prp-rmse-mae" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 6.3 (<span class="math inline">\(\mathrm{RECM}\geq \mathrm{EAM}\)</span> siempre)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Proposición 7.3 (<span class="math inline">\(\mathrm{RECM}\geq \mathrm{EAM}\)</span> siempre)</strong></span> &nbsp;</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -548,19 +564,19 @@ window.Quarto = {
      Ruta elegida sobre Cauchy-Schwarz: es probabilidad que sí tienen. -->
 </div>
 <div id="rem-metrica-modelo" class="proof remark">
-<p><span class="proof-title"><em>Observación 6.3</em> (Elegir métrica es elegir modelo). </span><span class="math inline">\(\mathrm{ECM}\)</span> apunta a la <strong>media</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>); <span class="math inline">\(\mathrm{EAM}\)</span>, a la <strong>mediana</strong> (<a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a>). No son dos formas de medir lo mismo: estiman funcionales distintos de la distribución condicional.</p>
+<p><span class="proof-title"><em>Observación 7.3</em> (Elegir métrica es elegir modelo). </span><span class="math inline">\(\mathrm{ECM}\)</span> apunta a la <strong>media</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a>); <span class="math inline">\(\mathrm{EAM}\)</span>, a la <strong>mediana</strong> (<a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>). No son dos formas de medir lo mismo: estiman funcionales distintos de la distribución condicional.</p>
 </div>
 </section>
 <section id="r2" class="level2">
 <h2 class="anchored" data-anchor-id="r2"><span class="math inline">\(R^2\)</span></h2>
 <div id="def-r2" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 6.5 (<span class="math inline">\(\mathrm{SCE}\)</span>, <span class="math inline">\(\mathrm{SCT}\)</span> y <span class="math inline">\(R^2\)</span>)</strong></span> <span class="math inline">\(\mathrm{SCE}= \sum_i(y_i-\hat{y}_i)^2\)</span>, <span class="math inline">\(\mathrm{SCT}= \sum_i(y_i-\bar{y})^2\)</span>, <span class="math inline">\(\ R^2= 1 - \mathrm{SCE}/\mathrm{SCT}\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 7.5 (<span class="math inline">\(\mathrm{SCE}\)</span>, <span class="math inline">\(\mathrm{SCT}\)</span> y <span class="math inline">\(R^2\)</span>)</strong></span> <span class="math inline">\(\mathrm{SCE}= \sum_i(y_i-\hat{y}_i)^2\)</span>, <span class="math inline">\(\mathrm{SCT}= \sum_i(y_i-\bar{y})^2\)</span>, <span class="math inline">\(\ R^2= 1 - \mathrm{SCE}/\mathrm{SCT}\)</span>.</p>
 </div>
 <div id="thm-r2-comparacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.3 (<span class="math inline">\(R^2\)</span> compara contra el modelo de la media)</strong></span> <span class="math inline">\(\mathrm{SCT}= n\,\hat{R}(\bar{f})\)</span> donde <span class="math inline">\(\bar{f}\equiv \bar{y}\)</span> es <strong>el mejor modelo constante</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a>). Por tanto <span class="math display">\[R^2= 1 - \frac{\hat{R}(\hat{f})}{\hat{R}(\bar{f})}:\]</span> la fracción del riesgo del modelo nulo que el modelo consigue eliminar. <span class="math inline">\(R^2=0\)</span> significa “igual de bueno que la media”; <span class="math inline">\(R^2=1\)</span>, predicción perfecta.</p>
+<p><span class="theorem-title"><strong>Teorema 7.3 (<span class="math inline">\(R^2\)</span> compara contra el modelo de la media)</strong></span> <span class="math inline">\(\mathrm{SCT}= n\,\hat{R}(\bar{f})\)</span> donde <span class="math inline">\(\bar{f}\equiv \bar{y}\)</span> es <strong>el mejor modelo constante</strong> (<a href="02-verosimilitud.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a>). Por tanto <span class="math display">\[R^2= 1 - \frac{\hat{R}(\hat{f})}{\hat{R}(\bar{f})}:\]</span> la fracción del riesgo del modelo nulo que el modelo consigue eliminar. <span class="math inline">\(R^2=0\)</span> significa “igual de bueno que la media”; <span class="math inline">\(R^2=1\)</span>, predicción perfecta.</p>
 </div>
 <div id="thm-sct-descompone" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.4 (<span class="math inline">\(\mathrm{SCT}= \mathrm{SCReg}+ \mathrm{SCE}\)</span> <strong>en la muestra</strong>)</strong></span> Con mínimos cuadrados, término independiente y <strong>sobre los datos de entrenamiento</strong>, <span class="math inline">\(\sum_i(y_i-\bar{y})^2 = \sum_i(\hat{y}_i-\bar{y})^2 + \sum_i(y_i-\hat{y}_i)^2\)</span>, de donde <span class="math inline">\(0 \le R^2\le 1\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 7.4 (<span class="math inline">\(\mathrm{SCT}= \mathrm{SCReg}+ \mathrm{SCE}\)</span> <strong>en la muestra</strong>)</strong></span> Con mínimos cuadrados, término independiente y <strong>sobre los datos de entrenamiento</strong>, <span class="math inline">\(\sum_i(y_i-\bar{y})^2 = \sum_i(\hat{y}_i-\bar{y})^2 + \sum_i(y_i-\hat{y}_i)^2\)</span>, de donde <span class="math inline">\(0 \le R^2\le 1\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -569,7 +585,7 @@ window.Quarto = {
      Es la misma técnica de @thm-identidad-fundamental; conviene señalarlo en clase. -->
 </div>
 <div id="thm-r2-negativo" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 6.5 (Fuera de la muestra <span class="math inline">\(R^2\)</span> puede ser negativo)</strong></span> En test <strong>falla <a href="04-forma-matricial.html#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>4.1</span></a></strong>, luego falla <a href="#thm-sct-descompone" class="quarto-xref">Teorema&nbsp;<span>6.4</span></a> y <span class="math inline">\(R^2\)</span> no está acotado inferiormente. Además <span class="math display">\[R^2_{\text{test}} &lt; 0 \iff \mathrm{SCE}_{\text{test}} &gt; \mathrm{SCT}_{\text{test}} \iff \text{el modelo predice peor que la constante } \bar{y}.\]</span></p>
+<p><span class="theorem-title"><strong>Teorema 7.5 (Fuera de la muestra <span class="math inline">\(R^2\)</span> puede ser negativo)</strong></span> En test <strong>falla <a href="04-forma-matricial.html#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>5.1</span></a></strong>, luego falla <a href="#thm-sct-descompone" class="quarto-xref">Teorema&nbsp;<span>7.4</span></a> y <span class="math inline">\(R^2\)</span> no está acotado inferiormente. Además <span class="math display">\[R^2_{\text{test}} &lt; 0 \iff \mathrm{SCE}_{\text{test}} &gt; \mathrm{SCT}_{\text{test}} \iff \text{el modelo predice peor que la constante } \bar{y}.\]</span></p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -577,7 +593,7 @@ window.Quarto = {
      (b) dar un CONTRAEJEMPLO MINIMO de 3 puntos calculable a mano -> ítem de examen. -->
 </div>
 <div id="rem-r2-avisos" class="proof remark">
-<p><span class="proof-title"><em>Observación 6.4</em> (Tres avisos sobre <span class="math inline">\(R^2\)</span>). </span><code>r2_score</code> usa la media del vector <span class="math inline">\(y\)</span> que se le pasa, es decir la de <strong>test</strong>. <span class="math inline">\(R^2\)</span> es adimensional, luego <strong>no es comparable entre conjuntos de datos</strong> porque <span class="math inline">\(\mathrm{SCT}\)</span> depende de <span class="math inline">\(\mathrm{Var}\!\left( y \right)\)</span>. Y un <span class="math inline">\(R^2\)</span> alto no implica un modelo útil.</p>
+<p><span class="proof-title"><em>Observación 7.4</em> (Tres avisos sobre <span class="math inline">\(R^2\)</span>). </span><code>r2_score</code> usa la media del vector <span class="math inline">\(y\)</span> que se le pasa, es decir la de <strong>test</strong>. <span class="math inline">\(R^2\)</span> es adimensional, luego <strong>no es comparable entre conjuntos de datos</strong> porque <span class="math inline">\(\mathrm{SCT}\)</span> depende de <span class="math inline">\(\mathrm{Var}\!\left( y \right)\)</span>. Y un <span class="math inline">\(R^2\)</span> alto no implica un modelo útil.</p>
 </div>
 </section>
 <section id="laboratorio" class="level2">
@@ -595,7 +611,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“He probado veinte modelos y me quedo con el mejor en test”</strong></p>
-<p>Ese “mejor en test” ya no estima nada, por <a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.</p>
+<p>Ese “mejor en test” ya no estima nada, por <a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>7.2</span></a>. Con veinte modelos y un test pequeño, el ganador lo es en buena parte por suerte. Hiperparámetros en validación; test, una vez.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -634,25 +650,25 @@ window.Quarto = {
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-metricas-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6.1</strong></span> Sobre una tabla de seis filas, calcule a mano <span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(R^2\)</span>. Verifique <a href="#prp-rmse-mae" class="quarto-xref">Proposición&nbsp;<span>6.3</span></a>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7.1</strong></span> Sobre una tabla de seis filas, calcule a mano <span class="math inline">\(\mathrm{EAM}\)</span>, <span class="math inline">\(\mathrm{ECM}\)</span>, <span class="math inline">\(\mathrm{RECM}\)</span> y <span class="math inline">\(R^2\)</span>. Verifique <a href="#prp-rmse-mae" class="quarto-xref">Proposición&nbsp;<span>7.3</span></a>.</p>
 </div>
 <div id="exr-r2-negativo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6.2</strong></span> Construya tres puntos y un modelo lineal con <span class="math inline">\(R^2_{\text{test}} &lt; 0\)</span>. Explique en una frase qué le está diciendo ese número a quien lo lea.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7.2</strong></span> Construya tres puntos y un modelo lineal con <span class="math inline">\(R^2_{\text{test}} &lt; 0\)</span>. Explique en una frase qué le está diciendo ese número a quien lo lea.</p>
 </div>
 <div id="exr-cv-estimador" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6.3</strong></span> Dadas las pérdidas de tres bloques <span class="math inline">\((12{,}1;\ 9{,}8;\ 14{,}0)\)</span> de tamaños <span class="math inline">\((40, 40, 41)\)</span>, calcule <span class="math inline">\(\mathrm{VC}_3\)</span> de las dos maneras de <a href="#def-cv" class="quarto-xref">Definición&nbsp;<span>6.3</span></a> y explique la diferencia.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7.3</strong></span> Dadas las pérdidas de tres bloques <span class="math inline">\((12{,}1;\ 9{,}8;\ 14{,}0)\)</span> de tamaños <span class="math inline">\((40, 40, 41)\)</span>, calcule <span class="math inline">\(\mathrm{VC}_3\)</span> de las dos maneras de <a href="#def-cv" class="quarto-xref">Definición&nbsp;<span>7.3</span></a> y explique la diferencia.</p>
 </div>
 <!-- TODO(D11): 2-3 más. Uno debe pedir identificar la fuga en un script impreso. -->
 </section>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li>El error de test es insesgado <strong>solo</strong> bajo dos hipótesis explícitas (<a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>), y elegir con él las rompe (<a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>6.2</span></a>).</li>
-<li><span class="math inline">\(K=5\)</span> o <span class="math inline">\(10\)</span> no es un teorema: es sesgo (<a href="#prp-sesgo-cv" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>) contra varianza
+<li>El error de test es insesgado <strong>solo</strong> bajo dos hipótesis explícitas (<a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>7.1</span></a>), y elegir con él las rompe (<a href="#thm-sesgo-seleccion" class="quarto-xref">Teorema&nbsp;<span>7.2</span></a>).</li>
+<li><span class="math inline">\(K=5\)</span> o <span class="math inline">\(10\)</span> no es un teorema: es sesgo (<a href="#prp-sesgo-cv" class="quarto-xref">Proposición&nbsp;<span>7.2</span></a>) contra varianza
 <ol class="example" type="1">
 <li>contra coste.</li>
 </ol></li>
-<li><span class="math inline">\(R^2\)</span> es una comparación contra la media (<a href="#thm-r2-comparacion" class="quarto-xref">Teorema&nbsp;<span>6.3</span></a>); fuera de la muestra puede ser negativo, y eso significa algo muy concreto (<a href="#thm-r2-negativo" class="quarto-xref">Teorema&nbsp;<span>6.5</span></a>).</li>
+<li><span class="math inline">\(R^2\)</span> es una comparación contra la media (<a href="#thm-r2-comparacion" class="quarto-xref">Teorema&nbsp;<span>7.3</span></a>); fuera de la muestra puede ser negativo, y eso significa algo muy concreto (<a href="#thm-r2-negativo" class="quarto-xref">Teorema&nbsp;<span>7.5</span></a>).</li>
 </ul>
 
 
@@ -1062,12 +1078,12 @@ window.Quarto = {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../capitulos/05-datos.html" class="pagination-link" aria-label="De los datos crudos a la matriz de diseño">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/07-sesgo-varianza.html" class="pagination-link" aria-label="Sesgo, varianza y ruido">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

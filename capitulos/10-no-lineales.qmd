@@ -38,6 +38,20 @@ completo desde el primer día.
 - Polinomios y su patología en los bordes; splines cúbicos y nudos; bases gaussianas.
 - k-NN y la maldición de la dimensionalidad.
 
+## Taller de agentes de IA I (45 min)
+
+<!-- TODO. Se traslada aqui desde el capitulo 5 para no compartir sesion con el pipeline
+     canonico. Contenido:
+       (a) que es un LLM en dos transparencias: prediccion del siguiente token y muestreo
+           con temperatura, p_i propto exp(s_i/T). Por eso el mismo prompt da respuestas
+           distintas;
+       (b) el bucle del agente: leer, actuar, observar;
+       (c) tres tareas con trampa, con transcripciones reales grabadas en agosto:
+           "anade validacion cruzada a este pipeline"  -> suele romper el pipeline
+           "mejora el R2"                              -> suele ajustar sobre test
+           "imputa los valores que faltan"             -> suele imputar antes de partir
+     El alumno tiene que identificar el error, no ejecutar el codigo. -->
+
 ## Ejercicios
 
 <!-- TODO: 4-6 ejercicios con solución plegable. -->

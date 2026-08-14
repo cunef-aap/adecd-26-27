@@ -17,6 +17,9 @@ Tres sesiones por semana, con papeles distintos:
 |---|---|---|
 | S1 | **Teoría** | La derivación, en pizarra. Sin ordenador |
 | S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
+
+En la semana 3, la S2 se dedica íntegramente a práctica de álgebra matricial: es el
+requisito de la semana 4 y conviene llegar con él resuelto.
 | S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
 
 ## Contrato de trabajo
@@ -26,17 +29,21 @@ Tres sesiones por semana, con papeles distintos:
 | | h/semana |
 |---|---|
 | Completar el cuaderno tras el laboratorio | 1,5 |
-| Hoja de problemas | 1,5 |
+| Hoja de problemas | 1,0 |
 | Leer el capítulo | 1,0 |
 | Proyecto (solo semanas 9-13) | 1,5 |
-| **Total fuera de clase** | **~5,5** (7 en semanas de proyecto) |
+| **Total fuera de clase** | **~5,0** (6,5 en semanas de proyecto) |
+
+Cada hoja tiene **cinco ejercicios: tres nucleares**, que son los del examen, y dos
+opcionales.
 
 Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 
 ## La derivación de la semana
 
-Cada S2 empieza con diez minutos en los que **una persona reproduce en la pizarra una
-demostración elegida al azar** de las ya vistas. La lista completa está publicada en el
+Cada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una
+demostración elegida al azar **entre las de las tres últimas semanas**, no entre todas las
+del curso. La lista completa está publicada en el
 [índice de resultados](indice-resultados.qmd) desde el primer día.
 
 ## Qué NO cubre esta asignatura

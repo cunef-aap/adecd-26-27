@@ -228,15 +228,13 @@ error absoluto es $\abs{\residi}/\nobs$. Eliminar atípicos es **cambiar los dat
      (c) @cor-mediana-no-media en euros sobre airbnb_madrid.csv;
      (d) @prp-condicionamiento: contar iteraciones con y sin estandarizar. -->
 
-## Higiene de agentes de IA (45 min)
+::: {.callout-note appearance="simple"}
+## Sobre los agentes de IA
 
-<!-- TODO(D9). Se coloca AQUI, y no en la semana 13, porque el fallo caracteristico de
-     un agente sobre este material ES la fuga de informacion, y este es el capitulo de
-     la fuga. Tres tareas con trampa, con transcripciones reales grabadas en agosto:
-       1. "añade validación cruzada a este pipeline"  -> suele romper el pipeline
-       2. "mejora el R²"                              -> suele ajustar sobre test
-       3. "imputa los valores que faltan"             -> suele imputar antes de partir
-     El ejercicio consiste en identificar el error del agente, no en ejecutar su código. -->
+El fallo característico de un agente sobre este material es exactamente la fuga de
+información de @def-fuga. El taller donde se practica está en el capítulo 10; conviene
+volver a esta sección cuando se llegue allí.
+:::
 
 ## Error frecuente
 

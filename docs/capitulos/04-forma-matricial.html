@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Forma matricial y ecuaciones normales – Aprendizaje Automático: Predicción</title>
+<title>5&nbsp; Forma matricial y ecuaciones normales – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/04-forma-matricial.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/04-forma-matricial.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -153,6 +153,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -165,25 +171,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -200,13 +206,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,19 +229,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,19 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,19 +287,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -356,6 +362,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -401,9 +413,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/04-forma-matricial.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/04-forma-matricial.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></h1>
 <p class="subtitle lead">Ecuaciones normales, optimalidad global, existencia y unicidad</p>
 </div>
 
@@ -435,7 +447,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>, <a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> (la condición que se anula en el mínimo), <a href="03-gradientes.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>3.4</span></a>.</p>
+<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>3.1</span></a>, <a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a> (la condición que se anula en el mínimo), <a href="03-gradientes.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>4.5</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
@@ -455,41 +467,32 @@ window.Quarto = {
 <section id="preparativos" class="level2">
 <h2 class="anchored" data-anchor-id="preparativos">Preparativos</h2>
 <div id="def-diseno" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 4.1 (Matriz de diseño)</strong></span> <span class="math inline">\(\mathbf{X}\in \mathbb{R}^{n\times (p+1)}\)</span> con <strong>primera columna de unos</strong>, de modo que <span class="math inline">\(x_{i0} = 1\)</span> y el término independiente queda absorbido en <span class="math inline">\(\boldsymbol{w}\)</span>. El <em>score</em> es <span class="math inline">\(s_i = \mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\)</span>. Este convenio se mantiene en el resto del curso.</p>
+<p><span class="theorem-title"><strong>Definición 5.1 (Matriz de diseño)</strong></span> <span class="math inline">\(\mathbf{X}\in \mathbb{R}^{n\times (p+1)}\)</span> con <strong>primera columna de unos</strong>, de modo que <span class="math inline">\(x_{i0} = 1\)</span> y el término independiente queda absorbido en <span class="math inline">\(\boldsymbol{w}\)</span>. El <em>score</em> es <span class="math inline">\(s_i = \mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\)</span>. Este convenio se mantiene en el resto del curso.</p>
 </div>
 <div id="prp-riesgo-matricial" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 4.1 (Riesgo en forma matricial)</strong></span> <span class="math inline">\(\displaystyle \hat{R}(\boldsymbol{w}) = \frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}- \mathbf{y} \right\rVert^2\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 5.1 (Riesgo en forma matricial)</strong></span> <span class="math inline">\(\displaystyle \hat{R}(\boldsymbol{w}) = \frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}- \mathbf{y} \right\rVert^2\)</span>.</p>
 </div>
-<div id="lem-grad-lineal" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 4.1 (<span class="math inline">\(\nabla(\mathbf{a}^{\mathsf{T}}\boldsymbol{w}) = \mathbf{a}\)</span>)</strong></span> &nbsp;</p>
-</div>
-<div id="lem-grad-cuadratica" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 4.2 (<span class="math inline">\(\nabla(\boldsymbol{w}^{\mathsf{T}}\mathbf{A}\boldsymbol{w}) = 2\mathbf{A}\boldsymbol{w}\)</span> para <span class="math inline">\(\mathbf{A}\)</span> simétrica)</strong></span> &nbsp;</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D6, 15 min): desarrollar la suma doble, derivar respecto de w_j y RECOGER LOS
-     DOS TERMINOS en los que aparece j (el de la fila y el de la columna). Ese "dos"
-     es de donde sale el 2. En el caso general el resultado es (A + A^T) w. -->
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
-<p><a href="#lem-grad-lineal" class="quarto-xref">Lema&nbsp;<span>4.1</span></a> y <a href="#lem-grad-cuadratica" class="quarto-xref">Lema&nbsp;<span>4.2</span></a> son cálculo, no aprendizaje automático. Van al anexo y se piden como <strong>trabajo previo</strong>; en clase se usan.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Dos identidades, del anexo
 </div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\nabla(\mathbf{a}^{\mathsf{T}}\boldsymbol{w}) = \mathbf{a}\)</span> (<a href="../curso/algebra.html#lem-grad-lineal" class="quarto-xref">Lema&nbsp;<span>1</span></a>) y <span class="math inline">\(\nabla(\boldsymbol{w}^{\mathsf{T}}\mathbf{A}\boldsymbol{w}) = 2\mathbf{A}\boldsymbol{w}\)</span> para <span class="math inline">\(\mathbf{A}\)</span> simétrica (<a href="../curso/algebra.html#lem-grad-cuadratica" class="quarto-xref">Lema&nbsp;<span>2</span></a>). Son cálculo, no aprendizaje automático: están demostradas en el anexo de <a href="../curso/algebra.html">cálculo y álgebra</a> y se piden como trabajo previo a esta sesión.</p>
 </div>
 </div>
 <div id="rem-simetrica" class="proof remark">
-<p><span class="proof-title"><em>Observación 4.1</em>. </span><span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> es simétrica y de tamaño <span class="math inline">\((p+1)\times(p+1)\)</span>, <strong>no</strong> <span class="math inline">\(n\times n\)</span>.</p>
+<p><span class="proof-title"><em>Observación 5.1</em>. </span><span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> es simétrica y de tamaño <span class="math inline">\((p+1)\times(p+1)\)</span>, <strong>no</strong> <span class="math inline">\(n\times n\)</span>.</p>
 </div>
 </section>
 <section id="ecuaciones-normales" class="level2">
 <h2 class="anchored" data-anchor-id="ecuaciones-normales">Ecuaciones normales</h2>
 <div id="thm-gradiente-matricial" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 4.1 (Gradiente del riesgo)</strong></span> <span class="math inline">\(\displaystyle \nabla\hat{R}(\boldsymbol{w}) = \frac{2}{n}\,\mathbf{X}^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}- \mathbf{y})\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 5.1 (Gradiente del riesgo)</strong></span> <span class="math inline">\(\displaystyle \nabla\hat{R}(\boldsymbol{w}) = \frac{2}{n}\,\mathbf{X}^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}- \mathbf{y})\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -501,16 +504,16 @@ window.Quarto = {
      reconciliación entrywise<->vectorial con deltas de Kronecker: está cortada. -->
 </div>
 <div id="thm-ecuaciones-normales" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 4.2 (Ecuaciones normales)</strong></span> Si <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> minimiza <span class="math inline">\(\hat{R}\)</span>, entonces <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 5.2 (Ecuaciones normales)</strong></span> Si <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> minimiza <span class="math inline">\(\hat{R}\)</span>, entonces <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span><a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> aplicado a <a href="#thm-gradiente-matricial" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a>: en un mínimo el gradiente se anula, y <span class="math inline">\(\frac{2}{n}\mathbf{X}^{\mathsf{T}}(\mathbf{X}\hat{\boldsymbol{w}}- \mathbf{y}) = \mathbf{0}\)</span> equivale a <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span><a href="03-gradientes.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a> aplicado a <a href="#thm-gradiente-matricial" class="quarto-xref">Teorema&nbsp;<span>5.1</span></a>: en un mínimo el gradiente se anula, y <span class="math inline">\(\frac{2}{n}\mathbf{X}^{\mathsf{T}}(\mathbf{X}\hat{\boldsymbol{w}}- \mathbf{y}) = \mathbf{0}\)</span> equivale a <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</p>
 </div>
 <div id="cor-residuos-ortogonales" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 4.1 (Ortogonalidad de los residuos)</strong></span> Con <span class="math inline">\(\mathbf{r}= \mathbf{y}- \mathbf{X}\hat{\boldsymbol{w}}\)</span> se tiene <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}= \mathbf{0}\)</span>. En particular, <strong>si hay término independiente</strong>, <span class="math inline">\(\sum_i r_i= 0\)</span> y la media de las predicciones coincide con <span class="math inline">\(\bar{y}\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 5.1 (Ortogonalidad de los residuos)</strong></span> Con <span class="math inline">\(\mathbf{r}= \mathbf{y}- \mathbf{X}\hat{\boldsymbol{w}}\)</span> se tiene <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}= \mathbf{0}\)</span>. En particular, <strong>si hay término independiente</strong>, <span class="math inline">\(\sum_i r_i= 0\)</span> y la media de las predicciones coincide con <span class="math inline">\(\bar{y}\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Reescritura de <a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>. La primera componente de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}\)</span> es <span class="math inline">\(\mathbf{1}^{\mathsf{T}}\mathbf{r}= \sum_i r_i\)</span> porque la primera columna de <span class="math inline">\(\mathbf{X}\)</span> es de unos.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Reescritura de <a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>5.2</span></a>. La primera componente de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}\)</span> es <span class="math inline">\(\mathbf{1}^{\mathsf{T}}\mathbf{r}= \sum_i r_i\)</span> porque la primera columna de <span class="math inline">\(\mathbf{X}\)</span> es de unos.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -518,7 +521,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>4.1</span></a> se utiliza en el capítulo 6 para demostrar <a href="06-validacion.html#thm-sct-descompone" class="quarto-xref">Teorema&nbsp;<span>6.4</span></a>. Fuera de la muestra deja de cumplirse, y de ahí que <span class="math inline">\(R^2\)</span> pueda salir negativo.</p>
+<p><a href="#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>5.1</span></a> se utiliza en el capítulo 6 para demostrar <a href="06-validacion.html#thm-sct-descompone" class="quarto-xref">Teorema&nbsp;<span>7.4</span></a>. Fuera de la muestra deja de cumplirse, y de ahí que <span class="math inline">\(R^2\)</span> pueda salir negativo.</p>
 </div>
 </div>
 </div>
@@ -526,9 +529,9 @@ window.Quarto = {
 <section id="óptimo-global-existencia-y-unicidad" class="level2">
 <h2 class="anchored" data-anchor-id="óptimo-global-existencia-y-unicidad">Óptimo global, existencia y unicidad</h2>
 <div id="thm-identidad-fundamental" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 4.3 (Identidad fundamental)</strong></span> Si <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> resuelve <a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>, entonces <strong>para todo</strong> <span class="math inline">\(\boldsymbol{w}\)</span>: <span id="eq-identidad"><span class="math display">\[
+<p><span class="theorem-title"><strong>Teorema 5.3 (Identidad fundamental)</strong></span> Si <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> resuelve <a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>5.2</span></a>, entonces <strong>para todo</strong> <span class="math inline">\(\boldsymbol{w}\)</span>: <span id="eq-identidad"><span class="math display">\[
 \hat{R}(\boldsymbol{w}) = \hat{R}(\hat{\boldsymbol{w}}) + \frac{1}{n}\left\lVert \mathbf{X}(\boldsymbol{w}- \hat{\boldsymbol{w}}) \right\rVert^2 .
-\tag{4.1}\]</span></span></p>
+\tag{5.1}\]</span></span></p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -539,7 +542,7 @@ window.Quarto = {
      por @thm-ecuaciones-normales. La demostración ocupa tres líneas. -->
 </div>
 <div id="cor-minimo-global" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 4.2 (Todo punto crítico es mínimo global)</strong></span> El segundo sumando de <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a> es <span class="math inline">\(\geq 0\)</span>, luego <span class="math inline">\(\hat{R}(\boldsymbol{w}) \geq \hat{R}(\hat{\boldsymbol{w}})\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 5.2 (Todo punto crítico es mínimo global)</strong></span> El segundo sumando de <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>5.1</span></a> es <span class="math inline">\(\geq 0\)</span>, luego <span class="math inline">\(\hat{R}(\boldsymbol{w}) \geq \hat{R}(\hat{\boldsymbol{w}})\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -552,7 +555,7 @@ window.Quarto = {
 </div>
 </div>
 <div id="thm-existencia-unicidad" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 4.4 (Existencia y unicidad)</strong></span> <span class="math inline">\(\mathop{\mathrm{nuc}}(\mathbf{X}^{\mathsf{T}}\mathbf{X}) = \mathop{\mathrm{nuc}}(\mathbf{X})\)</span>. En consecuencia, <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> es <strong>único</strong> si y solo si ninguna columna de <span class="math inline">\(\mathbf{X}\)</span> es combinación lineal de las demás (es decir <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}= p+ 1\)</span>, lo que exige <span class="math inline">\(n\geq p+ 1\)</span>), y entonces <span class="math display">\[\hat{\boldsymbol{w}}= (\mathbf{X}^{\mathsf{T}}\mathbf{X})^{-1}\mathbf{X}^{\mathsf{T}}\mathbf{y}.\]</span></p>
+<p><span class="theorem-title"><strong>Teorema 5.4 (Existencia y unicidad)</strong></span> <span class="math inline">\(\mathop{\mathrm{nuc}}(\mathbf{X}^{\mathsf{T}}\mathbf{X}) = \mathop{\mathrm{nuc}}(\mathbf{X})\)</span>. En consecuencia, <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> es <strong>único</strong> si y solo si ninguna columna de <span class="math inline">\(\mathbf{X}\)</span> es combinación lineal de las demás (es decir <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}= p+ 1\)</span>, lo que exige <span class="math inline">\(n\geq p+ 1\)</span>), y entonces <span class="math display">\[\hat{\boldsymbol{w}}= (\mathbf{X}^{\mathsf{T}}\mathbf{X})^{-1}\mathbf{X}^{\mathsf{T}}\mathbf{y}.\]</span></p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -563,10 +566,11 @@ window.Quarto = {
          o sea w - what en ker(X). -->
 </div>
 <div id="thm-hessiano" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 4.5 (Hessiano y convexidad)</strong></span> <span class="math inline">\(\nabla^2\hat{R}= \frac{2}{n}\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span>. Para cualquier dirección <span class="math inline">\(\mathbf{v}\)</span>, la función <span class="math inline">\(\varphi(t) = \hat{R}(\boldsymbol{w}+ t\mathbf{v})\)</span> cumple <span class="math inline">\(\varphi''(t) = \frac{2}{n}\left\lVert \mathbf{X}\mathbf{v} \right\rVert^2 \geq 0\)</span>: <strong>la curvatura en toda dirección es no negativa</strong>, es decir <span class="math inline">\(\hat{R}\)</span> es convexa. Es estrictamente convexa si y solo si <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}= p+1\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 5.5 (Hessiano y convexidad)</strong></span> <span class="math inline">\(\nabla^2\hat{R}= \frac{2}{n}\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span>. Para cualquier dirección <span class="math inline">\(\mathbf{v}\)</span>, la función <span class="math inline">\(\varphi(t) = \hat{R}(\boldsymbol{w}+ t\mathbf{v})\)</span> cumple <span class="math inline">\(\varphi''(t) = \frac{2}{n}\left\lVert \mathbf{X}\mathbf{v} \right\rVert^2 \geq 0\)</span>: <strong>la curvatura en toda dirección es no negativa</strong>, es decir <span class="math inline">\(\hat{R}\)</span> es convexa. Es estrictamente convexa si y solo si <span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}= p+1\)</span>.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Derivar <a href="#thm-gradiente-matricial" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> con <a href="#lem-grad-lineal" class="quarto-xref">Lema&nbsp;<span>4.1</span></a> y <a href="#lem-grad-cuadratica" class="quarto-xref">Lema&nbsp;<span>4.2</span></a>; la curvatura direccional es la misma línea <span class="math inline">\(\left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span> de <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>.</p>
+<div class="cajanegra">
+<p><strong>La comprobación queda para el laboratorio</strong></p>
+<p>El cálculo es el mismo de <a href="#thm-gradiente-matricial" class="quarto-xref">Teorema&nbsp;<span>5.1</span></a> derivado una segunda vez, y la curvatura direccional vuelve a ser la línea <span class="math inline">\(\left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span> de <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>. No lo hacemos en pizarra porque <a href="#cor-minimo-global" class="quarto-xref">Corolario&nbsp;<span>5.2</span></a> ya nos da el mínimo global sin necesidad de convexidad; el hessiano se comprueba numéricamente en el laboratorio y se retoma en el capítulo 8, donde sí hace falta.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -574,7 +578,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Orden deliberado: <a href="#thm-identidad-fundamental" class="quarto-xref">Teorema&nbsp;<span>4.3</span></a> da el mínimo global <strong>primero</strong>, y el hessiano llega después como segunda lectura. Al revés, la convexidad costaría media pizarra de teoría de funciones convexas; así cuesta tres líneas. El hessiano se queda porque es lo que generaliza a <em>ridge</em> (capítulo 8) y a Newton.</p>
+<p>Orden deliberado: <a href="#thm-identidad-fundamental" class="quarto-xref">Teorema&nbsp;<span>5.3</span></a> da el mínimo global <strong>primero</strong>, y el hessiano llega después como segunda lectura. Al revés, la convexidad costaría media pizarra de teoría de funciones convexas; así cuesta tres líneas. El hessiano se queda porque es lo que generaliza a <em>ridge</em> (capítulo 8) y a Newton.</p>
 </div>
 </div>
 </div>
@@ -582,7 +586,7 @@ window.Quarto = {
 <section id="coste-computacional" class="level2">
 <h2 class="anchored" data-anchor-id="coste-computacional">Coste computacional</h2>
 <div id="prp-coste" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 4.2 (¿Fórmula cerrada o gradiente?)</strong></span> Formar <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> cuesta <span class="math inline">\(O(np^2)\)</span>; resolver el sistema, <span class="math inline">\(O(p^3)\)</span>. Un paso de descenso cuesta <span class="math inline">\(O(np)\)</span>, y <span class="math inline">\(T\)</span> pasos <span class="math inline">\(O(Tnp)\)</span>. <strong>El gradiente gana cuando <span class="math inline">\(p^2 \gg Tn\)</span></strong>, o cuando <span class="math inline">\(\mathbf{X}\)</span> no cabe en memoria, o cuando los datos llegan en flujo.</p>
+<p><span class="theorem-title"><strong>Proposición 5.2 (¿Fórmula cerrada o gradiente?)</strong></span> Formar <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> cuesta <span class="math inline">\(O(np^2)\)</span>; resolver el sistema, <span class="math inline">\(O(p^3)\)</span>. Un paso de descenso cuesta <span class="math inline">\(O(np)\)</span>, y <span class="math inline">\(T\)</span> pasos <span class="math inline">\(O(Tnp)\)</span>. <strong>El gradiente gana cuando <span class="math inline">\(p^2 \gg Tn\)</span></strong>, o cuando <span class="math inline">\(\mathbf{X}\)</span> no cabe en memoria, o cuando los datos llegan en flujo.</p>
 </div>
 <div class="cajanegra">
 <p><strong>Resolver el sistema en lugar de invertir la matriz</strong></p>
@@ -592,7 +596,7 @@ window.Quarto = {
 <section id="la-conversación-pendiente-con-econometría" class="level2">
 <h2 class="anchored" data-anchor-id="la-conversación-pendiente-con-econometría">La conversación pendiente con econometría</h2>
 <div id="rem-inferencia" class="proof remark">
-<p><span class="proof-title"><em>Observación 4.2</em> (Aquí declinamos formalmente la inferencia). </span>En este punto la tentación es calcular errores estándar, estadísticos <span class="math inline">\(t\)</span> y valores <span class="math inline">\(p\)</span> sobre <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>. <strong>No lo vamos a hacer</strong>, y conviene decir por qué en lugar de omitirlo en silencio. Toda esa maquinaria responde a la pregunta <em>¿cuánto vale <span class="math inline">\(w_j\)</span>?</em>; este curso responde a <em>¿qué predice mejor fuera de la muestra?</em>. Son objetivos distintos y llevan a modelos distintos: la regularización del capítulo 8 sesga deliberadamente <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> porque a cambio reduce el error de predicción.</p>
+<p><span class="proof-title"><em>Observación 5.2</em> (Aquí declinamos formalmente la inferencia). </span>En este punto la tentación es calcular errores estándar, estadísticos <span class="math inline">\(t\)</span> y valores <span class="math inline">\(p\)</span> sobre <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>. <strong>No lo vamos a hacer</strong>, y conviene decir por qué en lugar de omitirlo en silencio. Toda esa maquinaria responde a la pregunta <em>¿cuánto vale <span class="math inline">\(w_j\)</span>?</em>; este curso responde a <em>¿qué predice mejor fuera de la muestra?</em>. Son objetivos distintos y llevan a modelos distintos: la regularización del capítulo 8 sesga deliberadamente <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> porque a cambio reduce el error de predicción.</p>
 <p>La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las <strong>predicciones</strong> mediante intervalos conformes, sin un solo valor <span class="math inline">\(p\)</span>.</p>
 </div>
 <!-- TODO(D6): proyectar un summary() de statsmodels sobre prostate.data, nombrar
@@ -604,7 +608,7 @@ window.Quarto = {
      (1) np.linalg.solve(X.T @ X, X.T @ y)
      (2) np.linalg.lstsq(X, y, rcond=None)
      (3) el DescensoGradiente del capítulo 3, vectorizado
-     (4) comprobación del gradiente con torch.autograd
+     (4) comprobación de @thm-gradiente-matricial con jax.grad (@sec-autodiff)
      (5) %timeit de (1) vs (3) al crecer p -> @prp-coste medido, no contado
      (6) demo de np.linalg.inv fallando en una X casi colineal -->
 </section>
@@ -612,7 +616,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong><code>np.linalg.inv(X.T @ X) @ X.T @ y</code></strong></p>
-<p>Funciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa <strong>no existe</strong> (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use <code>solve</code> o <code>lstsq</code>.</p>
+<p>Funciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es combinación de las demás, la inversa <strong>no existe</strong> (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>) y NumPy devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el número de condición pierde precisión. Use <code>solve</code> o <code>lstsq</code>.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -638,6 +642,10 @@ window.Quarto = {
 <td><code>LinearRegression(fit_intercept=False).fit(X, y).coef_</code></td>
 </tr>
 <tr class="even">
+<td><span class="math inline">\(\nabla\hat{R}\)</span> comprobado</td>
+<td><code>jax.grad(riesgo)(w, X, y)</code></td>
+</tr>
+<tr class="odd">
 <td><span class="math inline">\(\mathop{\mathrm{rango}}\mathbf{X}\)</span></td>
 <td><code>np.linalg.matrix_rank(X)</code></td>
 </tr>
@@ -647,10 +655,10 @@ window.Quarto = {
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-normales-2x2" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4.1</strong></span> Con <span class="math inline">\(\mathbf{X}= \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3\end{pmatrix}\)</span> y <span class="math inline">\(\mathbf{y}= (2,3,5)^{\mathsf{T}}\)</span>, escriba y resuelva a mano las ecuaciones normales. Compruebe <a href="#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>4.1</span></a>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 5.1</strong></span> Con <span class="math inline">\(\mathbf{X}= \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3\end{pmatrix}\)</span> y <span class="math inline">\(\mathbf{y}= (2,3,5)^{\mathsf{T}}\)</span>, escriba y resuelva a mano las ecuaciones normales. Compruebe <a href="#cor-residuos-ortogonales" class="quarto-xref">Corolario&nbsp;<span>5.1</span></a>.</p>
 </div>
 <div id="exr-rango" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4.2</strong></span> Construya una <span class="math inline">\(\mathbf{X}\)</span> de rango deficiente con tres columnas y exhiba <strong>explícitamente</strong> un vector <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> con <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. ¿Cuántas soluciones tiene el problema de mínimos cuadrados? ¿Cambian las predicciones?</p>
+<p><span class="theorem-title"><strong>Ejercicio 5.2</strong></span> Construya una <span class="math inline">\(\mathbf{X}\)</span> de rango deficiente con tres columnas y exhiba <strong>explícitamente</strong> un vector <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> con <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. ¿Cuántas soluciones tiene el problema de mínimos cuadrados? ¿Cambian las predicciones?</p>
 </div>
 <!-- TODO(D7): 2-3 más. Uno debe pedir aplicar @eq-identidad para probar que dos
      soluciones distintas dan el mismo riesgo: prepara el capítulo 5 (trampa de la dummy). -->
@@ -658,9 +666,9 @@ window.Quarto = {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li><span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span> sale de anular el gradiente (<a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>).</li>
-<li>La identidad <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a> da el <strong>mínimo global</strong> sin teoría de convexidad, y de regalo la unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>).</li>
-<li>La existencia y unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>4.4</span></a>) y la convexidad (<a href="#thm-hessiano" class="quarto-xref">Teorema&nbsp;<span>4.5</span></a>) se apoyan en la igualdad <span class="math inline">\(\mathbf{v}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{v} = \left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span>.</li>
+<li><span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\hat{\boldsymbol{w}}= \mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span> sale de anular el gradiente (<a href="#thm-ecuaciones-normales" class="quarto-xref">Teorema&nbsp;<span>5.2</span></a>).</li>
+<li>La identidad <a href="#eq-identidad" class="quarto-xref">Ecuación&nbsp;<span>5.1</span></a> da el <strong>mínimo global</strong> sin teoría de convexidad, y de regalo la unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>).</li>
+<li>La existencia y unicidad (<a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>5.4</span></a>) y la convexidad (<a href="#thm-hessiano" class="quarto-xref">Teorema&nbsp;<span>5.5</span></a>) se apoyan en la igualdad <span class="math inline">\(\mathbf{v}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{v} = \left\lVert \mathbf{X}\mathbf{v} \right\rVert^2\)</span>.</li>
 </ul>
 
 
@@ -1070,12 +1078,12 @@ window.Quarto = {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../capitulos/03-gradientes.html" class="pagination-link" aria-label="Gradientes y descenso de gradiente">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/05-datos.html" class="pagination-link" aria-label="De los datos crudos a la matriz de diseño">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

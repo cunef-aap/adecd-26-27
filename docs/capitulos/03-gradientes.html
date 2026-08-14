@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Gradientes y descenso de gradiente – Aprendizaje Automático: Predicción</title>
+<title>4&nbsp; Gradientes y descenso de gradiente – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -153,7 +153,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/03-gradientes.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/03-gradientes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -188,6 +188,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -200,25 +206,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -235,13 +241,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -258,19 +264,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -287,19 +293,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,19 +322,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -391,6 +397,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -423,6 +435,7 @@ window.Quarto = {
   <li><a href="#derivadas-parciales-y-gradiente" id="toc-derivadas-parciales-y-gradiente" class="nav-link" data-scroll-target="#derivadas-parciales-y-gradiente">Derivadas parciales y gradiente</a></li>
   <li><a href="#puntos-críticos" id="toc-puntos-críticos" class="nav-link" data-scroll-target="#puntos-críticos">Puntos críticos</a></li>
   <li><a href="#el-gradiente-del-riesgo" id="toc-el-gradiente-del-riesgo" class="nav-link" data-scroll-target="#el-gradiente-del-riesgo">El gradiente del riesgo</a></li>
+  <li><a href="#sec-autodiff" id="toc-sec-autodiff" class="nav-link" data-scroll-target="#sec-autodiff">Diferenciación automática</a></li>
   <li><a href="#descenso-de-gradiente" id="toc-descenso-de-gradiente" class="nav-link" data-scroll-target="#descenso-de-gradiente">Descenso de gradiente</a></li>
   <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio">Laboratorio</a></li>
   <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
@@ -435,9 +448,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/03-gradientes.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/03-gradientes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></h1>
 <p class="subtitle lead">Minimización de funciones diferenciables mediante descenso de gradiente</p>
 </div>
 
@@ -469,26 +482,26 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>, <a href="02-verosimilitud.html#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>, <a href="02-verosimilitud.html#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>.</p>
+<p><a href="02-verosimilitud.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>3.1</span></a>, <a href="02-verosimilitud.html#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a>, <a href="02-verosimilitud.html#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>3.1</span></a>.</p>
 </div>
 </div>
 </section>
 <section id="derivadas-parciales-y-gradiente" class="level2">
 <h2 class="anchored" data-anchor-id="derivadas-parciales-y-gradiente">Derivadas parciales y gradiente</h2>
 <div id="def-parcial" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.1 (Derivada parcial)</strong></span> <span class="math inline">\(\displaystyle \frac{\partial f}{\partial w_j}(\boldsymbol{w}) = \lim_{h \to 0} \frac{f(\boldsymbol{w}+ h\,\mathbf{e}_j) - f(\boldsymbol{w})}{h}\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 4.1 (Derivada parcial)</strong></span> <span class="math inline">\(\displaystyle \frac{\partial f}{\partial w_j}(\boldsymbol{w}) = \lim_{h \to 0} \frac{f(\boldsymbol{w}+ h\,\mathbf{e}_j) - f(\boldsymbol{w})}{h}\)</span>.</p>
 </div>
 <div id="prp-receta-parcial" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.1 (Receta de cálculo)</strong></span> Para derivar respecto de <span class="math inline">\(w_j\)</span>, tratar las demás coordenadas como constantes y aplicar cálculo de una variable.</p>
+<p><span class="theorem-title"><strong>Proposición 4.1 (Receta de cálculo)</strong></span> Para derivar respecto de <span class="math inline">\(w_j\)</span>, tratar las demás coordenadas como constantes y aplicar cálculo de una variable.</p>
 </div>
 <div id="def-gradiente" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.2 (Gradiente)</strong></span> <span class="math inline">\(\nabla f(\boldsymbol{w}) = \left( \frac{\partial f}{\partial w_0}, \dots, \frac{\partial f}{\partial w_{p}} \right)^{\mathsf{T}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 4.2 (Gradiente)</strong></span> <span class="math inline">\(\nabla f(\boldsymbol{w}) = \left( \frac{\partial f}{\partial w_0}, \dots, \frac{\partial f}{\partial w_{p}} \right)^{\mathsf{T}}\)</span>.</p>
 </div>
 <div id="prp-primer-orden" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.2 (Aproximación de primer orden)</strong></span> <span class="math inline">\(f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}\nabla f(\boldsymbol{w}) + o(h)\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 4.2 (Aproximación de primer orden)</strong></span> <span class="math inline">\(f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}\nabla f(\boldsymbol{w}) + o(h)\)</span>.</p>
 </div>
 <div id="thm-maximo-crecimiento" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 3.1 (Dirección de máximo crecimiento)</strong></span> Entre los <span class="math inline">\(\mathbf{u}\)</span> con <span class="math inline">\(\left\lVert \mathbf{u} \right\rVert = 1\)</span>, la derivada direccional <span class="math inline">\(\mathbf{u}^{\mathsf{T}}\nabla f\)</span> se maximiza en <span class="math inline">\(\mathbf{u}^\star = \nabla f/ \left\lVert \nabla f \right\rVert\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 4.1 (Dirección de máximo crecimiento)</strong></span> Entre los <span class="math inline">\(\mathbf{u}\)</span> con <span class="math inline">\(\left\lVert \mathbf{u} \right\rVert = 1\)</span>, la derivada direccional <span class="math inline">\(\mathbf{u}^{\mathsf{T}}\nabla f\)</span> se maximiza en <span class="math inline">\(\mathbf{u}^\star = \nabla f/ \left\lVert \nabla f \right\rVert\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -497,16 +510,16 @@ window.Quarto = {
      y aquí no hace falta. Nombrarla al final, en una línea, como el nombre del hecho. -->
 </div>
 <div id="rem-ortogonal" class="proof remark">
-<p><span class="proof-title"><em>Observación 3.1</em> (El gradiente es ortogonal a las curvas de nivel). </span>Se enuncia y se <strong>dibuja</strong>; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Sirve como apoyo geométrico y no se utiliza más adelante.</p>
+<p><span class="proof-title"><em>Observación 4.1</em> (El gradiente es ortogonal a las curvas de nivel). </span>Se enuncia y se <strong>dibuja</strong>; no se demuestra (requiere curvas parametrizadas y regla de la cadena multivariante). Sirve como apoyo geométrico y no se utiliza más adelante.</p>
 </div>
 </section>
 <section id="puntos-críticos" class="level2">
 <h2 class="anchored" data-anchor-id="puntos-críticos">Puntos críticos</h2>
 <div id="def-punto-critico" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.3 (Punto crítico, mínimo local y global)</strong></span> <span class="math inline">\(\boldsymbol{w}^\star\)</span> es punto crítico si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star) = \mathbf{0}\)</span>; es mínimo local si existe <span class="math inline">\(r&gt;0\)</span> con <span class="math inline">\(\hat{R}(\boldsymbol{w}^\star) \le \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\left\lVert \boldsymbol{w}- \boldsymbol{w}^\star \right\rVert &lt; r\)</span>; global si vale para todo <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 4.3 (Punto crítico, mínimo local y global)</strong></span> <span class="math inline">\(\boldsymbol{w}^\star\)</span> es punto crítico si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star) = \mathbf{0}\)</span>; es mínimo local si existe <span class="math inline">\(r&gt;0\)</span> con <span class="math inline">\(\hat{R}(\boldsymbol{w}^\star) \le \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\left\lVert \boldsymbol{w}- \boldsymbol{w}^\star \right\rVert &lt; r\)</span>; global si vale para todo <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 </div>
 <div id="thm-condicion-primer-orden" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 3.2 (Condición de primer orden)</strong></span> Si <span class="math inline">\(\hat{R}\)</span> es diferenciable y <span class="math inline">\(\boldsymbol{w}^\star\)</span> es mínimo local, entonces <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star) = \mathbf{0}\)</span>. <strong>El recíproco es falso</strong>: <span class="math inline">\(f(w)=w^3\)</span> en <span class="math inline">\(w=0\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 4.2 (Condición de primer orden)</strong></span> Si <span class="math inline">\(\hat{R}\)</span> es diferenciable y <span class="math inline">\(\boldsymbol{w}^\star\)</span> es mínimo local, entonces <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star) = \mathbf{0}\)</span>. <strong>El recíproco es falso</strong>: <span class="math inline">\(f(w)=w^3\)</span> en <span class="math inline">\(w=0\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -520,7 +533,7 @@ window.Quarto = {
 <section id="el-gradiente-del-riesgo" class="level2">
 <h2 class="anchored" data-anchor-id="el-gradiente-del-riesgo">El gradiente del riesgo</h2>
 <div id="thm-gradiente-riesgo-1d" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 3.3 (Gradiente del riesgo, caso <span class="math inline">\(p= 1\)</span>)</strong></span> Con <span class="math inline">\(\hat{y}_i= w_0+ w_1 x_i\)</span>, <span class="math display">\[
+<p><span class="theorem-title"><strong>Teorema 4.3 (Gradiente del riesgo, caso <span class="math inline">\(p= 1\)</span>)</strong></span> Con <span class="math inline">\(\hat{y}_i= w_0+ w_1 x_i\)</span>, <span class="math display">\[
 \frac{\partial \hat{R}}{\partial w_0} = -\frac{2}{n}\sum_i (y_i- w_0- w_1 x_i),
 \qquad
 \frac{\partial \hat{R}}{\partial w_1} = -\frac{2}{n}\sum_i x_i(y_i- w_0- w_1 x_i).
@@ -532,10 +545,63 @@ window.Quarto = {
      es la única vez que hacen esto a mano antes de pasar a forma matricial. -->
 </div>
 </section>
+<section id="sec-autodiff" class="level2">
+<h2 class="anchored" data-anchor-id="sec-autodiff">Diferenciación automática</h2>
+<p>Acabamos de derivar <span class="math inline">\(\nabla\hat{R}\)</span> a mano. A partir de ahora lo haremos con frecuencia, y conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de obtener una derivada en un ordenador, y solo una de ellas sirve.</p>
+<p><strong>Diferencias finitas.</strong> Aproximar <span class="math inline">\(\frac{\partial \hat{R}}{\partial w_j} \approx
+\frac{\hat{R}(\boldsymbol{w}+ h\mathbf{e}_j) - \hat{R}(\boldsymbol{w}- h\mathbf{e}_j)}{2h}\)</span>. Es fácil de programar y siempre funciona, pero tiene dos problemas: el error es de orden <span class="math inline">\(h^2\)</span> y además la resta de dos números casi iguales pierde precisión, de modo que no existe un <span class="math inline">\(h\)</span> bueno; y hace falta evaluar <span class="math inline">\(\hat{R}\)</span> dos veces por cada coordenada, es decir <span class="math inline">\(2(p+1)\)</span> evaluaciones para un solo gradiente.</p>
+<p><strong>Derivación simbólica.</strong> Manipular la expresión algebraica, como haría un humano o un sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.</p>
+<p><strong>Diferenciación automática.</strong> Ni aproxima ni manipula símbolos. Observa que un programa que calcula <span class="math inline">\(\hat{R}(\boldsymbol{w})\)</span> es una composición de operaciones elementales cuya derivada se conoce (sumar, multiplicar, <code>exp</code>, <code>log</code>), y aplica la regla de la cadena a esa composición, <strong>evaluándola numéricamente</strong> paso a paso. El resultado es exacto salvo error de redondeo.</p>
+<div id="def-autodiff" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.4 (Modos directo e inverso)</strong></span> Sea <span class="math inline">\(\hat{R}: \mathbb{R}^{p+1} \to \mathbb{R}\)</span> una composición de operaciones elementales. El <strong>modo directo</strong> propaga derivadas desde las entradas hacia la salida y obtiene una derivada direccional por pasada. El <strong>modo inverso</strong> las propaga desde la salida hacia las entradas y obtiene <strong>el gradiente completo en una sola pasada</strong>.</p>
+</div>
+<p>Para lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (<span class="math inline">\(p+1\)</span> coeficientes) y una sola salida (un riesgo). El modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales de una vez, a un coste comparable al de evaluar <span class="math inline">\(\hat{R}\)</span>. El modo directo necesitaría <span class="math inline">\(p+1\)</span> pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.</p>
+<p>En <code>jax</code>, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.</p>
+<div id="94d6e23b" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>jax.config.update(<span class="st">"jax_enable_x64"</span>, <span class="va">True</span>)   <span class="co"># por defecto jax usa float32</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([np.ones(<span class="bu">len</span>(d)), d[<span class="st">"lcavol"</span>], d[<span class="st">"lweight"</span>]])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> d[<span class="st">"lpsa"</span>].to_numpy()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (X <span class="op">-</span> X.mean(<span class="dv">0</span>)) <span class="op">/</span> np.where(X.std(<span class="dv">0</span>) <span class="op">==</span> <span class="dv">0</span>, <span class="dv">1</span>, X.std(<span class="dv">0</span>))   <span class="co"># la columna de unos se deja</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X[:, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="9ab5903b" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w, X, y):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> X <span class="op">@</span> w <span class="op">-</span> y</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (r <span class="op">@</span> r) <span class="op">/</span> <span class="bu">len</span>(y)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>grad_riesgo <span class="op">=</span> jax.grad(riesgo)     <span class="co"># devuelve una FUNCIÓN, no un número</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nótese la diferencia con <code>riesgo(w, X, y)</code>, que devuelve un número: <code>jax.grad(riesgo)</code> devuelve una función que, evaluada en <span class="math inline">\(\boldsymbol{w}\)</span>, devuelve el vector de derivadas parciales. Es la traducción literal de <span class="math inline">\(\nabla\)</span>.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Detalle a tener presente: <code>jax</code> trabaja por defecto en precisión simple. La línea <code>jax.config.update("jax_enable_x64", True)</code> la eleva a doble precisión, que es lo que queremos para comparar contra un resultado analítico.</p>
+</div>
+</div>
+</div>
+<div class="trampa">
+<p><strong>La diferenciación automática no es magia, y sobre todo no sustituye a derivar</strong></p>
+<p>Devuelve el gradiente del programa que le has dado, que no siempre es el gradiente que creías haber escrito. Si el código tiene un error, <code>jax.grad</code> derivará el código erróneo sin protestar. Sirve para <strong>comprobar</strong> una derivación hecha a mano, no para evitarla.</p>
+</div>
+</section>
 <section id="descenso-de-gradiente" class="level2">
 <h2 class="anchored" data-anchor-id="descenso-de-gradiente">Descenso de gradiente</h2>
 <div id="def-descenso" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.4 (Descenso de gradiente)</strong></span> <span class="math display">\[\boldsymbol{w}^{(t+1)} = \boldsymbol{w}^{(t)} - \alpha\, \nabla\hat{R}\!\left(\boldsymbol{w}^{(t)}\right).\]</span></p>
+<p><span class="theorem-title"><strong>Definición 4.5 (Descenso de gradiente)</strong></span> <span class="math display">\[\boldsymbol{w}^{(t+1)} = \boldsymbol{w}^{(t)} - \alpha\, \nabla\hat{R}\!\left(\boldsymbol{w}^{(t)}\right).\]</span></p>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon">
 <div class="callout-body d-flex">
@@ -548,7 +614,7 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-descenso-desciende" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.3 (Decrecimiento del riesgo en cada paso)</strong></span> Si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}) \neq \mathbf{0}\)</span>, existe <span class="math inline">\(\bar{\alpha} &gt; 0\)</span> tal que <span class="math inline">\(\hat{R}(\boldsymbol{w}- \alpha\nabla\hat{R}(\boldsymbol{w})) &lt; \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\alpha\in (0, \bar{\alpha})\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 4.3 (Decrecimiento del riesgo en cada paso)</strong></span> Si <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}) \neq \mathbf{0}\)</span>, existe <span class="math inline">\(\bar{\alpha} &gt; 0\)</span> tal que <span class="math inline">\(\hat{R}(\boldsymbol{w}- \alpha\nabla\hat{R}(\boldsymbol{w})) &lt; \hat{R}(\boldsymbol{w})\)</span> para todo <span class="math inline">\(\alpha\in (0, \bar{\alpha})\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -557,7 +623,7 @@ window.Quarto = {
      decrece a la derecha de 0. -->
 </div>
 <div id="prp-caso-cuadratico" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.4 (Caso cuadrático exacto: los tres regímenes)</strong></span> Si <span class="math inline">\(\hat{R}(w) = a(w - w^\star)^2\)</span> con <span class="math inline">\(a &gt; 0\)</span>, entonces <span class="math display">\[w^{(t)} - w^\star = (1 - 2\alpha a)^t \left( w^{(0)} - w^\star \right).\]</span> Converge si y solo si <span class="math inline">\(0 &lt; \alpha&lt; 1/a\)</span>; monótonamente si <span class="math inline">\(\alpha&lt; 1/2a\)</span>; oscilando si <span class="math inline">\(1/2a &lt; \alpha&lt; 1/a\)</span>; diverge si <span class="math inline">\(\alpha&gt; 1/a\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 4.4 (Caso cuadrático exacto: los tres regímenes)</strong></span> Si <span class="math inline">\(\hat{R}(w) = a(w - w^\star)^2\)</span> con <span class="math inline">\(a &gt; 0\)</span>, entonces <span class="math display">\[w^{(t)} - w^\star = (1 - 2\alpha a)^t \left( w^{(0)} - w^\star \right).\]</span> Converge si y solo si <span class="math inline">\(0 &lt; \alpha&lt; 1/a\)</span>; monótonamente si <span class="math inline">\(\alpha&lt; 1/2a\)</span>; oscilando si <span class="math inline">\(1/2a &lt; \alpha&lt; 1/a\)</span>; diverge si <span class="math inline">\(\alpha&gt; 1/a\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -569,7 +635,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a> se usa en el capítulo 5 para justificar la estandarización sin recurrir a autovalores.</p>
+<p><a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> se usa en el capítulo 5 para justificar la estandarización sin recurrir a autovalores.</p>
 </div>
 </div>
 </div>
@@ -580,42 +646,49 @@ window.Quarto = {
 </section>
 <section id="laboratorio" class="level2">
 <h2 class="anchored" data-anchor-id="laboratorio">Laboratorio</h2>
-<div id="fbdaafcf" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DescensoGradiente:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0, lr<span class="op">=</span><span class="fl">0.01</span>):</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.tensor(w0, dtype<span class="op">=</span>torch.float32)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.historia <span class="op">=</span> []</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> paso(<span class="va">self</span>, grad_fn):</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> grad_fn(<span class="va">self</span>.w)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> <span class="va">self</span>.w <span class="op">-</span> <span class="va">self</span>.lr <span class="op">*</span> g</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.w</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="832e246d" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DescensoGradiente:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0, lr<span class="op">=</span><span class="fl">0.01</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> np.asarray(w0, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.historia <span class="op">=</span> []</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> paso(<span class="va">self</span>, grad_fn):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> <span class="va">self</span>.w <span class="op">-</span> <span class="va">self</span>.lr <span class="op">*</span> grad_fn(<span class="va">self</span>.w)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.historia.append(<span class="va">self</span>.w.copy())</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.w</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Y la comprobación de <a href="#thm-gradiente-riesgo-1d" class="quarto-xref">Teorema&nbsp;<span>4.3</span></a>: derivamos a mano, y preguntamos a <code>jax</code> si estábamos en lo cierto.</p>
+<div id="4b1bf354" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_analitico(w, X, y):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">/</span> <span class="bu">len</span>(y) <span class="op">*</span> X.T <span class="op">@</span> (y <span class="op">-</span> X <span class="op">@</span> w)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>w0 <span class="op">=</span> np.zeros(X.shape[<span class="dv">1</span>])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>np.allclose(grad_analitico(w0, X, y), grad_riesgo(w0, X, y))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>True</code></pre>
+</div>
 </div>
 <!-- TODO(D5): completar el laboratorio.
-     (a) grad_fn para el riesgo 1-D de @thm-gradiente-riesgo-1d sobre prostate.data;
+     (a) construir X e y a partir de prostate.data antes de las celdas de arriba;
      (b) curva de pérdida para alpha en {0.001, 0.01, 0.1, 1.0} -> los tres regímenes
-         de @prp-caso-cuadratico, VERIFICADOS numéricamente;
-     (c) comprobación numérica del gradiente con torch.autograd;
+         de @prp-caso-cuadratico, verificados numéricamente;
+     (c) comparar los tres gradientes sobre los mismos datos: analítico, diferencias
+         finitas y jax.grad, y cronometrar los tres al crecer p. Es la forma de que
+         vean por qué el modo inverso gana;
      (d) el mismo ajuste sin estandarizar, como preparación del capítulo 5. -->
 </section>
 <section id="error-frecuente" class="level2">
 <h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“No converge, subo la tasa de aprendizaje”</strong></p>
-<p>Normalmente el problema es el opuesto. Por <a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>, pasado <span class="math inline">\(\alpha= 1/a\)</span> el método <strong>diverge</strong>, y entre <span class="math inline">\(1/2a\)</span> y <span class="math inline">\(1/a\)</span> oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna <span class="math inline">\(\alpha\)</span> buena para todas a la vez: eso se arregla estandarizando, no tocando <span class="math inline">\(\alpha\)</span>.</p>
+<p>Normalmente el problema es el opuesto. Por <a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a>, pasado <span class="math inline">\(\alpha= 1/a\)</span> el método <strong>diverge</strong>, y entre <span class="math inline">\(1/2a\)</span> y <span class="math inline">\(1/a\)</span> oscila mientras converge, que es justo lo que parece inestabilidad. Y si las variables tienen escalas muy distintas, no hay ninguna <span class="math inline">\(\alpha\)</span> buena para todas a la vez: eso se arregla estandarizando, no tocando <span class="math inline">\(\alpha\)</span>.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
 <h2 class="anchored" data-anchor-id="notación-código">Notación ↔︎ código</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Matemáticas</th>
@@ -629,9 +702,13 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\nabla\hat{R}(\boldsymbol{w})\)</span></td>
-<td><code>grad_fn(w)</code>, <code>w.grad</code> tras <code>loss.backward()</code></td>
+<td><code>grad_analitico(w, X, y)</code></td>
 </tr>
 <tr class="odd">
+<td><span class="math inline">\(\nabla\)</span> (el operador)</td>
+<td><code>jax.grad(riesgo)</code></td>
+</tr>
+<tr class="even">
 <td><span class="math inline">\(\boldsymbol{w}^{(t)}\)</span></td>
 <td><code>w</code> en la iteración <code>t</code></td>
 </tr>
@@ -641,10 +718,10 @@ window.Quarto = {
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-dos-iteraciones" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.1</strong></span> Con los datos <span class="math inline">\((1,2), (2,3), (3,5)\)</span>, <span class="math inline">\(\boldsymbol{w}^{(0)} = (0,0)\)</span> y <span class="math inline">\(\alpha= 0{,}1\)</span>, ejecute <strong>dos iteraciones</strong> de descenso de gradiente a mano usando <a href="#thm-gradiente-riesgo-1d" class="quarto-xref">Teorema&nbsp;<span>3.3</span></a>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4.1</strong></span> Con los datos <span class="math inline">\((1,2), (2,3), (3,5)\)</span>, <span class="math inline">\(\boldsymbol{w}^{(0)} = (0,0)\)</span> y <span class="math inline">\(\alpha= 0{,}1\)</span>, ejecute <strong>dos iteraciones</strong> de descenso de gradiente a mano usando <a href="#thm-gradiente-riesgo-1d" class="quarto-xref">Teorema&nbsp;<span>4.3</span></a>.</p>
 </div>
 <div id="exr-regimenes" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.2</strong></span> Para <span class="math inline">\(\hat{R}(w) = 3(w-2)^2\)</span>, determine el rango de <span class="math inline">\(\alpha\)</span> que converge, el que converge monótonamente y el que diverge. Compruébelo numéricamente.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4.2</strong></span> Para <span class="math inline">\(\hat{R}(w) = 3(w-2)^2\)</span>, determine el rango de <span class="math inline">\(\alpha\)</span> que converge, el que converge monótonamente y el que diverge. Compruébelo numéricamente.</p>
 </div>
 <!-- TODO(D5): 2-3 ejercicios más, uno de ellos sobre por qué el recíproco de
      @thm-condicion-primer-orden es falso. -->
@@ -652,8 +729,9 @@ window.Quarto = {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li>La condición de primer orden (<a href="#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>) es lo que convierte “minimizar” en “resolver una ecuación”. De ella sale todo el capítulo 4.</li>
-<li>El descenso siempre desciende para <span class="math inline">\(\alpha\)</span> suficientemente pequeña (<a href="#prp-descenso-desciende" class="quarto-xref">Proposición&nbsp;<span>3.3</span></a>), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita (<a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>3.4</span></a>).</li>
+<li>La condición de primer orden (<a href="#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>4.2</span></a>) es lo que convierte “minimizar” en “resolver una ecuación”. De ella sale todo el capítulo 4.</li>
+<li>La diferenciación automática en modo inverso da las <span class="math inline">\(p+1\)</span> parciales en una pasada (<a href="#sec-autodiff" class="quarto-xref"><span>Sección 4.5</span></a>), y sirve para <strong>comprobar</strong> una derivación, no para evitarla.</li>
+<li>El descenso siempre desciende para <span class="math inline">\(\alpha\)</span> suficientemente pequeña (<a href="#prp-descenso-desciende" class="quarto-xref">Proposición&nbsp;<span>4.3</span></a>), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita (<a href="#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a>).</li>
 </ul>
 
 
@@ -1063,12 +1141,12 @@ window.Quarto = {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../capitulos/02-verosimilitud.html" class="pagination-link" aria-label="Verosimilitud y máxima verosimilitud">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/04-forma-matricial.html" class="pagination-link" aria-label="Forma matricial y ecuaciones normales">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

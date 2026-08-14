@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Señal y ruido – Aprendizaje Automático: Predicción</title>
+<title>2&nbsp; Señal y ruido – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../capitulos/02-verosimilitud.html" rel="next">
-<link href="../index.html" rel="prev">
+<link href="../capitulos/00-presentacion.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -153,7 +153,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -188,6 +188,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -200,25 +206,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -235,13 +241,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -258,19 +264,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -287,19 +293,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,19 +322,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -391,6 +397,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -437,9 +449,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></h1>
 <p class="subtitle lead">Sobreajuste, modelo de ruido gaussiano y verosimilitud</p>
 </div>
 
@@ -465,39 +477,40 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>Un modelo que predice bien no explica nada por el hecho de predecir bien.</p>
 </blockquote>
-<p>En este capítulo demostraremos dos cosas. La primera, que <strong>ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver.</p>
+<p>En este capítulo demostraremos dos cosas. La primera, que <strong>ajustar perfectamente los datos de entrenamiento siempre es posible y por tanto no significa nada</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>). La segunda, que en cuanto uno se atreve a suponer algo sobre el ruido, el problema de modelizar se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver.</p>
 </section>
 <section id="datos-señal-y-ruido" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="datos-señal-y-ruido">Datos, señal y ruido</h2>
 <div id="def-datos" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.1 (Datos y problema de predicción)</strong></span> Un conjunto de datos es <span class="math inline">\(\mathcal{D}= \{(\mathbf{x}_i, y_i)\}_{i=1}^{n}\)</span> con <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{p}\)</span> y <span class="math inline">\(y_i\in \mathbb{R}\)</span>. El problema de predicción consiste en elegir una función <span class="math inline">\(f: \mathbb{R}^{p} \to \mathbb{R}\)</span> que prediga bien <span class="math inline">\(y\)</span> en observaciones <strong>no vistas</strong>.</p>
+<p><span class="theorem-title"><strong>Definición 2.1 (Datos y problema de predicción)</strong></span> Un conjunto de datos es <span class="math inline">\(\mathcal{D}= \{(\mathbf{x}_i, y_i)\}_{i=1}^{n}\)</span> con <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{p}\)</span> y <span class="math inline">\(y_i\in \mathbb{R}\)</span>. El problema de predicción consiste en elegir una función <span class="math inline">\(f: \mathbb{R}^{p} \to \mathbb{R}\)</span> que prediga bien <span class="math inline">\(y\)</span> en observaciones <strong>no vistas</strong>.</p>
 </div>
-<p>La condición que importa en <a href="#def-datos" class="quarto-xref">Definición&nbsp;<span>1.1</span></a> es <em>no vistas</em>: las observaciones sobre las que se mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición el problema es trivial.</p>
-<div id="f3e44a3a" class="cell" data-execution_count="3">
+<p>La condición que importa en <a href="#def-datos" class="quarto-xref">Definición&nbsp;<span>2.1</span></a> es <em>no vistas</em>: las observaciones sobre las que se mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición el problema es trivial.</p>
+<div id="d03faa7b" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="524cd76c" class="cell" data-execution_count="4">
+<div id="bee53419" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.0</span>            <span class="co"># la verdad que NO conocemos</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> torch.randn(n) <span class="op">*</span> <span class="fl">3.0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="fl">3.0</span>, size<span class="op">=</span>n)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, <span class="op">**</span>kw_puntos)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.plot(x, senal, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"Señal: </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs"> = 2x_i </span><span class="op">+</span><span class="vs"> 1</span><span class="dv">$</span><span class="vs">"</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="op">=</span> <span class="vs">r"Ruido: </span><span class="dv">$</span><span class="er">\</span><span class="vs">epsilon_i</span><span class="dv">$</span><span class="vs">"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ax.plot([x[i].item()] <span class="op">*</span> <span class="dv">2</span>, [senal[i].item(), y[i].item()],</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ax.plot([x[i]] <span class="op">*</span> <span class="dv">2</span>, [senal[i], y[i]],</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"#ff5700"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, linewidth<span class="op">=</span><span class="fl">0.9</span>, label<span class="op">=</span>etiqueta)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
@@ -506,7 +519,7 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="96f54ea1" class="cell" data-execution_count="5">
+<div id="e0100384" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -517,19 +530,19 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).
+Figura&nbsp;2.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).
 </figcaption>
 </figure>
 </div>
 <div id="def-senal-ruido" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.2 (Modelo señal + ruido)</strong></span> <span id="eq-senal-ruido"><span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 2.2 (Modelo señal + ruido)</strong></span> <span id="eq-senal-ruido"><span class="math display">\[
 y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \mathbb{E}\!\left[ \varepsilon_i \right] = 0.
-\tag{1.1}\]</span></span></p>
+\tag{2.1}\]</span></span></p>
 <p>A <span class="math inline">\(f\)</span> la llamamos <strong>señal</strong> y a <span class="math inline">\(\varepsilon_i\)</span> <strong>ruido</strong>.</p>
 </div>
 <p>Lo que queremos aprender es <span class="math inline">\(f\)</span>, <strong>no</strong> los valores <span class="math inline">\(y_i\)</span>.</p>
 <div id="def-errores" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.3 (Error de entrenamiento y error de test)</strong></span> Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 2.3 (Error de entrenamiento y error de test)</strong></span> Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
 \hat{R}_{\mathcal{S}}(\hat{f}) = \frac{1}{\left\lvert \mathcal{S} \right\rvert} \sum_{i \in \mathcal{S}} \left( y_i- \hat{f}(\mathbf{x}_i) \right)^2 .
 \]</span></p>
 </div>
@@ -539,7 +552,7 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>De momento el cuadrado es una elección arbitraria: lo estamos <strong>midiendo</strong>, no justificando. En <a href="#sec-mle-teorema" class="quarto-xref"><span>Sección 1.5</span></a> demostraremos que se deduce de suponer ruido gaussiano.</p>
+<p>De momento el cuadrado es una elección arbitraria: lo estamos <strong>midiendo</strong>, no justificando. En <a href="#sec-mle-teorema" class="quarto-xref"><span>Sección 2.5</span></a> demostraremos que se deduce de suponer ruido gaussiano.</p>
 </div>
 </div>
 </div>
@@ -547,11 +560,11 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 <section id="interpolar-no-es-aprender" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="interpolar-no-es-aprender">Interpolar no es aprender</h2>
 <div id="def-sobreajuste" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.4 (Sobreajuste)</strong></span> Se produce <strong>sobreajuste</strong> cuando aumentar la complejidad del modelo mejora su error de entrenamiento y <strong>empeora</strong> su error de test.</p>
+<p><span class="theorem-title"><strong>Definición 2.4 (Sobreajuste)</strong></span> Se produce <strong>sobreajuste</strong> cuando aumentar la complejidad del modelo mejora su error de entrenamiento y <strong>empeora</strong> su error de test.</p>
 </div>
 <p>El siguiente resultado no suele aparecer en los cursos introductorios.</p>
 <div id="thm-interpolacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1, \dots, x_{n} \in \mathbb{R}\)</span> <strong>distintos dos a dos</strong> y sean <span class="math inline">\(y_1, \dots, y_{n} \in \mathbb{R}\)</span> cualesquiera. Entonces existe un polinomio <span class="math inline">\(P\)</span> de grado <span class="math inline">\(\leq n- 1\)</span> tal que <span class="math inline">\(P(x_i) = y_i\)</span> para todo <span class="math inline">\(i\)</span>; es decir, con error de entrenamiento <strong>exactamente cero</strong>.</p>
+<p><span class="theorem-title"><strong>Teorema 2.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1, \dots, x_{n} \in \mathbb{R}\)</span> <strong>distintos dos a dos</strong> y sean <span class="math inline">\(y_1, \dots, y_{n} \in \mathbb{R}\)</span> cualesquiera. Entonces existe un polinomio <span class="math inline">\(P\)</span> de grado <span class="math inline">\(\leq n- 1\)</span> tal que <span class="math inline">\(P(x_i) = y_i\)</span> para todo <span class="math inline">\(i\)</span>; es decir, con error de entrenamiento <strong>exactamente cero</strong>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Construimos la solución. Para cada <span class="math inline">\(j\)</span> defínase la <em>base de Lagrange</em> <span class="math display">\[
@@ -578,19 +591,19 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>f_int <span class="op">=</span> interpolate.interp1d(x.numpy(), y.numpy(), kind<span class="op">=</span><span class="st">"cubic"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">200</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>y_int <span class="op">=</span> f_int(x_denso.numpy())</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>f_int <span class="op">=</span> interpolate.interp1d(x, y, kind<span class="op">=</span><span class="st">"cubic"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">200</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>y_int <span class="op">=</span> f_int(x_denso)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x_denso.numpy(), y_int, color<span class="op">=</span><span class="st">"#ff5700"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"interpolador"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].scatter(x, y, <span class="op">**</span>kw_puntos)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x_denso, y_int, color<span class="op">=</span><span class="st">"#ff5700"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"interpolador"</span>)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Datos de entrenamiento"</span>, xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>y_nuevo <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="fl">1.0</span> <span class="op">+</span> torch.randn(<span class="dv">200</span>) <span class="op">*</span> <span class="fl">3.0</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(x_denso.numpy(), y_nuevo.numpy(), <span class="op">**</span>kw_puntos)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x_denso.numpy(), y_int, color<span class="op">=</span><span class="st">"#ff5700"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"interpolador"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>y_nuevo <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="fl">1.0</span> <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="fl">3.0</span>, size<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(x_denso, y_nuevo, <span class="op">**</span>kw_puntos)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x_denso, y_int, color<span class="op">=</span><span class="st">"#ff5700"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"interpolador"</span>)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Datos nuevos, misma señal"</span>, xlabel<span class="op">=</span><span class="st">"$x$"</span>)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].legend()</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -598,7 +611,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="4824a864" class="cell" data-execution_count="6">
+<div id="af7b151a" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -609,70 +622,44 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 </div>
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1.2: El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).
+Figura&nbsp;2.2: El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="modelizar-el-ruido" class="level2">
 <h2 class="anchored" data-anchor-id="modelizar-el-ruido">Modelizar el ruido</h2>
-<p>Si queremos aprender <span class="math inline">\(f\)</span> en <a href="#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>, necesitamos poder hablar matemáticamente de <span class="math inline">\(\varepsilon_i\)</span>. Supondremos que el ruido es gaussiano.</p>
+<p>Si queremos aprender <span class="math inline">\(f\)</span> en <a href="#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>2.1</span></a>, necesitamos poder hablar matemáticamente de <span class="math inline">\(\varepsilon_i\)</span>. Supondremos que el ruido es gaussiano.</p>
 <div id="def-normal" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.5 (Densidad normal)</strong></span> <span id="eq-densidad-normal"><span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 2.5 (Densidad normal)</strong></span> <span id="eq-densidad-normal"><span class="math display">\[
 p(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right).
-\tag{1.2}\]</span></span></p>
+\tag{2.2}\]</span></span></p>
 </div>
-<div id="lem-normalizacion" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 1.1 (Constante de normalización)</strong></span> <span class="math inline">\(\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \mathrm{d}z = \sqrt{2\pi}\)</span>.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="cajanegra">
-<p><strong>No lo demostramos</strong></p>
-<p>La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>De Estadística
 </div>
-<div id="thm-traslacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.2 (Traslación)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
+<div class="callout-body-container callout-body">
+<p>Usaremos cuatro propiedades de la normal: la constante de normalización, y su comportamiento bajo traslación (<a href="../curso/probabilidad.html#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1</span></a>), bajo cambio de escala (<a href="../curso/probabilidad.html#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a>) y la estandarización que se sigue de ambas (<a href="../curso/probabilidad.html#cor-estandarizacion" class="quarto-xref">Corolario&nbsp;<span>1</span></a>), más <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right]=\mu\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon \right)=\sigma^2\)</span> (<a href="../curso/probabilidad.html#thm-momentos" class="quarto-xref">Teorema&nbsp;<span>3</span></a>). Están enunciadas y demostradas en el <a href="../curso/probabilidad.html">repaso de probabilidad</a>. Aquí solo necesitamos la primera de ellas.</p>
 </div>
-<div id="thm-escala" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.3 (Escala)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
-     Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
-     en este curso y lo van a necesitar otra vez en 5.12. -->
-</div>
-<div id="cor-estandarizacion" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 1.1 (Estandarización)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(Z = (\varepsilon - \mu)/\sigma\sim \mathcal{N}(0,1)\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>1.3</span></a> con <span class="math inline">\(a = 1/\sigma\)</span> y después <a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = -\mu/\sigma\)</span>.</p>
-</div>
-<div id="thm-momentos" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.4 (Media y varianza)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right] = \mu\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon \right) = \sigma^2\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D3, 25 min). RUTA OBLIGATORIA: no hacerlo desde cero o pasa de M a L:
-     1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
-        eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
-     2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
-     3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
 </div>
 <div id="cor-target" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 1.2 (Del modelo de ruido a la distribución del objetivo)</strong></span> <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span> si y solo si <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim \mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 2.1 (Del modelo de ruido a la distribución del objetivo)</strong></span> <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span> si y solo si <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim \mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span><a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a> con <span class="math inline">\(c = f(\mathbf{x}_i)\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span><a href="../curso/probabilidad.html#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1</span></a> con <span class="math inline">\(c = f(\mathbf{x}_i)\)</span>.</p>
 </div>
 <p>El corolario convierte una hipótesis sobre los <strong>errores</strong> en una distribución para los <strong>datos</strong>. A una distribución se le puede calcular la verosimilitud, y eso es lo que haremos a continuación.</p>
 </section>
 <section id="sec-mle-teorema" class="level2">
 <h2 class="anchored" data-anchor-id="sec-mle-teorema">Verosimilitud</h2>
 <div id="def-lineal-gaussiano" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.6 (Modelo lineal-gaussiano)</strong></span> Con <span class="math inline">\(p= 1\)</span>: <span class="math inline">\(y_i\sim \mathcal{N}(w_0+ w_1 x_i,\ \sigma^2)\)</span>, de forma independiente.</p>
+<p><span class="theorem-title"><strong>Definición 2.6 (Modelo lineal-gaussiano)</strong></span> Con <span class="math inline">\(p= 1\)</span>: <span class="math inline">\(y_i\sim \mathcal{N}(w_0+ w_1 x_i,\ \sigma^2)\)</span>, de forma independiente.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -684,24 +671,24 @@ p(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\s
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><em>Independientes</em> significa aquí condicionalmente a las <span class="math inline">\(\mathbf{x}_i\)</span>. Es una hipótesis, no una verdad. En la <a href="06-validacion.html#sec-grupos" class="quarto-xref"><span>Sección 6.5</span></a> del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.</p>
+<p><em>Independientes</em> significa aquí condicionalmente a las <span class="math inline">\(\mathbf{x}_i\)</span>. Es una hipótesis, no una verdad. En la <a href="06-validacion.html#sec-grupos" class="quarto-xref"><span>Sección 7.5</span></a> del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.</p>
 </div>
 </div>
 <div id="def-verosimilitud" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.7 (Verosimilitud y log-verosimilitud)</strong></span> <span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 2.7 (Verosimilitud y log-verosimilitud)</strong></span> <span class="math display">\[
 L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right),
 \qquad
 \ell(\boldsymbol{w}) = \sum_{i=1}^{n} \log p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right).
 \]</span></p>
 </div>
 <div id="lem-log-argmax" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 1.2 (El logaritmo preserva el argmax)</strong></span> Si <span class="math inline">\(g\)</span> es estrictamente creciente, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} g(L(\boldsymbol{w})) = \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w})\)</span>. En particular <span class="math inline">\(\mathop{\mathrm{arg\,max}}L= \mathop{\mathrm{arg\,max}}\ell= \mathop{\mathrm{arg\,min}}(-\ell)\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 2.1 (El logaritmo preserva el argmax)</strong></span> Si <span class="math inline">\(g\)</span> es estrictamente creciente, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} g(L(\boldsymbol{w})) = \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w})\)</span>. En particular <span class="math inline">\(\mathop{\mathrm{arg\,max}}L= \mathop{\mathrm{arg\,max}}\ell= \mathop{\mathrm{arg\,min}}(-\ell)\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Si <span class="math inline">\(\boldsymbol{w}^{\star}\)</span> maximiza <span class="math inline">\(L\)</span> entonces <span class="math inline">\(L(\boldsymbol{w}) \leq L(\boldsymbol{w}^\star)\)</span> para todo <span class="math inline">\(\boldsymbol{w}\)</span>, y aplicando <span class="math inline">\(g\)</span> creciente, <span class="math inline">\(g(L(\boldsymbol{w})) \leq g(L(\boldsymbol{w}^\star))\)</span>. El recíproco es idéntico usando que <span class="math inline">\(g\)</span> es estrictamente creciente.</p>
 </div>
 <div id="def-mle" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.8 (Estimación máximo-verosímil)</strong></span> <span class="math inline">\(\hat{\boldsymbol{w}}= \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w}) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left(-\ell(\boldsymbol{w})\right)\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 2.8 (Estimación máximo-verosímil)</strong></span> <span class="math inline">\(\hat{\boldsymbol{w}}= \mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} L(\boldsymbol{w}) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left(-\ell(\boldsymbol{w})\right)\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -719,24 +706,24 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="resolución-por-búsqueda-en-rejilla" class="level3">
 <h3 class="anchored" data-anchor-id="resolución-por-búsqueda-en-rejilla">Resolución por búsqueda en rejilla</h3>
 <p>Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.</p>
-<div id="58e29599" class="cell" data-execution_count="7">
+<div id="b5afe9e4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_verosimilitud(w0, w1, x, y, sigma<span class="op">=</span><span class="fl">3.0</span>):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma).log().<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.log(densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma)).<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f298e161" class="cell" data-execution_count="8">
+<div id="753aec12" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rejilla_w1 <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">60</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> torch.tensor([[log_verosimilitud(a, b, x, y) <span class="cf">for</span> b <span class="kw">in</span> rejilla_w1] <span class="cf">for</span> a <span class="kw">in</span> rejilla_w0])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rejilla_w1 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">60</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> np.array([[log_verosimilitud(a, b, x, y) <span class="cf">for</span> b <span class="kw">in</span> rejilla_w1] <span class="cf">for</span> a <span class="kw">in</span> rejilla_w0])</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">5.5</span>, <span class="dv">4</span>))</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>cs <span class="op">=</span> ax.contourf(rejilla_w1.numpy(), rejilla_w0.numpy(), L.numpy(), levels<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>i, j <span class="op">=</span> <span class="bu">divmod</span>(<span class="bu">int</span>(L.argmax()), L.shape[<span class="dv">1</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>cs <span class="op">=</span> ax.contourf(rejilla_w1, rejilla_w0, L, levels<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>i, j <span class="op">=</span> np.unravel_index(L.argmax(), L.shape)</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color<span class="op">=</span><span class="st">"#ff5700"</span>, s<span class="op">=</span><span class="dv">60</span>, label<span class="op">=</span><span class="st">"máximo en la rejilla"</span>)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ax.scatter([<span class="fl">2.0</span>], [<span class="fl">1.0</span>], color<span class="op">=</span><span class="st">"white"</span>, marker<span class="op">=</span><span class="st">"x"</span>, s<span class="op">=</span><span class="dv">60</span>, label<span class="op">=</span><span class="st">"verdad"</span>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$w_1$"</span>, ylabel<span class="op">=</span><span class="st">"$w_0$"</span>)</span>
@@ -759,7 +746,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
 <div class="trampa">
 <p><strong>“Mi <span class="math inline">\(R^2\)</span> de entrenamiento es 0,999”</strong></p>
-<p>Es exactamente <a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a> en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es <em>cuánto ajusta</em> sino <em>sobre qué datos se ha medido</em>. Volveremos sobre esto con el aparato completo en el capítulo 6.</p>
+<p>Es exactamente <a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a> en acción. Añadan grados de libertad suficientes y cualquiera consigue ese número. La pregunta correcta no es <em>cuánto ajusta</em> sino <em>sobre qué datos se ha medido</em>. Volveremos sobre esto con el aparato completo en el capítulo 6.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -809,17 +796,17 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.1</strong></span> Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construya explícitamente el polinomio interpolador de Lagrange y compruebe que pasa por los tres puntos.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construya explícitamente el polinomio interpolador de Lagrange y compruebe que pasa por los tres puntos.</p>
 </div>
 <div class="sol">
 <!-- TODO(D3): escribir. Sale un polinomio de grado 2; el objetivo es que vean que
      la construcción es mecánica, no un teorema de existencia abstracto. -->
 </div>
 <div id="exr-titulares" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.2</strong></span> Tres titulares de prensa afirman: (a) “el modelo predice el impago con un 99 % de acierto”; (b) “hemos reducido el error a cero”; (c) “validado sobre 10 millones de registros”. Para cada uno, diga qué información falta para poder juzgarlo.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> Tres titulares de prensa afirman: (a) “el modelo predice el impago con un 99 % de acierto”; (b) “hemos reducido el error a cero”; (c) “validado sobre 10 millones de registros”. Para cada uno, diga qué información falta para poder juzgarlo.</p>
 </div>
 <div id="exr-ruido" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.3</strong></span> Suponga <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escriba la log-verosimilitud de una única observación y dibuje, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> Suponga <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escriba la log-verosimilitud de una única observación y dibuje, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
 </div>
 <!-- TODO(D3): faltan 2 ejercicios más. Uno de simulación (generar datos con w conocido
      y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
@@ -828,8 +815,8 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li>Error de entrenamiento cero se consigue <strong>siempre</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>) y por tanto no es evidencia de nada.</li>
-<li>Suponer una distribución para el ruido convierte el problema en uno de <strong>verosimilitud</strong> (<a href="#cor-target" class="quarto-xref">Corolario&nbsp;<span>1.2</span></a>).</li>
+<li>Error de entrenamiento cero se consigue <strong>siempre</strong> (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>) y por tanto no es evidencia de nada.</li>
+<li>Suponer una distribución para el ruido convierte el problema en uno de <strong>verosimilitud</strong> (<a href="#cor-target" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>).</li>
 <li>Maximizar la verosimilitud por fuerza bruta no escala. Necesitamos gradientes.</li>
 </ul>
 
@@ -1239,13 +1226,13 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link" aria-label="Bienvenida">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bienvenida</span>
+      <a href="../capitulos/00-presentacion.html" class="pagination-link" aria-label="Presentación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/02-verosimilitud.html" class="pagination-link" aria-label="Verosimilitud y máxima verosimilitud">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

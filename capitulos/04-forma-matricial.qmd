@@ -49,24 +49,14 @@ $s_i = \xv_i\T\coef$. Este convenio se mantiene en el resto del curso.
 $\displaystyle \Riskh(\coef) = \frac{1}{\nobs}\norm{\X\coef - \yv}^2$.
 :::
 
-::: {#lem-grad-lineal}
-## $\grad(\mathbf{a}\T\coef) = \mathbf{a}$
-:::
-
-::: {#lem-grad-cuadratica}
-## $\grad(\coef\T\mathbf{A}\coef) = 2\mathbf{A}\coef$ para $\mathbf{A}$ simétrica
-:::
-
-::: {.proof}
-<!-- TODO(D6, 15 min): desarrollar la suma doble, derivar respecto de w_j y RECOGER LOS
-     DOS TERMINOS en los que aparece j (el de la fila y el de la columna). Ese "dos"
-     es de donde sale el 2. En el caso general el resultado es (A + A^T) w. -->
-
-:::
-
 ::: {.callout-note appearance="simple"}
-@lem-grad-lineal y @lem-grad-cuadratica son cálculo, no aprendizaje automático. Van al
-anexo y se piden como **trabajo previo**; en clase se usan.
+## Dos identidades, del anexo
+
+$\grad(\mathbf{a}\T\coef) = \mathbf{a}$ (@lem-grad-lineal) y
+$\grad(\coef\T\mathbf{A}\coef) = 2\mathbf{A}\coef$ para $\mathbf{A}$ simétrica
+(@lem-grad-cuadratica). Son cálculo, no aprendizaje automático: están demostradas en el
+anexo de [cálculo y álgebra](../curso/algebra.qmd) y se piden como trabajo previo a esta
+sesión.
 :::
 
 ::: {#rem-simetrica}
@@ -182,10 +172,14 @@ dirección es no negativa**, es decir $\Riskh$ es convexa. Es estrictamente conv
 solo si $\rank\X = \nfeat+1$.
 :::
 
-::: {.proof}
-Derivar @thm-gradiente-matricial con @lem-grad-lineal y @lem-grad-cuadratica; la
-curvatura direccional es la misma línea $\norm{\X\mathbf{v}}^2$ de
-@thm-existencia-unicidad.
+::: {.cajanegra}
+**La comprobación queda para el laboratorio**
+
+El cálculo es el mismo de @thm-gradiente-matricial derivado una segunda vez, y la
+curvatura direccional vuelve a ser la línea $\norm{\X\mathbf{v}}^2$ de
+@thm-existencia-unicidad. No lo hacemos en pizarra porque @cor-minimo-global ya nos da el
+mínimo global sin necesidad de convexidad; el hessiano se comprueba numéricamente en el
+laboratorio y se retoma en el capítulo 8, donde sí hace falta.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -239,7 +233,7 @@ La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las
      (1) np.linalg.solve(X.T @ X, X.T @ y)
      (2) np.linalg.lstsq(X, y, rcond=None)
      (3) el DescensoGradiente del capítulo 3, vectorizado
-     (4) comprobación del gradiente con torch.autograd
+     (4) comprobación de @thm-gradiente-matricial con jax.grad (@sec-autodiff)
      (5) %timeit de (1) vs (3) al crecer p -> @prp-coste medido, no contado
      (6) demo de np.linalg.inv fallando en una X casi colineal -->
 
@@ -261,6 +255,7 @@ número de condición pierde precisión. Use `solve` o `lstsq`.
 | $\X$ con columna de unos | `np.column_stack([np.ones(n), X])` |
 | $\Xt\X\coefhat = \Xt\yv$ | `np.linalg.solve(X.T @ X, X.T @ y)` |
 | $\coefhat$ | `LinearRegression(fit_intercept=False).fit(X, y).coef_` |
+| $\grad \Riskh$ comprobado | `jax.grad(riesgo)(w, X, y)` |
 | $\rank\X$ | `np.linalg.matrix_rank(X)` |
 
 ## Ejercicios

@@ -7,7 +7,7 @@ scipy>=1.14
 matplotlib>=3.9
 scikit-learn>=1.5
 statsmodels>=0.14
-torch>=2.4
+jax[cpu]>=0.4
 jupyter
 nbformat>=5.10
 ipykernel>=6.29

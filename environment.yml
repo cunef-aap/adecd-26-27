@@ -8,7 +8,7 @@ dependencies:
   - matplotlib
   - scikit-learn
   - statsmodels
-  - pytorch
+  - jax
   - jupyter
   - nbformat
   - ipykernel

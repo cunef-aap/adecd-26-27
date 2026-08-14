@@ -118,6 +118,93 @@ $$
 
 :::
 
+## Diferenciación automática {#sec-autodiff}
+
+Acabamos de derivar $\grad\Riskh$ a mano. A partir de ahora lo haremos con frecuencia, y
+conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de
+obtener una derivada en un ordenador, y solo una de ellas sirve.
+
+**Diferencias finitas.** Aproximar $\pd{\Riskh}{w_j} \approx
+\frac{\Riskh(\coef + h\mathbf{e}_j) - \Riskh(\coef - h\mathbf{e}_j)}{2h}$. Es fácil de
+programar y siempre funciona, pero tiene dos problemas: el error es de orden $h^2$ y
+además la resta de dos números casi iguales pierde precisión, de modo que no existe un $h$
+bueno; y hace falta evaluar $\Riskh$ dos veces por cada coordenada, es decir $2(\nfeat+1)$
+evaluaciones para un solo gradiente.
+
+**Derivación simbólica.** Manipular la expresión algebraica, como haría un humano o un
+sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al
+componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.
+
+**Diferenciación automática.** Ni aproxima ni manipula símbolos. Observa que un programa
+que calcula $\Riskh(\coef)$ es una composición de operaciones elementales cuya derivada se
+conoce (sumar, multiplicar, `exp`, `log`), y aplica la regla de la cadena a esa
+composición, **evaluándola numéricamente** paso a paso. El resultado es exacto salvo error
+de redondeo.
+
+::: {#def-autodiff}
+## Modos directo e inverso
+
+Sea $\Riskh: \Real^{\nfeat+1} \to \Real$ una composición de operaciones elementales. El
+**modo directo** propaga derivadas desde las entradas hacia la salida y obtiene una
+derivada direccional por pasada. El **modo inverso** las propaga desde la salida hacia las
+entradas y obtiene **el gradiente completo en una sola pasada**.
+:::
+
+Para lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas
+entradas ($\nfeat+1$ coeficientes) y una sola salida (un riesgo). El modo inverso da las
+$\nfeat+1$ derivadas parciales de una vez, a un coste comparable al de evaluar $\Riskh$.
+El modo directo necesitaría $\nfeat+1$ pasadas. Por eso el modo inverso es el que usan
+todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos
+con millones de parámetros.
+
+En `jax`, la diferenciación automática se escribe como lo que es: un operador que toma una
+función y devuelve otra función, su gradiente.
+
+```{python}
+#| code-fold: true
+import numpy as np
+import pandas as pd
+import jax
+
+jax.config.update("jax_enable_x64", True)   # por defecto jax usa float32
+
+# Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.
+d = pd.read_csv("../datos/prostate.data")
+X = np.column_stack([np.ones(len(d)), d["lcavol"], d["lweight"]])
+y = d["lpsa"].to_numpy()
+X = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja
+X[:, 0] = 1.0
+```
+
+```{python}
+#---
+def riesgo(w, X, y):
+    r = X @ w - y
+    return (r @ r) / len(y)
+
+
+grad_riesgo = jax.grad(riesgo)     # devuelve una FUNCIÓN, no un número
+#---
+```
+
+Nótese la diferencia con `riesgo(w, X, y)`, que devuelve un número: `jax.grad(riesgo)`
+devuelve una función que, evaluada en $\coef$, devuelve el vector de derivadas parciales.
+Es la traducción literal de $\grad$.
+
+::: {.callout-note appearance="simple"}
+Detalle a tener presente: `jax` trabaja por defecto en precisión simple. La línea
+`jax.config.update("jax_enable_x64", True)` la eleva a doble precisión, que es lo que
+queremos para comparar contra un resultado analítico.
+:::
+
+::: {.trampa}
+**La diferenciación automática no es magia, y sobre todo no sustituye a derivar**
+
+Devuelve el gradiente del programa que le has dado, que no siempre es el gradiente que
+creías haber escrito. Si el código tiene un error, `jax.grad` derivará el código erróneo
+sin protestar. Sirve para **comprobar** una derivación hecha a mano, no para evitarla.
+:::
+
 ## Descenso de gradiente
 
 ::: {#def-descenso}
@@ -176,27 +263,40 @@ estudian en un curso de optimización.
 
 ```{python}
 #---
-import torch
-
-
 class DescensoGradiente:
     def __init__(self, w0, lr=0.01):
-        self.w = torch.tensor(w0, dtype=torch.float32)
+        self.w = np.asarray(w0, dtype=float)
         self.lr = lr
         self.historia = []
 
     def paso(self, grad_fn):
-        g = grad_fn(self.w)
-        self.w = self.w - self.lr * g
+        self.w = self.w - self.lr * grad_fn(self.w)
+        self.historia.append(self.w.copy())
         return self.w
 #---
 ```
 
+Y la comprobación de @thm-gradiente-riesgo-1d: derivamos a mano, y preguntamos a `jax` si
+estábamos en lo cierto.
+
+```{python}
+#---
+def grad_analitico(w, X, y):
+    return -2 / len(y) * X.T @ (y - X @ w)
+
+
+w0 = np.zeros(X.shape[1])
+np.allclose(grad_analitico(w0, X, y), grad_riesgo(w0, X, y))
+#---
+```
+
 <!-- TODO(D5): completar el laboratorio.
-     (a) grad_fn para el riesgo 1-D de @thm-gradiente-riesgo-1d sobre prostate.data;
+     (a) construir X e y a partir de prostate.data antes de las celdas de arriba;
      (b) curva de pérdida para alpha en {0.001, 0.01, 0.1, 1.0} -> los tres regímenes
-         de @prp-caso-cuadratico, VERIFICADOS numéricamente;
-     (c) comprobación numérica del gradiente con torch.autograd;
+         de @prp-caso-cuadratico, verificados numéricamente;
+     (c) comparar los tres gradientes sobre los mismos datos: analítico, diferencias
+         finitas y jax.grad, y cronometrar los tres al crecer p. Es la forma de que
+         vean por qué el modo inverso gana;
      (d) el mismo ajuste sin estandarizar, como preparación del capítulo 5. -->
 
 ## Error frecuente
@@ -215,7 +315,8 @@ buena para todas a la vez: eso se arregla estandarizando, no tocando $\lr$.
 | Matemáticas | Código |
 |---|---|
 | $\lr$ | `lr`, `learning_rate` |
-| $\grad \Riskh(\coef)$ | `grad_fn(w)`, `w.grad` tras `loss.backward()` |
+| $\grad \Riskh(\coef)$ | `grad_analitico(w, X, y)` |
+| $\grad$ (el operador) | `jax.grad(riesgo)` |
 | $\coef^{(t)}$ | `w` en la iteración `t` |
 
 ## Ejercicios
@@ -237,6 +338,8 @@ monótonamente y el que diverge. Compruébelo numéricamente.
 
 - La condición de primer orden (@thm-condicion-primer-orden) es lo que convierte
   "minimizar" en "resolver una ecuación". De ella sale todo el capítulo 4.
+- La diferenciación automática en modo inverso da las $\nfeat+1$ parciales en una
+  pasada (@sec-autodiff), y sirve para **comprobar** una derivación, no para evitarla.
 - El descenso siempre desciende para $\lr$ suficientemente pequeña
   (@prp-descenso-desciende), y en el caso cuadrático la velocidad de convergencia se conoce de forma explícita
   (@prp-caso-cuadratico).

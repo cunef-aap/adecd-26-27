@@ -35,6 +35,31 @@ $$\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
 
 **Condición de primer orden.** En un mínimo, el gradiente se anula. El recíproco es falso.
 
+### Las dos identidades del capítulo 4
+
+Trabajo previo a la sesión de teoría de la semana 4.
+
+::: {#lem-grad-lineal}
+## $\grad(\mathbf{a}\T\coef) = \mathbf{a}$
+:::
+
+::: {#lem-grad-cuadratica}
+## $\grad(\coef\T\mathbf{A}\coef) = 2\mathbf{A}\coef$ para $\mathbf{A}$ simétrica
+:::
+
+::: {.proof}
+<!-- TODO(D6, 15 min): desarrollar la suma doble, derivar respecto de w_j y RECOGER LOS
+     DOS TERMINOS en los que aparece j (el de la fila y el de la columna). Ese "dos"
+     es de donde sale el 2. En el caso general el resultado es (A + A^T) w. -->
+
+:::
+
+::: {.callout-note appearance="simple"}
+@lem-grad-lineal y @lem-grad-cuadratica son cálculo, no aprendizaje automático. Van al
+anexo y se piden como **trabajo previo**; en clase se usan.
+:::
+
+
 ## Probabilidad
 
 Densidad, esperanza, varianza. Densidad normal. Que $\mathbb{E}$ es lineal y

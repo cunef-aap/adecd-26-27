@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Verosimilitud y máxima verosimilitud – Aprendizaje Automático: Predicción</title>
+<title>3&nbsp; Verosimilitud y máxima verosimilitud – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/02-verosimilitud.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/02-verosimilitud.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -153,6 +153,12 @@ window.Quarto = {
  <span class="menu-text">Bienvenida</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -165,25 +171,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -200,13 +206,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,19 +229,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,19 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,19 +287,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -356,6 +362,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glosario y notación</span></a>
   </div>
@@ -399,9 +411,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/02-verosimilitud.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="../capitulos/02-verosimilitud.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></h1>
 <p class="subtitle lead">De la verosimilitud gaussiana a los mínimos cuadrados</p>
 </div>
 
@@ -434,20 +446,20 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="01-senal-ruido.html#def-senal-ruido" class="quarto-xref">Definición&nbsp;<span>1.2</span></a>, <a href="01-senal-ruido.html#cor-target" class="quarto-xref">Corolario&nbsp;<span>1.2</span></a>, <a href="01-senal-ruido.html#def-verosimilitud" class="quarto-xref">Definición&nbsp;<span>1.7</span></a>, <a href="01-senal-ruido.html#lem-log-argmax" class="quarto-xref">Lema&nbsp;<span>1.2</span></a>, <a href="01-senal-ruido.html#def-mle" class="quarto-xref">Definición&nbsp;<span>1.8</span></a>.</p>
+<p><a href="01-senal-ruido.html#def-senal-ruido" class="quarto-xref">Definición&nbsp;<span>2.2</span></a>, <a href="01-senal-ruido.html#cor-target" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>, <a href="01-senal-ruido.html#def-verosimilitud" class="quarto-xref">Definición&nbsp;<span>2.7</span></a>, <a href="01-senal-ruido.html#lem-log-argmax" class="quarto-xref">Lema&nbsp;<span>2.1</span></a>, <a href="01-senal-ruido.html#def-mle" class="quarto-xref">Definición&nbsp;<span>2.8</span></a>.</p>
 </div>
 </div>
 </section>
 <section id="riesgo-empírico" class="level2">
 <h2 class="anchored" data-anchor-id="riesgo-empírico">Riesgo empírico</h2>
 <div id="def-riesgo-empirico" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 2.1 (Riesgo empírico)</strong></span> <span class="math display">\[\hat{R}(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} \left(y_i- \hat{y}_i\right)^2 .\]</span> El factor <span class="math inline">\(1/n\)</span> forma parte de la definición y se mantiene en todo el curso.</p>
+<p><span class="theorem-title"><strong>Definición 3.1 (Riesgo empírico)</strong></span> <span class="math display">\[\hat{R}(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} \left(y_i- \hat{y}_i\right)^2 .\]</span> El factor <span class="math inline">\(1/n\)</span> forma parte de la definición y se mantiene en todo el curso.</p>
 </div>
 <div id="def-residuo" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 2.2 (Residuo y suma de cuadrados)</strong></span> <span class="math inline">\(r_i= y_i- \hat{y}_i\)</span>, <span class="math inline">\(\ \mathrm{SCR}= \sum_i r_i^2\)</span>, y por tanto <span class="math inline">\(\hat{R}(\boldsymbol{w}) = \mathrm{SCR}/n\)</span>.</p>
+<p><span class="theorem-title"><strong>Definición 3.2 (Residuo y suma de cuadrados)</strong></span> <span class="math inline">\(r_i= y_i- \hat{y}_i\)</span>, <span class="math inline">\(\ \mathrm{SCR}= \sum_i r_i^2\)</span>, y por tanto <span class="math inline">\(\hat{R}(\boldsymbol{w}) = \mathrm{SCR}/n\)</span>.</p>
 </div>
 <div id="lem-invarianza-afin" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 2.1 (Invarianza afín del argmin)</strong></span> Si <span class="math inline">\(a &gt; 0\)</span> entonces <span class="math inline">\(\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left( a\, h(\boldsymbol{w}) + b \right) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} h(\boldsymbol{w})\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 3.1 (Invarianza afín del argmin)</strong></span> Si <span class="math inline">\(a &gt; 0\)</span> entonces <span class="math inline">\(\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left( a\, h(\boldsymbol{w}) + b \right) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} h(\boldsymbol{w})\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -456,7 +468,7 @@ window.Quarto = {
      poder citarlo por número. -->
 </div>
 <div id="lem-media-optima" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 2.2 (El modelo constante óptimo en error cuadrático es la media)</strong></span> <span class="math inline">\(\displaystyle \mathop{\mathrm{arg\,min}}_{c \in \mathbb{R}} \sum_{i=1}^{n} (y_i- c)^2 = \bar{y}\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 3.2 (El modelo constante óptimo en error cuadrático es la media)</strong></span> <span class="math inline">\(\displaystyle \mathop{\mathrm{arg\,min}}_{c \in \mathbb{R}} \sum_{i=1}^{n} (y_i- c)^2 = \bar{y}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -471,7 +483,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a> se usa tres veces más en el curso: en el capítulo 5 (imputación por la media), en el capítulo 6 (el modelo nulo contra el que compara <span class="math inline">\(R^2\)</span>) y en la semana 11 (la constante óptima dentro de una hoja de un árbol).</p>
+<p><a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a> se usa tres veces más en el curso: en el capítulo 5 (imputación por la media), en el capítulo 6 (el modelo nulo contra el que compara <span class="math inline">\(R^2\)</span>) y en la semana 11 (la constante óptima dentro de una hoja de un árbol).</p>
 </div>
 </div>
 </div>
@@ -479,9 +491,9 @@ window.Quarto = {
 <section id="sec-teorema-central" class="level2">
 <h2 class="anchored" data-anchor-id="sec-teorema-central">De la log-verosimilitud al riesgo empírico</h2>
 <div id="thm-loglik-mse" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 2.1 (Expansión de la log-verosimilitud)</strong></span> Bajo el modelo lineal-gaussiano de <a href="01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, <span id="eq-loglik"><span class="math display">\[
+<p><span class="theorem-title"><strong>Teorema 3.1 (Expansión de la log-verosimilitud)</strong></span> Bajo el modelo lineal-gaussiano de <a href="01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>2.6</span></a>, <span id="eq-loglik"><span class="math display">\[
 \ell(\boldsymbol{w}, \sigma) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{n}{2\sigma^2}\, \hat{R}(\boldsymbol{w}).
-\tag{2.1}\]</span></span></p>
+\tag{3.1}\]</span></span></p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -493,10 +505,10 @@ window.Quarto = {
      Sin saltos: es la primera demostración larga del curso y fija el nivel de detalle esperado. -->
 </div>
 <div id="cor-mle-minimos-cuadrados" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 2.1 (Máxima verosimilitud = mínimos cuadrados)</strong></span> Para <span class="math inline">\(\sigma\)</span> fijo, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} \ell(\boldsymbol{w},\sigma) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \hat{R}(\boldsymbol{w})\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 3.1 (Máxima verosimilitud = mínimos cuadrados)</strong></span> Para <span class="math inline">\(\sigma\)</span> fijo, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} \ell(\boldsymbol{w},\sigma) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \hat{R}(\boldsymbol{w})\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a> a <span class="math inline">\(-\ell\)</span>, que es <span class="math inline">\(\hat{R}\)</span> multiplicado por <span class="math inline">\(n/2\sigma^2 &gt; 0\)</span> más una constante que no depende de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>3.1</span></a> a <span class="math inline">\(-\ell\)</span>, que es <span class="math inline">\(\hat{R}\)</span> multiplicado por <span class="math inline">\(n/2\sigma^2 &gt; 0\)</span> más una constante que no depende de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -504,18 +516,18 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>El cuadrado del error no es un convenio: <strong>se deduce de haber supuesto ruido gaussiano</strong>. Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a>.</p>
+<p>El cuadrado del error no es un convenio: <strong>se deduce de haber supuesto ruido gaussiano</strong>. Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>.</p>
 </div>
 </div>
 </div>
 <div id="rem-condicional" class="proof remark">
-<p><span class="proof-title"><em>Observación 2.1</em> (La verosimilitud es condicional). </span><span class="math inline">\(L= \prod_i p(y_i\,\vert\,\mathbf{x}_i) \cdot \prod_i p(\mathbf{x}_i)\)</span>, y el segundo factor no depende de <span class="math inline">\(\boldsymbol{w}\)</span>, luego sale del <span class="math inline">\(\mathop{\mathrm{arg\,max}}\)</span> por <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a>. <strong>Por eso no modelizamos <span class="math inline">\(\mathbf{x}\)</span></strong>: no porque no importe, sino porque es irrelevante para <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
+<p><span class="proof-title"><em>Observación 3.1</em> (La verosimilitud es condicional). </span><span class="math inline">\(L= \prod_i p(y_i\,\vert\,\mathbf{x}_i) \cdot \prod_i p(\mathbf{x}_i)\)</span>, y el segundo factor no depende de <span class="math inline">\(\boldsymbol{w}\)</span>, luego sale del <span class="math inline">\(\mathop{\mathrm{arg\,max}}\)</span> por <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>3.1</span></a>. <strong>Por eso no modelizamos <span class="math inline">\(\mathbf{x}\)</span></strong>: no porque no importe, sino porque es irrelevante para <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
 </div>
 </section>
 <section id="estimar-el-ruido" class="level2">
 <h2 class="anchored" data-anchor-id="estimar-el-ruido">Estimar el ruido</h2>
 <div id="thm-perfilado-sigma" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 2.2 (Perfilado de <span class="math inline">\(\sigma\)</span>)</strong></span> Para <span class="math inline">\(\boldsymbol{w}\)</span> fijo, el maximizador de <a href="#eq-loglik" class="quarto-xref">Ecuación&nbsp;<span>2.1</span></a> en <span class="math inline">\(\sigma&gt; 0\)</span> es <span class="math display">\[
+<p><span class="theorem-title"><strong>Teorema 3.2 (Perfilado de <span class="math inline">\(\sigma\)</span>)</strong></span> Para <span class="math inline">\(\boldsymbol{w}\)</span> fijo, el maximizador de <a href="#eq-loglik" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> en <span class="math inline">\(\sigma&gt; 0\)</span> es <span class="math display">\[
 \hat{\sigma}^2(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} r_i^2 = \hat{R}(\boldsymbol{w}).
 \]</span></p>
 </div>
@@ -528,7 +540,7 @@ window.Quarto = {
      Más corto y más honesto. -->
 </div>
 <div id="cor-loglik-perfilada" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 2.2 (Perfilar <span class="math inline">\(\sigma\)</span> no cambia <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>)</strong></span> <span class="math inline">\(\ell_{\mathrm{p}}(\boldsymbol{w}) = -\frac{n}{2}\left(\log 2\pi \hat{R}(\boldsymbol{w}) + 1\right)\)</span> es estrictamente decreciente en <span class="math inline">\(\hat{R}\)</span>, luego <span class="math inline">\(\mathop{\mathrm{arg\,max}}\ell_{\mathrm{p}}= \mathop{\mathrm{arg\,min}}\hat{R}\)</span>; y <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> evaluado en <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 3.2 (Perfilar <span class="math inline">\(\sigma\)</span> no cambia <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>)</strong></span> <span class="math inline">\(\ell_{\mathrm{p}}(\boldsymbol{w}) = -\frac{n}{2}\left(\log 2\pi \hat{R}(\boldsymbol{w}) + 1\right)\)</span> es estrictamente decreciente en <span class="math inline">\(\hat{R}\)</span>, luego <span class="math inline">\(\mathop{\mathrm{arg\,max}}\ell_{\mathrm{p}}= \mathop{\mathrm{arg\,min}}\hat{R}\)</span>; y <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> evaluado en <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -544,13 +556,13 @@ window.Quarto = {
 </div>
 </div>
 <div id="rem-sesgo-sigma" class="proof remark">
-<p><span class="proof-title"><em>Observación 2.2</em> (<span class="math inline">\(\hat{\sigma}^2\)</span> está sesgado a la baja). </span><span class="math inline">\(\mathbb{E}\!\left[ \hat{\sigma}^2 \right] = \frac{n- p- 1}{n}\sigma^2\)</span>. Se enuncia y <strong>no se demuestra</strong>: requiere matriz sombrero, traza e idempotencia, veinte minutos de álgebra que no enseñan aprendizaje automático. El corrector es <span class="math inline">\(n/(n-p-1)\)</span> y lo demostraron en econometría.</p>
+<p><span class="proof-title"><em>Observación 3.2</em> (<span class="math inline">\(\hat{\sigma}^2\)</span> está sesgado a la baja). </span><span class="math inline">\(\mathbb{E}\!\left[ \hat{\sigma}^2 \right] = \frac{n- p- 1}{n}\sigma^2\)</span>. Se enuncia y <strong>no se demuestra</strong>: requiere matriz sombrero, traza e idempotencia, veinte minutos de álgebra que no enseñan aprendizaje automático. El corrector es <span class="math inline">\(n/(n-p-1)\)</span> y lo demostraron en econometría.</p>
 </div>
 </section>
 <section id="otro-ruido-otra-pérdida" class="level2">
 <h2 class="anchored" data-anchor-id="otro-ruido-otra-pérdida">Otro ruido, otra pérdida</h2>
 <div id="prp-laplace-mae" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 2.1 (Ruido de Laplace ⟹ error absoluto)</strong></span> Si <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0, b)\)</span>, con densidad <span class="math inline">\(\frac{1}{2b}e^{-\left\lvert x \right\rvert/b}\)</span>, entonces <span class="math inline">\(\ell(\boldsymbol{w}) = C - \frac{1}{b}\sum_i \left\lvert y_i- f(\mathbf{x}_i) \right\rvert\)</span> y por tanto la estimación máximo-verosímil equivale a <strong>minimizar el error absoluto medio</strong>.</p>
+<p><span class="theorem-title"><strong>Proposición 3.1 (Ruido de Laplace ⟹ error absoluto)</strong></span> Si <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0, b)\)</span>, con densidad <span class="math inline">\(\frac{1}{2b}e^{-\left\lvert x \right\rvert/b}\)</span>, entonces <span class="math inline">\(\ell(\boldsymbol{w}) = C - \frac{1}{b}\sum_i \left\lvert y_i- f(\mathbf{x}_i) \right\rvert\)</span> y por tanto la estimación máximo-verosímil equivale a <strong>minimizar el error absoluto medio</strong>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -559,7 +571,7 @@ window.Quarto = {
      máquina y no un caso particular afortunado. -->
 </div>
 <div id="rem-catalogo" class="proof remark">
-<p><span class="proof-title"><em>Observación 2.3</em> (Catálogo ruido → pérdida). </span></p>
+<p><span class="proof-title"><em>Observación 3.3</em> (Catálogo ruido → pérdida). </span></p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -643,10 +655,10 @@ window.Quarto = {
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-laplace" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> Repita la demostración de <a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a> suponiendo <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0,b)\)</span> y obtenga <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.1</strong></span> Repita la demostración de <a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a> suponiendo <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0,b)\)</span> y obtenga <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>.</p>
 </div>
 <div id="exr-perfilado" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> Sobre <code>prostate.data</code>, ajuste el modelo constante <span class="math inline">\(f\equiv c\)</span>, calcule <span class="math inline">\(\hat{\boldsymbol{w}}= \bar{y}\)</span> usando <a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>2.2</span></a> y <span class="math inline">\(\hat{\sigma}^2\)</span> usando <a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>2.2</span></a>. Interprete <span class="math inline">\(\hat{\sigma}\)</span> en las unidades de <code>lpsa</code>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.2</strong></span> Sobre <code>prostate.data</code>, ajuste el modelo constante <span class="math inline">\(f\equiv c\)</span>, calcule <span class="math inline">\(\hat{\boldsymbol{w}}= \bar{y}\)</span> usando <a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a> y <span class="math inline">\(\hat{\sigma}^2\)</span> usando <a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>. Interprete <span class="math inline">\(\hat{\sigma}\)</span> en las unidades de <code>lpsa</code>.</p>
 </div>
 <!-- TODO(D4): 2-3 ejercicios más. Uno numérico de log-verosimilitud sobre 5 puntos a
      mano; uno conceptual sobre por qué C(sigma) no afecta al argmax en w pero sí al
@@ -655,9 +667,9 @@ window.Quarto = {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <ul>
-<li><span class="math inline">\(\ell= C - \frac{n}{2\sigma^2}\hat{R}\)</span>: los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano (<a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>, <a href="#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>).</li>
-<li><span class="math inline">\(\sigma\)</span> no es un dato del problema: se estima, y vale <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> (<a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>2.2</span></a>).</li>
-<li>Cambiar el modelo de ruido cambia la pérdida (<a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>2.1</span></a>). La receta es una máquina, no un caso particular.</li>
+<li><span class="math inline">\(\ell= C - \frac{n}{2\sigma^2}\hat{R}\)</span>: los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano (<a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a>, <a href="#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>3.1</span></a>).</li>
+<li><span class="math inline">\(\sigma\)</span> no es un dato del problema: se estima, y vale <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> (<a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>).</li>
+<li>Cambiar el modelo de ruido cambia la pérdida (<a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>). La receta es una máquina, no un caso particular.</li>
 </ul>
 
 
@@ -1067,12 +1079,12 @@ window.Quarto = {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../capitulos/01-senal-ruido.html" class="pagination-link" aria-label="Señal y ruido">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../capitulos/03-gradientes.html" class="pagination-link" aria-label="Gradientes y descenso de gradiente">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

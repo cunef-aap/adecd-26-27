@@ -52,18 +52,19 @@ el problema es trivial.
 
 ```{python}
 #| code-fold: true
-import torch
+import numpy as np
 from matplotlib import pyplot as plt
 
+rng = np.random.default_rng(42)
 kw_puntos = dict(color="black", facecolors="none", s=40, alpha=0.6, label="datos")
 ```
 
 ```{python}
 #---
 n = 20
-x = torch.linspace(0, 10, n)
+x = np.linspace(0, 10, n)
 senal = 2.0 * x + 1.0            # la verdad que NO conocemos
-ruido = torch.randn(n) * 3.0
+ruido = rng.normal(scale=3.0, size=n)
 y = senal + ruido
 #---
 ```
@@ -73,12 +74,12 @@ y = senal + ruido
 ```{python}
 #| code-fold: true
 fig, ax = plt.subplots(figsize=(6, 4))
-ax.scatter(x.numpy(), y.numpy(), **kw_puntos)
-ax.plot(x.numpy(), senal.numpy(), color="black", linestyle="--",
+ax.scatter(x, y, **kw_puntos)
+ax.plot(x, senal, color="black", linestyle="--",
         label=r"Señal: $f(x_i) = 2x_i + 1$")
 for i in range(n):
     etiqueta = r"Ruido: $\epsilon_i$" if i == 0 else None
-    ax.plot([x[i].item()] * 2, [senal[i].item(), y[i].item()],
+    ax.plot([x[i]] * 2, [senal[i], y[i]],
             color="#ff5700", alpha=0.5, linewidth=0.9, label=etiqueta)
 ax.set(xlabel="$x$", ylabel="$y$")
 ax.legend()
@@ -168,19 +169,19 @@ señal y ruido distinto**.
 #| code-fold: true
 from scipy import interpolate
 
-f_int = interpolate.interp1d(x.numpy(), y.numpy(), kind="cubic")
-x_denso = torch.linspace(0, 10, 200)
-y_int = f_int(x_denso.numpy())
+f_int = interpolate.interp1d(x, y, kind="cubic")
+x_denso = np.linspace(0, 10, 200)
+y_int = f_int(x_denso)
 
 fig, ax = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
-ax[0].scatter(x.numpy(), y.numpy(), **kw_puntos)
-ax[0].plot(x_denso.numpy(), y_int, color="#ff5700", linestyle="--", label="interpolador")
+ax[0].scatter(x, y, **kw_puntos)
+ax[0].plot(x_denso, y_int, color="#ff5700", linestyle="--", label="interpolador")
 ax[0].set(title="Datos de entrenamiento", xlabel="$x$", ylabel="$y$")
 ax[0].legend()
 
-y_nuevo = 2.0 * x_denso + 1.0 + torch.randn(200) * 3.0
-ax[1].scatter(x_denso.numpy(), y_nuevo.numpy(), **kw_puntos)
-ax[1].plot(x_denso.numpy(), y_int, color="#ff5700", linestyle="--", label="interpolador")
+y_nuevo = 2.0 * x_denso + 1.0 + rng.normal(scale=3.0, size=200)
+ax[1].scatter(x_denso, y_nuevo, **kw_puntos)
+ax[1].plot(x_denso, y_int, color="#ff5700", linestyle="--", label="interpolador")
 ax[1].set(title="Datos nuevos, misma señal", xlabel="$x$")
 ax[1].legend()
 plt.show()
@@ -203,71 +204,15 @@ $$
 $$ {#eq-densidad-normal}
 :::
 
-::: {#lem-normalizacion}
-## Constante de normalización
+::: {.callout-note appearance="simple"}
+## De Estadística
 
-$\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \dd z = \sqrt{2\pi}$.
-:::
-
-::: {.cajanegra}
-**No lo demostramos**
-
-La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y
-no enseña nada de aprendizaje automático. Se acepta y se sigue.
-:::
-
-::: {#thm-traslacion}
-## Traslación
-
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ y $c \in \Real$, entonces
-$\varepsilon + c \sim \Normal(\mu + c, \noise^2)$.
-:::
-
-::: {.proof}
-Sea $W = \varepsilon + c$. Entonces
-$\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} = \int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$.
-El cambio de variable $u = x + c$ (con $\dd u = \dd x$) transforma la integral en
-$\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y por @eq-densidad-normal
-$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
-:::
-
-::: {#thm-escala}
-## Escala
-
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ y $a \neq 0$, entonces
-$a\varepsilon \sim \Normal(a\mu, a^2\noise^2)$.
-:::
-
-::: {.proof}
-<!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
-     Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
-     en este curso y lo van a necesitar otra vez en 5.12. -->
-
-:::
-
-::: {#cor-estandarizacion}
-## Estandarización
-
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $Z = (\varepsilon - \mu)/\noise \sim \Normal(0,1)$.
-:::
-
-::: {.proof}
-Aplicar @thm-escala con $a = 1/\noise$ y después @thm-traslacion con $c = -\mu/\noise$.
-:::
-
-::: {#thm-momentos}
-## Media y varianza
-
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y $\Var{\varepsilon} = \noise^2$.
-:::
-
-::: {.proof}
-<!-- TODO(D3, 25 min). RUTA OBLIGATORIA: no hacerlo desde cero o pasa de M a L:
-     1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
-        eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
-     2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
-     3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
-
+Usaremos cuatro propiedades de la normal: la constante de normalización, y su
+comportamiento bajo traslación (@thm-traslacion), bajo cambio de escala (@thm-escala) y
+la estandarización que se sigue de ambas (@cor-estandarizacion), más
+$\E{\varepsilon}=\mu$ y $\Var{\varepsilon}=\noise^2$ (@thm-momentos). Están enunciadas
+y demostradas en el [repaso de probabilidad](../curso/probabilidad.qmd). Aquí solo
+necesitamos la primera de ellas.
 :::
 
 ::: {#cor-target}
@@ -345,23 +290,23 @@ Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste com
 ```{python}
 #---
 def densidad_normal(x, mu, sigma):
-    return torch.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * (2 * torch.pi) ** 0.5)
+    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))
 
 
 def log_verosimilitud(w0, w1, x, y, sigma=3.0):
-    return densidad_normal(y, w0 + w1 * x, sigma).log().sum()
+    return np.log(densidad_normal(y, w0 + w1 * x, sigma)).sum()
 #---
 ```
 
 ```{python}
 #| code-fold: true
-rejilla_w0 = torch.linspace(-5, 5, 60)
-rejilla_w1 = torch.linspace(-1, 3, 60)
-L = torch.tensor([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])
+rejilla_w0 = np.linspace(-5, 5, 60)
+rejilla_w1 = np.linspace(-1, 3, 60)
+L = np.array([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])
 
 fig, ax = plt.subplots(figsize=(5.5, 4))
-cs = ax.contourf(rejilla_w1.numpy(), rejilla_w0.numpy(), L.numpy(), levels=30)
-i, j = divmod(int(L.argmax()), L.shape[1])
+cs = ax.contourf(rejilla_w1, rejilla_w0, L, levels=30)
+i, j = np.unravel_index(L.argmax(), L.shape)
 ax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color="#ff5700", s=60, label="máximo en la rejilla")
 ax.scatter([2.0], [1.0], color="white", marker="x", s=60, label="verdad")
 ax.set(xlabel="$w_1$", ylabel="$w_0$")

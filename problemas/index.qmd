@@ -12,6 +12,9 @@ después de la sesión.
 | [5](hoja-05.qmd) | Datos | esqueleto |
 | [6](hoja-06.qmd) | Validación y métricas | esqueleto |
 
+Cada hoja tiene **cinco ejercicios**: tres marcados como nucleares, que son del tipo que
+entra en el examen, y dos opcionales.
+
 ::: {.callout-note appearance="simple"}
 Este es el activo más caro de construir de todo el curso y el que ninguna de las dos
 fuentes aporta: Chodrow publica **tres** ejercicios en toda la primera mitad, y el curso
