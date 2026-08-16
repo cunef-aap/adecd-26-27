@@ -379,9 +379,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#bienvenida" id="toc-bienvenida" class="nav-link active" data-scroll-target="#bienvenida">Bienvenida</a>
   <ul class="collapse">
-  <li><a href="#de-qué-va-este-curso" id="toc-de-qué-va-este-curso" class="nav-link" data-scroll-target="#de-qué-va-este-curso">De qué va este curso</a></li>
-  <li><a href="#cómo-se-usan-estos-apuntes" id="toc-cómo-se-usan-estos-apuntes" class="nav-link" data-scroll-target="#cómo-se-usan-estos-apuntes">Cómo se usan estos apuntes</a></li>
-  <li><a href="#antes-de-la-primera-sesión" id="toc-antes-de-la-primera-sesión" class="nav-link" data-scroll-target="#antes-de-la-primera-sesión">Antes de la primera sesión</a></li>
+  <li><a href="#de-qué-va-el-curso" id="toc-de-qué-va-el-curso" class="nav-link" data-scroll-target="#de-qué-va-el-curso">De qué va el curso</a></li>
+  <li><a href="#un-solo-procedimiento-quince-veces" id="toc-un-solo-procedimiento-quince-veces" class="nav-link" data-scroll-target="#un-solo-procedimiento-quince-veces">Un solo procedimiento, quince veces</a></li>
+  <li><a href="#cómo-está-hecho-esto" id="toc-cómo-está-hecho-esto" class="nav-link" data-scroll-target="#cómo-está-hecho-esto">Cómo está hecho esto</a></li>
+  <li><a href="#por-dónde-empezar" id="toc-por-dónde-empezar" class="nav-link" data-scroll-target="#por-dónde-empezar">Por dónde empezar</a></li>
   <li><a href="#sobre-estos-apuntes" id="toc-sobre-estos-apuntes" class="nav-link" data-scroll-target="#sobre-estos-apuntes">Sobre estos apuntes</a></li>
   </ul></li>
   </ul>
@@ -413,27 +414,33 @@ ul.task-list li input[type="checkbox"] {
 <section id="bienvenida" class="level1 unnumbered">
 <h1 class="unnumbered">Bienvenida</h1>
 <p>Apuntes de <strong>Aprendizaje Automático: Predicción</strong> (G244), asignatura obligatoria de tercer curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.</p>
-<section id="de-qué-va-este-curso" class="level2">
-<h2 class="anchored" data-anchor-id="de-qué-va-este-curso">De qué va este curso</h2>
-<p>De un problema concreto: predecir una magnitud numérica en observaciones que todavía no hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince capítulos:</p>
-<blockquote class="blockquote">
-<p><strong>(1)</strong> escribe un modelo de datos <code>señal + ruido</code> → <strong>(2)</strong> escribe la verosimilitud → <strong>(3)</strong> toma <code>−log</code> y obtén una pérdida → <strong>(4)</strong> minimízala → <strong>(5)</strong> valida sin reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del problema.</p>
-</blockquote>
-<p>Ese esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.</p>
+<section id="de-qué-va-el-curso" class="level2">
+<h2 class="anchored" data-anchor-id="de-qué-va-el-curso">De qué va el curso</h2>
+<p>Hay una distribución de probabilidad que no conocemos y una muestra finita extraída de ella. Queremos construir, a partir de la muestra, una función que prediga bien en observaciones <strong>nuevas</strong> de esa misma distribución. Ajustar la muestra que tenemos es fácil y no significa nada: el capítulo 1 lo demuestra en una página.</p>
+<p>Trabajamos el caso supervisado con respuesta numérica, que es aquel en el que el criterio de calidad está bien definido: el riesgo esperado bajo la distribución desconocida. La <a href="./capitulos/00-presentacion.html">presentación</a> precisa qué queda dentro y qué queda fuera.</p>
 </section>
-<section id="cómo-se-usan-estos-apuntes" class="level2">
-<h2 class="anchored" data-anchor-id="cómo-se-usan-estos-apuntes">Cómo se usan estos apuntes</h2>
+<section id="un-solo-procedimiento-quince-veces" class="level2">
+<h2 class="anchored" data-anchor-id="un-solo-procedimiento-quince-veces">Un solo procedimiento, quince veces</h2>
+<blockquote class="blockquote">
+<p><strong>(1)</strong> escribe un modelo de datos <code>señal + ruido</code> → <strong>(2)</strong> escribe la verosimilitud → <strong>(3)</strong> toma <code>−log</code> y obtén una pérdida → <strong>(4)</strong> minimízala → <strong>(5)</strong> estima el riesgo con datos que no hayas usado para ajustar.</p>
+</blockquote>
+<p>Se deriva entero, a mano, una vez, en los capítulos 2 a 4. A partir de ahí es una plantilla: cambia el paso 1 y aparecen los modelos lineales generalizados; cambia el paso 3 y aparecen <em>ridge</em> y <em>lasso</em>; cambia el paso 4 y aparecen los árboles.</p>
+</section>
+<section id="cómo-está-hecho-esto" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-está-hecho-esto">Cómo está hecho esto</h2>
 <ul>
-<li>Cada capítulo se lee <strong>antes</strong> de la sesión de teoría.</li>
-<li>Los resultados van numerados y <strong>se demuestra todo lo que se enuncia</strong>. Lo poco que no, aparece bajo el rótulo <em>fuera de alcance</em>, con el motivo escrito.</li>
-<li>Las demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.</li>
-<li>Cada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.</li>
-<li>Al final de cada capítulo hay un apartado de errores frecuentes, con un error realista demostrado fallando.</li>
+<li><strong>Los apuntes son ejecutables.</strong> Las figuras se generan al publicar, con el código que se ve justo encima de ellas. No hay diapositivas.</li>
+<li><strong>Cada capítulo tiene un cuaderno con huecos</strong>, generado del mismo fichero, que se completa en el laboratorio y abre en Google Colab sin instalar nada.</li>
+<li><strong>Se demuestra todo lo que se enuncia.</strong> Cada demostración cierra con ∎; si un resultado no lo lleva, su demostración todavía está por escribir. Lo que queda fuera va marcado como <em>fuera de alcance</em>, con el motivo.</li>
+<li>Al final de cada capítulo hay un <strong>error frecuente</strong>: un fallo realista, demostrado fallando.</li>
 </ul>
 </section>
-<section id="antes-de-la-primera-sesión" class="level2">
-<h2 class="anchored" data-anchor-id="antes-de-la-primera-sesión">Antes de la primera sesión</h2>
-<p>Lee el anexo <a href="./curso/algebra.html">Cálculo y álgebra que vas a necesitar</a> y haz el diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de qué punto partimos.</p>
+<section id="por-dónde-empezar" class="level2">
+<h2 class="anchored" data-anchor-id="por-dónde-empezar">Por dónde empezar</h2>
+<ol type="1">
+<li>Lee la <a href="./capitulos/00-presentacion.html">presentación</a>: estructura de las clases, herramientas, evaluación y horarios.</li>
+<li>Repasa los anexos de <a href="./curso/algebra.html">cálculo y álgebra</a> y de <a href="./curso/probabilidad.html">probabilidad</a>, y haz el diagnóstico de quince minutos que hay al final del primero.</li>
+</ol>
 </section>
 <section id="sobre-estos-apuntes" class="level2">
 <h2 class="anchored" data-anchor-id="sobre-estos-apuntes">Sobre estos apuntes</h2>

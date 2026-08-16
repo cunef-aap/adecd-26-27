@@ -24,15 +24,17 @@ requisito de la semana 4 y conviene llegar con él resuelto.
 
 ## Contrato de trabajo
 
-6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:
+6 ECTS son 150 horas. Tres horas semanales durante quince semanas son **45 horas de
+clase**, de modo que unas **105 son trabajo fuera del aula**, en torno a 7 por semana:
 
 | | h/semana |
 |---|---|
-| Completar el cuaderno tras el laboratorio | 1,5 |
-| Hoja de problemas | 1,0 |
-| Leer el capítulo | 1,0 |
-| Proyecto (solo semanas 9-13) | 1,5 |
-| **Total fuera de clase** | **~5,0** (6,5 en semanas de proyecto) |
+| Leer el capítulo antes de la S1 | 1,5 |
+| Hoja de problemas | 2,0 |
+| Completar el cuaderno después de la S3 | 1,5 |
+| Estudio y repaso | 1,0 |
+| Proyecto (solo semanas 9-13) | 2,0 |
+| **Total fuera de clase** | **6** (8 en semanas de proyecto) |
 
 Cada hoja tiene **cinco ejercicios**, y los cuatro primeros reproducen los bloques A, B,
 C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien

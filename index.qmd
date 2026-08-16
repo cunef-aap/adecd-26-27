@@ -3,37 +3,46 @@
 Apuntes de **Aprendizaje Automático: Predicción** (G244), asignatura obligatoria de tercer
 curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.
 
-## De qué va este curso
+## De qué va el curso
 
-De un problema concreto: predecir una magnitud numérica en observaciones que todavía no
-hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince
-capítulos:
+Hay una distribución de probabilidad que no conocemos y una muestra finita extraída de
+ella. Queremos construir, a partir de la muestra, una función que prediga bien en
+observaciones **nuevas** de esa misma distribución. Ajustar la muestra que tenemos es
+fácil y no significa nada: el capítulo 1 lo demuestra en una página.
+
+Trabajamos el caso supervisado con respuesta numérica, que es aquel en el que el criterio
+de calidad está bien definido: el riesgo esperado bajo la distribución desconocida. La
+[presentación](capitulos/00-presentacion.qmd) precisa qué queda dentro y qué queda fuera.
+
+## Un solo procedimiento, quince veces
 
 > **(1)** escribe un modelo de datos `señal + ruido` → **(2)** escribe la verosimilitud →
-> **(3)** toma `−log` y obtén una pérdida → **(4)** minimízala → **(5)** valida sin
-> reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del
-> problema.
+> **(3)** toma `−log` y obtén una pérdida → **(4)** minimízala → **(5)** estima el riesgo
+> con datos que no hayas usado para ajustar.
 
-Ese esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
-*ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
-variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4
-se vuelve búsqueda voraz.
+Se deriva entero, a mano, una vez, en los capítulos 2 a 4. A partir de ahí es una
+plantilla: cambia el paso 1 y aparecen los modelos lineales generalizados; cambia el paso
+3 y aparecen *ridge* y *lasso*; cambia el paso 4 y aparecen los árboles.
 
-## Cómo se usan estos apuntes
+## Cómo está hecho esto
 
-- Cada capítulo se lee **antes** de la sesión de teoría.
-- Los resultados van numerados y **se demuestra todo lo que se enuncia**. Lo poco que no,
-  aparece bajo el rótulo *fuera de alcance*, con el motivo escrito.
-- Las demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.
-- Cada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está
-  arriba del todo.
-- Al final de cada capítulo hay un apartado de errores frecuentes, con un error realista demostrado fallando.
+- **Los apuntes son ejecutables.** Las figuras se generan al publicar, con el código que se
+  ve justo encima de ellas. No hay diapositivas.
+- **Cada capítulo tiene un cuaderno con huecos**, generado del mismo fichero, que se
+  completa en el laboratorio y abre en Google Colab sin instalar nada.
+- **Se demuestra todo lo que se enuncia.** Cada demostración cierra con ∎; si un resultado
+  no lo lleva, su demostración todavía está por escribir. Lo que queda fuera va marcado
+  como *fuera de alcance*, con el motivo.
+- Al final de cada capítulo hay un **error frecuente**: un fallo realista, demostrado
+  fallando.
 
-## Antes de la primera sesión
+## Por dónde empezar
 
-Lee el anexo [Cálculo y álgebra que vas a necesitar](curso/algebra.qmd) y haz el
-diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber
-de qué punto partimos.
+1. Lee la [presentación](capitulos/00-presentacion.qmd): estructura de las clases,
+   herramientas, evaluación y horarios.
+2. Repasa los anexos de [cálculo y álgebra](curso/algebra.qmd) y de
+   [probabilidad](curso/probabilidad.qmd), y haz el diagnóstico de quince minutos que hay
+   al final del primero.
 
 ## Sobre estos apuntes
 

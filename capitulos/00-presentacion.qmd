@@ -9,64 +9,102 @@ $$
 $$
 :::
 
-## ¿Qué es el aprendizaje automático?
+## Qué es el aprendizaje automático
 
-Un conjunto de métodos para construir, a partir de datos, funciones que predicen. La
-palabra que hace el trabajo es *predicen*: no describen los datos que ya tenemos, sino que
-asignan un valor a observaciones que todavía no hemos visto.
+Conviene definirlo con más precisión que "el ordenador aprende de los datos".
 
-## Tipos de problemas
+Se supone que existe una **distribución desconocida** $P$ sobre un espacio de
+observaciones, y que lo que tenemos es una **muestra finita** extraída de ella. El
+aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una
+función, una partición, una densidad, una política) que sea bueno **respecto de $P$**, y
+no respecto de la muestra concreta que nos ha tocado.
 
-El primer corte es por lo que sabemos de los datos:
+Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es
+fácil y no significa nada: el capítulo 1 lo demuestra. Lo difícil es que el objeto siga
+funcionando en observaciones nuevas extraídas de la misma $P$.
 
-- **Aprendizaje supervisado**: cada observación viene con una respuesta conocida, y
-  queremos predecir esa respuesta en observaciones nuevas.
-- **Aprendizaje no supervisado**: no hay respuesta, y buscamos estructura.
-- **Aprendizaje por refuerzo**: un agente actúa, recibe una recompensa y aprende de ella.
+Un problema de aprendizaje queda especificado cuando se fijan tres cosas:
 
-Dentro del supervisado, el segundo corte es por el tipo de respuesta:
+1. **Qué se observa.** El espacio de las observaciones.
+2. **Qué se construye.** La clase de objetos entre los que elegimos.
+3. **Con qué criterio.** Una medida de calidad definida como una **esperanza bajo $P$**,
+   que por tanto no se puede calcular, solo estimar.
 
-- **Regresión**: la respuesta es un número. El precio de un piso, la demanda de la semana
-  que viene, el coste de un siniestro.
-- **Clasificación**: la respuesta es una categoría. Si un cliente impaga o no.
+## Las tres familias, y en qué se diferencian de verdad
 
-**Esta asignatura trata el aprendizaje supervisado con respuesta numérica.** La
-clasificación es la asignatura hermana, *Aprendizaje Automático: Clasificación* [G249],
-que comparte con esta buena parte del aparato.
+La taxonomía habitual no se basa en el algoritmo, sino en qué se observa y qué se puede
+usar como criterio.
 
-## Predicción no es inferencia
+**Aprendizaje supervisado.** Se observan pares $(\xv, y)$. Se construye una función
+$\model: \Xcal \to \Ycal$. El criterio es el **riesgo esperado**
+$$
+\Risk(\model) = \E{\loss\left(Y, \model(X)\right)}
+$$
+para una pérdida $\loss$ fijada de antemano. Aquí sí se predice, y el criterio es
+inequívoco: dos personas con la misma pérdida y la misma $P$ ordenan los modelos igual.
 
-Es la distinción que organiza el curso, y conviene tenerla clara desde el primer día.
+**Aprendizaje no supervisado.** Se observa solo $\xv$. **Aquí normalmente no se predice
+nada**, y esa es la diferencia importante. Se construye otra cosa: una estimación de la
+densidad de $P$, una partición del espacio, una representación de menor dimensión. El
+criterio depende de qué se construya, y no siempre existe uno aceptado:
+
+- En estimación de densidad sí lo hay: la log-verosimilitud de observaciones nuevas.
+- En reducción de dimensión hay uno razonable: el error de reconstrucción.
+- En agrupamiento **no hay un criterio único**. Dos particiones distintas de los mismos
+  datos pueden ser ambas defendibles, porque no existe una respuesta correcta contra la
+  que comparar.
+
+Decir que el aprendizaje no supervisado "predice la estructura de los datos" es una
+imprecisión que conviene evitar desde el principio.
+
+**Aprendizaje por refuerzo.** Los datos no vienen dados: los genera un agente al
+interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará
+después. Se construye una política, y el criterio es la recompensa acumulada esperada.
+
+::: {.callout-note appearance="simple"}
+## Dónde estamos
+
+Esta asignatura trata **aprendizaje supervisado con $y$ numérica**, y con pérdida
+cuadrática salvo cuando digamos lo contrario. Es decir, el caso en que el criterio está
+bien definido y podemos ser exigentes con él.
+
+La clasificación, que es aprendizaje supervisado con $y$ categórica, es la asignatura
+hermana *Aprendizaje Automático: Clasificación* [G249].
+:::
+
+## Predecir no es lo mismo que explicar
+
+Es la distinción que organiza el curso.
 
 |  | Econometría | Esta asignatura |
 |---|---|---|
 | Pregunta | ¿cuánto vale $\coefj$ y es significativo? | ¿qué $\coef$ predice mejor fuera de la muestra? |
 | Objeto de interés | el coeficiente | la predicción |
-| Criterio | insesgadez, error estándar | error sobre datos no vistos |
+| Criterio | insesgadez, error estándar | riesgo estimado sobre datos no usados |
 
-Son preguntas distintas y llevan a modelos distintos. En el capítulo 8 veremos un método,
-la regularización, que **sesga los coeficientes a propósito** porque a cambio predice
-mejor. Desde la óptica de la inferencia eso sería un defecto; desde la nuestra, el
-objetivo.
+Llevan a modelos distintos. En el capítulo 8 veremos la regularización, que **sesga los
+coeficientes a propósito** porque a cambio reduce el riesgo. Desde la óptica de la
+inferencia eso es un defecto; desde la nuestra, el objetivo.
 
 No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de
-confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero
+confianza). Es una decisión deliberada. El capítulo 14 sí trata la incertidumbre, pero
 sobre las predicciones.
 
 ## El esquema del curso
 
-Hay un único método, y se repite quince veces:
+Todos los métodos salen del mismo procedimiento, aplicado quince veces:
 
-1. Escribe un modelo de datos: **señal más ruido**.
-2. Escribe la **verosimilitud** de ese modelo.
-3. Toma $-\log$ y obtén una **pérdida**.
-4. **Minimízala**, en forma cerrada o por descenso de gradiente.
-5. **Valida** sin reutilizar los datos de ajuste y mide con una métrica interpretable.
+1. Escribir un **modelo de datos**: señal más ruido.
+2. Escribir la **verosimilitud** de ese modelo.
+3. Tomar $-\log$ y obtener una **pérdida**.
+4. **Minimizarla**, en forma cerrada o por descenso de gradiente.
+5. **Estimar el riesgo** con datos que no se hayan usado para ajustar, y medirlo con una
+   métrica interpretable.
 
-Ese esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
-*ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
-variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4
-se vuelve búsqueda voraz.
+Se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: *ridge* y
+*lasso* son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson
+es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda
+voraz.
 
 ## Programa
 
@@ -76,50 +114,108 @@ se vuelve búsqueda voraz.
 | 2. Metodologías para predicción | 5 (datos), 9 (reducción y selección), 6 (validación y métricas) |
 | 3. Algoritmos para predicción | 3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas) |
 | 4. Implementación y aplicación | los laboratorios; casos de uso en 12, 14 y 15 |
-| Complemento: agentes de IA | 5, 10, 12 y el proyecto |
+| Complemento: agentes de IA | 10, 12 y el proyecto |
 
 ## Cómo se trabaja
 
-Tres sesiones por semana, con papeles distintos:
+**Tres sesiones de una hora por semana**, con papeles distintos y ninguno intercambiable.
 
-| | Sesión | Qué se hace |
-|---|---|---|
-| S1 | **Teoría** | Una demostración, en pizarra. Sin ordenador |
-| S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
-| S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
+### S1 · Teoría
 
-**Se demuestra todo lo que se enuncia.** Es la diferencia principal con el curso anterior,
-y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo
-poco que no demostramos aparece marcado como *fuera de alcance*, con el motivo escrito.
+Pizarra. **Una demostración por sesión**, entera. Sin ordenador.
 
-Cada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una
-demostración elegida al azar **entre las de las tres últimas semanas**. La lista completa
-está publicada en el [índice de resultados](../curso/indice-resultados.qmd) desde el
-primer día.
+| min | |
+|---|---|
+| 0-5 | Qué usamos de lo anterior |
+| 5-12 | El problema, en palabras, sin símbolos |
+| 12-38 | La demostración |
+| 38-48 | Qué dice el resultado y para qué sirve |
+| 48-56 | El error frecuente de la semana |
+| 56-60 | Qué viene después |
 
-### Contrato de trabajo
+### S2 · Problemas
 
-6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:
+Lápiz y papel. **Aquí es donde se usan las hojas de ejercicios.**
+
+| min | |
+|---|---|
+| 0-8 | *La derivación de la semana*: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas |
+| 8-45 | La hoja del capítulo, por parejas. El profesor circula |
+| 45-60 | Un ejercicio resuelto en la pizarra **por un estudiante** |
+
+Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un **miniexamen
+cronometrado** de un bloque, corregido acto seguido. No cuenta para la nota: sirve para
+saber cuánto se tarda de verdad.
+
+### S3 · Laboratorio
+
+Ordenador. Se completa en directo el cuaderno del capítulo.
+
+| min | |
+|---|---|
+| 0-5 | Qué vamos a construir |
+| 5-50 | Código en directo. El profesor teclea y los estudiantes teclean |
+| 50-60 | El cuaderno corriendo entero, de arriba abajo |
+
+## Cómo es el material
+
+No hay diapositivas. Hay tres cosas, y conviene saber para qué sirve cada una.
+
+**Los apuntes son ejecutables.** Lo que se lee en la web no es una descripción del código:
+**es el código**. Las figuras de los capítulos se generan al publicarlos, ejecutando las
+celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.
+
+**Cada capítulo tiene un cuaderno con huecos.** Es el mismo fichero que los apuntes, pero
+con los trozos de código que se escriben en clase sustituidos por un hueco. El enlace está
+arriba del todo de cada capítulo y abre directamente en Google Colab, sin instalar nada.
+Como es el mismo fichero, **no se pueden desincronizar**: lo que se teclea en el
+laboratorio es exactamente lo que queda publicado como referencia.
+
+**Las hojas de problemas** son para la S2, una por capítulo, y se publican con solución
+después de la sesión.
+
+### Herramientas
+
+- **Python**, con `numpy`, `pandas`, `matplotlib` y `scikit-learn`. `statsmodels` en el
+  capítulo 12.
+- **`jax`** en los capítulos 3 y 4, para **diferenciación automática**. No la usamos para
+  entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta.
+  `jax.grad(f)` devuelve una función, el gradiente de `f`, que es la traducción literal
+  del operador $\grad$. El capítulo 3 explica en qué se diferencia de las diferencias
+  finitas y de la derivación simbólica, y por qué el modo inverso da las $\nfeat+1$
+  derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos
+  grandes.
+- **Google Colab**, para no instalar nada. Quien prefiera trabajar en local tiene el
+  entorno en `environment.yml`.
+- **Herramientas de IA generativa**. Su uso está permitido y, en el proyecto, es
+  obligatorio documentarlo. Ver la [política de uso de IA](../curso/politica-ia.qmd).
+
+::: {.callout-important appearance="simple"}
+## Se demuestra todo lo que se enuncia
+
+Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no
+es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado
+como *fuera de alcance*, con el motivo escrito.
+
+Cada demostración se cierra con ∎. Si un resultado no lo lleva, es que su demostración
+todavía está por escribir.
+:::
+
+## Carga de trabajo
+
+6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase,
+de modo que **unas 105 horas son trabajo fuera del aula**: en torno a 7 por semana.
 
 | | h/semana |
 |---|---|
-| Completar el cuaderno tras el laboratorio | 1,5 |
-| Hoja de problemas | 1,0 |
-| Leer el capítulo | 1,0 |
-| Proyecto (solo semanas 9 a 13) | 1,5 |
-| **Total fuera de clase** | **~5,0** (6,5 en semanas de proyecto) |
+| Leer el capítulo antes de la S1 | 1,5 |
+| Hoja de problemas | 2,0 |
+| Completar el cuaderno después de la S3 | 1,5 |
+| Estudio y repaso | 1,0 |
+| Proyecto (solo semanas 9 a 13) | 2,0 |
+| **Total** | **6** (8 en semanas de proyecto) |
 
-## Herramientas
-
-- **Python**, con `numpy`, `pandas`, `matplotlib` y `scikit-learn`. `statsmodels` en el
-  capítulo 14.
-- **`jax`** en los capítulos 3 y 4, solo para diferenciación automática: sirve para
-  comprobar que una derivada hecha a mano es correcta.
-- **Google Colab**, para no tener que instalar nada. Cada capítulo tiene un cuaderno con
-  huecos, enlazado arriba del todo.
-- **Herramientas de IA generativa** (Claude, ChatGPT y similares). Su uso está permitido y,
-  en el proyecto, es obligatorio documentarlo. Ver la
-  [política de uso de IA](../curso/politica-ia.qmd).
+Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 
 ## Datos de la asignatura
 
@@ -142,8 +238,8 @@ La asistencia es **obligatoria** en primera matrícula. Una asistencia inferior 
 implica la pérdida del derecho a examen en la convocatoria ordinaria.
 
 Sobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos
-en el aula salvo indicación del profesor. En esta asignatura, **portátil obligatorio en
-S3** y **sin dispositivos en S1 y S2**.
+en el aula salvo indicación del profesor. En esta asignatura, **portátil obligatorio en la
+S3** y **sin dispositivos en S1 y S2**. La S2 es el ensayo del examen, que se hace en papel.
 
 ### Tutorías
 
@@ -169,19 +265,6 @@ requiere una **calificación mínima de 5 sobre 10** para poder aprobar. El bloq
 la lista publicada en el [índice de resultados](../curso/indice-resultados.qmd), que por
 tanto es un compromiso y no una orientación.
 
-### Cómo sale la nota de actas
-
-| Situación | Nota en actas |
-|---|---|
-| Examen final $\geq 5$ | 40 % continua + 60 % final |
-| Examen final $< 5$ | la nota del examen final |
-| No se presenta al examen final | la nota de la continua, ponderada al 40 % |
-| No ha calificado ninguna prueba | No Presentado |
-
-En **convocatoria extraordinaria**, la nota de evaluación continua puede sustituirse,
-cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
-final de la convocatoria ordinaria (60 %).
-
 ### Estructura de los exámenes
 
 El parcial y el final tienen la misma estructura, de modo que el parcial funcione como
@@ -194,8 +277,23 @@ ensayo del final:
 | C | 25 % | Cálculo a mano sobre una tabla pequeña |
 | D | 20 % | *"Este script tiene errores"*: encontrarlos y justificarlos |
 
-Las hojas de problemas semanales reproducen esa misma estructura, de modo que la
-preparación del examen es el trabajo ordinario del curso y no una fase aparte.
+**Las hojas de problemas semanales reproducen exactamente esa estructura**: el ejercicio 1
+es del bloque A, el 2 del B, el 3 del C y el 4 del D. Quien hace las quince hojas llega al
+examen habiendo hecho quince exámenes por bloques. Además hay dos simulacros completos: el
+del parcial, con solución, en la semana 4, y el del final en la semana 15.
+
+### Cómo sale la nota de actas
+
+| Situación | Nota en actas |
+|---|---|
+| Examen final $\geq 5$ | 40 % continua + 60 % final |
+| Examen final $< 5$ | la nota del examen final |
+| No se presenta al examen final | la nota de la continua, ponderada al 40 % |
+| No ha calificado ninguna prueba | No Presentado |
+
+En **convocatoria extraordinaria**, la nota de evaluación continua puede sustituirse,
+cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
+final de la convocatoria ordinaria (60 %).
 
 ## Bibliografía
 
@@ -218,6 +316,7 @@ los conceptos y no por el código.
 
 ## Antes de la primera sesión de teoría
 
-Lee el anexo [Cálculo y álgebra que vas a necesitar](../curso/algebra.qmd) y haz el
-diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de
-qué punto partimos.
+Lee los anexos [Cálculo y álgebra que vas a necesitar](../curso/algebra.qmd) y
+[Repaso de probabilidad](../curso/probabilidad.qmd), y haz el diagnóstico de quince
+minutos que hay al final del primero. No cuenta para la nota; sirve para saber de qué
+punto partimos.

@@ -407,16 +407,22 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#qué-es-el-aprendizaje-automático" id="toc-qué-es-el-aprendizaje-automático" class="nav-link active" data-scroll-target="#qué-es-el-aprendizaje-automático">¿Qué es el aprendizaje automático?</a></li>
-  <li><a href="#tipos-de-problemas" id="toc-tipos-de-problemas" class="nav-link" data-scroll-target="#tipos-de-problemas">Tipos de problemas</a></li>
-  <li><a href="#predicción-no-es-inferencia" id="toc-predicción-no-es-inferencia" class="nav-link" data-scroll-target="#predicción-no-es-inferencia">Predicción no es inferencia</a></li>
+  <li><a href="#qué-es-el-aprendizaje-automático" id="toc-qué-es-el-aprendizaje-automático" class="nav-link active" data-scroll-target="#qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</a></li>
+  <li><a href="#las-tres-familias-y-en-qué-se-diferencian-de-verdad" id="toc-las-tres-familias-y-en-qué-se-diferencian-de-verdad" class="nav-link" data-scroll-target="#las-tres-familias-y-en-qué-se-diferencian-de-verdad">Las tres familias, y en qué se diferencian de verdad</a></li>
+  <li><a href="#predecir-no-es-lo-mismo-que-explicar" id="toc-predecir-no-es-lo-mismo-que-explicar" class="nav-link" data-scroll-target="#predecir-no-es-lo-mismo-que-explicar">Predecir no es lo mismo que explicar</a></li>
   <li><a href="#el-esquema-del-curso" id="toc-el-esquema-del-curso" class="nav-link" data-scroll-target="#el-esquema-del-curso">El esquema del curso</a></li>
   <li><a href="#programa" id="toc-programa" class="nav-link" data-scroll-target="#programa">Programa</a></li>
   <li><a href="#cómo-se-trabaja" id="toc-cómo-se-trabaja" class="nav-link" data-scroll-target="#cómo-se-trabaja">Cómo se trabaja</a>
   <ul class="collapse">
-  <li><a href="#contrato-de-trabajo" id="toc-contrato-de-trabajo" class="nav-link" data-scroll-target="#contrato-de-trabajo">Contrato de trabajo</a></li>
+  <li><a href="#s1-teoría" id="toc-s1-teoría" class="nav-link" data-scroll-target="#s1-teoría">S1 · Teoría</a></li>
+  <li><a href="#s2-problemas" id="toc-s2-problemas" class="nav-link" data-scroll-target="#s2-problemas">S2 · Problemas</a></li>
+  <li><a href="#s3-laboratorio" id="toc-s3-laboratorio" class="nav-link" data-scroll-target="#s3-laboratorio">S3 · Laboratorio</a></li>
   </ul></li>
+  <li><a href="#cómo-es-el-material" id="toc-cómo-es-el-material" class="nav-link" data-scroll-target="#cómo-es-el-material">Cómo es el material</a>
+  <ul class="collapse">
   <li><a href="#herramientas" id="toc-herramientas" class="nav-link" data-scroll-target="#herramientas">Herramientas</a></li>
+  </ul></li>
+  <li><a href="#carga-de-trabajo" id="toc-carga-de-trabajo" class="nav-link" data-scroll-target="#carga-de-trabajo">Carga de trabajo</a></li>
   <li><a href="#datos-de-la-asignatura" id="toc-datos-de-la-asignatura" class="nav-link" data-scroll-target="#datos-de-la-asignatura">Datos de la asignatura</a>
   <ul class="collapse">
   <li><a href="#horario-y-aulas" id="toc-horario-y-aulas" class="nav-link" data-scroll-target="#horario-y-aulas">Horario y aulas</a></li>
@@ -424,8 +430,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#evaluación" id="toc-evaluación" class="nav-link" data-scroll-target="#evaluación">Evaluación</a>
   <ul class="collapse">
-  <li><a href="#cómo-sale-la-nota-de-actas" id="toc-cómo-sale-la-nota-de-actas" class="nav-link" data-scroll-target="#cómo-sale-la-nota-de-actas">Cómo sale la nota de actas</a></li>
   <li><a href="#estructura-de-los-exámenes" id="toc-estructura-de-los-exámenes" class="nav-link" data-scroll-target="#estructura-de-los-exámenes">Estructura de los exámenes</a></li>
+  <li><a href="#cómo-sale-la-nota-de-actas" id="toc-cómo-sale-la-nota-de-actas" class="nav-link" data-scroll-target="#cómo-sale-la-nota-de-actas">Cómo sale la nota de actas</a></li>
   </ul></li>
   <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
   <li><a href="#antes-de-la-primera-sesión-de-teoría" id="toc-antes-de-la-primera-sesión-de-teoría" class="nav-link" data-scroll-target="#antes-de-la-primera-sesión-de-teoría">Antes de la primera sesión de teoría</a></li>
@@ -456,27 +462,49 @@ window.Quarto = {
 
 
 <section id="qué-es-el-aprendizaje-automático" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">¿Qué es el aprendizaje automático?</h2>
-<p>Un conjunto de métodos para construir, a partir de datos, funciones que predicen. La palabra que hace el trabajo es <em>predicen</em>: no describen los datos que ya tenemos, sino que asignan un valor a observaciones que todavía no hemos visto.</p>
+<h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</h2>
+<p>Conviene definirlo con más precisión que “el ordenador aprende de los datos”.</p>
+<p>Se supone que existe una <strong>distribución desconocida</strong> <span class="math inline">\(P\)</span> sobre un espacio de observaciones, y que lo que tenemos es una <strong>muestra finita</strong> extraída de ella. El aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una función, una partición, una densidad, una política) que sea bueno <strong>respecto de <span class="math inline">\(P\)</span></strong>, y no respecto de la muestra concreta que nos ha tocado.</p>
+<p>Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es fácil y no significa nada: el capítulo 1 lo demuestra. Lo difícil es que el objeto siga funcionando en observaciones nuevas extraídas de la misma <span class="math inline">\(P\)</span>.</p>
+<p>Un problema de aprendizaje queda especificado cuando se fijan tres cosas:</p>
+<ol type="1">
+<li><strong>Qué se observa.</strong> El espacio de las observaciones.</li>
+<li><strong>Qué se construye.</strong> La clase de objetos entre los que elegimos.</li>
+<li><strong>Con qué criterio.</strong> Una medida de calidad definida como una <strong>esperanza bajo <span class="math inline">\(P\)</span></strong>, que por tanto no se puede calcular, solo estimar.</li>
+</ol>
 </section>
-<section id="tipos-de-problemas" class="level2">
-<h2 class="anchored" data-anchor-id="tipos-de-problemas">Tipos de problemas</h2>
-<p>El primer corte es por lo que sabemos de los datos:</p>
+<section id="las-tres-familias-y-en-qué-se-diferencian-de-verdad" class="level2">
+<h2 class="anchored" data-anchor-id="las-tres-familias-y-en-qué-se-diferencian-de-verdad">Las tres familias, y en qué se diferencian de verdad</h2>
+<p>La taxonomía habitual no se basa en el algoritmo, sino en qué se observa y qué se puede usar como criterio.</p>
+<p><strong>Aprendizaje supervisado.</strong> Se observan pares <span class="math inline">\((\mathbf{x}, y)\)</span>. Se construye una función <span class="math inline">\(f: \mathcal{X}\to \mathcal{Y}\)</span>. El criterio es el <strong>riesgo esperado</strong> <span class="math display">\[
+R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
+\]</span> para una pérdida <span class="math inline">\(\ell\)</span> fijada de antemano. Aquí sí se predice, y el criterio es inequívoco: dos personas con la misma pérdida y la misma <span class="math inline">\(P\)</span> ordenan los modelos igual.</p>
+<p><strong>Aprendizaje no supervisado.</strong> Se observa solo <span class="math inline">\(\mathbf{x}\)</span>. <strong>Aquí normalmente no se predice nada</strong>, y esa es la diferencia importante. Se construye otra cosa: una estimación de la densidad de <span class="math inline">\(P\)</span>, una partición del espacio, una representación de menor dimensión. El criterio depende de qué se construya, y no siempre existe uno aceptado:</p>
 <ul>
-<li><strong>Aprendizaje supervisado</strong>: cada observación viene con una respuesta conocida, y queremos predecir esa respuesta en observaciones nuevas.</li>
-<li><strong>Aprendizaje no supervisado</strong>: no hay respuesta, y buscamos estructura.</li>
-<li><strong>Aprendizaje por refuerzo</strong>: un agente actúa, recibe una recompensa y aprende de ella.</li>
+<li>En estimación de densidad sí lo hay: la log-verosimilitud de observaciones nuevas.</li>
+<li>En reducción de dimensión hay uno razonable: el error de reconstrucción.</li>
+<li>En agrupamiento <strong>no hay un criterio único</strong>. Dos particiones distintas de los mismos datos pueden ser ambas defendibles, porque no existe una respuesta correcta contra la que comparar.</li>
 </ul>
-<p>Dentro del supervisado, el segundo corte es por el tipo de respuesta:</p>
-<ul>
-<li><strong>Regresión</strong>: la respuesta es un número. El precio de un piso, la demanda de la semana que viene, el coste de un siniestro.</li>
-<li><strong>Clasificación</strong>: la respuesta es una categoría. Si un cliente impaga o no.</li>
-</ul>
-<p><strong>Esta asignatura trata el aprendizaje supervisado con respuesta numérica.</strong> La clasificación es la asignatura hermana, <em>Aprendizaje Automático: Clasificación</em> [G249], que comparte con esta buena parte del aparato.</p>
+<p>Decir que el aprendizaje no supervisado “predice la estructura de los datos” es una imprecisión que conviene evitar desde el principio.</p>
+<p><strong>Aprendizaje por refuerzo.</strong> Los datos no vienen dados: los genera un agente al interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará después. Se construye una política, y el criterio es la recompensa acumulada esperada.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Dónde estamos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta asignatura trata <strong>aprendizaje supervisado con <span class="math inline">\(y\)</span> numérica</strong>, y con pérdida cuadrática salvo cuando digamos lo contrario. Es decir, el caso en que el criterio está bien definido y podemos ser exigentes con él.</p>
+<p>La clasificación, que es aprendizaje supervisado con <span class="math inline">\(y\)</span> categórica, es la asignatura hermana <em>Aprendizaje Automático: Clasificación</em> [G249].</p>
+</div>
+</div>
 </section>
-<section id="predicción-no-es-inferencia" class="level2">
-<h2 class="anchored" data-anchor-id="predicción-no-es-inferencia">Predicción no es inferencia</h2>
-<p>Es la distinción que organiza el curso, y conviene tenerla clara desde el primer día.</p>
+<section id="predecir-no-es-lo-mismo-que-explicar" class="level2">
+<h2 class="anchored" data-anchor-id="predecir-no-es-lo-mismo-que-explicar">Predecir no es lo mismo que explicar</h2>
+<p>Es la distinción que organiza el curso.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -504,24 +532,24 @@ window.Quarto = {
 <tr class="odd">
 <td>Criterio</td>
 <td>insesgadez, error estándar</td>
-<td>error sobre datos no vistos</td>
+<td>riesgo estimado sobre datos no usados</td>
 </tr>
 </tbody>
 </table>
-<p>Son preguntas distintas y llevan a modelos distintos. En el capítulo 8 veremos un método, la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio predice mejor. Desde la óptica de la inferencia eso sería un defecto; desde la nuestra, el objetivo.</p>
-<p>No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.</p>
+<p>Llevan a modelos distintos. En el capítulo 8 veremos la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio reduce el riesgo. Desde la óptica de la inferencia eso es un defecto; desde la nuestra, el objetivo.</p>
+<p>No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 14 sí trata la incertidumbre, pero sobre las predicciones.</p>
 </section>
 <section id="el-esquema-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="el-esquema-del-curso">El esquema del curso</h2>
-<p>Hay un único método, y se repite quince veces:</p>
+<p>Todos los métodos salen del mismo procedimiento, aplicado quince veces:</p>
 <ol type="1">
-<li>Escribe un modelo de datos: <strong>señal más ruido</strong>.</li>
-<li>Escribe la <strong>verosimilitud</strong> de ese modelo.</li>
-<li>Toma <span class="math inline">\(-\log\)</span> y obtén una <strong>pérdida</strong>.</li>
-<li><strong>Minimízala</strong>, en forma cerrada o por descenso de gradiente.</li>
-<li><strong>Valida</strong> sin reutilizar los datos de ajuste y mide con una métrica interpretable.</li>
+<li>Escribir un <strong>modelo de datos</strong>: señal más ruido.</li>
+<li>Escribir la <strong>verosimilitud</strong> de ese modelo.</li>
+<li>Tomar <span class="math inline">\(-\log\)</span> y obtener una <strong>pérdida</strong>.</li>
+<li><strong>Minimizarla</strong>, en forma cerrada o por descenso de gradiente.</li>
+<li><strong>Estimar el riesgo</strong> con datos que no se hayan usado para ajustar, y medirlo con una métrica interpretable.</li>
 </ol>
-<p>Ese esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.</p>
+<p>Se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.</p>
 </section>
 <section id="programa" class="level2">
 <h2 class="anchored" data-anchor-id="programa">Programa</h2>
@@ -555,50 +583,147 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Complemento: agentes de IA</td>
-<td>5, 10, 12 y el proyecto</td>
+<td>10, 12 y el proyecto</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="cómo-se-trabaja" class="level2">
 <h2 class="anchored" data-anchor-id="cómo-se-trabaja">Cómo se trabaja</h2>
-<p>Tres sesiones por semana, con papeles distintos:</p>
+<p><strong>Tres sesiones de una hora por semana</strong>, con papeles distintos y ninguno intercambiable.</p>
+<section id="s1-teoría" class="level3">
+<h3 class="anchored" data-anchor-id="s1-teoría">S1 · Teoría</h3>
+<p>Pizarra. <strong>Una demostración por sesión</strong>, entera. Sin ordenador.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
+<th>min</th>
 <th></th>
-<th>Sesión</th>
-<th>Qué se hace</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>S1</td>
-<td><strong>Teoría</strong></td>
-<td>Una demostración, en pizarra. Sin ordenador</td>
+<td>0-5</td>
+<td>Qué usamos de lo anterior</td>
 </tr>
 <tr class="even">
-<td>S2</td>
-<td><strong>Problemas</strong></td>
-<td>Lápiz y papel. Empieza con <em>la derivación de la semana</em></td>
+<td>5-12</td>
+<td>El problema, en palabras, sin símbolos</td>
 </tr>
 <tr class="odd">
-<td>S3</td>
-<td><strong>Laboratorio</strong></td>
-<td>Se completa en directo el cuaderno del capítulo</td>
+<td>12-38</td>
+<td>La demostración</td>
+</tr>
+<tr class="even">
+<td>38-48</td>
+<td>Qué dice el resultado y para qué sirve</td>
+</tr>
+<tr class="odd">
+<td>48-56</td>
+<td>El error frecuente de la semana</td>
+</tr>
+<tr class="even">
+<td>56-60</td>
+<td>Qué viene después</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Se demuestra todo lo que se enuncia.</strong> Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado como <em>fuera de alcance</em>, con el motivo escrito.</p>
-<p>Cada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una demostración elegida al azar <strong>entre las de las tres últimas semanas</strong>. La lista completa está publicada en el <a href="../curso/indice-resultados.html">índice de resultados</a> desde el primer día.</p>
-<section id="contrato-de-trabajo" class="level3">
-<h3 class="anchored" data-anchor-id="contrato-de-trabajo">Contrato de trabajo</h3>
-<p>6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:</p>
+</section>
+<section id="s2-problemas" class="level3">
+<h3 class="anchored" data-anchor-id="s2-problemas">S2 · Problemas</h3>
+<p>Lápiz y papel. <strong>Aquí es donde se usan las hojas de ejercicios.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>min</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0-8</td>
+<td><em>La derivación de la semana</em>: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas</td>
+</tr>
+<tr class="even">
+<td>8-45</td>
+<td>La hoja del capítulo, por parejas. El profesor circula</td>
+</tr>
+<tr class="odd">
+<td>45-60</td>
+<td>Un ejercicio resuelto en la pizarra <strong>por un estudiante</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un <strong>miniexamen cronometrado</strong> de un bloque, corregido acto seguido. No cuenta para la nota: sirve para saber cuánto se tarda de verdad.</p>
+</section>
+<section id="s3-laboratorio" class="level3">
+<h3 class="anchored" data-anchor-id="s3-laboratorio">S3 · Laboratorio</h3>
+<p>Ordenador. Se completa en directo el cuaderno del capítulo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>min</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0-5</td>
+<td>Qué vamos a construir</td>
+</tr>
+<tr class="even">
+<td>5-50</td>
+<td>Código en directo. El profesor teclea y los estudiantes teclean</td>
+</tr>
+<tr class="odd">
+<td>50-60</td>
+<td>El cuaderno corriendo entero, de arriba abajo</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cómo-es-el-material" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-es-el-material">Cómo es el material</h2>
+<p>No hay diapositivas. Hay tres cosas, y conviene saber para qué sirve cada una.</p>
+<p><strong>Los apuntes son ejecutables.</strong> Lo que se lee en la web no es una descripción del código: <strong>es el código</strong>. Las figuras de los capítulos se generan al publicarlos, ejecutando las celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.</p>
+<p><strong>Cada capítulo tiene un cuaderno con huecos.</strong> Es el mismo fichero que los apuntes, pero con los trozos de código que se escriben en clase sustituidos por un hueco. El enlace está arriba del todo de cada capítulo y abre directamente en Google Colab, sin instalar nada. Como es el mismo fichero, <strong>no se pueden desincronizar</strong>: lo que se teclea en el laboratorio es exactamente lo que queda publicado como referencia.</p>
+<p><strong>Las hojas de problemas</strong> son para la S2, una por capítulo, y se publican con solución después de la sesión.</p>
+<section id="herramientas" class="level3">
+<h3 class="anchored" data-anchor-id="herramientas">Herramientas</h3>
+<ul>
+<li><strong>Python</strong>, con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> y <code>scikit-learn</code>. <code>statsmodels</code> en el capítulo 12.</li>
+<li><strong><code>jax</code></strong> en los capítulos 3 y 4, para <strong>diferenciación automática</strong>. No la usamos para entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta. <code>jax.grad(f)</code> devuelve una función, el gradiente de <code>f</code>, que es la traducción literal del operador <span class="math inline">\(\nabla\)</span>. El capítulo 3 explica en qué se diferencia de las diferencias finitas y de la derivación simbólica, y por qué el modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos grandes.</li>
+<li><strong>Google Colab</strong>, para no instalar nada. Quien prefiera trabajar en local tiene el entorno en <code>environment.yml</code>.</li>
+<li><strong>Herramientas de IA generativa</strong>. Su uso está permitido y, en el proyecto, es obligatorio documentarlo. Ver la <a href="../curso/politica-ia.html">política de uso de IA</a>.</li>
+</ul>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Se demuestra todo lo que se enuncia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado como <em>fuera de alcance</em>, con el motivo escrito.</p>
+<p>Cada demostración se cierra con ∎. Si un resultado no lo lleva, es que su demostración todavía está por escribir.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="carga-de-trabajo" class="level2">
+<h2 class="anchored" data-anchor-id="carga-de-trabajo">Carga de trabajo</h2>
+<p>6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase, de modo que <strong>unas 105 horas son trabajo fuera del aula</strong>: en torno a 7 por semana.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -608,37 +733,32 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Completar el cuaderno tras el laboratorio</td>
+<td>Leer el capítulo antes de la S1</td>
 <td>1,5</td>
 </tr>
 <tr class="even">
 <td>Hoja de problemas</td>
-<td>1,0</td>
+<td>2,0</td>
 </tr>
 <tr class="odd">
-<td>Leer el capítulo</td>
-<td>1,0</td>
-</tr>
-<tr class="even">
-<td>Proyecto (solo semanas 9 a 13)</td>
+<td>Completar el cuaderno después de la S3</td>
 <td>1,5</td>
 </tr>
+<tr class="even">
+<td>Estudio y repaso</td>
+<td>1,0</td>
+</tr>
 <tr class="odd">
-<td><strong>Total fuera de clase</strong></td>
-<td><strong>~5,0</strong> (6,5 en semanas de proyecto)</td>
+<td>Proyecto (solo semanas 9 a 13)</td>
+<td>2,0</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>6</strong> (8 en semanas de proyecto)</td>
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="herramientas" class="level2">
-<h2 class="anchored" data-anchor-id="herramientas">Herramientas</h2>
-<ul>
-<li><strong>Python</strong>, con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> y <code>scikit-learn</code>. <code>statsmodels</code> en el capítulo 14.</li>
-<li><strong><code>jax</code></strong> en los capítulos 3 y 4, solo para diferenciación automática: sirve para comprobar que una derivada hecha a mano es correcta.</li>
-<li><strong>Google Colab</strong>, para no tener que instalar nada. Cada capítulo tiene un cuaderno con huecos, enlazado arriba del todo.</li>
-<li><strong>Herramientas de IA generativa</strong> (Claude, ChatGPT y similares). Su uso está permitido y, en el proyecto, es obligatorio documentarlo. Ver la <a href="../curso/politica-ia.html">política de uso de IA</a>.</li>
-</ul>
+<p>Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.</p>
 </section>
 <section id="datos-de-la-asignatura" class="level2">
 <h2 class="anchored" data-anchor-id="datos-de-la-asignatura">Datos de la asignatura</h2>
@@ -682,7 +802,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>La asistencia es <strong>obligatoria</strong> en primera matrícula. Una asistencia inferior al <strong>80 %</strong> implica la pérdida del derecho a examen en la convocatoria ordinaria.</p>
-<p>Sobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, <strong>portátil obligatorio en S3</strong> y <strong>sin dispositivos en S1 y S2</strong>.</p>
+<p>Sobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, <strong>portátil obligatorio en la S3</strong> y <strong>sin dispositivos en S1 y S2</strong>. La S2 es el ensayo del examen, que se hace en papel.</p>
 </section>
 <section id="tutorías" class="level3">
 <h3 class="anchored" data-anchor-id="tutorías">Tutorías</h3>
@@ -735,40 +855,6 @@ window.Quarto = {
 </tbody>
 </table>
 <p>El examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una <strong>calificación mínima de 5 sobre 10</strong> para poder aprobar. El bloque B sale de la lista publicada en el <a href="../curso/indice-resultados.html">índice de resultados</a>, que por tanto es un compromiso y no una orientación.</p>
-<section id="cómo-sale-la-nota-de-actas" class="level3">
-<h3 class="anchored" data-anchor-id="cómo-sale-la-nota-de-actas">Cómo sale la nota de actas</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Situación</th>
-<th>Nota en actas</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Examen final <span class="math inline">\(\geq 5\)</span></td>
-<td>40 % continua + 60 % final</td>
-</tr>
-<tr class="even">
-<td>Examen final <span class="math inline">\(&lt; 5\)</span></td>
-<td>la nota del examen final</td>
-</tr>
-<tr class="odd">
-<td>No se presenta al examen final</td>
-<td>la nota de la continua, ponderada al 40 %</td>
-</tr>
-<tr class="even">
-<td>No ha calificado ninguna prueba</td>
-<td>No Presentado</td>
-</tr>
-</tbody>
-</table>
-<p>En <strong>convocatoria extraordinaria</strong>, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).</p>
-</section>
 <section id="estructura-de-los-exámenes" class="level3">
 <h3 class="anchored" data-anchor-id="estructura-de-los-exámenes">Estructura de los exámenes</h3>
 <p>El parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:</p>
@@ -808,7 +894,41 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Las hojas de problemas semanales reproducen esa misma estructura, de modo que la preparación del examen es el trabajo ordinario del curso y no una fase aparte.</p>
+<p><strong>Las hojas de problemas semanales reproducen exactamente esa estructura</strong>: el ejercicio 1 es del bloque A, el 2 del B, el 3 del C y el 4 del D. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques. Además hay dos simulacros completos: el del parcial, con solución, en la semana 4, y el del final en la semana 15.</p>
+</section>
+<section id="cómo-sale-la-nota-de-actas" class="level3">
+<h3 class="anchored" data-anchor-id="cómo-sale-la-nota-de-actas">Cómo sale la nota de actas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>Nota en actas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Examen final <span class="math inline">\(\geq 5\)</span></td>
+<td>40 % continua + 60 % final</td>
+</tr>
+<tr class="even">
+<td>Examen final <span class="math inline">\(&lt; 5\)</span></td>
+<td>la nota del examen final</td>
+</tr>
+<tr class="odd">
+<td>No se presenta al examen final</td>
+<td>la nota de la continua, ponderada al 40 %</td>
+</tr>
+<tr class="even">
+<td>No ha calificado ninguna prueba</td>
+<td>No Presentado</td>
+</tr>
+</tbody>
+</table>
+<p>En <strong>convocatoria extraordinaria</strong>, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).</p>
 </section>
 </section>
 <section id="bibliografía" class="level2">
@@ -830,7 +950,7 @@ window.Quarto = {
 </section>
 <section id="antes-de-la-primera-sesión-de-teoría" class="level2">
 <h2 class="anchored" data-anchor-id="antes-de-la-primera-sesión-de-teoría">Antes de la primera sesión de teoría</h2>
-<p>Lee el anexo <a href="../curso/algebra.html">Cálculo y álgebra que vas a necesitar</a> y haz el diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de qué punto partimos.</p>
+<p>Lee los anexos <a href="../curso/algebra.html">Cálculo y álgebra que vas a necesitar</a> y <a href="../curso/probabilidad.html">Repaso de probabilidad</a>, y haz el diagnóstico de quince minutos que hay al final del primero. No cuenta para la nota; sirve para saber de qué punto partimos.</p>
 
 
 </section>

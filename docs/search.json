@@ -10,31 +10,41 @@
     ]
   },
   {
-    "objectID": "index.html#de-qué-va-este-curso",
-    "href": "index.html#de-qué-va-este-curso",
+    "objectID": "index.html#de-qué-va-el-curso",
+    "href": "index.html#de-qué-va-el-curso",
     "title": "Aprendizaje Automático: Predicción",
-    "section": "De qué va este curso",
-    "text": "De qué va este curso\nDe un problema concreto: predecir una magnitud numérica en observaciones que todavía no hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince capítulos:\n\n(1) escribe un modelo de datos señal + ruido → (2) escribe la verosimilitud → (3) toma −log y obtén una pérdida → (4) minimízala → (5) valida sin reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del problema.\n\nEse esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
+    "section": "De qué va el curso",
+    "text": "De qué va el curso\nHay una distribución de probabilidad que no conocemos y una muestra finita extraída de ella. Queremos construir, a partir de la muestra, una función que prediga bien en observaciones nuevas de esa misma distribución. Ajustar la muestra que tenemos es fácil y no significa nada: el capítulo 1 lo demuestra en una página.\nTrabajamos el caso supervisado con respuesta numérica, que es aquel en el que el criterio de calidad está bien definido: el riesgo esperado bajo la distribución desconocida. La presentación precisa qué queda dentro y qué queda fuera.",
     "crumbs": [
       "Bienvenida"
     ]
   },
   {
-    "objectID": "index.html#cómo-se-usan-estos-apuntes",
-    "href": "index.html#cómo-se-usan-estos-apuntes",
+    "objectID": "index.html#un-solo-procedimiento-quince-veces",
+    "href": "index.html#un-solo-procedimiento-quince-veces",
     "title": "Aprendizaje Automático: Predicción",
-    "section": "Cómo se usan estos apuntes",
-    "text": "Cómo se usan estos apuntes\n\nCada capítulo se lee antes de la sesión de teoría.\nLos resultados van numerados y se demuestra todo lo que se enuncia. Lo poco que no, aparece bajo el rótulo fuera de alcance, con el motivo escrito.\nLas demostraciones se cierran con ∎. Si no lo lleva, es que aún está por escribir.\nCada capítulo tiene un cuaderno con huecos para completar en clase; el enlace está arriba del todo.\nAl final de cada capítulo hay un apartado de errores frecuentes, con un error realista demostrado fallando.",
+    "section": "Un solo procedimiento, quince veces",
+    "text": "Un solo procedimiento, quince veces\n\n(1) escribe un modelo de datos señal + ruido → (2) escribe la verosimilitud → (3) toma −log y obtén una pérdida → (4) minimízala → (5) estima el riesgo con datos que no hayas usado para ajustar.\n\nSe deriva entero, a mano, una vez, en los capítulos 2 a 4. A partir de ahí es una plantilla: cambia el paso 1 y aparecen los modelos lineales generalizados; cambia el paso 3 y aparecen ridge y lasso; cambia el paso 4 y aparecen los árboles.",
     "crumbs": [
       "Bienvenida"
     ]
   },
   {
-    "objectID": "index.html#antes-de-la-primera-sesión",
-    "href": "index.html#antes-de-la-primera-sesión",
+    "objectID": "index.html#cómo-está-hecho-esto",
+    "href": "index.html#cómo-está-hecho-esto",
     "title": "Aprendizaje Automático: Predicción",
-    "section": "Antes de la primera sesión",
-    "text": "Antes de la primera sesión\nLee el anexo Cálculo y álgebra que vas a necesitar y haz el diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de qué punto partimos.",
+    "section": "Cómo está hecho esto",
+    "text": "Cómo está hecho esto\n\nLos apuntes son ejecutables. Las figuras se generan al publicar, con el código que se ve justo encima de ellas. No hay diapositivas.\nCada capítulo tiene un cuaderno con huecos, generado del mismo fichero, que se completa en el laboratorio y abre en Google Colab sin instalar nada.\nSe demuestra todo lo que se enuncia. Cada demostración cierra con ∎; si un resultado no lo lleva, su demostración todavía está por escribir. Lo que queda fuera va marcado como fuera de alcance, con el motivo.\nAl final de cada capítulo hay un error frecuente: un fallo realista, demostrado fallando.",
+    "crumbs": [
+      "Bienvenida"
+    ]
+  },
+  {
+    "objectID": "index.html#por-dónde-empezar",
+    "href": "index.html#por-dónde-empezar",
+    "title": "Aprendizaje Automático: Predicción",
+    "section": "Por dónde empezar",
+    "text": "Por dónde empezar\n\nLee la presentación: estructura de las clases, herramientas, evaluación y horarios.\nRepasa los anexos de cálculo y álgebra y de probabilidad, y haz el diagnóstico de quince minutos que hay al final del primero.",
     "crumbs": [
       "Bienvenida"
     ]
@@ -54,27 +64,37 @@
     "href": "capitulos/00-presentacion.html",
     "title": "1  Presentación",
     "section": "",
-    "text": "¿Qué es el aprendizaje automático?\nUn conjunto de métodos para construir, a partir de datos, funciones que predicen. La palabra que hace el trabajo es predicen: no describen los datos que ya tenemos, sino que asignan un valor a observaciones que todavía no hemos visto.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Qué es el aprendizaje automático\nConviene definirlo con más precisión que “el ordenador aprende de los datos”.\nSe supone que existe una distribución desconocida \\(P\\) sobre un espacio de observaciones, y que lo que tenemos es una muestra finita extraída de ella. El aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una función, una partición, una densidad, una política) que sea bueno respecto de \\(P\\), y no respecto de la muestra concreta que nos ha tocado.\nEsa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es fácil y no significa nada: el capítulo 1 lo demuestra. Lo difícil es que el objeto siga funcionando en observaciones nuevas extraídas de la misma \\(P\\).\nUn problema de aprendizaje queda especificado cuando se fijan tres cosas:\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
   },
   {
-    "objectID": "capitulos/00-presentacion.html#tipos-de-problemas",
-    "href": "capitulos/00-presentacion.html#tipos-de-problemas",
+    "objectID": "capitulos/00-presentacion.html#qué-es-el-aprendizaje-automático",
+    "href": "capitulos/00-presentacion.html#qué-es-el-aprendizaje-automático",
     "title": "1  Presentación",
-    "section": "Tipos de problemas",
-    "text": "Tipos de problemas\nEl primer corte es por lo que sabemos de los datos:\n\nAprendizaje supervisado: cada observación viene con una respuesta conocida, y queremos predecir esa respuesta en observaciones nuevas.\nAprendizaje no supervisado: no hay respuesta, y buscamos estructura.\nAprendizaje por refuerzo: un agente actúa, recibe una recompensa y aprende de ella.\n\nDentro del supervisado, el segundo corte es por el tipo de respuesta:\n\nRegresión: la respuesta es un número. El precio de un piso, la demanda de la semana que viene, el coste de un siniestro.\nClasificación: la respuesta es una categoría. Si un cliente impaga o no.\n\nEsta asignatura trata el aprendizaje supervisado con respuesta numérica. La clasificación es la asignatura hermana, Aprendizaje Automático: Clasificación [G249], que comparte con esta buena parte del aparato.",
+    "section": "",
+    "text": "Qué se observa. El espacio de las observaciones.\nQué se construye. La clase de objetos entre los que elegimos.\nCon qué criterio. Una medida de calidad definida como una esperanza bajo \\(P\\), que por tanto no se puede calcular, solo estimar.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
   },
   {
-    "objectID": "capitulos/00-presentacion.html#predicción-no-es-inferencia",
-    "href": "capitulos/00-presentacion.html#predicción-no-es-inferencia",
+    "objectID": "capitulos/00-presentacion.html#las-tres-familias-y-en-qué-se-diferencian-de-verdad",
+    "href": "capitulos/00-presentacion.html#las-tres-familias-y-en-qué-se-diferencian-de-verdad",
     "title": "1  Presentación",
-    "section": "Predicción no es inferencia",
-    "text": "Predicción no es inferencia\nEs la distinción que organiza el curso, y conviene tenerla clara desde el primer día.\n\n\n\n\n\n\n\n\n\nEconometría\nEsta asignatura\n\n\n\n\nPregunta\n¿cuánto vale \\(w_j\\) y es significativo?\n¿qué \\(\\boldsymbol{w}\\) predice mejor fuera de la muestra?\n\n\nObjeto de interés\nel coeficiente\nla predicción\n\n\nCriterio\ninsesgadez, error estándar\nerror sobre datos no vistos\n\n\n\nSon preguntas distintas y llevan a modelos distintos. En el capítulo 8 veremos un método, la regularización, que sesga los coeficientes a propósito porque a cambio predice mejor. Desde la óptica de la inferencia eso sería un defecto; desde la nuestra, el objetivo.\nNo cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.",
+    "section": "Las tres familias, y en qué se diferencian de verdad",
+    "text": "Las tres familias, y en qué se diferencian de verdad\nLa taxonomía habitual no se basa en el algoritmo, sino en qué se observa y qué se puede usar como criterio.\nAprendizaje supervisado. Se observan pares \\((\\mathbf{x}, y)\\). Se construye una función \\(f: \\mathcal{X}\\to \\mathcal{Y}\\). El criterio es el riesgo esperado \\[\nR(f) = \\mathbb{E}\\!\\left[ \\ell\\left(Y, f(X)\\right) \\right]\n\\] para una pérdida \\(\\ell\\) fijada de antemano. Aquí sí se predice, y el criterio es inequívoco: dos personas con la misma pérdida y la misma \\(P\\) ordenan los modelos igual.\nAprendizaje no supervisado. Se observa solo \\(\\mathbf{x}\\). Aquí normalmente no se predice nada, y esa es la diferencia importante. Se construye otra cosa: una estimación de la densidad de \\(P\\), una partición del espacio, una representación de menor dimensión. El criterio depende de qué se construya, y no siempre existe uno aceptado:\n\nEn estimación de densidad sí lo hay: la log-verosimilitud de observaciones nuevas.\nEn reducción de dimensión hay uno razonable: el error de reconstrucción.\nEn agrupamiento no hay un criterio único. Dos particiones distintas de los mismos datos pueden ser ambas defendibles, porque no existe una respuesta correcta contra la que comparar.\n\nDecir que el aprendizaje no supervisado “predice la estructura de los datos” es una imprecisión que conviene evitar desde el principio.\nAprendizaje por refuerzo. Los datos no vienen dados: los genera un agente al interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará después. Se construye una política, y el criterio es la recompensa acumulada esperada.\n\n\n\n\n\n\nNotaDónde estamos\n\n\n\nEsta asignatura trata aprendizaje supervisado con \\(y\\) numérica, y con pérdida cuadrática salvo cuando digamos lo contrario. Es decir, el caso en que el criterio está bien definido y podemos ser exigentes con él.\nLa clasificación, que es aprendizaje supervisado con \\(y\\) categórica, es la asignatura hermana Aprendizaje Automático: Clasificación [G249].",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/00-presentacion.html#predecir-no-es-lo-mismo-que-explicar",
+    "href": "capitulos/00-presentacion.html#predecir-no-es-lo-mismo-que-explicar",
+    "title": "1  Presentación",
+    "section": "Predecir no es lo mismo que explicar",
+    "text": "Predecir no es lo mismo que explicar\nEs la distinción que organiza el curso.\n\n\n\n\n\n\n\n\n\nEconometría\nEsta asignatura\n\n\n\n\nPregunta\n¿cuánto vale \\(w_j\\) y es significativo?\n¿qué \\(\\boldsymbol{w}\\) predice mejor fuera de la muestra?\n\n\nObjeto de interés\nel coeficiente\nla predicción\n\n\nCriterio\ninsesgadez, error estándar\nriesgo estimado sobre datos no usados\n\n\n\nLlevan a modelos distintos. En el capítulo 8 veremos la regularización, que sesga los coeficientes a propósito porque a cambio reduce el riesgo. Desde la óptica de la inferencia eso es un defecto; desde la nuestra, el objetivo.\nNo cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 14 sí trata la incertidumbre, pero sobre las predicciones.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -84,7 +104,7 @@
     "href": "capitulos/00-presentacion.html#el-esquema-del-curso",
     "title": "1  Presentación",
     "section": "El esquema del curso",
-    "text": "El esquema del curso\nHay un único método, y se repite quince veces:\n\nEscribe un modelo de datos: señal más ruido.\nEscribe la verosimilitud de ese modelo.\nToma \\(-\\log\\) y obtén una pérdida.\nMinimízala, en forma cerrada o por descenso de gradiente.\nValida sin reutilizar los datos de ajuste y mide con una métrica interpretable.\n\nEse esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
+    "text": "El esquema del curso\nTodos los métodos salen del mismo procedimiento, aplicado quince veces:\n\nEscribir un modelo de datos: señal más ruido.\nEscribir la verosimilitud de ese modelo.\nTomar \\(-\\log\\) y obtener una pérdida.\nMinimizarla, en forma cerrada o por descenso de gradiente.\nEstimar el riesgo con datos que no se hayan usado para ajustar, y medirlo con una métrica interpretable.\n\nSe deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -94,7 +114,7 @@
     "href": "capitulos/00-presentacion.html#programa",
     "title": "1  Presentación",
     "section": "Programa",
-    "text": "Programa\n\n\n\n\n\n\n\nTema oficial\nCapítulos\n\n\n\n\n1. Introducción al aprendizaje automático\n1, 2 y el estado del arte del 15\n\n\n2. Metodologías para predicción\n5 (datos), 9 (reducción y selección), 6 (validación y métricas)\n\n\n3. Algoritmos para predicción\n3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas)\n\n\n4. Implementación y aplicación\nlos laboratorios; casos de uso en 12, 14 y 15\n\n\nComplemento: agentes de IA\n5, 10, 12 y el proyecto",
+    "text": "Programa\n\n\n\n\n\n\n\nTema oficial\nCapítulos\n\n\n\n\n1. Introducción al aprendizaje automático\n1, 2 y el estado del arte del 15\n\n\n2. Metodologías para predicción\n5 (datos), 9 (reducción y selección), 6 (validación y métricas)\n\n\n3. Algoritmos para predicción\n3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas)\n\n\n4. Implementación y aplicación\nlos laboratorios; casos de uso en 12, 14 y 15\n\n\nComplemento: agentes de IA\n10, 12 y el proyecto",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -104,17 +124,27 @@
     "href": "capitulos/00-presentacion.html#cómo-se-trabaja",
     "title": "1  Presentación",
     "section": "Cómo se trabaja",
-    "text": "Cómo se trabaja\nTres sesiones por semana, con papeles distintos:\n\n\n\n\n\n\n\n\n\nSesión\nQué se hace\n\n\n\n\nS1\nTeoría\nUna demostración, en pizarra. Sin ordenador\n\n\nS2\nProblemas\nLápiz y papel. Empieza con la derivación de la semana\n\n\nS3\nLaboratorio\nSe completa en directo el cuaderno del capítulo\n\n\n\nSe demuestra todo lo que se enuncia. Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado como fuera de alcance, con el motivo escrito.\nCada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas. La lista completa está publicada en el índice de resultados desde el primer día.\n\nContrato de trabajo\n6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:\n\n\n\n\nh/semana\n\n\n\n\nCompletar el cuaderno tras el laboratorio\n1,5\n\n\nHoja de problemas\n1,0\n\n\nLeer el capítulo\n1,0\n\n\nProyecto (solo semanas 9 a 13)\n1,5\n\n\nTotal fuera de clase\n~5,0 (6,5 en semanas de proyecto)",
+    "text": "Cómo se trabaja\nTres sesiones de una hora por semana, con papeles distintos y ninguno intercambiable.\n\nS1 · Teoría\nPizarra. Una demostración por sesión, entera. Sin ordenador.\n\n\n\nmin\n\n\n\n\n\n0-5\nQué usamos de lo anterior\n\n\n5-12\nEl problema, en palabras, sin símbolos\n\n\n12-38\nLa demostración\n\n\n38-48\nQué dice el resultado y para qué sirve\n\n\n48-56\nEl error frecuente de la semana\n\n\n56-60\nQué viene después\n\n\n\n\n\nS2 · Problemas\nLápiz y papel. Aquí es donde se usan las hojas de ejercicios.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-8\nLa derivación de la semana: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas\n\n\n8-45\nLa hoja del capítulo, por parejas. El profesor circula\n\n\n45-60\nUn ejercicio resuelto en la pizarra por un estudiante\n\n\n\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un miniexamen cronometrado de un bloque, corregido acto seguido. No cuenta para la nota: sirve para saber cuánto se tarda de verdad.\n\n\nS3 · Laboratorio\nOrdenador. Se completa en directo el cuaderno del capítulo.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-5\nQué vamos a construir\n\n\n5-50\nCódigo en directo. El profesor teclea y los estudiantes teclean\n\n\n50-60\nEl cuaderno corriendo entero, de arriba abajo",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
   },
   {
-    "objectID": "capitulos/00-presentacion.html#herramientas",
-    "href": "capitulos/00-presentacion.html#herramientas",
+    "objectID": "capitulos/00-presentacion.html#cómo-es-el-material",
+    "href": "capitulos/00-presentacion.html#cómo-es-el-material",
     "title": "1  Presentación",
-    "section": "Herramientas",
-    "text": "Herramientas\n\nPython, con numpy, pandas, matplotlib y scikit-learn. statsmodels en el capítulo 14.\njax en los capítulos 3 y 4, solo para diferenciación automática: sirve para comprobar que una derivada hecha a mano es correcta.\nGoogle Colab, para no tener que instalar nada. Cada capítulo tiene un cuaderno con huecos, enlazado arriba del todo.\nHerramientas de IA generativa (Claude, ChatGPT y similares). Su uso está permitido y, en el proyecto, es obligatorio documentarlo. Ver la política de uso de IA.",
+    "section": "Cómo es el material",
+    "text": "Cómo es el material\nNo hay diapositivas. Hay tres cosas, y conviene saber para qué sirve cada una.\nLos apuntes son ejecutables. Lo que se lee en la web no es una descripción del código: es el código. Las figuras de los capítulos se generan al publicarlos, ejecutando las celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.\nCada capítulo tiene un cuaderno con huecos. Es el mismo fichero que los apuntes, pero con los trozos de código que se escriben en clase sustituidos por un hueco. El enlace está arriba del todo de cada capítulo y abre directamente en Google Colab, sin instalar nada. Como es el mismo fichero, no se pueden desincronizar: lo que se teclea en el laboratorio es exactamente lo que queda publicado como referencia.\nLas hojas de problemas son para la S2, una por capítulo, y se publican con solución después de la sesión.\n\nHerramientas\n\nPython, con numpy, pandas, matplotlib y scikit-learn. statsmodels en el capítulo 12.\njax en los capítulos 3 y 4, para diferenciación automática. No la usamos para entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta. jax.grad(f) devuelve una función, el gradiente de f, que es la traducción literal del operador \\(\\nabla\\). El capítulo 3 explica en qué se diferencia de las diferencias finitas y de la derivación simbólica, y por qué el modo inverso da las \\(p+1\\) derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos grandes.\nGoogle Colab, para no instalar nada. Quien prefiera trabajar en local tiene el entorno en environment.yml.\nHerramientas de IA generativa. Su uso está permitido y, en el proyecto, es obligatorio documentarlo. Ver la política de uso de IA.\n\n\n\n\n\n\n\nImportanteSe demuestra todo lo que se enuncia\n\n\n\nEs la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado como fuera de alcance, con el motivo escrito.\nCada demostración se cierra con ∎. Si un resultado no lo lleva, es que su demostración todavía está por escribir.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/00-presentacion.html#carga-de-trabajo",
+    "href": "capitulos/00-presentacion.html#carga-de-trabajo",
+    "title": "1  Presentación",
+    "section": "Carga de trabajo",
+    "text": "Carga de trabajo\n6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase, de modo que unas 105 horas son trabajo fuera del aula: en torno a 7 por semana.\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n1,0\n\n\nProyecto (solo semanas 9 a 13)\n2,0\n\n\nTotal\n6 (8 en semanas de proyecto)\n\n\n\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -124,7 +154,7 @@
     "href": "capitulos/00-presentacion.html#datos-de-la-asignatura",
     "title": "1  Presentación",
     "section": "Datos de la asignatura",
-    "text": "Datos de la asignatura\n\nAsignatura: Aprendizaje Automático: Predicción (G244), 6 ECTS, obligatoria.\nTitulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.\nProfesor: Roi Naveiro (roi.naveiro@cunef.edu).\nWeb del curso: https://cunef-aap-fall2026.github.io/\n\n\nHorario y aulas\n\n\n\n\nSesión\nDía\nHora\nAula\n\n\n\n\nS1 · Teoría\n\n\n\n\n\nS2 · Problemas\n\n\n\n\n\nS3 · Laboratorio\n\n\n\n\n\n\nLa asistencia es obligatoria en primera matrícula. Una asistencia inferior al 80 % implica la pérdida del derecho a examen en la convocatoria ordinaria.\nSobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, portátil obligatorio en S3 y sin dispositivos en S1 y S2.\n\n\nTutorías\n\n\n\n\nDía\nHora\nLugar",
+    "text": "Datos de la asignatura\n\nAsignatura: Aprendizaje Automático: Predicción (G244), 6 ECTS, obligatoria.\nTitulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.\nProfesor: Roi Naveiro (roi.naveiro@cunef.edu).\nWeb del curso: https://cunef-aap-fall2026.github.io/\n\n\nHorario y aulas\n\n\n\n\nSesión\nDía\nHora\nAula\n\n\n\n\nS1 · Teoría\n\n\n\n\n\nS2 · Problemas\n\n\n\n\n\nS3 · Laboratorio\n\n\n\n\n\n\nLa asistencia es obligatoria en primera matrícula. Una asistencia inferior al 80 % implica la pérdida del derecho a examen en la convocatoria ordinaria.\nSobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, portátil obligatorio en la S3 y sin dispositivos en S1 y S2. La S2 es el ensayo del examen, que se hace en papel.\n\n\nTutorías\n\n\n\n\nDía\nHora\nLugar",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -134,7 +164,7 @@
     "href": "capitulos/00-presentacion.html#evaluación",
     "title": "1  Presentación",
     "section": "Evaluación",
-    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una calificación mínima de 5 sobre 10 para poder aprobar. El bloque B sale de la lista publicada en el índice de resultados, que por tanto es un compromiso y no una orientación.\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\n\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos\n\n\n\nLas hojas de problemas semanales reproducen esa misma estructura, de modo que la preparación del examen es el trabajo ordinario del curso y no una fase aparte.",
+    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una calificación mínima de 5 sobre 10 para poder aprobar. El bloque B sale de la lista publicada en el índice de resultados, que por tanto es un compromiso y no una orientación.\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos\n\n\n\nLas hojas de problemas semanales reproducen exactamente esa estructura: el ejercicio 1 es del bloque A, el 2 del B, el 3 del C y el 4 del D. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques. Además hay dos simulacros completos: el del parcial, con solución, en la semana 4, y el del final en la semana 15.\n\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -154,7 +184,7 @@
     "href": "capitulos/00-presentacion.html#antes-de-la-primera-sesión-de-teoría",
     "title": "1  Presentación",
     "section": "Antes de la primera sesión de teoría",
-    "text": "Antes de la primera sesión de teoría\nLee el anexo Cálculo y álgebra que vas a necesitar y haz el diagnóstico de quince minutos que hay al final. No cuenta para la nota; sirve para saber de qué punto partimos.",
+    "text": "Antes de la primera sesión de teoría\nLee los anexos Cálculo y álgebra que vas a necesitar y Repaso de probabilidad, y haz el diagnóstico de quince minutos que hay al final del primero. No cuenta para la nota; sirve para saber de qué punto partimos.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -1517,7 +1547,7 @@
     "href": "curso/guia.html#contrato-de-trabajo",
     "title": "Guía de la asignatura",
     "section": "Contrato de trabajo",
-    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:\n\n\n\n\nh/semana\n\n\n\n\nCompletar el cuaderno tras el laboratorio\n1,5\n\n\nHoja de problemas\n1,0\n\n\nLeer el capítulo\n1,0\n\n\nProyecto (solo semanas 9-13)\n1,5\n\n\nTotal fuera de clase\n~5,0 (6,5 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios, y los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
+    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase, de modo que unas 105 son trabajo fuera del aula, en torno a 7 por semana:\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n1,0\n\n\nProyecto (solo semanas 9-13)\n2,0\n\n\nTotal fuera de clase\n6 (8 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios, y los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
     "crumbs": [
       "Apéndices",
       "Guía de la asignatura"
