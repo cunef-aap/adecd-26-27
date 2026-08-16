@@ -451,7 +451,7 @@ window.Quarto = {
 </header>
 
 
-<p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/05-datos.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
+<p><em><a href="https://colab.research.google.com/github/cunef-aap-fall2026/cunef-aap-fall2026.github.io/blob/main/docs/live-notebooks/05-datos.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
 <section id="planteamiento" class="level2">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Hasta ahora <span class="math inline">\(\mathbf{X}\)</span> nos venía dada. En la práctica <span class="math inline">\(\mathbf{X}\)</span> <strong>se construye</strong>, y casi todas las decisiones de esa construcción tienen consecuencias matemáticas exactas. Este capítulo demuestra cinco.</p>
@@ -519,7 +519,7 @@ window.Quarto = {
 </div>
 </div>
 <div id="prp-condicionamiento" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 6.4 (Estandarizar y velocidad de convergencia)</strong></span> Con columnas ortogonales y centradas, <span class="math inline">\(\hat{R}\)</span> se desacopla en cuadráticas unidimensionales de curvatura <span class="math inline">\(a_j = \frac{2}{n}\sum_i x_{ij}^2\)</span>. Por <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> la estabilidad exige <span class="math inline">\(\alpha&lt; 1/a_{\max}\)</span>, mientras que la dirección lenta contrae al ritmo <span class="math inline">\(\left\lvert 1 - 2\alpha a_{\min} \right\rvert\)</span>: el número de iteraciones crece como <span class="math inline">\(a_{\max}/a_{\min} = (s_{\max}/s_{\min})^2\)</span>. Estandarizadas, <span class="math inline">\(a_1 = a_2\)</span> y el método converge <strong>en un paso</strong> con <span class="math inline">\(\alpha= 1/2a\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 6.4 (Estandarizar y velocidad de convergencia)</strong></span> Con columnas ortogonales y centradas, <span class="math inline">\(\hat{R}\)</span> se desacopla en cuadráticas unidimensionales <span class="math inline">\(\hat{R}_j(w_j) = a_j (w_j - w_j^\star)^2 + \text{cte}\)</span> de curvatura <span class="math inline">\(a_j = \frac{1}{n}\sum_i x_{ij}^2\)</span>. Por <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> la estabilidad exige <span class="math inline">\(\alpha&lt; 1/a_{\max}\)</span>, mientras que la dirección lenta contrae al ritmo <span class="math inline">\(\left\lvert 1 - 2\alpha a_{\min} \right\rvert\)</span>: el número de iteraciones crece como <span class="math inline">\(a_{\max}/a_{\min} = (s_{\max}/s_{\min})^2\)</span>. Estandarizadas, <span class="math inline">\(a_1 = a_2\)</span> y el método converge <strong>en un paso</strong> con <span class="math inline">\(\alpha= 1/2a\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="03-gradientes.html#prp-caso-cuadratico" class="quarto-xref">Proposición&nbsp;<span>4.4</span></a> a cada coordenada por separado.</p>

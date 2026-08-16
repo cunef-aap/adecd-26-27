@@ -103,7 +103,8 @@ estandarizar por costumbre.
 ## Estandarizar y velocidad de convergencia
 
 Con columnas ortogonales y centradas, $\Riskh$ se desacopla en cuadráticas unidimensionales
-de curvatura $a_j = \frac{2}{\nobs}\sum_i x_{ij}^2$. Por @prp-caso-cuadratico la
+$\Riskh_j(w_j) = a_j (w_j - w_j^\star)^2 + \text{cte}$ de curvatura
+$a_j = \frac{1}{\nobs}\sum_i x_{ij}^2$. Por @prp-caso-cuadratico la
 estabilidad exige $\lr < 1/a_{\max}$, mientras que la dirección lenta contrae al ritmo
 $\abs{1 - 2\lr a_{\min}}$: el número de iteraciones crece como
 $a_{\max}/a_{\min} = (s_{\max}/s_{\min})^2$. Estandarizadas, $a_1 = a_2$ y el método

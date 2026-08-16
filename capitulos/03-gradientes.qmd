@@ -238,7 +238,9 @@ $\Riskh(\coef - \lr \grad \Riskh(\coef)) < \Riskh(\coef)$ para todo $\lr \in (0,
 Si $\Riskh(w) = a(w - w^\star)^2$ con $a > 0$, entonces
 $$w^{(t)} - w^\star = (1 - 2\lr a)^t \left( w^{(0)} - w^\star \right).$$
 Converge si y solo si $0 < \lr < 1/a$; monótonamente si $\lr < 1/2a$; oscilando si
-$1/2a < \lr < 1/a$; diverge si $\lr > 1/a$.
+$1/2a < \lr < 1/a$; y diverge si $\lr > 1/a$. En el caso frontera $\lr = 1/a$ el factor
+vale $-1$: el error no crece ni decrece, y los iterados quedan en un ciclo que alterna de
+signo. Con $\lr = 1/2a$ el factor es cero y se alcanza el mínimo **en un solo paso**.
 :::
 
 ::: {.proof}

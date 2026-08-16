@@ -485,7 +485,7 @@ window.Quarto = {
 </header>
 
 
-<p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/03-gradientes.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
+<p><em><a href="https://colab.research.google.com/github/cunef-aap-fall2026/cunef-aap-fall2026.github.io/blob/main/docs/live-notebooks/03-gradientes.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
 <section id="planteamiento" class="level2">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>El capítulo 2 dejó el problema planteado: minimizar <span class="math inline">\(\hat{R}(\boldsymbol{w})\)</span>. El capítulo 1 dejó claro que por fuerza bruta no se puede. Aquí construimos la herramienta.</p>
@@ -574,7 +574,7 @@ window.Quarto = {
 </div>
 <p>Para lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (<span class="math inline">\(p+1\)</span> coeficientes) y una sola salida (un riesgo). El modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales de una vez, a un coste comparable al de evaluar <span class="math inline">\(\hat{R}\)</span>. El modo directo necesitaría <span class="math inline">\(p+1\)</span> pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.</p>
 <p>En <code>jax</code>, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.</p>
-<div id="94d6e23b" class="cell" data-execution_count="3">
+<div id="2ce9d1b1" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -591,7 +591,7 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X[:, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="9ab5903b" class="cell" data-execution_count="4">
+<div id="21eb3294" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w, X, y):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> X <span class="op">@</span> w <span class="op">-</span> y</span>
@@ -642,7 +642,7 @@ window.Quarto = {
      decrece a la derecha de 0. -->
 </div>
 <div id="prp-caso-cuadratico" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 4.4 (Caso cuadrático exacto: los tres regímenes)</strong></span> Si <span class="math inline">\(\hat{R}(w) = a(w - w^\star)^2\)</span> con <span class="math inline">\(a &gt; 0\)</span>, entonces <span class="math display">\[w^{(t)} - w^\star = (1 - 2\alpha a)^t \left( w^{(0)} - w^\star \right).\]</span> Converge si y solo si <span class="math inline">\(0 &lt; \alpha&lt; 1/a\)</span>; monótonamente si <span class="math inline">\(\alpha&lt; 1/2a\)</span>; oscilando si <span class="math inline">\(1/2a &lt; \alpha&lt; 1/a\)</span>; diverge si <span class="math inline">\(\alpha&gt; 1/a\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposición 4.4 (Caso cuadrático exacto: los tres regímenes)</strong></span> Si <span class="math inline">\(\hat{R}(w) = a(w - w^\star)^2\)</span> con <span class="math inline">\(a &gt; 0\)</span>, entonces <span class="math display">\[w^{(t)} - w^\star = (1 - 2\alpha a)^t \left( w^{(0)} - w^\star \right).\]</span> Converge si y solo si <span class="math inline">\(0 &lt; \alpha&lt; 1/a\)</span>; monótonamente si <span class="math inline">\(\alpha&lt; 1/2a\)</span>; oscilando si <span class="math inline">\(1/2a &lt; \alpha&lt; 1/a\)</span>; y diverge si <span class="math inline">\(\alpha&gt; 1/a\)</span>. En el caso frontera <span class="math inline">\(\alpha= 1/a\)</span> el factor vale <span class="math inline">\(-1\)</span>: el error no crece ni decrece, y los iterados quedan en un ciclo que alterna de signo. Con <span class="math inline">\(\alpha= 1/2a\)</span> el factor es cero y se alcanza el mínimo <strong>en un solo paso</strong>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span></p>
@@ -665,7 +665,7 @@ window.Quarto = {
 </section>
 <section id="laboratorio" class="level2">
 <h2 class="anchored" data-anchor-id="laboratorio">Laboratorio</h2>
-<div id="832e246d" class="cell" data-execution_count="5">
+<div id="7f7b5a64" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DescensoGradiente:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0, lr<span class="op">=</span><span class="fl">0.01</span>):</span>
@@ -680,7 +680,7 @@ window.Quarto = {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#---</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Y la comprobación de <a href="#thm-gradiente-riesgo-1d" class="quarto-xref">Teorema&nbsp;<span>4.3</span></a>: derivamos a mano, y preguntamos a <code>jax</code> si estábamos en lo cierto.</p>
-<div id="4b1bf354" class="cell" data-execution_count="6">
+<div id="97100dce" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#---</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_analitico(w, X, y):</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">/</span> <span class="bu">len</span>(y) <span class="op">*</span> X.T <span class="op">@</span> (y <span class="op">-</span> X <span class="op">@</span> w)</span>
