@@ -3,7 +3,7 @@
 Apuntes, laboratorios y material de evaluación de la asignatura **Aprendizaje Automático:
 Predicción**, 3.º del Doble Grado en ADE y Ciencia de Datos, CUNEF Universidad.
 
-Sitio publicado: <https://roinaveiro.github.io/aap-cunef/>
+Sitio publicado: <https://cunef-aap-fall2026.github.io/>
 
 ## Puesta en marcha
 

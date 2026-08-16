@@ -1,7 +1,8 @@
 # Índice de resultados {.unnumbered}
 
-Todos los resultados numerados del curso. **El bloque B de los exámenes sale de aquí**, y
-de ningún otro sitio.
+Todos los resultados numerados del curso. **El bloque B de los exámenes sale de aquí, y de
+ningún otro sitio.** El examen lo redacta el profesor de la asignatura, así que esta lista
+es un compromiso.
 
 ::: {.callout-note appearance="simple"}
 Se genera automáticamente con `scripts/check-numeracion.py` (pendiente, D13). De momento

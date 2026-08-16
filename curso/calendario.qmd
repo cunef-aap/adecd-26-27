@@ -17,10 +17,10 @@ Fechas pendientes del calendario académico oficial. La estructura por semanas e
 | 9 | 9 · Selección y reducción | formación de equipos |
 | 10 | 10 · Métodos no lineales | taller de agentes I (S3), con la higiene |
 | 11 | 11 · Árboles de regresión | checkpoint del proyecto (S3) |
-| 12 | 12 · Ensembles | taller de agentes II (S3) |
+| 12 | 12 · GLM | taller de agentes II (S3) |
 | 13 | 13 · Proyecto | **Entrega y defensa (20 %)** |
-| 14 | 14 · GLM | |
-| 15 | 15 · Decisión e incertidumbre | simulacro del examen final |
+| 14 | 14 · Decisión e incertidumbre | |
+| 15 | 15 · Repaso y estado del arte | simulacro del examen final |
 
 Las semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se
 toca nada más.

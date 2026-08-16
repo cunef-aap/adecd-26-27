@@ -126,10 +126,13 @@ Si $Z_1,\dots,Z_K$ tienen varianza $v$ y correlación $\rho$ dos a dos, entonces
 $$\Var{\frac{1}{K}\sum_k Z_k} = \rho v + \frac{(1-\rho)v}{K}.$$
 :::
 
-::: {.callout-note appearance="simple"}
-La demostración se hace en el capítulo 12, donde este mismo lema es el argumento de por
-qué hay que descorrelacionar los árboles de un *random forest*. Aquí solo usamos el
-enunciado. En pizarra basta comprobarlo con $K=2$, que es una línea.
+::: {.proof}
+<!-- TODO(D10, 10 min). En pizarra, solo el caso K = 2, que es una línea y ya deja ver
+     el suelo rho*v:
+        Var((Z1+Z2)/2) = (1/4)(Var Z1 + Var Z2 + 2 Cov) = (v/2)(1 + rho)
+                       = rho*v + (1-rho)v/2.
+     El caso general se enuncia y se deja como ejercicio. -->
+
 :::
 
 ::: {#cor-elegir-k}
@@ -143,8 +146,9 @@ empírico, y decirlo es contenido, no laguna.
 :::
 
 ::: {.callout-important appearance="simple"}
-@lem-varianza-media-correlada **es** el resultado que la semana 12 necesita para explicar
-`max_features` en un *random forest*. Demostrado aquí, esa semana ya está pagada.
+El lema explica por qué promediar tiene un suelo: por mucho que crezca $K$, la varianza
+no baja de $\rho v$. Es el mismo argumento por el que, en los métodos que promedian
+modelos, hace falta que esos modelos estén poco correlacionados entre sí.
 :::
 
 ## Cuando la hipótesis iid es falsa {#sec-grupos}

@@ -27,7 +27,10 @@ En **convocatoria extraordinaria**, la nota de evaluación continua puede sustit
 cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
 final de la convocatoria ordinaria (60 %).
 
-El examen final es **de cátedra**: evalúa todos los contenidos del programa.
+El examen final evalúa todos los contenidos del programa y lo redacta el profesor de la
+asignatura. Por tanto, **la lista de demostraciones examinables del
+[índice de resultados](indice-resultados.qmd) es un compromiso, no una orientación**: el
+bloque B saldrá de ahí y de ningún otro sitio.
 
 ## Estructura de los exámenes
 

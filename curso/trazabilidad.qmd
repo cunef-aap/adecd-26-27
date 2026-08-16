@@ -15,12 +15,12 @@ cobertura, y que la pregunta *"¿por qué tantas demostraciones?"* tenga respues
 | T2 · Reducción de dimensiones y selección de variables | 8, **9** |
 | T2 · Validación y métricas de evaluación | **6**, 7 |
 | T3 · Descenso de gradiente | **3**, 4, 12 |
-| T3 · Métodos lineales | 2, **4**, 8, 14 |
-| T3 · Métodos no lineales | **10**, 11, 12 |
-| T3 · Métodos basados en reglas | **11**, 12 |
+| T3 · Métodos lineales | 2, **4**, 8, 12 |
+| T3 · Métodos no lineales | **10**, 11 |
+| T3 · Métodos basados en reglas | **11** |
 | T4 · Librerías de programación | transversal (los 15 laboratorios); consolidado en 5 y 12 |
-| T4 · Casos de uso y aplicaciones | 12, 14, **15** |
-| + Agentes de IA para implementar modelos | 5 (higiene), 10, 12, proyecto |
+| T4 · Casos de uso y aplicaciones | 12, **14**, 15 |
+| + Agentes de IA para implementar modelos | 10 (taller I con la higiene), 12 (taller II), proyecto |
 
 Dos reordenaciones deliberadas: *estado del arte* se cierra en la semana 15, cuando ya
 tienen las herramientas para entenderlo; y el Tema 4 se imparte como **pista paralela de

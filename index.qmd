@@ -16,8 +16,8 @@ capítulos:
 
 Ese esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
 *ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
-variables; Poisson es el paso 1 con otro ruido; el *boosting* es el paso 4 en el espacio
-de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.
+variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4
+se vuelve búsqueda voraz.
 
 ## Cómo se usan estos apuntes
 

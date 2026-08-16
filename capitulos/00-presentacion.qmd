@@ -65,8 +65,8 @@ Hay un único método, y se repite quince veces:
 
 Ese esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza:
 *ridge* y *lasso* son el paso 3 con un prior; los splines son el paso 1 con otras
-variables; Poisson es el paso 1 con otro ruido; el *boosting* es el paso 4 en el espacio
-de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.
+variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4
+se vuelve búsqueda voraz.
 
 ## Programa
 
@@ -74,8 +74,8 @@ de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda vora
 |---|---|
 | 1. Introducción al aprendizaje automático | 1, 2 y el estado del arte del 15 |
 | 2. Metodologías para predicción | 5 (datos), 9 (reducción y selección), 6 (validación y métricas) |
-| 3. Algoritmos para predicción | 3 y 4 (descenso de gradiente), 2, 4, 8 y 14 (lineales), 10 (no lineales), 11 y 12 (basados en reglas) |
-| 4. Implementación y aplicación | los quince laboratorios; casos de uso en 12, 14 y 15 |
+| 3. Algoritmos para predicción | 3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas) |
+| 4. Implementación y aplicación | los laboratorios; casos de uso en 12, 14 y 15 |
 | Complemento: agentes de IA | 5, 10, 12 y el proyecto |
 
 ## Cómo se trabaja
@@ -126,7 +126,7 @@ primer día.
 - Asignatura: **Aprendizaje Automático: Predicción** (G244), 6 ECTS, obligatoria.
 - Titulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.
 - Profesor: **Roi Naveiro** ([roi.naveiro@cunef.edu](mailto:roi.naveiro@cunef.edu)).
-- Web del curso: <https://roinaveiro.github.io/aap-cunef/>
+- Web del curso: <https://cunef-aap-fall2026.github.io/>
 
 ### Horario y aulas
 
@@ -164,8 +164,10 @@ estudiantes de intercambio. Los parciales **no son liberatorios**.
 | Proyecto en colaboración con agentes de IA | 20 % | semanas 12 y 13 |
 | **Examen final** | **60 %** | convocatoria ordinaria |
 
-El examen final es de cátedra, evalúa todo el programa y requiere una **calificación
-mínima de 5 sobre 10** para poder aprobar.
+El examen final evalúa todo el programa, lo redacta el profesor de la asignatura y
+requiere una **calificación mínima de 5 sobre 10** para poder aprobar. El bloque B sale de
+la lista publicada en el [índice de resultados](../curso/indice-resultados.qmd), que por
+tanto es un compromiso y no una orientación.
 
 ### Cómo sale la nota de actas
 

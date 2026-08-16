@@ -14,7 +14,7 @@
     "href": "index.html#de-qué-va-este-curso",
     "title": "Aprendizaje Automático: Predicción",
     "section": "De qué va este curso",
-    "text": "De qué va este curso\nDe un problema concreto: predecir una magnitud numérica en observaciones que todavía no hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince capítulos:\n\n(1) escribe un modelo de datos señal + ruido → (2) escribe la verosimilitud → (3) toma −log y obtén una pérdida → (4) minimízala → (5) valida sin reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del problema.\n\nEse esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; el boosting es el paso 4 en el espacio de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
+    "text": "De qué va este curso\nDe un problema concreto: predecir una magnitud numérica en observaciones que todavía no hemos visto. El curso sigue siempre el mismo esquema, que se repite en los quince capítulos:\n\n(1) escribe un modelo de datos señal + ruido → (2) escribe la verosimilitud → (3) toma −log y obtén una pérdida → (4) minimízala → (5) valida sin reutilizar los datos de ajuste y mide con una métrica interpretable en las unidades del problema.\n\nEse esquema se deriva por completo, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
     "crumbs": [
       "Bienvenida"
     ]
@@ -84,7 +84,7 @@
     "href": "capitulos/00-presentacion.html#el-esquema-del-curso",
     "title": "1  Presentación",
     "section": "El esquema del curso",
-    "text": "El esquema del curso\nHay un único método, y se repite quince veces:\n\nEscribe un modelo de datos: señal más ruido.\nEscribe la verosimilitud de ese modelo.\nToma \\(-\\log\\) y obtén una pérdida.\nMinimízala, en forma cerrada o por descenso de gradiente.\nValida sin reutilizar los datos de ajuste y mide con una métrica interpretable.\n\nEse esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; el boosting es el paso 4 en el espacio de funciones; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
+    "text": "El esquema del curso\nHay un único método, y se repite quince veces:\n\nEscribe un modelo de datos: señal más ruido.\nEscribe la verosimilitud de ese modelo.\nToma \\(-\\log\\) y obtén una pérdida.\nMinimízala, en forma cerrada o por descenso de gradiente.\nValida sin reutilizar los datos de ajuste y mide con una métrica interpretable.\n\nEse esquema se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: ridge y lasso son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -94,7 +94,7 @@
     "href": "capitulos/00-presentacion.html#programa",
     "title": "1  Presentación",
     "section": "Programa",
-    "text": "Programa\n\n\n\n\n\n\n\nTema oficial\nCapítulos\n\n\n\n\n1. Introducción al aprendizaje automático\n1, 2 y el estado del arte del 15\n\n\n2. Metodologías para predicción\n5 (datos), 9 (reducción y selección), 6 (validación y métricas)\n\n\n3. Algoritmos para predicción\n3 y 4 (descenso de gradiente), 2, 4, 8 y 14 (lineales), 10 (no lineales), 11 y 12 (basados en reglas)\n\n\n4. Implementación y aplicación\nlos quince laboratorios; casos de uso en 12, 14 y 15\n\n\nComplemento: agentes de IA\n5, 10, 12 y el proyecto",
+    "text": "Programa\n\n\n\n\n\n\n\nTema oficial\nCapítulos\n\n\n\n\n1. Introducción al aprendizaje automático\n1, 2 y el estado del arte del 15\n\n\n2. Metodologías para predicción\n5 (datos), 9 (reducción y selección), 6 (validación y métricas)\n\n\n3. Algoritmos para predicción\n3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas)\n\n\n4. Implementación y aplicación\nlos laboratorios; casos de uso en 12, 14 y 15\n\n\nComplemento: agentes de IA\n5, 10, 12 y el proyecto",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -124,7 +124,7 @@
     "href": "capitulos/00-presentacion.html#datos-de-la-asignatura",
     "title": "1  Presentación",
     "section": "Datos de la asignatura",
-    "text": "Datos de la asignatura\n\nAsignatura: Aprendizaje Automático: Predicción (G244), 6 ECTS, obligatoria.\nTitulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.\nProfesor: Roi Naveiro (roi.naveiro@cunef.edu).\nWeb del curso: https://roinaveiro.github.io/aap-cunef/\n\n\nHorario y aulas\n\n\n\n\nSesión\nDía\nHora\nAula\n\n\n\n\nS1 · Teoría\n\n\n\n\n\nS2 · Problemas\n\n\n\n\n\nS3 · Laboratorio\n\n\n\n\n\n\nLa asistencia es obligatoria en primera matrícula. Una asistencia inferior al 80 % implica la pérdida del derecho a examen en la convocatoria ordinaria.\nSobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, portátil obligatorio en S3 y sin dispositivos en S1 y S2.\n\n\nTutorías\n\n\n\n\nDía\nHora\nLugar",
+    "text": "Datos de la asignatura\n\nAsignatura: Aprendizaje Automático: Predicción (G244), 6 ECTS, obligatoria.\nTitulación: Doble Grado en ADE y Ciencia de Datos, tercer curso, primer semestre.\nProfesor: Roi Naveiro (roi.naveiro@cunef.edu).\nWeb del curso: https://cunef-aap-fall2026.github.io/\n\n\nHorario y aulas\n\n\n\n\nSesión\nDía\nHora\nAula\n\n\n\n\nS1 · Teoría\n\n\n\n\n\nS2 · Problemas\n\n\n\n\n\nS3 · Laboratorio\n\n\n\n\n\n\nLa asistencia es obligatoria en primera matrícula. Una asistencia inferior al 80 % implica la pérdida del derecho a examen en la convocatoria ordinaria.\nSobre dispositivos: la guía docente no permite móviles ni otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, portátil obligatorio en S3 y sin dispositivos en S1 y S2.\n\n\nTutorías\n\n\n\n\nDía\nHora\nLugar",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -134,7 +134,7 @@
     "href": "capitulos/00-presentacion.html#evaluación",
     "title": "1  Presentación",
     "section": "Evaluación",
-    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final es de cátedra, evalúa todo el programa y requiere una calificación mínima de 5 sobre 10 para poder aprobar.\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\n\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos",
+    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una calificación mínima de 5 sobre 10 para poder aprobar. El bloque B sale de la lista publicada en el índice de resultados, que por tanto es un compromiso y no una orientación.\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\n\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -186,7 +186,7 @@
     "href": "capitulos/01-senal-ruido.html#datos-señal-y-ruido",
     "title": "2  Señal y ruido",
     "section": "Datos, señal y ruido",
-    "text": "Datos, señal y ruido\n\nDefinición 2.1 (Datos y problema de predicción) Un conjunto de datos es \\(\\mathcal{D}= \\{(\\mathbf{x}_i, y_i)\\}_{i=1}^{n}\\) con \\(\\mathbf{x}_i \\in \\mathbb{R}^{p}\\) y \\(y_i\\in \\mathbb{R}\\). El problema de predicción consiste en elegir una función \\(f: \\mathbb{R}^{p} \\to \\mathbb{R}\\) que prediga bien \\(y\\) en observaciones no vistas.\n\nLa condición que importa en Definición 2.1 es no vistas: las observaciones sobre las que se mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición el problema es trivial.\n\n\nCódigo\nimport numpy as np\nfrom matplotlib import pyplot as plt\n\nrng = np.random.default_rng(42)\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.6, label=\"datos\")\n\n\n\nn = 20\nx = np.linspace(0, 10, n)\nsenal = 2.0 * x + 1.0            # la verdad que NO conocemos\nruido = rng.normal(scale=3.0, size=n)\ny = senal + ruido\n\n\nCódigo\nfig, ax = plt.subplots(figsize=(6, 4))\nax.scatter(x, y, **kw_puntos)\nax.plot(x, senal, color=\"black\", linestyle=\"--\",\n        label=r\"Señal: $f(x_i) = 2x_i + 1$\")\nfor i in range(n):\n    etiqueta = r\"Ruido: $\\epsilon_i$\" if i == 0 else None\n    ax.plot([x[i]] * 2, [senal[i], y[i]],\n            color=\"#ff5700\", alpha=0.5, linewidth=0.9, label=etiqueta)\nax.set(xlabel=\"$x$\", ylabel=\"$y$\")\nax.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 2.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).\n\n\n\n\nDefinición 2.2 (Modelo señal + ruido) \\[\ny_i= f(\\mathbf{x}_i) + \\varepsilon_i, \\qquad \\varepsilon_i \\text{ iid}, \\quad \\mathbb{E}\\!\\left[ \\varepsilon_i \\right] = 0.\n\\tag{2.1}\\]\nA \\(f\\) la llamamos señal y a \\(\\varepsilon_i\\) ruido.\n\nLo que queremos aprender es \\(f\\), no los valores \\(y_i\\).\n\nDefinición 2.3 (Error de entrenamiento y error de test) Dado un conjunto \\(\\mathcal{S}\\) y un modelo ajustado \\(\\hat{f}\\), \\[\n\\hat{R}_{\\mathcal{S}}(\\hat{f}) = \\frac{1}{\\left\\lvert \\mathcal{S} \\right\\rvert} \\sum_{i \\in \\mathcal{S}} \\left( y_i- \\hat{f}(\\mathbf{x}_i) \\right)^2 .\n\\]\n\n\n\n\n\n\n\nDe momento el cuadrado es una elección arbitraria: lo estamos midiendo, no justificando. En Sección 2.5 demostraremos que se deduce de suponer ruido gaussiano.",
+    "text": "Datos, señal y ruido\n\nDefinición 2.1 (Datos y problema de predicción) Un conjunto de datos es \\(\\mathcal{D}= \\{(\\mathbf{x}_i, y_i)\\}_{i=1}^{n}\\) con \\(\\mathbf{x}_i \\in \\mathbb{R}^{p}\\) y \\(y_i\\in \\mathbb{R}\\). El problema de predicción consiste en elegir una función \\(f: \\mathbb{R}^{p} \\to \\mathbb{R}\\) que prediga bien \\(y\\) en observaciones no vistas.\n\nLa condición que importa en Definición 2.1 es no vistas: las observaciones sobre las que se mide el error no pueden ser las que se han usado para ajustar el modelo. Sin esa condición el problema es trivial.\n\n\nCódigo\nimport numpy as np\nfrom matplotlib import pyplot as plt\n\nrng = np.random.default_rng(42)\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.6, label=\"datos\")\n\n\n\n#---\nn = 20\nx = np.linspace(0, 10, n)\nsenal = 2.0 * x + 1.0            # la verdad que NO conocemos\nruido = rng.normal(scale=3.0, size=n)\ny = senal + ruido\n#---\n\n\nCódigo\nfig, ax = plt.subplots(figsize=(6, 4))\nax.scatter(x, y, **kw_puntos)\nax.plot(x, senal, color=\"black\", linestyle=\"--\",\n        label=r\"Señal: $f(x_i) = 2x_i + 1$\")\nfor i in range(n):\n    etiqueta = r\"Ruido: $\\epsilon_i$\" if i == 0 else None\n    ax.plot([x[i]] * 2, [senal[i], y[i]],\n            color=\"#ff5700\", alpha=0.5, linewidth=0.9, label=etiqueta)\nax.set(xlabel=\"$x$\", ylabel=\"$y$\")\nax.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 2.1: Descomposición de un conjunto de datos (puntos) en una señal subyacente (línea discontinua) y ruido (segmentos naranjas).\n\n\n\n\nDefinición 2.2 (Modelo señal + ruido) \\[\ny_i= f(\\mathbf{x}_i) + \\varepsilon_i, \\qquad \\varepsilon_i \\text{ iid}, \\quad \\mathbb{E}\\!\\left[ \\varepsilon_i \\right] = 0.\n\\tag{2.1}\\]\nA \\(f\\) la llamamos señal y a \\(\\varepsilon_i\\) ruido.\n\nLo que queremos aprender es \\(f\\), no los valores \\(y_i\\).\n\nDefinición 2.3 (Error de entrenamiento y error de test) Dado un conjunto \\(\\mathcal{S}\\) y un modelo ajustado \\(\\hat{f}\\), \\[\n\\hat{R}_{\\mathcal{S}}(\\hat{f}) = \\frac{1}{\\left\\lvert \\mathcal{S} \\right\\rvert} \\sum_{i \\in \\mathcal{S}} \\left( y_i- \\hat{f}(\\mathbf{x}_i) \\right)^2 .\n\\]\n\n\n\n\n\n\n\nDe momento el cuadrado es una elección arbitraria: lo estamos midiendo, no justificando. En Sección 2.5 demostraremos que se deduce de suponer ruido gaussiano.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Señal y ruido</span>"
@@ -219,7 +219,7 @@
     "href": "capitulos/01-senal-ruido.html#sec-mle-teorema",
     "title": "2  Señal y ruido",
     "section": "Verosimilitud",
-    "text": "Verosimilitud\n\nDefinición 2.6 (Modelo lineal-gaussiano) Con \\(p= 1\\): \\(y_i\\sim \\mathcal{N}(w_0+ w_1 x_i,\\ \\sigma^2)\\), de forma independiente.\n\n\n\n\n\n\n\nNotaSobre la independencia\n\n\n\nIndependientes significa aquí condicionalmente a las \\(\\mathbf{x}_i\\). Es una hipótesis, no una verdad. En la Sección 7.5 del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.\n\n\n\nDefinición 2.7 (Verosimilitud y log-verosimilitud) \\[\nL(\\boldsymbol{w}) = \\prod_{i=1}^{n} p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right),\n\\qquad\n\\ell(\\boldsymbol{w}) = \\sum_{i=1}^{n} \\log p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right).\n\\]\n\n\nLema 2.1 (El logaritmo preserva el argmax) Si \\(g\\) es estrictamente creciente, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} g(L(\\boldsymbol{w})) = \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w})\\). En particular \\(\\mathop{\\mathrm{arg\\,max}}L= \\mathop{\\mathrm{arg\\,max}}\\ell= \\mathop{\\mathrm{arg\\,min}}(-\\ell)\\).\n\n\nDemostración. Si \\(\\boldsymbol{w}^{\\star}\\) maximiza \\(L\\) entonces \\(L(\\boldsymbol{w}) \\leq L(\\boldsymbol{w}^\\star)\\) para todo \\(\\boldsymbol{w}\\), y aplicando \\(g\\) creciente, \\(g(L(\\boldsymbol{w})) \\leq g(L(\\boldsymbol{w}^\\star))\\). El recíproco es idéntico usando que \\(g\\) es estrictamente creciente.\n\n\nDefinición 2.8 (Estimación máximo-verosímil) \\(\\hat{\\boldsymbol{w}}= \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w}) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left(-\\ell(\\boldsymbol{w})\\right)\\).\n\n\n\n\n\n\n\nTipConvenio: siempre minimizamos\n\n\n\nAunque el problema nazca como una maximización, en este curso siempre lo escribiremos como minimización. Es el convenio de toda la literatura de optimización y evita errores de signo en el capítulo 3.\n\n\n\nResolución por búsqueda en rejilla\nEmpezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.\n\ndef densidad_normal(x, mu, sigma):\n    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))\n\n\ndef log_verosimilitud(w0, w1, x, y, sigma=3.0):\n    return np.log(densidad_normal(y, w0 + w1 * x, sigma)).sum()\n\n\n\nCódigo\nrejilla_w0 = np.linspace(-5, 5, 60)\nrejilla_w1 = np.linspace(-1, 3, 60)\nL = np.array([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])\n\nfig, ax = plt.subplots(figsize=(5.5, 4))\ncs = ax.contourf(rejilla_w1, rejilla_w0, L, levels=30)\ni, j = np.unravel_index(L.argmax(), L.shape)\nax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color=\"#ff5700\", s=60, label=\"máximo en la rejilla\")\nax.scatter([2.0], [1.0], color=\"white\", marker=\"x\", s=60, label=\"verdad\")\nax.set(xlabel=\"$w_1$\", ylabel=\"$w_0$\")\nax.legend()\nplt.colorbar(cs, ax=ax, label=r\"$\\ell(w)$\")\nplt.show()\n\n\n\n\n\n\n\n\n\nCon dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con \\(p= 20\\) parámetros serían \\(60^{20}\\), un número de evaluaciones inabordable. Hace falta cálculo, y eso es el capítulo 3.",
+    "text": "Verosimilitud\n\nDefinición 2.6 (Modelo lineal-gaussiano) Con \\(p= 1\\): \\(y_i\\sim \\mathcal{N}(w_0+ w_1 x_i,\\ \\sigma^2)\\), de forma independiente.\n\n\n\n\n\n\n\nNotaSobre la independencia\n\n\n\nIndependientes significa aquí condicionalmente a las \\(\\mathbf{x}_i\\). Es una hipótesis, no una verdad. En la Sección 7.5 del capítulo 6 veremos qué ocurre cuando no se cumple: un mismo anfitrión con doce anuncios en Madrid la rompe.\n\n\n\nDefinición 2.7 (Verosimilitud y log-verosimilitud) \\[\nL(\\boldsymbol{w}) = \\prod_{i=1}^{n} p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right),\n\\qquad\n\\ell(\\boldsymbol{w}) = \\sum_{i=1}^{n} \\log p\\left(y_i;\\ f(\\mathbf{x}_i),\\ \\sigma\\right).\n\\]\n\n\nLema 2.1 (El logaritmo preserva el argmax) Si \\(g\\) es estrictamente creciente, \\(\\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} g(L(\\boldsymbol{w})) = \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w})\\). En particular \\(\\mathop{\\mathrm{arg\\,max}}L= \\mathop{\\mathrm{arg\\,max}}\\ell= \\mathop{\\mathrm{arg\\,min}}(-\\ell)\\).\n\n\nDemostración. Si \\(\\boldsymbol{w}^{\\star}\\) maximiza \\(L\\) entonces \\(L(\\boldsymbol{w}) \\leq L(\\boldsymbol{w}^\\star)\\) para todo \\(\\boldsymbol{w}\\), y aplicando \\(g\\) creciente, \\(g(L(\\boldsymbol{w})) \\leq g(L(\\boldsymbol{w}^\\star))\\). El recíproco es idéntico usando que \\(g\\) es estrictamente creciente.\n\n\nDefinición 2.8 (Estimación máximo-verosímil) \\(\\hat{\\boldsymbol{w}}= \\mathop{\\mathrm{arg\\,max}}_{\\boldsymbol{w}} L(\\boldsymbol{w}) = \\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}} \\left(-\\ell(\\boldsymbol{w})\\right)\\).\n\n\n\n\n\n\n\nTipConvenio: siempre minimizamos\n\n\n\nAunque el problema nazca como una maximización, en este curso siempre lo escribiremos como minimización. Es el convenio de toda la literatura de optimización y evita errores de signo en el capítulo 3.\n\n\n\nResolución por búsqueda en rejilla\nEmpezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.\n\n#---\ndef densidad_normal(x, mu, sigma):\n    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))\n\n\ndef log_verosimilitud(w0, w1, x, y, sigma=3.0):\n    return np.log(densidad_normal(y, w0 + w1 * x, sigma)).sum()\n#---\n\n\n\nCódigo\nrejilla_w0 = np.linspace(-5, 5, 60)\nrejilla_w1 = np.linspace(-1, 3, 60)\nL = np.array([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])\n\nfig, ax = plt.subplots(figsize=(5.5, 4))\ncs = ax.contourf(rejilla_w1, rejilla_w0, L, levels=30)\ni, j = np.unravel_index(L.argmax(), L.shape)\nax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color=\"#ff5700\", s=60, label=\"máximo en la rejilla\")\nax.scatter([2.0], [1.0], color=\"white\", marker=\"x\", s=60, label=\"verdad\")\nax.set(xlabel=\"$w_1$\", ylabel=\"$w_0$\")\nax.legend()\nplt.colorbar(cs, ax=ax, label=r\"$\\ell(w)$\")\nplt.show()\n\n\n\n\n\n\n\n\n\nCon dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con \\(p= 20\\) parámetros serían \\(60^{20}\\), un número de evaluaciones inabordable. Hace falta cálculo, y eso es el capítulo 3.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Señal y ruido</span>"
@@ -439,7 +439,7 @@
     "href": "capitulos/03-gradientes.html#sec-autodiff",
     "title": "4  Gradientes y descenso de gradiente",
     "section": "Diferenciación automática",
-    "text": "Diferenciación automática\nAcabamos de derivar \\(\\nabla\\hat{R}\\) a mano. A partir de ahora lo haremos con frecuencia, y conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de obtener una derivada en un ordenador, y solo una de ellas sirve.\nDiferencias finitas. Aproximar \\(\\frac{\\partial \\hat{R}}{\\partial w_j} \\approx\n\\frac{\\hat{R}(\\boldsymbol{w}+ h\\mathbf{e}_j) - \\hat{R}(\\boldsymbol{w}- h\\mathbf{e}_j)}{2h}\\). Es fácil de programar y siempre funciona, pero tiene dos problemas: el error es de orden \\(h^2\\) y además la resta de dos números casi iguales pierde precisión, de modo que no existe un \\(h\\) bueno; y hace falta evaluar \\(\\hat{R}\\) dos veces por cada coordenada, es decir \\(2(p+1)\\) evaluaciones para un solo gradiente.\nDerivación simbólica. Manipular la expresión algebraica, como haría un humano o un sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.\nDiferenciación automática. Ni aproxima ni manipula símbolos. Observa que un programa que calcula \\(\\hat{R}(\\boldsymbol{w})\\) es una composición de operaciones elementales cuya derivada se conoce (sumar, multiplicar, exp, log), y aplica la regla de la cadena a esa composición, evaluándola numéricamente paso a paso. El resultado es exacto salvo error de redondeo.\n\nDefinición 4.4 (Modos directo e inverso) Sea \\(\\hat{R}: \\mathbb{R}^{p+1} \\to \\mathbb{R}\\) una composición de operaciones elementales. El modo directo propaga derivadas desde las entradas hacia la salida y obtiene una derivada direccional por pasada. El modo inverso las propaga desde la salida hacia las entradas y obtiene el gradiente completo en una sola pasada.\n\nPara lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (\\(p+1\\) coeficientes) y una sola salida (un riesgo). El modo inverso da las \\(p+1\\) derivadas parciales de una vez, a un coste comparable al de evaluar \\(\\hat{R}\\). El modo directo necesitaría \\(p+1\\) pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.\nEn jax, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.\n\n\nCódigo\nimport numpy as np\nimport pandas as pd\nimport jax\n\njax.config.update(\"jax_enable_x64\", True)   # por defecto jax usa float32\n\n# Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.\nd = pd.read_csv(\"../datos/prostate.data\")\nX = np.column_stack([np.ones(len(d)), d[\"lcavol\"], d[\"lweight\"]])\ny = d[\"lpsa\"].to_numpy()\nX = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja\nX[:, 0] = 1.0\n\n\n\ndef riesgo(w, X, y):\n    r = X @ w - y\n    return (r @ r) / len(y)\n\n\ngrad_riesgo = jax.grad(riesgo)     # devuelve una FUNCIÓN, no un número\n\nNótese la diferencia con riesgo(w, X, y), que devuelve un número: jax.grad(riesgo) devuelve una función que, evaluada en \\(\\boldsymbol{w}\\), devuelve el vector de derivadas parciales. Es la traducción literal de \\(\\nabla\\).\n\n\n\n\n\n\nDetalle a tener presente: jax trabaja por defecto en precisión simple. La línea jax.config.update(\"jax_enable_x64\", True) la eleva a doble precisión, que es lo que queremos para comparar contra un resultado analítico.\n\n\n\n\nLa diferenciación automática no es magia, y sobre todo no sustituye a derivar\nDevuelve el gradiente del programa que le has dado, que no siempre es el gradiente que creías haber escrito. Si el código tiene un error, jax.grad derivará el código erróneo sin protestar. Sirve para comprobar una derivación hecha a mano, no para evitarla.",
+    "text": "Diferenciación automática\nAcabamos de derivar \\(\\nabla\\hat{R}\\) a mano. A partir de ahora lo haremos con frecuencia, y conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de obtener una derivada en un ordenador, y solo una de ellas sirve.\nDiferencias finitas. Aproximar \\(\\frac{\\partial \\hat{R}}{\\partial w_j} \\approx\n\\frac{\\hat{R}(\\boldsymbol{w}+ h\\mathbf{e}_j) - \\hat{R}(\\boldsymbol{w}- h\\mathbf{e}_j)}{2h}\\). Es fácil de programar y siempre funciona, pero tiene dos problemas: el error es de orden \\(h^2\\) y además la resta de dos números casi iguales pierde precisión, de modo que no existe un \\(h\\) bueno; y hace falta evaluar \\(\\hat{R}\\) dos veces por cada coordenada, es decir \\(2(p+1)\\) evaluaciones para un solo gradiente.\nDerivación simbólica. Manipular la expresión algebraica, como haría un humano o un sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.\nDiferenciación automática. Ni aproxima ni manipula símbolos. Observa que un programa que calcula \\(\\hat{R}(\\boldsymbol{w})\\) es una composición de operaciones elementales cuya derivada se conoce (sumar, multiplicar, exp, log), y aplica la regla de la cadena a esa composición, evaluándola numéricamente paso a paso. El resultado es exacto salvo error de redondeo.\n\nDefinición 4.4 (Modos directo e inverso) Sea \\(\\hat{R}: \\mathbb{R}^{p+1} \\to \\mathbb{R}\\) una composición de operaciones elementales. El modo directo propaga derivadas desde las entradas hacia la salida y obtiene una derivada direccional por pasada. El modo inverso las propaga desde la salida hacia las entradas y obtiene el gradiente completo en una sola pasada.\n\nPara lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (\\(p+1\\) coeficientes) y una sola salida (un riesgo). El modo inverso da las \\(p+1\\) derivadas parciales de una vez, a un coste comparable al de evaluar \\(\\hat{R}\\). El modo directo necesitaría \\(p+1\\) pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.\nEn jax, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.\n\n\nCódigo\nimport numpy as np\nimport pandas as pd\nimport jax\n\njax.config.update(\"jax_enable_x64\", True)   # por defecto jax usa float32\n\n# Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.\nd = pd.read_csv(\"../datos/prostate.data\")\nX = np.column_stack([np.ones(len(d)), d[\"lcavol\"], d[\"lweight\"]])\ny = d[\"lpsa\"].to_numpy()\nX = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja\nX[:, 0] = 1.0\n\n\n\n#---\ndef riesgo(w, X, y):\n    r = X @ w - y\n    return (r @ r) / len(y)\n\n\ngrad_riesgo = jax.grad(riesgo)     # devuelve una FUNCIÓN, no un número\n#---\n\nNótese la diferencia con riesgo(w, X, y), que devuelve un número: jax.grad(riesgo) devuelve una función que, evaluada en \\(\\boldsymbol{w}\\), devuelve el vector de derivadas parciales. Es la traducción literal de \\(\\nabla\\).\n\n\n\n\n\n\nDetalle a tener presente: jax trabaja por defecto en precisión simple. La línea jax.config.update(\"jax_enable_x64\", True) la eleva a doble precisión, que es lo que queremos para comparar contra un resultado analítico.\n\n\n\n\nLa diferenciación automática no es magia, y sobre todo no sustituye a derivar\nDevuelve el gradiente del programa que le has dado, que no siempre es el gradiente que creías haber escrito. Si el código tiene un error, jax.grad derivará el código erróneo sin protestar. Sirve para comprobar una derivación hecha a mano, no para evitarla.",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -461,7 +461,7 @@
     "href": "capitulos/03-gradientes.html#laboratorio",
     "title": "4  Gradientes y descenso de gradiente",
     "section": "Laboratorio",
-    "text": "Laboratorio\n\nclass DescensoGradiente:\n    def __init__(self, w0, lr=0.01):\n        self.w = np.asarray(w0, dtype=float)\n        self.lr = lr\n        self.historia = []\n\n    def paso(self, grad_fn):\n        self.w = self.w - self.lr * grad_fn(self.w)\n        self.historia.append(self.w.copy())\n        return self.w\n\nY la comprobación de Teorema 4.3: derivamos a mano, y preguntamos a jax si estábamos en lo cierto.\n\ndef grad_analitico(w, X, y):\n    return -2 / len(y) * X.T @ (y - X @ w)\n\n\nw0 = np.zeros(X.shape[1])\nnp.allclose(grad_analitico(w0, X, y), grad_riesgo(w0, X, y))\n\nTrue",
+    "text": "Laboratorio\n\n#---\nclass DescensoGradiente:\n    def __init__(self, w0, lr=0.01):\n        self.w = np.asarray(w0, dtype=float)\n        self.lr = lr\n        self.historia = []\n\n    def paso(self, grad_fn):\n        self.w = self.w - self.lr * grad_fn(self.w)\n        self.historia.append(self.w.copy())\n        return self.w\n#---\n\nY la comprobación de Teorema 4.3: derivamos a mano, y preguntamos a jax si estábamos en lo cierto.\n\n#---\ndef grad_analitico(w, X, y):\n    return -2 / len(y) * X.T @ (y - X @ w)\n\n\nw0 = np.zeros(X.shape[1])\nnp.allclose(grad_analitico(w0, X, y), grad_riesgo(w0, X, y))\n#---\n\nTrue",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -835,7 +835,7 @@
     "href": "capitulos/06-validacion.html#validación-cruzada",
     "title": "7  Validación y métricas",
     "section": "Validación cruzada",
-    "text": "Validación cruzada\n\nDefinición 7.3 (Validación cruzada en \\(K\\) bloques) \\(\\displaystyle \\mathrm{VC}_K = \\frac{1}{K}\\sum_{k=1}^{K}\\hat{R}_k\\), con \\(\\hat{R}_k\\) el riesgo empírico sobre el bloque \\(k\\) del modelo entrenado sin él.\n\n\n\n\n\n\n\nAdvertenciaUna precisión sobre el promedio\n\n\n\n\\(\\frac{1}{K}\\sum_k(\\text{media del bloque})\\) coincide con \\(\\frac{1}{n}\\sum_i \\ell_i\\) solo si los bloques tienen el mismo tamaño. cross_val_score hace lo primero.\n\n\n\nProposición 7.2 (Sesgo de la validación cruzada) Cada modelo se entrena con \\(n(K-1)/K\\) observaciones, luego \\(\\mathrm{VC}_K\\) estima el riesgo de un modelo entrenado con menos datos que el que finalmente se despliega: el sesgo es pesimista y decrece con \\(K\\).\n\n\nLema 7.1 (Varianza de una media de variables correladas) Si \\(Z_1,\\dots,Z_K\\) tienen varianza \\(v\\) y correlación \\(\\rho\\) dos a dos, entonces \\[\\mathrm{Var}\\!\\left( \\frac{1}{K}\\sum_k Z_k \\right) = \\rho v + \\frac{(1-\\rho)v}{K}.\\]\n\n\n\n\n\n\n\nLa demostración se hace en el capítulo 12, donde este mismo lema es el argumento de por qué hay que descorrelacionar los árboles de un random forest. Aquí solo usamos el enunciado. En pizarra basta comprobarlo con \\(K=2\\), que es una línea.\n\n\n\n\nCorolario 7.1 (Por qué \\(K=5\\) o \\(K=10\\)) Al crecer \\(K\\) el sesgo baja (Proposición 7.2), pero los conjuntos de entrenamiento se solapan más, \\(\\rho\\) crece y por 1 la varianza no baja: tiende a \\(\\rho v\\). Con \\(K=n\\) (LOOCV) el sesgo es mínimo, la varianza no se promedia y el coste es \\(n\\) ajustes. No hay ningún teorema que fije \\(K\\): es un compromiso empírico, y decirlo es contenido, no laguna.\n\n\n\n\n\n\n\n1 es el resultado que la semana 12 necesita para explicar max_features en un random forest. Demostrado aquí, esa semana ya está pagada.",
+    "text": "Validación cruzada\n\nDefinición 7.3 (Validación cruzada en \\(K\\) bloques) \\(\\displaystyle \\mathrm{VC}_K = \\frac{1}{K}\\sum_{k=1}^{K}\\hat{R}_k\\), con \\(\\hat{R}_k\\) el riesgo empírico sobre el bloque \\(k\\) del modelo entrenado sin él.\n\n\n\n\n\n\n\nAdvertenciaUna precisión sobre el promedio\n\n\n\n\\(\\frac{1}{K}\\sum_k(\\text{media del bloque})\\) coincide con \\(\\frac{1}{n}\\sum_i \\ell_i\\) solo si los bloques tienen el mismo tamaño. cross_val_score hace lo primero.\n\n\n\nProposición 7.2 (Sesgo de la validación cruzada) Cada modelo se entrena con \\(n(K-1)/K\\) observaciones, luego \\(\\mathrm{VC}_K\\) estima el riesgo de un modelo entrenado con menos datos que el que finalmente se despliega: el sesgo es pesimista y decrece con \\(K\\).\n\n\nLema 7.1 (Varianza de una media de variables correladas) Si \\(Z_1,\\dots,Z_K\\) tienen varianza \\(v\\) y correlación \\(\\rho\\) dos a dos, entonces \\[\\mathrm{Var}\\!\\left( \\frac{1}{K}\\sum_k Z_k \\right) = \\rho v + \\frac{(1-\\rho)v}{K}.\\]\n\n\nDemostración. \n\n\n\nCorolario 7.1 (Por qué \\(K=5\\) o \\(K=10\\)) Al crecer \\(K\\) el sesgo baja (Proposición 7.2), pero los conjuntos de entrenamiento se solapan más, \\(\\rho\\) crece y por 1 la varianza no baja: tiende a \\(\\rho v\\). Con \\(K=n\\) (LOOCV) el sesgo es mínimo, la varianza no se promedia y el coste es \\(n\\) ajustes. No hay ningún teorema que fije \\(K\\): es un compromiso empírico, y decirlo es contenido, no laguna.\n\n\n\n\n\n\n\nEl lema explica por qué promediar tiene un suelo: por mucho que crezca \\(K\\), la varianza no baja de \\(\\rho v\\). Es el mismo argumento por el que, en los métodos que promedian modelos, hace falta que esos modelos estén poco correlacionados entre sí.",
     "crumbs": [
       "Del dato crudo al modelo",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Validación y métricas</span>"
@@ -1216,58 +1216,58 @@
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html",
-    "href": "capitulos/12-ensembles.html",
-    "title": "13  Ensembles: bagging, random forest y boosting",
+    "objectID": "capitulos/12-glm.html",
+    "href": "capitulos/12-glm.html",
+    "title": "13  Cuando el ruido no es gaussiano: GLM",
     "section": "",
     "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
-      "Modelos no lineales y basados en reglas",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
+      "Más allá del ruido gaussiano",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html#de-dónde-sale-el-material",
-    "href": "capitulos/12-ensembles.html#de-dónde-sale-el-material",
-    "title": "13  Ensembles: bagging, random forest y boosting",
+    "objectID": "capitulos/12-glm.html#de-dónde-sale-el-material",
+    "href": "capitulos/12-glm.html#de-dónde-sale-el-material",
+    "title": "13  Cuando el ruido no es gaussiano: GLM",
     "section": "De dónde sale el material",
-    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/06-trees: bagging, RF, AdaBoost, gradient boosting, importancia por permutación, dependencia parcial. Material propio, con tres demostraciones ya escritas (desigualdad del bagging; varianza de la media correlada; \\(E_{COM}=E_{PR}/M\\)).",
+    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/02-supervised sl. 43-54 (logística, Newton-Raphson derivado, IRLS).\ncurso-ml-R/Rmd/04-regression sl. 3-6 (GLM, ejemplo Poisson).\nOjo: La regresión logística se menciona una vez como miembro Bernoulli del catálogo de enlaces y no se evalúa: es de G249.",
     "crumbs": [
-      "Modelos no lineales y basados en reglas",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
+      "Más allá del ruido gaussiano",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html#resultados-que-deben-aparecer",
-    "href": "capitulos/12-ensembles.html#resultados-que-deben-aparecer",
-    "title": "13  Ensembles: bagging, random forest y boosting",
+    "objectID": "capitulos/12-glm.html#resultados-que-deben-aparecer",
+    "href": "capitulos/12-glm.html#resultados-que-deben-aparecer",
+    "title": "13  Cuando el ruido no es gaussiano: GLM",
     "section": "Resultados que deben aparecer",
-    "text": "Resultados que deben aparecer\n\nLema 7.1 ya está demostrado en el capítulo 6. Aquí solo se aplica: promediar mata el término \\((1-\\rho)/K\\) pero \\(\\rho\\) es un suelo ⟹ hay que descorrelacionar ⟹ de ahí sale `max_features`.\nMuestras OOB como validación gratuita.\nBoosting: el residuo es el gradiente negativo de la pérdida cuadrática respecto de la predicción. Cierra el círculo con el capítulo 3.\nOjo: Frontera con G249: aquí solo en versión regresión.",
+    "text": "Resultados que deben aparecer\n\nSi \\(y\\) es un conteo, el modelo gaussiano predice negativos y asume varianza constante: ambas cosas falsas.\nPoisson con enlace logarítmico; log-verosimilitud y su gradiente \\(\\mathbf{X}^{\\mathsf{T}}(\\mathbf{y}-\\boldsymbol\\mu)\\) misma forma que Teorema 5.1, otra \\(\\mu\\).\nDesvianza como pérdida. Tabla de familias y enlaces (cierra Remark 3.3).\nInterpretación multiplicativa de los coeficientes.",
     "crumbs": [
-      "Modelos no lineales y basados en reglas",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
+      "Más allá del ruido gaussiano",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html#ejercicios",
-    "href": "capitulos/12-ensembles.html#ejercicios",
-    "title": "13  Ensembles: bagging, random forest y boosting",
+    "objectID": "capitulos/12-glm.html#ejercicios",
+    "href": "capitulos/12-glm.html#ejercicios",
+    "title": "13  Cuando el ruido no es gaussiano: GLM",
     "section": "Ejercicios",
     "text": "Ejercicios",
     "crumbs": [
-      "Modelos no lineales y basados en reglas",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
+      "Más allá del ruido gaussiano",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
     ]
   },
   {
-    "objectID": "capitulos/12-ensembles.html#resumen",
-    "href": "capitulos/12-ensembles.html#resumen",
-    "title": "13  Ensembles: bagging, random forest y boosting",
+    "objectID": "capitulos/12-glm.html#resumen",
+    "href": "capitulos/12-glm.html#resumen",
+    "title": "13  Cuando el ruido no es gaussiano: GLM",
     "section": "Resumen",
     "text": "Resumen",
     "crumbs": [
-      "Modelos no lineales y basados en reglas",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Ensembles: bagging, random forest y boosting</span>"
+      "Más allá del ruido gaussiano",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
     ]
   },
   {
@@ -1326,113 +1326,124 @@
     ]
   },
   {
-    "objectID": "capitulos/14-glm.html",
-    "href": "capitulos/14-glm.html",
-    "title": "15  Cuando el ruido no es gaussiano: GLM",
+    "objectID": "capitulos/14-decision.html",
+    "href": "capitulos/14-decision.html",
+    "title": "15  Del valor puntual a la decisión",
     "section": "",
     "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
     ]
   },
   {
-    "objectID": "capitulos/14-glm.html#de-dónde-sale-el-material",
-    "href": "capitulos/14-glm.html#de-dónde-sale-el-material",
-    "title": "15  Cuando el ruido no es gaussiano: GLM",
-    "section": "De dónde sale el material",
-    "text": "De dónde sale el material\n\ncurso-ml-R/Rmd/02-supervised sl. 43-54 (logística, Newton-Raphson derivado, IRLS).\ncurso-ml-R/Rmd/04-regression sl. 3-6 (GLM, ejemplo Poisson).\nOjo: La regresión logística se menciona una vez como miembro Bernoulli del catálogo de enlaces y no se evalúa: es de G249.",
-    "crumbs": [
-      "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
-    ]
-  },
-  {
-    "objectID": "capitulos/14-glm.html#resultados-que-deben-aparecer",
-    "href": "capitulos/14-glm.html#resultados-que-deben-aparecer",
-    "title": "15  Cuando el ruido no es gaussiano: GLM",
-    "section": "Resultados que deben aparecer",
-    "text": "Resultados que deben aparecer\n\nSi \\(y\\) es un conteo, el modelo gaussiano predice negativos y asume varianza constante: ambas cosas falsas.\nPoisson con enlace logarítmico; log-verosimilitud y su gradiente \\(\\mathbf{X}^{\\mathsf{T}}(\\mathbf{y}-\\boldsymbol\\mu)\\) misma forma que Teorema 5.1, otra \\(\\mu\\).\nDesvianza como pérdida. Tabla de familias y enlaces (cierra Remark 3.3).\nInterpretación multiplicativa de los coeficientes.",
-    "crumbs": [
-      "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
-    ]
-  },
-  {
-    "objectID": "capitulos/14-glm.html#ejercicios",
-    "href": "capitulos/14-glm.html#ejercicios",
-    "title": "15  Cuando el ruido no es gaussiano: GLM",
-    "section": "Ejercicios",
-    "text": "Ejercicios",
-    "crumbs": [
-      "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
-    ]
-  },
-  {
-    "objectID": "capitulos/14-glm.html#resumen",
-    "href": "capitulos/14-glm.html#resumen",
-    "title": "15  Cuando el ruido no es gaussiano: GLM",
-    "section": "Resumen",
-    "text": "Resumen",
-    "crumbs": [
-      "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Cuando el ruido no es gaussiano: GLM</span>"
-    ]
-  },
-  {
-    "objectID": "capitulos/15-decision.html",
-    "href": "capitulos/15-decision.html",
-    "title": "16  Del valor puntual a la decisión",
-    "section": "",
-    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
-    "crumbs": [
-      "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
-    ]
-  },
-  {
-    "objectID": "capitulos/15-decision.html#de-dónde-sale-el-material",
-    "href": "capitulos/15-decision.html#de-dónde-sale-el-material",
-    "title": "16  Del valor puntual a la decisión",
+    "objectID": "capitulos/14-decision.html#de-dónde-sale-el-material",
+    "href": "capitulos/14-decision.html#de-dónde-sale-el-material",
+    "title": "15  Del valor puntual a la decisión",
     "section": "De dónde sale el material",
     "text": "De dónde sale el material\n\nChodrow chapters/12-decision-theory.qmd: portar el argumento (coste como criterio de selección de modelo, no como apéndice) de clasificación a regresión.\nAngelopoulos & Bates para conformal split.",
     "crumbs": [
       "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
     ]
   },
   {
-    "objectID": "capitulos/15-decision.html#resultados-que-deben-aparecer",
-    "href": "capitulos/15-decision.html#resultados-que-deben-aparecer",
-    "title": "16  Del valor puntual a la decisión",
+    "objectID": "capitulos/14-decision.html#resultados-que-deben-aparecer",
+    "href": "capitulos/14-decision.html#resultados-que-deben-aparecer",
+    "title": "15  Del valor puntual a la decisión",
     "section": "Resultados que deben aparecer",
     "text": "Resultados que deben aparecer\n\nEl minimizador de \\(\\mathbb{E}\\!\\left[ \\left\\lvert Y-c \\right\\rvert \\right]\\) es la mediana ⟹ pérdida pinball ⟹ regresión cuantílica. Completa Proposición 3.1.\nConformal split como cálculo examinable: ordenar los residuos de calibración, tomar el \\(\\lceil(1-\\alpha)(n_{\\mathrm{cal}}+1)\\rceil\\)-ésimo, dar \\(\\hat{y}\\pm \\hat{q}\\).\nComparar la anchura del intervalo con \\(\\hat{\\sigma}\\) del capítulo 2: ningún modelo baja del suelo de ruido. Cierre del hilo.\nEstado del arte honesto + cierre ético con marco europeo (EU AI Act, RGPD).",
     "crumbs": [
       "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
     ]
   },
   {
-    "objectID": "capitulos/15-decision.html#ejercicios",
-    "href": "capitulos/15-decision.html#ejercicios",
-    "title": "16  Del valor puntual a la decisión",
+    "objectID": "capitulos/14-decision.html#ejercicios",
+    "href": "capitulos/14-decision.html#ejercicios",
+    "title": "15  Del valor puntual a la decisión",
     "section": "Ejercicios",
     "text": "Ejercicios",
     "crumbs": [
       "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
     ]
   },
   {
-    "objectID": "capitulos/15-decision.html#resumen",
-    "href": "capitulos/15-decision.html#resumen",
-    "title": "16  Del valor puntual a la decisión",
+    "objectID": "capitulos/14-decision.html#resumen",
+    "href": "capitulos/14-decision.html#resumen",
+    "title": "15  Del valor puntual a la decisión",
     "section": "Resumen",
     "text": "Resumen",
     "crumbs": [
       "Más allá del ruido gaussiano",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Del valor puntual a la decisión</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html",
+    "href": "capitulos/15-repaso.html",
+    "title": "16  Repaso y estado del arte",
+    "section": "",
+    "text": "Planteamiento\nAbre el cuaderno para completar en clase en Google Colab.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html#el-esquema-relleno",
+    "href": "capitulos/15-repaso.html#el-esquema-relleno",
+    "title": "16  Repaso y estado del arte",
+    "section": "El esquema, relleno",
+    "text": "El esquema, relleno",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html#estado-del-arte",
+    "href": "capitulos/15-repaso.html#estado-del-arte",
+    "title": "16  Repaso y estado del arte",
+    "section": "Estado del arte",
+    "text": "Estado del arte",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html#límites-y-responsabilidad",
+    "href": "capitulos/15-repaso.html#límites-y-responsabilidad",
+    "title": "16  Repaso y estado del arte",
+    "section": "Límites y responsabilidad",
+    "text": "Límites y responsabilidad",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html#simulacro-del-examen-final",
+    "href": "capitulos/15-repaso.html#simulacro-del-examen-final",
+    "title": "16  Repaso y estado del arte",
+    "section": "Simulacro del examen final",
+    "text": "Simulacro del examen final",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
+    ]
+  },
+  {
+    "objectID": "capitulos/15-repaso.html#resumen",
+    "href": "capitulos/15-repaso.html#resumen",
+    "title": "16  Repaso y estado del arte",
+    "section": "Resumen",
+    "text": "Resumen",
+    "crumbs": [
+      "Cierre",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Repaso y estado del arte</span>"
     ]
   },
   {
@@ -1539,7 +1550,7 @@
     "href": "curso/calendario.html",
     "title": "Calendario",
     "section": "",
-    "text": "Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.\n\n\n\n\n\n\n\n\n\n\n\nSem.\nCapítulo\nEvaluación\n\n\n\n\n1\n1 · Señal y ruido\ndiagnóstico (no evaluado)\n\n\n2\n2 · Verosimilitud y MLE\n\n\n\n3\n3 · Gradientes y descenso\nS2: práctica de álgebra matricial\n\n\n4\n4 · Forma matricial\nse publica el simulacro del parcial\n\n\n5\n5 · De los datos crudos a X\nS3 completa para el pipeline canónico\n\n\n6\n6 · Validación y métricas\n\n\n\n7\n7 · Sesgo y varianza\nParcial 1 (20 %), S3\n\n\n8\n8 · Regularización\nse publica el enunciado del proyecto\n\n\n9\n9 · Selección y reducción\nformación de equipos\n\n\n10\n10 · Métodos no lineales\ntaller de agentes I (S3), con la higiene\n\n\n11\n11 · Árboles de regresión\ncheckpoint del proyecto (S3)\n\n\n12\n12 · Ensembles\ntaller de agentes II (S3)\n\n\n13\n13 · Proyecto\nEntrega y defensa (20 %)\n\n\n14\n14 · GLM\n\n\n\n15\n15 · Decisión e incertidumbre\nsimulacro del examen final\n\n\n\nLas semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se toca nada más.\n\n\n\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.\n\n\n\n\n\n\n\n\n\n\n\nSem.\nCapítulo\nEvaluación\n\n\n\n\n1\n1 · Señal y ruido\ndiagnóstico (no evaluado)\n\n\n2\n2 · Verosimilitud y MLE\n\n\n\n3\n3 · Gradientes y descenso\nS2: práctica de álgebra matricial\n\n\n4\n4 · Forma matricial\nse publica el simulacro del parcial\n\n\n5\n5 · De los datos crudos a X\nS3 completa para el pipeline canónico\n\n\n6\n6 · Validación y métricas\n\n\n\n7\n7 · Sesgo y varianza\nParcial 1 (20 %), S3\n\n\n8\n8 · Regularización\nse publica el enunciado del proyecto\n\n\n9\n9 · Selección y reducción\nformación de equipos\n\n\n10\n10 · Métodos no lineales\ntaller de agentes I (S3), con la higiene\n\n\n11\n11 · Árboles de regresión\ncheckpoint del proyecto (S3)\n\n\n12\n12 · GLM\ntaller de agentes II (S3)\n\n\n13\n13 · Proyecto\nEntrega y defensa (20 %)\n\n\n14\n14 · Decisión e incertidumbre\n\n\n\n15\n15 · Repaso y estado del arte\nsimulacro del examen final\n\n\n\nLas semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se toca nada más.\n\n\n\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Apéndices",
       "Calendario"
@@ -1550,7 +1561,7 @@
     "href": "curso/evaluacion.html",
     "title": "Evaluación",
     "section": "",
-    "text": "Cómo sale la nota de actas\nEvaluación continua 40 % + examen final 60 %. Hace falta un 5/10 en el examen final para promediar. Asistencia obligatoria (80 %).\nLos parciales no son liberatorios. La evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio.\nEstas reglas proceden de la guía docente oficial.\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\nEl examen final es de cátedra: evalúa todos los contenidos del programa.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Cómo sale la nota de actas\nEvaluación continua 40 % + examen final 60 %. Hace falta un 5/10 en el examen final para promediar. Asistencia obligatoria (80 %).\nLos parciales no son liberatorios. La evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio.\nEstas reglas proceden de la guía docente oficial.\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\nEl examen final evalúa todos los contenidos del programa y lo redacta el profesor de la asignatura. Por tanto, la lista de demostraciones examinables del índice de resultados es un compromiso, no una orientación: el bloque B saldrá de ahí y de ningún otro sitio.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Apéndices",
       "Evaluación"
@@ -1781,7 +1792,7 @@
     "href": "curso/indice-resultados.html",
     "title": "Índice de resultados",
     "section": "",
-    "text": "Capítulo 1 · Señal y ruido\nTodos los resultados numerados del curso. El bloque B de los exámenes sale de aquí, y de ningún otro sitio.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Capítulo 1 · Señal y ruido\nTodos los resultados numerados del curso. El bloque B de los exámenes sale de aquí, y de ningún otro sitio. El examen lo redacta el profesor de la asignatura, así que esta lista es un compromiso.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Apéndices",
       "Índice de resultados"
@@ -1825,7 +1836,7 @@
     "href": "curso/trazabilidad.html#temario",
     "title": "Trazabilidad con la guía docente",
     "section": "",
-    "text": "Programa oficial\nSemanas\n\n\n\n\nT1 · Conceptos básicos de aprendizaje automático\n1, 2\n\n\nT1 · Estado del arte\n1 (breve), 15 (completo)\n\n\nT2 · Análisis y tratamiento de datos\n5\n\n\nT2 · Reducción de dimensiones y selección de variables\n8, 9\n\n\nT2 · Validación y métricas de evaluación\n6, 7\n\n\nT3 · Descenso de gradiente\n3, 4, 12\n\n\nT3 · Métodos lineales\n2, 4, 8, 14\n\n\nT3 · Métodos no lineales\n10, 11, 12\n\n\nT3 · Métodos basados en reglas\n11, 12\n\n\nT4 · Librerías de programación\ntransversal (los 15 laboratorios); consolidado en 5 y 12\n\n\nT4 · Casos de uso y aplicaciones\n12, 14, 15\n\n\n+ Agentes de IA para implementar modelos\n5 (higiene), 10, 12, proyecto",
+    "text": "Programa oficial\nSemanas\n\n\n\n\nT1 · Conceptos básicos de aprendizaje automático\n1, 2\n\n\nT1 · Estado del arte\n1 (breve), 15 (completo)\n\n\nT2 · Análisis y tratamiento de datos\n5\n\n\nT2 · Reducción de dimensiones y selección de variables\n8, 9\n\n\nT2 · Validación y métricas de evaluación\n6, 7\n\n\nT3 · Descenso de gradiente\n3, 4, 12\n\n\nT3 · Métodos lineales\n2, 4, 8, 12\n\n\nT3 · Métodos no lineales\n10, 11\n\n\nT3 · Métodos basados en reglas\n11\n\n\nT4 · Librerías de programación\ntransversal (los 15 laboratorios); consolidado en 5 y 12\n\n\nT4 · Casos de uso y aplicaciones\n12, 14, 15\n\n\n+ Agentes de IA para implementar modelos\n10 (taller I con la higiene), 12 (taller II), proyecto",
     "crumbs": [
       "Apéndices",
       "Trazabilidad con la guía docente"

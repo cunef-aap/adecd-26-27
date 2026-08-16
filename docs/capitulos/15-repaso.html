@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Del valor puntual a la decisión – Aprendizaje Automático: Predicción</title>
+<title>16&nbsp; Repaso y estado del arte – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../problemas/index.html" rel="next">
-<link href="../capitulos/14-glm.html" rel="prev">
+<link href="../capitulos/14-decision.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -76,35 +76,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -118,7 +89,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/13-proyecto.html">Más allá del ruido gaussiano</a></li><li class="breadcrumb-item"><a href="../capitulos/15-decision.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/15-repaso.html">Cierre</a></li><li class="breadcrumb-item"><a href="../capitulos/15-repaso.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -267,12 +238,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-ensembles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ensembles: bagging, random forest y boosting</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -286,20 +251,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../capitulos/12-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-decision.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+  <a href="../capitulos/14-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,12 +272,29 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Problemas</span></a>
+ <span class="menu-text">Cierre</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/15-repaso.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Problemas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../problemas/index.html" class="sidebar-item-text sidebar-link">
@@ -323,13 +305,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/guia.html" class="sidebar-item-text sidebar-link">
@@ -397,9 +379,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
-  <li><a href="#de-dónde-sale-el-material" id="toc-de-dónde-sale-el-material" class="nav-link" data-scroll-target="#de-dónde-sale-el-material">De dónde sale el material</a></li>
-  <li><a href="#resultados-que-deben-aparecer" id="toc-resultados-que-deben-aparecer" class="nav-link" data-scroll-target="#resultados-que-deben-aparecer">Resultados que deben aparecer</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#el-esquema-relleno" id="toc-el-esquema-relleno" class="nav-link" data-scroll-target="#el-esquema-relleno">El esquema, relleno</a></li>
+  <li><a href="#estado-del-arte" id="toc-estado-del-arte" class="nav-link" data-scroll-target="#estado-del-arte">Estado del arte</a></li>
+  <li><a href="#límites-y-responsabilidad" id="toc-límites-y-responsabilidad" class="nav-link" data-scroll-target="#límites-y-responsabilidad">Límites y responsabilidad</a></li>
+  <li><a href="#simulacro-del-examen-final" id="toc-simulacro-del-examen-final" class="nav-link" data-scroll-target="#simulacro-del-examen-final">Simulacro del examen final</a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
@@ -407,10 +390,10 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/13-proyecto.html">Más allá del ruido gaussiano</a></li><li class="breadcrumb-item"><a href="../capitulos/15-decision.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/15-repaso.html">Cierre</a></li><li class="breadcrumb-item"><a href="../capitulos/15-repaso.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></h1>
-<p class="subtitle lead">Costes asimétricos, cuantiles e intervalos conformes</p>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></h1>
+<p class="subtitle lead">Cierre del curso y preparación del examen final</p>
 </div>
 
 
@@ -427,7 +410,7 @@ window.Quarto = {
 </header>
 
 
-<p><em><a href="https://colab.research.google.com/github/roinaveiro/aap-cunef/blob/main/docs/live-notebooks/15-decision.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
+<p><em><a href="https://colab.research.google.com/github/cunef-aap-fall2026/cunef-aap-fall2026.github.io/blob/main/docs/live-notebooks/15-repaso.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -438,32 +421,42 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté completo desde el primer día.</p>
+<p>Se escribe en septiembre.</p>
 </div>
 </div>
 <section id="planteamiento" class="level2">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
-<!-- TODO: un párrafo enlazando con el capítulo anterior. -->
+<!-- TODO: cerrar el curso con la tabla que resume las quince semanas. -->
 </section>
-<section id="de-dónde-sale-el-material" class="level2">
-<h2 class="anchored" data-anchor-id="de-dónde-sale-el-material">De dónde sale el material</h2>
-<ul>
-<li>Chodrow <code>chapters/12-decision-theory.qmd</code>: portar el <strong>argumento</strong> (coste como criterio de selección de modelo, no como apéndice) de clasificación a regresión.</li>
-<li>Angelopoulos &amp; Bates para conformal split.</li>
-</ul>
+<section id="el-esquema-relleno" class="level2">
+<h2 class="anchored" data-anchor-id="el-esquema-relleno">El esquema, relleno</h2>
+<!-- TODO: una tabla con una fila por modelo visto (MCO, ridge, lasso, PCR, spline,
+     árbol, Poisson, cuantílica) y cuatro columnas: clase de hipótesis, modelo de ruido,
+     pérdida que se deduce, optimizador. Es el resumen del curso en una página y la
+     forma en que conviene estudiar para el final. -->
 </section>
-<section id="resultados-que-deben-aparecer" class="level2">
-<h2 class="anchored" data-anchor-id="resultados-que-deben-aparecer">Resultados que deben aparecer</h2>
-<ul>
-<li>El minimizador de <span class="math inline">\(\mathbb{E}\!\left[ \left\lvert Y-c \right\rvert \right]\)</span> es la mediana ⟹ pérdida pinball ⟹ regresión cuantílica. Completa <a href="02-verosimilitud.html#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>.</li>
-<li><strong>Conformal split como cálculo examinable</strong>: ordenar los residuos de calibración, tomar el <span class="math inline">\(\lceil(1-\alpha)(n_{\mathrm{cal}}+1)\rceil\)</span>-ésimo, dar <span class="math inline">\(\hat{y}\pm \hat{q}\)</span>.</li>
-<li>Comparar la anchura del intervalo con <span class="math inline">\(\hat{\sigma}\)</span> del capítulo 2: <strong>ningún modelo baja del suelo de ruido</strong>. Cierre del hilo.</li>
-<li>Estado del arte honesto + cierre ético con marco europeo (EU AI Act, RGPD).</li>
-</ul>
+<section id="estado-del-arte" class="level2">
+<h2 class="anchored" data-anchor-id="estado-del-arte">Estado del arte</h2>
+<!-- TODO. Cuatro afirmaciones concretas y defendibles:
+     (a) en datos tabulares, que es lo que verá un graduado en ADE, el boosting sigue
+         ganando a las redes neuronales;
+     (b) donde encaja el aprendizaje profundo: el par de ecuaciones de Chodrow, clásico
+         = minimizar sobre w con phi FIJA, profundo = minimizar sobre w Y phi, es decir
+         "aprender las variables". Conecta con el capítulo 10;
+     (c) por que eso importa en texto e imagen y poco en un CSV de 20.000 filas;
+     (d) que hace posible todo eso: la diferenciacion automatica del capítulo 3. -->
 </section>
-<section id="ejercicios" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
-<!-- TODO: 4-6 ejercicios con solución plegable. -->
+<section id="límites-y-responsabilidad" class="level2">
+<h2 class="anchored" data-anchor-id="límites-y-responsabilidad">Límites y responsabilidad</h2>
+<!-- TODO, 20 min, con marco europeo y no norteamericano: niveles de riesgo del EU AI
+     Act, credit scoring bajo RGPD, precios algorítmicos, y el modelo que se equivoca
+     sistemáticamente en el mismo barrio. -->
+</section>
+<section id="simulacro-del-examen-final" class="level2">
+<h2 class="anchored" data-anchor-id="simulacro-del-examen-final">Simulacro del examen final</h2>
+<!-- TODO: examen completo con la estructura exacta del final (bloques A-D), corregido
+     en clase con la rúbrica en pantalla. Incluye el ejercicio de "este script tiene
+     errores", con al menos dos del tipo que produce un agente. -->
 </section>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
@@ -875,8 +868,8 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../capitulos/14-glm.html" class="pagination-link" aria-label="Cuando el ruido no es gaussiano: GLM">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span>
+      <a href="../capitulos/14-decision.html" class="pagination-link" aria-label="Del valor puntual a la decisión">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -27,12 +27,14 @@ book:
       chapters:
         - capitulos/10-no-lineales.qmd
         - capitulos/11-arboles.qmd
-        - capitulos/12-ensembles.qmd
     - part: "Más allá del ruido gaussiano"
       chapters:
+        - capitulos/12-glm.qmd
         - capitulos/13-proyecto.qmd
-        - capitulos/14-glm.qmd
-        - capitulos/15-decision.qmd
+        - capitulos/14-decision.qmd
+    - part: "Cierre"
+      chapters:
+        - capitulos/15-repaso.qmd
     - part: "Problemas"
       chapters:
         - problemas/index.qmd
