@@ -118,7 +118,8 @@ voraz.
 
 ## Cómo se trabaja
 
-**Tres sesiones de una hora por semana**, con papeles distintos y ninguno intercambiable.
+**Tres sesiones de 55 minutos por semana**, con papeles distintos y ninguno
+intercambiable.
 
 ### S1 · Teoría
 
@@ -127,21 +128,28 @@ Pizarra. **Una demostración por sesión**, entera. Sin ordenador.
 | min | |
 |---|---|
 | 0-5 | Qué usamos de lo anterior |
-| 5-12 | El problema, en palabras, sin símbolos |
-| 12-38 | La demostración |
-| 38-48 | Qué dice el resultado y para qué sirve |
-| 48-56 | El error frecuente de la semana |
-| 56-60 | Qué viene después |
+| 5-11 | El problema, en palabras, sin símbolos |
+| 11-35 | La demostración |
+| 35-44 | Qué dice el resultado y para qué sirve |
+| 44-51 | El error frecuente de la semana |
+| 51-55 | Qué viene después |
 
-### S2 · Problemas
+### S2 · Ejercicios tipo examen
 
-Lápiz y papel. **Aquí es donde se usan las hojas de ejercicios.**
+Lápiz y papel, y **la sesión donde se resuelven ejercicios con la forma exacta del
+examen**. Sigue siempre la misma secuencia: primero se resuelve uno delante de vosotros,
+después lo hacéis, después se corrige.
 
 | min | |
 |---|---|
-| 0-8 | *La derivación de la semana*: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas |
-| 8-45 | La hoja del capítulo, por parejas. El profesor circula |
-| 45-60 | Un ejercicio resuelto en la pizarra **por un estudiante** |
+| 0-7 | *La derivación de la semana*: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas |
+| 7-22 | **El profesor resuelve un ejercicio tipo examen en la pizarra**, razonando en voz alta y diciendo qué puntúa y qué no |
+| 22-42 | Vosotros hacéis el siguiente de la hoja, por parejas. El profesor circula |
+| 42-55 | Corrección en la pizarra, **por un estudiante** |
+
+La colección de [ejercicios tipo examen resueltos](../evaluacion/ejercicios-tipo-examen.qmd)
+recoge los que se van resolviendo en clase, con la solución que se espera y la rúbrica con
+la que se puntúan.
 
 Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un **miniexamen
 cronometrado** de un bloque, corregido acto seguido. No cuenta para la nota: sirve para
@@ -154,8 +162,8 @@ Ordenador. Se completa en directo el cuaderno del capítulo.
 | min | |
 |---|---|
 | 0-5 | Qué vamos a construir |
-| 5-50 | Código en directo. El profesor teclea y los estudiantes teclean |
-| 50-60 | El cuaderno corriendo entero, de arriba abajo |
+| 5-46 | Código en directo. El profesor teclea y los estudiantes teclean |
+| 46-55 | El cuaderno corriendo entero, de arriba abajo |
 
 ## Cómo es el material
 
@@ -203,17 +211,18 @@ todavía está por escribir.
 
 ## Carga de trabajo
 
-6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase,
-de modo que **unas 105 horas son trabajo fuera del aula**: en torno a 7 por semana.
+6 ECTS son 150 horas. Tres sesiones de 55 minutos durante quince semanas son unas
+**41 horas de clase**, de modo que **unas 109 horas son trabajo fuera del aula**: en torno
+a 7 por semana.
 
 | | h/semana |
 |---|---|
 | Leer el capítulo antes de la S1 | 1,5 |
 | Hoja de problemas | 2,0 |
 | Completar el cuaderno después de la S3 | 1,5 |
-| Estudio y repaso | 1,0 |
+| Estudio y repaso | 2,0 |
 | Proyecto (solo semanas 9 a 13) | 2,0 |
-| **Total** | **6** (8 en semanas de proyecto) |
+| **Total** | **7** (9 en semanas de proyecto) |
 
 Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 

@@ -124,7 +124,7 @@
     "href": "capitulos/00-presentacion.html#cómo-se-trabaja",
     "title": "1  Presentación",
     "section": "Cómo se trabaja",
-    "text": "Cómo se trabaja\nTres sesiones de una hora por semana, con papeles distintos y ninguno intercambiable.\n\nS1 · Teoría\nPizarra. Una demostración por sesión, entera. Sin ordenador.\n\n\n\nmin\n\n\n\n\n\n0-5\nQué usamos de lo anterior\n\n\n5-12\nEl problema, en palabras, sin símbolos\n\n\n12-38\nLa demostración\n\n\n38-48\nQué dice el resultado y para qué sirve\n\n\n48-56\nEl error frecuente de la semana\n\n\n56-60\nQué viene después\n\n\n\n\n\nS2 · Problemas\nLápiz y papel. Aquí es donde se usan las hojas de ejercicios.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-8\nLa derivación de la semana: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas\n\n\n8-45\nLa hoja del capítulo, por parejas. El profesor circula\n\n\n45-60\nUn ejercicio resuelto en la pizarra por un estudiante\n\n\n\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un miniexamen cronometrado de un bloque, corregido acto seguido. No cuenta para la nota: sirve para saber cuánto se tarda de verdad.\n\n\nS3 · Laboratorio\nOrdenador. Se completa en directo el cuaderno del capítulo.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-5\nQué vamos a construir\n\n\n5-50\nCódigo en directo. El profesor teclea y los estudiantes teclean\n\n\n50-60\nEl cuaderno corriendo entero, de arriba abajo",
+    "text": "Cómo se trabaja\nTres sesiones de 55 minutos por semana, con papeles distintos y ninguno intercambiable.\n\nS1 · Teoría\nPizarra. Una demostración por sesión, entera. Sin ordenador.\n\n\n\nmin\n\n\n\n\n\n0-5\nQué usamos de lo anterior\n\n\n5-11\nEl problema, en palabras, sin símbolos\n\n\n11-35\nLa demostración\n\n\n35-44\nQué dice el resultado y para qué sirve\n\n\n44-51\nEl error frecuente de la semana\n\n\n51-55\nQué viene después\n\n\n\n\n\nS2 · Ejercicios tipo examen\nLápiz y papel, y la sesión donde se resuelven ejercicios con la forma exacta del examen. Sigue siempre la misma secuencia: primero se resuelve uno delante de vosotros, después lo hacéis, después se corrige.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-7\nLa derivación de la semana: una persona reproduce en la pizarra una demostración elegida al azar entre las de las tres últimas semanas\n\n\n7-22\nEl profesor resuelve un ejercicio tipo examen en la pizarra, razonando en voz alta y diciendo qué puntúa y qué no\n\n\n22-42\nVosotros hacéis el siguiente de la hoja, por parejas. El profesor circula\n\n\n42-55\nCorrección en la pizarra, por un estudiante\n\n\n\nLa colección de ejercicios tipo examen resueltos recoge los que se van resolviendo en clase, con la solución que se espera y la rúbrica con la que se puntúan.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un miniexamen cronometrado de un bloque, corregido acto seguido. No cuenta para la nota: sirve para saber cuánto se tarda de verdad.\n\n\nS3 · Laboratorio\nOrdenador. Se completa en directo el cuaderno del capítulo.\n\n\n\n\n\n\n\nmin\n\n\n\n\n\n0-5\nQué vamos a construir\n\n\n5-46\nCódigo en directo. El profesor teclea y los estudiantes teclean\n\n\n46-55\nEl cuaderno corriendo entero, de arriba abajo",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -144,7 +144,7 @@
     "href": "capitulos/00-presentacion.html#carga-de-trabajo",
     "title": "1  Presentación",
     "section": "Carga de trabajo",
-    "text": "Carga de trabajo\n6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase, de modo que unas 105 horas son trabajo fuera del aula: en torno a 7 por semana.\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n1,0\n\n\nProyecto (solo semanas 9 a 13)\n2,0\n\n\nTotal\n6 (8 en semanas de proyecto)\n\n\n\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
+    "text": "Carga de trabajo\n6 ECTS son 150 horas. Tres sesiones de 55 minutos durante quince semanas son unas 41 horas de clase, de modo que unas 109 horas son trabajo fuera del aula: en torno a 7 por semana.\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n2,0\n\n\nProyecto (solo semanas 9 a 13)\n2,0\n\n\nTotal\n7 (9 en semanas de proyecto)\n\n\n\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -1481,7 +1481,7 @@
     "href": "problemas/index.html",
     "title": "Hojas de problemas",
     "section": "",
-    "text": "Las hojas son el entrenamiento del examen\nUna hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.\nNo hay sesiones aparte de “ejercicios tipo examen”, y no hacen falta: cada hoja está construida con la estructura del examen. Los cinco ejercicios se reparten así:\nLos cuatro primeros son nucleares. Si haces las quince hojas, habrás hecho quince exámenes por bloques antes de sentarte en el primero.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Las hojas son el entrenamiento del examen\nUna hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.\nLos ejercicios se resuelven en clase. La S2 sigue siempre la misma secuencia: el profesor resuelve uno en la pizarra diciendo en voz alta qué puntúa, vosotros hacéis el siguiente por parejas, y se corrige en la pizarra. Lo que quede sin ver, con solución publicada después.\nNo hay sesiones aparte de “ejercicios tipo examen”, y no hacen falta: cada hoja está construida con la estructura del examen. Los cinco ejercicios se reparten así:\nLos cuatro primeros son nucleares. Si sigues las quince S2, habrás visto resolver quince ejercicios de examen y habrás hecho otros tantos antes de sentarte en el primero.\nEn la colección de ejercicios tipo examen resueltos están todos, con la solución que se espera y la rúbrica con la que se puntúan.\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Problemas",
       "Hojas de problemas"
@@ -1547,7 +1547,7 @@
     "href": "curso/guia.html#contrato-de-trabajo",
     "title": "Guía de la asignatura",
     "section": "Contrato de trabajo",
-    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Tres horas semanales durante quince semanas son 45 horas de clase, de modo que unas 105 son trabajo fuera del aula, en torno a 7 por semana:\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n1,0\n\n\nProyecto (solo semanas 9-13)\n2,0\n\n\nTotal fuera de clase\n6 (8 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios, y los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
+    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Tres sesiones de 55 minutos durante quince semanas son unas 41 horas de clase, de modo que unas 109 son trabajo fuera del aula, en torno a 7 por semana:\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n2,0\n\n\nProyecto (solo semanas 9-13)\n2,0\n\n\nTotal fuera de clase\n7 (9 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios, y los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores.\nSe resuelven en clase, en la S2, con la misma secuencia todas las semanas: el profesor resuelve uno en la pizarra razonando en voz alta, los estudiantes hacen el siguiente por parejas, y se corrige en la pizarra. Quien hace las quince hojas llega al examen habiendo visto resolver quince ejercicios de examen y habiendo hecho otros tantos.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
     "crumbs": [
       "Apéndices",
       "Guía de la asignatura"
@@ -1606,6 +1606,50 @@
     "crumbs": [
       "Apéndices",
       "Guía de la asignatura"
+    ]
+  },
+  {
+    "objectID": "evaluacion/ejercicios-tipo-examen.html",
+    "href": "evaluacion/ejercicios-tipo-examen.html",
+    "title": "Ejercicios tipo examen",
+    "section": "",
+    "text": "Bloque A · Conceptuales\nLos ejercicios que se resuelven en la S2, agrupados por bloque del examen. Cada uno lleva la solución que se espera y la rúbrica: qué hace falta escribir para aprobar el apartado y qué lo eleva a la máxima nota.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Apéndices",
+      "Ejercicios tipo examen"
+    ]
+  },
+  {
+    "objectID": "evaluacion/ejercicios-tipo-examen.html#bloque-b-demostraciones",
+    "href": "evaluacion/ejercicios-tipo-examen.html#bloque-b-demostraciones",
+    "title": "Ejercicios tipo examen",
+    "section": "Bloque B · Demostraciones",
+    "text": "Bloque B · Demostraciones",
+    "crumbs": [
+      "Apéndices",
+      "Ejercicios tipo examen"
+    ]
+  },
+  {
+    "objectID": "evaluacion/ejercicios-tipo-examen.html#bloque-c-cálculo-a-mano",
+    "href": "evaluacion/ejercicios-tipo-examen.html#bloque-c-cálculo-a-mano",
+    "title": "Ejercicios tipo examen",
+    "section": "Bloque C · Cálculo a mano",
+    "text": "Bloque C · Cálculo a mano",
+    "crumbs": [
+      "Apéndices",
+      "Ejercicios tipo examen"
+    ]
+  },
+  {
+    "objectID": "evaluacion/ejercicios-tipo-examen.html#bloque-d-encuentra-los-errores",
+    "href": "evaluacion/ejercicios-tipo-examen.html#bloque-d-encuentra-los-errores",
+    "title": "Ejercicios tipo examen",
+    "section": "Bloque D · Encuentra los errores",
+    "text": "Bloque D · Encuentra los errores",
+    "crumbs": [
+      "Apéndices",
+      "Ejercicios tipo examen"
     ]
   },
   {

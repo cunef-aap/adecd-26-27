@@ -24,21 +24,26 @@ requisito de la semana 4 y conviene llegar con él resuelto.
 
 ## Contrato de trabajo
 
-6 ECTS son 150 horas. Tres horas semanales durante quince semanas son **45 horas de
-clase**, de modo que unas **105 son trabajo fuera del aula**, en torno a 7 por semana:
+6 ECTS son 150 horas. Tres sesiones de 55 minutos durante quince semanas son unas
+**41 horas de clase**, de modo que unas **109 son trabajo fuera del aula**, en torno a 7
+por semana:
 
 | | h/semana |
 |---|---|
 | Leer el capítulo antes de la S1 | 1,5 |
 | Hoja de problemas | 2,0 |
 | Completar el cuaderno después de la S3 | 1,5 |
-| Estudio y repaso | 1,0 |
+| Estudio y repaso | 2,0 |
 | Proyecto (solo semanas 9-13) | 2,0 |
-| **Total fuera de clase** | **6** (8 en semanas de proyecto) |
+| **Total fuera de clase** | **7** (9 en semanas de proyecto) |
 
 Cada hoja tiene **cinco ejercicios**, y los cuatro primeros reproducen los bloques A, B,
-C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien
-hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.
+C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores.
+
+**Se resuelven en clase, en la S2**, con la misma secuencia todas las semanas: el profesor
+resuelve uno en la pizarra razonando en voz alta, los estudiantes hacen el siguiente por
+parejas, y se corrige en la pizarra. Quien hace las quince hojas llega al examen habiendo
+visto resolver quince ejercicios de examen y habiendo hecho otros tantos.
 
 Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un
 **miniexamen cronometrado** de un solo bloque, corregido en clase acto seguido. No cuenta
