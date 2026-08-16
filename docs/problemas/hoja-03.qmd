@@ -1,14 +1,45 @@
 # Hoja 3 {.unnumbered}
 
-::: {.callout-warning appearance="simple"}
-En construcción. Los ejercicios base están al final del capítulo 3; esta hoja los amplía
-a 6-8 con solución.
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
 :::
 
-<!-- TODO: 5 ejercicios (3 nucleares + 2 opcionales).
-     Mezcla objetivo por hoja:
-       2 de cálculo a mano (bloque C del examen),
-       2 de demostración corta (bloque B),
-       2 conceptuales con los verbos del banco (bloque A),
-       1 de "encuentra el error" en código impreso (bloque D).
-     Cada uno con ::: {.sol} plegable. -->
+**Esta hoja es distinta.** No sigue la estructura del examen: es práctica de álgebra
+matricial, y ocupa la sesión S2 entera. El motivo es que el capítulo 4 se apoya por
+completo en estas operaciones, y conviene llegar con ellas resueltas.
+
+El material de referencia es el anexo
+[Cálculo y álgebra que vas a necesitar](../curso/algebra.qmd).
+
+::: {.callout-warning appearance="simple"}
+En construcción.
+:::
+
+## 1. Productos y traspuestas
+
+<!-- TODO. Media docena de productos matriz-vector y matriz-matriz a mano, con
+     dimensiones que obliguen a comprobar si el producto está definido. Incluir un
+     caso en que NO lo esté. -->
+
+## 2. La matriz de diseño
+
+<!-- TODO. Construir X a mano a partir de una tabla de 5 observaciones y 2 variables,
+     con columna de unos. Calcular X^T X y X^T y. Comprobar el tamaño de X^T X. -->
+
+## 3. Rango y núcleo
+
+<!-- TODO. Tres matrices; en dos de ellas hay que EXHIBIR el vector del núcleo. Una
+     de ellas debe ser el caso one-hot con columna de unos, que anticipa la trampa
+     de la variable ficticia del capítulo 5. -->
+
+## 4. Gradientes
+
+<!-- TODO. Aplicar @lem-grad-lineal y @lem-grad-cuadratica a casos concretos de
+     tamaño 2 y 3, comprobando componente a componente. -->
+
+## 5. Ampliación
+
+<!-- TODO. Demostrar que X^T X es simétrica y que v^T X^T X v = ||Xv||^2. La segunda
+     es la línea de la que depende todo el capítulo 4. -->

@@ -1,77 +1,221 @@
 # Cálculo y álgebra que vas a necesitar {.unnumbered}
 
-Dos páginas con lo que este curso da por sabido en matemáticas. Si algo de aquí te suena
-lejano, conviene repasarlo antes de la primera sesión.
-
-## Álgebra lineal
-
-**Producto matriz-vector.** Si $\mathbf{X}$ es $n\times m$ y $\mathbf{v}$ es $m\times 1$,
-entonces $\mathbf{X}\mathbf{v}$ es $n\times 1$ y su fila $i$ es
-$\sum_{j} x_{ij}v_j$.
-
-**Traspuesta.** $(\mathbf{A}\mathbf{B})^{\mathsf{T}} = \mathbf{B}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}$.
-
-**Norma euclídea.** $\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_j v_j^2$.
-Es cero si y solo si $\mathbf{v} = \mathbf{0}$. Esta propiedad se usa en el capítulo 4 para
-caracterizar cuándo la solución de mínimos cuadrados es única.
-
-**Dependencia lineal.** Una columna de $\mathbf{X}$ es combinación lineal de las demás si
-existe $\mathbf{v} \neq \mathbf{0}$ con $\mathbf{X}\mathbf{v} = \mathbf{0}$. Cuando no
-existe tal $\mathbf{v}$, decimos que $\mathbf{X}$ tiene **rango completo por columnas**.
-
-## Cálculo
-
-**Derivada parcial.** Se deriva respecto de una variable tratando las demás como
-constantes.
-
-**Gradiente.** El vector de todas las parciales. Apunta en la dirección de máximo
-crecimiento.
-
-**Regla de la cadena.** $\frac{d}{dw} g(h(w)) = g'(h(w))\,h'(w)$.
-
-**Dos identidades que usaremos con frecuencia** (capítulo 4):
-$$\nabla(\mathbf{a}^{\mathsf{T}}\mathbf{w}) = \mathbf{a}, \qquad
-  \nabla(\mathbf{w}^{\mathsf{T}}\mathbf{A}\mathbf{w}) = 2\mathbf{A}\mathbf{w} \ \ (\mathbf{A}\text{ simétrica}).$$
-
-**Condición de primer orden.** En un mínimo, el gradiente se anula. El recíproco es falso.
-
-### Las dos identidades del capítulo 4
-
-Trabajo previo a la sesión de teoría de la semana 4.
-
-::: {#lem-grad-lineal}
-## $\grad(\mathbf{a}\T\coef) = \mathbf{a}$
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
 :::
 
-::: {#lem-grad-cuadratica}
-## $\grad(\coef\T\mathbf{A}\coef) = 2\mathbf{A}\coef$ para $\mathbf{A}$ simétrica
+Todo lo que este curso da por sabido en álgebra lineal y cálculo. No se ve en clase: se
+supone conocido de los cursos previos y se recoge aquí para poder consultarlo. Si algo de
+esto te suena lejano, conviene repasarlo antes de la primera sesión de teoría.
+
+Al final hay un diagnóstico de quince minutos. No cuenta para la nota.
+
+## Vectores
+
+Un vector de $\Real^{m}$ es una columna de $m$ números. Escribimos $\mathbf{v} =
+(v_1,\dots,v_m)\T$, donde la $\T$ indica traspuesta, es decir, que lo escrito en fila se
+lee como columna.
+
+**Producto escalar.** Para $\mathbf{u}, \mathbf{v} \in \Real^m$,
+$$
+\mathbf{u}\T\mathbf{v} = \sum_{j=1}^{m} u_j v_j .
+$$
+Es un número, no un vector. Y es simétrico: $\mathbf{u}\T\mathbf{v} = \mathbf{v}\T\mathbf{u}$.
+
+**Norma euclídea.**
+$$
+\norm{\mathbf{v}}^2 = \mathbf{v}\T\mathbf{v} = \sum_{j=1}^{m} v_j^2 .
+$$
+
+De aquí sale la propiedad que más se usa en el curso, y conviene aislarla:
+
+::: {#lem-norma-cero}
+## Una norma se anula solo en el vector nulo
+
+$\norm{\mathbf{v}}^2 = 0$ si y solo si $\mathbf{v} = \zerov$.
 :::
 
 ::: {.proof}
-<!-- TODO(D6, 15 min): desarrollar la suma doble, derivar respecto de w_j y RECOGER LOS
-     DOS TERMINOS en los que aparece j (el de la fila y el de la columna). Ese "dos"
-     es de donde sale el 2. En el caso general el resultado es (A + A^T) w. -->
+$\norm{\mathbf{v}}^2$ es una suma de cuadrados, luego cada sumando es no negativo. Una
+suma de términos no negativos vale cero solo si todos valen cero, es decir, si $v_j = 0$
+para todo $j$.
+:::
 
+Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución
+de mínimos cuadrados (capítulo 4) y la trampa de la variable ficticia (capítulo 5).
+
+## Matrices
+
+Una matriz $\X$ de dimensión $\nobs \times m$ tiene $\nobs$ filas y $m$ columnas. En este
+curso las filas son observaciones y las columnas variables.
+
+**Producto matriz por vector.** Si $\X$ es $\nobs \times m$ y $\mathbf{v}$ es $m \times 1$,
+entonces $\X\mathbf{v}$ es $\nobs \times 1$, y su componente $i$-ésima es
+$$
+(\X\mathbf{v})_i = \sum_{j=1}^{m} x_{ij} v_j = \xv_i\T\mathbf{v},
+$$
+donde $\xv_i$ es la fila $i$ de $\X$ escrita como columna. Dicho en palabras: **cada
+componente del resultado es el producto escalar de una fila por el vector**. En el curso,
+$\X\coef$ es el vector de las $\nobs$ predicciones.
+
+**Producto de matrices.** $\mathbf{A}\mathbf{B}$ está definido si el número de columnas de
+$\mathbf{A}$ coincide con el de filas de $\mathbf{B}$, y entonces
+$(\mathbf{A}\mathbf{B})_{ik} = \sum_j a_{ij} b_{jk}$. No es conmutativo.
+
+**Traspuesta.** $(\mathbf{A}\T)_{ij} = a_{ji}$, y
+
+$$
+(\mathbf{A}\mathbf{B})\T = \mathbf{B}\T\mathbf{A}\T, \qquad (\mathbf{A}\T)\T = \mathbf{A}.
+$$
+
+Una matriz es **simétrica** si $\mathbf{A}\T = \mathbf{A}$.
+
+::: {#exr-xtx-simetrica}
+Comprueba que $\Xt\X$ es siempre simétrica, sea cual sea $\X$. *(Una línea, usando la
+regla de la traspuesta de un producto.)*
+:::
+
+## La matriz de diseño del curso
+
+Conviene fijarla desde ahora porque aparece en todos los capítulos. Con $\nobs$
+observaciones y $\nfeat$ variables,
+$$
+\X = \begin{pmatrix}
+1 & x_{11} & \cdots & x_{1\nfeat} \\
+1 & x_{21} & \cdots & x_{2\nfeat} \\
+\vdots & \vdots & & \vdots \\
+1 & x_{\nobs 1} & \cdots & x_{\nobs \nfeat}
+\end{pmatrix} \in \Real^{\nobs \times (\nfeat+1)} .
+$$
+
+La primera columna es de unos. Sirve para que el término independiente $\coefzero$ entre
+en el vector de coeficientes y no haya que arrastrarlo aparte: con ese convenio,
+$\X\coef$ ya incluye el término independiente.
+
+Nótese el tamaño de $\Xt\X$: es $(\nfeat+1)\times(\nfeat+1)$, **no** $\nobs\times\nobs$. Es
+decir, del tamaño del número de variables, no del de observaciones.
+
+## Dependencia lineal, rango y núcleo
+
+Las columnas de $\X$ son **linealmente dependientes** si alguna de ellas se puede escribir
+como combinación de las demás. De forma equivalente, y esta es la formulación que usamos:
+
+::: {#def-nucleo}
+## Núcleo
+
+El **núcleo** de $\X$ es el conjunto de vectores que $\X$ envía al cero:
+$\kernelop(\X) = \{\mathbf{v} : \X\mathbf{v} = \zerov\}$. Las columnas de $\X$ son
+linealmente independientes si y solo si $\kernelop(\X) = \{\zerov\}$, y en ese caso
+decimos que $\X$ tiene **rango completo por columnas**, o $\rank \X = \nfeat+1$.
+:::
+
+Para que el rango sea completo hace falta, como mínimo, $\nobs \geq \nfeat+1$: no puede
+haber más columnas independientes que filas.
+
+::: {.callout-tip appearance="simple"}
+## Cómo se demuestra que hay dependencia
+
+No en abstracto: **exhibiendo el vector**. Para probar que unas columnas son dependientes,
+se escribe un $\mathbf{v} \neq \zerov$ concreto y se comprueba que $\X\mathbf{v} = \zerov$.
+Así se hace en el capítulo 5 con la trampa de la variable ficticia.
+:::
+
+::: {#exr-nucleo}
+Sea $\X = \begin{pmatrix} 1 & 2 \\ 2 & 4 \\ 3 & 6\end{pmatrix}$. Exhibe un
+$\mathbf{v} \neq \zerov$ con $\X\mathbf{v} = \zerov$ y di cuál es el rango de $\X$.
+:::
+
+## Resolver un sistema, no invertir la matriz
+
+Si $\mathbf{A}$ es cuadrada y de rango completo, el sistema $\mathbf{A}\mathbf{z} =
+\mathbf{b}$ tiene solución única. Formalmente se escribe $\mathbf{z} =
+\mathbf{A}^{-1}\mathbf{b}$, pero **en el ordenador nunca se calcula la inversa**: se
+resuelve el sistema directamente, que es más rápido y numéricamente más estable.
+
+| Matemáticas | Código |
+|---|---|
+| $\mathbf{z} = \mathbf{A}^{-1}\mathbf{b}$ | `np.linalg.solve(A, b)` |
+| mínimos cuadrados | `np.linalg.lstsq(X, y, rcond=None)` |
+| $\rank \X$ | `np.linalg.matrix_rank(X)` |
+
+## Derivadas parciales y gradiente
+
+Sea $\model: \Real^{m} \to \Real$. La **derivada parcial** respecto de $w_j$ se obtiene
+derivando en $w_j$ y tratando las demás coordenadas como constantes. El **gradiente** es
+el vector que las apila:
+$$
+\grad \model(\coef) = \left( \pd{\model}{w_1}, \dots, \pd{\model}{w_m} \right)\T .
+$$
+
+**Regla de la cadena**, en la forma que usaremos: si $\model(\coef) = g(h(\coef))$ con
+$h: \Real^m \to \Real$ y $g:\Real\to\Real$, entonces
+$\grad \model(\coef) = g'(h(\coef))\, \grad h(\coef)$.
+
+**Condición de primer orden.** Si $\coef^\star$ es un mínimo local de una función
+diferenciable, entonces $\grad \model(\coef^\star) = \zerov$. El recíproco es falso:
+$w^3$ tiene derivada nula en $0$ y no hay ahí ni mínimo ni máximo.
+
+## Las dos identidades del capítulo 4
+
+Son trabajo previo a la sesión de teoría de la semana 4. Con ellas, el gradiente del
+riesgo sale en tres líneas; sin ellas, la sesión no cabe.
+
+::: {#lem-grad-lineal}
+## Gradiente de una forma lineal
+
+Para $\mathbf{a} \in \Real^{m}$ fijo, $\grad\left(\mathbf{a}\T\coef\right) = \mathbf{a}$.
+:::
+
+::: {.proof}
+Escribimos $\mathbf{a}\T\coef = \sum_{k=1}^{m} a_k w_k$. Al derivar respecto de $w_j$,
+todos los sumandos con $k \neq j$ son constantes y desaparecen, y queda $a_j$. Apilando
+las $m$ derivadas parciales se obtiene $\mathbf{a}$.
+:::
+
+::: {#lem-grad-cuadratica}
+## Gradiente de una forma cuadrática
+
+Para $\mathbf{A}$ simétrica, $\grad\left(\coef\T\mathbf{A}\coef\right) = 2\mathbf{A}\coef$.
+:::
+
+::: {.proof}
+Desarrollamos la forma cuadrática como suma doble:
+$$
+\coef\T\mathbf{A}\coef = \sum_{k=1}^{m}\sum_{l=1}^{m} w_k\, a_{kl}\, w_l .
+$$
+Al derivar respecto de $w_j$, sobreviven los sumandos en los que aparece $w_j$, y son de
+dos clases: los que tienen $k=j$, que aportan $\sum_l a_{jl} w_l$, y los que tienen $l=j$,
+que aportan $\sum_k w_k a_{kj}$. (El sumando con $k=l=j$ aparece en las dos clases, y así
+debe ser: contiene $w_j^2$ y su derivada es $2a_{jj}w_j$.) Por tanto
+$$
+\pd{}{w_j}\left(\coef\T\mathbf{A}\coef\right) = (\mathbf{A}\coef)_j + (\mathbf{A}\T\coef)_j
+= 2(\mathbf{A}\coef)_j,
+$$
+donde la última igualdad usa que $\mathbf{A}$ es simétrica. Apilando, el resultado.
 :::
 
 ::: {.callout-note appearance="simple"}
-@lem-grad-lineal y @lem-grad-cuadratica son cálculo, no aprendizaje automático. Van al
-anexo y se piden como **trabajo previo**; en clase se usan.
+Sin la hipótesis de simetría el resultado es
+$\grad(\coef\T\mathbf{A}\coef) = (\mathbf{A} + \mathbf{A}\T)\coef$. En el curso siempre
+aplicamos el lema a $\mathbf{A} = \Xt\X$, que es simétrica por @exr-xtx-simetrica.
 :::
 
+## Diagnóstico
 
-## Probabilidad
+Quince minutos, sin ordenador. No cuenta para la nota; sirve para saber de qué punto
+partimos.
 
-Densidad, esperanza, varianza. Densidad normal. Que $\mathbb{E}$ es lineal y
-$\operatorname{Var}(aX) = a^2\operatorname{Var}(X)$. Independencia.
-
-## Diagnóstico (15 minutos, no cuenta para la nota)
-
-1. Escriba la traspuesta de $\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6\end{pmatrix}$.
-2. Con $\mathbf{X} = \begin{pmatrix} 1 & 0 \\ 1 & 1 \\ 1 & 2\end{pmatrix}$, calcule
-   $\mathbf{X}^{\mathsf{T}}\mathbf{X}$.
-3. ¿Cuánto vale $\partial/\partial w$ de $\mathbf{w}^{\mathsf{T}}\mathbf{w}$?
-4. Si $f(x,y) = x^2\sin y + y^3$, calcule $\partial f/\partial x$ y $\partial f/\partial y$.
-5. Exhiba un $\mathbf{v}\neq\mathbf{0}$ con $\mathbf{X}\mathbf{v}=\mathbf{0}$ para
-   $\mathbf{X} = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$.
-6. Si $Z\sim\mathcal{N}(0,1)$, ¿cuánto vale $\mathbb{E}[3Z+2]$? ¿Y $\operatorname{Var}(3Z+2)$?
+1. Escribe la traspuesta de $\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6\end{pmatrix}$.
+2. Con $\X = \begin{pmatrix} 1 & 0 \\ 1 & 1 \\ 1 & 2\end{pmatrix}$, calcula $\Xt\X$ y di
+   de qué tamaño es.
+3. Con la misma $\X$ y $\coef = (2, -1)\T$, calcula $\X\coef$.
+4. ¿Cuánto vale $\grad\left(\coef\T\coef\right)$?
+5. Si $\model(x,y) = x^2\sin y + y^3$, calcula $\pd{\model}{x}$ y $\pd{\model}{y}$.
+6. Exhibe un $\mathbf{v}\neq\zerov$ con $\X\mathbf{v}=\zerov$ para
+   $\X = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$. ¿Cuál es su rango?
+7. Sean $\mathbf{u} = (1,2,2)\T$ y $\mathbf{v} = (3,0,4)\T$. Calcula
+   $\mathbf{u}\T\mathbf{v}$, $\norm{\mathbf{u}}$ y $\norm{\mathbf{v}}$.
+8. Si $\norm{\X\mathbf{v}}^2 = 0$, ¿qué se puede concluir sobre $\X\mathbf{v}$? ¿Y sobre
+   $\mathbf{v}$?

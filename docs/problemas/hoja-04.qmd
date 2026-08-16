@@ -1,14 +1,37 @@
 # Hoja 4 {.unnumbered}
 
-::: {.callout-warning appearance="simple"}
-En construcción. Los ejercicios base están al final del capítulo 4; esta hoja los amplía
-a 6-8 con solución.
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
 :::
 
-<!-- TODO: 5 ejercicios (3 nucleares + 2 opcionales).
-     Mezcla objetivo por hoja:
-       2 de cálculo a mano (bloque C del examen),
-       2 de demostración corta (bloque B),
-       2 conceptuales con los verbos del banco (bloque A),
-       1 de "encuentra el error" en código impreso (bloque D).
-     Cada uno con ::: {.sol} plegable. -->
+Capítulo 4, Forma matricial. Los cuatro primeros ejercicios son nucleares y tienen la
+estructura del examen; el quinto es de ampliación.
+
+::: {.callout-warning appearance="simple"}
+En construcción. El modelo a seguir es la [hoja 1](hoja-01.qmd).
+:::
+
+## 1. Conceptual
+
+<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
+     (define, explica, razona, analiza). -->
+
+## 2. Demostración
+
+<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
+     @thm-ecuaciones-normales o @thm-identidad-fundamental. -->
+
+## 3. Cálculo a mano
+
+<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
+
+## 4. Encuentra los errores
+
+<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
+     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
+
+## 5. Ampliación
+
+<!-- TODO. Opcional, no entra en el examen. -->

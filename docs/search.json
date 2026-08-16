@@ -134,7 +134,7 @@
     "href": "capitulos/00-presentacion.html#evaluación",
     "title": "1  Presentación",
     "section": "Evaluación",
-    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una calificación mínima de 5 sobre 10 para poder aprobar. El bloque B sale de la lista publicada en el índice de resultados, que por tanto es un compromiso y no una orientación.\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\n\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos",
+    "text": "Evaluación\nLa evaluación continua es obligatoria para todo el mundo, incluidos repetidores y estudiantes de intercambio. Los parciales no son liberatorios.\n\n\n\nActividad\nPeso\nCuándo\n\n\n\n\nExamen parcial 1\n20 %\nsemana 7, sesión S3\n\n\nProyecto en colaboración con agentes de IA\n20 %\nsemanas 12 y 13\n\n\nExamen final\n60 %\nconvocatoria ordinaria\n\n\n\nEl examen final evalúa todo el programa, lo redacta el profesor de la asignatura y requiere una calificación mínima de 5 sobre 10 para poder aprobar. El bloque B sale de la lista publicada en el índice de resultados, que por tanto es un compromiso y no una orientación.\n\nCómo sale la nota de actas\n\n\n\n\n\n\n\nSituación\nNota en actas\n\n\n\n\nExamen final \\(\\geq 5\\)\n40 % continua + 60 % final\n\n\nExamen final \\(&lt; 5\\)\nla nota del examen final\n\n\nNo se presenta al examen final\nla nota de la continua, ponderada al 40 %\n\n\nNo ha calificado ninguna prueba\nNo Presentado\n\n\n\nEn convocatoria extraordinaria, la nota de evaluación continua puede sustituirse, cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen final de la convocatoria ordinaria (60 %).\n\n\nEstructura de los exámenes\nEl parcial y el final tienen la misma estructura, de modo que el parcial funcione como ensayo del final:\n\n\n\n\n\n\n\n\nBloque\nPeso\nQué se pide\n\n\n\n\nA\n30 %\nPreguntas conceptuales cortas\n\n\nB\n25 %\nUna demostración, del índice de resultados\n\n\nC\n25 %\nCálculo a mano sobre una tabla pequeña\n\n\nD\n20 %\n“Este script tiene errores”: encontrarlos y justificarlos\n\n\n\nLas hojas de problemas semanales reproducen esa misma estructura, de modo que la preparación del examen es el trabajo ordinario del curso y no una fase aparte.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
     ]
@@ -538,7 +538,7 @@
     "href": "capitulos/04-forma-matricial.html#preparativos",
     "title": "5  Forma matricial y ecuaciones normales",
     "section": "Preparativos",
-    "text": "Preparativos\n\nDefinición 5.1 (Matriz de diseño) \\(\\mathbf{X}\\in \\mathbb{R}^{n\\times (p+1)}\\) con primera columna de unos, de modo que \\(x_{i0} = 1\\) y el término independiente queda absorbido en \\(\\boldsymbol{w}\\). El score es \\(s_i = \\mathbf{x}_i^{\\mathsf{T}}\\boldsymbol{w}\\). Este convenio se mantiene en el resto del curso.\n\n\nProposición 5.1 (Riesgo en forma matricial) \\(\\displaystyle \\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\left\\lVert \\mathbf{X}\\boldsymbol{w}- \\mathbf{y} \\right\\rVert^2\\).\n\n\n\n\n\n\n\nNotaDos identidades, del anexo\n\n\n\n\\(\\nabla(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}) = \\mathbf{a}\\) (Lema 1) y \\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}) = 2\\mathbf{A}\\boldsymbol{w}\\) para \\(\\mathbf{A}\\) simétrica (Lema 2). Son cálculo, no aprendizaje automático: están demostradas en el anexo de cálculo y álgebra y se piden como trabajo previo a esta sesión.\n\n\n\nObservación 5.1. \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es simétrica y de tamaño \\((p+1)\\times(p+1)\\), no \\(n\\times n\\).",
+    "text": "Preparativos\n\nDefinición 5.1 (Matriz de diseño) \\(\\mathbf{X}\\in \\mathbb{R}^{n\\times (p+1)}\\) con primera columna de unos, de modo que \\(x_{i0} = 1\\) y el término independiente queda absorbido en \\(\\boldsymbol{w}\\). El score es \\(s_i = \\mathbf{x}_i^{\\mathsf{T}}\\boldsymbol{w}\\). Este convenio se mantiene en el resto del curso.\n\n\nProposición 5.1 (Riesgo en forma matricial) \\(\\displaystyle \\hat{R}(\\boldsymbol{w}) = \\frac{1}{n}\\left\\lVert \\mathbf{X}\\boldsymbol{w}- \\mathbf{y} \\right\\rVert^2\\).\n\n\n\n\n\n\n\nNotaDos identidades, del anexo\n\n\n\n\\(\\nabla(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}) = \\mathbf{a}\\) (Lema 2) y \\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}) = 2\\mathbf{A}\\boldsymbol{w}\\) para \\(\\mathbf{A}\\) simétrica (Lema 3). Son cálculo, no aprendizaje automático: están demostradas en el anexo de cálculo y álgebra y se piden como trabajo previo a esta sesión.\n\n\n\nObservación 5.1. \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es simétrica y de tamaño \\((p+1)\\times(p+1)\\), no \\(n\\times n\\).",
     "crumbs": [
       "Fundamentos",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Forma matricial y ecuaciones normales</span>"
@@ -1451,7 +1451,40 @@
     "href": "problemas/index.html",
     "title": "Hojas de problemas",
     "section": "",
-    "text": "Una hoja por capítulo, para la sesión S2 (lápiz y papel). Las soluciones se publican después de la sesión.\n\n\n\nHoja\nCapítulo\nEstado\n\n\n\n\n1\nSeñal y ruido\nesqueleto\n\n\n2\nVerosimilitud y MLE\nesqueleto\n\n\n3\nGradientes\nesqueleto\n\n\n4\nForma matricial\nesqueleto\n\n\n5\nDatos\nesqueleto\n\n\n6\nValidación y métricas\nesqueleto\n\n\n\nCada hoja tiene cinco ejercicios: tres marcados como nucleares, que son del tipo que entra en el examen, y dos opcionales.\n\n\n\n\n\n\nEste es el activo más caro de construir de todo el curso y el que ninguna de las dos fuentes aporta: Chodrow publica tres ejercicios en toda la primera mitad, y el curso anterior publicaba enunciados sin soluciones por política. Todo esto es material nuevo.\n\n\n\n\n\n\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Las hojas son el entrenamiento del examen\nUna hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.\nNo hay sesiones aparte de “ejercicios tipo examen”, y no hacen falta: cada hoja está construida con la estructura del examen. Los cinco ejercicios se reparten así:\nLos cuatro primeros son nucleares. Si haces las quince hojas, habrás hecho quince exámenes por bloques antes de sentarte en el primero.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hojas de problemas"
+    ]
+  },
+  {
+    "objectID": "problemas/index.html#las-hojas-son-el-entrenamiento-del-examen",
+    "href": "problemas/index.html#las-hojas-son-el-entrenamiento-del-examen",
+    "title": "Hojas de problemas",
+    "section": "",
+    "text": "Ejercicio\nBloque del examen\nQué entrena\n\n\n\n\n1\nA\nPregunta conceptual corta: define, explica, razona, analiza\n\n\n2\nB\nUna demostración del índice de resultados\n\n\n3\nC\nCálculo a mano sobre una tabla pequeña\n\n\n4\nD\n“Este script tiene errores”: encontrarlos y justificarlos\n\n\n5\n\nAmpliación, opcional. No entra en el examen",
+    "crumbs": [
+      "Problemas",
+      "Hojas de problemas"
+    ]
+  },
+  {
+    "objectID": "problemas/index.html#calibración-con-reloj",
+    "href": "problemas/index.html#calibración-con-reloj",
+    "title": "Hojas de problemas",
+    "section": "Calibración con reloj",
+    "text": "Calibración con reloj\nTres veces en el curso, los últimos 20 minutos de la S2 son un miniexamen cronometrado: un solo bloque, en silencio, corregido en clase inmediatamente después.\n\n\n\nSemana\nBloque\nSobre\n\n\n\n\n6\nB, una demostración\ncapítulos 1 a 5\n\n\n10\nC + D\ncapítulos 6 a 9\n\n\n14\nB + C\ncapítulos 10 a 13\n\n\n\nNo cuentan para la nota. Sirven para saber cuánto se tarda de verdad, que es lo que ninguna hoja sin reloj enseña.\nAdemás hay dos simulacros completos: el del parcial, publicado con solución en la semana 4, y el del examen final, en la semana 15.",
+    "crumbs": [
+      "Problemas",
+      "Hojas de problemas"
+    ]
+  },
+  {
+    "objectID": "problemas/index.html#las-hojas",
+    "href": "problemas/index.html#las-hojas",
+    "title": "Hojas de problemas",
+    "section": "Las hojas",
+    "text": "Las hojas\n\n\n\nHoja\nCapítulo\nEstado\n\n\n\n\n1\nSeñal y ruido\nescrita\n\n\n2\nVerosimilitud y MLE\nesqueleto\n\n\n3\nGradientes\npráctica de álgebra matricial\n\n\n4\nForma matricial\nesqueleto\n\n\n5\nDatos\nesqueleto\n\n\n6\nValidación y métricas\nesqueleto\n\n\n\n\n\n\n\n\n\nLas soluciones se publican después de la sesión, no antes.",
     "crumbs": [
       "Problemas",
       "Hojas de problemas"
@@ -1484,7 +1517,7 @@
     "href": "curso/guia.html#contrato-de-trabajo",
     "title": "Guía de la asignatura",
     "section": "Contrato de trabajo",
-    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:\n\n\n\n\nh/semana\n\n\n\n\nCompletar el cuaderno tras el laboratorio\n1,5\n\n\nHoja de problemas\n1,0\n\n\nLeer el capítulo\n1,0\n\n\nProyecto (solo semanas 9-13)\n1,5\n\n\nTotal fuera de clase\n~5,0 (6,5 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios: tres nucleares, que son los del examen, y dos opcionales.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
+    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Unas 67 son presenciales y el resto es trabajo autónomo:\n\n\n\n\nh/semana\n\n\n\n\nCompletar el cuaderno tras el laboratorio\n1,5\n\n\nHoja de problemas\n1,0\n\n\nLeer el capítulo\n1,0\n\n\nProyecto (solo semanas 9-13)\n1,5\n\n\nTotal fuera de clase\n~5,0 (6,5 en semanas de proyecto)\n\n\n\nCada hoja tiene cinco ejercicios, y los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
     "crumbs": [
       "Apéndices",
       "Guía de la asignatura"
@@ -1550,7 +1583,7 @@
     "href": "curso/calendario.html",
     "title": "Calendario",
     "section": "",
-    "text": "Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.\n\n\n\n\n\n\n\n\n\n\n\nSem.\nCapítulo\nEvaluación\n\n\n\n\n1\n1 · Señal y ruido\ndiagnóstico (no evaluado)\n\n\n2\n2 · Verosimilitud y MLE\n\n\n\n3\n3 · Gradientes y descenso\nS2: práctica de álgebra matricial\n\n\n4\n4 · Forma matricial\nse publica el simulacro del parcial\n\n\n5\n5 · De los datos crudos a X\nS3 completa para el pipeline canónico\n\n\n6\n6 · Validación y métricas\n\n\n\n7\n7 · Sesgo y varianza\nParcial 1 (20 %), S3\n\n\n8\n8 · Regularización\nse publica el enunciado del proyecto\n\n\n9\n9 · Selección y reducción\nformación de equipos\n\n\n10\n10 · Métodos no lineales\ntaller de agentes I (S3), con la higiene\n\n\n11\n11 · Árboles de regresión\ncheckpoint del proyecto (S3)\n\n\n12\n12 · GLM\ntaller de agentes II (S3)\n\n\n13\n13 · Proyecto\nEntrega y defensa (20 %)\n\n\n14\n14 · Decisión e incertidumbre\n\n\n\n15\n15 · Repaso y estado del arte\nsimulacro del examen final\n\n\n\nLas semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se toca nada más.\n\n\n\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.\n\n\n\n\n\n\n\n\n\n\n\nSem.\nCapítulo\nEvaluación\n\n\n\n\n1\n1 · Señal y ruido\ndiagnóstico (no evaluado)\n\n\n2\n2 · Verosimilitud y MLE\n\n\n\n3\n3 · Gradientes y descenso\nS2: práctica de álgebra matricial\n\n\n4\n4 · Forma matricial\nse publica el simulacro del parcial\n\n\n5\n5 · De los datos crudos a X\nS3 completa para el pipeline canónico\n\n\n6\n6 · Validación y métricas\nminiexamen cronometrado (S2, 20 min)\n\n\n7\n7 · Sesgo y varianza\nParcial 1 (20 %), S3\n\n\n8\n8 · Regularización\nse publica el enunciado del proyecto\n\n\n9\n9 · Selección y reducción\nformación de equipos\n\n\n10\n10 · Métodos no lineales\ntaller de agentes I (S3); miniexamen (S2)\n\n\n11\n11 · Árboles de regresión\ncheckpoint del proyecto (S3)\n\n\n12\n12 · GLM\ntaller de agentes II (S3)\n\n\n13\n13 · Proyecto\nEntrega y defensa (20 %)\n\n\n14\n14 · Decisión e incertidumbre\nminiexamen cronometrado (S2)\n\n\n15\n15 · Repaso y estado del arte\nsimulacro del examen final\n\n\n\nLas semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se toca nada más.\n\n\n\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Apéndices",
       "Calendario"
@@ -1671,40 +1704,95 @@
     "href": "curso/algebra.html",
     "title": "Cálculo y álgebra que vas a necesitar",
     "section": "",
-    "text": "Álgebra lineal\nDos páginas con lo que este curso da por sabido en matemáticas. Si algo de aquí te suena lejano, conviene repasarlo antes de la primera sesión.\nProducto matriz-vector. Si \\(\\mathbf{X}\\) es \\(n\\times m\\) y \\(\\mathbf{v}\\) es \\(m\\times 1\\), entonces \\(\\mathbf{X}\\mathbf{v}\\) es \\(n\\times 1\\) y su fila \\(i\\) es \\(\\sum_{j} x_{ij}v_j\\).\nTraspuesta. \\((\\mathbf{A}\\mathbf{B})^{\\mathsf{T}} = \\mathbf{B}^{\\mathsf{T}}\\mathbf{A}^{\\mathsf{T}}\\).\nNorma euclídea. \\(\\lVert \\mathbf{v} \\rVert^2 = \\mathbf{v}^{\\mathsf{T}}\\mathbf{v} = \\sum_j v_j^2\\). Es cero si y solo si \\(\\mathbf{v} = \\mathbf{0}\\). Esta propiedad se usa en el capítulo 4 para caracterizar cuándo la solución de mínimos cuadrados es única.\nDependencia lineal. Una columna de \\(\\mathbf{X}\\) es combinación lineal de las demás si existe \\(\\mathbf{v} \\neq \\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v} = \\mathbf{0}\\). Cuando no existe tal \\(\\mathbf{v}\\), decimos que \\(\\mathbf{X}\\) tiene rango completo por columnas.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Vectores\nTodo lo que este curso da por sabido en álgebra lineal y cálculo. No se ve en clase: se supone conocido de los cursos previos y se recoge aquí para poder consultarlo. Si algo de esto te suena lejano, conviene repasarlo antes de la primera sesión de teoría.\nAl final hay un diagnóstico de quince minutos. No cuenta para la nota.\nUn vector de \\(\\mathbb{R}^{m}\\) es una columna de \\(m\\) números. Escribimos \\(\\mathbf{v} =\n(v_1,\\dots,v_m)^{\\mathsf{T}}\\), donde la \\(^{\\mathsf{T}}\\) indica traspuesta, es decir, que lo escrito en fila se lee como columna.\nProducto escalar. Para \\(\\mathbf{u}, \\mathbf{v} \\in \\mathbb{R}^m\\), \\[\n\\mathbf{u}^{\\mathsf{T}}\\mathbf{v} = \\sum_{j=1}^{m} u_j v_j .\n\\] Es un número, no un vector. Y es simétrico: \\(\\mathbf{u}^{\\mathsf{T}}\\mathbf{v} = \\mathbf{v}^{\\mathsf{T}}\\mathbf{u}\\).\nNorma euclídea. \\[\n\\left\\lVert \\mathbf{v} \\right\\rVert^2 = \\mathbf{v}^{\\mathsf{T}}\\mathbf{v} = \\sum_{j=1}^{m} v_j^2 .\n\\]\nDe aquí sale la propiedad que más se usa en el curso, y conviene aislarla:\nParece trivial, y es la línea de la que dependen la existencia y unicidad de la solución de mínimos cuadrados (capítulo 4) y la trampa de la variable ficticia (capítulo 5).\n© Roi Naveiro, CUNEF Universidad, 2026",
     "crumbs": [
       "Apéndices",
       "Cálculo y álgebra que vas a necesitar"
     ]
   },
   {
-    "objectID": "curso/algebra.html#cálculo",
-    "href": "curso/algebra.html#cálculo",
+    "objectID": "curso/algebra.html#vectores",
+    "href": "curso/algebra.html#vectores",
     "title": "Cálculo y álgebra que vas a necesitar",
-    "section": "Cálculo",
-    "text": "Cálculo\nDerivada parcial. Se deriva respecto de una variable tratando las demás como constantes.\nGradiente. El vector de todas las parciales. Apunta en la dirección de máximo crecimiento.\nRegla de la cadena. \\(\\frac{d}{dw} g(h(w)) = g'(h(w))\\,h'(w)\\).\nDos identidades que usaremos con frecuencia (capítulo 4): \\[\\nabla(\\mathbf{a}^{\\mathsf{T}}\\mathbf{w}) = \\mathbf{a}, \\qquad\n  \\nabla(\\mathbf{w}^{\\mathsf{T}}\\mathbf{A}\\mathbf{w}) = 2\\mathbf{A}\\mathbf{w} \\ \\ (\\mathbf{A}\\text{ simétrica}).\\]\nCondición de primer orden. En un mínimo, el gradiente se anula. El recíproco es falso.\n\nLas dos identidades del capítulo 4\nTrabajo previo a la sesión de teoría de la semana 4.\n\nLema 1 (\\(\\grad(\\mathbf{a}\\T\\coef) = \\mathbf{a}\\))  \n\n\nLema 2 (\\(\\grad(\\coef\\T\\mathbf{A}\\coef) = 2\\mathbf{A}\\coef\\) para \\(\\mathbf{A}\\) simétrica)  \n\n\nDemostración. \n\n\n\n\n\n\n\n\nLema 1 y Lema 2 son cálculo, no aprendizaje automático. Van al anexo y se piden como trabajo previo; en clase se usan.",
+    "section": "",
+    "text": "Lema 1 (Una norma se anula solo en el vector nulo) \\(\\left\\lVert \\mathbf{v} \\right\\rVert^2 = 0\\) si y solo si \\(\\mathbf{v} = \\mathbf{0}\\).\n\n\nDemostración. \\(\\left\\lVert \\mathbf{v} \\right\\rVert^2\\) es una suma de cuadrados, luego cada sumando es no negativo. Una suma de términos no negativos vale cero solo si todos valen cero, es decir, si \\(v_j = 0\\) para todo \\(j\\).",
     "crumbs": [
       "Apéndices",
       "Cálculo y álgebra que vas a necesitar"
     ]
   },
   {
-    "objectID": "curso/algebra.html#probabilidad",
-    "href": "curso/algebra.html#probabilidad",
+    "objectID": "curso/algebra.html#matrices",
+    "href": "curso/algebra.html#matrices",
     "title": "Cálculo y álgebra que vas a necesitar",
-    "section": "Probabilidad",
-    "text": "Probabilidad\nDensidad, esperanza, varianza. Densidad normal. Que \\(\\mathbb{E}\\) es lineal y \\(\\operatorname{Var}(aX) = a^2\\operatorname{Var}(X)\\). Independencia.",
+    "section": "Matrices",
+    "text": "Matrices\nUna matriz \\(\\mathbf{X}\\) de dimensión \\(n\\times m\\) tiene \\(n\\) filas y \\(m\\) columnas. En este curso las filas son observaciones y las columnas variables.\nProducto matriz por vector. Si \\(\\mathbf{X}\\) es \\(n\\times m\\) y \\(\\mathbf{v}\\) es \\(m \\times 1\\), entonces \\(\\mathbf{X}\\mathbf{v}\\) es \\(n\\times 1\\), y su componente \\(i\\)-ésima es \\[\n(\\mathbf{X}\\mathbf{v})_i = \\sum_{j=1}^{m} x_{ij} v_j = \\mathbf{x}_i^{\\mathsf{T}}\\mathbf{v},\n\\] donde \\(\\mathbf{x}_i\\) es la fila \\(i\\) de \\(\\mathbf{X}\\) escrita como columna. Dicho en palabras: cada componente del resultado es el producto escalar de una fila por el vector. En el curso, \\(\\mathbf{X}\\boldsymbol{w}\\) es el vector de las \\(n\\) predicciones.\nProducto de matrices. \\(\\mathbf{A}\\mathbf{B}\\) está definido si el número de columnas de \\(\\mathbf{A}\\) coincide con el de filas de \\(\\mathbf{B}\\), y entonces \\((\\mathbf{A}\\mathbf{B})_{ik} = \\sum_j a_{ij} b_{jk}\\). No es conmutativo.\nTraspuesta. \\((\\mathbf{A}^{\\mathsf{T}})_{ij} = a_{ji}\\), y\n\\[\n(\\mathbf{A}\\mathbf{B})^{\\mathsf{T}}= \\mathbf{B}^{\\mathsf{T}}\\mathbf{A}^{\\mathsf{T}}, \\qquad (\\mathbf{A}^{\\mathsf{T}})^{\\mathsf{T}}= \\mathbf{A}.\n\\]\nUna matriz es simétrica si \\(\\mathbf{A}^{\\mathsf{T}}= \\mathbf{A}\\).\n\nEjercicio 1 Comprueba que \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es siempre simétrica, sea cual sea \\(\\mathbf{X}\\). (Una línea, usando la regla de la traspuesta de un producto.)",
     "crumbs": [
       "Apéndices",
       "Cálculo y álgebra que vas a necesitar"
     ]
   },
   {
-    "objectID": "curso/algebra.html#diagnóstico-15-minutos-no-cuenta-para-la-nota",
-    "href": "curso/algebra.html#diagnóstico-15-minutos-no-cuenta-para-la-nota",
+    "objectID": "curso/algebra.html#la-matriz-de-diseño-del-curso",
+    "href": "curso/algebra.html#la-matriz-de-diseño-del-curso",
     "title": "Cálculo y álgebra que vas a necesitar",
-    "section": "Diagnóstico (15 minutos, no cuenta para la nota)",
-    "text": "Diagnóstico (15 minutos, no cuenta para la nota)\n\nEscriba la traspuesta de \\(\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6\\end{pmatrix}\\).\nCon \\(\\mathbf{X} = \\begin{pmatrix} 1 & 0 \\\\ 1 & 1 \\\\ 1 & 2\\end{pmatrix}\\), calcule \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\).\n¿Cuánto vale \\(\\partial/\\partial w\\) de \\(\\mathbf{w}^{\\mathsf{T}}\\mathbf{w}\\)?\nSi \\(f(x,y) = x^2\\sin y + y^3\\), calcule \\(\\partial f/\\partial x\\) y \\(\\partial f/\\partial y\\).\nExhiba un \\(\\mathbf{v}\\neq\\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v}=\\mathbf{0}\\) para \\(\\mathbf{X} = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\).\nSi \\(Z\\sim\\mathcal{N}(0,1)\\), ¿cuánto vale \\(\\mathbb{E}[3Z+2]\\)? ¿Y \\(\\operatorname{Var}(3Z+2)\\)?",
+    "section": "La matriz de diseño del curso",
+    "text": "La matriz de diseño del curso\nConviene fijarla desde ahora porque aparece en todos los capítulos. Con \\(n\\) observaciones y \\(p\\) variables, \\[\n\\mathbf{X}= \\begin{pmatrix}\n1 & x_{11} & \\cdots & x_{1p} \\\\\n1 & x_{21} & \\cdots & x_{2p} \\\\\n\\vdots & \\vdots & & \\vdots \\\\\n1 & x_{n1} & \\cdots & x_{np}\n\\end{pmatrix} \\in \\mathbb{R}^{n\\times (p+1)} .\n\\]\nLa primera columna es de unos. Sirve para que el término independiente \\(w_0\\) entre en el vector de coeficientes y no haya que arrastrarlo aparte: con ese convenio, \\(\\mathbf{X}\\boldsymbol{w}\\) ya incluye el término independiente.\nNótese el tamaño de \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\): es \\((p+1)\\times(p+1)\\), no \\(n\\times n\\). Es decir, del tamaño del número de variables, no del de observaciones.",
+    "crumbs": [
+      "Apéndices",
+      "Cálculo y álgebra que vas a necesitar"
+    ]
+  },
+  {
+    "objectID": "curso/algebra.html#dependencia-lineal-rango-y-núcleo",
+    "href": "curso/algebra.html#dependencia-lineal-rango-y-núcleo",
+    "title": "Cálculo y álgebra que vas a necesitar",
+    "section": "Dependencia lineal, rango y núcleo",
+    "text": "Dependencia lineal, rango y núcleo\nLas columnas de \\(\\mathbf{X}\\) son linealmente dependientes si alguna de ellas se puede escribir como combinación de las demás. De forma equivalente, y esta es la formulación que usamos:\n\nDefinición 1 (Núcleo) El núcleo de \\(\\mathbf{X}\\) es el conjunto de vectores que \\(\\mathbf{X}\\) envía al cero: \\(\\mathop{\\mathrm{nuc}}(\\mathbf{X}) = \\{\\mathbf{v} : \\mathbf{X}\\mathbf{v} = \\mathbf{0}\\}\\). Las columnas de \\(\\mathbf{X}\\) son linealmente independientes si y solo si \\(\\mathop{\\mathrm{nuc}}(\\mathbf{X}) = \\{\\mathbf{0}\\}\\), y en ese caso decimos que \\(\\mathbf{X}\\) tiene rango completo por columnas, o \\(\\mathop{\\mathrm{rango}}\\mathbf{X}= p+1\\).\n\nPara que el rango sea completo hace falta, como mínimo, \\(n\\geq p+1\\): no puede haber más columnas independientes que filas.\n\n\n\n\n\n\nTipCómo se demuestra que hay dependencia\n\n\n\nNo en abstracto: exhibiendo el vector. Para probar que unas columnas son dependientes, se escribe un \\(\\mathbf{v} \\neq \\mathbf{0}\\) concreto y se comprueba que \\(\\mathbf{X}\\mathbf{v} = \\mathbf{0}\\). Así se hace en el capítulo 5 con la trampa de la variable ficticia.\n\n\n\nEjercicio 2 Sea \\(\\mathbf{X}= \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\\\ 3 & 6\\end{pmatrix}\\). Exhibe un \\(\\mathbf{v} \\neq \\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v} = \\mathbf{0}\\) y di cuál es el rango de \\(\\mathbf{X}\\).",
+    "crumbs": [
+      "Apéndices",
+      "Cálculo y álgebra que vas a necesitar"
+    ]
+  },
+  {
+    "objectID": "curso/algebra.html#resolver-un-sistema-no-invertir-la-matriz",
+    "href": "curso/algebra.html#resolver-un-sistema-no-invertir-la-matriz",
+    "title": "Cálculo y álgebra que vas a necesitar",
+    "section": "Resolver un sistema, no invertir la matriz",
+    "text": "Resolver un sistema, no invertir la matriz\nSi \\(\\mathbf{A}\\) es cuadrada y de rango completo, el sistema \\(\\mathbf{A}\\mathbf{z} =\n\\mathbf{b}\\) tiene solución única. Formalmente se escribe \\(\\mathbf{z} =\n\\mathbf{A}^{-1}\\mathbf{b}\\), pero en el ordenador nunca se calcula la inversa: se resuelve el sistema directamente, que es más rápido y numéricamente más estable.\n\n\n\nMatemáticas\nCódigo\n\n\n\n\n\\(\\mathbf{z} = \\mathbf{A}^{-1}\\mathbf{b}\\)\nnp.linalg.solve(A, b)\n\n\nmínimos cuadrados\nnp.linalg.lstsq(X, y, rcond=None)\n\n\n\\(\\mathop{\\mathrm{rango}}\\mathbf{X}\\)\nnp.linalg.matrix_rank(X)",
+    "crumbs": [
+      "Apéndices",
+      "Cálculo y álgebra que vas a necesitar"
+    ]
+  },
+  {
+    "objectID": "curso/algebra.html#derivadas-parciales-y-gradiente",
+    "href": "curso/algebra.html#derivadas-parciales-y-gradiente",
+    "title": "Cálculo y álgebra que vas a necesitar",
+    "section": "Derivadas parciales y gradiente",
+    "text": "Derivadas parciales y gradiente\nSea \\(f: \\mathbb{R}^{m} \\to \\mathbb{R}\\). La derivada parcial respecto de \\(w_j\\) se obtiene derivando en \\(w_j\\) y tratando las demás coordenadas como constantes. El gradiente es el vector que las apila: \\[\n\\nabla f(\\boldsymbol{w}) = \\left( \\frac{\\partial f}{\\partial w_1}, \\dots, \\frac{\\partial f}{\\partial w_m} \\right)^{\\mathsf{T}}.\n\\]\nRegla de la cadena, en la forma que usaremos: si \\(f(\\boldsymbol{w}) = g(h(\\boldsymbol{w}))\\) con \\(h: \\mathbb{R}^m \\to \\mathbb{R}\\) y \\(g:\\mathbb{R}\\to\\mathbb{R}\\), entonces \\(\\nabla f(\\boldsymbol{w}) = g'(h(\\boldsymbol{w}))\\, \\nabla h(\\boldsymbol{w})\\).\nCondición de primer orden. Si \\(\\boldsymbol{w}^\\star\\) es un mínimo local de una función diferenciable, entonces \\(\\nabla f(\\boldsymbol{w}^\\star) = \\mathbf{0}\\). El recíproco es falso: \\(w^3\\) tiene derivada nula en \\(0\\) y no hay ahí ni mínimo ni máximo.",
+    "crumbs": [
+      "Apéndices",
+      "Cálculo y álgebra que vas a necesitar"
+    ]
+  },
+  {
+    "objectID": "curso/algebra.html#las-dos-identidades-del-capítulo-4",
+    "href": "curso/algebra.html#las-dos-identidades-del-capítulo-4",
+    "title": "Cálculo y álgebra que vas a necesitar",
+    "section": "Las dos identidades del capítulo 4",
+    "text": "Las dos identidades del capítulo 4\nSon trabajo previo a la sesión de teoría de la semana 4. Con ellas, el gradiente del riesgo sale en tres líneas; sin ellas, la sesión no cabe.\n\nLema 2 (Gradiente de una forma lineal) Para \\(\\mathbf{a} \\in \\mathbb{R}^{m}\\) fijo, \\(\\nabla\\left(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}\\right) = \\mathbf{a}\\).\n\n\nDemostración. Escribimos \\(\\mathbf{a}^{\\mathsf{T}}\\boldsymbol{w}= \\sum_{k=1}^{m} a_k w_k\\). Al derivar respecto de \\(w_j\\), todos los sumandos con \\(k \\neq j\\) son constantes y desaparecen, y queda \\(a_j\\). Apilando las \\(m\\) derivadas parciales se obtiene \\(\\mathbf{a}\\).\n\n\nLema 3 (Gradiente de una forma cuadrática) Para \\(\\mathbf{A}\\) simétrica, \\(\\nabla\\left(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}\\right) = 2\\mathbf{A}\\boldsymbol{w}\\).\n\n\nDemostración. Desarrollamos la forma cuadrática como suma doble: \\[\n\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}= \\sum_{k=1}^{m}\\sum_{l=1}^{m} w_k\\, a_{kl}\\, w_l .\n\\] Al derivar respecto de \\(w_j\\), sobreviven los sumandos en los que aparece \\(w_j\\), y son de dos clases: los que tienen \\(k=j\\), que aportan \\(\\sum_l a_{jl} w_l\\), y los que tienen \\(l=j\\), que aportan \\(\\sum_k w_k a_{kj}\\). (El sumando con \\(k=l=j\\) aparece en las dos clases, y así debe ser: contiene \\(w_j^2\\) y su derivada es \\(2a_{jj}w_j\\).) Por tanto \\[\n\\frac{\\partial }{\\partial w_j}\\left(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}\\right) = (\\mathbf{A}\\boldsymbol{w})_j + (\\mathbf{A}^{\\mathsf{T}}\\boldsymbol{w})_j\n= 2(\\mathbf{A}\\boldsymbol{w})_j,\n\\] donde la última igualdad usa que \\(\\mathbf{A}\\) es simétrica. Apilando, el resultado.\n\n\n\n\n\n\n\nSin la hipótesis de simetría el resultado es \\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\mathbf{A}\\boldsymbol{w}) = (\\mathbf{A} + \\mathbf{A}^{\\mathsf{T}})\\boldsymbol{w}\\). En el curso siempre aplicamos el lema a \\(\\mathbf{A} = \\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\), que es simétrica por Ejercicio 1.",
+    "crumbs": [
+      "Apéndices",
+      "Cálculo y álgebra que vas a necesitar"
+    ]
+  },
+  {
+    "objectID": "curso/algebra.html#diagnóstico",
+    "href": "curso/algebra.html#diagnóstico",
+    "title": "Cálculo y álgebra que vas a necesitar",
+    "section": "Diagnóstico",
+    "text": "Diagnóstico\nQuince minutos, sin ordenador. No cuenta para la nota; sirve para saber de qué punto partimos.\n\nEscribe la traspuesta de \\(\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6\\end{pmatrix}\\).\nCon \\(\\mathbf{X}= \\begin{pmatrix} 1 & 0 \\\\ 1 & 1 \\\\ 1 & 2\\end{pmatrix}\\), calcula \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) y di de qué tamaño es.\nCon la misma \\(\\mathbf{X}\\) y \\(\\boldsymbol{w}= (2, -1)^{\\mathsf{T}}\\), calcula \\(\\mathbf{X}\\boldsymbol{w}\\).\n¿Cuánto vale \\(\\nabla\\left(\\boldsymbol{w}^{\\mathsf{T}}\\boldsymbol{w}\\right)\\)?\nSi \\(f(x,y) = x^2\\sin y + y^3\\), calcula \\(\\frac{\\partial f}{\\partial x}\\) y \\(\\frac{\\partial f}{\\partial y}\\).\nExhibe un \\(\\mathbf{v}\\neq\\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v}=\\mathbf{0}\\) para \\(\\mathbf{X}= \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\). ¿Cuál es su rango?\nSean \\(\\mathbf{u} = (1,2,2)^{\\mathsf{T}}\\) y \\(\\mathbf{v} = (3,0,4)^{\\mathsf{T}}\\). Calcula \\(\\mathbf{u}^{\\mathsf{T}}\\mathbf{v}\\), \\(\\left\\lVert \\mathbf{u} \\right\\rVert\\) y \\(\\left\\lVert \\mathbf{v} \\right\\rVert\\).\nSi \\(\\left\\lVert \\mathbf{X}\\mathbf{v} \\right\\rVert^2 = 0\\), ¿qué se puede concluir sobre \\(\\mathbf{X}\\mathbf{v}\\)? ¿Y sobre \\(\\mathbf{v}\\)?",
     "crumbs": [
       "Apéndices",
       "Cálculo y álgebra que vas a necesitar"
@@ -1715,7 +1803,62 @@
     "href": "curso/probabilidad.html",
     "title": "Repaso de probabilidad",
     "section": "",
-    "text": "La distribución normal\nLo que este curso da por sabido de probabilidad, con las demostraciones de las propiedades de la gaussiana que se usan en el capítulo 1. No se ven en clase: se dan por conocidas de Estadística y se dejan aquí escritas para poder consultarlas.\nLa densidad se define en Definición 2.5. Las cuatro propiedades siguientes son las únicas que usamos.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "text": "Variables aleatorias continuas\nLo que este curso da por sabido de probabilidad, más las propiedades de la normal que se usan en el capítulo 1. No se ve en clase: se supone conocido de Estadística y se recoge aquí para poder consultarlo.\nUna variable aleatoria continua \\(X\\) queda descrita por su densidad \\(p\\), que cumple \\(p(x) \\geq 0\\) y \\(\\int_{-\\infty}^{\\infty} p(x)\\,\\mathrm{d}x = 1\\). La probabilidad de caer en un intervalo es el área bajo la densidad: \\[\n\\mathbb{P}\\!\\left( a \\leq X \\leq b \\right) = \\int_a^b p(x)\\,\\mathrm{d}x .\n\\]\nUna densidad no es una probabilidad: puede valer más que 1. Lo que está acotado por 1 es su integral.\nEsperanza y varianza. \\[\n\\mathbb{E}\\!\\left[ X \\right] = \\int x\\,p(x)\\,\\mathrm{d}x,\n\\qquad\n\\mathrm{Var}\\!\\left( X \\right) = \\mathbb{E}\\!\\left[ (X - \\mathbb{E}\\!\\left[ X \\right])^2 \\right] = \\mathbb{E}\\!\\left[ X^2 \\right] - \\mathbb{E}\\!\\left[ X \\right]^2 .\n\\]\nLas dos reglas que usaremos sin parar:\nAdemás, \\(\\mathbb{E}\\!\\left[ X + Y \\right] = \\mathbb{E}\\!\\left[ X \\right] + \\mathbb{E}\\!\\left[ Y \\right]\\) sin ninguna hipótesis, mientras que \\(\\mathrm{Var}\\!\\left( X+Y \\right) = \\mathrm{Var}\\!\\left( X \\right) + \\mathrm{Var}\\!\\left( Y \\right)\\) solo si \\(X\\) e \\(Y\\) son independientes. En general, \\(\\mathrm{Var}\\!\\left( X+Y \\right) = \\mathrm{Var}\\!\\left( X \\right) + \\mathrm{Var}\\!\\left( Y \\right) + 2\\mathrm{Cov}\\!\\left( X, Y \\right)\\).\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#variables-aleatorias-continuas",
+    "href": "curso/probabilidad.html#variables-aleatorias-continuas",
+    "title": "Repaso de probabilidad",
+    "section": "",
+    "text": "Lema 1 (Linealidad y escala) Para \\(a, b\\) constantes, \\(\\mathbb{E}\\!\\left[ aX + b \\right] = a\\mathbb{E}\\!\\left[ X \\right] + b\\) y \\(\\mathrm{Var}\\!\\left( aX+b \\right) = a^2\\mathrm{Var}\\!\\left( X \\right)\\). La esperanza es lineal siempre; la varianza no, y por eso el \\(a\\) sale al cuadrado y el \\(b\\) desaparece.",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#independencia-y-por-qué-la-verosimilitud-es-un-producto",
+    "href": "curso/probabilidad.html#independencia-y-por-qué-la-verosimilitud-es-un-producto",
+    "title": "Repaso de probabilidad",
+    "section": "Independencia, y por qué la verosimilitud es un producto",
+    "text": "Independencia, y por qué la verosimilitud es un producto\nLas variables \\(X_1,\\dots,X_{n}\\) son independientes si su densidad conjunta es el producto de las densidades individuales: \\[\np(x_1,\\dots,x_{n}) = \\prod_{i=1}^{n} p_i(x_i).\n\\]\nEsa igualdad es la razón de que la verosimilitud del capítulo 1 sea un producto, y de que al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: la independencia es una hipótesis del modelo, no una propiedad de los datos. Cuando falla, falla la verosimilitud, y con ella el estimador. En el capítulo 6 veremos un caso concreto: un anfitrión con doce anuncios en Madrid.",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#cambio-de-variable",
+    "href": "curso/probabilidad.html#cambio-de-variable",
+    "title": "Repaso de probabilidad",
+    "section": "Cambio de variable",
+    "text": "Cambio de variable\nSi \\(Y = g(X)\\) con \\(g\\) derivable y estrictamente monótona, la densidad de \\(Y\\) es \\[\np_Y(y) = p_X\\!\\left(g^{-1}(y)\\right) \\left| \\frac{\\mathrm{d}}{\\mathrm{d}y} g^{-1}(y) \\right| .\n\\]\nEl factor de la derecha es el jacobiano, y es lo que impide tratar una densidad como si fuera una probabilidad. Se usa dos veces en el curso: en Teorema 2 y en el sesgo de retransformación del capítulo 5.",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#esperanza-condicional",
+    "href": "curso/probabilidad.html#esperanza-condicional",
+    "title": "Repaso de probabilidad",
+    "section": "Esperanza condicional",
+    "text": "Esperanza condicional\n\\(\\mathbb{E}\\!\\left[ Y \\,\\vert\\,X = x \\right]\\) es la media de \\(Y\\) entre las observaciones con ese valor de \\(X\\). Como función de \\(x\\) es la función de regresión, y es el objeto que todo el curso intenta estimar.\n\nLema 2 (Ley de la esperanza total) \\(\\mathbb{E}\\!\\left[ Y \\right] = \\mathbb{E}\\!\\left[ \\,\\mathbb{E}\\!\\left[ Y \\,\\vert\\,X \\right]\\, \\right]\\).\n\nSe usa en el capítulo 7, en la descomposición del error en sesgo, varianza y ruido.",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#cuantiles",
+    "href": "curso/probabilidad.html#cuantiles",
+    "title": "Repaso de probabilidad",
+    "section": "Cuantiles",
+    "text": "Cuantiles\nEl cuantil de orden \\(\\tau \\in (0,1)\\) de \\(X\\) es el valor \\(q_\\tau\\) tal que \\(\\mathbb{P}\\!\\left( X \\leq q_\\tau \\right) = \\tau\\). La mediana es \\(q_{0{,}5}\\).\nLos cuantiles se conservan bajo transformaciones crecientes: si \\(g\\) es creciente, \\(q_\\tau(g(X)) = g(q_\\tau(X))\\). La media no tiene esa propiedad, y de esa asimetría sale el resultado del capítulo 5 sobre transformaciones logarítmicas. Los cuantiles reaparecen en el capítulo 14, con la regresión cuantílica.",
     "crumbs": [
       "Apéndices",
       "Repaso de probabilidad"
@@ -1725,19 +1868,30 @@
     "objectID": "curso/probabilidad.html#la-distribución-normal",
     "href": "curso/probabilidad.html#la-distribución-normal",
     "title": "Repaso de probabilidad",
-    "section": "",
-    "text": "Lema 1 (Constante de normalización) \\(\\displaystyle \\int_{-\\infty}^{\\infty} e^{-z^2/2}\\, \\mathrm{d}z = \\sqrt{2\\pi}\\).\n\n\nNo lo demostramos\nLa demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.\n\n\nTeorema 1 (Traslación) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) y \\(c \\in \\mathbb{R}\\), entonces \\(\\varepsilon + c \\sim \\mathcal{N}(\\mu + c, \\sigma^2)\\).\n\n\nDemostración. Sea \\(W = \\varepsilon + c\\). Entonces \\(\\mathbb{P}\\!\\left( W \\leq t \\right) = \\mathbb{P}\\!\\left( \\varepsilon \\leq t - c \\right) = \\int_{-\\infty}^{t-c} p(x;\\mu,\\sigma)\\,\\mathrm{d}x\\). El cambio de variable \\(u = x + c\\) (con \\(\\mathrm{d}u = \\mathrm{d}x\\)) transforma la integral en \\(\\int_{-\\infty}^{t} p(u - c;\\mu,\\sigma)\\,\\mathrm{d}u\\), y por Ecuación 2.2 \\(p(u-c;\\mu,\\sigma) = p(u; \\mu+c, \\sigma)\\).\n\n\nTeorema 2 (Escala) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) y \\(a \\neq 0\\), entonces \\(a\\varepsilon \\sim \\mathcal{N}(a\\mu, a^2\\sigma^2)\\).\n\n\nDemostración. \n\n\n\nCorolario 1 (Estandarización) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(Z = (\\varepsilon - \\mu)/\\sigma\\sim \\mathcal{N}(0,1)\\).\n\n\nDemostración. Aplicar Teorema 2 con \\(a = 1/\\sigma\\) y después Teorema 1 con \\(c = -\\mu/\\sigma\\).\n\n\nTeorema 3 (Media y varianza) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(\\mathbb{E}\\!\\left[ \\varepsilon \\right] = \\mu\\) y \\(\\mathrm{Var}\\!\\left( \\varepsilon \\right) = \\sigma^2\\).\n\n\nDemostración.",
+    "section": "La distribución normal",
+    "text": "La distribución normal\nLa densidad se define en Definición 2.5. Las propiedades siguientes son las únicas que usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como integral y hacer un cambio de variable.\n\nLema 3 (Constante de normalización) \\(\\displaystyle \\int_{-\\infty}^{\\infty} e^{-z^2/2}\\, \\mathrm{d}z = \\sqrt{2\\pi}\\).\n\n\nNo lo demostramos\nLa demostración pasa por elevar la integral al cuadrado y pasar a coordenadas polares. Es bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.\n\n\nTeorema 1 (Traslación) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) y \\(c \\in \\mathbb{R}\\), entonces \\(\\varepsilon + c \\sim \\mathcal{N}(\\mu + c, \\sigma^2)\\).\n\n\nDemostración. Sea \\(W = \\varepsilon + c\\). Entonces \\(\\mathbb{P}\\!\\left( W \\leq t \\right) = \\mathbb{P}\\!\\left( \\varepsilon \\leq t - c \\right) = \\int_{-\\infty}^{t-c} p(x;\\mu,\\sigma)\\,\\mathrm{d}x\\). El cambio de variable \\(u = x + c\\) (con \\(\\mathrm{d}u = \\mathrm{d}x\\)) transforma la integral en \\(\\int_{-\\infty}^{t} p(u - c;\\mu,\\sigma)\\,\\mathrm{d}u\\), y por Ecuación 2.2 \\(p(u-c;\\mu,\\sigma) = p(u; \\mu+c, \\sigma)\\).\n\n\nTeorema 2 (Escala) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) y \\(a \\neq 0\\), entonces \\(a\\varepsilon \\sim \\mathcal{N}(a\\mu, a^2\\sigma^2)\\).\n\n\nDemostración. Tomemos \\(a &gt; 0\\); el caso \\(a&lt;0\\) es idéntico salvo que se invierten los límites y aparece \\(\\left\\lvert a \\right\\rvert\\). Sea \\(W = a\\varepsilon\\). Entonces \\[\n\\mathbb{P}\\!\\left( W \\leq t \\right) = \\mathbb{P}\\!\\left( \\varepsilon \\leq t/a \\right) = \\int_{-\\infty}^{t/a} p(x;\\mu,\\sigma)\\,\\mathrm{d}x .\n\\] El cambio de variable \\(u = ax\\), con \\(\\mathrm{d}u = a\\,\\mathrm{d}x\\), lleva la integral a \\(\\int_{-\\infty}^{t} \\frac{1}{a}\\,p(u/a;\\mu,\\sigma)\\,\\mathrm{d}u\\). Basta comprobar que el integrando es la densidad buscada: \\[\n\\frac{1}{a}\\,p\\!\\left(\\frac{u}{a};\\mu,\\sigma\\right)\n= \\frac{1}{a\\sigma\\sqrt{2\\pi}} \\exp\\!\\left(-\\frac{(u/a-\\mu)^2}{2\\sigma^2}\\right)\n= \\frac{1}{(a\\sigma)\\sqrt{2\\pi}} \\exp\\!\\left(-\\frac{(u-a\\mu)^2}{2(a\\sigma)^2}\\right),\n\\] donde el último paso sale de multiplicar numerador y denominador del exponente por \\(a^2\\). El resultado es \\(p(u; a\\mu, a\\sigma)\\).\n\n\nCorolario 1 (Estandarización) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(Z = (\\varepsilon - \\mu)/\\sigma\\sim \\mathcal{N}(0,1)\\).\n\n\nDemostración. Aplicar Teorema 2 con \\(a = 1/\\sigma\\) y después Teorema 1 con \\(c = -\\mu/\\sigma\\).\n\n\nTeorema 3 (Media y varianza) Si \\(\\varepsilon \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) entonces \\(\\mathbb{E}\\!\\left[ \\varepsilon \\right] = \\mu\\) y \\(\\mathrm{Var}\\!\\left( \\varepsilon \\right) = \\sigma^2\\).\n\n\nDemostración. Basta hacerlo para la normal estándar \\(Z\\), porque por Corolario 1 podemos escribir \\(\\varepsilon = \\sigma Z + \\mu\\), y entonces Lema 1 da \\(\\mathbb{E}\\!\\left[ \\varepsilon \\right] = \\sigma\\mathbb{E}\\!\\left[ Z \\right] + \\mu\\) y \\(\\mathrm{Var}\\!\\left( \\varepsilon \\right) = \\sigma^2\\mathrm{Var}\\!\\left( Z \\right)\\).\nSea \\(\\varphi(z) = e^{-z^2/2}/\\sqrt{2\\pi}\\) la densidad estándar.\nMedia. El integrando \\(z\\,\\varphi(z)\\) es una función impar, y su integral sobre toda la recta es cero. Luego \\(\\mathbb{E}\\!\\left[ Z \\right] = 0\\).\nVarianza. Como \\(\\mathbb{E}\\!\\left[ Z \\right]=0\\), se tiene \\(\\mathrm{Var}\\!\\left( Z \\right) = \\mathbb{E}\\!\\left[ Z^2 \\right] = \\int z^2 \\varphi(z)\\,\\mathrm{d}z\\). Integramos por partes con \\(u = z\\) y \\(\\mathrm{d}v = z\\varphi(z)\\,\\mathrm{d}z\\). Nótese que \\(\\varphi'(z) = -z\\varphi(z)\\), de modo que \\(v = -\\varphi(z)\\). Entonces \\[\n\\int_{-\\infty}^{\\infty} z^2 \\varphi(z)\\,\\mathrm{d}z\n= \\Big[-z\\varphi(z)\\Big]_{-\\infty}^{\\infty} + \\int_{-\\infty}^{\\infty} \\varphi(z)\\,\\mathrm{d}z\n= 0 + 1 = 1,\n\\] donde el corchete se anula porque \\(\\varphi\\) decae más deprisa que cualquier polinomio, y la última integral vale 1 por Lema 3.\nSustituyendo, \\(\\mathbb{E}\\!\\left[ \\varepsilon \\right] = \\mu\\) y \\(\\mathrm{Var}\\!\\left( \\varepsilon \\right) = \\sigma^2\\).",
     "crumbs": [
       "Apéndices",
       "Repaso de probabilidad"
     ]
   },
   {
-    "objectID": "curso/probabilidad.html#qué-hay-que-saber-traer-de-estadística",
-    "href": "curso/probabilidad.html#qué-hay-que-saber-traer-de-estadística",
+    "objectID": "curso/probabilidad.html#otras-distribuciones-del-curso",
+    "href": "curso/probabilidad.html#otras-distribuciones-del-curso",
     "title": "Repaso de probabilidad",
-    "section": "Qué hay que saber traer de Estadística",
-    "text": "Qué hay que saber traer de Estadística\n\nDensidad, esperanza y varianza de una variable continua.\nLinealidad de la esperanza, y \\(\\mathrm{Var}\\!\\left( aX \\right) = a^2\\mathrm{Var}\\!\\left( X \\right)\\).\nIndependencia, y que la densidad conjunta de variables independientes es el producto de las densidades. Esto último es lo que hace que la verosimilitud sea un producto.",
+    "section": "Otras distribuciones del curso",
+    "text": "Otras distribuciones del curso\nAparecen cuando cambiamos el modelo de ruido. Se recogen aquí para tenerlas juntas; cada una se presenta en su capítulo.\n\n\n\n\n\n\n\n\n\nDistribución\nDensidad o masa\nSoporte\nDónde\n\n\n\n\nNormal\n\\(\\frac{1}{\\sigma\\sqrt{2\\pi}}e^{-(x-\\mu)^2/2\\sigma^2}\\)\n\\(\\mathbb{R}\\)\ncaps. 1 y 2\n\n\nLaplace\n\\(\\frac{1}{2b}e^{-\\left\\lvert x-\\mu \\right\\rvert/b}\\)\n\\(\\mathbb{R}\\)\ncap. 2\n\n\nLognormal\nsi \\(\\log Y \\sim \\mathcal{N}(\\mu,\\sigma^2)\\)\n\\((0,\\infty)\\)\ncap. 5\n\n\nPoisson\n\\(e^{-\\lambda}\\lambda^{k}/k!\\)\n\\(\\{0,1,2,\\dots\\}\\)\ncap. 12\n\n\nGamma\n\\(\\propto x^{\\alpha-1}e^{-x/\\beta}\\)\n\\((0,\\infty)\\)\ncap. 12\n\n\n\nDe la lognormal usamos un solo hecho, y se demuestra en el capítulo 5: si \\(Z \\sim \\mathcal{N}(\\mu,\\sigma^2)\\), entonces \\(\\mathbb{E}\\!\\left[ e^{Z} \\right] = e^{\\mu + \\sigma^2/2}\\), que no es \\(e^{\\mu}\\). Esa diferencia es la que hace que exponenciar una predicción hecha en logaritmos infravalore sistemáticamente.",
+    "crumbs": [
+      "Apéndices",
+      "Repaso de probabilidad"
+    ]
+  },
+  {
+    "objectID": "curso/probabilidad.html#qué-hay-que-traer-de-estadística",
+    "href": "curso/probabilidad.html#qué-hay-que-traer-de-estadística",
+    "title": "Repaso de probabilidad",
+    "section": "Qué hay que traer de Estadística",
+    "text": "Qué hay que traer de Estadística\nSi has seguido hasta aquí sin dificultad, vas bien. Lo imprescindible es:\n\nDensidad, esperanza y varianza de una variable continua.\nLinealidad de la esperanza y \\(\\mathrm{Var}\\!\\left( aX+b \\right) = a^2\\mathrm{Var}\\!\\left( X \\right)\\).\nIndependencia, y que la densidad conjunta de variables independientes es el producto de las densidades.\nManejo básico de integrales: cambio de variable e integración por partes.\n\nLo que no hace falta: teoremas límite, convergencia, funciones características, teoría de la medida.",
     "crumbs": [
       "Apéndices",
       "Repaso de probabilidad"

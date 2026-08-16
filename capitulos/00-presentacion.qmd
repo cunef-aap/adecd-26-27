@@ -194,6 +194,9 @@ ensayo del final:
 | C | 25 % | Cálculo a mano sobre una tabla pequeña |
 | D | 20 % | *"Este script tiene errores"*: encontrarlos y justificarlos |
 
+Las hojas de problemas semanales reproducen esa misma estructura, de modo que la
+preparación del examen es el trabajo ordinario del curso y no una fase aparte.
+
 ## Bibliografía
 
 La de la guía docente oficial:

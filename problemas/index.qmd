@@ -1,22 +1,51 @@
 # Hojas de problemas {.unnumbered}
 
-Una hoja por capítulo, para la sesión S2 (lápiz y papel). Las soluciones se publican
-después de la sesión.
+Una hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.
+
+## Las hojas son el entrenamiento del examen
+
+No hay sesiones aparte de "ejercicios tipo examen", y no hacen falta: **cada hoja está
+construida con la estructura del examen**. Los cinco ejercicios se reparten así:
+
+| Ejercicio | Bloque del examen | Qué entrena |
+|---|---|---|
+| 1 | **A** | Pregunta conceptual corta: *define*, *explica*, *razona*, *analiza* |
+| 2 | **B** | Una demostración del [índice de resultados](../curso/indice-resultados.qmd) |
+| 3 | **C** | Cálculo a mano sobre una tabla pequeña |
+| 4 | **D** | *"Este script tiene errores"*: encontrarlos y justificarlos |
+| 5 |  | Ampliación, opcional. No entra en el examen |
+
+Los cuatro primeros son **nucleares**. Si haces las quince hojas, habrás hecho quince
+exámenes por bloques antes de sentarte en el primero.
+
+## Calibración con reloj
+
+Tres veces en el curso, los últimos 20 minutos de la S2 son un **miniexamen cronometrado**:
+un solo bloque, en silencio, corregido en clase inmediatamente después.
+
+| Semana | Bloque | Sobre |
+|---|---|---|
+| 6 | B, una demostración | capítulos 1 a 5 |
+| 10 | C + D | capítulos 6 a 9 |
+| 14 | B + C | capítulos 10 a 13 |
+
+No cuentan para la nota. Sirven para saber cuánto se tarda de verdad, que es lo que ninguna
+hoja sin reloj enseña.
+
+Además hay dos simulacros completos: el del parcial, publicado con solución en la semana 4,
+y el del examen final, en la semana 15.
+
+## Las hojas
 
 | Hoja | Capítulo | Estado |
 |---|---|---|
-| [1](hoja-01.qmd) | Señal y ruido | esqueleto |
+| [1](hoja-01.qmd) | Señal y ruido | escrita |
 | [2](hoja-02.qmd) | Verosimilitud y MLE | esqueleto |
-| [3](hoja-03.qmd) | Gradientes | esqueleto |
+| [3](hoja-03.qmd) | Gradientes | **práctica de álgebra matricial** |
 | [4](hoja-04.qmd) | Forma matricial | esqueleto |
 | [5](hoja-05.qmd) | Datos | esqueleto |
 | [6](hoja-06.qmd) | Validación y métricas | esqueleto |
 
-Cada hoja tiene **cinco ejercicios**: tres marcados como nucleares, que son del tipo que
-entra en el examen, y dos opcionales.
-
 ::: {.callout-note appearance="simple"}
-Este es el activo más caro de construir de todo el curso y el que ninguna de las dos
-fuentes aporta: Chodrow publica **tres** ejercicios en toda la primera mitad, y el curso
-anterior publicaba enunciados sin soluciones por política. Todo esto es material nuevo.
+Las soluciones se publican después de la sesión, no antes.
 :::

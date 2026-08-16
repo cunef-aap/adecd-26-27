@@ -1,19 +1,102 @@
 # Repaso de probabilidad {.unnumbered}
 
-Lo que este curso da por sabido de probabilidad, con las demostraciones de las propiedades
-de la gaussiana que se usan en el capítulo 1. No se ven en clase: se dan por conocidas de
-Estadística y se dejan aquí escritas para poder consultarlas.
-
 ::: {.content-hidden}
 $$
 {{< include ../assets/includes/_macros.tex >}}
 $$
 :::
 
+Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se
+usan en el capítulo 1. No se ve en clase: se supone conocido de Estadística y se recoge
+aquí para poder consultarlo.
+
+## Variables aleatorias continuas
+
+Una variable aleatoria continua $X$ queda descrita por su **densidad** $\pdf$, que cumple
+$\pdf(x) \geq 0$ y $\int_{-\infty}^{\infty} \pdf(x)\,\dd x = 1$. La probabilidad de caer en
+un intervalo es el área bajo la densidad:
+$$
+\Prob{a \leq X \leq b} = \int_a^b \pdf(x)\,\dd x .
+$$
+
+Una densidad **no** es una probabilidad: puede valer más que 1. Lo que está acotado por 1
+es su integral.
+
+**Esperanza y varianza.**
+$$
+\E{X} = \int x\,\pdf(x)\,\dd x,
+\qquad
+\Var{X} = \E{(X - \E{X})^2} = \E{X^2} - \E{X}^2 .
+$$
+
+Las dos reglas que usaremos sin parar:
+
+::: {#lem-linealidad}
+## Linealidad y escala
+
+Para $a, b$ constantes, $\E{aX + b} = a\E{X} + b$ y $\Var{aX+b} = a^2\Var{X}$. La
+esperanza es lineal **siempre**; la varianza no, y por eso el $a$ sale al cuadrado y el
+$b$ desaparece.
+:::
+
+Además, $\E{X + Y} = \E{X} + \E{Y}$ sin ninguna hipótesis, mientras que
+$\Var{X+Y} = \Var{X} + \Var{Y}$ **solo si $X$ e $Y$ son independientes**. En general,
+$\Var{X+Y} = \Var{X} + \Var{Y} + 2\Cov{X}{Y}$.
+
+## Independencia, y por qué la verosimilitud es un producto
+
+Las variables $X_1,\dots,X_{\nobs}$ son **independientes** si su densidad conjunta es el
+producto de las densidades individuales:
+$$
+\pdf(x_1,\dots,x_{\nobs}) = \prod_{i=1}^{\nobs} \pdf_i(x_i).
+$$
+
+Esa igualdad es la razón de que la verosimilitud del capítulo 1 sea un producto, y de que
+al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: **la independencia
+es una hipótesis del modelo**, no una propiedad de los datos. Cuando falla, falla la
+verosimilitud, y con ella el estimador. En el capítulo 6 veremos un caso concreto: un
+anfitrión con doce anuncios en Madrid.
+
+## Cambio de variable
+
+Si $Y = g(X)$ con $g$ derivable y estrictamente monótona, la densidad de $Y$ es
+$$
+\pdf_Y(y) = \pdf_X\!\left(g^{-1}(y)\right) \left| \frac{\dd}{\dd y} g^{-1}(y) \right| .
+$$
+
+El factor de la derecha es el **jacobiano**, y es lo que impide tratar una densidad como
+si fuera una probabilidad. Se usa dos veces en el curso: en @thm-escala y en el sesgo de
+retransformación del capítulo 5.
+
+## Esperanza condicional
+
+$\E{Y \given X = x}$ es la media de $Y$ entre las observaciones con ese valor de $X$. Como
+función de $x$ es la **función de regresión**, y es el objeto que todo el curso intenta
+estimar.
+
+::: {#lem-esperanza-total}
+## Ley de la esperanza total
+
+$\E{Y} = \E{\,\E{Y \given X}\,}$.
+:::
+
+Se usa en el capítulo 7, en la descomposición del error en sesgo, varianza y ruido.
+
+## Cuantiles
+
+El **cuantil** de orden $\tau \in (0,1)$ de $X$ es el valor $q_\tau$ tal que
+$\Prob{X \leq q_\tau} = \tau$. La **mediana** es $q_{0{,}5}$.
+
+Los cuantiles se conservan bajo transformaciones crecientes: si $g$ es creciente,
+$q_\tau(g(X)) = g(q_\tau(X))$. La media **no** tiene esa propiedad, y de esa asimetría sale
+el resultado del capítulo 5 sobre transformaciones logarítmicas. Los cuantiles reaparecen
+en el capítulo 14, con la regresión cuantílica.
+
 ## La distribución normal
 
-La densidad se define en @def-normal. Las cuatro propiedades siguientes son las únicas que
-usamos.
+La densidad se define en @def-normal. Las propiedades siguientes son las únicas que
+usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como
+integral y hacer un cambio de variable.
 
 ::: {#lem-normalizacion}
 ## Constante de normalización
@@ -24,8 +107,8 @@ $\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \dd z = \sqrt{2\pi}$.
 ::: {.cajanegra}
 **No lo demostramos**
 
-La demostración usa coordenadas polares sobre el cuadrado de la integral. Es bonita y
-no enseña nada de aprendizaje automático. Se acepta y se sigue.
+La demostración pasa por elevar la integral al cuadrado y pasar a coordenadas polares. Es
+bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.
 :::
 
 ::: {#thm-traslacion}
@@ -51,10 +134,21 @@ $a\varepsilon \sim \Normal(a\mu, a^2\noise^2)$.
 :::
 
 ::: {.proof}
-<!-- TODO(D3, 15 min): mismo argumento que @thm-traslacion con el jacobiano |a|.
-     Escribirlo entero: es la primera vez que ven un cambio de variable con jacobiano
-     en este curso y lo van a necesitar otra vez en 5.12. -->
-
+Tomemos $a > 0$; el caso $a<0$ es idéntico salvo que se invierten los límites y aparece
+$\abs{a}$. Sea $W = a\varepsilon$. Entonces
+$$
+\Prob{W \leq t} = \Prob{\varepsilon \leq t/a} = \int_{-\infty}^{t/a} \pdf(x;\mu,\noise)\,\dd x .
+$$
+El cambio de variable $u = ax$, con $\dd u = a\,\dd x$, lleva la integral a
+$\int_{-\infty}^{t} \frac{1}{a}\,\pdf(u/a;\mu,\noise)\,\dd u$. Basta comprobar que el
+integrando es la densidad buscada:
+$$
+\frac{1}{a}\,\pdf\!\left(\frac{u}{a};\mu,\noise\right)
+= \frac{1}{a\noise\sqrt{2\pi}} \exp\!\left(-\frac{(u/a-\mu)^2}{2\noise^2}\right)
+= \frac{1}{(a\noise)\sqrt{2\pi}} \exp\!\left(-\frac{(u-a\mu)^2}{2(a\noise)^2}\right),
+$$
+donde el último paso sale de multiplicar numerador y denominador del exponente por $a^2$.
+El resultado es $\pdf(u; a\mu, a\noise)$.
 :::
 
 ::: {#cor-estandarizacion}
@@ -74,18 +168,56 @@ Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y 
 :::
 
 ::: {.proof}
-<!-- TODO(D3, 25 min). RUTA OBLIGATORIA: no hacerlo desde cero o pasa de M a L:
-     1. Reducir a Z por @cor-estandarizacion: si E[Z]=0 y Var(Z)=1, entonces
-        eps = sigma*Z + mu y las propiedades de linealidad dan el resultado.
-     2. E[Z] = 0 por SIMETRIA IMPAR del integrando z*phi(z) (no calcular la integral).
-     3. Var(Z) = 1 por PARTES con u = z, dv = z*phi(z) dz, usando @lem-normalizacion. -->
+Basta hacerlo para la normal estándar $Z$, porque por @cor-estandarizacion podemos
+escribir $\varepsilon = \noise Z + \mu$, y entonces @lem-linealidad da
+$\E{\varepsilon} = \noise\E{Z} + \mu$ y $\Var{\varepsilon} = \noise^2\Var{Z}$.
 
+Sea $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$ la densidad estándar.
+
+*Media.* El integrando $z\,\varphi(z)$ es una función impar, y su integral sobre toda la
+recta es cero. Luego $\E{Z} = 0$.
+
+*Varianza.* Como $\E{Z}=0$, se tiene $\Var{Z} = \E{Z^2} = \int z^2 \varphi(z)\,\dd z$.
+Integramos por partes con $u = z$ y $\dd v = z\varphi(z)\,\dd z$. Nótese que
+$\varphi'(z) = -z\varphi(z)$, de modo que $v = -\varphi(z)$. Entonces
+$$
+\int_{-\infty}^{\infty} z^2 \varphi(z)\,\dd z
+= \Big[-z\varphi(z)\Big]_{-\infty}^{\infty} + \int_{-\infty}^{\infty} \varphi(z)\,\dd z
+= 0 + 1 = 1,
+$$
+donde el corchete se anula porque $\varphi$ decae más deprisa que cualquier polinomio, y
+la última integral vale 1 por @lem-normalizacion.
+
+Sustituyendo, $\E{\varepsilon} = \mu$ y $\Var{\varepsilon} = \noise^2$.
 :::
 
+## Otras distribuciones del curso
 
-## Qué hay que saber traer de Estadística
+Aparecen cuando cambiamos el modelo de ruido. Se recogen aquí para tenerlas juntas; cada
+una se presenta en su capítulo.
+
+| Distribución | Densidad o masa | Soporte | Dónde |
+|---|---|---|---|
+| Normal | $\frac{1}{\noise\sqrt{2\pi}}e^{-(x-\mu)^2/2\noise^2}$ | $\Real$ | caps. 1 y 2 |
+| Laplace | $\frac{1}{2b}e^{-\abs{x-\mu}/b}$ | $\Real$ | cap. 2 |
+| Lognormal | si $\log Y \sim \Normal(\mu,\noise^2)$ | $(0,\infty)$ | cap. 5 |
+| Poisson | $e^{-\lambda}\lambda^{k}/k!$ | $\{0,1,2,\dots\}$ | cap. 12 |
+| Gamma | $\propto x^{\alpha-1}e^{-x/\beta}$ | $(0,\infty)$ | cap. 12 |
+
+De la lognormal usamos un solo hecho, y se demuestra en el capítulo 5: si
+$Z \sim \Normal(\mu,\noise^2)$, entonces $\E{e^{Z}} = e^{\mu + \noise^2/2}$, que **no** es
+$e^{\mu}$. Esa diferencia es la que hace que exponenciar una predicción hecha en
+logaritmos infravalore sistemáticamente.
+
+## Qué hay que traer de Estadística
+
+Si has seguido hasta aquí sin dificultad, vas bien. Lo imprescindible es:
 
 - Densidad, esperanza y varianza de una variable continua.
-- Linealidad de la esperanza, y $\Var{aX} = a^2\Var{X}$.
+- Linealidad de la esperanza y $\Var{aX+b} = a^2\Var{X}$.
 - Independencia, y que la densidad conjunta de variables independientes es el producto de
-  las densidades. Esto último es lo que hace que la verosimilitud sea un producto.
+  las densidades.
+- Manejo básico de integrales: cambio de variable e integración por partes.
+
+Lo que **no** hace falta: teoremas límite, convergencia, funciones características,
+teoría de la medida.

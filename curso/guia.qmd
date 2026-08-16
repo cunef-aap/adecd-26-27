@@ -34,8 +34,13 @@ requisito de la semana 4 y conviene llegar con él resuelto.
 | Proyecto (solo semanas 9-13) | 1,5 |
 | **Total fuera de clase** | **~5,0** (6,5 en semanas de proyecto) |
 
-Cada hoja tiene **cinco ejercicios: tres nucleares**, que son los del examen, y dos
-opcionales.
+Cada hoja tiene **cinco ejercicios**, y los cuatro primeros reproducen los bloques A, B,
+C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. Quien
+hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques.
+
+Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un
+**miniexamen cronometrado** de un solo bloque, corregido en clase acto seguido. No cuenta
+para la nota; sirve para calibrar el tiempo.
 
 Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 
