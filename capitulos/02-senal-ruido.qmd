@@ -1,0 +1,381 @@
+---
+title: 'Señal y ruido'
+subtitle: 'Sobreajuste, modelo de ruido gaussiano y verosimilitud'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+::: {.callout-note appearance="simple"}
+## Lo que usamos de antes
+
+De @def-problema, los predictores $\xv_i$, la respuesta $\yi$ y el símbolo $\approx$. De
+@def-hipotesis, la clase de hipótesis. Del anexo de probabilidad, densidad, esperanza y
+varianza.
+:::
+
+## Planteamiento
+
+El capítulo 1 terminó con dos cabos sueltos. El primero es el símbolo $\approx$ de
+@def-problema: dijimos que los puntos no están sobre la curva sino alrededor, pero no
+dijimos cuánto ni cómo. El segundo es @fig-trampa, donde un polinomio que pasaba por los
+40 puntos resultaba inservible, sin que quedara claro si aquello era mala suerte o algo
+inevitable.
+
+Este capítulo cierra los dos, y en el orden contrario al que se plantearon.
+
+Primero demostramos que lo de @fig-trampa **siempre** ocurre: con clases de hipótesis
+suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto
+de datos, de modo que conseguirlo no informa de nada (@thm-interpolacion).
+
+Después convertimos el $\approx$ en un modelo concreto, $y = \model(\xv) + \varepsilon$
+con $\varepsilon$ aleatorio. En cuanto se supone algo sobre $\varepsilon$, elegir un
+modelo deja de ser una cuestión de criterio y se convierte en un problema de
+**verosimilitud**, que es un problema que sabemos resolver. Ese paso es el que fija la
+pérdida, y con ello la segunda de las tres decisiones de @sec-tres-decisiones.
+
+## Datos, señal y ruido
+
+Recordemos la condición que da contenido a @def-problema: el error se mide sobre
+observaciones **no vistas**, es decir, distintas de las que se han usado para ajustar. Sin
+esa condición el problema es trivial, y el primer resultado del capítulo dice en qué
+sentido exacto lo es.
+
+```{python}
+#| code-fold: true
+import numpy as np
+from matplotlib import pyplot as plt
+
+rng = np.random.default_rng(42)
+kw_puntos = dict(color="black", facecolors="none", s=40, alpha=0.6, label="datos")
+```
+
+```{python}
+#---
+n = 20
+x = np.linspace(0, 10, n)
+senal = 2.0 * x + 1.0            # la verdad que NO conocemos
+ruido = rng.normal(scale=3.0, size=n)
+y = senal + ruido
+#---
+```
+
+::: {#fig-senal-ruido}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(x, y, **kw_puntos)
+ax.plot(x, senal, color="black", linestyle="--",
+        label=r"Señal: $f(x_i) = 2x_i + 1$")
+for i in range(n):
+    etiqueta = r"Ruido: $\epsilon_i$" if i == 0 else None
+    ax.plot([x[i]] * 2, [senal[i], y[i]],
+            color="#ff5700", alpha=0.5, linewidth=0.9, label=etiqueta)
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.show()
+```
+
+Descomposición de un conjunto de datos (puntos) en una señal subyacente
+(línea discontinua) y ruido (segmentos naranjas).
+
+:::
+
+::: {#def-senal-ruido}
+## Modelo señal + ruido
+
+$$
+\yi = \model(\xv_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \E{\varepsilon_i} = 0.
+$$ {#eq-senal-ruido}
+
+A $\model$ la llamamos **señal** y a $\varepsilon_i$ **ruido**.
+:::
+
+Lo que queremos aprender es $\model$, **no** los valores $\yi$.
+
+::: {#def-errores}
+## Error de entrenamiento y error de test
+
+Dado un conjunto $\mathcal{S}$ y un modelo ajustado $\modelh$,
+$$
+\Riskh_{\mathcal{S}}(\modelh) = \frac{1}{\abs{\mathcal{S}}} \sum_{i \in \mathcal{S}} \left( \yi - \modelh(\xv_i) \right)^2 .
+$$
+:::
+
+::: {.callout-note appearance="simple"}
+De momento el cuadrado es una elección arbitraria: lo estamos **midiendo**, no
+justificando. En @sec-mle-teorema demostraremos que se deduce de suponer ruido gaussiano.
+:::
+
+## Interpolar no es aprender
+
+::: {#def-sobreajuste}
+## Sobreajuste
+
+Se produce **sobreajuste** cuando aumentar la complejidad del modelo mejora su error de
+entrenamiento y **empeora** su error de test.
+:::
+
+El siguiente resultado no suele aparecer en los cursos introductorios.
+
+::: {#thm-interpolacion}
+## Interpolación exacta
+
+Sean $x_1, \dots, x_{\nobs} \in \Real$ **distintos dos a dos** y sean
+$y_1, \dots, y_{\nobs} \in \Real$ cualesquiera. Entonces existe un polinomio $P$ de grado
+$\leq \nobs - 1$ tal que $P(x_i) = \yi$ para todo $i$; es decir, con error de
+entrenamiento **exactamente cero**.
+:::
+
+::: {.proof}
+Construimos la solución. Para cada $j$ defínase la *base de Lagrange*
+$$
+\ell_j(x) = \prod_{k \neq j} \frac{x - x_k}{x_j - x_k},
+$$
+que está bien definida porque los $x_k$ son distintos. Evaluando, si $i = j$ todos los
+factores valen $1$, y si $i \neq j$ el factor $k = i$ se anula; por tanto
+$\ell_j(x_i) = \delta_{ij}$. Tomando
+$$
+P(x) = \sum_{j=1}^{\nobs} y_j\, \ell_j(x)
+$$
+se obtiene $P(x_i) = \sum_j y_j \delta_{ij} = \yi$. Cada $\ell_j$ tiene grado
+$\nobs - 1$, luego $P$ también.
+:::
+
+::: {.callout-important appearance="simple"}
+## Consecuencia
+
+Un error de entrenamiento de cero **no es evidencia de nada**: siempre se puede conseguir.
+Por tanto, una afirmación del tipo *"nuestro modelo acierta el 100 %"* no informa de nada
+mientras no se diga sobre qué datos se ha medido.
+:::
+
+Lo comprobamos numéricamente. Interpolamos los 20 puntos y después generamos datos nuevos con la **misma
+señal y ruido distinto**.
+
+::: {#fig-interpolacion}
+
+```{python}
+#| code-fold: true
+from scipy import interpolate
+
+f_int = interpolate.interp1d(x, y, kind="cubic")
+x_denso = np.linspace(0, 10, 200)
+y_int = f_int(x_denso)
+
+fig, ax = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
+ax[0].scatter(x, y, **kw_puntos)
+ax[0].plot(x_denso, y_int, color="#ff5700", linestyle="--", label="interpolador")
+ax[0].set(title="Datos de entrenamiento", xlabel="$x$", ylabel="$y$")
+ax[0].legend()
+
+y_nuevo = 2.0 * x_denso + 1.0 + rng.normal(scale=3.0, size=200)
+ax[1].scatter(x_denso, y_nuevo, **kw_puntos)
+ax[1].plot(x_denso, y_int, color="#ff5700", linestyle="--", label="interpolador")
+ax[1].set(title="Datos nuevos, misma señal", xlabel="$x$")
+ax[1].legend()
+plt.show()
+```
+
+El mismo interpolador: error nulo sobre los datos de entrenamiento (izquierda) y error grande sobre datos nuevos (derecha).
+
+:::
+
+## Modelizar el ruido
+
+Si queremos aprender $\model$ en @eq-senal-ruido, necesitamos poder hablar
+matemáticamente de $\varepsilon_i$. Supondremos que el ruido es gaussiano.
+
+::: {#def-normal}
+## Densidad normal
+
+$$
+\pdf(x; \mu, \noise) = \frac{1}{\noise \sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\noise^2} \right).
+$$ {#eq-densidad-normal}
+:::
+
+::: {.callout-note appearance="simple"}
+## De Estadística
+
+Usaremos cuatro propiedades de la normal: la constante de normalización, y su
+comportamiento bajo traslación (@thm-traslacion), bajo cambio de escala (@thm-escala) y
+la estandarización que se sigue de ambas (@cor-estandarizacion), más
+$\E{\varepsilon}=\mu$ y $\Var{\varepsilon}=\noise^2$ (@thm-momentos). Están enunciadas
+y demostradas en el [repaso de probabilidad](../curso/probabilidad.qmd). Aquí solo
+necesitamos la primera de ellas.
+:::
+
+::: {#cor-target}
+## Del modelo de ruido a la distribución del objetivo
+
+$\varepsilon_i \sim \Normal(0, \noise^2)$ si y solo si
+$\yi \given \xv_i \sim \Normal(\model(\xv_i), \noise^2)$.
+:::
+
+::: {.proof}
+@thm-traslacion con $c = \model(\xv_i)$.
+:::
+
+El corolario convierte una hipótesis sobre los **errores** en una distribución para los
+**datos**. A una distribución se le puede calcular la verosimilitud, y eso es lo que
+haremos a continuación.
+
+## Verosimilitud {#sec-mle-teorema}
+
+::: {#def-lineal-gaussiano}
+## Modelo lineal-gaussiano
+
+Con $\nfeat = 1$: $\yi \sim \Normal(\coefzero + w_1 x_i,\ \noise^2)$, de forma independiente.
+:::
+
+::: {.callout-note appearance="simple"}
+## Sobre la independencia
+
+*Independientes* significa aquí condicionalmente a las $\xv_i$. Es una hipótesis, no una
+verdad. En la @sec-grupos del capítulo 8 veremos qué ocurre cuando no se cumple: un mismo
+anfitrión con doce anuncios en Madrid la rompe.
+:::
+
+::: {#def-verosimilitud}
+## Verosimilitud y log-verosimilitud
+
+$$
+\Lik(\coef) = \prod_{i=1}^{\nobs} \pdf\left(\yi;\ \model(\xv_i),\ \noise\right),
+\qquad
+\loglik(\coef) = \sum_{i=1}^{\nobs} \log \pdf\left(\yi;\ \model(\xv_i),\ \noise\right).
+$$
+:::
+
+::: {#lem-log-argmax}
+## El logaritmo preserva el argmax
+
+Si $g$ es estrictamente creciente, $\argmax_{\coef} g(\Lik(\coef)) = \argmax_{\coef} \Lik(\coef)$.
+En particular $\argmax \Lik = \argmax \loglik = \argmin (-\loglik)$.
+:::
+
+::: {.proof}
+Si $\coef^{\star}$ maximiza $\Lik$ entonces $\Lik(\coef) \leq \Lik(\coef^\star)$ para todo
+$\coef$, y aplicando $g$ creciente, $g(\Lik(\coef)) \leq g(\Lik(\coef^\star))$. El recíproco
+es idéntico usando que $g$ es estrictamente creciente.
+:::
+
+::: {#def-mle}
+## Estimación máximo-verosímil
+
+$\coefhat = \argmax_{\coef} \Lik(\coef) = \argmin_{\coef} \left(-\loglik(\coef)\right)$.
+:::
+
+::: {.callout-tip appearance="simple"}
+## Convenio: siempre minimizamos
+
+Aunque el problema nazca como una maximización, en este curso **siempre** lo escribiremos
+como minimización. Es el convenio de toda la literatura de optimización y evita errores
+de signo en el capítulo 5.
+:::
+
+### Resolución por búsqueda en rejilla
+
+Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.
+
+```{python}
+#---
+def densidad_normal(x, mu, sigma):
+    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))
+
+
+def log_verosimilitud(w0, w1, x, y, sigma=3.0):
+    return np.log(densidad_normal(y, w0 + w1 * x, sigma)).sum()
+#---
+```
+
+```{python}
+#| code-fold: true
+rejilla_w0 = np.linspace(-5, 5, 60)
+rejilla_w1 = np.linspace(-1, 3, 60)
+L = np.array([[log_verosimilitud(a, b, x, y) for b in rejilla_w1] for a in rejilla_w0])
+
+fig, ax = plt.subplots(figsize=(5.5, 4))
+cs = ax.contourf(rejilla_w1, rejilla_w0, L, levels=30)
+i, j = np.unravel_index(L.argmax(), L.shape)
+ax.scatter([rejilla_w1[j]], [rejilla_w0[i]], color="#ff5700", s=60, label="máximo en la rejilla")
+ax.scatter([2.0], [1.0], color="white", marker="x", s=60, label="verdad")
+ax.set(xlabel="$w_1$", ylabel="$w_0$")
+ax.legend()
+plt.colorbar(cs, ax=ax, label=r"$\ell(w)$")
+plt.show()
+```
+
+Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con $\nfeat = 20$
+parámetros serían $60^{20}$, un número de evaluaciones inabordable. **Hace falta cálculo**,
+y eso es el capítulo 5.
+
+## Error frecuente
+
+::: {.trampa}
+**"Mi $\Rsq$ de entrenamiento es 0,999"**
+
+Es exactamente @thm-interpolacion en acción. Añade grados de libertad suficientes y
+cualquiera consigue ese número. La pregunta correcta no es *cuánto ajusta* sino
+*sobre qué datos se ha medido*. Volveremos sobre esto con el aparato completo en el
+capítulo 8.
+:::
+
+## Notación ↔ código
+
+| Matemáticas | Código | Nota |
+|---|---|---|
+| $\nobs$ | `n`, `X.shape[0]` | número de observaciones |
+| $\nfeat$ | `p`, `X.shape[1]` | número de variables |
+| $\coef$ | `w` | vector de coeficientes |
+| $\noise$ | `sigma` | escala del ruido |
+| $\model(\xv_i)$ | `f(x)` | la señal |
+| $\varepsilon_i$ | `ruido` | lo que no explicamos |
+
+## Ejercicios
+
+::: {#exr-lagrange}
+Sean los puntos $(1, 3)$, $(2, 5)$, $(4, 2)$. Construya explícitamente el polinomio
+interpolador de Lagrange y compruebe que pasa por los tres puntos.
+:::
+
+::: {.sol}
+
+
+<!-- TODO(D3): escribir. Sale un polinomio de grado 2; el objetivo es que vean que
+     la construcción es mecánica, no un teorema de existencia abstracto. -->
+:::
+
+::: {#exr-titulares}
+Tres titulares de prensa afirman: (a) "el modelo predice el impago con un 99 % de
+acierto"; (b) "hemos reducido el error a cero"; (c) "validado sobre 10 millones de
+registros". Para cada uno, diga qué información falta para poder juzgarlo.
+:::
+
+::: {#exr-ruido}
+Suponga $\varepsilon_i \sim \Normal(0, \noise^2)$. Escriba la log-verosimilitud de una
+única observación y dibuje, sin calcular nada, cómo cambia al alejarse $\yi$ de
+$\model(\xv_i)$.
+:::
+
+<!-- TODO(D3): faltan 2 ejercicios más. Uno de simulación (generar datos con w conocido
+     y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
+     sobre por qué la independencia es una hipótesis. -->
+
+## Resumen
+
+- Error de entrenamiento cero se consigue **siempre** (@thm-interpolacion) y por tanto no
+  es evidencia de nada.
+- Suponer una distribución para el ruido convierte el problema en uno de **verosimilitud**
+  (@cor-target).
+- Maximizar la verosimilitud por fuerza bruta no escala. Necesitamos gradientes.

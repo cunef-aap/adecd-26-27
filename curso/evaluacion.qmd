@@ -5,8 +5,8 @@ final** para promediar. Asistencia obligatoria (80 %).
 
 | Actividad | Peso | Cuándo |
 |---|---|---|
-| Parcial 1 | 20 % | semana 7, S1 |
-| Proyecto con agentes de IA | 20 % | semanas 12-13 |
+| Parcial 1 | 20 % | semana 8, S3 |
+| Proyecto con agentes de IA | 20 % | semanas 13-14 |
 | Examen final | 60 % | convocatoria ordinaria |
 
 Los parciales **no son liberatorios**. La evaluación continua es **obligatoria para todo
@@ -51,4 +51,4 @@ puntuación depende de la justificación y no del número de errores señalados.
 
 Todo lo que aparece con el marco verde de *Demostración* en los apuntes. La lista completa,
 con su número y su capítulo, está en el [índice de resultados](indice-resultados.qmd) y se
-publica en la semana 4, tres semanas antes del parcial.
+publica en la semana 6, dos semanas antes del parcial.

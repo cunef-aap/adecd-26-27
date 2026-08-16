@@ -4,23 +4,29 @@
 Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.
 :::
 
+El capítulo $k$, la hoja de problemas $k$ y el laboratorio $k$ corresponden a la semana $k$.
+
 | Sem. | Capítulo | Evaluación |
 |---|---|---|
-| 1 | 1 · Señal y ruido | diagnóstico (no evaluado) |
-| 2 | 2 · Verosimilitud y MLE | |
-| 3 | 3 · Gradientes y descenso | S2: práctica de álgebra matricial |
-| 4 | 4 · Forma matricial | se publica el simulacro del parcial |
-| 5 | 5 · De los datos crudos a X | S3 completa para el pipeline canónico |
-| 6 | 6 · Validación y métricas | miniexamen cronometrado (S2, 20 min) |
-| 7 | 7 · Sesgo y varianza | **Parcial 1 (20 %)**, S3 |
-| 8 | 8 · Regularización | se publica el enunciado del proyecto |
-| 9 | 9 · Selección y reducción | formación de equipos |
-| 10 | 10 · Métodos no lineales | taller de agentes I (S3); miniexamen (S2) |
-| 11 | 11 · Árboles de regresión | checkpoint del proyecto (S3) |
-| 12 | 12 · GLM | taller de agentes II (S3) |
-| 13 | 13 · Proyecto | **Entrega y defensa (20 %)** |
-| 14 | 14 · Decisión e incertidumbre | miniexamen cronometrado (S2) |
-| 15 | 15 · Repaso y estado del arte | simulacro del examen final |
+| 1 | 1 · Datos, patrones y modelos | diagnóstico (no evaluado) |
+| 2 | 2 · Señal y ruido | |
+| 3 | 3 · Verosimilitud y pérdida | |
+| 4 | 4 · Convexidad y riesgo empírico | |
+| 5 | 5 · Gradientes y descenso | S2: práctica de álgebra matricial |
+| 6 | 6 · Forma matricial | miniexamen cronometrado (S2, 20 min); se publica el simulacro del parcial |
+| 7 | 7 · Del dato crudo a X | S3 completa para el pipeline canónico |
+| 8 | 8 · Validación y métricas | **Parcial 1 (20 %)**, S3 |
+| 9 | 9 · Mapas de características | taller de agentes I (S3) |
+| 10 | 10 · Sesgo y varianza | miniexamen (S2); se publica el enunciado del proyecto |
+| 11 | 11 · Regularización | formación de equipos |
+| 12 | 12 · Selección y reducción | |
+| 13 | 13 · Árboles de regresión | *checkpoint* del proyecto (S3) |
+| 14 | 14 · GLM | miniexamen (S2); taller de agentes II (S3); **entrega y defensa del proyecto (20 %)** |
+| 15 | 15 · De la predicción a la decisión | simulacro del examen final |
 
-Las semanas 5, 6 y 7 son independientes entre sí: si el calendario mueve el parcial, no se
+Las semanas 6, 7 y 8 son independientes entre sí: si el calendario mueve el parcial, no se
 toca nada más.
+
+El proyecto no ocupa semana propia. Se publica en la semana 10, los equipos se forman en la
+11, el *checkpoint* usa la S3 de la 13 y la defensa la S3 de la 14. El trabajo se hace fuera
+del aula.

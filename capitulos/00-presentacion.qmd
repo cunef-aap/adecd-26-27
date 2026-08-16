@@ -1,7 +1,6 @@
----
-title: 'Presentación'
-subtitle: 'Qué vamos a estudiar, cómo se trabaja y cómo se evalúa'
----
+# Presentación {.unnumbered}
+
+*Qué vamos a estudiar, cómo se trabaja y cómo se evalúa.*
 
 ::: {.content-hidden}
 $$
@@ -20,7 +19,7 @@ función, una partición, una densidad, una política) que sea bueno **respecto 
 no respecto de la muestra concreta que nos ha tocado.
 
 Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es
-fácil y no significa nada: el capítulo 1 lo demuestra. Lo difícil es que el objeto siga
+fácil y no significa nada: el capítulo 2 lo demuestra. Lo difícil es que el objeto siga
 funcionando en observaciones nuevas extraídas de la misma $P$.
 
 Un problema de aprendizaje queda especificado cuando se fijan tres cosas:
@@ -82,39 +81,67 @@ Es la distinción que organiza el curso.
 | Objeto de interés | el coeficiente | la predicción |
 | Criterio | insesgadez, error estándar | riesgo estimado sobre datos no usados |
 
-Llevan a modelos distintos. En el capítulo 8 veremos la regularización, que **sesga los
+Llevan a modelos distintos. En el capítulo 11 veremos la regularización, que **sesga los
 coeficientes a propósito** porque a cambio reduce el riesgo. Desde la óptica de la
 inferencia eso es un defecto; desde la nuestra, el objetivo.
 
 No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de
-confianza). Es una decisión deliberada. El capítulo 14 sí trata la incertidumbre, pero
+confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero
 sobre las predicciones.
 
 ## El esquema del curso
 
-Todos los métodos salen del mismo procedimiento, aplicado quince veces:
+Plantear un problema de predicción son tres decisiones: qué **clase de hipótesis**, qué
+**pérdida** y qué **optimizador**. El curso las va rellenando en ese orden, y el índice
+está organizado según cuál se esté rellenando.
+
+La segunda de las tres, la pérdida, no se elige por gusto. Sale de un procedimiento que se
+aplica quince veces:
 
 1. Escribir un **modelo de datos**: señal más ruido.
 2. Escribir la **verosimilitud** de ese modelo.
 3. Tomar $-\log$ y obtener una **pérdida**.
-4. **Minimizarla**, en forma cerrada o por descenso de gradiente.
-5. **Estimar el riesgo** con datos que no se hayan usado para ajustar, y medirlo con una
+4. Comprobar que es **convexa**, que es lo que garantiza que minimizarla tenga sentido.
+5. **Minimizarla**, en forma cerrada o por descenso de gradiente.
+6. **Estimar el riesgo** con datos que no se hayan usado para ajustar, y medirlo con una
    métrica interpretable.
 
-Se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: *ridge* y
-*lasso* son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson
-es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda
-voraz.
+Se deriva entero, a mano, una vez (capítulos 2 a 6). Después se reutiliza: *ridge* y
+*lasso* son el paso 3 con una distribución a priori; los splines son el paso 1 con otras
+variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4
+falla y el 5 se vuelve búsqueda voraz.
+
+## Las quince semanas
+
+| Sem. | Capítulo | Decisión que rellena |
+|---|---|---|
+| 1 | Datos, patrones y modelos | las tres, planteadas |
+| 2 | Señal y ruido | clase de hipótesis |
+| 3 | Verosimilitud y pérdida | pérdida |
+| 4 | Convexidad y riesgo empírico | pérdida |
+| 5 | Gradientes y descenso | optimizador |
+| 6 | Forma matricial y ecuaciones normales | optimizador |
+| 7 | Del dato crudo a X | clase de hipótesis |
+| 8 | Validación y métricas | cómo se juzga todo lo anterior |
+| 9 | Mapas de características | clase de hipótesis |
+| 10 | Sesgo y varianza | por qué la clase no puede ser cualquiera |
+| 11 | Regularización: *ridge* y *lasso* | pérdida |
+| 12 | Selección de modelos | clase de hipótesis |
+| 13 | Árboles | clase de hipótesis y optimizador |
+| 14 | Modelos lineales generalizados | pérdida |
+| 15 | De la predicción a la decisión | pérdida, y qué se hace con el número |
+
+La hoja de problemas $k$ y el laboratorio $k$ corresponden al capítulo $k$.
 
 ## Programa
 
 | Tema oficial | Capítulos |
 |---|---|
 | 1. Introducción al aprendizaje automático | 1, 2 y el estado del arte del 15 |
-| 2. Metodologías para predicción | 5 (datos), 9 (reducción y selección), 6 (validación y métricas) |
-| 3. Algoritmos para predicción | 3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas) |
-| 4. Implementación y aplicación | los laboratorios; casos de uso en 12, 14 y 15 |
-| Complemento: agentes de IA | 10, 12 y el proyecto |
+| 2. Metodologías para predicción | 7 (datos), 12 (reducción y selección), 8 (validación y métricas) |
+| 3. Algoritmos para predicción | 4, 5 y 6 (convexidad y descenso de gradiente), 6, 11 y 14 (lineales), 9 (no lineales), 13 (basados en reglas) |
+| 4. Implementación y aplicación | los laboratorios; casos de uso en 14 y 15 |
+| Complemento: agentes de IA | 9, 14 y el proyecto |
 
 ## Cómo se trabaja
 
@@ -185,11 +212,11 @@ después de la sesión.
 ### Herramientas
 
 - **Python**, con `numpy`, `pandas`, `matplotlib` y `scikit-learn`. `statsmodels` en el
-  capítulo 12.
-- **`jax`** en los capítulos 3 y 4, para **diferenciación automática**. No la usamos para
+  capítulo 14.
+- **`jax`** en los capítulos 5 y 6, para **diferenciación automática**. No la usamos para
   entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta.
   `jax.grad(f)` devuelve una función, el gradiente de `f`, que es la traducción literal
-  del operador $\grad$. El capítulo 3 explica en qué se diferencia de las diferencias
+  del operador $\grad$. El capítulo 5 explica en qué se diferencia de las diferencias
   finitas y de la derivación simbólica, y por qué el modo inverso da las $\nfeat+1$
   derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos
   grandes.
@@ -221,7 +248,7 @@ a 7 por semana.
 | Hoja de problemas | 2,0 |
 | Completar el cuaderno después de la S3 | 1,5 |
 | Estudio y repaso | 2,0 |
-| Proyecto (solo semanas 9 a 13) | 2,0 |
+| Proyecto (solo semanas 10 a 14) | 2,0 |
 | **Total** | **7** (9 en semanas de proyecto) |
 
 Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
@@ -265,8 +292,8 @@ estudiantes de intercambio. Los parciales **no son liberatorios**.
 
 | Actividad | Peso | Cuándo |
 |---|---|---|
-| Examen parcial 1 | 20 % | semana 7, sesión S3 |
-| Proyecto en colaboración con agentes de IA | 20 % | semanas 12 y 13 |
+| Examen parcial 1 | 20 % | semana 8, sesión S3 |
+| Proyecto en colaboración con agentes de IA | 20 % | semanas 13 y 14 |
 | **Examen final** | **60 %** | convocatoria ordinaria |
 
 El examen final evalúa todo el programa, lo redacta el profesor de la asignatura y

@@ -6,154 +6,78 @@ $$
 $$
 :::
 
-Capítulo 1, señal y ruido. Los cuatro primeros ejercicios son nucleares y tienen la
-estructura del examen; el quinto es de ampliación.
+Capítulo 1, Datos, patrones y modelos. Los cuatro primeros ejercicios son nucleares y
+tienen la estructura del examen; el quinto es de ampliación.
 
-## 1. Conceptual {#sec-h1-a}
+## 1. Conceptual
 
-*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
+**a.** Define clase de hipótesis y explica, en dos frases, por qué el problema de
+predicción no está bien planteado hasta que se fija una.
 
-::: {#exr-h1-conceptual}
-a. Un compañero te enseña un modelo con error de entrenamiento cero y te dice que ha
-   resuelto el problema. **Razona** qué le contestarías, citando el resultado del capítulo
-   en el que te apoyas.
-b. **Explica** en qué se diferencian la señal y el ruido en el modelo
-   $\yi = \model(\xv_i) + \varepsilon_i$, y cuál de los dos queremos aprender.
-c. **Analiza** la siguiente afirmación: *"como el ruido tiene media cero, con suficientes
-   datos desaparece y podemos recuperar $\model$ exactamente"*.
-:::
+**b.** @def-problema exige que las observaciones sobre las que se mide el error no
+pertenezcan a $\data$. Razona qué solución tendría el problema si se suprimiera esa
+condición.
 
-::: {.sol}
-a. Que no es evidencia de nada. Por @thm-interpolacion, con abscisas distintas siempre
-   existe un polinomio que interpola los datos exactamente, de modo que un error de
-   entrenamiento nulo se puede conseguir siempre y no distingue un modelo bueno de uno
-   malo. La pregunta pertinente es qué error comete sobre observaciones que no se hayan
-   usado para ajustarlo.
-b. La señal es la parte de $y$ que depende sistemáticamente de $\xv$, es decir $\model$;
-   el ruido es la parte que varía entre observaciones con el mismo $\xv$. Queremos
-   aprender $\model$. Ajustar también el ruido es precisamente el sobreajuste de
-   @def-sobreajuste.
-c. Es falsa tal como está enunciada. Que $\E{\varepsilon_i}=0$ no implica que el ruido
-   desaparezca en una observación concreta: cada $y$ nuevo trae su propio $\varepsilon$.
-   Con más datos podemos estimar $\model$ mejor, pero el error de predicción sobre una
-   observación nueva no baja de $\Var{\varepsilon}$. Ese suelo es el ruido irreducible del
-   capítulo 7.
-:::
+**c.** Un compañero dice que su modelo es bueno porque el coeficiente de la variable
+`superficie` es positivo y significativo. Analiza si ese argumento responde a la pregunta
+de este curso.
 
-## 2. Demostración {#sec-h1-b}
+## 2. Demostración
 
-*Bloque B. Es del [índice de resultados](../curso/indice-resultados.qmd), así que puede caer
-tal cual en el examen.*
+Sea $\hyp$ la clase de las funciones constantes y $\loss(\yhat, y) = (\yhat - y)^2$.
+Demuestra que el minimizador del riesgo empírico es $\ybar$, y que su valor mínimo es la
+varianza muestral de $y$.
 
-::: {#exr-h1-lagrange}
-Sean $x_1,\dots,x_{\nobs}$ distintos dos a dos.
+*Es el @exr-decisiones del capítulo, con el segundo apartado añadido.*
 
-a. Escribe la base de Lagrange $\ell_j$ y comprueba que $\ell_j(x_i) = \delta_{ij}$.
-b. Demuestra @thm-interpolacion: existe un polinomio de grado $\leq \nobs-1$ que pasa por
-   los $\nobs$ puntos.
-c. Constrúyelo explícitamente para $(1,3)$, $(2,5)$ y $(4,2)$, y comprueba que pasa por
-   los tres.
-:::
+## 3. Cálculo a mano
 
-::: {.sol}
-a y b están en @thm-interpolacion.
+Sobre estos cuatro datos con un solo predictor:
 
-c. Con $x_1=1$, $x_2=2$, $x_3=4$:
-$$
-\ell_1(x) = \frac{(x-2)(x-4)}{(1-2)(1-4)} = \frac{(x-2)(x-4)}{3}, \quad
-\ell_2(x) = \frac{(x-1)(x-4)}{(2-1)(2-4)} = -\frac{(x-1)(x-4)}{2},
-$$
-$$
-\ell_3(x) = \frac{(x-1)(x-2)}{(4-1)(4-2)} = \frac{(x-1)(x-2)}{6}.
-$$
-El polinomio es $P(x) = 3\ell_1(x) + 5\ell_2(x) + 2\ell_3(x)$. Comprobación:
-$P(1) = 3\cdot 1 + 5\cdot 0 + 2\cdot 0 = 3$, y análogamente $P(2)=5$ y $P(4)=2$.
-:::
+| $i$ | $x_i$ | $y_i$ |
+|---|---|---|
+| 1 | 0 | 1 |
+| 2 | 1 | 3 |
+| 3 | 2 | 3 |
+| 4 | 3 | 5 |
 
-## 3. Cálculo a mano {#sec-h1-c}
+**a.** Calcula el riesgo empírico con pérdida cuadrática de los dos modelos
+$\model_1(x) = 1 + x$ y $\model_2(x) = 3$.
 
-*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
+**b.** Uno de los dos modelos pertenece a la clase de las funciones constantes y el otro a
+la de las afines. Di cuál es cuál y por qué la comparación de sus riesgos empíricos, tal
+como está hecha aquí, no permite concluir cuál predecirá mejor.
 
-::: {#exr-h1-calculo}
-Se ajustan dos modelos sobre estas cuatro observaciones de entrenamiento:
+## 4. Encuentra los errores
 
-| $x$ | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|
-| $y$ | 2 | 4 | 5 | 9 |
-
-El modelo $A$ predice $\yhat = 2x$. El modelo $B$ predice $\yhat = 2, 4, 5, 9$
-respectivamente, es decir, interpola.
-
-a. Calcula el error de entrenamiento $\Riskh$ de cada modelo.
-b. Llegan dos observaciones nuevas: $(x,y) = (2, 3)$ y $(x,y) = (3, 7)$. El modelo $B$
-   predice sobre ellas lo mismo que predecía en entrenamiento para esos valores de $x$.
-   Calcula el error de test de cada modelo.
-c. ¿Qué modelo elegirías y por qué? Relaciona la respuesta con @def-sobreajuste.
-:::
-
-::: {.sol}
-a. Modelo $A$: residuos $2-2=0$, $4-4=0$, $5-6=-1$, $9-8=1$. Suma de cuadrados $=2$, luego
-   $\Riskh_A = 2/4 = 0{,}5$. Modelo $B$: todos los residuos son cero, $\Riskh_B = 0$.
-b. Modelo $A$ sobre test: predice $4$ y $6$; residuos $3-4=-1$ y $7-6=1$; suma $=2$,
-   $\Riskh_A^{\text{test}} = 2/2 = 1$. Modelo $B$: predice $4$ y $5$; residuos $-1$ y $2$;
-   suma $=1+4=5$, $\Riskh_B^{\text{test}} = 5/2 = 2{,}5$.
-c. El modelo $A$. $B$ gana en entrenamiento (0 frente a 0,5) y pierde en test (2,5 frente
-   a 1): es exactamente el patrón de @def-sobreajuste, aumentar la complejidad mejora el
-   error de entrenamiento y empeora el de test.
-:::
-
-## 4. Encuentra los errores {#sec-h1-d}
-
-*Bloque D. Se puntúa la justificación, no la lista.*
-
-::: {#exr-h1-errores}
-El siguiente fragmento pretende comparar dos modelos y quedarse con el mejor. Tiene
-**tres** errores conceptuales. Localízalos y explica en cada caso qué consecuencia tiene.
+Tres errores conceptuales en este fragmento. Encuéntralos y justifica cada uno.
 
 ```python
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
 
-X, y = cargar_datos()                      # 40 observaciones
+X, y = cargar_datos()               # (200, 3) y (200,)
 
-Phi = PolynomialFeatures(degree=39).fit_transform(X)
-modelo_a = LinearRegression().fit(Phi, y)
-modelo_b = LinearRegression().fit(X, y)
+modelo = LinearRegression().fit(X, y)
+r2 = modelo.score(X, y)
+print(f"R2 = {r2:.3f}")
 
-error_a = np.mean((y - modelo_a.predict(Phi)) ** 2)
-error_b = np.mean((y - modelo_b.predict(X)) ** 2)
+# probamos con mas variables para ver si mejora
+X2 = np.column_stack([X, X**2, X**3])
+modelo2 = LinearRegression().fit(X2, y)
+print(f"R2 = {modelo2.score(X2, y):.3f}")   # sale mas alto, nos quedamos con este
 
-print("gana el modelo a" if error_a < error_b else "gana el modelo b")
+# como el R2 es alto, concluimos que la variable 0 causa y
+print(f"efecto de x0: {modelo2.coef_[0]:.3f}")
 ```
-:::
 
-::: {.sol}
-1. **Los dos errores se miden sobre los mismos datos con los que se ha ajustado.** No son
-   estimaciones de nada: por @thm-interpolacion, el modelo de grado 39 sobre 40 puntos
-   puede alcanzar error cero. La comparación está decidida antes de empezar. Hace falta
-   separar un conjunto que no se use para ajustar.
-2. **Grado 39 con 40 observaciones es interpolación.** No es un error de programación sino
-   de diseño: se está eligiendo a propósito la clase de modelos que garantiza error de
-   entrenamiento nulo, que es justo la que no aprende la señal.
-3. **El criterio de decisión es el error de entrenamiento.** Aunque los dos puntos
-   anteriores se arreglasen, quedarse con el menor de dos errores medidos sobre los mismos
-   datos favorece sistemáticamente al modelo más complejo. La decisión tiene que apoyarse
-   en datos no usados para ajustar.
+## 5. Ampliación
 
-*(Un cuarto defecto menor, que no cuenta como error conceptual: no se fija una semilla, de
-modo que el resultado no es reproducible.)*
-:::
+Considera la pérdida asimétrica $\loss(\yhat, y) = c\,(y - \yhat)$ si $\yhat \le y$ y
+$\loss(\yhat, y) = (\yhat - y)$ si $\yhat > y$, con $c > 1$. Sobre la clase de las
+funciones constantes, ¿qué característica de la distribución de $y$ minimiza el riesgo?
+Basta con que lo razones sobre los datos del ejercicio 3 probando valores.
 
-## 5. Ampliación {#sec-h1-e}
-
-*Opcional. No entra en el examen.*
-
-::: {#exr-h1-simulacion}
-Genera $\nobs = 20$ observaciones con $\model(x) = 2x+1$ y ruido normal de desviación 3.
-Ajusta el polinomio interpolador y una recta. Repite el experimento 200 veces, y en cada
-repetición mide el error de ambos modelos sobre 200 observaciones nuevas generadas con la
-misma señal. Dibuja las dos distribuciones de error.
-
-¿Qué le pasa a la distribución del interpolador cuando $\nobs$ crece de 20 a 40?
+::: {.callout-note appearance="simple"}
+Las soluciones se publican después de la sesión.
 :::

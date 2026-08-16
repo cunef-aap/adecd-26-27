@@ -156,13 +156,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+ <span class="menu-text">Presentación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Fundamentos</span></a>
+ <span class="menu-text">Plantear el problema</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,26 +170,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -197,7 +191,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Minimizar</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -205,14 +199,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="../capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="../capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,7 +220,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Del dato crudo al modelo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -228,20 +228,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  <a href="../capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="../capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Modelos no lineales y basados en reglas</span></a>
+ <span class="menu-text">Complejidad y regularización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -257,14 +251,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+  <a href="../capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+  <a href="../capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,20 +286,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+  <a href="../capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
       </ul>
@@ -309,8 +309,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-repaso.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></span></a>
+  <a href="../capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -419,7 +419,7 @@ window.Quarto = {
   <li><a href="#dependencia-lineal-rango-y-núcleo" id="toc-dependencia-lineal-rango-y-núcleo" class="nav-link" data-scroll-target="#dependencia-lineal-rango-y-núcleo">Dependencia lineal, rango y núcleo</a></li>
   <li><a href="#resolver-un-sistema-no-invertir-la-matriz" id="toc-resolver-un-sistema-no-invertir-la-matriz" class="nav-link" data-scroll-target="#resolver-un-sistema-no-invertir-la-matriz">Resolver un sistema, no invertir la matriz</a></li>
   <li><a href="#derivadas-parciales-y-gradiente" id="toc-derivadas-parciales-y-gradiente" class="nav-link" data-scroll-target="#derivadas-parciales-y-gradiente">Derivadas parciales y gradiente</a></li>
-  <li><a href="#las-dos-identidades-del-capítulo-4" id="toc-las-dos-identidades-del-capítulo-4" class="nav-link" data-scroll-target="#las-dos-identidades-del-capítulo-4">Las dos identidades del capítulo 4</a></li>
+  <li><a href="#las-dos-identidades-del-capítulo-6" id="toc-las-dos-identidades-del-capítulo-6" class="nav-link" data-scroll-target="#las-dos-identidades-del-capítulo-6">Las dos identidades del capítulo 6</a></li>
   <li><a href="#diagnóstico" id="toc-diagnóstico" class="nav-link" data-scroll-target="#diagnóstico">Diagnóstico</a></li>
   </ul>
 </nav>
@@ -465,7 +465,7 @@ window.Quarto = {
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span><span class="math inline">\(\left\lVert \mathbf{v} \right\rVert^2\)</span> es una suma de cuadrados, luego cada sumando es no negativo. Una suma de términos no negativos vale cero solo si todos valen cero, es decir, si <span class="math inline">\(v_j = 0\)</span> para todo <span class="math inline">\(j\)</span>.</p>
 </div>
-<p>Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución de mínimos cuadrados (capítulo 4) y la trampa de la variable ficticia (capítulo 5).</p>
+<p>Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución de mínimos cuadrados (capítulo 6) y la trampa de la variable ficticia (capítulo 7).</p>
 </section>
 <section id="matrices" class="level2">
 <h2 class="anchored" data-anchor-id="matrices">Matrices</h2>
@@ -513,7 +513,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>No en abstracto: <strong>exhibiendo el vector</strong>. Para probar que unas columnas son dependientes, se escribe un <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> concreto y se comprueba que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Así se hace en el capítulo 5 con la trampa de la variable ficticia.</p>
+<p>No en abstracto: <strong>exhibiendo el vector</strong>. Para probar que unas columnas son dependientes, se escribe un <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> concreto y se comprueba que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Así se hace en el capítulo 7 con la trampa de la variable ficticia.</p>
 </div>
 </div>
 <div id="exr-nucleo" class="theorem exercise">
@@ -556,9 +556,9 @@ window.Quarto = {
 <p><strong>Regla de la cadena</strong>, en la forma que usaremos: si <span class="math inline">\(f(\boldsymbol{w}) = g(h(\boldsymbol{w}))\)</span> con <span class="math inline">\(h: \mathbb{R}^m \to \mathbb{R}\)</span> y <span class="math inline">\(g:\mathbb{R}\to\mathbb{R}\)</span>, entonces <span class="math inline">\(\nabla f(\boldsymbol{w}) = g'(h(\boldsymbol{w}))\, \nabla h(\boldsymbol{w})\)</span>.</p>
 <p><strong>Condición de primer orden.</strong> Si <span class="math inline">\(\boldsymbol{w}^\star\)</span> es un mínimo local de una función diferenciable, entonces <span class="math inline">\(\nabla f(\boldsymbol{w}^\star) = \mathbf{0}\)</span>. El recíproco es falso: <span class="math inline">\(w^3\)</span> tiene derivada nula en <span class="math inline">\(0\)</span> y no hay ahí ni mínimo ni máximo.</p>
 </section>
-<section id="las-dos-identidades-del-capítulo-4" class="level2">
-<h2 class="anchored" data-anchor-id="las-dos-identidades-del-capítulo-4">Las dos identidades del capítulo 4</h2>
-<p>Son trabajo previo a la sesión de teoría de la semana 4. Con ellas, el gradiente del riesgo sale en tres líneas; sin ellas, la sesión no cabe.</p>
+<section id="las-dos-identidades-del-capítulo-6" class="level2">
+<h2 class="anchored" data-anchor-id="las-dos-identidades-del-capítulo-6">Las dos identidades del capítulo 6</h2>
+<p>Son trabajo previo a la sesión de teoría de la semana 6. Con ellas, el gradiente del riesgo sale en tres líneas; sin ellas, la sesión no cabe.</p>
 <div id="lem-grad-lineal" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 2 (Gradiente de una forma lineal)</strong></span> Para <span class="math inline">\(\mathbf{a} \in \mathbb{R}^{m}\)</span> fijo, <span class="math inline">\(\nabla\left(\mathbf{a}^{\mathsf{T}}\boldsymbol{w}\right) = \mathbf{a}\)</span>.</p>
 </div>

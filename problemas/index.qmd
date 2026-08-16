@@ -40,19 +40,23 @@ un solo bloque, en silencio, corregido en clase inmediatamente después.
 No cuentan para la nota. Sirven para saber cuánto se tarda de verdad, que es lo que ninguna
 hoja sin reloj enseña.
 
-Además hay dos simulacros completos: el del parcial, publicado con solución en la semana 4,
+Además hay dos simulacros completos: el del parcial, publicado con solución en la semana 6,
 y el del examen final, en la semana 15.
 
 ## Las hojas
 
+La hoja $k$ corresponde al capítulo $k$, que se da en la semana $k$.
+
 | Hoja | Capítulo | Estado |
 |---|---|---|
-| [1](hoja-01.qmd) | Señal y ruido | escrita |
-| [2](hoja-02.qmd) | Verosimilitud y MLE | esqueleto |
-| [3](hoja-03.qmd) | Gradientes | **práctica de álgebra matricial** |
-| [4](hoja-04.qmd) | Forma matricial | esqueleto |
-| [5](hoja-05.qmd) | Datos | esqueleto |
-| [6](hoja-06.qmd) | Validación y métricas | esqueleto |
+| [1](hoja-01.qmd) | Datos, patrones y modelos | escrita |
+| [2](hoja-02.qmd) | Señal y ruido | escrita |
+| [3](hoja-03.qmd) | Verosimilitud y MLE | esqueleto |
+| [4](hoja-04.qmd) | Convexidad y riesgo empírico | escrita |
+| [5](hoja-05.qmd) | Gradientes y descenso | **práctica de álgebra matricial** |
+| [6](hoja-06.qmd) | Forma matricial y ecuaciones normales | esqueleto |
+| [7](hoja-07.qmd) | Del dato crudo a X | esqueleto |
+| [8](hoja-08.qmd) | Validación y métricas | esqueleto |
 
 ::: {.callout-note appearance="simple"}
 Las soluciones se publican después de la sesión, no antes.

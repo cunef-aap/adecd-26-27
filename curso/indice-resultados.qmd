@@ -44,4 +44,4 @@ se mantiene a mano y solo cubre los capítulos publicados.
 | Obs. sesgo de $\hat\sigma^2$ | no (fuera de alcance) | |
 | **Prop. ruido de Laplace ⟹ error absoluto** | **sí** | expansión |
 
-<!-- TODO(D13): completar capítulos 3-6 y automatizar la generación. -->
+<!-- TODO(D13): completar capítulos 3-8 y automatizar la generación. -->

@@ -18,8 +18,8 @@ Tres sesiones por semana, con papeles distintos:
 | S1 | **Teoría** | La derivación, en pizarra. Sin ordenador |
 | S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
 
-En la semana 3, la S2 se dedica íntegramente a práctica de álgebra matricial: es el
-requisito de la semana 4 y conviene llegar con él resuelto.
+En la semana 5, la S2 se dedica íntegramente a práctica de álgebra matricial: es el
+requisito de la semana 6 y conviene llegar con él resuelto.
 | S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
 
 ## Contrato de trabajo
@@ -34,7 +34,7 @@ por semana:
 | Hoja de problemas | 2,0 |
 | Completar el cuaderno después de la S3 | 1,5 |
 | Estudio y repaso | 2,0 |
-| Proyecto (solo semanas 9-13) | 2,0 |
+| Proyecto (solo semanas 10-14) | 2,0 |
 | **Total fuera de clase** | **7** (9 en semanas de proyecto) |
 
 Cada hoja tiene **cinco ejercicios**, y los cuatro primeros reproducen los bloques A, B,
@@ -76,8 +76,8 @@ Las de la guía docente oficial, y dónde caen en este curso:
 |---|---|---|
 | AF1 | Clase magistral o teórica | sesión **S1** de cada semana |
 | AF2 | Clase práctica | sesiones **S2** (problemas) y **S3** (laboratorio) |
-| AF3 | Realización de trabajos | el proyecto con agentes de IA (semanas 8-13) |
-| AF4 | Tutorías | seguimiento del proyecto; *checkpoint* evaluado en la semana 11 |
+| AF3 | Realización de trabajos | el proyecto con agentes de IA (semanas 10-14) |
+| AF4 | Tutorías | seguimiento del proyecto; *checkpoint* evaluado en la semana 13 |
 | AF5 | Estudio independiente | ~5,5 h/semana, según el contrato de trabajo de arriba |
 | AF6 | Pruebas de evaluación | parcial 1, defensa del proyecto y examen final |
 

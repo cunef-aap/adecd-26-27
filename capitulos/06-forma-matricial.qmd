@@ -1,0 +1,282 @@
+---
+title: 'Forma matricial y ecuaciones normales'
+subtitle: 'Ecuaciones normales, optimalidad global, existencia y unicidad'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## Planteamiento
+
+Con una variable ya sabemos minimizar. Con $\nfeat$ variables hace falta álgebra
+matricial, y a cambio obtenemos algo que con una variable no se veía: **una fórmula
+cerrada**, y la respuesta exacta a cuándo existe y cuándo es única.
+
+::: {.callout-tip appearance="simple"}
+## Lo que usamos de antes
+@def-riesgo-empirico, @thm-condicion-primer-orden (la condición que se anula en el mínimo), @def-descenso.
+:::
+
+::: {.callout-note appearance="simple"}
+## Repaso previo (20 minutos)
+Producto matriz-vector, traspuesta, norma euclídea, y qué significa que una columna sea
+combinación lineal de las demás. Está en el anexo [Cálculo y álgebra](../curso/algebra.qmd),
+publicado antes de esta sesión y de lectura obligatoria previa.
+:::
+
+## Preparativos
+
+::: {#def-diseno}
+## Matriz de diseño
+
+$\X \in \Real^{\nobs \times (\nfeat+1)}$ con **primera columna de unos**, de modo que
+$x_{i0} = 1$ y el término independiente queda absorbido en $\coef$. El *score* es
+$s_i = \xv_i\T\coef$. Este convenio se mantiene en el resto del curso.
+:::
+
+::: {#prp-riesgo-matricial}
+## Riesgo en forma matricial
+
+$\displaystyle \Riskh(\coef) = \frac{1}{\nobs}\norm{\X\coef - \yv}^2$.
+:::
+
+::: {.callout-note appearance="simple"}
+## Dos identidades, del anexo
+
+$\grad(\mathbf{a}\T\coef) = \mathbf{a}$ (@lem-grad-lineal) y
+$\grad(\coef\T\mathbf{A}\coef) = 2\mathbf{A}\coef$ para $\mathbf{A}$ simétrica
+(@lem-grad-cuadratica). Son cálculo, no aprendizaje automático: están demostradas en el
+anexo de [cálculo y álgebra](../curso/algebra.qmd) y se piden como trabajo previo a esta
+sesión.
+:::
+
+::: {#rem-simetrica}
+$\Xt\X$ es simétrica y de tamaño $(\nfeat+1)\times(\nfeat+1)$, **no** $\nobs \times \nobs$.
+:::
+
+## Ecuaciones normales
+
+::: {#thm-gradiente-matricial}
+## Gradiente del riesgo
+
+$\displaystyle \grad \Riskh(\coef) = \frac{2}{\nobs}\,\Xt(\X\coef - \yv)$.
+:::
+
+::: {.proof}
+<!-- TODO(D6, 20 min). RUTA OBLIGATORIA: desarrollar
+        ||Xw - y||^2 = w^T X^T X w - 2 w^T X^T y + y^T y
+     y aplicar @lem-grad-lineal y @lem-grad-cuadratica. Es la ruta de econometría, que
+     ya conocen, y regala el hessiano de @thm-hessiano.
+     NO usar la ruta de Chodrow (regla de la cadena multivariante), y NO hacer la
+     reconciliación entrywise<->vectorial con deltas de Kronecker: está cortada. -->
+
+:::
+
+::: {#thm-ecuaciones-normales}
+## Ecuaciones normales
+
+Si $\coefhat$ minimiza $\Riskh$, entonces $\Xt\X\coefhat = \Xt\yv$.
+:::
+
+::: {.proof}
+@thm-condicion-primer-orden aplicado a @thm-gradiente-matricial: en un mínimo el gradiente
+se anula, y $\frac{2}{\nobs}\Xt(\X\coefhat - \yv) = \zerov$ equivale a
+$\Xt\X\coefhat = \Xt\yv$.
+:::
+
+::: {#cor-residuos-ortogonales}
+## Ortogonalidad de los residuos
+
+Con $\resid = \yv - \X\coefhat$ se tiene $\Xt\resid = \zerov$. En particular, **si hay
+término independiente**, $\sum_i \residi = 0$ y la media de las predicciones coincide con
+$\ybar$.
+:::
+
+::: {.proof}
+Reescritura de @thm-ecuaciones-normales. La primera componente de $\Xt\resid$ es
+$\onesv\T\resid = \sum_i \residi$ porque la primera columna de $\X$ es de unos.
+:::
+
+::: {.callout-important appearance="simple"}
+@cor-residuos-ortogonales se utiliza en el capítulo 8 para demostrar
+@thm-sct-descompone. Fuera de la muestra deja de cumplirse, y de ahí que $\Rsq$ pueda
+salir negativo.
+:::
+
+## Óptimo global, existencia y unicidad
+
+::: {#thm-identidad-fundamental}
+## Identidad fundamental
+
+Si $\coefhat$ resuelve @thm-ecuaciones-normales, entonces **para todo** $\coef$:
+$$
+\Riskh(\coef) = \Riskh(\coefhat) + \frac{1}{\nobs}\norm{\X(\coef - \coefhat)}^2 .
+$$ {#eq-identidad}
+:::
+
+::: {.proof}
+<!-- TODO(D6, 20 min). Sumar y restar:
+        X w - y = X(w - what) + (X what - y).
+     Desarrollar la norma al cuadrado. El término cruzado es
+        2 (w - what)^T X^T (X what - y) = 0
+     por @thm-ecuaciones-normales. La demostración ocupa tres líneas. -->
+
+:::
+
+::: {#cor-minimo-global}
+## Todo punto crítico es mínimo global
+
+El segundo sumando de @eq-identidad es $\geq 0$, luego
+$\Riskh(\coef) \geq \Riskh(\coefhat)$ para todo $\coef$.
+:::
+
+::: {.callout-important appearance="simple"}
+Obsérvese que la optimalidad global se ha obtenido sin usar la convexidad. El argumento
+se reduce a sumar y restar un término.
+:::
+
+::: {#thm-existencia-unicidad}
+## Existencia y unicidad
+
+$\kernelop(\Xt\X) = \kernelop(\X)$. En consecuencia, $\coefhat$ es **único** si y solo si
+ninguna columna de $\X$ es combinación lineal de las demás (es decir
+$\rank \X = \nfeat + 1$, lo que exige $\nobs \geq \nfeat + 1$), y entonces
+$$\coefhat = (\Xt\X)^{-1}\Xt\yv .$$
+:::
+
+::: {.proof}
+<!-- TODO(D6, 20 min). Dos partes.
+     (a) nucleo: si X^T X v = 0 entonces v^T X^T X v = 0, es decir ||X v||^2 = 0,
+         luego X v = 0. El recíproco es inmediato. Este paso es el que usa la identidad $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.
+     (b) unicidad: por @eq-identidad, Riskh(w) = Riskh(what) si y solo si X(w-what)=0,
+         o sea w - what en ker(X). -->
+
+:::
+
+::: {#thm-hessiano}
+## Hessiano y convexidad
+
+$\Hess \Riskh = \frac{2}{\nobs}\Xt\X$. Para cualquier dirección $\mathbf{v}$, la función
+$\varphi(t) = \Riskh(\coef + t\mathbf{v})$ cumple
+$\varphi''(t) = \frac{2}{\nobs}\norm{\X\mathbf{v}}^2 \geq 0$: **la curvatura en toda
+dirección es no negativa**, es decir $\Riskh$ es convexa. Es estrictamente convexa si y
+solo si $\rank\X = \nfeat+1$.
+:::
+
+::: {.cajanegra}
+**La comprobación queda para el laboratorio**
+
+El cálculo es el mismo de @thm-gradiente-matricial derivado una segunda vez, y la
+curvatura direccional vuelve a ser la línea $\norm{\X\mathbf{v}}^2$ de
+@thm-existencia-unicidad. No lo hacemos en pizarra porque @cor-minimo-global ya nos da el
+mínimo global sin necesidad de convexidad; el hessiano se comprueba numéricamente en el
+laboratorio y se retoma en el capítulo 11, donde sí hace falta.
+:::
+
+::: {.callout-note appearance="simple"}
+Orden deliberado: @thm-identidad-fundamental da el mínimo global **primero**, y el
+hessiano llega después como segunda lectura. Al revés, la convexidad costaría media
+pizarra de teoría de funciones convexas; así cuesta tres líneas. El hessiano se queda
+porque es lo que generaliza a *ridge* (capítulo 11) y a Newton.
+:::
+
+## Coste computacional
+
+::: {#prp-coste}
+## ¿Fórmula cerrada o gradiente?
+
+Formar $\Xt\X$ cuesta $O(\nobs \nfeat^2)$; resolver el sistema, $O(\nfeat^3)$. Un paso de
+descenso cuesta $O(\nobs\nfeat)$, y $T$ pasos $O(T\nobs\nfeat)$. **El gradiente gana
+cuando $\nfeat^2 \gg T\nobs$**, o cuando $\X$ no cabe en memoria, o cuando los datos
+llegan en flujo.
+:::
+
+::: {.cajanegra}
+**Resolver el sistema en lugar de invertir la matriz**
+
+Se resuelve el sistema (`solve`, `lstsq`), no se calcula la inversa. El número de
+condición cumple $\kappa(\Xt\X) = \kappa(\X)^2$, que **enunciamos y no demostramos**: en
+el laboratorio se ve numéricamente con una matriz casi colineal.
+:::
+
+## La conversación pendiente con econometría
+
+::: {#rem-inferencia}
+## Aquí declinamos formalmente la inferencia
+
+En este punto la tentación es calcular errores estándar, estadísticos $t$ y valores $p$
+sobre $\coefhat$. **No lo vamos a hacer**, y conviene decir por qué en lugar de omitirlo
+en silencio. Toda esa maquinaria responde a la pregunta *¿cuánto vale $\coefj$?*; este
+curso responde a *¿qué predice mejor fuera de la muestra?*. Son objetivos distintos y
+llevan a modelos distintos: la regularización del capítulo 11 sesga deliberadamente
+$\coefhat$ porque a cambio reduce el error de predicción.
+
+La deuda no queda impagada: en la semana 15 daremos incertidumbre sobre las
+**predicciones** mediante intervalos conformes, sin un solo valor $p$.
+:::
+
+<!-- TODO(D6): proyectar un summary() de statsmodels sobre prostate.data, nombrar
+     Gauss-Markov y los contrastes t, y explicitar qué objetivo adopta el curso: predicción, no inferencia sobre los coeficientes. -->
+
+## Laboratorio
+
+<!-- TODO(D7): tres caminos al mismo what sobre prostate.data, comparados con allclose:
+     (1) np.linalg.solve(X.T @ X, X.T @ y)
+     (2) np.linalg.lstsq(X, y, rcond=None)
+     (3) el DescensoGradiente del capítulo 5, vectorizado
+     (4) comprobación de @thm-gradiente-matricial con jax.grad (@sec-autodiff)
+     (5) %timeit de (1) vs (3) al crecer p -> @prp-coste medido, no contado
+     (6) demo de np.linalg.inv fallando en una X casi colineal -->
+
+## Error frecuente
+
+::: {.trampa}
+**`np.linalg.inv(X.T @ X) @ X.T @ y`**
+
+Funciona con matrices bien condicionadas y puede fallar con datos reales. Dos motivos: si alguna columna es
+combinación de las demás, la inversa **no existe** (@thm-existencia-unicidad) y NumPy
+devuelve basura numérica en lugar de un error; y aunque exista, elevar al cuadrado el
+número de condición pierde precisión. Use `solve` o `lstsq`.
+:::
+
+## Notación ↔ código
+
+| Matemáticas | Código |
+|---|---|
+| $\X$ con columna de unos | `np.column_stack([np.ones(n), X])` |
+| $\Xt\X\coefhat = \Xt\yv$ | `np.linalg.solve(X.T @ X, X.T @ y)` |
+| $\coefhat$ | `LinearRegression(fit_intercept=False).fit(X, y).coef_` |
+| $\grad \Riskh$ comprobado | `jax.grad(riesgo)(w, X, y)` |
+| $\rank\X$ | `np.linalg.matrix_rank(X)` |
+
+## Ejercicios
+
+::: {#exr-normales-2x2}
+Con $\X = \begin{pmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3\end{pmatrix}$ y $\yv = (2,3,5)\T$,
+escriba y resuelva a mano las ecuaciones normales. Compruebe @cor-residuos-ortogonales.
+:::
+
+::: {#exr-rango}
+Construya una $\X$ de rango deficiente con tres columnas y exhiba **explícitamente** un
+vector $\mathbf{v} \neq \zerov$ con $\X\mathbf{v} = \zerov$. ¿Cuántas soluciones tiene el
+problema de mínimos cuadrados? ¿Cambian las predicciones?
+:::
+
+<!-- TODO(D7): 2-3 más. Uno debe pedir aplicar @eq-identidad para probar que dos
+     soluciones distintas dan el mismo riesgo: prepara el capítulo 7 (trampa de la dummy). -->
+
+## Resumen
+
+- $\Xt\X\coefhat = \Xt\yv$ sale de anular el gradiente (@thm-ecuaciones-normales).
+- La identidad @eq-identidad da el **mínimo global** sin teoría de convexidad, y de
+  regalo la unicidad (@thm-existencia-unicidad).
+- La existencia y unicidad (@thm-existencia-unicidad) y la convexidad (@thm-hessiano) se apoyan en la igualdad $\mathbf{v}\T\Xt\X\mathbf{v} = \norm{\X\mathbf{v}}^2$.

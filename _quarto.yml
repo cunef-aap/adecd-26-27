@@ -8,33 +8,33 @@ book:
   chapters:
     - index.qmd
     - capitulos/00-presentacion.qmd
-    - part: "Fundamentos"
+    - part: "Plantear el problema"
       chapters:
-        - capitulos/01-senal-ruido.qmd
-        - capitulos/02-verosimilitud.qmd
-        - capitulos/03-gradientes.qmd
-        - capitulos/04-forma-matricial.qmd
+        - capitulos/01-datos-y-modelos.qmd
+        - capitulos/02-senal-ruido.qmd
+        - capitulos/03-verosimilitud.qmd
+    - part: "Minimizar"
+      chapters:
+        - capitulos/04-convexidad.qmd
+        - capitulos/05-gradientes.qmd
+        - capitulos/06-forma-matricial.qmd
     - part: "Del dato crudo al modelo"
       chapters:
-        - capitulos/05-datos.qmd
-        - capitulos/06-validacion.qmd
+        - capitulos/07-datos.qmd
+        - capitulos/08-validacion.qmd
     - part: "Complejidad y regularización"
       chapters:
-        - capitulos/07-sesgo-varianza.qmd
-        - capitulos/08-regularizacion.qmd
-        - capitulos/09-seleccion.qmd
-    - part: "Modelos no lineales y basados en reglas"
-      chapters:
-        - capitulos/10-no-lineales.qmd
-        - capitulos/11-arboles.qmd
+        - capitulos/09-caracteristicas.qmd
+        - capitulos/10-sesgo-varianza.qmd
+        - capitulos/11-regularizacion.qmd
+        - capitulos/12-seleccion.qmd
     - part: "Más allá del ruido gaussiano"
       chapters:
-        - capitulos/12-glm.qmd
-        - capitulos/13-proyecto.qmd
-        - capitulos/14-decision.qmd
+        - capitulos/13-arboles.qmd
+        - capitulos/14-glm.qmd
     - part: "Cierre"
       chapters:
-        - capitulos/15-repaso.qmd
+        - capitulos/15-cierre.qmd
     - part: "Problemas"
       chapters:
         - problemas/index.qmd

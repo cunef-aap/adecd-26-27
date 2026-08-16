@@ -6,32 +6,40 @@ $$
 $$
 :::
 
-Capítulo 5, De los datos crudos a X. Los cuatro primeros ejercicios son nucleares y tienen la
-estructura del examen; el quinto es de ampliación.
+**Esta hoja es distinta.** No sigue la estructura del examen: es práctica de álgebra
+matricial, y ocupa la sesión S2 entera. El motivo es que el capítulo 4 se apoya por
+completo en estas operaciones, y conviene llegar con ellas resueltas.
+
+El material de referencia es el anexo
+[Cálculo y álgebra que vas a necesitar](../curso/algebra.qmd).
 
 ::: {.callout-warning appearance="simple"}
-En construcción. El modelo a seguir es la [hoja 1](hoja-01.qmd).
+En construcción.
 :::
 
-## 1. Conceptual
+## 1. Productos y traspuestas
 
-<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
-     (define, explica, razona, analiza). -->
+<!-- TODO. Media docena de productos matriz-vector y matriz-matriz a mano, con
+     dimensiones que obliguen a comprobar si el producto está definido. Incluir un
+     caso en que NO lo esté. -->
 
-## 2. Demostración
+## 2. La matriz de diseño
 
-<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-trampa-dummy o @thm-retransformacion. -->
+<!-- TODO. Construir X a mano a partir de una tabla de 5 observaciones y 2 variables,
+     con columna de unos. Calcular X^T X y X^T y. Comprobar el tamaño de X^T X. -->
 
-## 3. Cálculo a mano
+## 3. Rango y núcleo
 
-<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
+<!-- TODO. Tres matrices; en dos de ellas hay que EXHIBIR el vector del núcleo. Una
+     de ellas debe ser el caso one-hot con columna de unos, que anticipa la trampa
+     de la variable ficticia del capítulo 5. -->
 
-## 4. Encuentra los errores
+## 4. Gradientes
 
-<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
-     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
+<!-- TODO. Aplicar @lem-grad-lineal y @lem-grad-cuadratica a casos concretos de
+     tamaño 2 y 3, comprobando componente a componente. -->
 
 ## 5. Ampliación
 
-<!-- TODO. Opcional, no entra en el examen. -->
+<!-- TODO. Demostrar que X^T X es simétrica y que v^T X^T X v = ||Xv||^2. La segunda
+     es la línea de la que depende todo el capítulo 4. -->

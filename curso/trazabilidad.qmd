@@ -17,10 +17,10 @@ cobertura, y que la pregunta *"¿por qué tantas demostraciones?"* tenga respues
 | T3 · Descenso de gradiente | **3**, 4, 12 |
 | T3 · Métodos lineales | 2, **4**, 8, 12 |
 | T3 · Métodos no lineales | **10**, 11 |
-| T3 · Métodos basados en reglas | **11** |
-| T4 · Librerías de programación | transversal (los 15 laboratorios); consolidado en 5 y 12 |
-| T4 · Casos de uso y aplicaciones | 12, **14**, 15 |
-| + Agentes de IA para implementar modelos | 10 (taller I con la higiene), 12 (taller II), proyecto |
+| T3 · Métodos basados en reglas | **13** |
+| T4 · Librerías de programación | transversal (los 15 laboratorios); consolidado en 7 y 14 |
+| T4 · Casos de uso y aplicaciones | 13, **14**, 15 |
+| + Agentes de IA para implementar modelos | 9 (taller I con la higiene), 14 (taller II), proyecto |
 
 Dos reordenaciones deliberadas: *estado del arte* se cierra en la semana 15, cuando ya
 tienen las herramientas para entenderlo; y el Tema 4 se imparte como **pista paralela de
@@ -30,18 +30,18 @@ laboratorio** en lugar de como bloque final.
 
 | Resultado | Dónde |
 |---|---|
-| C1 · fundamentos matemáticos y estadísticos | capítulos 1-4, 6-9, 14 |
-| C6 · análisis exploratorio preliminar | capítulos 1, 5 |
-| H1 · álgebra lineal, cálculo, estadística, cálculo numérico | capítulos 3, 4, 8, 9 |
-| H4 · modelos de probabilidad y estadística | capítulos 1, 2, 7, 14, 15 |
-| H8 · métodos de aprendizaje aplicados a conjuntos de datos | laboratorios 5-15, proyecto |
-| CO1 · pensamiento crítico sobre los datos | capítulos 5, 6, 15 |
-| CO3 · extracción de información de conjuntos heterogéneos | capítulos 5, 9, proyecto |
+| C1 · fundamentos matemáticos y estadísticos | capítulos 1-6, 8, 10-12, 15 |
+| C6 · análisis exploratorio preliminar | capítulos 1, 7 |
+| H1 · álgebra lineal, cálculo, estadística, cálculo numérico | capítulos 4, 5, 6, 11, 12 |
+| H4 · modelos de probabilidad y estadística | capítulos 2, 3, 10, 14, 15 |
+| H8 · métodos de aprendizaje aplicados a conjuntos de datos | laboratorios 7-15, proyecto |
+| CO1 · pensamiento crítico sobre los datos | capítulos 1, 7, 8, 15 |
+| CO3 · extracción de información de conjuntos heterogéneos | capítulos 7, 12, proyecto |
 
 ## ODS
 
 | ODS | Dónde |
 |---|---|
 | 4 · Educación de calidad | materiales abiertos, cuadernos reproducibles |
-| 8 · Trabajo decente y crecimiento económico | casos de uso de negocio (capítulos 5, 14, 15) |
+| 8 · Trabajo decente y crecimiento económico | casos de uso de negocio (capítulos 7, 14, 15) |
 | 9 · Industria, innovación e infraestructura | capítulo 15: estado del arte y límites |

@@ -6,11 +6,11 @@ $$
 $$
 :::
 
-Capítulo 6, Validación y métricas. Los cuatro primeros ejercicios son nucleares y tienen la
+Capítulo 6, Forma matricial y ecuaciones normales. Los cuatro primeros ejercicios son nucleares y tienen la
 estructura del examen; el quinto es de ampliación.
 
 ::: {.callout-warning appearance="simple"}
-En construcción. El modelo a seguir es la [hoja 1](hoja-01.qmd).
+En construcción. El modelo a seguir es la [hoja 2](hoja-02.qmd).
 :::
 
 ## 1. Conceptual
@@ -21,7 +21,7 @@ En construcción. El modelo a seguir es la [hoja 1](hoja-01.qmd).
 ## 2. Demostración
 
 <!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-r2-comparacion, @thm-sesgo-seleccion o @thm-r2-negativo. -->
+     @thm-ecuaciones-normales o @thm-identidad-fundamental. -->
 
 ## 3. Cálculo a mano
 

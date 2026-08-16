@@ -1,0 +1,98 @@
+---
+title: 'De la predicción a la decisión'
+subtitle: 'Costes asimétricos, incertidumbre, y qué queda cuando termina el curso'
+---
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+::: {.callout-warning appearance="simple"}
+## Capítulo en construcción, semana 15
+Se escribe en septiembre. Publicado como esqueleto para que el índice del sitio esté
+completo desde el primer día.
+:::
+
+## Planteamiento
+
+<!-- TODO. El curso ha producido un numero, y un numero no es una decision. Falta cerrar
+     dos cosas: que numero conviene dar segun lo que cueste equivocarse, y con cuanta
+     incertidumbre. Con eso el capitulo cierra el hilo abierto en el capitulo 1, donde
+     las tres decisiones aparecieron por primera vez. -->
+
+## De dónde sale el material
+
+- Chodrow `source/04-decision-theory.qmd`: portar el **argumento** (el coste como criterio
+  de selección de modelo, no como apéndice) de clasificación a regresión.
+- Angelopoulos & Bates para *conformal split*.
+- Chodrow `source/61-modern-optimization.ipynb` para el apartado de estado del arte.
+
+## Resultados que deben aparecer
+
+- **La predicción puntual óptima depende de la pérdida.** El minimizador de
+  $\E{(Y-c)^2}$ es la media, el de $\E{\abs{Y-c}}$ es la mediana y el de la pérdida
+  *pinball* $\pinball$ es el cuantil $\tau$. Tres pérdidas, tres funcionales distintos de
+  la misma distribución. Completa @lem-media-optima y @prp-laplace-mae, y explica a
+  posteriori por qué el capítulo 8 insistía en elegir la métrica antes de ajustar.
+- **Costes asimétricos**: si quedarse corto cuesta $c$ veces lo que pasarse, el óptimo es
+  el cuantil $c/(1+c)$. Es el resultado que convierte una conversación de negocio en un
+  parámetro.
+- ***Conformal split* como cálculo examinable**: ordenar los residuos de calibración,
+  tomar el $\lceil(1-\alpha)(\ncal+1)\rceil$-ésimo, dar $\yhat \pm \hat{q}$.
+- Comparar la anchura del intervalo con $\noisehat$ del capítulo 3: **ningún modelo baja
+  del suelo de ruido**. Cierre del hilo.
+
+## El esquema, relleno
+
+<!-- TODO: la tabla que resume las quince semanas, con una fila por modelo visto (MCO,
+     ridge, lasso, spline, arbol, Poisson, cuantilica) y cuatro columnas, que son las tres
+     decisiones de @sec-tres-decisiones mas el modelo de ruido del que sale la perdida:
+
+        clase de hipotesis | modelo de ruido | perdida que se deduce | optimizador
+
+     Es el curso entero en una pagina y la forma en que conviene estudiar para el final.
+     La columna "optimizador" tiene que dejar ver que solo hay tres respuestas distintas
+     en todo el curso: forma cerrada, descenso por gradiente y construccion voraz. -->
+
+## Estado del arte
+
+<!-- TODO. Cuatro afirmaciones concretas y defendibles:
+     (a) en datos tabulares, que es lo que vera un graduado en ADE, el boosting sigue
+         ganando a las redes neuronales;
+     (b) donde encaja el aprendizaje profundo: clasico = minimizar sobre w con phi FIJA,
+         profundo = minimizar sobre w Y phi, es decir "aprender las caracteristicas".
+         Conecta con el capitulo 9. Y el precio que se paga por hacerlo: se pierde la
+         convexidad del capitulo 4, y con ella toda garantia de optimo global;
+     (c) por que eso importa en texto e imagen y poco en un CSV de 20.000 filas;
+     (d) que hace posible todo eso: la diferenciacion automatica del capitulo 5, y los
+         optimizadores que no vemos (momento, Adam) enunciados sin demostrar. -->
+
+## Límites y responsabilidad
+
+<!-- TODO, 20 min, con marco europeo y no norteamericano: niveles de riesgo del EU AI
+     Act, credit scoring bajo RGPD, precios algoritmicos, y el modelo que se equivoca
+     sistematicamente en el mismo barrio. Enlazar con el capitulo 7: un modelo entrenado
+     sobre datos donde un grupo esta infrarrepresentado predice peor para ese grupo, y eso
+     no se ve en el R2 global. -->
+
+## Simulacro del examen final
+
+<!-- TODO: examen completo con la estructura exacta del final (bloques A-D), corregido
+     en clase con la rubrica en pantalla. Incluye el ejercicio de "este script tiene
+     errores", con al menos dos del tipo que produce un agente. -->
+
+## Ejercicios
+
+<!-- TODO: 4-6 ejercicios con solución plegable. -->
+
+## Resumen
+
+<!-- TODO: 3 viñetas. -->

@@ -7,7 +7,7 @@ $$
 :::
 
 Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se
-usan en el capítulo 1. No se ve en clase: se supone conocido de Estadística y se recoge
+usan en el capítulo 2. No se ve en clase: se supone conocido de Estadística y se recoge
 aquí para poder consultarlo.
 
 ## Variables aleatorias continuas
@@ -51,10 +51,10 @@ $$
 \pdf(x_1,\dots,x_{\nobs}) = \prod_{i=1}^{\nobs} \pdf_i(x_i).
 $$
 
-Esa igualdad es la razón de que la verosimilitud del capítulo 1 sea un producto, y de que
+Esa igualdad es la razón de que la verosimilitud del capítulo 2 sea un producto, y de que
 al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: **la independencia
 es una hipótesis del modelo**, no una propiedad de los datos. Cuando falla, falla la
-verosimilitud, y con ella el estimador. En el capítulo 6 veremos un caso concreto: un
+verosimilitud, y con ella el estimador. En el capítulo 8 veremos un caso concreto: un
 anfitrión con doce anuncios en Madrid.
 
 ## Cambio de variable
@@ -66,7 +66,7 @@ $$
 
 El factor de la derecha es el **jacobiano**, y es lo que impide tratar una densidad como
 si fuera una probabilidad. Se usa dos veces en el curso: en @thm-escala y en el sesgo de
-retransformación del capítulo 5.
+retransformación del capítulo 7.
 
 ## Esperanza condicional
 
@@ -80,7 +80,7 @@ estimar.
 $\E{Y} = \E{\,\E{Y \given X}\,}$.
 :::
 
-Se usa en el capítulo 7, en la descomposición del error en sesgo, varianza y ruido.
+Se usa en el capítulo 10, en la descomposición del error en sesgo, varianza y ruido.
 
 ## Cuantiles
 
@@ -89,8 +89,8 @@ $\Prob{X \leq q_\tau} = \tau$. La **mediana** es $q_{0{,}5}$.
 
 Los cuantiles se conservan bajo transformaciones crecientes: si $g$ es creciente,
 $q_\tau(g(X)) = g(q_\tau(X))$. La media **no** tiene esa propiedad, y de esa asimetría sale
-el resultado del capítulo 5 sobre transformaciones logarítmicas. Los cuantiles reaparecen
-en el capítulo 14, con la regresión cuantílica.
+el resultado del capítulo 7 sobre transformaciones logarítmicas. Los cuantiles reaparecen
+en el capítulo 15, con la regresión cuantílica.
 
 ## La distribución normal
 
@@ -204,7 +204,7 @@ una se presenta en su capítulo.
 | Poisson | $e^{-\lambda}\lambda^{k}/k!$ | $\{0,1,2,\dots\}$ | cap. 12 |
 | Gamma | $\propto x^{\alpha-1}e^{-x/\beta}$ | $(0,\infty)$ | cap. 12 |
 
-De la lognormal usamos un solo hecho, y se demuestra en el capítulo 5: si
+De la lognormal usamos un solo hecho, y se demuestra en el capítulo 7: si
 $Z \sim \Normal(\mu,\noise^2)$, entonces $\E{e^{Z}} = e^{\mu + \noise^2/2}$, que **no** es
 $e^{\mu}$. Esa diferencia es la que hace que exponenciar una predicción hecha en
 logaritmos infravalore sistemáticamente.

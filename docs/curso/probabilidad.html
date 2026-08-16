@@ -156,13 +156,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+ <span class="menu-text">Presentación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Fundamentos</span></a>
+ <span class="menu-text">Plantear el problema</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,26 +170,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -197,7 +191,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Minimizar</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -205,14 +199,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="../capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="../capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,7 +220,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Del dato crudo al modelo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -228,20 +228,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  <a href="../capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="../capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Modelos no lineales y basados en reglas</span></a>
+ <span class="menu-text">Complejidad y regularización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -257,14 +251,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+  <a href="../capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+  <a href="../capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,20 +286,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+  <a href="../capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
       </ul>
@@ -309,8 +309,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-repaso.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></span></a>
+  <a href="../capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -446,7 +446,7 @@ window.Quarto = {
 </header>
 
 
-<p>Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se usan en el capítulo 1. No se ve en clase: se supone conocido de Estadística y se recoge aquí para poder consultarlo.</p>
+<p>Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se usan en el capítulo 2. No se ve en clase: se supone conocido de Estadística y se recoge aquí para poder consultarlo.</p>
 <section id="variables-aleatorias-continuas" class="level2">
 <h2 class="anchored" data-anchor-id="variables-aleatorias-continuas">Variables aleatorias continuas</h2>
 <p>Una variable aleatoria continua <span class="math inline">\(X\)</span> queda descrita por su <strong>densidad</strong> <span class="math inline">\(p\)</span>, que cumple <span class="math inline">\(p(x) \geq 0\)</span> y <span class="math inline">\(\int_{-\infty}^{\infty} p(x)\,\mathrm{d}x = 1\)</span>. La probabilidad de caer en un intervalo es el área bajo la densidad: <span class="math display">\[
@@ -469,14 +469,14 @@ window.Quarto = {
 <p>Las variables <span class="math inline">\(X_1,\dots,X_{n}\)</span> son <strong>independientes</strong> si su densidad conjunta es el producto de las densidades individuales: <span class="math display">\[
 p(x_1,\dots,x_{n}) = \prod_{i=1}^{n} p_i(x_i).
 \]</span></p>
-<p>Esa igualdad es la razón de que la verosimilitud del capítulo 1 sea un producto, y de que al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: <strong>la independencia es una hipótesis del modelo</strong>, no una propiedad de los datos. Cuando falla, falla la verosimilitud, y con ella el estimador. En el capítulo 6 veremos un caso concreto: un anfitrión con doce anuncios en Madrid.</p>
+<p>Esa igualdad es la razón de que la verosimilitud del capítulo 2 sea un producto, y de que al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: <strong>la independencia es una hipótesis del modelo</strong>, no una propiedad de los datos. Cuando falla, falla la verosimilitud, y con ella el estimador. En el capítulo 8 veremos un caso concreto: un anfitrión con doce anuncios en Madrid.</p>
 </section>
 <section id="cambio-de-variable" class="level2">
 <h2 class="anchored" data-anchor-id="cambio-de-variable">Cambio de variable</h2>
 <p>Si <span class="math inline">\(Y = g(X)\)</span> con <span class="math inline">\(g\)</span> derivable y estrictamente monótona, la densidad de <span class="math inline">\(Y\)</span> es <span class="math display">\[
 p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1}(y) \right| .
 \]</span></p>
-<p>El factor de la derecha es el <strong>jacobiano</strong>, y es lo que impide tratar una densidad como si fuera una probabilidad. Se usa dos veces en el curso: en <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> y en el sesgo de retransformación del capítulo 5.</p>
+<p>El factor de la derecha es el <strong>jacobiano</strong>, y es lo que impide tratar una densidad como si fuera una probabilidad. Se usa dos veces en el curso: en <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> y en el sesgo de retransformación del capítulo 7.</p>
 </section>
 <section id="esperanza-condicional" class="level2">
 <h2 class="anchored" data-anchor-id="esperanza-condicional">Esperanza condicional</h2>
@@ -484,16 +484,16 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <div id="lem-esperanza-total" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 2 (Ley de la esperanza total)</strong></span> <span class="math inline">\(\mathbb{E}\!\left[ Y \right] = \mathbb{E}\!\left[ \,\mathbb{E}\!\left[ Y \,\vert\,X \right]\, \right]\)</span>.</p>
 </div>
-<p>Se usa en el capítulo 7, en la descomposición del error en sesgo, varianza y ruido.</p>
+<p>Se usa en el capítulo 10, en la descomposición del error en sesgo, varianza y ruido.</p>
 </section>
 <section id="cuantiles" class="level2">
 <h2 class="anchored" data-anchor-id="cuantiles">Cuantiles</h2>
 <p>El <strong>cuantil</strong> de orden <span class="math inline">\(\tau \in (0,1)\)</span> de <span class="math inline">\(X\)</span> es el valor <span class="math inline">\(q_\tau\)</span> tal que <span class="math inline">\(\mathbb{P}\!\left( X \leq q_\tau \right) = \tau\)</span>. La <strong>mediana</strong> es <span class="math inline">\(q_{0{,}5}\)</span>.</p>
-<p>Los cuantiles se conservan bajo transformaciones crecientes: si <span class="math inline">\(g\)</span> es creciente, <span class="math inline">\(q_\tau(g(X)) = g(q_\tau(X))\)</span>. La media <strong>no</strong> tiene esa propiedad, y de esa asimetría sale el resultado del capítulo 5 sobre transformaciones logarítmicas. Los cuantiles reaparecen en el capítulo 14, con la regresión cuantílica.</p>
+<p>Los cuantiles se conservan bajo transformaciones crecientes: si <span class="math inline">\(g\)</span> es creciente, <span class="math inline">\(q_\tau(g(X)) = g(q_\tau(X))\)</span>. La media <strong>no</strong> tiene esa propiedad, y de esa asimetría sale el resultado del capítulo 7 sobre transformaciones logarítmicas. Los cuantiles reaparecen en el capítulo 15, con la regresión cuantílica.</p>
 </section>
 <section id="la-distribución-normal" class="level2">
 <h2 class="anchored" data-anchor-id="la-distribución-normal">La distribución normal</h2>
-<p>La densidad se define en <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>2.5</span></a>. Las propiedades siguientes son las únicas que usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como integral y hacer un cambio de variable.</p>
+<p>La densidad se define en <a href="../capitulos/02-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>2.4</span></a>. Las propiedades siguientes son las únicas que usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como integral y hacer un cambio de variable.</p>
 <div id="lem-normalizacion" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 3 (Constante de normalización)</strong></span> <span class="math inline">\(\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \mathrm{d}z = \sqrt{2\pi}\)</span>.</p>
 </div>
@@ -505,7 +505,7 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <p><span class="theorem-title"><strong>Teorema 1 (Traslación)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="../capitulos/01-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>2.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="../capitulos/02-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>2.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
 </div>
 <div id="thm-escala" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2 (Escala)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
@@ -591,7 +591,7 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 </tr>
 </tbody>
 </table>
-<p>De la lognormal usamos un solo hecho, y se demuestra en el capítulo 5: si <span class="math inline">\(Z \sim \mathcal{N}(\mu,\sigma^2)\)</span>, entonces <span class="math inline">\(\mathbb{E}\!\left[ e^{Z} \right] = e^{\mu + \sigma^2/2}\)</span>, que <strong>no</strong> es <span class="math inline">\(e^{\mu}\)</span>. Esa diferencia es la que hace que exponenciar una predicción hecha en logaritmos infravalore sistemáticamente.</p>
+<p>De la lognormal usamos un solo hecho, y se demuestra en el capítulo 7: si <span class="math inline">\(Z \sim \mathcal{N}(\mu,\sigma^2)\)</span>, entonces <span class="math inline">\(\mathbb{E}\!\left[ e^{Z} \right] = e^{\mu + \sigma^2/2}\)</span>, que <strong>no</strong> es <span class="math inline">\(e^{\mu}\)</span>. Esa diferencia es la que hace que exponenciar una predicción hecha en logaritmos infravalore sistemáticamente.</p>
 </section>
 <section id="qué-hay-que-traer-de-estadística" class="level2">
 <h2 class="anchored" data-anchor-id="qué-hay-que-traer-de-estadística">Qué hay que traer de Estadística</h2>

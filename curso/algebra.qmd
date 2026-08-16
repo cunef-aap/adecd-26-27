@@ -44,7 +44,7 @@ para todo $j$.
 :::
 
 Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución
-de mínimos cuadrados (capítulo 4) y la trampa de la variable ficticia (capítulo 5).
+de mínimos cuadrados (capítulo 6) y la trampa de la variable ficticia (capítulo 7).
 
 ## Matrices
 
@@ -119,7 +119,7 @@ haber más columnas independientes que filas.
 
 No en abstracto: **exhibiendo el vector**. Para probar que unas columnas son dependientes,
 se escribe un $\mathbf{v} \neq \zerov$ concreto y se comprueba que $\X\mathbf{v} = \zerov$.
-Así se hace en el capítulo 5 con la trampa de la variable ficticia.
+Así se hace en el capítulo 7 con la trampa de la variable ficticia.
 :::
 
 ::: {#exr-nucleo}
@@ -157,9 +157,9 @@ $\grad \model(\coef) = g'(h(\coef))\, \grad h(\coef)$.
 diferenciable, entonces $\grad \model(\coef^\star) = \zerov$. El recíproco es falso:
 $w^3$ tiene derivada nula en $0$ y no hay ahí ni mínimo ni máximo.
 
-## Las dos identidades del capítulo 4
+## Las dos identidades del capítulo 6
 
-Son trabajo previo a la sesión de teoría de la semana 4. Con ellas, el gradiente del
+Son trabajo previo a la sesión de teoría de la semana 6. Con ellas, el gradiente del
 riesgo sale en tres líneas; sin ellas, la sesión no cabe.
 
 ::: {#lem-grad-lineal}

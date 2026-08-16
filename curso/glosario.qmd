@@ -7,10 +7,10 @@
 | observaciones / variables | $n$ / $p$ | el curso anterior escribía $m$ para las variables |
 | matriz de diseño | $\mathbf{X} \in \mathbb{R}^{n\times(p+1)}$ | primera columna de unos |
 | coeficientes | $\mathbf{w} = (w_0,\dots,w_p)^{\mathsf{T}}$ | |
-| variables expandidas | $\boldsymbol{\Phi}$ | capítulo 10 |
+| variables expandidas | $\boldsymbol{\Phi}$ | capítulo 9 |
 | riesgo empírico | $\hat{R}(\mathbf{w})$ | **siempre** normalizado por $1/n$ |
 | riesgo verdadero | $R(f)$ | esperanza sobre datos nuevos |
-| escala del ruido | $\sigma$ | se estima (capítulo 2) |
+| escala del ruido | $\sigma$ | se estima (capítulo 3) |
 | tasa de aprendizaje | $\alpha$ | |
 | regularización | $\lambda$ | **scikit-learn la llama `alpha=`** |
 

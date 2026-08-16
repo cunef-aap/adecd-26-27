@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Presentación – Aprendizaje Automático: Predicción</title>
+<title>Presentación – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,7 +36,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../capitulos/01-senal-ruido.html" rel="next">
+<link href="../capitulos/01-datos-y-modelos.html" rel="next">
 <link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -118,7 +118,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/00-presentacion.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/00-presentacion.html">Presentación</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -156,13 +156,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+ <span class="menu-text">Presentación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Fundamentos</span></a>
+ <span class="menu-text">Plantear el problema</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,26 +170,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/02-verosimilitud.html" class="sidebar-item-text sidebar-link">
+  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/04-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -197,7 +191,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Minimizar</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -205,14 +199,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/05-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="../capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/06-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="../capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,7 +220,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Del dato crudo al modelo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -228,20 +228,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/07-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  <a href="../capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/08-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/09-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="../capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Modelos no lineales y basados en reglas</span></a>
+ <span class="menu-text">Complejidad y regularización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -257,14 +251,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/10-no-lineales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Métodos no lineales: bases, splines y núcleos</span></span></a>
+  <a href="../capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/11-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
+  <a href="../capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,20 +286,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
+  <a href="../capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/13-proyecto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Entrega y defensa del proyecto</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-decision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Del valor puntual a la decisión</span></span></a>
+  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
   </div>
 </li>
       </ul>
@@ -309,8 +309,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-repaso.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso y estado del arte</span></span></a>
+  <a href="../capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
   </div>
 </li>
       </ul>
@@ -417,6 +417,7 @@ window.Quarto = {
   <li><a href="#las-tres-familias-y-en-qué-se-diferencian-de-verdad" id="toc-las-tres-familias-y-en-qué-se-diferencian-de-verdad" class="nav-link" data-scroll-target="#las-tres-familias-y-en-qué-se-diferencian-de-verdad">Las tres familias, y en qué se diferencian de verdad</a></li>
   <li><a href="#predecir-no-es-lo-mismo-que-explicar" id="toc-predecir-no-es-lo-mismo-que-explicar" class="nav-link" data-scroll-target="#predecir-no-es-lo-mismo-que-explicar">Predecir no es lo mismo que explicar</a></li>
   <li><a href="#el-esquema-del-curso" id="toc-el-esquema-del-curso" class="nav-link" data-scroll-target="#el-esquema-del-curso">El esquema del curso</a></li>
+  <li><a href="#las-quince-semanas" id="toc-las-quince-semanas" class="nav-link" data-scroll-target="#las-quince-semanas">Las quince semanas</a></li>
   <li><a href="#programa" id="toc-programa" class="nav-link" data-scroll-target="#programa">Programa</a></li>
   <li><a href="#cómo-se-trabaja" id="toc-cómo-se-trabaja" class="nav-link" data-scroll-target="#cómo-se-trabaja">Cómo se trabaja</a>
   <ul class="collapse">
@@ -449,8 +450,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></h1>
-<p class="subtitle lead">Qué vamos a estudiar, cómo se trabaja y cómo se evalúa</p>
+<h1 class="title">Presentación</h1>
 </div>
 
 
@@ -467,11 +467,12 @@ window.Quarto = {
 </header>
 
 
+<p><em>Qué vamos a estudiar, cómo se trabaja y cómo se evalúa.</em></p>
 <section id="qué-es-el-aprendizaje-automático" class="level2">
 <h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</h2>
 <p>Conviene definirlo con más precisión que “el ordenador aprende de los datos”.</p>
 <p>Se supone que existe una <strong>distribución desconocida</strong> <span class="math inline">\(P\)</span> sobre un espacio de observaciones, y que lo que tenemos es una <strong>muestra finita</strong> extraída de ella. El aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una función, una partición, una densidad, una política) que sea bueno <strong>respecto de <span class="math inline">\(P\)</span></strong>, y no respecto de la muestra concreta que nos ha tocado.</p>
-<p>Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es fácil y no significa nada: el capítulo 1 lo demuestra. Lo difícil es que el objeto siga funcionando en observaciones nuevas extraídas de la misma <span class="math inline">\(P\)</span>.</p>
+<p>Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es fácil y no significa nada: el capítulo 2 lo demuestra. Lo difícil es que el objeto siga funcionando en observaciones nuevas extraídas de la misma <span class="math inline">\(P\)</span>.</p>
 <p>Un problema de aprendizaje queda especificado cuando se fijan tres cosas:</p>
 <ol type="1">
 <li><strong>Qué se observa.</strong> El espacio de las observaciones.</li>
@@ -542,20 +543,117 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 </tr>
 </tbody>
 </table>
-<p>Llevan a modelos distintos. En el capítulo 8 veremos la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio reduce el riesgo. Desde la óptica de la inferencia eso es un defecto; desde la nuestra, el objetivo.</p>
-<p>No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 14 sí trata la incertidumbre, pero sobre las predicciones.</p>
+<p>Llevan a modelos distintos. En el capítulo 11 veremos la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio reduce el riesgo. Desde la óptica de la inferencia eso es un defecto; desde la nuestra, el objetivo.</p>
+<p>No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.</p>
 </section>
 <section id="el-esquema-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="el-esquema-del-curso">El esquema del curso</h2>
-<p>Todos los métodos salen del mismo procedimiento, aplicado quince veces:</p>
+<p>Plantear un problema de predicción son tres decisiones: qué <strong>clase de hipótesis</strong>, qué <strong>pérdida</strong> y qué <strong>optimizador</strong>. El curso las va rellenando en ese orden, y el índice está organizado según cuál se esté rellenando.</p>
+<p>La segunda de las tres, la pérdida, no se elige por gusto. Sale de un procedimiento que se aplica quince veces:</p>
 <ol type="1">
 <li>Escribir un <strong>modelo de datos</strong>: señal más ruido.</li>
 <li>Escribir la <strong>verosimilitud</strong> de ese modelo.</li>
 <li>Tomar <span class="math inline">\(-\log\)</span> y obtener una <strong>pérdida</strong>.</li>
+<li>Comprobar que es <strong>convexa</strong>, que es lo que garantiza que minimizarla tenga sentido.</li>
 <li><strong>Minimizarla</strong>, en forma cerrada o por descenso de gradiente.</li>
 <li><strong>Estimar el riesgo</strong> con datos que no se hayan usado para ajustar, y medirlo con una métrica interpretable.</li>
 </ol>
-<p>Se deriva entero, a mano, una vez (capítulos 2 a 4). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con un prior; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 se vuelve búsqueda voraz.</p>
+<p>Se deriva entero, a mano, una vez (capítulos 2 a 6). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con una distribución a priori; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 falla y el 5 se vuelve búsqueda voraz.</p>
+</section>
+<section id="las-quince-semanas" class="level2">
+<h2 class="anchored" data-anchor-id="las-quince-semanas">Las quince semanas</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sem.</th>
+<th>Capítulo</th>
+<th>Decisión que rellena</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Datos, patrones y modelos</td>
+<td>las tres, planteadas</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Señal y ruido</td>
+<td>clase de hipótesis</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Verosimilitud y pérdida</td>
+<td>pérdida</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Convexidad y riesgo empírico</td>
+<td>pérdida</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Gradientes y descenso</td>
+<td>optimizador</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Forma matricial y ecuaciones normales</td>
+<td>optimizador</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Del dato crudo a X</td>
+<td>clase de hipótesis</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Validación y métricas</td>
+<td>cómo se juzga todo lo anterior</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Mapas de características</td>
+<td>clase de hipótesis</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Sesgo y varianza</td>
+<td>por qué la clase no puede ser cualquiera</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Regularización: <em>ridge</em> y <em>lasso</em></td>
+<td>pérdida</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Selección de modelos</td>
+<td>clase de hipótesis</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Árboles</td>
+<td>clase de hipótesis y optimizador</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Modelos lineales generalizados</td>
+<td>pérdida</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>De la predicción a la decisión</td>
+<td>pérdida, y qué se hace con el número</td>
+</tr>
+</tbody>
+</table>
+<p>La hoja de problemas <span class="math inline">\(k\)</span> y el laboratorio <span class="math inline">\(k\)</span> corresponden al capítulo <span class="math inline">\(k\)</span>.</p>
 </section>
 <section id="programa" class="level2">
 <h2 class="anchored" data-anchor-id="programa">Programa</h2>
@@ -577,19 +675,19 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 </tr>
 <tr class="even">
 <td>2. Metodologías para predicción</td>
-<td>5 (datos), 9 (reducción y selección), 6 (validación y métricas)</td>
+<td>7 (datos), 12 (reducción y selección), 8 (validación y métricas)</td>
 </tr>
 <tr class="odd">
 <td>3. Algoritmos para predicción</td>
-<td>3 y 4 (descenso de gradiente), 2, 4, 8 y 12 (lineales), 10 (no lineales), 11 (basados en reglas)</td>
+<td>4, 5 y 6 (convexidad y descenso de gradiente), 6, 11 y 14 (lineales), 9 (no lineales), 13 (basados en reglas)</td>
 </tr>
 <tr class="even">
 <td>4. Implementación y aplicación</td>
-<td>los laboratorios; casos de uso en 12, 14 y 15</td>
+<td>los laboratorios; casos de uso en 14 y 15</td>
 </tr>
 <tr class="odd">
 <td>Complemento: agentes de IA</td>
-<td>10, 12 y el proyecto</td>
+<td>9, 14 y el proyecto</td>
 </tr>
 </tbody>
 </table>
@@ -711,8 +809,8 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 <section id="herramientas" class="level3">
 <h3 class="anchored" data-anchor-id="herramientas">Herramientas</h3>
 <ul>
-<li><strong>Python</strong>, con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> y <code>scikit-learn</code>. <code>statsmodels</code> en el capítulo 12.</li>
-<li><strong><code>jax</code></strong> en los capítulos 3 y 4, para <strong>diferenciación automática</strong>. No la usamos para entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta. <code>jax.grad(f)</code> devuelve una función, el gradiente de <code>f</code>, que es la traducción literal del operador <span class="math inline">\(\nabla\)</span>. El capítulo 3 explica en qué se diferencia de las diferencias finitas y de la derivación simbólica, y por qué el modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos grandes.</li>
+<li><strong>Python</strong>, con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> y <code>scikit-learn</code>. <code>statsmodels</code> en el capítulo 14.</li>
+<li><strong><code>jax</code></strong> en los capítulos 5 y 6, para <strong>diferenciación automática</strong>. No la usamos para entrenar nada: la usamos para comprobar que una derivada hecha a mano es correcta. <code>jax.grad(f)</code> devuelve una función, el gradiente de <code>f</code>, que es la traducción literal del operador <span class="math inline">\(\nabla\)</span>. El capítulo 5 explica en qué se diferencia de las diferencias finitas y de la derivación simbólica, y por qué el modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales en una sola pasada, que es lo que hace viable entrenar modelos grandes.</li>
 <li><strong>Google Colab</strong>, para no instalar nada. Quien prefiera trabajar en local tiene el entorno en <code>environment.yml</code>.</li>
 <li><strong>Herramientas de IA generativa</strong>. Su uso está permitido y, en el proyecto, es obligatorio documentarlo. Ver la <a href="../curso/politica-ia.html">política de uso de IA</a>.</li>
 </ul>
@@ -760,7 +858,7 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 <td>2,0</td>
 </tr>
 <tr class="odd">
-<td>Proyecto (solo semanas 9 a 13)</td>
+<td>Proyecto (solo semanas 10 a 14)</td>
 <td>2,0</td>
 </tr>
 <tr class="even">
@@ -851,12 +949,12 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 <tr class="odd">
 <td>Examen parcial 1</td>
 <td>20 %</td>
-<td>semana 7, sesión S3</td>
+<td>semana 8, sesión S3</td>
 </tr>
 <tr class="even">
 <td>Proyecto en colaboración con agentes de IA</td>
 <td>20 %</td>
-<td>semanas 12 y 13</td>
+<td>semanas 13 y 14</td>
 </tr>
 <tr class="odd">
 <td><strong>Examen final</strong></td>
@@ -1374,8 +1472,8 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../capitulos/01-senal-ruido.html" class="pagination-link" aria-label="Señal y ruido">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../capitulos/01-datos-y-modelos.html" class="pagination-link" aria-label="Datos, patrones y modelos">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
