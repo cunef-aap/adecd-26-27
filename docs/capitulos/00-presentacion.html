@@ -518,25 +518,24 @@ window.Quarto = {
 <p><em>Qué vamos a estudiar, cómo se trabaja y cómo se evalúa.</em></p>
 <section id="qué-es-el-aprendizaje-automático" class="level2">
 <h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</h2>
-<p>Un ejemplo antes que una definición.</p>
-<p>Un portal de alquiler tiene unos 9.000 anuncios de Madrid con su precio por noche. De cada anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, en qué barrio está y qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin precio. ¿Cuánto debería costar?</p>
-<p>Nadie ha escrito la fórmula del precio de un piso en Madrid, y no parece que nadie vaya a escribirla. Lo que hay son 9.000 casos resueltos. El aprendizaje automático reúne las técnicas que construyen la regla <strong>a partir de los casos resueltos</strong>, en lugar de programarla a mano.</p>
-<p>El anuncio que importa es el que todavía no tiene precio. Una regla que reprodujera los 9.000 precios conocidos y fallara en el 9.001 no serviría para nada, y en el capítulo 1 comprobaremos, con estos mismos datos, que construir una regla así es fácil. Por eso en todo el curso un modelo se juzga por lo que hace con datos que <strong>no</strong> se han usado para construirlo. Esa condición es lo que separa esta asignatura de un ajuste de curvas.</p>
+<p>Un portal de alquiler tiene 15.000 anuncios de Madrid con su precio por noche. De cada anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, cuántas reseñas ha recibido y qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin precio. ¿Cuánto debería costar?</p>
+<p>Nadie ha escrito la fórmula del precio de un piso en Madrid, y no parece que nadie vaya a escribirla. Lo que hay son 15.000 casos resueltos. El aprendizaje automático reúne las técnicas que construyen la regla <strong>a partir de los casos resueltos</strong>, en lugar de programarla a mano.</p>
+<p>El anuncio que importa es el que todavía no tiene precio. Una regla que reprodujera los 15.000 precios conocidos y fallara en el siguiente no serviría para nada, y en el capítulo 1 comprobaremos, con estos mismos datos, que construir una regla así es fácil. Por eso en todo el curso un modelo se juzga por lo que hace con datos que <strong>no</strong> se han usado para construirlo.</p>
 <p>Con el ejemplo delante ya se puede decir en general. Un problema de aprendizaje queda planteado cuando se fijan tres cosas:</p>
 <ol type="1">
 <li><strong>Qué se observa.</strong> Aquí, las características de un anuncio junto con su precio.</li>
 <li><strong>Qué se construye.</strong> Aquí, una función que convierte características en un precio.</li>
 <li><strong>Con qué criterio se juzga.</strong> Aquí, el error de esa función en anuncios que no se han usado para construirla.</li>
 </ol>
-<p>Cambiando esas tres casillas se obtienen las demás familias.</p>
+<p>Cambiando esas tres casillas se obtienen las demás familias. Dentro del caso supervisado, las casillas 2 y 3 se concretan en las tres decisiones del apartado <em>El esquema del curso</em>.</p>
 </section>
 <section id="las-tres-familias" class="level2">
 <h2 class="anchored" data-anchor-id="las-tres-familias">Las tres familias</h2>
 <p>La clasificación habitual no se basa en el algoritmo, sino en las tres casillas anteriores.</p>
 <p><strong>Aprendizaje supervisado.</strong> Se observan unas características y una respuesta. Se construye una función que predice la respuesta a partir de las características. El criterio es el error de predicción en datos nuevos. Es el caso del alquiler, y el de esta asignatura.</p>
 <p>Que el criterio esté fijado de antemano es lo que hace este caso más cómodo que los otros dos: dos personas que trabajen sobre los mismos datos y midan el error de la misma forma ordenan los modelos igual.</p>
-<p><strong>Aprendizaje no supervisado.</strong> Se observan las características, pero no hay respuesta. <strong>Aquí normalmente no se predice nada</strong>, y esa es la diferencia importante. Se construye otra cosa: una división de los anuncios en grupos, una representación con menos variables, una descripción de cómo se reparten los datos.</p>
-<p>El problema es el criterio. Si agrupamos los 9.000 anuncios en cuatro segmentos, no hay ninguna respuesta correcta con la que comparar, porque los segmentos no estaban en los datos: los ha producido el propio análisis. Dos segmentaciones distintas pueden ser las dos defendibles. Hay que elegir un criterio externo al problema, y criterios distintos dan resultados distintos.</p>
+<p><strong>Aprendizaje no supervisado.</strong> Se observan las características, pero no hay respuesta. Aquí normalmente no se predice nada. Se construye otra cosa: una división de los anuncios en grupos, una representación con menos variables, una descripción de cómo se reparten los datos.</p>
+<p>El problema es el criterio. Si agrupamos los 15.000 anuncios en cuatro segmentos, no hay ninguna respuesta correcta con la que comparar, porque los segmentos no estaban en los datos: los ha producido el propio análisis. Dos segmentaciones distintas pueden ser las dos defendibles. Hay que elegir un criterio externo al problema, y criterios distintos dan resultados distintos.</p>
 <p>Decir que el aprendizaje no supervisado “predice la estructura de los datos” es una imprecisión que conviene evitar desde el principio.</p>
 <p><strong>Aprendizaje por refuerzo.</strong> Los datos no vienen dados: los genera un programa al interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará después. Se construye una regla de actuación y el criterio es la recompensa acumulada.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
@@ -561,52 +560,21 @@ window.Quarto = {
 </section>
 <section id="predecir-no-es-lo-mismo-que-explicar" class="level2">
 <h2 class="anchored" data-anchor-id="predecir-no-es-lo-mismo-que-explicar">Predecir no es lo mismo que explicar</h2>
-<p>Es la distinción que organiza el curso.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Econometría</th>
-<th>Esta asignatura</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Pregunta</td>
-<td>¿cuánto vale <span class="math inline">\(w_j\)</span> y es significativo?</td>
-<td>¿qué <span class="math inline">\(\boldsymbol{w}\)</span> predice mejor fuera de la muestra?</td>
-</tr>
-<tr class="even">
-<td>Objeto de interés</td>
-<td>el coeficiente</td>
-<td>la predicción</td>
-</tr>
-<tr class="odd">
-<td>Criterio</td>
-<td>insesgadez, error estándar</td>
-<td>riesgo estimado sobre datos no usados</td>
-</tr>
-</tbody>
-</table>
-<p>Llevan a modelos distintos. En el capítulo 11 veremos la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio reduce el riesgo. Desde la óptica de la inferencia eso es un defecto; desde la nuestra, el objetivo.</p>
-<p>No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.</p>
+<p>Con los mismos datos y las mismas fórmulas se pueden responder dos preguntas distintas. La econometría pregunta cuánto vale un coeficiente y si es significativo; aquí preguntamos qué modelo predice mejor fuera de la muestra. El capítulo 1 compara las dos en una tabla.</p>
+<p>La consecuencia es que llevan a modelos distintos. En el capítulo 11 veremos la regularización, que <strong>sesga los coeficientes a propósito</strong> porque a cambio reduce el error de predicción. Sesgar los coeficientes es un defecto desde el punto de vista de la inferencia. Aquí se acepta porque reduce el error en datos nuevos.</p>
+<p>No cubrimos inferencia sobre los coeficientes: errores estándar, contrastes e intervalos de confianza. Es una decisión deliberada, y la asignatura de econometría es el sitio donde se tratan. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.</p>
 </section>
 <section id="el-esquema-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="el-esquema-del-curso">El esquema del curso</h2>
 <p>Plantear un problema de predicción son tres decisiones: qué <strong>clase de hipótesis</strong>, qué <strong>pérdida</strong> y qué <strong>optimizador</strong>. El curso las va rellenando en ese orden, y el índice está organizado según cuál se esté rellenando.</p>
-<p>La segunda de las tres, la pérdida, no se elige por gusto. Sale de un procedimiento que se aplica quince veces:</p>
+<p>La segunda de las tres, la pérdida, sale de un procedimiento que se aplica quince veces:</p>
 <ol type="1">
 <li>Escribir un <strong>modelo de datos</strong>: señal más ruido.</li>
 <li>Escribir la <strong>verosimilitud</strong> de ese modelo.</li>
 <li>Tomar <span class="math inline">\(-\log\)</span> y obtener una <strong>pérdida</strong>.</li>
 <li>Comprobar que es <strong>convexa</strong>, que es lo que garantiza que minimizarla tenga sentido.</li>
 <li><strong>Minimizarla</strong>, en forma cerrada o por descenso de gradiente.</li>
-<li><strong>Estimar el riesgo</strong> con datos que no se hayan usado para ajustar, y medirlo con una métrica interpretable.</li>
+<li><strong>Medir el error</strong> con datos que no se hayan usado para ajustar, con una métrica interpretable. Que ese número estime algo, y qué, es el capítulo 8.</li>
 </ol>
 <p>Se deriva entero, a mano, una vez (capítulos 2 a 6). Después se reutiliza: <em>ridge</em> y <em>lasso</em> son el paso 3 con una distribución a priori; los splines son el paso 1 con otras variables; Poisson es el paso 1 con otro ruido; los árboles son el caso en que el paso 4 falla y el 5 se vuelve búsqueda voraz.</p>
 </section>
@@ -744,7 +712,7 @@ window.Quarto = {
 </section>
 <section id="cómo-se-trabaja" class="level2">
 <h2 class="anchored" data-anchor-id="cómo-se-trabaja">Cómo se trabaja</h2>
-<p><strong>Tres sesiones de 55 minutos por semana</strong>, con papeles distintos y ninguno intercambiable.</p>
+<p><strong>Tres sesiones de 55 minutos por semana</strong>, con papeles distintos.</p>
 <section id="s1-teoría" class="level3">
 <h3 class="anchored" data-anchor-id="s1-teoría">S1 · Teoría</h3>
 <p>Pizarra. <strong>Una demostración por sesión</strong>, entera. Sin ordenador.</p>
@@ -817,7 +785,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>La colección de <a href="../evaluacion/ejercicios-tipo-examen.html">ejercicios tipo examen resueltos</a> recoge los que se van resolviendo en clase, con la solución que se espera y la rúbrica con la que se puntúan.</p>
-<p>Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un <strong>miniexamen cronometrado</strong> de un bloque, corregido acto seguido. No cuenta para la nota: sirve para saber cuánto se tarda de verdad.</p>
+<p>Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un <strong>miniexamen cronometrado</strong> de un bloque, corregido acto seguido. No cuenta para la nota: sirve para medir cuánto se tarda.</p>
 </section>
 <section id="s3-laboratorio" class="level3">
 <h3 class="anchored" data-anchor-id="s3-laboratorio">S3 · Laboratorio</h3>
@@ -853,7 +821,7 @@ window.Quarto = {
 <section id="cómo-es-el-material" class="level2">
 <h2 class="anchored" data-anchor-id="cómo-es-el-material">Cómo es el material</h2>
 <p>No hay diapositivas. Hay tres cosas, y conviene saber para qué sirve cada una.</p>
-<p><strong>Los apuntes son ejecutables.</strong> Lo que se lee en la web no es una descripción del código: <strong>es el código</strong>. Las figuras de los capítulos se generan al publicarlos, ejecutando las celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.</p>
+<p><strong>Los apuntes son ejecutables.</strong> Lo que se lee en la web es el código que produce las figuras. Las figuras de los capítulos se generan al publicarlos, ejecutando las celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.</p>
 <p><strong>Cada capítulo tiene un cuaderno con huecos.</strong> Es el mismo fichero que los apuntes, pero con los trozos de código que se escriben en clase sustituidos por un hueco. El enlace está arriba del todo de cada capítulo y abre directamente en Google Colab, sin instalar nada. Como es el mismo fichero, <strong>no se pueden desincronizar</strong>: lo que se teclea en el laboratorio es exactamente lo que queda publicado como referencia.</p>
 <p><strong>Las hojas de problemas</strong> son para la S2, una por capítulo, y se publican con solución después de la sesión.</p>
 <section id="herramientas" class="level3">
@@ -874,7 +842,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado como <em>fuera de alcance</em>, con el motivo escrito.</p>
+<p>Lo poco que no demostramos aparece marcado como <em>fuera de alcance</em>, con el motivo escrito.</p>
 <p>Cada demostración se cierra con ∎. Si un resultado no lo lleva, es que su demostración todavía está por escribir.</p>
 </div>
 </div>
@@ -1053,7 +1021,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><strong>Las hojas de problemas semanales reproducen exactamente esa estructura</strong>: el ejercicio 1 es del bloque A, el 2 del B, el 3 del C y el 4 del D. Quien hace las quince hojas llega al examen habiendo hecho quince exámenes por bloques. Además hay dos simulacros completos: el del parcial, con solución, en la semana 4, y el del final en la semana 15.</p>
+<p><strong>Las hojas de problemas semanales reproducen exactamente esa estructura</strong>: el ejercicio 1 es del bloque A, el 2 del B, el 3 del C y el 4 del D. Además hay dos simulacros completos: el del parcial, con solución, en la semana 4, y el del final en la semana 15.</p>
 </section>
 <section id="cómo-sale-la-nota-de-actas" class="level3">
 <h3 class="anchored" data-anchor-id="cómo-sale-la-nota-de-actas">Cómo sale la nota de actas</h3>

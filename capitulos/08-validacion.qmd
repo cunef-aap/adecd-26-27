@@ -282,7 +282,7 @@ Sobre una tabla de seis filas, calcule a mano $\MAE$, $\MSE$, $\RMSE$ y $\Rsq$. 
 :::
 
 ::: {#exr-r2-negativo}
-Construya tres puntos y un modelo lineal con $\Rsq_{\text{test}} < 0$. Explique en una
+Construye tres puntos y un modelo lineal con $\Rsq_{\text{test}} < 0$. Explica en una
 frase qué le está diciendo ese número a quien lo lea.
 :::
 

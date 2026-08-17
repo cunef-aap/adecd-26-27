@@ -461,8 +461,9 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#capítulo-1-señal-y-ruido" id="toc-capítulo-1-señal-y-ruido" class="nav-link active" data-scroll-target="#capítulo-1-señal-y-ruido">Capítulo 1 · Señal y ruido</a></li>
-  <li><a href="#capítulo-2-verosimilitud-y-mle" id="toc-capítulo-2-verosimilitud-y-mle" class="nav-link" data-scroll-target="#capítulo-2-verosimilitud-y-mle">Capítulo 2 · Verosimilitud y MLE</a></li>
+  <li><a href="#capítulo-1-datos-patrones-y-modelos" id="toc-capítulo-1-datos-patrones-y-modelos" class="nav-link active" data-scroll-target="#capítulo-1-datos-patrones-y-modelos">Capítulo 1 · Datos, patrones y modelos</a></li>
+  <li><a href="#capítulo-2-señal-y-ruido" id="toc-capítulo-2-señal-y-ruido" class="nav-link" data-scroll-target="#capítulo-2-señal-y-ruido">Capítulo 2 · Señal y ruido</a></li>
+  <li><a href="#capítulo-3-verosimilitud-y-mle" id="toc-capítulo-3-verosimilitud-y-mle" class="nav-link" data-scroll-target="#capítulo-3-verosimilitud-y-mle">Capítulo 3 · Verosimilitud y MLE</a></li>
   </ul>
 </nav>
     </div>
@@ -499,102 +500,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="capítulo-1-señal-y-ruido" class="level2">
-<h2 class="anchored" data-anchor-id="capítulo-1-señal-y-ruido">Capítulo 1 · Señal y ruido</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Resultado</th>
-<th>Se demuestra</th>
-<th>Depende de</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Def. datos y problema de predicción</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Def. modelo señal + ruido</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Def. error de entrenamiento y de test</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Def. sobreajuste</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Teo. interpolación exacta</strong></td>
-<td><strong>sí</strong> (base de Lagrange)</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Def. densidad normal</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Lema constante de normalización</td>
-<td>no (fuera de alcance)</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Teo. traslación</strong></td>
-<td><strong>sí</strong></td>
-<td>densidad normal</td>
-</tr>
-<tr class="odd">
-<td><strong>Teo. escala</strong></td>
-<td><strong>sí</strong></td>
-<td>densidad normal</td>
-</tr>
-<tr class="even">
-<td>Cor. estandarización</td>
-<td>sí</td>
-<td>traslación, escala</td>
-</tr>
-<tr class="odd">
-<td><strong>Teo. media y varianza</strong></td>
-<td><strong>sí</strong></td>
-<td>estandarización, normalización</td>
-</tr>
-<tr class="even">
-<td>Cor. del ruido al objetivo</td>
-<td>sí</td>
-<td>traslación</td>
-</tr>
-<tr class="odd">
-<td>Def. modelo lineal-gaussiano</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Def. verosimilitud</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Lema el logaritmo preserva el argmax</td>
-<td>sí</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Def. máxima verosimilitud</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="capítulo-2-verosimilitud-y-mle" class="level2">
-<h2 class="anchored" data-anchor-id="capítulo-2-verosimilitud-y-mle">Capítulo 2 · Verosimilitud y MLE</h2>
+<section id="capítulo-1-datos-patrones-y-modelos" class="level2">
+<h2 class="anchored" data-anchor-id="capítulo-1-datos-patrones-y-modelos">Capítulo 1 · Datos, patrones y modelos</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -610,9 +517,137 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Def. riesgo empírico</td>
+<td>Def. problema de predicción supervisada</td>
 <td></td>
 <td></td>
+</tr>
+<tr class="even">
+<td>Def. clase de hipótesis y parámetros</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Def. pérdida y riesgo empírico</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Lema el mejor modelo constante en pérdida cuadrática es <span class="math inline">\(\bar{y}\)</span></strong></td>
+<td><strong>sí</strong></td>
+<td>pérdida y riesgo empírico</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="capítulo-2-señal-y-ruido" class="level2">
+<h2 class="anchored" data-anchor-id="capítulo-2-señal-y-ruido">Capítulo 2 · Señal y ruido</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resultado</th>
+<th>Se demuestra</th>
+<th>Depende de</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Def. modelo señal + ruido</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Def. error de entrenamiento y de test</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Def. sobreajuste</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Teo. interpolación exacta</strong></td>
+<td><strong>sí</strong> (base de Lagrange)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Def. densidad normal</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Lema constante de normalización</td>
+<td>no (fuera de alcance)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Teo. traslación</strong></td>
+<td><strong>sí</strong></td>
+<td>densidad normal</td>
+</tr>
+<tr class="even">
+<td><strong>Teo. escala</strong></td>
+<td><strong>sí</strong></td>
+<td>densidad normal</td>
+</tr>
+<tr class="odd">
+<td>Cor. estandarización</td>
+<td>sí</td>
+<td>traslación, escala</td>
+</tr>
+<tr class="even">
+<td><strong>Teo. media y varianza</strong></td>
+<td><strong>sí</strong></td>
+<td>estandarización, normalización</td>
+</tr>
+<tr class="odd">
+<td>Cor. del ruido al objetivo</td>
+<td>sí</td>
+<td>traslación</td>
+</tr>
+<tr class="even">
+<td>Def. modelo lineal-gaussiano</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Def. verosimilitud</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Lema el logaritmo preserva el argmax</td>
+<td>sí</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Def. máxima verosimilitud</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="capítulo-3-verosimilitud-y-mle" class="level2">
+<h2 class="anchored" data-anchor-id="capítulo-3-verosimilitud-y-mle">Capítulo 3 · Verosimilitud y MLE</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resultado</th>
+<th>Se demuestra</th>
+<th>Depende de</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Def. riesgo empírico (caso cuadrático de la del cap. 1)</td>
+<td></td>
+<td>pérdida y riesgo empírico</td>
 </tr>
 <tr class="even">
 <td>Lema invarianza afín del argmin</td>
@@ -656,7 +691,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<!-- TODO(D13): completar capítulos 3-8 y automatizar la generación. -->
+<!-- TODO(D13): completar capítulos 4-8 y automatizar la generación. -->
 
 
 </section>

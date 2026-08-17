@@ -30,7 +30,7 @@ El capítulo 1 dejó dos cabos sueltos, y los dos eran observaciones sin explica
 
 El primero: un árbol sin límite de profundidad se equivocaba en medio euro por anuncio
 sobre los datos con los que se construyó, y en 78 euros sobre los apartados. Vimos lo
-mismo dibujado en @fig-trampa, con un polinomio que pasaba por los 40 puntos. Lo que no
+mismo dibujado en @fig-trampa, con un polinomio que pasaba por los 12 puntos. Lo que no
 sabemos todavía es si aquello fue mala suerte de esos datos concretos o algo inevitable.
 
 El segundo: el símbolo $\approx$ de @def-problema. Dijimos que los puntos no están sobre
@@ -40,9 +40,8 @@ Este capítulo cierra los dos, y en el orden contrario al que se plantearon.
 
 Primero demostramos que lo del árbol **siempre** ocurre: con clases de hipótesis
 suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto
-de datos, de modo que conseguirlo no informa de nada (@thm-interpolacion). No hizo falta
-un árbol ni un polinomio de grado 39: haría lo mismo cualquier modelo con libertad
-suficiente.
+de datos, de modo que conseguirlo no informa de nada (@thm-interpolacion). No hace falta
+un árbol ni un polinomio: le pasa a cualquier modelo con libertad suficiente.
 
 Después convertimos el $\approx$ en un modelo concreto, $y = \model(\xv) + \varepsilon$
 con $\varepsilon$ aleatorio. En cuanto se supone algo sobre $\varepsilon$, elegir un
@@ -113,7 +112,8 @@ Lo que queremos aprender es $\model$, **no** los valores $\yi$.
 ::: {#def-errores}
 ## Error de entrenamiento y error de test
 
-Dado un conjunto $\mathcal{S}$ y un modelo ajustado $\modelh$,
+Es @def-perdida con pérdida cuadrática, restringida a un subconjunto. Dado un conjunto
+$\mathcal{S}$ y un modelo ajustado $\modelh$,
 $$
 \Riskh_{\mathcal{S}}(\modelh) = \frac{1}{\abs{\mathcal{S}}} \sum_{i \in \mathcal{S}} \left( \yi - \modelh(\xv_i) \right)^2 .
 $$
@@ -328,9 +328,9 @@ plt.colorbar(cs, ax=ax, label=r"$\ell(w)$")
 plt.show()
 ```
 
-Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con $\nfeat = 20$
-parámetros serían $60^{20}$, un número de evaluaciones inabordable. **Hace falta cálculo**,
-y eso es el capítulo 5.
+Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones, y en el capítulo 1 ya
+vimos que con $\nfeat = 20$ predictores serían $60^{21}$. **Hace falta cálculo**, y eso es
+el capítulo 5.
 
 ## Error frecuente
 
@@ -357,8 +357,8 @@ capítulo 8.
 ## Ejercicios
 
 ::: {#exr-lagrange}
-Sean los puntos $(1, 3)$, $(2, 5)$, $(4, 2)$. Construya explícitamente el polinomio
-interpolador de Lagrange y compruebe que pasa por los tres puntos.
+Sean los puntos $(1, 3)$, $(2, 5)$, $(4, 2)$. Construye explícitamente el polinomio
+interpolador de Lagrange y comprueba que pasa por los tres puntos.
 :::
 
 ::: {.sol}
@@ -371,12 +371,12 @@ interpolador de Lagrange y compruebe que pasa por los tres puntos.
 ::: {#exr-titulares}
 Tres titulares de prensa afirman: (a) "el modelo predice el impago con un 99 % de
 acierto"; (b) "hemos reducido el error a cero"; (c) "validado sobre 10 millones de
-registros". Para cada uno, diga qué información falta para poder juzgarlo.
+registros". Para cada uno, di qué información falta para poder juzgarlo.
 :::
 
 ::: {#exr-ruido}
-Suponga $\varepsilon_i \sim \Normal(0, \noise^2)$. Escriba la log-verosimilitud de una
-única observación y dibuje, sin calcular nada, cómo cambia al alejarse $\yi$ de
+Supón $\varepsilon_i \sim \Normal(0, \noise^2)$. Escribe la log-verosimilitud de una
+única observación y dibuja, sin calcular nada, cómo cambia al alejarse $\yi$ de
 $\model(\xv_i)$.
 :::
 

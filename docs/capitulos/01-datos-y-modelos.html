@@ -508,7 +508,7 @@ window.Quarto = {
   <li><a href="#ajustar-cuatro-modelos" id="toc-ajustar-cuatro-modelos" class="nav-link" data-scroll-target="#ajustar-cuatro-modelos">Ajustar cuatro modelos</a></li>
   <li><a href="#medir-el-error" id="toc-medir-el-error" class="nav-link" data-scroll-target="#medir-el-error">Medir el error</a></li>
   </ul></li>
-  <li><a href="#lo-que-acaba-de-pasar-tiene-nombre" id="toc-lo-que-acaba-de-pasar-tiene-nombre" class="nav-link" data-scroll-target="#lo-que-acaba-de-pasar-tiene-nombre">Lo que acaba de pasar tiene nombre</a></li>
+  <li><a href="#sobreajuste" id="toc-sobreajuste" class="nav-link" data-scroll-target="#sobreajuste">Sobreajuste</a></li>
   <li><a href="#el-vocabulario" id="toc-el-vocabulario" class="nav-link" data-scroll-target="#el-vocabulario">El vocabulario</a></li>
   <li><a href="#medir-lo-que-cuesta-equivocarse" id="toc-medir-lo-que-cuesta-equivocarse" class="nav-link" data-scroll-target="#medir-lo-que-cuesta-equivocarse">Medir lo que cuesta equivocarse</a></li>
   <li><a href="#elegir-los-parámetros-a-mano" id="toc-elegir-los-parámetros-a-mano" class="nav-link" data-scroll-target="#elegir-los-parámetros-a-mano">Elegir los parámetros a mano</a></li>
@@ -549,7 +549,7 @@ window.Quarto = {
 <section id="planteamiento" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Antes de definir nada, vamos a mirar unos datos.</p>
-<div id="e1733441" class="cell" data-execution_count="3">
+<div id="a2e3326a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -577,7 +577,7 @@ window.Quarto = {
 <div id="fig-dos-patrones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-dos-patrones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="afb85388" class="cell" data-execution_count="4">
+<div id="6551fc80" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -618,7 +618,7 @@ Figura&nbsp;1.1: Dos conjuntos de datos. En los dos hay un patrón que relaciona
 <div id="fig-dos-funciones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-dos-funciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="b7bbb1bd" class="cell" data-execution_count="5">
+<div id="31ab14d1" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -635,13 +635,13 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 </div>
 <p>Llamamos <span class="math inline">\(x\)</span> a lo que se conoce de antemano y <span class="math inline">\(y\)</span> a lo que se quiere averiguar. Si <span class="math inline">\(f\)</span> es la función que hemos dibujado, lo que pretendemos es que <span class="math display">\[
 \text{``}\ f(x) = \hat{y}\approx y\ \text{''}
-\]</span> donde <span class="math inline">\(\hat{y}\)</span> es lo que el modelo predice e <span class="math inline">\(y\)</span> es el valor verdadero. Las comillas están puestas a propósito: eso todavía no es una afirmación que se pueda demostrar, porque no hemos dicho qué quiere decir <span class="math inline">\(\approx\)</span>. Lo diremos, y el capítulo 3 lo convierte en algo preciso. De momento sirve para fijar los símbolos.</p>
-<p>Fíjate en que en <a href="#fig-dos-funciones" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> los puntos <strong>no están sobre la curva</strong>, están alrededor. Escribir <span class="math inline">\(=\)</span> en lugar de <span class="math inline">\(\approx\)</span> sería falso, y además sería mala idea. Por qué es mala idea es lo primero que vamos a comprobar, y no con datos inventados.</p>
+\]</span> donde <span class="math inline">\(\hat{y}\)</span> es lo que el modelo predice e <span class="math inline">\(y\)</span> es el valor verdadero. Las comillas están puestas a propósito: eso todavía no es una afirmación que se pueda demostrar, porque no hemos dicho qué quiere decir <span class="math inline">\(\approx\)</span>. Lo diremos, y el capítulo 2 lo convierte en algo preciso, al escribir la diferencia entre <span class="math inline">\(\hat{y}\)</span> e <span class="math inline">\(y\)</span> como un término de ruido con distribución conocida. De momento sirve para fijar los símbolos.</p>
+<p>En <a href="#fig-dos-funciones" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> los puntos <strong>no están sobre la curva</strong>, están alrededor. Escribir <span class="math inline">\(=\)</span> en lugar de <span class="math inline">\(\approx\)</span> sería falso, y además sería mala idea. Por qué es mala idea lo comprueba la sección siguiente, con datos reales.</p>
 </section>
 <section id="sec-recorrido" class="level2">
 <h2 class="anchored" data-anchor-id="sec-recorrido">Un primer modelo, de principio a fin</h2>
 <p>Vamos a hacer el recorrido completo una vez, con datos reales y sin abrir ninguna caja. Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen por dentro, y de hecho el resto del curso consiste en abrirlas una por una.</p>
-<div id="9453e9bd" class="cell" data-execution_count="6">
+<div id="3a7928a3" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,</span></span>
@@ -658,7 +658,7 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> local <span class="cf">if</span> local.exists() <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>URL_DATOS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="6f16360d" class="cell" data-execution_count="7">
+<div id="51e002b7" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>anuncios <span class="op">=</span> pd.read_csv(ruta_datos(<span class="st">"airbnb_madrid.csv"</span>))</span>
@@ -668,7 +668,7 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 </div>
 </div>
 <p>Son 15.000 anuncios de alquiler de Madrid. Cada fila es un anuncio y cada columna una característica.</p>
-<div id="0db4a932" class="cell" data-execution_count="8">
+<div id="5a1566ed" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>anuncios[[<span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"neighbourhood_cleansed"</span>, <span class="st">"price"</span>]].head()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -732,8 +732,9 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 </blockquote>
 <section id="preparar-los-datos" class="level3">
 <h3 class="anchored" data-anchor-id="preparar-los-datos">Preparar los datos</h3>
-<p>Nos quedamos con siete características numéricas y con el precio, y tiramos las filas a las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7 trata precisamente de esto; hoy es lo más rápido.</p>
-<div id="630d8d30" class="cell" data-execution_count="9">
+<p>Nos quedamos con siete características numéricas y con el precio, y tiramos las filas a las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7 trata de esto; hoy es lo más rápido.</p>
+<p>El barrio se queda fuera aunque aparezca en la tabla de arriba, porque es texto y todavía no sabemos convertirlo en números. También es el capítulo 7.</p>
+<div id="3c577701" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CARACTERISTICAS <span class="op">=</span> [</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"beds"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"number_of_reviews"</span>, <span class="st">"review_scores_rating"</span>, <span class="st">"availability_365"</span>,</span>
@@ -744,7 +745,7 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 <pre><code>(8976, 8)</code></pre>
 </div>
 </div>
-<div id="7c2be4de" class="cell" data-execution_count="10">
+<div id="ba1f6e33" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tabla[<span class="st">"price"</span>].describe()[[<span class="st">"50%"</span>, <span class="st">"mean"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]].<span class="bu">round</span>(<span class="dv">0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>50%     142.0
@@ -759,8 +760,8 @@ Name: price, dtype: float64</code></pre>
 <section id="apartar-datos-para-el-final" class="level3">
 <h3 class="anchored" data-anchor-id="apartar-datos-para-el-final">Apartar datos para el final</h3>
 <p>Conviene detenerse en este paso, porque de él depende qué mide el error que calculemos al final.</p>
-<p>Apartamos una parte de los anuncios y hacemos como si no existieran. El modelo se construye <strong>solo</strong> con el resto. Al terminar, medimos el error sobre los apartados, que el modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía no tiene precio, que es el que de verdad nos importa.</p>
-<div id="d5a040ef" class="cell" data-execution_count="11">
+<p>Apartamos una parte de los anuncios y hacemos como si no existieran. El modelo se construye <strong>solo</strong> con el resto. Al terminar, medimos el error sobre los apartados, que el modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía no tiene precio, que es la situación en la que se va a usar el modelo.</p>
+<div id="5715a50f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tabla[CARACTERISTICAS]</span>
@@ -776,8 +777,10 @@ Name: price, dtype: float64</code></pre>
 </section>
 <section id="ajustar-cuatro-modelos" class="level3">
 <h3 class="anchored" data-anchor-id="ajustar-cuatro-modelos">Ajustar cuatro modelos</h3>
-<p>Cuatro modelos, de menos a más flexible. El primero ni siquiera mira las características: predice siempre la media, y sirve de referencia para saber si los demás aportan algo.</p>
-<div id="f91c1e8c" class="cell" data-execution_count="12">
+<p>Cuatro modelos, de menos a más flexible.</p>
+<p>El primero ni siquiera mira las características: predice siempre la media, y sirve de referencia para saber si los demás aportan algo. El segundo es una recta, o más bien su versión con siete predictores, que es lo que ocupa buena parte del curso.</p>
+<p>Los dos últimos son <strong>árboles de regresión</strong>. Un árbol parte los datos en dos según una pregunta del tipo <em>¿tiene más de dos dormitorios?</em>, vuelve a partir cada trozo con otra pregunta, y así sucesivamente; para predecir, deja caer el anuncio por las preguntas hasta un grupo final y devuelve el precio medio de ese grupo. <code>max_depth</code> limita cuántas preguntas encadenadas puede hacer. Sin límite, sigue partiendo hasta que los grupos son diminutos. El capítulo 13 los construye desde cero; aquí solo hacen falta para tener un modelo muy flexible con el que comparar.</p>
+<div id="9aae2bbe" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.dummy <span class="im">import</span> DummyRegressor</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
@@ -796,19 +799,33 @@ Name: price, dtype: float64</code></pre>
 <section id="medir-el-error" class="level3">
 <h3 class="anchored" data-anchor-id="medir-el-error">Medir el error</h3>
 <p>Medimos con el error absoluto medio: la diferencia entre lo predicho y lo real, en valor absoluto, promediada. Sale en euros, que es la unidad en la que se puede discutir con alguien que no sea del gremio.</p>
-<div id="1af1d4b5" class="cell" data-execution_count="13">
+<p>Conviene separar dos cosas que aquí no coinciden. El error absoluto medio es la <strong>métrica</strong> con la que leemos el resultado. No es lo que las librerías han minimizado al ajustar: las cuatro han minimizado el error <strong>cuadrático</strong> medio. Que se pueda ajustar con una y leer con otra tiene consecuencias, y el capítulo 8 las trata.</p>
+<p>Lo escribimos primero a mano, que son dos líneas, y después comprobamos que la función de la librería da lo mismo. Es la forma de saber qué hay dentro de un nombre.</p>
+<div id="99fbb9de" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>filas <span class="op">=</span> []</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, modelo <span class="kw">in</span> modelos.items():</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    filas.append({</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"modelo"</span>: nombre,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los que vio"</span>: mean_absolute_error(y_ent, modelo.predict(X_ent)),</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los apartados"</span>: mean_absolute_error(y_test, modelo.predict(X_test)),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(filas).set_index(<span class="st">"modelo"</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> modelos[<span class="st">"recta"</span>].predict(X_test)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>a_mano <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(y_pred <span class="op">-</span> y_test))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>libreria <span class="op">=</span> mean_absolute_error(y_test, y_pred)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>a_mano, libreria, np.allclose(a_mano, libreria)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>(np.float64(59.736654380041365), 59.736654380041365, True)</code></pre>
+</div>
+</div>
+<p>Con eso ya podemos usar <code>mean_absolute_error</code> sin que sea una caja negra.</p>
+<div id="f35c05b7" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>filas <span class="op">=</span> []</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, modelo <span class="kw">in</span> modelos.items():</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    filas.append({</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"modelo"</span>: nombre,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los que vio"</span>: mean_absolute_error(y_ent, modelo.predict(X_ent)),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los apartados"</span>: mean_absolute_error(y_test, modelo.predict(X_test)),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(filas).set_index(<span class="st">"modelo"</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -852,57 +869,62 @@ Name: price, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<p>Merece la pena parar aquí y leer la tabla despacio, porque contiene el curso entero.</p>
-<p>La columna de la izquierda, tomada por sí sola, ordena los modelos de peor a mejor y dice que el árbol sin límite es con diferencia el que mejor funciona: se equivoca en medio euro por anuncio. La columna de la derecha dice que ese mismo modelo es el peor de los tres que miran los datos, y que es tan malo como no mirarlos: se equivoca casi lo mismo que predecir siempre la media.</p>
+<p>La tabla contiene los dos hechos sobre los que se construye el resto del curso.</p>
+<p>La columna de la izquierda, tomada por sí sola, ordena los modelos de peor a mejor y dice que el árbol sin límite es el que mejor funciona: se equivoca en medio euro por anuncio. La columna de la derecha dice que ese mismo modelo es el peor de los tres que miran los datos, y que es tan malo como no mirarlos: se equivoca casi lo mismo que predecir siempre la media.</p>
 <p>El árbol sin límite se ha aprendido los anuncios de memoria. Con eso consigue un error casi nulo en los que vio, y ninguna capacidad de decir nada sobre los que no.</p>
 </section>
 </section>
-<section id="lo-que-acaba-de-pasar-tiene-nombre" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="lo-que-acaba-de-pasar-tiene-nombre">Lo que acaba de pasar tiene nombre</h2>
-<p>Se llama <strong>sobreajuste</strong>: el error sobre los datos con los que se construyó el modelo es mucho menor que el error sobre datos nuevos. El capítulo 2 lo define con precisión, cuando tengamos con qué medir la complejidad de un modelo.</p>
+<section id="sobreajuste" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sobreajuste">Sobreajuste</h2>
+<p>El fenómeno se llama <strong>sobreajuste</strong>: el error sobre los datos con los que se construyó el modelo es mucho menor que el error sobre datos nuevos. El capítulo 2 lo define con precisión, en términos de lo que le ocurre al error de prueba al mover la complejidad del modelo. Medir esa complejidad es el capítulo 10.</p>
 <p>No es un accidente de este conjunto de datos ni de este árbol. Es lo que ocurre siempre que se deja a un modelo suficiente libertad, y se ve mejor con datos inventados, donde sabemos cuál es la respuesta correcta.</p>
-<div id="594bb1a7" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>grado <span class="op">=</span> <span class="bu">len</span>(x_a) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>coef_interp <span class="op">=</span> np.polyfit(x_a, y_a, grado)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nos quedamos con 12 de los 40 puntos del panel (a) y les ajustamos un polinomio de grado 11, que tiene 12 coeficientes, uno por punto.</p>
+<div id="362f3331" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>elegidos <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="bu">len</span>(x_a) <span class="op">-</span> <span class="dv">1</span>, <span class="dv">12</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>x_s, y_s <span class="op">=</span> x_a[elegidos], y_a[elegidos]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>coef_interp <span class="op">=</span> np.polyfit(x_s, y_s, <span class="bu">len</span>(x_s) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">abs</span>(np.polyval(coef_interp, x_s) <span class="op">-</span> y_s).<span class="bu">max</span>()   <span class="co"># error maximo de ajuste</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>np.float64(4.83505253612293e-08)</code></pre>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><code>numpy</code> avisa de que el ajuste está mal condicionado. Tiene razón, y es parte del problema: un polinomio de grado 39 sobre 40 puntos es un objeto numéricamente frágil.</p>
-</div></div><details class="code-fold">
+</div>
+<p>El error de ajuste es cero salvo redondeo.</p>
+<details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.6</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fina <span class="op">=</span> np.linspace(x_a.<span class="bu">min</span>(), x_a.<span class="bu">max</span>(), <span class="dv">600</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(x_a, y_a, <span class="op">**</span>kw_puntos)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, np.polyval(coef_interp, fina), color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, <span class="fl">1.5</span> <span class="op">*</span> fina <span class="op">+</span> <span class="dv">2</span>, color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       ylim<span class="op">=</span>(y_a.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">6</span>, y_a.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">6</span>))</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.6</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fina <span class="op">=</span> np.linspace(x_s.<span class="bu">min</span>(), x_s.<span class="bu">max</span>(), <span class="dv">800</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(x_s, y_s, color<span class="op">=</span><span class="st">"black"</span>, s<span class="op">=</span><span class="dv">42</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, np.polyval(coef_interp, fina), color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, <span class="fl">1.5</span> <span class="op">*</span> fina <span class="op">+</span> <span class="dv">2</span>, color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       ylim<span class="op">=</span>(y_s.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">8</span>, y_s.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">8</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-trampa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="c0a73adb" class="cell" data-execution_count="15">
+<div id="052b47e3" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-datos-y-modelos_files/figure-html/cell-16-output-1.png" class="figure-img" width="767" height="455"></p>
+<p><img src="01-datos-y-modelos_files/figure-html/cell-17-output-1.png" class="figure-img" width="767" height="455"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1.3: El polinomio de grado 39 (línea fina) pasa por los 40 puntos; la recta (discontinua) no pasa por ninguno. El error sobre estos datos es exactamente 0 para el primero.
+Figura&nbsp;1.3: El polinomio de grado 11 (línea fina) pasa por los 12 puntos; la recta (discontinua) no pasa por ninguno. El error de ajuste del polinomio sobre esos puntos es cero.
 </figcaption>
 </figure>
 </div>
-<p>En <a href="#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> el polinomio es el equivalente del árbol sin límite: acierta en todos los puntos que ha visto y no se parece en nada a la recta que generó los datos. Es la misma situación que la tabla de la sección anterior, dibujada.</p>
-<p>De aquí sale la regla que no se negocia en toda la asignatura:</p>
+<p>En <a href="#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> el polinomio es el equivalente del árbol sin límite: acierta en todos los puntos que ha visto y no se parece en nada a la recta que generó los datos. Entre punto y punto oscila, y basta mirar dónde caería un dato nuevo para ver que fallaría por mucho. Es la misma situación que la tabla de la sección anterior, dibujada.</p>
+<p>De aquí sale la regla que se aplica en los quince capítulos:</p>
 <blockquote class="blockquote">
 <p>El error de un modelo se mide sobre datos que no se han usado para construirlo.</p>
 </blockquote>
-<p>Es tentador resumir el objetivo del curso diciendo que buscamos <em>la función que mejor se ajusta a los datos</em>. Acabamos de ver que eso es falso: siempre existe una función que se ajusta perfectamente, y no sirve. El capítulo 2 demuestra que existe siempre, y el capítulo 8 construye el procedimiento para medir bien.</p>
+<p>Es tentador resumir el objetivo del curso diciendo que buscamos <em>la función que mejor se ajusta a los datos</em>. Acabamos de ver que eso es falso: mientras no haya dos observaciones con los mismos predictores, siempre existe una función que se ajusta perfectamente, y no sirve. El capítulo 2 demuestra que existe siempre, y el capítulo 8 construye el procedimiento para medir bien.</p>
 </section>
 <section id="el-vocabulario" class="level2">
 <h2 class="anchored" data-anchor-id="el-vocabulario">El vocabulario</h2>
@@ -914,7 +936,7 @@ Figura&nbsp;1.3: El polinomio de grado 39 (línea fina) pasa por los 40 puntos; 
 \]</span></p>
 <p>Al vector <span class="math inline">\(\mathbf{x}_i\)</span> lo llamamos <strong>predictores</strong> de la observación <span class="math inline">\(i\)</span>, y al número <span class="math inline">\(y_i\)</span>, <strong>respuesta</strong>. El objetivo es construir, a partir de <span class="math inline">\(\mathcal{D}\)</span>, una función <span class="math inline">\(\hat{f}: \mathbb{R}^{p} \to \mathbb{R}\)</span> tal que <span class="math inline">\(\hat{f}(\mathbf{x}) \approx y\)</span> en observaciones <span class="math inline">\((\mathbf{x}, y)\)</span> que <strong>no</strong> pertenecen a <span class="math inline">\(\mathcal{D}\)</span>. Al número <span class="math inline">\(\hat{f}(\mathbf{x})\)</span> lo llamamos <strong>predicción</strong> y lo escribimos <span class="math inline">\(\hat{y}\)</span>.</p>
 </div>
-<p>En el recorrido, <span class="math inline">\(n\)</span> era 7.180 (las filas de <code>X_ent</code>), <span class="math inline">\(p\)</span> era 7 (las columnas de <code>CARACTERISTICAS</code>), <span class="math inline">\(\mathbf{x}_i\)</span> era una fila y <span class="math inline">\(y_i\)</span> el precio de ese anuncio. La condición <em>no pertenecen a <span class="math inline">\(\mathcal{D}\)</span></em> es <code>X_test</code>.</p>
+<p>En el recorrido, <span class="math inline">\(p\)</span> era 7 (las columnas de <code>CARACTERISTICAS</code>), <span class="math inline">\(\mathbf{x}_i\)</span> era una fila y <span class="math inline">\(y_i\)</span> el precio de ese anuncio. La condición <em>no pertenecen a <span class="math inline">\(\mathcal{D}\)</span></em> la cumple el anuncio que todavía no tiene precio, que es el caso que nos importa y que no está en la tabla. Apartar <code>X_test</code> es la forma de imitarlo con los datos que ya tenemos: los 7.180 anuncios de <code>X_ent</code> son los que ve el modelo y los 1.796 restantes hacen el papel de anuncios nuevos.</p>
 <p>Nos falta un nombre más. Una función suelta no se puede buscar, porque hay demasiadas. Lo que se busca es una función dentro de una familia fijada de antemano, y eso es lo que se elegía al escribir <code>LinearRegression()</code> o <code>DecisionTreeRegressor(max_depth=3)</code>.</p>
 <div id="def-hipotesis" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.2 (Clase de hipótesis y parámetros)</strong></span> Una <strong>clase de hipótesis</strong> <span class="math inline">\(\mathcal{F}\)</span> es un conjunto de funciones de <span class="math inline">\(\mathbb{R}^{p}\)</span> en <span class="math inline">\(\mathbb{R}\)</span> entre las cuales se busca <span class="math inline">\(\hat{f}\)</span>. Es habitual que las funciones de <span class="math inline">\(\mathcal{F}\)</span> estén indexadas por un vector de <strong>parámetros</strong> <span class="math inline">\(\boldsymbol{w}\in \mathbb{R}^{q}\)</span>, y entonces escribimos <span class="math inline">\(f(\mathbf{x}; \boldsymbol{w})\)</span>, o simplemente <span class="math inline">\(f(\mathbf{x})\)</span> cuando <span class="math inline">\(\boldsymbol{w}\)</span> se sobreentiende.</p>
@@ -922,7 +944,7 @@ Figura&nbsp;1.3: El polinomio de grado 39 (línea fina) pasa por los 40 puntos; 
 <p>Con la clase de hipótesis, buscar una función se convierte en buscar un vector de números, que es algo que un ordenador sabe hacer. La clase con la que trabajaremos hasta el capítulo 9 es la de las funciones afines: <span class="math display">\[
 \mathcal{F}= \left\{ f(\mathbf{x}) = w_0+ \sum_{j=1}^{p} w_jx_j
 \ :\ \boldsymbol{w}\in \mathbb{R}^{p+1} \right\} ,
-\]</span> que es la de <code>LinearRegression</code>. Produce el panel (a) de <a href="#fig-dos-funciones" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> pero no el (b). Que esa limitación es menos grave de lo que parece, y cómo se levanta sin cambiar ni una demostración, es el contenido del capítulo 9.</p>
+\]</span> que es la de <code>LinearRegression</code>. Produce el panel (a) de <a href="#fig-dos-funciones" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> pero no el (b). El capítulo 9 amplía esta clase para cubrir también el panel (b), reutilizando las demostraciones de los capítulos anteriores.</p>
 </section>
 <section id="medir-lo-que-cuesta-equivocarse" class="level2">
 <h2 class="anchored" data-anchor-id="medir-lo-que-cuesta-equivocarse">Medir lo que cuesta equivocarse</h2>
@@ -937,18 +959,35 @@ Figura&nbsp;1.3: El polinomio de grado 39 (línea fina) pasa por los 40 puntos; 
 <p>Elegida la pérdida, construir un modelo consiste en resolver <span id="eq-erm"><span class="math display">\[
 \hat{\boldsymbol{w}}= \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \hat{R}(\boldsymbol{w})
 \tag{1.1}\]</span></span></p>
-<p>que es lo que hicieron por dentro las cuatro llamadas a <code>.fit()</code>. A resolver <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a> se le llama <strong>minimización del riesgo empírico</strong>, y es la operación que se repite en todos los capítulos que siguen.</p>
+<p>que es lo que resolvieron por dentro las llamadas a <code>.fit()</code>, con la pérdida cuadrática. A resolver <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a> se le llama <strong>minimización del riesgo empírico</strong>, y es la operación que se repite en todos los capítulos que siguen.</p>
+<p>Con una salvedad que conviene anotar ya: en los árboles, <code>.fit()</code> no resuelve <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>. No busca el árbol de menor riesgo, sino que lo construye pregunta a pregunta quedándose cada vez con la que más baja el error en ese paso. El capítulo 13 explica por qué no queda otro remedio, y el capítulo 4 dice qué propiedad se pierde para que no lo haya.</p>
+<p>El caso más sencillo se puede resolver entero a mano, y conviene hacerlo una vez para ver qué forma tiene la respuesta. Es el modelo que en el recorrido se llamaba <code>media</code>.</p>
+<div id="lem-constante-media" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lema 1.1 (El mejor modelo constante en pérdida cuadrática)</strong></span> Sea <span class="math inline">\(\mathcal{F}= \{f(\mathbf{x}) = c : c \in \mathbb{R}\}\)</span> la clase de las funciones constantes y <span class="math inline">\(\ell(\hat{y}, y) = (\hat{y}- y)^2\)</span>. Entonces el minimizador de <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a> es <span class="math inline">\(c = \bar{y}\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>Con esa clase y esa pérdida, el riesgo empírico es una función de una sola variable: <span class="math display">\[
+\hat{R}(c) = \frac{1}{n}\sum_{i=1}^{n} (c - y_i)^2 .
+\]</span></p>
+<p>Es un polinomio de grado 2 en <span class="math inline">\(c\)</span>, así que es derivable, y <span class="math display">\[
+\hat{R}'(c) = \frac{2}{n}\sum_{i=1}^{n} (c - y_i)
+= 2\left( c - \frac{1}{n}\sum_{i=1}^{n} y_i\right) = 2(c - \bar{y}) .
+\]</span></p>
+<p>La derivada se anula solo en <span class="math inline">\(c = \bar{y}\)</span>. Como <span class="math inline">\(\hat{R}''(c) = 2 &gt; 0\)</span> para todo <span class="math inline">\(c\)</span>, ese punto es un mínimo, y es el único.</p>
+</div>
+<p><a href="#lem-constante-media" class="quarto-xref">Lema&nbsp;<span>1.1</span></a> reaparece en el capítulo 3, demostrado por segunda vez y de otra forma, completando cuadrados. Allí lo que interesa no es el resultado, que ya lo tenemos, sino la identidad que aparece a mitad de camino, porque es la que descompone la suma de cuadrados en el capítulo 8.</p>
 </section>
 <section id="elegir-los-parámetros-a-mano" class="level2">
 <h2 class="anchored" data-anchor-id="elegir-los-parámetros-a-mano">Elegir los parámetros a mano</h2>
 <p>Conviene ver una vez qué es lo que <code>.fit()</code> no nos ha dejado ver. Sobre los datos del panel (a) la clase afín con un solo predictor tiene dos parámetros, y podemos probar valores.</p>
-<div id="3b947060" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w0, w1, x, y):</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean((y_hat <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0, w1 <span class="kw">in</span> [(<span class="fl">0.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.5</span>), (<span class="fl">2.5</span>, <span class="fl">1.4</span>)]:</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"w0=</span><span class="sc">{</span>w0<span class="sc">:4.1f}</span><span class="ss">  w1=</span><span class="sc">{</span>w1<span class="sc">:4.1f}</span><span class="ss">   R = </span><span class="sc">{</span>riesgo(w0, w1, x_a, y_a)<span class="sc">:6.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aquí usamos la pérdida cuadrática y no la absoluta, porque es la que domina el curso a partir del capítulo 3. Los números que salen no son euros y no se comparan con los de la tabla anterior.</p>
+<div id="39b77f41" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo_cuadratico(w0, w1, x, y):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean((y_hat <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0, w1 <span class="kw">in</span> [(<span class="fl">0.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.5</span>), (<span class="fl">2.5</span>, <span class="fl">1.4</span>)]:</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"w0=</span><span class="sc">{</span>w0<span class="sc">:4.1f}</span><span class="ss">  w1=</span><span class="sc">{</span>w1<span class="sc">:4.1f}</span><span class="ss">   R = </span><span class="sc">{</span>riesgo_cuadratico(w0, w1, x_a, y_a)<span class="sc">:6.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>w0= 0.0  w1= 1.0   R =  22.49
 w0= 2.0  w1= 1.0   R =   9.52
@@ -956,11 +995,11 @@ w0= 2.0  w1= 1.5   R =   2.22
 w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 </div>
 </div>
-<p>En cuatro intentos el riesgo baja de 22,5 a 2,2, aunque el cuarto empeora respecto al tercero: probando a ojo no se avanza en línea recta. Con paciencia se llega a un valor razonable, así que el problema no es que el procedimiento no funcione. El problema es que no escala. Con dos parámetros y 60 valores para cada uno hay 3.600 combinaciones que probar. Con <span class="math inline">\(p= 20\)</span> predictores hay <span class="math inline">\(60^{21}\)</span>, un número que ningún ordenador va a recorrer.</p>
+<p>En cuatro intentos el riesgo baja de 22,5 a 2,2, aunque el cuarto empeora respecto al tercero: probando a ojo no se avanza en línea recta. Con paciencia se llega a un valor razonable, pero el procedimiento no escala. Con dos parámetros y 60 valores para cada uno hay 3.600 combinaciones que probar. Con <span class="math inline">\(p= 20\)</span> predictores hay <span class="math inline">\(60^{21}\)</span>, un número que ningún ordenador va a recorrer.</p>
 <blockquote class="blockquote">
 <p>Hace falta un procedimiento que encuentre el mínimo sin probar todos los valores.</p>
 </blockquote>
-<p>Construir ese procedimiento, y demostrar que lo que encuentra es de verdad el mínimo, es el contenido de los capítulos 4, 5 y 6.</p>
+<p>Construir ese procedimiento, y demostrar que lo que encuentra es el mínimo global, es el contenido de los capítulos 4, 5 y 6.</p>
 </section>
 <section id="sec-tres-decisiones" class="level2">
 <h2 class="anchored" data-anchor-id="sec-tres-decisiones">Las tres decisiones</h2>
@@ -990,7 +1029,7 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 <tr class="even">
 <td><strong>Pérdida</strong> <span class="math inline">\(\ell\)</span></td>
 <td>¿Qué quiere decir que una predicción es buena?</td>
-<td><code>mean_absolute_error</code></td>
+<td>la cuadrática, dentro de <code>.fit()</code>; el EAM solo para leer</td>
 <td>Caps. 3, 4</td>
 </tr>
 <tr class="odd">
@@ -1001,8 +1040,7 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 </tr>
 </tbody>
 </table>
-<p>La primera decisión es la que se ve en las figuras: rectas o curvas. La tercera es computacional. La segunda es la que suele darse por supuesta y la que más consecuencias tiene.</p>
-<p>Las tres se dieron hechas al llamar a la librería. El resto del curso consiste en abrirlas.</p>
+<p>La primera decisión es la que se ve en las figuras: rectas o curvas. La tercera es computacional. La segunda suele darse por supuesta, y el capítulo 3 muestra qué cambia al elegir una pérdida u otra.</p>
 </section>
 <section id="dos-preguntas-que-no-son-la-misma" class="level2">
 <h2 class="anchored" data-anchor-id="dos-preguntas-que-no-son-la-misma">Dos preguntas que no son la misma</h2>
@@ -1061,7 +1099,7 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 <div class="trampa">
 <p><strong>“Mi modelo tiene un error de medio euro”</strong></p>
 <p>Es la primera fila de la tabla de <a href="#sec-recorrido" class="quarto-xref"><span>Sección 1.3</span></a> leída a medias. La pregunta correcta nunca es <em>cuánto se equivoca</em> sino <em>sobre qué datos se ha medido</em>. Un error de medio euro medido sobre los datos de entrenamiento es, si acaso, un motivo de sospecha: significa que el modelo tiene libertad suficiente para memorizar, y por tanto que probablemente lo ha hecho.</p>
-<p>Cuando alguien presente un modelo sin decir sobre qué datos ha medido, la información que falta es justamente la única que importa.</p>
+<p>Cuando alguien presenta un modelo sin decir sobre qué datos ha medido el error, falta el dato que permite interpretarlo.</p>
 </div>
 </section>
 <section id="notación-código" class="level2">
@@ -1121,14 +1159,12 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-decisiones" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.1 (Las tres decisiones en un método conocido)</strong></span> La media muestral <span class="math inline">\(\bar{y}\)</span> se puede ver como el resultado de resolver <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>, y es lo que calcula <code>DummyRegressor(strategy="mean")</code>. Escribe cuál es la clase de hipótesis, cuál la pérdida y cuál el optimizador. Después repite el ejercicio con la mediana.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1.1 (Las tres decisiones en un método conocido)</strong></span> <a href="#lem-constante-media" class="quarto-xref">Lema&nbsp;<span>1.1</span></a> dice que la media muestral <span class="math inline">\(\bar{y}\)</span> resuelve <a href="#eq-erm" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a> sobre la clase de las funciones constantes, y es lo que calcula <code>DummyRegressor(strategy="mean")</code>. Escribe cuáles son en ese caso las tres decisiones de <a href="#sec-tres-decisiones" class="quarto-xref"><span>Sección 1.8</span></a>. Después repite el ejercicio cambiando la pérdida cuadrática por la absoluta.</p>
 </div>
 <div class="sol">
 <p><strong>Solución del <a href="#exr-decisiones" class="quarto-xref">Ejercicio&nbsp;<span>1.1</span></a></strong></p>
-<p>Clase de hipótesis: las funciones constantes, <span class="math inline">\(\mathcal{F}= \{f(\mathbf{x}) = c : c \in \mathbb{R}\}\)</span>. Pérdida: la cuadrática, <span class="math inline">\(\ell(\hat{y}, y) = (\hat{y}- y)^2\)</span>. Con ellas, <span class="math display">\[
-\hat{R}(c) = \frac{1}{n}\sum_i (c - y_i)^2 ,
-\]</span> que es un polinomio de grado 2 en <span class="math inline">\(c\)</span> con derivada <span class="math inline">\(\frac{2}{n}\sum_i (c - y_i)\)</span>. Igualando a cero, <span class="math inline">\(c = \bar{y}\)</span>. El optimizador es la solución en forma cerrada.</p>
-<p>Con la pérdida absoluta <span class="math inline">\(\ell(\hat{y}, y) = \left\lvert \hat{y}- y \right\rvert\)</span> y la misma clase de hipótesis, el minimizador es la mediana. Misma familia de funciones, respuesta distinta: la pérdida no es un detalle técnico, cambia el resultado. Se demuestra en el capítulo 8.</p>
+<p>Clase de hipótesis: las funciones constantes, <span class="math inline">\(\mathcal{F}= \{f(\mathbf{x}) = c : c \in \mathbb{R}\}\)</span>. Pérdida: la cuadrática, <span class="math inline">\(\ell(\hat{y}, y) = (\hat{y}- y)^2\)</span>. Optimizador: la solución en forma cerrada, que es la que da la demostración de <a href="#lem-constante-media" class="quarto-xref">Lema&nbsp;<span>1.1</span></a>, anulando la derivada.</p>
+<p>Con la pérdida absoluta <span class="math inline">\(\ell(\hat{y}, y) = \left\lvert \hat{y}- y \right\rvert\)</span> y la misma clase de hipótesis, el minimizador es una mediana muestral, y el optimizador consiste en ordenar los datos y tomar el valor central; con <span class="math inline">\(n\)</span> par, cualquier punto entre los dos centrales sirve. Con la misma clase de funciones, cambiar la pérdida cambia el resultado. Se demuestra en el capítulo 15, y el capítulo 3 da antes la pieza que lo conecta con un modelo de ruido.</p>
 </div>
 <div id="exr-leer-tabla" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1.2 (Leer la tabla)</strong></span> En la tabla de <a href="#sec-recorrido" class="quarto-xref"><span>Sección 1.3</span></a>, el árbol sin límite tiene un error de 0,5 euros en los anuncios que vio y de 77,9 en los apartados, y el modelo que predice siempre la media tiene 78,9 en los apartados.</p>
@@ -1155,11 +1191,13 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 <p>Para poder ordenar dos segmentaciones hay que elegir un criterio externo al problema, por ejemplo la suma de distancias de cada cliente al centro de su grupo, o una medida de separación entre grupos. Criterios distintos dan segmentaciones distintas y ninguno se deduce del enunciado, que es la diferencia con el caso supervisado.</p>
 </div>
 <div id="exr-interpolacion" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.4 (Cuántos puntos hacen falta)</strong></span> En <a href="#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> se ha usado un polinomio de grado 39 para pasar por 40 puntos. Argumenta por qué el grado <span class="math inline">\(n- 1\)</span> siempre basta, y qué condición tienen que cumplir los <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1.4 (Cuántos puntos hacen falta)</strong></span> En <a href="#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> se ha usado un polinomio de grado 11 para pasar por 12 puntos. Argumenta por qué el grado <span class="math inline">\(n- 1\)</span> siempre basta, y qué condición tienen que cumplir los <span class="math inline">\(x_i\)</span>.</p>
+<p>Comprueba además, ejecutando el código, qué pasa si se intenta lo mismo con los 40 puntos y grado 39. Explica por qué el resultado no contradice lo que acabas de argumentar.</p>
 </div>
 <div class="sol">
 <p><strong>Solución del <a href="#exr-interpolacion" class="quarto-xref">Ejercicio&nbsp;<span>1.4</span></a></strong></p>
 <p>Un polinomio de grado <span class="math inline">\(n-1\)</span> tiene <span class="math inline">\(n\)</span> coeficientes. Imponer que pase por los <span class="math inline">\(n\)</span> puntos son <span class="math inline">\(n\)</span> ecuaciones lineales en esos coeficientes, con matriz de Vandermonde. Esa matriz es invertible si y solo si los <span class="math inline">\(x_i\)</span> son distintos dos a dos, y entonces el sistema tiene solución única. Si hay dos observaciones con el mismo <span class="math inline">\(x_i\)</span> y distinto <span class="math inline">\(y_i\)</span>, ninguna función puede pasar por las dos, porque una función asigna un solo valor a cada entrada.</p>
+<p>Con 40 puntos y grado 39 el error de ajuste no sale cero, sino del orden de 1. El argumento de arriba sigue siendo correcto: el polinomio interpolador <strong>existe</strong>. Lo que falla es calcularlo. La matriz de Vandermonde de grado 39 está tan mal condicionada que en aritmética de doble precisión no se puede resolver el sistema, y <code>numpy</code> avisa de ello. Es la primera aparición de una distinción que reaparece en el capítulo 6: que un problema tenga solución y que sepamos calcularla son dos cosas distintas.</p>
 </div>
 </section>
 <section id="resumen" class="level2">
@@ -1167,7 +1205,7 @@ w0= 2.5  w1= 1.4   R =   2.36</code></pre>
 <ul>
 <li>Un patrón en unos datos se escribe como una función, y buscar una función se convierte en buscar unos parámetros cuando se fija una clase de hipótesis.</li>
 <li>El error se mide sobre datos que no se han usado para construir el modelo. Sin esa condición, el mejor modelo es el que memoriza, y no sirve para nada.</li>
-<li>Plantear el problema son tres decisiones: clase de hipótesis, pérdida y optimizador. Las librerías las toman por ti; el resto del curso consiste en tomarlas tú.</li>
+<li>Plantear el problema son tres decisiones: clase de hipótesis, pérdida y optimizador. En el recorrido las tomó la librería; el resto del curso las trata una por una.</li>
 </ul>
 
 

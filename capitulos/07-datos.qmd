@@ -260,14 +260,14 @@ poco mejor de lo que es.
 ## Ejercicios
 
 ::: {#exr-dummy-rango}
-Con tres niveles y término independiente, escriba $\X$ para cinco observaciones, exhiba el
-vector $\mathbf{v}$ de @thm-trampa-dummy y verifique $\X\mathbf{v} = \zerov$. Dé dos
-soluciones distintas del problema de mínimos cuadrados y compruebe que predicen igual.
+Con tres niveles y término independiente, escribe $\X$ para cinco observaciones, exhibe el
+vector $\mathbf{v}$ de @thm-trampa-dummy y verifica $\X\mathbf{v} = \zerov$. Da dos
+soluciones distintas del problema de mínimos cuadrados y comprueba que predicen igual.
 :::
 
 ::: {#exr-retransformacion}
 Un modelo sobre $\log(\text{precio})$ predice $\yhat = 4{,}5$ con $\noisehat^2 = 0{,}25$.
-Dé la predicción en euros como mediana y como media. ¿Cuál reportaría a un cliente y por qué?
+Da la predicción en euros como mediana y como media. ¿Cuál le darías a un cliente y por qué?
 :::
 
 <!-- TODO(D9): 2-3 más, uno sobre imputación + indicador y otro sobre detectar fugas en

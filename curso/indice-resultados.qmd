@@ -9,11 +9,19 @@ Se genera automáticamente con `scripts/check-numeracion.py` (pendiente, D13). D
 se mantiene a mano y solo cubre los capítulos publicados.
 :::
 
-## Capítulo 1 · Señal y ruido
+## Capítulo 1 · Datos, patrones y modelos
 
 | Resultado | Se demuestra | Depende de |
 |---|---|---|
-| Def. datos y problema de predicción |  | |
+| Def. problema de predicción supervisada |  | |
+| Def. clase de hipótesis y parámetros |  | |
+| Def. pérdida y riesgo empírico |  | |
+| **Lema el mejor modelo constante en pérdida cuadrática es $\bar{y}$** | **sí** | pérdida y riesgo empírico |
+
+## Capítulo 2 · Señal y ruido
+
+| Resultado | Se demuestra | Depende de |
+|---|---|---|
 | Def. modelo señal + ruido |  | |
 | Def. error de entrenamiento y de test |  | |
 | Def. sobreajuste |  | |
@@ -30,11 +38,11 @@ se mantiene a mano y solo cubre los capítulos publicados.
 | Lema el logaritmo preserva el argmax | sí |  |
 | Def. máxima verosimilitud |  | |
 
-## Capítulo 2 · Verosimilitud y MLE
+## Capítulo 3 · Verosimilitud y MLE
 
 | Resultado | Se demuestra | Depende de |
 |---|---|---|
-| Def. riesgo empírico |  | |
+| Def. riesgo empírico (caso cuadrático de la del cap. 1) |  | pérdida y riesgo empírico |
 | Lema invarianza afín del argmin | sí |  |
 | **Lema el mejor modelo constante es la media** | **sí** |  |
 | **Teo. expansión de la log-verosimilitud** | **sí** | densidad normal |
@@ -44,4 +52,4 @@ se mantiene a mano y solo cubre los capítulos publicados.
 | Obs. sesgo de $\hat\sigma^2$ | no (fuera de alcance) | |
 | **Prop. ruido de Laplace ⟹ error absoluto** | **sí** | expansión |
 
-<!-- TODO(D13): completar capítulos 3-8 y automatizar la generación. -->
+<!-- TODO(D13): completar capítulos 4-8 y automatizar la generación. -->

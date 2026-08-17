@@ -32,6 +32,7 @@ trata como constante conocida aunque en la práctica $\noise$ es desconocido y d
 ::: {#def-riesgo-empirico}
 ## Riesgo empírico
 
+Es @def-perdida con $\loss(\yhat, y) = (\yhat - y)^2$:
 $$\Riskh(\coef) = \frac{1}{\nobs}\sum_{i=1}^{\nobs} \left(\yi - \yhati\right)^2 .$$
 El factor $1/\nobs$ forma parte de la definición y se mantiene en todo el curso.
 :::

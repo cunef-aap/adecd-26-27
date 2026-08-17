@@ -266,7 +266,7 @@ escriba y resuelva a mano las ecuaciones normales. Compruebe @cor-residuos-ortog
 :::
 
 ::: {#exr-rango}
-Construya una $\X$ de rango deficiente con tres columnas y exhiba **explícitamente** un
+Construye una $\X$ de rango deficiente con tres columnas y exhibe **explícitamente** un
 vector $\mathbf{v} \neq \zerov$ con $\X\mathbf{v} = \zerov$. ¿Cuántas soluciones tiene el
 problema de mínimos cuadrados? ¿Cambian las predicciones?
 :::

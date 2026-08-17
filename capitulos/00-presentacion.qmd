@@ -10,23 +10,21 @@ $$
 
 ## Qué es el aprendizaje automático
 
-Un ejemplo antes que una definición.
-
-Un portal de alquiler tiene unos 9.000 anuncios de Madrid con su precio por noche. De cada
-anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, en qué barrio está y
-qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin precio. ¿Cuánto
-debería costar?
+Un portal de alquiler tiene 15.000 anuncios de Madrid con su precio por noche. De cada
+anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, cuántas reseñas ha
+recibido y qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin
+precio. ¿Cuánto debería costar?
 
 Nadie ha escrito la fórmula del precio de un piso en Madrid, y no parece que nadie vaya a
-escribirla. Lo que hay son 9.000 casos resueltos. El aprendizaje automático reúne las
+escribirla. Lo que hay son 15.000 casos resueltos. El aprendizaje automático reúne las
 técnicas que construyen la regla **a partir de los casos resueltos**, en lugar de
 programarla a mano.
 
 El anuncio que importa es el que todavía no tiene precio. Una regla que reprodujera los
-9.000 precios conocidos y fallara en el 9.001 no serviría para nada, y en el capítulo 1
-comprobaremos, con estos mismos datos, que construir una regla así es fácil. Por eso en
-todo el curso un modelo se juzga por lo que hace con datos que **no** se han usado para
-construirlo. Esa condición es lo que separa esta asignatura de un ajuste de curvas.
+15.000 precios conocidos y fallara en el siguiente no serviría para nada, y en el
+capítulo 1 comprobaremos, con estos mismos datos, que construir una regla así es fácil.
+Por eso en todo el curso un modelo se juzga por lo que hace con datos que **no** se han
+usado para construirlo.
 
 Con el ejemplo delante ya se puede decir en general. Un problema de aprendizaje queda
 planteado cuando se fijan tres cosas:
@@ -36,7 +34,8 @@ planteado cuando se fijan tres cosas:
 3. **Con qué criterio se juzga.** Aquí, el error de esa función en anuncios que no se han
    usado para construirla.
 
-Cambiando esas tres casillas se obtienen las demás familias.
+Cambiando esas tres casillas se obtienen las demás familias. Dentro del caso supervisado,
+las casillas 2 y 3 se concretan en las tres decisiones del apartado *El esquema del curso*.
 
 ## Las tres familias
 
@@ -53,11 +52,11 @@ dos: dos personas que trabajen sobre los mismos datos y midan el error de la mis
 ordenan los modelos igual.
 
 **Aprendizaje no supervisado.** Se observan las características, pero no hay respuesta.
-**Aquí normalmente no se predice nada**, y esa es la diferencia importante. Se construye
-otra cosa: una división de los anuncios en grupos, una representación con menos variables,
-una descripción de cómo se reparten los datos.
+Aquí normalmente no se predice nada. Se construye otra cosa: una división de los
+anuncios en grupos, una representación con menos variables, una descripción de cómo se
+reparten los datos.
 
-El problema es el criterio. Si agrupamos los 9.000 anuncios en cuatro segmentos, no hay
+El problema es el criterio. Si agrupamos los 15.000 anuncios en cuatro segmentos, no hay
 ninguna respuesta correcta con la que comparar, porque los segmentos no estaban en los
 datos: los ha producido el propio análisis. Dos segmentaciones distintas pueden ser las
 dos defendibles. Hay que elegir un criterio externo al problema, y criterios distintos dan
@@ -96,21 +95,18 @@ futuro, y en qué momento deja de serlo.
 
 ## Predecir no es lo mismo que explicar
 
-Es la distinción que organiza el curso.
+Con los mismos datos y las mismas fórmulas se pueden responder dos preguntas distintas. La
+econometría pregunta cuánto vale un coeficiente y si es significativo; aquí preguntamos qué
+modelo predice mejor fuera de la muestra. El capítulo 1 compara las dos en una tabla.
 
-|  | Econometría | Esta asignatura |
-|---|---|---|
-| Pregunta | ¿cuánto vale $\coefj$ y es significativo? | ¿qué $\coef$ predice mejor fuera de la muestra? |
-| Objeto de interés | el coeficiente | la predicción |
-| Criterio | insesgadez, error estándar | riesgo estimado sobre datos no usados |
+La consecuencia es que llevan a modelos distintos. En el capítulo 11 veremos la
+regularización, que **sesga los coeficientes a propósito** porque a cambio reduce el error
+de predicción. Sesgar los coeficientes es un defecto desde el punto de vista de la
+inferencia. Aquí se acepta porque reduce el error en datos nuevos.
 
-Llevan a modelos distintos. En el capítulo 11 veremos la regularización, que **sesga los
-coeficientes a propósito** porque a cambio reduce el riesgo. Desde la óptica de la
-inferencia eso es un defecto; desde la nuestra, el objetivo.
-
-No cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de
-confianza). Es una decisión deliberada. El capítulo 15 sí trata la incertidumbre, pero
-sobre las predicciones.
+No cubrimos inferencia sobre los coeficientes: errores estándar, contrastes e intervalos de
+confianza. Es una decisión deliberada, y la asignatura de econometría es el sitio donde se
+tratan. El capítulo 15 sí trata la incertidumbre, pero sobre las predicciones.
 
 ## El esquema del curso
 
@@ -118,16 +114,15 @@ Plantear un problema de predicción son tres decisiones: qué **clase de hipóte
 **pérdida** y qué **optimizador**. El curso las va rellenando en ese orden, y el índice
 está organizado según cuál se esté rellenando.
 
-La segunda de las tres, la pérdida, no se elige por gusto. Sale de un procedimiento que se
-aplica quince veces:
+La segunda de las tres, la pérdida, sale de un procedimiento que se aplica quince veces:
 
 1. Escribir un **modelo de datos**: señal más ruido.
 2. Escribir la **verosimilitud** de ese modelo.
 3. Tomar $-\log$ y obtener una **pérdida**.
 4. Comprobar que es **convexa**, que es lo que garantiza que minimizarla tenga sentido.
 5. **Minimizarla**, en forma cerrada o por descenso de gradiente.
-6. **Estimar el riesgo** con datos que no se hayan usado para ajustar, y medirlo con una
-   métrica interpretable.
+6. **Medir el error** con datos que no se hayan usado para ajustar, con una métrica
+   interpretable. Que ese número estime algo, y qué, es el capítulo 8.
 
 Se deriva entero, a mano, una vez (capítulos 2 a 6). Después se reutiliza: *ridge* y
 *lasso* son el paso 3 con una distribución a priori; los splines son el paso 1 con otras
@@ -168,8 +163,7 @@ La hoja de problemas $k$ y el laboratorio $k$ corresponden al capítulo $k$.
 
 ## Cómo se trabaja
 
-**Tres sesiones de 55 minutos por semana**, con papeles distintos y ninguno
-intercambiable.
+**Tres sesiones de 55 minutos por semana**, con papeles distintos.
 
 ### S1 · Teoría
 
@@ -203,7 +197,7 @@ la que se puntúan.
 
 Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos son un **miniexamen
 cronometrado** de un bloque, corregido acto seguido. No cuenta para la nota: sirve para
-saber cuánto se tarda de verdad.
+medir cuánto se tarda.
 
 ### S3 · Laboratorio
 
@@ -219,8 +213,8 @@ Ordenador. Se completa en directo el cuaderno del capítulo.
 
 No hay diapositivas. Hay tres cosas, y conviene saber para qué sirve cada una.
 
-**Los apuntes son ejecutables.** Lo que se lee en la web no es una descripción del código:
-**es el código**. Las figuras de los capítulos se generan al publicarlos, ejecutando las
+**Los apuntes son ejecutables.** Lo que se lee en la web es el código que produce las
+figuras. Las figuras de los capítulos se generan al publicarlos, ejecutando las
 celdas que aparecen justo encima. Si una figura está ahí, es que ese código funciona.
 
 **Cada capítulo tiene un cuaderno con huecos.** Es el mismo fichero que los apuntes, pero
@@ -251,9 +245,7 @@ después de la sesión.
 ::: {.callout-important appearance="simple"}
 ## Se demuestra todo lo que se enuncia
 
-Es la diferencia principal con el curso anterior, y conviene decirlo antes de empezar: no
-es más difícil, es un modo de trabajo distinto. Lo poco que no demostramos aparece marcado
-como *fuera de alcance*, con el motivo escrito.
+Lo poco que no demostramos aparece marcado como *fuera de alcance*, con el motivo escrito.
 
 Cada demostración se cierra con ∎. Si un resultado no lo lleva, es que su demostración
 todavía está por escribir.
@@ -337,8 +329,7 @@ ensayo del final:
 | D | 20 % | *"Este script tiene errores"*: encontrarlos y justificarlos |
 
 **Las hojas de problemas semanales reproducen exactamente esa estructura**: el ejercicio 1
-es del bloque A, el 2 del B, el 3 del C y el 4 del D. Quien hace las quince hojas llega al
-examen habiendo hecho quince exámenes por bloques. Además hay dos simulacros completos: el
+es del bloque A, el 2 del B, el 3 del C y el 4 del D. Además hay dos simulacros completos: el
 del parcial, con solución, en la semana 4, y el del final en la semana 15.
 
 ### Cómo sale la nota de actas

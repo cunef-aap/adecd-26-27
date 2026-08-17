@@ -551,16 +551,16 @@ window.Quarto = {
 <section id="planteamiento" class="level2">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>El capítulo 1 dejó dos cabos sueltos, y los dos eran observaciones sin explicación.</p>
-<p>El primero: un árbol sin límite de profundidad se equivocaba en medio euro por anuncio sobre los datos con los que se construyó, y en 78 euros sobre los apartados. Vimos lo mismo dibujado en <a href="01-datos-y-modelos.html#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>, con un polinomio que pasaba por los 40 puntos. Lo que no sabemos todavía es si aquello fue mala suerte de esos datos concretos o algo inevitable.</p>
+<p>El primero: un árbol sin límite de profundidad se equivocaba en medio euro por anuncio sobre los datos con los que se construyó, y en 78 euros sobre los apartados. Vimos lo mismo dibujado en <a href="01-datos-y-modelos.html#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>, con un polinomio que pasaba por los 12 puntos. Lo que no sabemos todavía es si aquello fue mala suerte de esos datos concretos o algo inevitable.</p>
 <p>El segundo: el símbolo <span class="math inline">\(\approx\)</span> de <a href="01-datos-y-modelos.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>. Dijimos que los puntos no están sobre la curva sino alrededor, pero no dijimos cuánto ni cómo.</p>
 <p>Este capítulo cierra los dos, y en el orden contrario al que se plantearon.</p>
-<p>Primero demostramos que lo del árbol <strong>siempre</strong> ocurre: con clases de hipótesis suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto de datos, de modo que conseguirlo no informa de nada (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>). No hizo falta un árbol ni un polinomio de grado 39: haría lo mismo cualquier modelo con libertad suficiente.</p>
+<p>Primero demostramos que lo del árbol <strong>siempre</strong> ocurre: con clases de hipótesis suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto de datos, de modo que conseguirlo no informa de nada (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>). No hace falta un árbol ni un polinomio: le pasa a cualquier modelo con libertad suficiente.</p>
 <p>Después convertimos el <span class="math inline">\(\approx\)</span> en un modelo concreto, <span class="math inline">\(y = f(\mathbf{x}) + \varepsilon\)</span> con <span class="math inline">\(\varepsilon\)</span> aleatorio. En cuanto se supone algo sobre <span class="math inline">\(\varepsilon\)</span>, elegir un modelo deja de ser una cuestión de criterio y se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver. Ese paso es el que fija la pérdida, y con ello la segunda de las tres decisiones de <a href="01-datos-y-modelos.html#sec-tres-decisiones" class="quarto-xref"><span>Sección 1.8</span></a>.</p>
 </section>
 <section id="datos-señal-y-ruido" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="datos-señal-y-ruido">Datos, señal y ruido</h2>
 <p>Recordemos la condición que da contenido a <a href="01-datos-y-modelos.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>: el error se mide sobre observaciones <strong>no vistas</strong>, es decir, distintas de las que se han usado para ajustar. Sin esa condición el problema es trivial, y el primer resultado del capítulo dice en qué sentido exacto lo es.</p>
-<div id="c1ca9f21" class="cell" data-execution_count="3">
+<div id="5e93cb0d" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -570,7 +570,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="af01d2ad" class="cell" data-execution_count="4">
+<div id="6ee78fd6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.0</span>            <span class="co"># la verdad que NO conocemos</span></span>
@@ -594,7 +594,7 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="064a51ed" class="cell" data-execution_count="5">
+<div id="31457802" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -617,7 +617,7 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 </div>
 <p>Lo que queremos aprender es <span class="math inline">\(f\)</span>, <strong>no</strong> los valores <span class="math inline">\(y_i\)</span>.</p>
 <div id="def-errores" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 2.2 (Error de entrenamiento y error de test)</strong></span> Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
+<p><span class="theorem-title"><strong>Definición 2.2 (Error de entrenamiento y error de test)</strong></span> Es <a href="01-datos-y-modelos.html#def-perdida" class="quarto-xref">Definición&nbsp;<span>1.3</span></a> con pérdida cuadrática, restringida a un subconjunto. Dado un conjunto <span class="math inline">\(\mathcal{S}\)</span> y un modelo ajustado <span class="math inline">\(\hat{f}\)</span>, <span class="math display">\[
 \hat{R}_{\mathcal{S}}(\hat{f}) = \frac{1}{\left\lvert \mathcal{S} \right\rvert} \sum_{i \in \mathcal{S}} \left( y_i- \hat{f}(\mathbf{x}_i) \right)^2 .
 \]</span></p>
 </div>
@@ -687,7 +687,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="24da0ab7" class="cell" data-execution_count="6">
+<div id="4b014465" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -782,7 +782,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="resolución-por-búsqueda-en-rejilla" class="level3">
 <h3 class="anchored" data-anchor-id="resolución-por-búsqueda-en-rejilla">Resolución por búsqueda en rejilla</h3>
 <p>Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.</p>
-<div id="09962e8a" class="cell" data-execution_count="7">
+<div id="8ac433d5" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -790,7 +790,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_verosimilitud(w0, w1, x, y, sigma<span class="op">=</span><span class="fl">3.0</span>):</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.log(densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma)).<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="d2aaab50" class="cell" data-execution_count="8">
+<div id="9302c50d" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>
@@ -815,7 +815,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 </div>
 </div>
 </div>
-<p>Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones. Con <span class="math inline">\(p= 20\)</span> parámetros serían <span class="math inline">\(60^{20}\)</span>, un número de evaluaciones inabordable. <strong>Hace falta cálculo</strong>, y eso es el capítulo 5.</p>
+<p>Con dos parámetros y 60 valores cada uno son 3.600 evaluaciones, y en el capítulo 1 ya vimos que con <span class="math inline">\(p= 20\)</span> predictores serían <span class="math inline">\(60^{21}\)</span>. <strong>Hace falta cálculo</strong>, y eso es el capítulo 5.</p>
 </section>
 </section>
 <section id="error-frecuente" class="level2">
@@ -872,17 +872,17 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="ejercicios" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construya explícitamente el polinomio interpolador de Lagrange y compruebe que pasa por los tres puntos.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> Sean los puntos <span class="math inline">\((1, 3)\)</span>, <span class="math inline">\((2, 5)\)</span>, <span class="math inline">\((4, 2)\)</span>. Construye explícitamente el polinomio interpolador de Lagrange y comprueba que pasa por los tres puntos.</p>
 </div>
 <div class="sol">
 <!-- TODO(D3): escribir. Sale un polinomio de grado 2; el objetivo es que vean que
      la construcción es mecánica, no un teorema de existencia abstracto. -->
 </div>
 <div id="exr-titulares" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> Tres titulares de prensa afirman: (a) “el modelo predice el impago con un 99 % de acierto”; (b) “hemos reducido el error a cero”; (c) “validado sobre 10 millones de registros”. Para cada uno, diga qué información falta para poder juzgarlo.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> Tres titulares de prensa afirman: (a) “el modelo predice el impago con un 99 % de acierto”; (b) “hemos reducido el error a cero”; (c) “validado sobre 10 millones de registros”. Para cada uno, di qué información falta para poder juzgarlo.</p>
 </div>
 <div id="exr-ruido" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> Suponga <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escriba la log-verosimilitud de una única observación y dibuje, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> Supón <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>. Escribe la log-verosimilitud de una única observación y dibuja, sin calcular nada, cómo cambia al alejarse <span class="math inline">\(y_i\)</span> de <span class="math inline">\(f(\mathbf{x}_i)\)</span>.</p>
 </div>
 <!-- TODO(D3): faltan 2 ejercicios más. Uno de simulación (generar datos con w conocido
      y ver el máximo de la rejilla acercarse a la verdad al crecer n) y uno conceptual
