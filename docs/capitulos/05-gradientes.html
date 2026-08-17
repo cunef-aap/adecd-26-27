@@ -589,7 +589,7 @@ f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}
 </div>
 <p>Para lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (<span class="math inline">\(p+1\)</span> coeficientes) y una sola salida (un riesgo). El modo inverso da las <span class="math inline">\(p+1\)</span> derivadas parciales de una vez, a un coste comparable al de evaluar <span class="math inline">\(\hat{R}\)</span>. El modo directo necesitaría <span class="math inline">\(p+1\)</span> pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.</p>
 <p>En <code>jax</code>, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.</p>
-<div id="e4980a92" class="cell" data-execution_count="3">
+<div id="98dfc204" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -599,14 +599,16 @@ f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>jax.config.update(<span class="st">"jax_enable_x64"</span>, <span class="va">True</span>)   <span class="co"># por defecto jax usa float32</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([np.ones(<span class="bu">len</span>(d)), d[<span class="st">"lcavol"</span>], d[<span class="st">"lweight"</span>]])</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> d[<span class="st">"lpsa"</span>].to_numpy()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (X <span class="op">-</span> X.mean(<span class="dv">0</span>)) <span class="op">/</span> np.where(X.std(<span class="dv">0</span>) <span class="op">==</span> <span class="dv">0</span>, <span class="dv">1</span>, X.std(<span class="dv">0</span>))   <span class="co"># la columna de unos se deja</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X[:, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> style <span class="im">import</span> ruta_datos</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(ruta_datos(<span class="st">"prostate.data"</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([np.ones(<span class="bu">len</span>(d)), d[<span class="st">"lcavol"</span>], d[<span class="st">"lweight"</span>]])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> d[<span class="st">"lpsa"</span>].to_numpy()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (X <span class="op">-</span> X.mean(<span class="dv">0</span>)) <span class="op">/</span> np.where(X.std(<span class="dv">0</span>) <span class="op">==</span> <span class="dv">0</span>, <span class="dv">1</span>, X.std(<span class="dv">0</span>))   <span class="co"># la columna de unos se deja</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>X[:, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="78de7441" class="cell" data-execution_count="4">
+<div id="cd84ac0d" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w, X, y):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> X <span class="op">@</span> w <span class="op">-</span> y</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (r <span class="op">@</span> r) <span class="op">/</span> <span class="bu">len</span>(y)</span>
@@ -678,7 +680,7 @@ f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}
 </section>
 <section id="laboratorio" class="level2">
 <h2 class="anchored" data-anchor-id="laboratorio">Laboratorio</h2>
-<div id="480893ac" class="cell" data-execution_count="5">
+<div id="63a5a03e" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DescensoGradiente:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0, lr<span class="op">=</span><span class="fl">0.01</span>):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> np.asarray(w0, dtype<span class="op">=</span><span class="bu">float</span>)</span>
@@ -691,7 +693,7 @@ f(\boldsymbol{w}+ h\mathbf{u}) = f(\boldsymbol{w}) + h\, \mathbf{u}^{\mathsf{T}}
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.w</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Y la comprobación de <a href="#thm-gradiente-riesgo-1d" class="quarto-xref">Teorema&nbsp;<span>5.5</span></a>: derivamos a mano, y preguntamos a <code>jax</code> si estábamos en lo cierto.</p>
-<div id="ceacdf32" class="cell" data-execution_count="6">
+<div id="ff747312" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_analitico(w, X, y):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">/</span> <span class="bu">len</span>(y) <span class="op">*</span> X.T <span class="op">@</span> (y <span class="op">-</span> X <span class="op">@</span> w)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>

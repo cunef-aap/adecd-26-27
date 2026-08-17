@@ -1,6 +1,6 @@
 ---
 title: 'Datos, patrones y modelos'
-subtitle: 'Qué es un problema de predicción y qué hay que decidir para plantearlo'
+subtitle: 'Un recorrido completo, y el vocabulario que hace falta para repetirlo'
 ---
 
 {{< include ../assets/includes/_colab-link.qmd >}}
@@ -27,10 +27,7 @@ from matplotlib import pyplot as plt
 
 rng = np.random.default_rng(1)
 kw_puntos = dict(color="black", facecolors="none", s=38, alpha=0.7)
-```
 
-```{python}
-#| code-fold: true
 n = 40
 x_a = np.sort(rng.uniform(0, 10, n))
 y_a = 1.5 * x_a + 2 + rng.normal(scale=2.0, size=n)
@@ -65,10 +62,11 @@ tenemos nosotros. La pregunta con la que arranca el curso es esta:
 
 > ¿Cómo escribimos ese patrón de forma que una máquina pueda encontrarlo y usarlo?
 
+## El patrón es una función
+
 La respuesta que vamos a desarrollar durante quince semanas es que el patrón se escribe
 como una **función**. En el panel (a) la función es una recta; en el panel (b), una curva.
-En los dos casos es un objeto matemático que toma un valor de $x$ y devuelve un valor de
-$y$.
+En los dos casos es un objeto que toma un valor de $x$ y devuelve un valor de $y$.
 
 ::: {#fig-dos-funciones}
 
@@ -90,9 +88,213 @@ plt.tight_layout()
 El mismo patrón, escrito como una función. Es lo que queremos que la máquina encuentre.
 :::
 
-## Vocabulario
+Llamamos $x$ a lo que se conoce de antemano y $y$ a lo que se quiere averiguar. Si $f$ es
+la función que hemos dibujado, lo que pretendemos es que
+$$
+\text{``}\ \model(x) = \yhat \approx y\ \text{''}
+$$
+donde $\yhat$ es lo que el modelo predice e $y$ es el valor verdadero. Las comillas están
+puestas a propósito: eso todavía no es una afirmación que se pueda demostrar, porque no
+hemos dicho qué quiere decir $\approx$. Lo diremos, y el capítulo 3 lo convierte en algo
+preciso. De momento sirve para fijar los símbolos.
 
-Conviene fijar los nombres antes de seguir, porque se usan en los quince capítulos.
+Fíjate en que en @fig-dos-funciones los puntos **no están sobre la curva**, están
+alrededor. Escribir $=$ en lugar de $\approx$ sería falso, y además sería mala idea. Por
+qué es mala idea es lo primero que vamos a comprobar, y no con datos inventados.
+
+## Un primer modelo, de principio a fin {#sec-recorrido}
+
+Vamos a hacer el recorrido completo una vez, con datos reales y sin abrir ninguna caja.
+Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen por dentro, y
+de hecho el resto del curso consiste en abrirlas una por una.
+
+```{python}
+#---
+import pandas as pd
+from style import ruta_datos
+
+anuncios = pd.read_csv(ruta_datos("airbnb_madrid.csv"))
+anuncios.shape
+#---
+```
+
+Son 15.000 anuncios de alquiler de Madrid. Cada fila es un anuncio y cada columna una
+característica.
+
+```{python}
+#---
+anuncios[["accommodates", "bedrooms", "neighbourhood_cleansed", "price"]].head()
+#---
+```
+
+La pregunta es la del portal de alquiler:
+
+> Dadas las características de un anuncio, ¿qué precio por noche le corresponde?
+
+### Preparar los datos
+
+Nos quedamos con siete características numéricas y con el precio, y tiramos las filas a
+las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7
+trata precisamente de esto; hoy es lo más rápido.
+
+```{python}
+#---
+CARACTERISTICAS = [
+    "accommodates", "bedrooms", "bathrooms", "beds",
+    "number_of_reviews", "review_scores_rating", "availability_365",
+]
+tabla = anuncios[CARACTERISTICAS + ["price"]].dropna()
+tabla.shape
+#---
+```
+
+```{python}
+#---
+tabla["price"].describe()[["50%", "mean", "min", "max"]].round(0)
+#---
+```
+
+La mitad de los anuncios cuesta menos de 142 euros por noche. Conviene tener ese número en
+la cabeza, porque es con el que compararemos los errores.
+
+### Apartar datos para el final
+
+Conviene detenerse en este paso, porque de él depende qué mide el error que calculemos al
+final.
+
+Apartamos una parte de los anuncios y hacemos como si no existieran. El modelo se
+construye **solo** con el resto. Al terminar, medimos el error sobre los apartados, que el
+modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía
+no tiene precio, que es el que de verdad nos importa.
+
+```{python}
+#---
+from sklearn.model_selection import train_test_split
+
+X = tabla[CARACTERISTICAS]
+y = tabla["price"]
+
+X_ent, X_test, y_ent, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+len(y_ent), len(y_test)
+#---
+```
+
+A partir de ahora nos olvidamos de `X_test` e `y_test` hasta el último momento.
+
+### Ajustar cuatro modelos
+
+Cuatro modelos, de menos a más flexible. El primero ni siquiera mira las características:
+predice siempre la media, y sirve de referencia para saber si los demás aportan algo.
+
+```{python}
+#---
+from sklearn.dummy import DummyRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+
+modelos = {
+    "media": DummyRegressor(strategy="mean"),
+    "recta": LinearRegression(),
+    "árbol de profundidad 3": DecisionTreeRegressor(max_depth=3, random_state=0),
+    "árbol sin límite": DecisionTreeRegressor(random_state=0),
+}
+
+for modelo in modelos.values():
+    modelo.fit(X_ent, y_ent)
+#---
+```
+
+### Medir el error
+
+Medimos con el error absoluto medio: la diferencia entre lo predicho y lo real, en valor
+absoluto, promediada. Sale en euros, que es la unidad en la que se puede discutir con
+alguien que no sea del gremio.
+
+```{python}
+#---
+from sklearn.metrics import mean_absolute_error
+
+filas = []
+for nombre, modelo in modelos.items():
+    filas.append({
+        "modelo": nombre,
+        "error en los que vio": mean_absolute_error(y_ent, modelo.predict(X_ent)),
+        "error en los apartados": mean_absolute_error(y_test, modelo.predict(X_test)),
+    })
+
+pd.DataFrame(filas).set_index("modelo").round(1)
+#---
+```
+
+Merece la pena parar aquí y leer la tabla despacio, porque contiene el curso entero.
+
+La columna de la izquierda, tomada por sí sola, ordena los modelos de peor a mejor y dice
+que el árbol sin límite es con diferencia el que mejor funciona: se equivoca en medio euro
+por anuncio. La columna de la derecha dice que ese mismo modelo es el peor de los tres que
+miran los datos, y que es tan malo como no mirarlos: se equivoca casi lo mismo que
+predecir siempre la media.
+
+El árbol sin límite se ha aprendido los anuncios de memoria. Con eso consigue un error
+casi nulo en los que vio, y ninguna capacidad de decir nada sobre los que no.
+
+## Lo que acaba de pasar tiene nombre
+
+Se llama **sobreajuste**: el error sobre los datos con los que se construyó el modelo es
+mucho menor que el error sobre datos nuevos. El capítulo 2 lo define con precisión, cuando
+tengamos con qué medir la complejidad de un modelo.
+
+No es un accidente de este conjunto de datos ni de este árbol. Es lo que ocurre siempre
+que se deja a un modelo suficiente libertad, y se ve mejor con datos inventados, donde
+sabemos cuál es la respuesta correcta.
+
+```{python}
+#| warning: false
+#---
+grado = len(x_a) - 1
+coef_interp = np.polyfit(x_a, y_a, grado)
+#---
+```
+
+::: {.aside}
+`numpy` avisa de que el ajuste está mal condicionado. Tiene razón, y es parte del
+problema: un polinomio de grado 39 sobre 40 puntos es un objeto numéricamente frágil.
+:::
+
+::: {#fig-trampa}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 3.6))
+fina = np.linspace(x_a.min(), x_a.max(), 600)
+ax.scatter(x_a, y_a, **kw_puntos)
+ax.plot(fina, np.polyval(coef_interp, fina), color="black", lw=1)
+ax.plot(fina, 1.5 * fina + 2, color="black", ls="--", lw=2)
+ax.set(xlabel="$x$", ylabel="$y$",
+       ylim=(y_a.min() - 6, y_a.max() + 6))
+plt.tight_layout()
+```
+
+El polinomio de grado 39 (línea fina) pasa por los 40 puntos; la recta (discontinua) no
+pasa por ninguno. El error sobre estos datos es exactamente 0 para el primero.
+:::
+
+En @fig-trampa el polinomio es el equivalente del árbol sin límite: acierta en todos los
+puntos que ha visto y no se parece en nada a la recta que generó los datos. Es la misma
+situación que la tabla de la sección anterior, dibujada.
+
+De aquí sale la regla que no se negocia en toda la asignatura:
+
+> El error de un modelo se mide sobre datos que no se han usado para construirlo.
+
+Es tentador resumir el objetivo del curso diciendo que buscamos *la función que mejor se
+ajusta a los datos*. Acabamos de ver que eso es falso: siempre existe una función que se
+ajusta perfectamente, y no sirve. El capítulo 2 demuestra que existe siempre, y el
+capítulo 8 construye el procedimiento para medir bien.
+
+## El vocabulario
+
+Con el recorrido hecho ya podemos poner nombres. Todos aparecieron en la sección anterior,
+solo que en código.
 
 ::: {#def-problema}
 ## Problema de predicción supervisada
@@ -105,66 +307,43 @@ $$
 
 Al vector $\xv_i$ lo llamamos **predictores** de la observación $i$, y al número $\yi$,
 **respuesta**. El objetivo es construir, a partir de $\data$, una función
-$\modelh: \Real^{\nfeat} \to \Real$ tal que
-$$
-\modelh(\xv) \approx y
-$$
-en observaciones $(\xv, y)$ que **no** pertenecen a $\data$. Al número $\modelh(\xv)$ lo
-llamamos **predicción** y lo escribimos $\yhat$.
+$\modelh: \Real^{\nfeat} \to \Real$ tal que $\modelh(\xv) \approx y$ en observaciones
+$(\xv, y)$ que **no** pertenecen a $\data$. Al número $\modelh(\xv)$ lo llamamos
+**predicción** y lo escribimos $\yhat$.
 :::
 
-Tres comentarios sobre @def-problema, uno por cada parte que se puede leer mal.
+En el recorrido, $\nobs$ era 7.180 (las filas de `X_ent`), $\nfeat$ era 7 (las columnas de
+`CARACTERISTICAS`), $\xv_i$ era una fila y $\yi$ el precio de ese anuncio. La condición
+*no pertenecen a $\data$* es `X_test`.
 
-**El adjetivo *supervisada*** quiere decir que en los datos de partida aparecen las
-respuestas $\yi$. Hay problemas donde no aparecen, y entonces el objetivo no es predecir
-nada; los describimos en @sec-alcance.
-
-**La condición *no pertenecen a $\data$*** es la que da contenido al problema. Sin ella
-existe una solución trivial y sin ningún valor: memorizar la tabla. El capítulo siguiente
-lo convierte en un teorema.
-
-**El símbolo $\approx$** no es descuido de notación. En @fig-dos-patrones los puntos no
-están *sobre* la curva, están alrededor. Escribir $=$ sería falso y además sería una mala
-idea, y de por qué es una mala idea trata el capítulo 2.
-
-Nos falta un nombre más. Una función suelta no se puede buscar: hay demasiadas. Lo que se
-busca es una función dentro de una familia fijada de antemano.
+Nos falta un nombre más. Una función suelta no se puede buscar, porque hay demasiadas. Lo
+que se busca es una función dentro de una familia fijada de antemano, y eso es lo que se
+elegía al escribir `LinearRegression()` o `DecisionTreeRegressor(max_depth=3)`.
 
 ::: {#def-hipotesis}
 ## Clase de hipótesis y parámetros
 
 Una **clase de hipótesis** $\hyp$ es un conjunto de funciones de $\Real^{\nfeat}$ en
-$\Real$ entre las cuales se busca $\modelh$. Es habitual que las funciones de $\hyp$
-estén indexadas por un vector de **parámetros** $\coef \in \Real^{q}$, y entonces
-escribimos $\model(\xv; \coef)$, o simplemente $\model(\xv)$ cuando $\coef$ se sobreentiende.
+$\Real$ entre las cuales se busca $\modelh$. Es habitual que las funciones de $\hyp$ estén
+indexadas por un vector de **parámetros** $\coef \in \Real^{q}$, y entonces escribimos
+$\model(\xv; \coef)$, o simplemente $\model(\xv)$ cuando $\coef$ se sobreentiende.
 :::
 
 Con la clase de hipótesis, buscar una función se convierte en buscar un vector de números,
-que es algo que un ordenador sabe hacer. El ejemplo con el que trabajaremos hasta el
-capítulo 9 es la clase de las funciones afines:
+que es algo que un ordenador sabe hacer. La clase con la que trabajaremos hasta el
+capítulo 9 es la de las funciones afines:
 $$
 \hyp = \left\{ \model(\xv) = \coefzero + \sum_{j=1}^{\nfeat} \coefj x_j
-\ :\ \coef \in \Real^{\nfeat+1} \right\} .
+\ :\ \coef \in \Real^{\nfeat+1} \right\} ,
 $$
+que es la de `LinearRegression`. Produce el panel (a) de @fig-dos-funciones pero no el
+(b). Que esa limitación es menos grave de lo que parece, y cómo se levanta sin cambiar ni
+una demostración, es el contenido del capítulo 9.
 
-Esta clase produce el panel (a) de @fig-dos-funciones pero no el (b). Que esa limitación
-es menos grave de lo que parece, y cómo se levanta sin cambiar ni una demostración, es el
-contenido del capítulo 9.
+## Medir lo que cuesta equivocarse
 
-## Las tres decisiones {#sec-tres-decisiones}
-
-Plantear un problema de predicción consiste en tomar tres decisiones. Todos los métodos
-del curso, y también los que no vemos, se obtienen eligiendo las tres.
-
-| Decisión | Pregunta que responde | Dónde se trata |
-|---|---|---|
-| **Clase de hipótesis** $\hyp$ | ¿Entre qué funciones buscamos? | Caps. 2, 9, 13 |
-| **Pérdida** $\loss$ | ¿Qué queremos decir con que una predicción es buena? | Caps. 3, 4 |
-| **Optimizador** | ¿Cómo encontramos la mejor función de $\hyp$? | Caps. 5, 6 |
-
-La primera decisión es la que se ve en las figuras: rectas o curvas. La tercera es
-computacional. La segunda es la que suele darse por supuesta y la que más consecuencias
-tiene, así que la enunciamos con cuidado.
+En el recorrido elegimos el error absoluto medio sin discutirlo. Esa elección tiene nombre
+y tiene consecuencias.
 
 ::: {#def-perdida}
 ## Pérdida y riesgo empírico
@@ -177,24 +356,29 @@ $$
 $$
 :::
 
-La pérdida más habitual es la cuadrática, $\loss(\yhat, y) = (\yhat - y)^2$, y entonces el
-riesgo empírico es el error cuadrático medio. Pero no es la única y no siempre es la
-adecuada: si predecir de menos cuesta el triple que predecir de más, la pérdida cuadrática
-está midiendo otra cosa.
+El error absoluto medio es el riesgo empírico con $\loss(\yhat, y) = \abs{\yhat - y}$. La
+otra pérdida habitual es la cuadrática, $\loss(\yhat, y) = (\yhat - y)^2$, y da el error
+cuadrático medio.
 
-Elegida la pérdida, el problema queda escrito así:
+No son intercambiables. Si predecir de menos cuesta el triple que predecir de más, ninguna
+de las dos mide lo que importa, y hay que escribir otra. El capítulo 3 explica de dónde
+sale la pérdida cuadrática, que es la que domina el curso, y el 15 vuelve sobre el caso
+asimétrico.
+
+Elegida la pérdida, construir un modelo consiste en resolver
 $$
 \coefhat = \argmin_{\coef} \Riskh(\coef)
 $$ {#eq-erm}
 
-A resolver @eq-erm se le llama **minimización del riesgo empírico**. Es la operación que
-se repite en todos los capítulos que siguen.
+que es lo que hicieron por dentro las cuatro llamadas a `.fit()`. A resolver @eq-erm se le
+llama **minimización del riesgo empírico**, y es la operación que se repite en todos los
+capítulos que siguen.
 
 ## Elegir los parámetros a mano
 
-Antes de buscar un procedimiento, conviene intentarlo a mano. Sobre los datos del panel
-(a), la clase de hipótesis afín con un solo predictor tiene dos parámetros, y podemos
-probar valores.
+Conviene ver una vez qué es lo que `.fit()` no nos ha dejado ver. Sobre los datos del
+panel (a) la clase afín con un solo predictor tiene dos parámetros, y podemos probar
+valores.
 
 ```{python}
 #---
@@ -210,30 +394,46 @@ for w0, w1 in [(0.0, 1.0), (2.0, 1.0), (2.0, 1.5), (2.5, 1.4)]:
 En cuatro intentos el riesgo baja de 22,5 a 2,2, aunque el cuarto empeora respecto al
 tercero: probando a ojo no se avanza en línea recta. Con paciencia se llega a un valor
 razonable, así que el problema no es que el procedimiento no funcione. El problema es que
-no escala. Con dos
-parámetros y 60 valores para cada uno hay 3.600 combinaciones que probar. Con
-$\nfeat = 20$ predictores hay $60^{21}$, un número que ningún ordenador va a recorrer.
+no escala. Con dos parámetros y 60 valores para cada uno hay 3.600 combinaciones que
+probar. Con $\nfeat = 20$ predictores hay $60^{21}$, un número que ningún ordenador va a
+recorrer.
 
 > Hace falta un procedimiento que encuentre el mínimo sin probar todos los valores.
 
 Construir ese procedimiento, y demostrar que lo que encuentra es de verdad el mínimo, es
-el contenido de los capítulos 4, 5 y 6. Antes hay que responder a una pregunta previa:
-saber si ese mínimo existe y si es único. Esa es la del capítulo 4.
+el contenido de los capítulos 4, 5 y 6.
+
+## Las tres decisiones {#sec-tres-decisiones}
+
+Ya hemos usado todas las piezas. Recogidas, plantear un problema de predicción consiste en
+tomar tres decisiones, y todos los métodos del curso se obtienen eligiéndolas.
+
+| Decisión | Pregunta que responde | En el recorrido fue | Dónde se trata |
+|---|---|---|---|
+| **Clase de hipótesis** $\hyp$ | ¿Entre qué funciones buscamos? | `LinearRegression()` | Caps. 2, 9, 13 |
+| **Pérdida** $\loss$ | ¿Qué quiere decir que una predicción es buena? | `mean_absolute_error` | Caps. 3, 4 |
+| **Optimizador** | ¿Cómo encontramos la mejor función de $\hyp$? | `.fit()` | Caps. 5, 6 |
+
+La primera decisión es la que se ve en las figuras: rectas o curvas. La tercera es
+computacional. La segunda es la que suele darse por supuesta y la que más consecuencias
+tiene.
+
+Las tres se dieron hechas al llamar a la librería. El resto del curso consiste en abrirlas.
 
 ## Dos preguntas que no son la misma
 
-Hasta ahora hemos hablado de predecir. Conviene separarlo desde el primer día de la otra
-cosa que se puede hacer con los mismos datos y las mismas fórmulas, porque la asignatura
-de econometría trata de la otra.
+Conviene separar desde el primer día lo que hacemos aquí de la otra cosa que se puede
+hacer con los mismos datos y las mismas fórmulas, porque la asignatura de econometría
+trata de la otra.
 
-| | Pregunta | Criterio de éxito |
+| | Econometría | Esta asignatura |
 |---|---|---|
-| **Inferencia** | ¿Cuánto vale $\coefj$? ¿Es significativo? | Propiedades del estimador |
-| **Predicción** | ¿Qué $\coef$ predice mejor fuera de la muestra? | Error en datos no vistos |
+| Pregunta | ¿cuánto vale $\coefj$? ¿es significativo? | ¿qué $\coef$ predice mejor fuera de la muestra? |
+| Objeto de interés | el coeficiente | la predicción |
+| Criterio | insesgadez, error estándar | error en datos no usados |
 
 Son preguntas distintas y admiten respuestas distintas sobre los mismos datos. Un modelo
-puede predecir bien y tener coeficientes que no se pueden interpretar, y al revés. Este
-curso trata de la segunda columna.
+puede predecir bien y tener coeficientes que no se pueden interpretar, y al revés.
 
 > Que un modelo prediga bien no significa que explique nada.
 
@@ -241,7 +441,7 @@ curso trata de la segunda columna.
 
 En este curso trabajamos el caso supervisado con respuesta numérica. Es una elección, y
 tiene un motivo: es el caso donde el criterio de calidad está bien definido antes de
-empezar. Hay un error de predicción, se puede medir y se puede comparar entre modelos.
+empezar, como acabamos de comprobar en @sec-recorrido.
 
 Queda fuera, y se dice aquí para que nadie lo busque en el índice:
 
@@ -259,46 +459,25 @@ La definición de aprendizaje automático que sirve para los tres casos es más 
 @def-problema, y se la debemos a Mitchell (1997): un programa aprende de la experiencia
 $E$ respecto a una tarea $T$ y una medida de rendimiento $P$ si su rendimiento en $T$,
 medido por $P$, mejora con $E$. En nuestro caso $T$ es predecir $y$ a partir de $\xv$,
-$E$ es el conjunto $\data$ y $P$ es el riesgo en datos no vistos. Lo que cambia en los
+$E$ es el conjunto $\data$ y $P$ es el error en datos no vistos. Lo que cambia en los
 otros dos casos es $P$, y es lo que hace que no podamos tratarlos con las mismas
 herramientas.
 :::
 
-## La trampa de esta semana
+## Error frecuente
 
-Es tentador resumir @def-problema diciendo que el objetivo es *encontrar la función que
-mejor se ajusta a los datos*. Es falso, y de la forma más incómoda posible: siempre existe
-una función que se ajusta perfectamente a los datos, y es inútil.
+::: {.trampa}
+**"Mi modelo tiene un error de medio euro"**
 
-```{python}
-#---
-grado = len(x_a) - 1
-coef_interp = np.polyfit(x_a, y_a, grado)
-#---
-```
+Es la primera fila de la tabla de @sec-recorrido leída a medias. La pregunta correcta
+nunca es *cuánto se equivoca* sino *sobre qué datos se ha medido*. Un error de medio euro
+medido sobre los datos de entrenamiento es, si acaso, un motivo de sospecha: significa que
+el modelo tiene libertad suficiente para memorizar, y por tanto que probablemente lo ha
+hecho.
 
-::: {#fig-trampa}
-
-```{python}
-#| code-fold: true
-fig, ax = plt.subplots(figsize=(6, 3.6))
-fina = np.linspace(x_a.min(), x_a.max(), 600)
-ax.scatter(x_a, y_a, **kw_puntos)
-ax.plot(fina, np.polyval(coef_interp, fina), color="black", lw=1)
-ax.plot(fina, 1.5 * fina + 2, color="black", ls="--", lw=2)
-ax.set(xlabel="$x$", ylabel="$y$",
-       ylim=(y_a.min() - 6, y_a.max() + 6))
-plt.tight_layout()
-```
-
-El polinomio de grado 39 (línea fina) pasa por los 40 puntos; la recta (discontinua) no
-pasa por ninguno. El error sobre estos datos es 0 para el primero. Nadie lo usaría para
-predecir.
+Cuando alguien presente un modelo sin decir sobre qué datos ha medido, la información que
+falta es justamente la única que importa.
 :::
-
-La conclusión no es que el ajuste no importe, sino que **no se puede medir sobre los
-mismos datos con los que se ha ajustado**. El capítulo 2 demuestra que esto pasa siempre y
-no por casualidad, y el capítulo 8 construye el procedimiento para medirlo bien.
 
 ## Notación ↔ código
 
@@ -307,17 +486,19 @@ no por casualidad, y el capítulo 8 construye el procedimiento para medirlo bien
 | $\xv_i$ | fila `i` de `X` | `X.shape == (n, p)` |
 | $\yi$ | `y[i]` | vector, no matriz de una columna |
 | $\nobs$, $\nfeat$ | `n, p = X.shape` | |
-| $\model(\xv; \coef)$ | `modelo.predict(X)` | |
-| $\Riskh(\coef)$ | `np.mean(perdida(y_hat, y))` | |
+| $\hyp$ | `LinearRegression()` | la clase, antes de ajustar |
+| $\coefhat$ | `modelo.coef_`, `modelo.intercept_` | después de `.fit()` |
+| $\modelh(\xv)$ | `modelo.predict(X)` | |
+| $\Riskh(\coef)$ | `mean_absolute_error(y, y_hat)` | con la pérdida absoluta |
 
 ## Ejercicios
 
 ::: {#exr-decisiones}
 ## Las tres decisiones en un método conocido
 
-La media muestral $\ybar$ se puede ver como el resultado de resolver @eq-erm. Escribe cuál
-es la clase de hipótesis, cuál la pérdida y cuál el optimizador. Después repite el
-ejercicio con la mediana.
+La media muestral $\ybar$ se puede ver como el resultado de resolver @eq-erm, y es lo que
+calcula `DummyRegressor(strategy="mean")`. Escribe cuál es la clase de hipótesis, cuál la
+pérdida y cuál el optimizador. Después repite el ejercicio con la mediana.
 :::
 
 ::: {.sol}
@@ -332,8 +513,38 @@ que es un polinomio de grado 2 en $c$ con derivada $\frac{2}{\nobs}\sum_i (c - \
 Igualando a cero, $c = \ybar$. El optimizador es la solución en forma cerrada.
 
 Con la pérdida absoluta $\loss(\yhat, y) = \abs{\yhat - y}$ y la misma clase de hipótesis,
-el minimizador es la mediana. Misma clase, misma familia de funciones, respuesta distinta:
-la pérdida no es un detalle técnico, cambia el resultado. Se demuestra en el capítulo 8.
+el minimizador es la mediana. Misma familia de funciones, respuesta distinta: la pérdida
+no es un detalle técnico, cambia el resultado. Se demuestra en el capítulo 8.
+:::
+
+::: {#exr-leer-tabla}
+## Leer la tabla
+
+En la tabla de @sec-recorrido, el árbol sin límite tiene un error de 0,5 euros en los
+anuncios que vio y de 77,9 en los apartados, y el modelo que predice siempre la media
+tiene 78,9 en los apartados.
+
+a. Explica en tres o cuatro frases por qué el árbol sin límite consigue 0,5 euros.
+b. Un compañero concluye que el árbol sin límite "aprendió mucho pero luego se le olvidó".
+   Corrige esa lectura.
+c. ¿Qué modelo elegirías para poner precio a un anuncio nuevo, y con qué argumento?
+:::
+
+::: {.sol}
+**Solución del @exr-leer-tabla**
+
+a. Un árbol sin límite de profundidad sigue partiendo los datos hasta que en cada hoja
+   quedan anuncios prácticamente idénticos, y en el límite uno solo. La predicción de esa
+   hoja es entonces el precio de ese anuncio. Es decir, el árbol guarda una copia de los
+   datos de entrenamiento, y por eso los reproduce casi exactamente.
+b. No hay ningún olvido: el modelo no ha cambiado entre las dos columnas. Lo que cambia
+   son los datos sobre los que se mide. Sobre los que memorizó acierta, y sobre otros no
+   tiene nada que decir, porque nunca extrajo un patrón, solo una lista.
+c. El árbol de profundidad 3 o la recta, que están empatados alrededor de 60 euros en los
+   apartados. El argumento es que esa columna es la única que estima lo que ocurrirá con
+   un anuncio nuevo, que es la situación en la que se va a usar el modelo. Entre los dos,
+   con estos datos no hay motivo para preferir uno, y el capítulo 8 dará las herramientas
+   para decidir si la diferencia entre 59,7 y 60,0 significa algo.
 :::
 
 ::: {#exr-no-supervisado}
@@ -380,7 +591,7 @@ valor a cada entrada.
 
 - Un patrón en unos datos se escribe como una función, y buscar una función se convierte
   en buscar unos parámetros cuando se fija una clase de hipótesis.
-- Plantear el problema son tres decisiones: clase de hipótesis, pérdida y optimizador. El
-  resto del curso las va rellenando.
-- El objetivo no es ajustar los datos que tenemos. Ajustarlos siempre es posible y por eso
-  no dice nada.
+- El error se mide sobre datos que no se han usado para construir el modelo. Sin esa
+  condición, el mejor modelo es el que memoriza, y no sirve para nada.
+- Plantear el problema son tres decisiones: clase de hipótesis, pérdida y optimizador. Las
+  librerías las toman por ti; el resto del curso consiste en tomarlas tú.

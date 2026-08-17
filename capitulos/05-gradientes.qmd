@@ -203,7 +203,9 @@ import jax
 jax.config.update("jax_enable_x64", True)   # por defecto jax usa float32
 
 # Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.
-d = pd.read_csv("../datos/prostate.data")
+from style import ruta_datos
+
+d = pd.read_csv(ruta_datos("prostate.data"))
 X = np.column_stack([np.ones(len(d)), d["lcavol"], d["lweight"]])
 y = d["lpsa"].to_numpy()
 X = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja

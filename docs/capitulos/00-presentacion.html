@@ -414,7 +414,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#qué-es-el-aprendizaje-automático" id="toc-qué-es-el-aprendizaje-automático" class="nav-link active" data-scroll-target="#qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</a></li>
-  <li><a href="#las-tres-familias-y-en-qué-se-diferencian-de-verdad" id="toc-las-tres-familias-y-en-qué-se-diferencian-de-verdad" class="nav-link" data-scroll-target="#las-tres-familias-y-en-qué-se-diferencian-de-verdad">Las tres familias, y en qué se diferencian de verdad</a></li>
+  <li><a href="#las-tres-familias" id="toc-las-tres-familias" class="nav-link" data-scroll-target="#las-tres-familias">Las tres familias</a></li>
   <li><a href="#predecir-no-es-lo-mismo-que-explicar" id="toc-predecir-no-es-lo-mismo-que-explicar" class="nav-link" data-scroll-target="#predecir-no-es-lo-mismo-que-explicar">Predecir no es lo mismo que explicar</a></li>
   <li><a href="#el-esquema-del-curso" id="toc-el-esquema-del-curso" class="nav-link" data-scroll-target="#el-esquema-del-curso">El esquema del curso</a></li>
   <li><a href="#las-quince-semanas" id="toc-las-quince-semanas" class="nav-link" data-scroll-target="#las-quince-semanas">Las quince semanas</a></li>
@@ -470,30 +470,27 @@ window.Quarto = {
 <p><em>Qué vamos a estudiar, cómo se trabaja y cómo se evalúa.</em></p>
 <section id="qué-es-el-aprendizaje-automático" class="level2">
 <h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</h2>
-<p>Conviene definirlo con más precisión que “el ordenador aprende de los datos”.</p>
-<p>Se supone que existe una <strong>distribución desconocida</strong> <span class="math inline">\(P\)</span> sobre un espacio de observaciones, y que lo que tenemos es una <strong>muestra finita</strong> extraída de ella. El aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una función, una partición, una densidad, una política) que sea bueno <strong>respecto de <span class="math inline">\(P\)</span></strong>, y no respecto de la muestra concreta que nos ha tocado.</p>
-<p>Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es fácil y no significa nada: el capítulo 2 lo demuestra. Lo difícil es que el objeto siga funcionando en observaciones nuevas extraídas de la misma <span class="math inline">\(P\)</span>.</p>
-<p>Un problema de aprendizaje queda especificado cuando se fijan tres cosas:</p>
+<p>Un ejemplo antes que una definición.</p>
+<p>Un portal de alquiler tiene unos 9.000 anuncios de Madrid con su precio por noche. De cada anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, en qué barrio está y qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin precio. ¿Cuánto debería costar?</p>
+<p>Nadie ha escrito la fórmula del precio de un piso en Madrid, y no parece que nadie vaya a escribirla. Lo que hay son 9.000 casos resueltos. El aprendizaje automático reúne las técnicas que construyen la regla <strong>a partir de los casos resueltos</strong>, en lugar de programarla a mano.</p>
+<p>El anuncio que importa es el que todavía no tiene precio. Una regla que reprodujera los 9.000 precios conocidos y fallara en el 9.001 no serviría para nada, y en el capítulo 1 comprobaremos, con estos mismos datos, que construir una regla así es fácil. Por eso en todo el curso un modelo se juzga por lo que hace con datos que <strong>no</strong> se han usado para construirlo. Esa condición es lo que separa esta asignatura de un ajuste de curvas.</p>
+<p>Con el ejemplo delante ya se puede decir en general. Un problema de aprendizaje queda planteado cuando se fijan tres cosas:</p>
 <ol type="1">
-<li><strong>Qué se observa.</strong> El espacio de las observaciones.</li>
-<li><strong>Qué se construye.</strong> La clase de objetos entre los que elegimos.</li>
-<li><strong>Con qué criterio.</strong> Una medida de calidad definida como una <strong>esperanza bajo <span class="math inline">\(P\)</span></strong>, que por tanto no se puede calcular, solo estimar.</li>
+<li><strong>Qué se observa.</strong> Aquí, las características de un anuncio junto con su precio.</li>
+<li><strong>Qué se construye.</strong> Aquí, una función que convierte características en un precio.</li>
+<li><strong>Con qué criterio se juzga.</strong> Aquí, el error de esa función en anuncios que no se han usado para construirla.</li>
 </ol>
+<p>Cambiando esas tres casillas se obtienen las demás familias.</p>
 </section>
-<section id="las-tres-familias-y-en-qué-se-diferencian-de-verdad" class="level2">
-<h2 class="anchored" data-anchor-id="las-tres-familias-y-en-qué-se-diferencian-de-verdad">Las tres familias, y en qué se diferencian de verdad</h2>
-<p>La taxonomía habitual no se basa en el algoritmo, sino en qué se observa y qué se puede usar como criterio.</p>
-<p><strong>Aprendizaje supervisado.</strong> Se observan pares <span class="math inline">\((\mathbf{x}, y)\)</span>. Se construye una función <span class="math inline">\(f: \mathcal{X}\to \mathcal{Y}\)</span>. El criterio es el <strong>riesgo esperado</strong> <span class="math display">\[
-R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
-\]</span> para una pérdida <span class="math inline">\(\ell\)</span> fijada de antemano. Aquí sí se predice, y el criterio es inequívoco: dos personas con la misma pérdida y la misma <span class="math inline">\(P\)</span> ordenan los modelos igual.</p>
-<p><strong>Aprendizaje no supervisado.</strong> Se observa solo <span class="math inline">\(\mathbf{x}\)</span>. <strong>Aquí normalmente no se predice nada</strong>, y esa es la diferencia importante. Se construye otra cosa: una estimación de la densidad de <span class="math inline">\(P\)</span>, una partición del espacio, una representación de menor dimensión. El criterio depende de qué se construya, y no siempre existe uno aceptado:</p>
-<ul>
-<li>En estimación de densidad sí lo hay: la log-verosimilitud de observaciones nuevas.</li>
-<li>En reducción de dimensión hay uno razonable: el error de reconstrucción.</li>
-<li>En agrupamiento <strong>no hay un criterio único</strong>. Dos particiones distintas de los mismos datos pueden ser ambas defendibles, porque no existe una respuesta correcta contra la que comparar.</li>
-</ul>
+<section id="las-tres-familias" class="level2">
+<h2 class="anchored" data-anchor-id="las-tres-familias">Las tres familias</h2>
+<p>La clasificación habitual no se basa en el algoritmo, sino en las tres casillas anteriores.</p>
+<p><strong>Aprendizaje supervisado.</strong> Se observan unas características y una respuesta. Se construye una función que predice la respuesta a partir de las características. El criterio es el error de predicción en datos nuevos. Es el caso del alquiler, y el de esta asignatura.</p>
+<p>Que el criterio esté fijado de antemano es lo que hace este caso más cómodo que los otros dos: dos personas que trabajen sobre los mismos datos y midan el error de la misma forma ordenan los modelos igual.</p>
+<p><strong>Aprendizaje no supervisado.</strong> Se observan las características, pero no hay respuesta. <strong>Aquí normalmente no se predice nada</strong>, y esa es la diferencia importante. Se construye otra cosa: una división de los anuncios en grupos, una representación con menos variables, una descripción de cómo se reparten los datos.</p>
+<p>El problema es el criterio. Si agrupamos los 9.000 anuncios en cuatro segmentos, no hay ninguna respuesta correcta con la que comparar, porque los segmentos no estaban en los datos: los ha producido el propio análisis. Dos segmentaciones distintas pueden ser las dos defendibles. Hay que elegir un criterio externo al problema, y criterios distintos dan resultados distintos.</p>
 <p>Decir que el aprendizaje no supervisado “predice la estructura de los datos” es una imprecisión que conviene evitar desde el principio.</p>
-<p><strong>Aprendizaje por refuerzo.</strong> Los datos no vienen dados: los genera un agente al interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará después. Se construye una política, y el criterio es la recompensa acumulada esperada.</p>
+<p><strong>Aprendizaje por refuerzo.</strong> Los datos no vienen dados: los genera un programa al interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará después. Se construye una regla de actuación y el criterio es la recompensa acumulada.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -504,9 +501,14 @@ R(f) = \mathbb{E}\!\left[ \ell\left(Y, f(X)\right) \right]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Esta asignatura trata <strong>aprendizaje supervisado con <span class="math inline">\(y\)</span> numérica</strong>, y con pérdida cuadrática salvo cuando digamos lo contrario. Es decir, el caso en que el criterio está bien definido y podemos ser exigentes con él.</p>
-<p>La clasificación, que es aprendizaje supervisado con <span class="math inline">\(y\)</span> categórica, es la asignatura hermana <em>Aprendizaje Automático: Clasificación</em> [G249].</p>
+<p>Esta asignatura trata <strong>aprendizaje supervisado con respuesta numérica</strong>: predecir un número, como un precio, una demanda o un coste.</p>
+<p>La clasificación, que es predecir una categoría, es la asignatura hermana <em>Aprendizaje Automático: Clasificación</em> [G249].</p>
 </div>
+</div>
+<div class="cajanegra">
+<p><strong>Lo que falta en la definición de arriba</strong></p>
+<p>Hemos dicho “datos nuevos” sin decir de dónde salen. Detrás hay un supuesto: que los datos que tenemos y los que vendrán proceden del mismo sitio, es decir, de una misma distribución de probabilidad que no conocemos. El criterio de calidad es entonces una esperanza respecto de esa distribución, y por eso no se puede calcular, solo estimar.</p>
+<p>Esa distinción tiene consecuencias y no conviene despacharla en una frase, así que no la usamos todavía. Se enuncia y se demuestra en el capítulo 8, que es donde hace falta para saber por qué el error medido sobre datos de prueba es una estimación honrada del error futuro, y en qué momento deja de serlo.</p>
 </div>
 </section>
 <section id="predecir-no-es-lo-mismo-que-explicar" class="level2">

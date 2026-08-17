@@ -26,17 +26,23 @@ varianza.
 
 ## Planteamiento
 
-El capítulo 1 terminó con dos cabos sueltos. El primero es el símbolo $\approx$ de
-@def-problema: dijimos que los puntos no están sobre la curva sino alrededor, pero no
-dijimos cuánto ni cómo. El segundo es @fig-trampa, donde un polinomio que pasaba por los
-40 puntos resultaba inservible, sin que quedara claro si aquello era mala suerte o algo
-inevitable.
+El capítulo 1 dejó dos cabos sueltos, y los dos eran observaciones sin explicación.
+
+El primero: un árbol sin límite de profundidad se equivocaba en medio euro por anuncio
+sobre los datos con los que se construyó, y en 78 euros sobre los apartados. Vimos lo
+mismo dibujado en @fig-trampa, con un polinomio que pasaba por los 40 puntos. Lo que no
+sabemos todavía es si aquello fue mala suerte de esos datos concretos o algo inevitable.
+
+El segundo: el símbolo $\approx$ de @def-problema. Dijimos que los puntos no están sobre
+la curva sino alrededor, pero no dijimos cuánto ni cómo.
 
 Este capítulo cierra los dos, y en el orden contrario al que se plantearon.
 
-Primero demostramos que lo de @fig-trampa **siempre** ocurre: con clases de hipótesis
+Primero demostramos que lo del árbol **siempre** ocurre: con clases de hipótesis
 suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto
-de datos, de modo que conseguirlo no informa de nada (@thm-interpolacion).
+de datos, de modo que conseguirlo no informa de nada (@thm-interpolacion). No hizo falta
+un árbol ni un polinomio de grado 39: haría lo mismo cualquier modelo con libertad
+suficiente.
 
 Después convertimos el $\approx$ en un modelo concreto, $y = \model(\xv) + \varepsilon$
 con $\varepsilon$ aleatorio. En cuanto se supone algo sobre $\varepsilon$, elegir un
@@ -126,6 +132,12 @@ justificando. En @sec-mle-teorema demostraremos que se deduce de suponer ruido g
 Se produce **sobreajuste** cuando aumentar la complejidad del modelo mejora su error de
 entrenamiento y **empeora** su error de test.
 :::
+
+@def-sobreajuste es más exigente que la descripción del capítulo 1. Allí dijimos que el
+error de entrenamiento era mucho menor que el de test, lo que puede ocurrir por casualidad
+con una muestra pequeña. Aquí pedimos que la diferencia responda a un cambio en la
+complejidad del modelo, que es lo que permite hacer algo al respecto: si moverla en un
+sentido empeora el test, se mueve en el otro.
 
 El siguiente resultado no suele aparecer en los cursos introductorios.
 

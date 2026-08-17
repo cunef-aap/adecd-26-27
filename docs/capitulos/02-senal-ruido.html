@@ -502,15 +502,17 @@ window.Quarto = {
 </div>
 <section id="planteamiento" class="level2">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
-<p>El capítulo 1 terminó con dos cabos sueltos. El primero es el símbolo <span class="math inline">\(\approx\)</span> de <a href="01-datos-y-modelos.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>: dijimos que los puntos no están sobre la curva sino alrededor, pero no dijimos cuánto ni cómo. El segundo es <a href="01-datos-y-modelos.html#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>, donde un polinomio que pasaba por los 40 puntos resultaba inservible, sin que quedara claro si aquello era mala suerte o algo inevitable.</p>
+<p>El capítulo 1 dejó dos cabos sueltos, y los dos eran observaciones sin explicación.</p>
+<p>El primero: un árbol sin límite de profundidad se equivocaba en medio euro por anuncio sobre los datos con los que se construyó, y en 78 euros sobre los apartados. Vimos lo mismo dibujado en <a href="01-datos-y-modelos.html#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>, con un polinomio que pasaba por los 40 puntos. Lo que no sabemos todavía es si aquello fue mala suerte de esos datos concretos o algo inevitable.</p>
+<p>El segundo: el símbolo <span class="math inline">\(\approx\)</span> de <a href="01-datos-y-modelos.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>. Dijimos que los puntos no están sobre la curva sino alrededor, pero no dijimos cuánto ni cómo.</p>
 <p>Este capítulo cierra los dos, y en el orden contrario al que se plantearon.</p>
-<p>Primero demostramos que lo de <a href="01-datos-y-modelos.html#fig-trampa" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> <strong>siempre</strong> ocurre: con clases de hipótesis suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto de datos, de modo que conseguirlo no informa de nada (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>).</p>
-<p>Después convertimos el <span class="math inline">\(\approx\)</span> en un modelo concreto, <span class="math inline">\(y = f(\mathbf{x}) + \varepsilon\)</span> con <span class="math inline">\(\varepsilon\)</span> aleatorio. En cuanto se supone algo sobre <span class="math inline">\(\varepsilon\)</span>, elegir un modelo deja de ser una cuestión de criterio y se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver. Ese paso es el que fija la pérdida, y con ello la segunda de las tres decisiones de <a href="01-datos-y-modelos.html#sec-tres-decisiones" class="quarto-xref"><span>Sección 1.3</span></a>.</p>
+<p>Primero demostramos que lo del árbol <strong>siempre</strong> ocurre: con clases de hipótesis suficientemente ricas, ajustar los datos a la perfección es posible en cualquier conjunto de datos, de modo que conseguirlo no informa de nada (<a href="#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a>). No hizo falta un árbol ni un polinomio de grado 39: haría lo mismo cualquier modelo con libertad suficiente.</p>
+<p>Después convertimos el <span class="math inline">\(\approx\)</span> en un modelo concreto, <span class="math inline">\(y = f(\mathbf{x}) + \varepsilon\)</span> con <span class="math inline">\(\varepsilon\)</span> aleatorio. En cuanto se supone algo sobre <span class="math inline">\(\varepsilon\)</span>, elegir un modelo deja de ser una cuestión de criterio y se convierte en un problema de <strong>verosimilitud</strong>, que es un problema que sabemos resolver. Ese paso es el que fija la pérdida, y con ello la segunda de las tres decisiones de <a href="01-datos-y-modelos.html#sec-tres-decisiones" class="quarto-xref"><span>Sección 1.8</span></a>.</p>
 </section>
 <section id="datos-señal-y-ruido" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="datos-señal-y-ruido">Datos, señal y ruido</h2>
 <p>Recordemos la condición que da contenido a <a href="01-datos-y-modelos.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>: el error se mide sobre observaciones <strong>no vistas</strong>, es decir, distintas de las que se han usado para ajustar. Sin esa condición el problema es trivial, y el primer resultado del capítulo dice en qué sentido exacto lo es.</p>
-<div id="d4b0f5fe" class="cell" data-execution_count="3">
+<div id="c1ca9f21" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -520,7 +522,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="e8728d3f" class="cell" data-execution_count="4">
+<div id="af01d2ad" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.0</span>            <span class="co"># la verdad que NO conocemos</span></span>
@@ -544,7 +546,7 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e2f93306" class="cell" data-execution_count="5">
+<div id="064a51ed" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -587,6 +589,7 @@ y_i= f(\mathbf{x}_i) + \varepsilon_i, \qquad \varepsilon_i \text{ iid}, \quad \m
 <div id="def-sobreajuste" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 2.3 (Sobreajuste)</strong></span> Se produce <strong>sobreajuste</strong> cuando aumentar la complejidad del modelo mejora su error de entrenamiento y <strong>empeora</strong> su error de test.</p>
 </div>
+<p><a href="#def-sobreajuste" class="quarto-xref">Definición&nbsp;<span>2.3</span></a> es más exigente que la descripción del capítulo 1. Allí dijimos que el error de entrenamiento era mucho menor que el de test, lo que puede ocurrir por casualidad con una muestra pequeña. Aquí pedimos que la diferencia responda a un cambio en la complejidad del modelo, que es lo que permite hacer algo al respecto: si moverla en un sentido empeora el test, se mueve en el otro.</p>
 <p>El siguiente resultado no suele aparecer en los cursos introductorios.</p>
 <div id="thm-interpolacion" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1, \dots, x_{n} \in \mathbb{R}\)</span> <strong>distintos dos a dos</strong> y sean <span class="math inline">\(y_1, \dots, y_{n} \in \mathbb{R}\)</span> cualesquiera. Entonces existe un polinomio <span class="math inline">\(P\)</span> de grado <span class="math inline">\(\leq n- 1\)</span> tal que <span class="math inline">\(P(x_i) = y_i\)</span> para todo <span class="math inline">\(i\)</span>; es decir, con error de entrenamiento <strong>exactamente cero</strong>.</p>
@@ -636,7 +639,7 @@ P(x) = \sum_{j=1}^{n} y_j\, \ell_j(x)
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="755411e4" class="cell" data-execution_count="6">
+<div id="24da0ab7" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -731,7 +734,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <section id="resolución-por-búsqueda-en-rejilla" class="level3">
 <h3 class="anchored" data-anchor-id="resolución-por-búsqueda-en-rejilla">Resolución por búsqueda en rejilla</h3>
 <p>Empezamos por una búsqueda exhaustiva en una rejilla, para evaluar su coste computacional.</p>
-<div id="2f3afbc9" class="cell" data-execution_count="7">
+<div id="09962e8a" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(x, mu, sigma):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -739,7 +742,7 @@ L(\boldsymbol{w}) = \prod_{i=1}^{n} p\left(y_i;\ f(\mathbf{x}_i),\ \sigma\right)
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_verosimilitud(w0, w1, x, y, sigma<span class="op">=</span><span class="fl">3.0</span>):</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.log(densidad_normal(y, w0 <span class="op">+</span> w1 <span class="op">*</span> x, sigma)).<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="8f9a6c7b" class="cell" data-execution_count="8">
+<div id="d2aaab50" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rejilla_w0 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">60</span>)</span>

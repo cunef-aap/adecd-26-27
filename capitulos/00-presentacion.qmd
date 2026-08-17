@@ -10,65 +10,88 @@ $$
 
 ## Qué es el aprendizaje automático
 
-Conviene definirlo con más precisión que "el ordenador aprende de los datos".
+Un ejemplo antes que una definición.
 
-Se supone que existe una **distribución desconocida** $P$ sobre un espacio de
-observaciones, y que lo que tenemos es una **muestra finita** extraída de ella. El
-aprendizaje automático consiste en construir, a partir de esa muestra, un objeto (una
-función, una partición, una densidad, una política) que sea bueno **respecto de $P$**, y
-no respecto de la muestra concreta que nos ha tocado.
+Un portal de alquiler tiene unos 9.000 anuncios de Madrid con su precio por noche. De cada
+anuncio sabe cuánta gente admite, cuántos dormitorios y baños tiene, en qué barrio está y
+qué puntuación le ponen los huéspedes. Llega un anuncio nuevo, todavía sin precio. ¿Cuánto
+debería costar?
 
-Esa última distinción es todo el contenido de la disciplina. Ajustar bien la muestra es
-fácil y no significa nada: el capítulo 2 lo demuestra. Lo difícil es que el objeto siga
-funcionando en observaciones nuevas extraídas de la misma $P$.
+Nadie ha escrito la fórmula del precio de un piso en Madrid, y no parece que nadie vaya a
+escribirla. Lo que hay son 9.000 casos resueltos. El aprendizaje automático reúne las
+técnicas que construyen la regla **a partir de los casos resueltos**, en lugar de
+programarla a mano.
 
-Un problema de aprendizaje queda especificado cuando se fijan tres cosas:
+El anuncio que importa es el que todavía no tiene precio. Una regla que reprodujera los
+9.000 precios conocidos y fallara en el 9.001 no serviría para nada, y en el capítulo 1
+comprobaremos, con estos mismos datos, que construir una regla así es fácil. Por eso en
+todo el curso un modelo se juzga por lo que hace con datos que **no** se han usado para
+construirlo. Esa condición es lo que separa esta asignatura de un ajuste de curvas.
 
-1. **Qué se observa.** El espacio de las observaciones.
-2. **Qué se construye.** La clase de objetos entre los que elegimos.
-3. **Con qué criterio.** Una medida de calidad definida como una **esperanza bajo $P$**,
-   que por tanto no se puede calcular, solo estimar.
+Con el ejemplo delante ya se puede decir en general. Un problema de aprendizaje queda
+planteado cuando se fijan tres cosas:
 
-## Las tres familias, y en qué se diferencian de verdad
+1. **Qué se observa.** Aquí, las características de un anuncio junto con su precio.
+2. **Qué se construye.** Aquí, una función que convierte características en un precio.
+3. **Con qué criterio se juzga.** Aquí, el error de esa función en anuncios que no se han
+   usado para construirla.
 
-La taxonomía habitual no se basa en el algoritmo, sino en qué se observa y qué se puede
-usar como criterio.
+Cambiando esas tres casillas se obtienen las demás familias.
 
-**Aprendizaje supervisado.** Se observan pares $(\xv, y)$. Se construye una función
-$\model: \Xcal \to \Ycal$. El criterio es el **riesgo esperado**
-$$
-\Risk(\model) = \E{\loss\left(Y, \model(X)\right)}
-$$
-para una pérdida $\loss$ fijada de antemano. Aquí sí se predice, y el criterio es
-inequívoco: dos personas con la misma pérdida y la misma $P$ ordenan los modelos igual.
+## Las tres familias
 
-**Aprendizaje no supervisado.** Se observa solo $\xv$. **Aquí normalmente no se predice
-nada**, y esa es la diferencia importante. Se construye otra cosa: una estimación de la
-densidad de $P$, una partición del espacio, una representación de menor dimensión. El
-criterio depende de qué se construya, y no siempre existe uno aceptado:
+La clasificación habitual no se basa en el algoritmo, sino en las tres casillas
+anteriores.
 
-- En estimación de densidad sí lo hay: la log-verosimilitud de observaciones nuevas.
-- En reducción de dimensión hay uno razonable: el error de reconstrucción.
-- En agrupamiento **no hay un criterio único**. Dos particiones distintas de los mismos
-  datos pueden ser ambas defendibles, porque no existe una respuesta correcta contra la
-  que comparar.
+**Aprendizaje supervisado.** Se observan unas características y una respuesta. Se
+construye una función que predice la respuesta a partir de las características. El
+criterio es el error de predicción en datos nuevos. Es el caso del alquiler, y el de esta
+asignatura.
+
+Que el criterio esté fijado de antemano es lo que hace este caso más cómodo que los otros
+dos: dos personas que trabajen sobre los mismos datos y midan el error de la misma forma
+ordenan los modelos igual.
+
+**Aprendizaje no supervisado.** Se observan las características, pero no hay respuesta.
+**Aquí normalmente no se predice nada**, y esa es la diferencia importante. Se construye
+otra cosa: una división de los anuncios en grupos, una representación con menos variables,
+una descripción de cómo se reparten los datos.
+
+El problema es el criterio. Si agrupamos los 9.000 anuncios en cuatro segmentos, no hay
+ninguna respuesta correcta con la que comparar, porque los segmentos no estaban en los
+datos: los ha producido el propio análisis. Dos segmentaciones distintas pueden ser las
+dos defendibles. Hay que elegir un criterio externo al problema, y criterios distintos dan
+resultados distintos.
 
 Decir que el aprendizaje no supervisado "predice la estructura de los datos" es una
 imprecisión que conviene evitar desde el principio.
 
-**Aprendizaje por refuerzo.** Los datos no vienen dados: los genera un agente al
+**Aprendizaje por refuerzo.** Los datos no vienen dados: los genera un programa al
 interactuar con un entorno, de modo que sus propias decisiones cambian lo que observará
-después. Se construye una política, y el criterio es la recompensa acumulada esperada.
+después. Se construye una regla de actuación y el criterio es la recompensa acumulada.
 
 ::: {.callout-note appearance="simple"}
 ## Dónde estamos
 
-Esta asignatura trata **aprendizaje supervisado con $y$ numérica**, y con pérdida
-cuadrática salvo cuando digamos lo contrario. Es decir, el caso en que el criterio está
-bien definido y podemos ser exigentes con él.
+Esta asignatura trata **aprendizaje supervisado con respuesta numérica**: predecir un
+número, como un precio, una demanda o un coste.
 
-La clasificación, que es aprendizaje supervisado con $y$ categórica, es la asignatura
-hermana *Aprendizaje Automático: Clasificación* [G249].
+La clasificación, que es predecir una categoría, es la asignatura hermana *Aprendizaje
+Automático: Clasificación* [G249].
+:::
+
+::: {.cajanegra}
+**Lo que falta en la definición de arriba**
+
+Hemos dicho "datos nuevos" sin decir de dónde salen. Detrás hay un supuesto: que los
+datos que tenemos y los que vendrán proceden del mismo sitio, es decir, de una misma
+distribución de probabilidad que no conocemos. El criterio de calidad es entonces una
+esperanza respecto de esa distribución, y por eso no se puede calcular, solo estimar.
+
+Esa distinción tiene consecuencias y no conviene despacharla en una frase, así que no la
+usamos todavía. Se enuncia y se demuestra en el capítulo 8, que es donde hace falta para
+saber por qué el error medido sobre datos de prueba es una estimación honrada del error
+futuro, y en qué momento deja de serlo.
 :::
 
 ## Predecir no es lo mismo que explicar
