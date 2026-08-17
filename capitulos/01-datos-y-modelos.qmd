@@ -109,9 +109,24 @@ Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen p
 de hecho el resto del curso consiste en abrirlas una por una.
 
 ```{python}
+#| code-fold: true
+# Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,
+# para que el resultado no dependa de la red. Cuando el cuaderno corre solo, por
+# ejemplo en Colab, esa copia no está y se descarga del repositorio del curso.
+from pathlib import Path
+
+URL_DATOS = ("https://raw.githubusercontent.com/cunef-aap-fall2026/"
+             "cunef-aap-fall2026.github.io/main/datos")
+
+
+def ruta_datos(nombre):
+    local = Path("../datos") / nombre
+    return local if local.exists() else f"{URL_DATOS}/{nombre}"
+```
+
+```{python}
 #---
 import pandas as pd
-from style import ruta_datos
 
 anuncios = pd.read_csv(ruta_datos("airbnb_madrid.csv"))
 anuncios.shape

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Verosimilitud y máxima verosimilitud – Aprendizaje Automático: Predicción</title>
+<title>Hoja 5 – Aprendizaje Automático: Predicción</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../capitulos/04-convexidad.html" rel="next">
-<link href="../capitulos/02-senal-ruido.html" rel="prev">
+<link href="../problemas/hoja-06.html" rel="next">
+<link href="../problemas/hoja-04.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -76,35 +76,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -118,7 +89,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-datos-y-modelos.html">Plantear el problema</a></li><li class="breadcrumb-item"><a href="../capitulos/03-verosimilitud.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-05.html">Hoja 5</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -182,7 +153,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link active">
+  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
   </div>
 </li>
@@ -356,7 +327,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link">
+  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Hoja 5</span></a>
   </div>
 </li>
@@ -461,25 +432,20 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link active" data-scroll-target="#planteamiento">Planteamiento</a></li>
-  <li><a href="#riesgo-empírico" id="toc-riesgo-empírico" class="nav-link" data-scroll-target="#riesgo-empírico">Riesgo empírico</a></li>
-  <li><a href="#sec-teorema-central" id="toc-sec-teorema-central" class="nav-link" data-scroll-target="#sec-teorema-central">De la log-verosimilitud al riesgo empírico</a></li>
-  <li><a href="#estimar-el-ruido" id="toc-estimar-el-ruido" class="nav-link" data-scroll-target="#estimar-el-ruido">Estimar el ruido</a></li>
-  <li><a href="#otro-ruido-otra-pérdida" id="toc-otro-ruido-otra-pérdida" class="nav-link" data-scroll-target="#otro-ruido-otra-pérdida">Otro ruido, otra pérdida</a></li>
-  <li><a href="#error-frecuente" id="toc-error-frecuente" class="nav-link" data-scroll-target="#error-frecuente">Error frecuente</a></li>
-  <li><a href="#notación-código" id="toc-notación-código" class="nav-link" data-scroll-target="#notación-código">Notación ↔︎ código</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#productos-y-traspuestas" id="toc-productos-y-traspuestas" class="nav-link active" data-scroll-target="#productos-y-traspuestas">1. Productos y traspuestas</a></li>
+  <li><a href="#la-matriz-de-diseño" id="toc-la-matriz-de-diseño" class="nav-link" data-scroll-target="#la-matriz-de-diseño">2. La matriz de diseño</a></li>
+  <li><a href="#rango-y-núcleo" id="toc-rango-y-núcleo" class="nav-link" data-scroll-target="#rango-y-núcleo">3. Rango y núcleo</a></li>
+  <li><a href="#gradientes" id="toc-gradientes" class="nav-link" data-scroll-target="#gradientes">4. Gradientes</a></li>
+  <li><a href="#ampliación" id="toc-ampliación" class="nav-link" data-scroll-target="#ampliación">5. Ampliación</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-datos-y-modelos.html">Plantear el problema</a></li><li class="breadcrumb-item"><a href="../capitulos/03-verosimilitud.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-05.html">Hoja 5</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></h1>
-<p class="subtitle lead">De la verosimilitud gaussiana a los mínimos cuadrados</p>
+<h1 class="title">Hoja 5</h1>
 </div>
 
 
@@ -496,246 +462,44 @@ window.Quarto = {
 </header>
 
 
-<p><em><a href="https://colab.research.google.com/github/cunef-aap-fall2026/cunef-aap-fall2026.github.io/blob/main/docs/live-notebooks/03-verosimilitud.ipynb">Abre el cuaderno para completar en clase</a> en Google Colab.</em></p>
-<section id="planteamiento" class="level2">
-<h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
-<p>En el capítulo 2 supusimos ruido gaussiano y llegamos a que <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i \sim
-\mathcal{N}(f(\mathbf{x}_i), \sigma^2)\)</span>. Aquí extraemos las consecuencias de esa hipótesis: <strong>el error cuadrático medio no es una elección, es una consecuencia</strong>. Y de paso estimamos <span class="math inline">\(\sigma\)</span>, que Chodrow trata como constante conocida aunque en la práctica <span class="math inline">\(\sigma\)</span> es desconocido y debe estimarse.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Lo que usamos de antes
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><a href="02-senal-ruido.html#def-senal-ruido" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>, <a href="02-senal-ruido.html#cor-target" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>, <a href="02-senal-ruido.html#def-verosimilitud" class="quarto-xref">Definición&nbsp;<span>2.6</span></a>, <a href="02-senal-ruido.html#lem-log-argmax" class="quarto-xref">Lema&nbsp;<span>2.1</span></a>, <a href="02-senal-ruido.html#def-mle" class="quarto-xref">Definición&nbsp;<span>2.7</span></a>.</p>
-</div>
-</div>
-</section>
-<section id="riesgo-empírico" class="level2">
-<h2 class="anchored" data-anchor-id="riesgo-empírico">Riesgo empírico</h2>
-<div id="def-riesgo-empirico" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.1 (Riesgo empírico)</strong></span> <span class="math display">\[\hat{R}(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} \left(y_i- \hat{y}_i\right)^2 .\]</span> El factor <span class="math inline">\(1/n\)</span> forma parte de la definición y se mantiene en todo el curso.</p>
-</div>
-<div id="def-residuo" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 3.2 (Residuo y suma de cuadrados)</strong></span> <span class="math inline">\(r_i= y_i- \hat{y}_i\)</span>, <span class="math inline">\(\ \mathrm{SCR}= \sum_i r_i^2\)</span>, y por tanto <span class="math inline">\(\hat{R}(\boldsymbol{w}) = \mathrm{SCR}/n\)</span>.</p>
-</div>
-<div id="lem-invarianza-afin" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 3.1 (Invarianza afín del argmin)</strong></span> Si <span class="math inline">\(a &gt; 0\)</span> entonces <span class="math inline">\(\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \left( a\, h(\boldsymbol{w}) + b \right) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} h(\boldsymbol{w})\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 5 min): tres líneas desde la definición de mínimo. Es trivial y hay que
-     escribirlo igualmente, porque se usa CUATRO veces (2.6, 2.9, 6.16) y conviene
-     poder citarlo por número. -->
-</div>
-<div id="lem-media-optima" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 3.2 (El modelo constante óptimo en error cuadrático es la media)</strong></span> <span class="math inline">\(\displaystyle \mathop{\mathrm{arg\,min}}_{c \in \mathbb{R}} \sum_{i=1}^{n} (y_i- c)^2 = \bar{y}\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 10 min). Preferible completar cuadrados a derivar, porque la identidad
-        sum (y_i - c)^2 = sum (y_i - ybar)^2 + n (ybar - c)^2
-     se reutiliza literalmente en 6.17 (SCT = SCReg + SCE). Derivar también vale
-     pero no deja nada guardado. -->
-</div>
-<div class="callout callout-style-simple callout-important no-icon">
+<p><strong>Esta hoja es distinta.</strong> No sigue la estructura del examen: es práctica de álgebra matricial, y ocupa la sesión S2 entera. El motivo es que el capítulo 4 se apoya por completo en estas operaciones, y conviene llegar con ellas resueltas.</p>
+<p>El material de referencia es el anexo <a href="../curso/algebra.html">Cálculo y álgebra que vas a necesitar</a>.</p>
+<div class="callout callout-style-simple callout-warning no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a> se usa tres veces más en el curso: en el capítulo 7 (imputación por la media), en el capítulo 8 (el modelo nulo contra el que compara <span class="math inline">\(R^2\)</span>) y en la semana 13 (la constante óptima dentro de una hoja de un árbol).</p>
+<p>En construcción.</p>
 </div>
 </div>
 </div>
+<section id="productos-y-traspuestas" class="level2">
+<h2 class="anchored" data-anchor-id="productos-y-traspuestas">1. Productos y traspuestas</h2>
+<!-- TODO. Media docena de productos matriz-vector y matriz-matriz a mano, con
+     dimensiones que obliguen a comprobar si el producto está definido. Incluir un
+     caso en que NO lo esté. -->
 </section>
-<section id="sec-teorema-central" class="level2">
-<h2 class="anchored" data-anchor-id="sec-teorema-central">De la log-verosimilitud al riesgo empírico</h2>
-<div id="thm-loglik-mse" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 3.1 (Expansión de la log-verosimilitud)</strong></span> Bajo el modelo lineal-gaussiano de <a href="02-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>2.5</span></a>, <span id="eq-loglik"><span class="math display">\[
-\ell(\boldsymbol{w}, \sigma) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{n}{2\sigma^2}\, \hat{R}(\boldsymbol{w}).
-\tag{3.1}\]</span></span></p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 25 min): Demostración principal del capítulo; escribirla completa, paso a paso.:
-     1. sustituir la densidad @eq-densidad-normal dentro del producto,
-     2. log del producto -> suma,
-     3. separar la constante de la suma,
-     4. identificar sum (y_i - f(x_i))^2 = n * Riskh(w).
-     Sin saltos: es la primera demostración larga del curso y fija el nivel de detalle esperado. -->
-</div>
-<div id="cor-mle-minimos-cuadrados" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 3.1 (Máxima verosimilitud = mínimos cuadrados)</strong></span> Para <span class="math inline">\(\sigma\)</span> fijo, <span class="math inline">\(\mathop{\mathrm{arg\,max}}_{\boldsymbol{w}} \ell(\boldsymbol{w},\sigma) = \mathop{\mathrm{arg\,min}}_{\boldsymbol{w}} \hat{R}(\boldsymbol{w})\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>3.1</span></a> a <span class="math inline">\(-\ell\)</span>, que es <span class="math inline">\(\hat{R}\)</span> multiplicado por <span class="math inline">\(n/2\sigma^2 &gt; 0\)</span> más una constante que no depende de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
-</div>
-<div class="callout callout-style-simple callout-important no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>El cuadrado del error no es un convenio: <strong>se deduce de haber supuesto ruido gaussiano</strong>. Si cambia el modelo de ruido, cambia la pérdida. Ese es el contenido de <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>.</p>
-</div>
-</div>
-</div>
-<div id="rem-condicional" class="proof remark">
-<p><span class="proof-title"><em>Observación 3.1</em> (La verosimilitud es condicional). </span><span class="math inline">\(L= \prod_i p(y_i\,\vert\,\mathbf{x}_i) \cdot \prod_i p(\mathbf{x}_i)\)</span>, y el segundo factor no depende de <span class="math inline">\(\boldsymbol{w}\)</span>, luego sale del <span class="math inline">\(\mathop{\mathrm{arg\,max}}\)</span> por <a href="#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>3.1</span></a>. <strong>Por eso no modelizamos <span class="math inline">\(\mathbf{x}\)</span></strong>: no porque no importe, sino porque es irrelevante para <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
-</div>
+<section id="la-matriz-de-diseño" class="level2">
+<h2 class="anchored" data-anchor-id="la-matriz-de-diseño">2. La matriz de diseño</h2>
+<!-- TODO. Construir X a mano a partir de una tabla de 5 observaciones y 2 variables,
+     con columna de unos. Calcular X^T X y X^T y. Comprobar el tamaño de X^T X. -->
 </section>
-<section id="estimar-el-ruido" class="level2">
-<h2 class="anchored" data-anchor-id="estimar-el-ruido">Estimar el ruido</h2>
-<div id="thm-perfilado-sigma" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 3.2 (Perfilado de <span class="math inline">\(\sigma\)</span>)</strong></span> Para <span class="math inline">\(\boldsymbol{w}\)</span> fijo, el maximizador de <a href="#eq-loglik" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> en <span class="math inline">\(\sigma&gt; 0\)</span> es <span class="math display">\[
-\hat{\sigma}^2(\boldsymbol{w}) = \frac{1}{n}\sum_{i=1}^{n} r_i^2 = \hat{R}(\boldsymbol{w}).
-\]</span></p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 20 min). Ruta:
-     dl/dsigma = -n/sigma + sigma^{-3} sum r_i^2 = 0  ==>  sigma^2 = RSS/n.
-     Para la globalidad NO usar segunda derivada: basta con que el punto crítico es
-     UNICO en (0, inf) y que l -> -inf cuando sigma -> 0+ y cuando sigma -> inf.
-     Más corto y más honesto. -->
-</div>
-<div id="cor-loglik-perfilada" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 3.2 (Perfilar <span class="math inline">\(\sigma\)</span> no cambia <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>)</strong></span> <span class="math inline">\(\ell_{\mathrm{p}}(\boldsymbol{w}) = -\frac{n}{2}\left(\log 2\pi \hat{R}(\boldsymbol{w}) + 1\right)\)</span> es estrictamente decreciente en <span class="math inline">\(\hat{R}\)</span>, luego <span class="math inline">\(\mathop{\mathrm{arg\,max}}\ell_{\mathrm{p}}= \mathop{\mathrm{arg\,min}}\hat{R}\)</span>; y <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> evaluado en <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>.</p>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Usos posteriores de <span class="math inline">\(\hat{\sigma}^2\)</span>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este número reaparece cuatro veces: aquí; en el capítulo 7, al devolver euros insesgados tras una transformación logarítmica; en el capítulo 10, como término de ruido irreducible de la descomposición sesgo-varianza; y en la semana 15, como referencia con la que juzgar la anchura de un intervalo.</p>
-</div>
-</div>
-<div id="rem-sesgo-sigma" class="proof remark">
-<p><span class="proof-title"><em>Observación 3.2</em> (<span class="math inline">\(\hat{\sigma}^2\)</span> está sesgado a la baja). </span><span class="math inline">\(\mathbb{E}\!\left[ \hat{\sigma}^2 \right] = \frac{n- p- 1}{n}\sigma^2\)</span>. Se enuncia y <strong>no se demuestra</strong>: requiere matriz sombrero, traza e idempotencia, veinte minutos de álgebra que no enseñan aprendizaje automático. El corrector es <span class="math inline">\(n/(n-p-1)\)</span> y lo demostraron en econometría.</p>
-</div>
+<section id="rango-y-núcleo" class="level2">
+<h2 class="anchored" data-anchor-id="rango-y-núcleo">3. Rango y núcleo</h2>
+<!-- TODO. Tres matrices; en dos de ellas hay que EXHIBIR el vector del núcleo. Una
+     de ellas debe ser el caso one-hot con columna de unos, que anticipa la trampa
+     de la variable ficticia del capítulo 5. -->
 </section>
-<section id="otro-ruido-otra-pérdida" class="level2">
-<h2 class="anchored" data-anchor-id="otro-ruido-otra-pérdida">Otro ruido, otra pérdida</h2>
-<div id="prp-laplace-mae" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposición 3.1 (Ruido de Laplace ⟹ error absoluto)</strong></span> Si <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0, b)\)</span>, con densidad <span class="math inline">\(\frac{1}{2b}e^{-\left\lvert x \right\rvert/b}\)</span>, entonces <span class="math inline">\(\ell(\boldsymbol{w}) = C - \frac{1}{b}\sum_i \left\lvert y_i- f(\mathbf{x}_i) \right\rvert\)</span> y por tanto la estimación máximo-verosímil equivale a <strong>minimizar el error absoluto medio</strong>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span></p>
-<!-- TODO(D4, 10 min): mismo álgebra que @thm-loglik-mse con la densidad de Laplace.
-     Deliberadamente idéntica en estructura: es la demostración de que el spine es una
-     máquina y no un caso particular afortunado. -->
-</div>
-<div id="rem-catalogo" class="proof remark">
-<p><span class="proof-title"><em>Observación 3.3</em> (Catálogo ruido → pérdida). </span></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Ruido</th>
-<th>Pérdida</th>
-<th>Predice</th>
-<th>Dónde</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Gaussiano</td>
-<td>cuadrática (<span class="math inline">\(\mathrm{ECM}\)</span>)</td>
-<td>la <strong>media</strong></td>
-<td>aquí</td>
-</tr>
-<tr class="even">
-<td>Laplace</td>
-<td>absoluta (<span class="math inline">\(\mathrm{EAM}\)</span>)</td>
-<td>la <strong>mediana</strong></td>
-<td>aquí; demostrado en la semana 15</td>
-</tr>
-<tr class="odd">
-<td>Poisson</td>
-<td>desvianza</td>
-<td>un conteo</td>
-<td>capítulo 14</td>
-</tr>
-<tr class="even">
-<td>Gamma</td>
-<td>desvianza</td>
-<td>un importe positivo</td>
-<td>capítulo 14</td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="gradientes" class="level2">
+<h2 class="anchored" data-anchor-id="gradientes">4. Gradientes</h2>
+<!-- TODO. Aplicar @lem-grad-lineal y @lem-grad-cuadratica a casos concretos de
+     tamaño 2 y 3, comprobando componente a componente. -->
 </section>
-<section id="error-frecuente" class="level2">
-<h2 class="anchored" data-anchor-id="error-frecuente">Error frecuente</h2>
-<div class="trampa">
-<p><strong>“Uso RMSE porque es lo estándar”</strong></p>
-<p>Elegir una métrica equivale a elegir un modelo de ruido, y por tanto elegir qué funcional de la distribución condicional se está estimando. Si el objetivo es asimétrico o tiene colas pesadas, minimizar el <span class="math inline">\(\mathrm{ECM}\)</span> estima la media condicional, que puede no ser el funcional de interés.</p>
-</div>
-</section>
-<section id="notación-código" class="level2">
-<h2 class="anchored" data-anchor-id="notación-código">Notación ↔︎ código</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Matemáticas</th>
-<th>Código</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(\hat{R}(\boldsymbol{w})\)</span></td>
-<td><code>mean_squared_error(y, yhat)</code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\mathrm{SCR}\)</span></td>
-<td><code>((y - yhat)**2).sum()</code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\hat{\sigma}^2\)</span></td>
-<td><code>resid.var(ddof=0)</code> (ojo, <code>ddof=0</code>, no <code>1</code>)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\ell\)</span></td>
-<td><code>dist.log_prob(y).sum()</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="ejercicios" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
-<div id="exr-laplace" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.1</strong></span> Repita la demostración de <a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a> suponiendo <span class="math inline">\(\varepsilon_i \sim \mathrm{Laplace}(0,b)\)</span> y obtenga <a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>.</p>
-</div>
-<div id="exr-perfilado" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.2</strong></span> Sobre <code>prostate.data</code>, ajuste el modelo constante <span class="math inline">\(f\equiv c\)</span>, calcule <span class="math inline">\(\hat{\boldsymbol{w}}= \bar{y}\)</span> usando <a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>3.2</span></a> y <span class="math inline">\(\hat{\sigma}^2\)</span> usando <a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>. Interprete <span class="math inline">\(\hat{\sigma}\)</span> en las unidades de <code>lpsa</code>.</p>
-</div>
-<!-- TODO(D4): 2-3 ejercicios más. Uno numérico de log-verosimilitud sobre 5 puntos a
-     mano; uno conceptual sobre por qué C(sigma) no afecta al argmax en w pero sí al
-     argmax en sigma. -->
-</section>
-<section id="resumen" class="level2">
-<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<ul>
-<li><span class="math inline">\(\ell= C - \frac{n}{2\sigma^2}\hat{R}\)</span>: los mínimos cuadrados se deducen de la hipótesis de ruido gaussiano (<a href="#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a>, <a href="#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>3.1</span></a>).</li>
-<li><span class="math inline">\(\sigma\)</span> no es un dato del problema: se estima, y vale <span class="math inline">\(\hat{\sigma}^2 = \mathrm{SCR}/n\)</span> (<a href="#thm-perfilado-sigma" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>).</li>
-<li>Cambiar el modelo de ruido cambia la pérdida (<a href="#prp-laplace-mae" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>). La receta es una máquina, no un caso particular.</li>
-</ul>
+<section id="ampliación" class="level2">
+<h2 class="anchored" data-anchor-id="ampliación">5. Ampliación</h2>
+<!-- TODO. Demostrar que X^T X es simétrica y que v^T X^T X v = ||Xv||^2. La segunda
+     es la línea de la que depende todo el capítulo 4. -->
 
 
 </section>
@@ -1143,13 +907,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../capitulos/02-senal-ruido.html" class="pagination-link" aria-label="Señal y ruido">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span>
+      <a href="../problemas/hoja-04.html" class="pagination-link" aria-label="Hoja 4">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Hoja 4</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../capitulos/04-convexidad.html" class="pagination-link" aria-label="Convexidad y riesgo empírico">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../problemas/hoja-06.html" class="pagination-link" aria-label="Hoja 6">
+        <span class="nav-page-text">Hoja 6</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

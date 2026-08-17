@@ -38,6 +38,16 @@ book:
     - part: "Problemas"
       chapters:
         - problemas/index.qmd
+        # Sin listarlas aquí, Quarto no las renderiza: las copia como .qmd al
+        # directorio de salida y los enlaces del índice descargan el fuente.
+        - problemas/hoja-01.qmd
+        - problemas/hoja-02.qmd
+        - problemas/hoja-03.qmd
+        - problemas/hoja-04.qmd
+        - problemas/hoja-05.qmd
+        - problemas/hoja-06.qmd
+        - problemas/hoja-07.qmd
+        - problemas/hoja-08.qmd
   appendices:
     - curso/guia.qmd
     - evaluacion/ejercicios-tipo-examen.qmd

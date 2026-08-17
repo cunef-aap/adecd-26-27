@@ -368,6 +368,54 @@ window.Quarto = {
  <span class="menu-text">Hojas de problemas</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 5</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 6</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 7</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 8</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -501,7 +549,7 @@ window.Quarto = {
 <section id="planteamiento" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="planteamiento">Planteamiento</h2>
 <p>Antes de definir nada, vamos a mirar unos datos.</p>
-<div id="674e28cc" class="cell" data-execution_count="3">
+<div id="e1733441" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -529,7 +577,7 @@ window.Quarto = {
 <div id="fig-dos-patrones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-dos-patrones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e1283da3" class="cell" data-execution_count="4">
+<div id="afb85388" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -570,7 +618,7 @@ Figura&nbsp;1.1: Dos conjuntos de datos. En los dos hay un patrón que relaciona
 <div id="fig-dos-funciones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-dos-funciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="0caa330c" class="cell" data-execution_count="5">
+<div id="b7bbb1bd" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -593,20 +641,36 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 <section id="sec-recorrido" class="level2">
 <h2 class="anchored" data-anchor-id="sec-recorrido">Un primer modelo, de principio a fin</h2>
 <p>Vamos a hacer el recorrido completo una vez, con datos reales y sin abrir ninguna caja. Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen por dentro, y de hecho el resto del curso consiste en abrirlas una por una.</p>
-<div id="448827af" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> style <span class="im">import</span> ruta_datos</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>anuncios <span class="op">=</span> pd.read_csv(ruta_datos(<span class="st">"airbnb_madrid.csv"</span>))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>anuncios.shape</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="9453e9bd" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para que el resultado no dependa de la red. Cuando el cuaderno corre solo, por</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ejemplo en Colab, esa copia no está y se descarga del repositorio del curso.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>URL_DATOS <span class="op">=</span> (<span class="st">"https://raw.githubusercontent.com/cunef-aap-fall2026/"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"cunef-aap-fall2026.github.io/main/datos"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ruta_datos(nombre):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    local <span class="op">=</span> Path(<span class="st">"../datos"</span>) <span class="op">/</span> nombre</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> local <span class="cf">if</span> local.exists() <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>URL_DATOS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="6f16360d" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>anuncios <span class="op">=</span> pd.read_csv(ruta_datos(<span class="st">"airbnb_madrid.csv"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>anuncios.shape</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>(15000, 17)</code></pre>
 </div>
 </div>
 <p>Son 15.000 anuncios de alquiler de Madrid. Cada fila es un anuncio y cada columna una característica.</p>
-<div id="d25823bc" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>anuncios[[<span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"neighbourhood_cleansed"</span>, <span class="st">"price"</span>]].head()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div id="0db4a932" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>anuncios[[<span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"neighbourhood_cleansed"</span>, <span class="st">"price"</span>]].head()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -669,20 +733,20 @@ Figura&nbsp;1.2: El mismo patrón, escrito como una función. Es lo que queremos
 <section id="preparar-los-datos" class="level3">
 <h3 class="anchored" data-anchor-id="preparar-los-datos">Preparar los datos</h3>
 <p>Nos quedamos con siete características numéricas y con el precio, y tiramos las filas a las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7 trata precisamente de esto; hoy es lo más rápido.</p>
-<div id="0566d681" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>CARACTERISTICAS <span class="op">=</span> [</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"beds"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"number_of_reviews"</span>, <span class="st">"review_scores_rating"</span>, <span class="st">"availability_365"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>tabla <span class="op">=</span> anuncios[CARACTERISTICAS <span class="op">+</span> [<span class="st">"price"</span>]].dropna()</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>tabla.shape</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="630d8d30" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CARACTERISTICAS <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"beds"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"number_of_reviews"</span>, <span class="st">"review_scores_rating"</span>, <span class="st">"availability_365"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>tabla <span class="op">=</span> anuncios[CARACTERISTICAS <span class="op">+</span> [<span class="st">"price"</span>]].dropna()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>tabla.shape</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>(8976, 8)</code></pre>
 </div>
 </div>
-<div id="39c67389" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tabla[<span class="st">"price"</span>].describe()[[<span class="st">"50%"</span>, <span class="st">"mean"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]].<span class="bu">round</span>(<span class="dv">0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="7c2be4de" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tabla[<span class="st">"price"</span>].describe()[[<span class="st">"50%"</span>, <span class="st">"mean"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]].<span class="bu">round</span>(<span class="dv">0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>50%     142.0
 mean    173.0
 min      18.0
@@ -696,15 +760,15 @@ Name: price, dtype: float64</code></pre>
 <h3 class="anchored" data-anchor-id="apartar-datos-para-el-final">Apartar datos para el final</h3>
 <p>Conviene detenerse en este paso, porque de él depende qué mide el error que calculemos al final.</p>
 <p>Apartamos una parte de los anuncios y hacemos como si no existieran. El modelo se construye <strong>solo</strong> con el resto. Al terminar, medimos el error sobre los apartados, que el modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía no tiene precio, que es el que de verdad nos importa.</p>
-<div id="b25336a6" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tabla[CARACTERISTICAS]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> tabla[<span class="st">"price"</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>X_ent, X_test, y_ent, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(y_ent), <span class="bu">len</span>(y_test)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="d5a040ef" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tabla[CARACTERISTICAS]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> tabla[<span class="st">"price"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>X_ent, X_test, y_ent, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(y_ent), <span class="bu">len</span>(y_test)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>(7180, 1796)</code></pre>
 </div>
 </div>
@@ -713,38 +777,38 @@ Name: price, dtype: float64</code></pre>
 <section id="ajustar-cuatro-modelos" class="level3">
 <h3 class="anchored" data-anchor-id="ajustar-cuatro-modelos">Ajustar cuatro modelos</h3>
 <p>Cuatro modelos, de menos a más flexible. El primero ni siquiera mira las características: predice siempre la media, y sirve de referencia para saber si los demás aportan algo.</p>
-<div id="f52fa052" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.dummy <span class="im">import</span> DummyRegressor</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>modelos <span class="op">=</span> {</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"media"</span>: DummyRegressor(strategy<span class="op">=</span><span class="st">"mean"</span>),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"recta"</span>: LinearRegression(),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"árbol de profundidad 3"</span>: DecisionTreeRegressor(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"árbol sin límite"</span>: DecisionTreeRegressor(random_state<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> modelo <span class="kw">in</span> modelos.values():</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    modelo.fit(X_ent, y_ent)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f91c1e8c" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.dummy <span class="im">import</span> DummyRegressor</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>modelos <span class="op">=</span> {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"media"</span>: DummyRegressor(strategy<span class="op">=</span><span class="st">"mean"</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"recta"</span>: LinearRegression(),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"árbol de profundidad 3"</span>: DecisionTreeRegressor(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"árbol sin límite"</span>: DecisionTreeRegressor(random_state<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> modelo <span class="kw">in</span> modelos.values():</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    modelo.fit(X_ent, y_ent)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="medir-el-error" class="level3">
 <h3 class="anchored" data-anchor-id="medir-el-error">Medir el error</h3>
 <p>Medimos con el error absoluto medio: la diferencia entre lo predicho y lo real, en valor absoluto, promediada. Sale en euros, que es la unidad en la que se puede discutir con alguien que no sea del gremio.</p>
-<div id="7ba4f462" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>filas <span class="op">=</span> []</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, modelo <span class="kw">in</span> modelos.items():</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    filas.append({</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"modelo"</span>: nombre,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los que vio"</span>: mean_absolute_error(y_ent, modelo.predict(X_ent)),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los apartados"</span>: mean_absolute_error(y_test, modelo.predict(X_test)),</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(filas).set_index(<span class="st">"modelo"</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div id="1af1d4b5" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>filas <span class="op">=</span> []</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, modelo <span class="kw">in</span> modelos.items():</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    filas.append({</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"modelo"</span>: nombre,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los que vio"</span>: mean_absolute_error(y_ent, modelo.predict(X_ent)),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"error en los apartados"</span>: mean_absolute_error(y_test, modelo.predict(X_test)),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(filas).set_index(<span class="st">"modelo"</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -797,32 +861,32 @@ Name: price, dtype: float64</code></pre>
 <h2 class="anchored" data-anchor-id="lo-que-acaba-de-pasar-tiene-nombre">Lo que acaba de pasar tiene nombre</h2>
 <p>Se llama <strong>sobreajuste</strong>: el error sobre los datos con los que se construyó el modelo es mucho menor que el error sobre datos nuevos. El capítulo 2 lo define con precisión, cuando tengamos con qué medir la complejidad de un modelo.</p>
 <p>No es un accidente de este conjunto de datos ni de este árbol. Es lo que ocurre siempre que se deja a un modelo suficiente libertad, y se ve mejor con datos inventados, donde sabemos cuál es la respuesta correcta.</p>
-<div id="2e943bb2" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>grado <span class="op">=</span> <span class="bu">len</span>(x_a) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>coef_interp <span class="op">=</span> np.polyfit(x_a, y_a, grado)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="594bb1a7" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>grado <span class="op">=</span> <span class="bu">len</span>(x_a) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>coef_interp <span class="op">=</span> np.polyfit(x_a, y_a, grado)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><code>numpy</code> avisa de que el ajuste está mal condicionado. Tiene razón, y es parte del problema: un polinomio de grado 39 sobre 40 puntos es un objeto numéricamente frágil.</p>
 </div></div><details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.6</span>))</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fina <span class="op">=</span> np.linspace(x_a.<span class="bu">min</span>(), x_a.<span class="bu">max</span>(), <span class="dv">600</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(x_a, y_a, <span class="op">**</span>kw_puntos)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, np.polyval(coef_interp, fina), color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, <span class="fl">1.5</span> <span class="op">*</span> fina <span class="op">+</span> <span class="dv">2</span>, color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       ylim<span class="op">=</span>(y_a.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">6</span>, y_a.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">6</span>))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.6</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fina <span class="op">=</span> np.linspace(x_a.<span class="bu">min</span>(), x_a.<span class="bu">max</span>(), <span class="dv">600</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(x_a, y_a, <span class="op">**</span>kw_puntos)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, np.polyval(coef_interp, fina), color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax.plot(fina, <span class="fl">1.5</span> <span class="op">*</span> fina <span class="op">+</span> <span class="dv">2</span>, color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       ylim<span class="op">=</span>(y_a.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">6</span>, y_a.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">6</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-trampa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="cac0d397" class="cell" data-execution_count="14">
+<div id="c0a73adb" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-datos-y-modelos_files/figure-html/cell-15-output-1.png" class="figure-img" width="767" height="455"></p>
+<p><img src="01-datos-y-modelos_files/figure-html/cell-16-output-1.png" class="figure-img" width="767" height="455"></p>
 </figure>
 </div>
 </div>
@@ -878,13 +942,13 @@ Figura&nbsp;1.3: El polinomio de grado 39 (línea fina) pasa por los 40 puntos; 
 <section id="elegir-los-parámetros-a-mano" class="level2">
 <h2 class="anchored" data-anchor-id="elegir-los-parámetros-a-mano">Elegir los parámetros a mano</h2>
 <p>Conviene ver una vez qué es lo que <code>.fit()</code> no nos ha dejado ver. Sobre los datos del panel (a) la clase afín con un solo predictor tiene dos parámetros, y podemos probar valores.</p>
-<div id="53a056a8" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w0, w1, x, y):</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean((y_hat <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0, w1 <span class="kw">in</span> [(<span class="fl">0.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.5</span>), (<span class="fl">2.5</span>, <span class="fl">1.4</span>)]:</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"w0=</span><span class="sc">{</span>w0<span class="sc">:4.1f}</span><span class="ss">  w1=</span><span class="sc">{</span>w1<span class="sc">:4.1f}</span><span class="ss">   R = </span><span class="sc">{</span>riesgo(w0, w1, x_a, y_a)<span class="sc">:6.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3b947060" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo(w0, w1, x, y):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean((y_hat <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0, w1 <span class="kw">in</span> [(<span class="fl">0.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.0</span>), (<span class="fl">2.0</span>, <span class="fl">1.5</span>), (<span class="fl">2.5</span>, <span class="fl">1.4</span>)]:</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"w0=</span><span class="sc">{</span>w0<span class="sc">:4.1f}</span><span class="ss">  w1=</span><span class="sc">{</span>w1<span class="sc">:4.1f}</span><span class="ss">   R = </span><span class="sc">{</span>riesgo(w0, w1, x_a, y_a)<span class="sc">:6.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>w0= 0.0  w1= 1.0   R =  22.49
 w0= 2.0  w1= 1.0   R =   9.52

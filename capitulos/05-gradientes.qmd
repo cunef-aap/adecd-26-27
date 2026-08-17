@@ -196,6 +196,22 @@ función y devuelve otra función, su gradiente.
 
 ```{python}
 #| code-fold: true
+# Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,
+# para que el resultado no dependa de la red. Cuando el cuaderno corre solo, por
+# ejemplo en Colab, esa copia no está y se descarga del repositorio del curso.
+from pathlib import Path
+
+URL_DATOS = ("https://raw.githubusercontent.com/cunef-aap-fall2026/"
+             "cunef-aap-fall2026.github.io/main/datos")
+
+
+def ruta_datos(nombre):
+    local = Path("../datos") / nombre
+    return local if local.exists() else f"{URL_DATOS}/{nombre}"
+```
+
+```{python}
+#| code-fold: true
 import numpy as np
 import pandas as pd
 import jax
@@ -203,8 +219,6 @@ import jax
 jax.config.update("jax_enable_x64", True)   # por defecto jax usa float32
 
 # Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.
-from style import ruta_datos
-
 d = pd.read_csv(ruta_datos("prostate.data"))
 X = np.column_stack([np.ones(len(d)), d["lcavol"], d["lweight"]])
 y = d["lpsa"].to_numpy()

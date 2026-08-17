@@ -1,36 +1,10 @@
-"""Estilo de figuras del curso y localización de los datos.
+"""Estilo de figuras del curso.
 
 Misma gramática que la web: tinta, un único acento naranja CUNEF y grises.
 El color se usa para señalar UNA cosa por figura, no para decorar.
 """
 
-import os
-from pathlib import Path
-
 from matplotlib import pyplot as plt
-
-# --- Dónde están los datos --------------------------------------------------
-# Los capítulos se leen en dos sitios con rutas distintas: al renderizar el
-# libro, `capitulos/` tiene `../datos/` al lado; en Colab, el cuaderno está
-# solo y no hay ningún fichero. `ruta_datos()` resuelve los dos casos.
-#
-# Se prefiere SIEMPRE la copia local, para que el render no dependa de la red
-# y sea reproducible sin conexión.
-
-URL_DATOS = os.environ.get(
-    "URL_DATOS",
-    "https://raw.githubusercontent.com/cunef-aap-fall2026/"
-    "cunef-aap-fall2026.github.io/main/datos",
-)
-
-
-def ruta_datos(nombre):
-    """Ruta local del fichero de datos si existe, y si no su URL pública."""
-    for candidata in (Path("../datos") / nombre, Path("datos") / nombre):
-        if candidata.exists():
-            return candidata
-    return f"{URL_DATOS}/{nombre}"
-
 
 TINTA = "#1b1d21"
 AZUL = "#151f6c"

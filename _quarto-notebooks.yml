@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: docs/live-notebooks
+  # Solo los capítulos generan cuaderno. Sin esta lista, Quarto recorre el
+  # árbol entero, entra en docs/ y falla al resolver los include relativos de
+  # cualquier .qmd que haya quedado allí.
+  render:
+    - capitulos/*.qmd
 
 format:
   ipynb:

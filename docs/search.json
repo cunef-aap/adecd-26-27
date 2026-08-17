@@ -247,7 +247,7 @@
     "href": "capitulos/01-datos-y-modelos.html#sec-recorrido",
     "title": "1  Datos, patrones y modelos",
     "section": "Un primer modelo, de principio a fin",
-    "text": "Un primer modelo, de principio a fin\nVamos a hacer el recorrido completo una vez, con datos reales y sin abrir ninguna caja. Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen por dentro, y de hecho el resto del curso consiste en abrirlas una por una.\n\nimport pandas as pd\nfrom style import ruta_datos\n\nanuncios = pd.read_csv(ruta_datos(\"airbnb_madrid.csv\"))\nanuncios.shape\n\n(15000, 17)\n\n\nSon 15.000 anuncios de alquiler de Madrid. Cada fila es un anuncio y cada columna una característica.\n\nanuncios[[\"accommodates\", \"bedrooms\", \"neighbourhood_cleansed\", \"price\"]].head()\n\n\n\n\n\n\n\n\naccommodates\nbedrooms\nneighbourhood_cleansed\nprice\n\n\n\n\n0\n4\nNaN\nSol\n132.67\n\n\n1\n2\n1.0\nEmbajadores\n83.00\n\n\n2\n6\n3.0\nCortes\n497.00\n\n\n3\n6\n3.0\nValdezarza\n151.56\n\n\n4\n2\n1.0\nQuintana\n140.00\n\n\n\n\n\n\n\nLa pregunta es la del portal de alquiler:\n\nDadas las características de un anuncio, ¿qué precio por noche le corresponde?\n\n\nPreparar los datos\nNos quedamos con siete características numéricas y con el precio, y tiramos las filas a las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7 trata precisamente de esto; hoy es lo más rápido.\n\nCARACTERISTICAS = [\n    \"accommodates\", \"bedrooms\", \"bathrooms\", \"beds\",\n    \"number_of_reviews\", \"review_scores_rating\", \"availability_365\",\n]\ntabla = anuncios[CARACTERISTICAS + [\"price\"]].dropna()\ntabla.shape\n\n(8976, 8)\n\n\n\ntabla[\"price\"].describe()[[\"50%\", \"mean\", \"min\", \"max\"]].round(0)\n\n50%     142.0\nmean    173.0\nmin      18.0\nmax     991.0\nName: price, dtype: float64\n\n\nLa mitad de los anuncios cuesta menos de 142 euros por noche. Conviene tener ese número en la cabeza, porque es con el que compararemos los errores.\n\n\nApartar datos para el final\nConviene detenerse en este paso, porque de él depende qué mide el error que calculemos al final.\nApartamos una parte de los anuncios y hacemos como si no existieran. El modelo se construye solo con el resto. Al terminar, medimos el error sobre los apartados, que el modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía no tiene precio, que es el que de verdad nos importa.\n\nfrom sklearn.model_selection import train_test_split\n\nX = tabla[CARACTERISTICAS]\ny = tabla[\"price\"]\n\nX_ent, X_test, y_ent, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nlen(y_ent), len(y_test)\n\n(7180, 1796)\n\n\nA partir de ahora nos olvidamos de X_test e y_test hasta el último momento.\n\n\nAjustar cuatro modelos\nCuatro modelos, de menos a más flexible. El primero ni siquiera mira las características: predice siempre la media, y sirve de referencia para saber si los demás aportan algo.\n\nfrom sklearn.dummy import DummyRegressor\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.tree import DecisionTreeRegressor\n\nmodelos = {\n    \"media\": DummyRegressor(strategy=\"mean\"),\n    \"recta\": LinearRegression(),\n    \"árbol de profundidad 3\": DecisionTreeRegressor(max_depth=3, random_state=0),\n    \"árbol sin límite\": DecisionTreeRegressor(random_state=0),\n}\n\nfor modelo in modelos.values():\n    modelo.fit(X_ent, y_ent)\n\n\n\nMedir el error\nMedimos con el error absoluto medio: la diferencia entre lo predicho y lo real, en valor absoluto, promediada. Sale en euros, que es la unidad en la que se puede discutir con alguien que no sea del gremio.\n\nfrom sklearn.metrics import mean_absolute_error\n\nfilas = []\nfor nombre, modelo in modelos.items():\n    filas.append({\n        \"modelo\": nombre,\n        \"error en los que vio\": mean_absolute_error(y_ent, modelo.predict(X_ent)),\n        \"error en los apartados\": mean_absolute_error(y_test, modelo.predict(X_test)),\n    })\n\npd.DataFrame(filas).set_index(\"modelo\").round(1)\n\n\n\n\n\n\n\n\nerror en los que vio\nerror en los apartados\n\n\nmodelo\n\n\n\n\n\n\nmedia\n78.4\n78.9\n\n\nrecta\n58.9\n59.7\n\n\nárbol de profundidad 3\n58.5\n60.0\n\n\nárbol sin límite\n0.5\n77.9\n\n\n\n\n\n\n\nMerece la pena parar aquí y leer la tabla despacio, porque contiene el curso entero.\nLa columna de la izquierda, tomada por sí sola, ordena los modelos de peor a mejor y dice que el árbol sin límite es con diferencia el que mejor funciona: se equivoca en medio euro por anuncio. La columna de la derecha dice que ese mismo modelo es el peor de los tres que miran los datos, y que es tan malo como no mirarlos: se equivoca casi lo mismo que predecir siempre la media.\nEl árbol sin límite se ha aprendido los anuncios de memoria. Con eso consigue un error casi nulo en los que vio, y ninguna capacidad de decir nada sobre los que no.",
+    "text": "Un primer modelo, de principio a fin\nVamos a hacer el recorrido completo una vez, con datos reales y sin abrir ninguna caja. Todo lo que sigue son órdenes de librería. No hace falta entender qué hacen por dentro, y de hecho el resto del curso consiste en abrirlas una por una.\n\n\nCódigo\n# Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,\n# para que el resultado no dependa de la red. Cuando el cuaderno corre solo, por\n# ejemplo en Colab, esa copia no está y se descarga del repositorio del curso.\nfrom pathlib import Path\n\nURL_DATOS = (\"https://raw.githubusercontent.com/cunef-aap-fall2026/\"\n             \"cunef-aap-fall2026.github.io/main/datos\")\n\n\ndef ruta_datos(nombre):\n    local = Path(\"../datos\") / nombre\n    return local if local.exists() else f\"{URL_DATOS}/{nombre}\"\n\n\n\nimport pandas as pd\n\nanuncios = pd.read_csv(ruta_datos(\"airbnb_madrid.csv\"))\nanuncios.shape\n\n(15000, 17)\n\n\nSon 15.000 anuncios de alquiler de Madrid. Cada fila es un anuncio y cada columna una característica.\n\nanuncios[[\"accommodates\", \"bedrooms\", \"neighbourhood_cleansed\", \"price\"]].head()\n\n\n\n\n\n\n\n\naccommodates\nbedrooms\nneighbourhood_cleansed\nprice\n\n\n\n\n0\n4\nNaN\nSol\n132.67\n\n\n1\n2\n1.0\nEmbajadores\n83.00\n\n\n2\n6\n3.0\nCortes\n497.00\n\n\n3\n6\n3.0\nValdezarza\n151.56\n\n\n4\n2\n1.0\nQuintana\n140.00\n\n\n\n\n\n\n\nLa pregunta es la del portal de alquiler:\n\nDadas las características de un anuncio, ¿qué precio por noche le corresponde?\n\n\nPreparar los datos\nNos quedamos con siete características numéricas y con el precio, y tiramos las filas a las que les falta algo. Tirar filas no es la única opción ni la mejor, y el capítulo 7 trata precisamente de esto; hoy es lo más rápido.\n\nCARACTERISTICAS = [\n    \"accommodates\", \"bedrooms\", \"bathrooms\", \"beds\",\n    \"number_of_reviews\", \"review_scores_rating\", \"availability_365\",\n]\ntabla = anuncios[CARACTERISTICAS + [\"price\"]].dropna()\ntabla.shape\n\n(8976, 8)\n\n\n\ntabla[\"price\"].describe()[[\"50%\", \"mean\", \"min\", \"max\"]].round(0)\n\n50%     142.0\nmean    173.0\nmin      18.0\nmax     991.0\nName: price, dtype: float64\n\n\nLa mitad de los anuncios cuesta menos de 142 euros por noche. Conviene tener ese número en la cabeza, porque es con el que compararemos los errores.\n\n\nApartar datos para el final\nConviene detenerse en este paso, porque de él depende qué mide el error que calculemos al final.\nApartamos una parte de los anuncios y hacemos como si no existieran. El modelo se construye solo con el resto. Al terminar, medimos el error sobre los apartados, que el modelo no ha visto nunca. Esos anuncios apartados hacen el papel del anuncio que todavía no tiene precio, que es el que de verdad nos importa.\n\nfrom sklearn.model_selection import train_test_split\n\nX = tabla[CARACTERISTICAS]\ny = tabla[\"price\"]\n\nX_ent, X_test, y_ent, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nlen(y_ent), len(y_test)\n\n(7180, 1796)\n\n\nA partir de ahora nos olvidamos de X_test e y_test hasta el último momento.\n\n\nAjustar cuatro modelos\nCuatro modelos, de menos a más flexible. El primero ni siquiera mira las características: predice siempre la media, y sirve de referencia para saber si los demás aportan algo.\n\nfrom sklearn.dummy import DummyRegressor\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.tree import DecisionTreeRegressor\n\nmodelos = {\n    \"media\": DummyRegressor(strategy=\"mean\"),\n    \"recta\": LinearRegression(),\n    \"árbol de profundidad 3\": DecisionTreeRegressor(max_depth=3, random_state=0),\n    \"árbol sin límite\": DecisionTreeRegressor(random_state=0),\n}\n\nfor modelo in modelos.values():\n    modelo.fit(X_ent, y_ent)\n\n\n\nMedir el error\nMedimos con el error absoluto medio: la diferencia entre lo predicho y lo real, en valor absoluto, promediada. Sale en euros, que es la unidad en la que se puede discutir con alguien que no sea del gremio.\n\nfrom sklearn.metrics import mean_absolute_error\n\nfilas = []\nfor nombre, modelo in modelos.items():\n    filas.append({\n        \"modelo\": nombre,\n        \"error en los que vio\": mean_absolute_error(y_ent, modelo.predict(X_ent)),\n        \"error en los apartados\": mean_absolute_error(y_test, modelo.predict(X_test)),\n    })\n\npd.DataFrame(filas).set_index(\"modelo\").round(1)\n\n\n\n\n\n\n\n\nerror en los que vio\nerror en los apartados\n\n\nmodelo\n\n\n\n\n\n\nmedia\n78.4\n78.9\n\n\nrecta\n58.9\n59.7\n\n\nárbol de profundidad 3\n58.5\n60.0\n\n\nárbol sin límite\n0.5\n77.9\n\n\n\n\n\n\n\nMerece la pena parar aquí y leer la tabla despacio, porque contiene el curso entero.\nLa columna de la izquierda, tomada por sí sola, ordena los modelos de peor a mejor y dice que el árbol sin límite es con diferencia el que mejor funciona: se equivoca en medio euro por anuncio. La columna de la derecha dice que ese mismo modelo es el peor de los tres que miran los datos, y que es tan malo como no mirarlos: se equivoca casi lo mismo que predecir siempre la media.\nEl árbol sin límite se ha aprendido los anuncios de memoria. Con eso consigue un error casi nulo en los que vio, y ninguna capacidad de decir nada sobre los que no.",
     "crumbs": [
       "Plantear el problema",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Datos, patrones y modelos</span>"
@@ -775,7 +775,7 @@
     "href": "capitulos/05-gradientes.html#sec-autodiff",
     "title": "5  Gradientes y descenso de gradiente",
     "section": "Diferenciación automática",
-    "text": "Diferenciación automática\nAcabamos de derivar \\(\\nabla\\hat{R}\\) a mano. A partir de ahora lo haremos con frecuencia, y conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de obtener una derivada en un ordenador, y solo una de ellas sirve.\nDiferencias finitas. Aproximar \\(\\frac{\\partial \\hat{R}}{\\partial w_j} \\approx\n\\frac{\\hat{R}(\\boldsymbol{w}+ h\\mathbf{e}_j) - \\hat{R}(\\boldsymbol{w}- h\\mathbf{e}_j)}{2h}\\). Es fácil de programar y siempre funciona, pero tiene dos problemas: el error es de orden \\(h^2\\) y además la resta de dos números casi iguales pierde precisión, de modo que no existe un \\(h\\) bueno; y hace falta evaluar \\(\\hat{R}\\) dos veces por cada coordenada, es decir \\(2(p+1)\\) evaluaciones para un solo gradiente.\nDerivación simbólica. Manipular la expresión algebraica, como haría un humano o un sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.\nDiferenciación automática. Ni aproxima ni manipula símbolos. Observa que un programa que calcula \\(\\hat{R}(\\boldsymbol{w})\\) es una composición de operaciones elementales cuya derivada se conoce (sumar, multiplicar, exp, log), y aplica la regla de la cadena a esa composición, evaluándola numéricamente paso a paso. El resultado es exacto salvo error de redondeo.\n\nDefinición 5.4 (Modos directo e inverso) Sea \\(\\hat{R}: \\mathbb{R}^{p+1} \\to \\mathbb{R}\\) una composición de operaciones elementales. El modo directo propaga derivadas desde las entradas hacia la salida y obtiene una derivada direccional por pasada. El modo inverso las propaga desde la salida hacia las entradas y obtiene el gradiente completo en una sola pasada.\n\nPara lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (\\(p+1\\) coeficientes) y una sola salida (un riesgo). El modo inverso da las \\(p+1\\) derivadas parciales de una vez, a un coste comparable al de evaluar \\(\\hat{R}\\). El modo directo necesitaría \\(p+1\\) pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.\nEn jax, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.\n\n\nCódigo\nimport numpy as np\nimport pandas as pd\nimport jax\n\njax.config.update(\"jax_enable_x64\", True)   # por defecto jax usa float32\n\n# Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.\nfrom style import ruta_datos\n\nd = pd.read_csv(ruta_datos(\"prostate.data\"))\nX = np.column_stack([np.ones(len(d)), d[\"lcavol\"], d[\"lweight\"]])\ny = d[\"lpsa\"].to_numpy()\nX = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja\nX[:, 0] = 1.0\n\n\n\ndef riesgo(w, X, y):\n    r = X @ w - y\n    return (r @ r) / len(y)\n\n\ngrad_riesgo = jax.grad(riesgo)     # devuelve una FUNCIÓN, no un número\n\nNótese la diferencia con riesgo(w, X, y), que devuelve un número: jax.grad(riesgo) devuelve una función que, evaluada en \\(\\boldsymbol{w}\\), devuelve el vector de derivadas parciales. Es la traducción literal de \\(\\nabla\\).\n\n\n\n\n\n\nDetalle a tener presente: jax trabaja por defecto en precisión simple. La línea jax.config.update(\"jax_enable_x64\", True) la eleva a doble precisión, que es lo que queremos para comparar contra un resultado analítico.\n\n\n\n\nLa diferenciación automática no es magia, y sobre todo no sustituye a derivar\nDevuelve el gradiente del programa que le has dado, que no siempre es el gradiente que creías haber escrito. Si el código tiene un error, jax.grad derivará el código erróneo sin protestar. Sirve para comprobar una derivación hecha a mano, no para evitarla.",
+    "text": "Diferenciación automática\nAcabamos de derivar \\(\\nabla\\hat{R}\\) a mano. A partir de ahora lo haremos con frecuencia, y conviene tener una forma de comprobar si el resultado es correcto. Hay tres maneras de obtener una derivada en un ordenador, y solo una de ellas sirve.\nDiferencias finitas. Aproximar \\(\\frac{\\partial \\hat{R}}{\\partial w_j} \\approx\n\\frac{\\hat{R}(\\boldsymbol{w}+ h\\mathbf{e}_j) - \\hat{R}(\\boldsymbol{w}- h\\mathbf{e}_j)}{2h}\\). Es fácil de programar y siempre funciona, pero tiene dos problemas: el error es de orden \\(h^2\\) y además la resta de dos números casi iguales pierde precisión, de modo que no existe un \\(h\\) bueno; y hace falta evaluar \\(\\hat{R}\\) dos veces por cada coordenada, es decir \\(2(p+1)\\) evaluaciones para un solo gradiente.\nDerivación simbólica. Manipular la expresión algebraica, como haría un humano o un sistema de álgebra computacional. Es exacta, pero la expresión crece de forma explosiva al componer funciones, y muchos programas ni siquiera tienen una expresión algebraica cerrada.\nDiferenciación automática. Ni aproxima ni manipula símbolos. Observa que un programa que calcula \\(\\hat{R}(\\boldsymbol{w})\\) es una composición de operaciones elementales cuya derivada se conoce (sumar, multiplicar, exp, log), y aplica la regla de la cadena a esa composición, evaluándola numéricamente paso a paso. El resultado es exacto salvo error de redondeo.\n\nDefinición 5.4 (Modos directo e inverso) Sea \\(\\hat{R}: \\mathbb{R}^{p+1} \\to \\mathbb{R}\\) una composición de operaciones elementales. El modo directo propaga derivadas desde las entradas hacia la salida y obtiene una derivada direccional por pasada. El modo inverso las propaga desde la salida hacia las entradas y obtiene el gradiente completo en una sola pasada.\n\nPara lo que hacemos aquí, la elección está clara: nuestras funciones tienen muchas entradas (\\(p+1\\) coeficientes) y una sola salida (un riesgo). El modo inverso da las \\(p+1\\) derivadas parciales de una vez, a un coste comparable al de evaluar \\(\\hat{R}\\). El modo directo necesitaría \\(p+1\\) pasadas. Por eso el modo inverso es el que usan todas las librerías de aprendizaje automático, y es lo que hace viable entrenar modelos con millones de parámetros.\nEn jax, la diferenciación automática se escribe como lo que es: un operador que toma una función y devuelve otra función, su gradiente.\n\n\nCódigo\n# Localiza los datos. Al renderizar el libro existe la copia local, y se usa esa,\n# para que el resultado no dependa de la red. Cuando el cuaderno corre solo, por\n# ejemplo en Colab, esa copia no está y se descarga del repositorio del curso.\nfrom pathlib import Path\n\nURL_DATOS = (\"https://raw.githubusercontent.com/cunef-aap-fall2026/\"\n             \"cunef-aap-fall2026.github.io/main/datos\")\n\n\ndef ruta_datos(nombre):\n    local = Path(\"../datos\") / nombre\n    return local if local.exists() else f\"{URL_DATOS}/{nombre}\"\n\n\n\n\nCódigo\nimport numpy as np\nimport pandas as pd\nimport jax\n\njax.config.update(\"jax_enable_x64\", True)   # por defecto jax usa float32\n\n# Datos de trabajo: prostate (ESL). Objetivo `lpsa`, dos predictores para empezar.\nd = pd.read_csv(ruta_datos(\"prostate.data\"))\nX = np.column_stack([np.ones(len(d)), d[\"lcavol\"], d[\"lweight\"]])\ny = d[\"lpsa\"].to_numpy()\nX = (X - X.mean(0)) / np.where(X.std(0) == 0, 1, X.std(0))   # la columna de unos se deja\nX[:, 0] = 1.0\n\n\n\ndef riesgo(w, X, y):\n    r = X @ w - y\n    return (r @ r) / len(y)\n\n\ngrad_riesgo = jax.grad(riesgo)     # devuelve una FUNCIÓN, no un número\n\nNótese la diferencia con riesgo(w, X, y), que devuelve un número: jax.grad(riesgo) devuelve una función que, evaluada en \\(\\boldsymbol{w}\\), devuelve el vector de derivadas parciales. Es la traducción literal de \\(\\nabla\\).\n\n\n\n\n\n\nDetalle a tener presente: jax trabaja por defecto en precisión simple. La línea jax.config.update(\"jax_enable_x64\", True) la eleva a doble precisión, que es lo que queremos para comparar contra un resultado analítico.\n\n\n\n\nLa diferenciación automática no es magia, y sobre todo no sustituye a derivar\nDevuelve el gradiente del programa que le has dado, que no siempre es el gradiente que creías haber escrito. Si el código tiene un error, jax.grad derivará el código erróneo sin protestar. Sirve para comprobar una derivación hecha a mano, no para evitarla.",
     "crumbs": [
       "Minimizar",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Gradientes y descenso de gradiente</span>"
@@ -1747,6 +1747,457 @@
     "crumbs": [
       "Problemas",
       "Hojas de problemas"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-01.html",
+    "href": "problemas/hoja-01.html",
+    "title": "Hoja 1",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 1, Datos, patrones y modelos. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\na. Define clase de hipótesis y explica, en dos frases, por qué el problema de predicción no está bien planteado hasta que se fija una.\nb. Definición 1.1 exige que las observaciones sobre las que se mide el error no pertenezcan a \\(\\mathcal{D}\\). Razona qué solución tendría el problema si se suprimiera esa condición.\nc. Un compañero dice que su modelo es bueno porque el coeficiente de la variable superficie es positivo y significativo. Analiza si ese argumento responde a la pregunta de este curso.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-01.html#demostración",
+    "href": "problemas/hoja-01.html#demostración",
+    "title": "Hoja 1",
+    "section": "2. Demostración",
+    "text": "2. Demostración\nSea \\(\\mathcal{F}\\) la clase de las funciones constantes y \\(\\ell(\\hat{y}, y) = (\\hat{y}- y)^2\\). Demuestra que el minimizador del riesgo empírico es \\(\\bar{y}\\), y que su valor mínimo es la varianza muestral de \\(y\\).\nEs el Ejercicio 1.1 del capítulo, con el segundo apartado añadido.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-01.html#cálculo-a-mano",
+    "href": "problemas/hoja-01.html#cálculo-a-mano",
+    "title": "Hoja 1",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano\nSobre estos cuatro datos con un solo predictor:\n\n\n\n\\(i\\)\n\\(x_i\\)\n\\(y_i\\)\n\n\n\n\n1\n0\n1\n\n\n2\n1\n3\n\n\n3\n2\n3\n\n\n4\n3\n5\n\n\n\na. Calcula el riesgo empírico con pérdida cuadrática de los dos modelos \\(f_1(x) = 1 + x\\) y \\(f_2(x) = 3\\).\nb. Uno de los dos modelos pertenece a la clase de las funciones constantes y el otro a la de las afines. Di cuál es cuál y por qué la comparación de sus riesgos empíricos, tal como está hecha aquí, no permite concluir cuál predecirá mejor.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-01.html#encuentra-los-errores",
+    "href": "problemas/hoja-01.html#encuentra-los-errores",
+    "title": "Hoja 1",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores\nTres errores conceptuales en este fragmento. Encuéntralos y justifica cada uno.\nimport numpy as np\nfrom sklearn.linear_model import LinearRegression\n\nX, y = cargar_datos()               # (200, 3) y (200,)\n\nmodelo = LinearRegression().fit(X, y)\nr2 = modelo.score(X, y)\nprint(f\"R2 = {r2:.3f}\")\n\n# probamos con mas variables para ver si mejora\nX2 = np.column_stack([X, X**2, X**3])\nmodelo2 = LinearRegression().fit(X2, y)\nprint(f\"R2 = {modelo2.score(X2, y):.3f}\")   # sale mas alto, nos quedamos con este\n\n# como el R2 es alto, concluimos que la variable 0 causa y\nprint(f\"efecto de x0: {modelo2.coef_[0]:.3f}\")",
+    "crumbs": [
+      "Problemas",
+      "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-01.html#ampliación",
+    "href": "problemas/hoja-01.html#ampliación",
+    "title": "Hoja 1",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación\nConsidera la pérdida asimétrica \\(\\ell(\\hat{y}, y) = c\\,(y - \\hat{y})\\) si \\(\\hat{y}\\le y\\) y \\(\\ell(\\hat{y}, y) = (\\hat{y}- y)\\) si \\(\\hat{y}&gt; y\\), con \\(c &gt; 1\\). Sobre la clase de las funciones constantes, ¿qué característica de la distribución de \\(y\\) minimiza el riesgo? Basta con que lo razones sobre los datos del ejercicio 3 probando valores.\n\n\n\n\n\n\nLas soluciones se publican después de la sesión.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html",
+    "href": "problemas/hoja-02.html",
+    "title": "Hoja 2",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 2, Señal y ruido. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\nBloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html#sec-h1-a",
+    "href": "problemas/hoja-02.html#sec-h1-a",
+    "title": "Hoja 2",
+    "section": "",
+    "text": "Ejercicio 1  \n\nUn compañero te enseña un modelo con error de entrenamiento cero y te dice que ha resuelto el problema. Razona qué le contestarías, citando el resultado del capítulo en el que te apoyas.\nExplica en qué se diferencian la señal y el ruido en el modelo \\(y_i= f(\\mathbf{x}_i) + \\varepsilon_i\\), y cuál de los dos queremos aprender.\nAnaliza la siguiente afirmación: “como el ruido tiene media cero, con suficientes datos desaparece y podemos recuperar \\(f\\) exactamente”.\n\n\n\n\nQue no es evidencia de nada. Por Teorema 2.1, con abscisas distintas siempre existe un polinomio que interpola los datos exactamente, de modo que un error de entrenamiento nulo se puede conseguir siempre y no distingue un modelo bueno de uno malo. La pregunta pertinente es qué error comete sobre observaciones que no se hayan usado para ajustarlo.\nLa señal es la parte de \\(y\\) que depende sistemáticamente de \\(\\mathbf{x}\\), es decir \\(f\\); el ruido es la parte que varía entre observaciones con el mismo \\(\\mathbf{x}\\). Queremos aprender \\(f\\). Ajustar también el ruido es precisamente el sobreajuste de\n\n\n\nEs falsa tal como está enunciada. Que \\(\\mathbb{E}\\!\\left[ \\varepsilon_i \\right]=0\\) no implica que el ruido desaparezca en una observación concreta: cada \\(y\\) nuevo trae su propio \\(\\varepsilon\\). Con más datos podemos estimar \\(f\\) mejor, pero el error de predicción sobre una observación nueva no baja de \\(\\mathrm{Var}\\!\\left( \\varepsilon \\right)\\). Ese suelo es el ruido irreducible del capítulo 7.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html#sec-h1-b",
+    "href": "problemas/hoja-02.html#sec-h1-b",
+    "title": "Hoja 2",
+    "section": "2. Demostración",
+    "text": "2. Demostración\nBloque B. Es del índice de resultados, así que puede caer tal cual en el examen.\n\nEjercicio 2 Sean \\(x_1,\\dots,x_{n}\\) distintos dos a dos.\n\nEscribe la base de Lagrange \\(\\ell_j\\) y comprueba que \\(\\ell_j(x_i) = \\delta_{ij}\\).\nDemuestra Teorema 2.1: existe un polinomio de grado \\(\\leq n-1\\) que pasa por los \\(n\\) puntos.\nConstrúyelo explícitamente para \\((1,3)\\), \\((2,5)\\) y \\((4,2)\\), y comprueba que pasa por los tres.\n\n\n\na y b están en Teorema 2.1.\n\nCon \\(x_1=1\\), \\(x_2=2\\), \\(x_3=4\\): \\[\n\\ell_1(x) = \\frac{(x-2)(x-4)}{(1-2)(1-4)} = \\frac{(x-2)(x-4)}{3}, \\quad\n\\ell_2(x) = \\frac{(x-1)(x-4)}{(2-1)(2-4)} = -\\frac{(x-1)(x-4)}{2},\n\\] \\[\n\\ell_3(x) = \\frac{(x-1)(x-2)}{(4-1)(4-2)} = \\frac{(x-1)(x-2)}{6}.\n\\] El polinomio es \\(P(x) = 3\\ell_1(x) + 5\\ell_2(x) + 2\\ell_3(x)\\). Comprobación: \\(P(1) = 3\\cdot 1 + 5\\cdot 0 + 2\\cdot 0 = 3\\), y análogamente \\(P(2)=5\\) y \\(P(4)=2\\).",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html#sec-h1-c",
+    "href": "problemas/hoja-02.html#sec-h1-c",
+    "title": "Hoja 2",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano\nBloque C. Sin calculadora; los números están elegidos para que salgan redondos.\n\nEjercicio 3 Se ajustan dos modelos sobre estas cuatro observaciones de entrenamiento:\n\n\n\n\\(x\\)\n1\n2\n3\n4\n\n\n\n\n\\(y\\)\n2\n4\n5\n9\n\n\n\nEl modelo \\(A\\) predice \\(\\hat{y}= 2x\\). El modelo \\(B\\) predice \\(\\hat{y}= 2, 4, 5, 9\\) respectivamente, es decir, interpola.\n\nCalcula el error de entrenamiento \\(\\hat{R}\\) de cada modelo.\nLlegan dos observaciones nuevas: \\((x,y) = (2, 3)\\) y \\((x,y) = (3, 7)\\). El modelo \\(B\\) predice sobre ellas lo mismo que predecía en entrenamiento para esos valores de \\(x\\). Calcula el error de test de cada modelo.\n¿Qué modelo elegirías y por qué? Relaciona la respuesta con 1.\n\n\n\n\nModelo \\(A\\): residuos \\(2-2=0\\), \\(4-4=0\\), \\(5-6=-1\\), \\(9-8=1\\). Suma de cuadrados \\(=2\\), luego \\(\\hat{R}_A = 2/4 = 0{,}5\\). Modelo \\(B\\): todos los residuos son cero, \\(\\hat{R}_B = 0\\).\nModelo \\(A\\) sobre test: predice \\(4\\) y \\(6\\); residuos \\(3-4=-1\\) y \\(7-6=1\\); suma \\(=2\\), \\(\\hat{R}_A^{\\text{test}} = 2/2 = 1\\). Modelo \\(B\\): predice \\(4\\) y \\(5\\); residuos \\(-1\\) y \\(2\\); suma \\(=1+4=5\\), \\(\\hat{R}_B^{\\text{test}} = 5/2 = 2{,}5\\).\nEl modelo \\(A\\). \\(B\\) gana en entrenamiento (0 frente a 0,5) y pierde en test (2,5 frente a 1): es exactamente el patrón de 1, aumentar la complejidad mejora el error de entrenamiento y empeora el de test.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html#sec-h1-d",
+    "href": "problemas/hoja-02.html#sec-h1-d",
+    "title": "Hoja 2",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores\nBloque D. Se puntúa la justificación, no la lista.\n\nEjercicio 4 El siguiente fragmento pretende comparar dos modelos y quedarse con el mejor. Tiene tres errores conceptuales. Localízalos y explica en cada caso qué consecuencia tiene.\nimport numpy as np\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.preprocessing import PolynomialFeatures\n\nX, y = cargar_datos()                      # 40 observaciones\n\nPhi = PolynomialFeatures(degree=39).fit_transform(X)\nmodelo_a = LinearRegression().fit(Phi, y)\nmodelo_b = LinearRegression().fit(X, y)\n\nerror_a = np.mean((y - modelo_a.predict(Phi)) ** 2)\nerror_b = np.mean((y - modelo_b.predict(X)) ** 2)\n\nprint(\"gana el modelo a\" if error_a &lt; error_b else \"gana el modelo b\")\n\n\n\nLos dos errores se miden sobre los mismos datos con los que se ha ajustado. No son estimaciones de nada: por Teorema 2.1, el modelo de grado 39 sobre 40 puntos puede alcanzar error cero. La comparación está decidida antes de empezar. Hace falta separar un conjunto que no se use para ajustar.\nGrado 39 con 40 observaciones es interpolación. No es un error de programación sino de diseño: se está eligiendo a propósito la clase de modelos que garantiza error de entrenamiento nulo, que es justo la que no aprende la señal.\nEl criterio de decisión es el error de entrenamiento. Aunque los dos puntos anteriores se arreglasen, quedarse con el menor de dos errores medidos sobre los mismos datos favorece sistemáticamente al modelo más complejo. La decisión tiene que apoyarse en datos no usados para ajustar.\n\n(Un cuarto defecto menor, que no cuenta como error conceptual: no se fija una semilla, de modo que el resultado no es reproducible.)",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-02.html#sec-h1-e",
+    "href": "problemas/hoja-02.html#sec-h1-e",
+    "title": "Hoja 2",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación\nOpcional. No entra en el examen.\n\nEjercicio 5 Genera \\(n= 20\\) observaciones con \\(f(x) = 2x+1\\) y ruido normal de desviación 3. Ajusta el polinomio interpolador y una recta. Repite el experimento 200 veces, y en cada repetición mide el error de ambos modelos sobre 200 observaciones nuevas generadas con la misma señal. Dibuja las dos distribuciones de error.\n¿Qué le pasa a la distribución del interpolador cuando \\(n\\) crece de 20 a 40?",
+    "crumbs": [
+      "Problemas",
+      "Hoja 2"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-03.html",
+    "href": "problemas/hoja-03.html",
+    "title": "Hoja 3",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 3, Verosimilitud y MLE. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 3"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-03.html#demostración",
+    "href": "problemas/hoja-03.html#demostración",
+    "title": "Hoja 3",
+    "section": "2. Demostración",
+    "text": "2. Demostración",
+    "crumbs": [
+      "Problemas",
+      "Hoja 3"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-03.html#cálculo-a-mano",
+    "href": "problemas/hoja-03.html#cálculo-a-mano",
+    "title": "Hoja 3",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano",
+    "crumbs": [
+      "Problemas",
+      "Hoja 3"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-03.html#encuentra-los-errores",
+    "href": "problemas/hoja-03.html#encuentra-los-errores",
+    "title": "Hoja 3",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores",
+    "crumbs": [
+      "Problemas",
+      "Hoja 3"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-03.html#ampliación",
+    "href": "problemas/hoja-03.html#ampliación",
+    "title": "Hoja 3",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación",
+    "crumbs": [
+      "Problemas",
+      "Hoja 3"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-04.html",
+    "href": "problemas/hoja-04.html",
+    "title": "Hoja 4",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 4, Convexidad y riesgo empírico. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\na. Define función estrictamente convexa y explica qué garantiza la convexidad estricta que no garantiza la convexidad a secas.\nb. Razona por qué Teorema 4.1 no basta para asegurar que el problema \\(\\mathop{\\mathrm{arg\\,min}}_{\\boldsymbol{w}}\\hat{R}(\\boldsymbol{w})\\) tenga solución, y da un ejemplo.\nc. El riesgo empírico de un árbol de regresión usa la pérdida cuadrática, que es convexa. Explica por qué, a pesar de ello, el problema de ajustar el árbol no es convexo.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 4"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-04.html#demostración",
+    "href": "problemas/hoja-04.html#demostración",
+    "title": "Hoja 4",
+    "section": "2. Demostración",
+    "text": "2. Demostración\nDemuestra Proposición 4.2: si \\(\\ell(\\cdot, y)\\) es convexa en su primer argumento y \\(f(\\mathbf{x};\\boldsymbol{w}) = \\left\\langle \\boldsymbol{w}, \\mathbf{x} \\right\\rangle\\), entonces \\(\\hat{R}\\) es convexa en \\(\\boldsymbol{w}\\). Enuncia y demuestra por el camino los dos lemas que necesitas.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 4"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-04.html#cálculo-a-mano",
+    "href": "problemas/hoja-04.html#cálculo-a-mano",
+    "title": "Hoja 4",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano\nPara cada una de estas funciones de \\(\\mathbb{R}\\) en \\(\\mathbb{R}\\), decide si es convexa y justifícalo con Proposición 4.1 o con un contraejemplo explícito. Sin calculadora.\na. \\(f(z) = z^2 - 6z + 10\\) b. \\(f(z) = \\log(1 + e^{z})\\) c. \\(f(z) = z^3\\) d. \\(f(z) = \\max\\{0,\\ \\left\\lvert z \\right\\rvert - 1\\}\\)\nPara la que no sea convexa, da los dos puntos y el \\(\\lambda\\) que rompen Ecuación 4.1.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 4"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-04.html#encuentra-los-errores",
+    "href": "problemas/hoja-04.html#encuentra-los-errores",
+    "title": "Hoja 4",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores\nTres errores en este razonamiento. Encuéntralos y justifica cada uno.\n\nQueremos ajustar un modelo minimizando la proporción de predicciones que se desvían más de 50 euros del precio real, porque es el criterio del negocio. La pérdida correspondiente es convexa, ya que solo toma los valores 0 y 1 y por tanto está acotada. Como es convexa, el descenso por gradiente encontrará el mínimo global. Y como el mínimo global es único, el modelo ajustado no depende del punto de partida.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 4"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-04.html#ampliación",
+    "href": "problemas/hoja-04.html#ampliación",
+    "title": "Hoja 4",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación\nLa pérdida de Huber con parámetro \\(\\delta\\) es \\[\n\\ell_\\delta(r) = \\begin{cases}\n\\tfrac{1}{2} r^2 & \\left\\lvert r \\right\\rvert \\le \\delta \\\\\n\\delta\\left(\\left\\lvert r \\right\\rvert - \\tfrac{1}{2}\\delta\\right) & \\left\\lvert r \\right\\rvert &gt; \\delta .\n\\end{cases}\n\\]\na. Comprueba que \\(\\ell_\\delta\\) y \\(\\ell_\\delta'\\) son continuas en \\(r = \\pm\\delta\\). b. Argumenta que es convexa pero no estrictamente convexa. c. Estudia qué ocurre cuando \\(\\delta \\to \\infty\\) y cuando \\(\\delta \\to 0^{+}\\), y explica en qué sentido esta pérdida interpola entre las dos primeras de Figura 4.1.\n\n\n\n\n\n\nLas soluciones se publican después de la sesión.",
+    "crumbs": [
+      "Problemas",
+      "Hoja 4"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-05.html",
+    "href": "problemas/hoja-05.html",
+    "title": "Hoja 5",
+    "section": "",
+    "text": "1. Productos y traspuestas\nEsta hoja es distinta. No sigue la estructura del examen: es práctica de álgebra matricial, y ocupa la sesión S2 entera. El motivo es que el capítulo 4 se apoya por completo en estas operaciones, y conviene llegar con ellas resueltas.\nEl material de referencia es el anexo Cálculo y álgebra que vas a necesitar.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 5"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-05.html#la-matriz-de-diseño",
+    "href": "problemas/hoja-05.html#la-matriz-de-diseño",
+    "title": "Hoja 5",
+    "section": "2. La matriz de diseño",
+    "text": "2. La matriz de diseño",
+    "crumbs": [
+      "Problemas",
+      "Hoja 5"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-05.html#rango-y-núcleo",
+    "href": "problemas/hoja-05.html#rango-y-núcleo",
+    "title": "Hoja 5",
+    "section": "3. Rango y núcleo",
+    "text": "3. Rango y núcleo",
+    "crumbs": [
+      "Problemas",
+      "Hoja 5"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-05.html#gradientes",
+    "href": "problemas/hoja-05.html#gradientes",
+    "title": "Hoja 5",
+    "section": "4. Gradientes",
+    "text": "4. Gradientes",
+    "crumbs": [
+      "Problemas",
+      "Hoja 5"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-05.html#ampliación",
+    "href": "problemas/hoja-05.html#ampliación",
+    "title": "Hoja 5",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación",
+    "crumbs": [
+      "Problemas",
+      "Hoja 5"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-06.html",
+    "href": "problemas/hoja-06.html",
+    "title": "Hoja 6",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 6, Forma matricial y ecuaciones normales. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 6"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-06.html#demostración",
+    "href": "problemas/hoja-06.html#demostración",
+    "title": "Hoja 6",
+    "section": "2. Demostración",
+    "text": "2. Demostración",
+    "crumbs": [
+      "Problemas",
+      "Hoja 6"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-06.html#cálculo-a-mano",
+    "href": "problemas/hoja-06.html#cálculo-a-mano",
+    "title": "Hoja 6",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano",
+    "crumbs": [
+      "Problemas",
+      "Hoja 6"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-06.html#encuentra-los-errores",
+    "href": "problemas/hoja-06.html#encuentra-los-errores",
+    "title": "Hoja 6",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores",
+    "crumbs": [
+      "Problemas",
+      "Hoja 6"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-06.html#ampliación",
+    "href": "problemas/hoja-06.html#ampliación",
+    "title": "Hoja 6",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación",
+    "crumbs": [
+      "Problemas",
+      "Hoja 6"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-07.html",
+    "href": "problemas/hoja-07.html",
+    "title": "Hoja 7",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 7, Del dato crudo a X. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 7"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-07.html#demostración",
+    "href": "problemas/hoja-07.html#demostración",
+    "title": "Hoja 7",
+    "section": "2. Demostración",
+    "text": "2. Demostración",
+    "crumbs": [
+      "Problemas",
+      "Hoja 7"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-07.html#cálculo-a-mano",
+    "href": "problemas/hoja-07.html#cálculo-a-mano",
+    "title": "Hoja 7",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano",
+    "crumbs": [
+      "Problemas",
+      "Hoja 7"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-07.html#encuentra-los-errores",
+    "href": "problemas/hoja-07.html#encuentra-los-errores",
+    "title": "Hoja 7",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores",
+    "crumbs": [
+      "Problemas",
+      "Hoja 7"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-07.html#ampliación",
+    "href": "problemas/hoja-07.html#ampliación",
+    "title": "Hoja 7",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación",
+    "crumbs": [
+      "Problemas",
+      "Hoja 7"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-08.html",
+    "href": "problemas/hoja-08.html",
+    "title": "Hoja 8",
+    "section": "",
+    "text": "1. Conceptual\nCapítulo 8, Validación y métricas. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.\n© Roi Naveiro, CUNEF Universidad, 2026",
+    "crumbs": [
+      "Problemas",
+      "Hoja 8"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-08.html#demostración",
+    "href": "problemas/hoja-08.html#demostración",
+    "title": "Hoja 8",
+    "section": "2. Demostración",
+    "text": "2. Demostración",
+    "crumbs": [
+      "Problemas",
+      "Hoja 8"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-08.html#cálculo-a-mano",
+    "href": "problemas/hoja-08.html#cálculo-a-mano",
+    "title": "Hoja 8",
+    "section": "3. Cálculo a mano",
+    "text": "3. Cálculo a mano",
+    "crumbs": [
+      "Problemas",
+      "Hoja 8"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-08.html#encuentra-los-errores",
+    "href": "problemas/hoja-08.html#encuentra-los-errores",
+    "title": "Hoja 8",
+    "section": "4. Encuentra los errores",
+    "text": "4. Encuentra los errores",
+    "crumbs": [
+      "Problemas",
+      "Hoja 8"
+    ]
+  },
+  {
+    "objectID": "problemas/hoja-08.html#ampliación",
+    "href": "problemas/hoja-08.html#ampliación",
+    "title": "Hoja 8",
+    "section": "5. Ampliación",
+    "text": "5. Ampliación",
+    "crumbs": [
+      "Problemas",
+      "Hoja 8"
     ]
   },
   {
