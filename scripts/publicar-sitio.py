@@ -35,11 +35,17 @@ def main() -> int:
     seco = "--seco" in sys.argv
     if not (DOCS / "index.html").exists():
         raise SystemExit("no hay docs/index.html: ejecuta antes `make sitio`")
-    if (DOCS / "problemas").exists():
-        colados = sorted((DOCS / "problemas").glob("*soluciones*"))
-        if colados:
-            raise SystemExit("los solucionarios están en docs/: ejecuta "
-                             "`python scripts/soluciones.py --ocultar` y `make sitio`")
+    # Un .qmd en docs/ significa que una pagina publicada enlaza a otra que no lo esta:
+    # Quarto la trata como recurso y copia el FUENTE. Es la via por la que se publicaria un
+    # capitulo inedito o un solucionario. Lo evita scripts/enlaces-publicados.lua, y esta
+    # guarda esta aqui por si alguien lo quita del perfil.
+    fuentes = sorted(DOCS.rglob("*.qmd"))
+    if fuentes:
+        raise SystemExit("hay fuentes .qmd en docs/, no publico:\n  "
+                         + "\n  ".join(str(f.relative_to(DOCS)) for f in fuentes))
+    colados = sorted(DOCS.rglob("*soluciones*"))
+    if colados:
+        raise SystemExit("los solucionarios están en docs/: revisa contenido.txt")
     if (DOCS / "evaluacion").exists():
         raise SystemExit("docs/evaluacion existe: material de examen en el sitio, aborto")
     if not list((DOCS / "live-notebooks").glob("*.ipynb")):

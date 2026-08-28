@@ -5,68 +5,25 @@ project:
 book:
   title: "Aprendizaje Automático: Predicción"
   subtitle: "G244 · Doble Grado ADE + Ciencia de Datos · CUNEF Universidad"
+  # <<< generado por scripts/publicado.py a partir de contenido.txt
   chapters:
     - index.qmd
     - part: "Fundamentos del aprendizaje predictivo"
       chapters:
         - capitulos/01-senal-ruido.qmd
-        - capitulos/02-aprender-minimizando.qmd
-        - capitulos/03-modelos-lineales.qmd
-    - part: "Evaluación y datos"
-      chapters:
-        - capitulos/04-evaluacion.qmd
-        - capitulos/05-preparacion-datos.qmd
-    - part: "Complejidad y generalización"
-      chapters:
-        - capitulos/06-complejidad.qmd
-        - capitulos/07-regularizacion.qmd
-        - capitulos/08-seleccion-dimension.qmd
-    - part: "Otros métodos"
-      chapters:
-        - capitulos/09-arboles.qmd
     - part: "Hojas de problemas"
       chapters:
-        - problemas/index.qmd
         - problemas/hoja-01.qmd
-        # - problemas/hoja-01-soluciones.qmd
-        - problemas/hoja-02.qmd
-        # - problemas/hoja-02-soluciones.qmd
-        - problemas/hoja-03.qmd
-        # - problemas/hoja-03-soluciones.qmd
-        - problemas/hoja-04.qmd
-        # - problemas/hoja-04-soluciones.qmd
-        - problemas/hoja-05.qmd
-        # - problemas/hoja-05-soluciones.qmd
-        - problemas/hoja-06.qmd
-        # - problemas/hoja-06-soluciones.qmd
-        - problemas/hoja-07.qmd
-        - problemas/hoja-08.qmd
-        - problemas/hoja-09.qmd
-        # Una hoja por capitulo: hoja-NN es la del capitulo NN. Las hojas 4 a 9 son
-        # esqueletos, pero se listan igualmente: sin listarlas aqui Quarto no las
-        # renderiza, las copia como .qmd al directorio de salida, y los enlaces del
-        # indice descargan el fuente en lugar de abrir una pagina.
-        #
-        # Para no publicar las soluciones basta con comentar las lineas *-soluciones
-        # y quitar el enlace del pie de cada hoja.
   appendices:
     - curso/guia.qmd
     - curso/calendario.qmd
     - curso/evaluacion.qmd
     - curso/politica-ia.qmd
-    - curso/proyecto.qmd
     - curso/algebra.qmd
     - curso/probabilidad.qmd
     - curso/indice-resultados.qmd
-    - curso/glosario.qmd
     - curso/trazabilidad.qmd
-  body-footer: |
-    <br><br><span style="color:grey;">&#169; Roi Naveiro, CUNEF Universidad, 2026</span>
-  sidebar:
-    search: true
-    logo: assets/img/cunef-logo.png
-    logo-alt: "CUNEF Universidad"
-
+  # >>> fin del bloque generado
 format:
   html:
     theme: [cosmo, assets/custom.scss]

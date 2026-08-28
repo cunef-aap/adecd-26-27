@@ -10,3 +10,6 @@ format:
   html:
     filters:
       - scripts/strip-delims.lua
+      # Desactiva los enlaces a lo que todavia no se publica. Sin el, Quarto copia el .qmd
+      # fuente de esos capitulos a docs/ y los publicaria.
+      - scripts/enlaces-publicados.lua

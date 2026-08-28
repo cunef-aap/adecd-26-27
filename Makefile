@@ -1,8 +1,7 @@
 # Aprendizaje Automatico: Prediccion (G244) — CUNEF
 # Uso habitual:  make check && make sitio && make notebooks
 
-.PHONY: check marcas sitio notebooks preview publicar datos limpiar \
-        pdfs pdfs-soluciones soluciones-estado
+.PHONY: check marcas sitio notebooks preview publicar datos limpiar pdfs publicado
 
 check:                       ## centinelas emparejados + reglas mecánicas de estilo
 	python scripts/check-centinelas.py
@@ -11,7 +10,8 @@ check:                       ## centinelas emparejados + reglas mecánicas de es
 marcas:                      ## marcas de revisión .nuevo sin aceptar
 	python scripts/aceptar-marcas.py --listar
 
-sitio: check                 ## renderiza el sitio a docs/
+sitio: check                 ## renderiza a docs/ SOLO lo publicado en contenido.txt
+	python scripts/publicado.py --sitio
 	quarto render --profile publica
 
 notebooks: check             ## cuadernos con huecos -> docs/live-notebooks/
@@ -22,34 +22,27 @@ notebooks: check             ## cuadernos con huecos -> docs/live-notebooks/
 preview:                     ## servidor local con recarga
 	quarto preview --profile publica
 
-pdfs: sitio notebooks        ## PDF de capitulos, hojas y apendices -> pdf/
-	python scripts/crear-pdfs.py
+# Los PDF salen del libro COMPLETO, no del sitio: se suben al Campus Virtual a medida
+# que cada capitulo tiene version definitiva, antes de publicarse en la web. Van a
+# _completo/ para no ensuciar docs/, que es lo que se publica.
+pdfs: check                  ## PDF de todo el libro, incluidos solucionarios -> pdf/
+	python scripts/publicado.py --completo
+	quarto render --profile publica --output-dir _completo
+	python scripts/publicado.py --sitio
+	python scripts/crear-pdfs.py --desde _completo
 
-# `quarto render` vacia docs/ de lo que no sale de el, asi que `notebooks` va detras de
-# cada render, no delante. Sin eso el sitio se publica sin los cuadernos ni los datos.
-pdfs-soluciones:             ## PDF de los solucionarios, sin dejarlos publicados
-	python scripts/soluciones.py --mostrar
-	quarto render --profile publica
-	python scripts/crear-pdfs.py --solo hoja
-	python scripts/soluciones.py --ocultar
-	quarto render --profile publica
-	$(MAKE) notebooks
-	@echo
-	@echo "Los solucionarios estan en pdf/problemas/ y vuelven a estar ocultos"
-	@echo "en el sitio. Comprueba con: make soluciones-estado"
-
-soluciones-estado:           ## dice si los solucionarios se publicarian o no
-	python scripts/soluciones.py --estado
+publicado:                   ## dice que documentos se publican en la web
+	python scripts/publicado.py --estado
 
 datos:                       ## espeja y submuestrea los datasets
 	python scripts/descargar-datos.py
 
 publicar: sitio notebooks marcas   ## fuente al repo privado y sitio al publico
-	python scripts/soluciones.py --estado
+	python scripts/publicado.py --estado
 	git add -A
 	git commit -m "Actualiza el sitio"
 	git push origin main
 	python scripts/publicar-sitio.py
 
 limpiar:
-	rm -rf docs .quarto _freeze
+	rm -rf docs _completo .quarto _freeze

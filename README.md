@@ -37,22 +37,38 @@ El sitio se sirve con GitHub Pages desde la carpeta `docs/` de la rama `main`, a
 make publicar    # render + notebooks + commit + push
 ```
 
-### Los solucionarios no se publican
+### Qué se publica: `contenido.txt`
 
-Las seis líneas `problemas/hoja-NN-soluciones.qmd` de `_quarto.yml` están **comentadas**, y
-el perfil `publica` excluye además esos ficheros de `project.render` para que Quarto no
-copie el `.qmd` crudo a `docs/`. Los solucionarios se reparten por el Campus Virtual, en
-PDF, después de cada sesión de problemas, que es lo que promete el pie de cada hoja.
+El sitio solo lleva el material con versión definitiva. Quién entra y quién no se declara en
+**`contenido.txt`**, y en ningún otro sitio: las rutas que empiezan por `-` se quedan en
+este repositorio privado.
 
 ```bash
-make soluciones-estado   # dice si se publicarían o no
-make pdfs-soluciones     # los imprime a pdf/problemas/ y los vuelve a ocultar
+make publicado   # lista lo que se publica ahora mismo
 ```
 
-`make pdfs-soluciones` los publica temporalmente porque sus referencias cruzadas
-(`@thm-test-insesgado` y compañía) solo resuelven con el libro entero renderizado; al
-terminar deja el repositorio como estaba. Para publicarlos de forma permanente,
-descomenta esas líneas y borra el bloque `render` de `_quarto-publica.yml`.
+Al terminar un capítulo, quita el `-` de su línea y ejecuta `make publicar`. Tres piezas lo
+sostienen:
+
+- `scripts/publicado.py` genera con `contenido.txt` la lista de capítulos de `_quarto.yml`,
+  entre dos centinelas. Hace falta un script porque **en un proyecto `book` los perfiles no
+  pueden reducir el libro**: `book.chapters` y `project.render` declarados en un
+  `_quarto-PERFIL.yml` se ignoran, y Quarto renderiza todo (comprobado con Quarto 1.10.18).
+- `scripts/enlaces-publicados.lua` desactiva los enlaces a páginas todavía inéditas. Sin él
+  no solo quedarían 404: Quarto trata ese `.qmd` como un recurso y **copia el fuente** a
+  `docs/`, es decir, publicaría el capítulo inédito o el solucionario en versión `.qmd`.
+- `scripts/crear-ipynb.py` genera cuaderno solo de los capítulos publicados, y
+  `scripts/publicar-sitio.py` se niega a subir si encuentra un `.qmd`, un solucionario o un
+  `docs/evaluacion` en la salida.
+
+Los solucionarios nunca se publican en la web: van por el Campus Virtual, en PDF, después de
+cada sesión, que es lo que promete el pie de cada hoja.
+
+### Los PDF salen del libro completo
+
+`make pdfs` no imprime del sitio, sino de un render aparte con **todo** el libro, en
+`_completo/`, para poder subir al Campus Virtual capítulos y solucionarios que aún no están
+en la web.
 
 ### Por qué los PDF salen de imprimir el HTML
 

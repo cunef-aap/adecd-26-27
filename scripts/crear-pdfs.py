@@ -8,9 +8,13 @@ porque el HTML se renderizo con el libro entero. Un render a PDF de cada capitul
 separado las dejaria como "?@thm-test-insesgado", y las cajas .sol, .trampa y .cajanegra
 perderian su estilo, que vive en assets/styles.css.
 
-    python scripts/crear-pdfs.py                 # capitulos, hojas y apendices
-    python scripts/crear-pdfs.py --solo hoja     # solo las hojas de problemas
-    python scripts/crear-pdfs.py --solo capitulo # solo los capitulos
+    python scripts/crear-pdfs.py --desde _completo   # todo el libro
+    python scripts/crear-pdfs.py --solo hoja         # solo las hojas de problemas
+    python scripts/crear-pdfs.py --solo capitulo     # solo los capitulos
+
+Sin `--desde` imprime de docs/, que solo lleva lo publicado en la web. Para los PDF del
+Campus Virtual interesa `_completo/`, que es el libro entero: ahi estan los capitulos que
+aun no se publican y los solucionarios.
 
 Los nombres de salida llevan delante el numero de capitulo o de hoja para que en el
 Campus Virtual salgan en orden.
@@ -23,7 +27,6 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-DOCS = RAIZ / "docs"
 SALIDA = RAIZ / "pdf"
 CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 
@@ -33,6 +36,16 @@ GRUPOS = [
     ("problemas/hoja-*.html", "problemas", "hoja"),
     ("curso/*.html", "curso", "curso"),
 ]
+
+
+def origen() -> Path:
+    if "--desde" in sys.argv:
+        d = RAIZ / sys.argv[sys.argv.index("--desde") + 1]
+    else:
+        d = RAIZ / "docs"
+    if not (d / "index.html").exists():
+        raise SystemExit(f"no hay {d.name}/index.html: renderiza antes")
+    return d
 
 
 def imprime(html: Path, pdf: Path) -> bool:
@@ -49,8 +62,7 @@ def imprime(html: Path, pdf: Path) -> bool:
 def main() -> int:
     if not CHROME.exists():
         raise SystemExit(f"no encuentro Chrome en {CHROME}")
-    if not DOCS.exists():
-        raise SystemExit("no hay docs/: ejecuta antes `make sitio`")
+    fuente = origen()
     solo = None
     if "--solo" in sys.argv:
         solo = sys.argv[sys.argv.index("--solo") + 1]
@@ -59,7 +71,7 @@ def main() -> int:
     for patron, carpeta, etiqueta in GRUPOS:
         if solo and solo != etiqueta:
             continue
-        for html in sorted(DOCS.glob(patron)):
+        for html in sorted(fuente.glob(patron)):
             pdf = SALIDA / carpeta / f"{html.stem}.pdf"
             if imprime(html, pdf):
                 hechos.append((pdf, pdf.stat().st_size))

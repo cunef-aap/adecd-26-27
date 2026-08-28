@@ -27,3 +27,6 @@ pdf/
 
 # El clon del repositorio publico del sitio.
 _sitio-publicado/
+
+# El render completo del libro, solo para sacar los PDF.
+_completo/
