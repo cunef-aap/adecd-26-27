@@ -133,7 +133,8 @@ De `PLAN_CURSO.md:86-98`, en forma verificable. Un capítulo está terminado cua
 - [ ] existe la hoja de problemas correspondiente y el cuaderno se genera del mismo `.qmd`;
 - [ ] `curso/glosario.qmd` recoge la notación nueva y `problemas/index.qmd` el estado de la
       hoja;
-- [ ] `curso/indice-resultados.qmd` recoge los resultados evaluables del capítulo;
+- [ ] el capítulo marca con demostración los resultados evaluables, que es de donde
+      sale el bloque B de las hojas y del examen;
 - [ ] `make marcas` no encuentra marcas `.nuevo` sin aceptar;
 - [ ] `make check` pasa y `check-capitulo.py` no da errores;
 - [ ] el render no produce avisos ni referencias rotas.

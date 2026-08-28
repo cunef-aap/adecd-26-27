@@ -54,7 +54,7 @@
     "href": "index.html#recorrido-del-curso",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Recorrido del curso",
-    "text": "Recorrido del curso\nUna vez delimitado el problema de regresión, el resto del curso responde de forma progresiva a cuatro preguntas: cómo se aprende una señal, cómo se evalúa sin optimismo, cómo se controla la complejidad y cómo se construye un flujo reproducible con datos reales.\n\n\n\n\n\n\n\n\nBloque del curso\nCapítulos\nContenido principal\n\n\n\n\nFundamentos del aprendizaje predictivo\n1-3\nseñal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales\n\n\nEvaluación y datos\n4-5\nmétricas, validación cruzada, fugas y pipelines de preparación\n\n\nComplejidad y generalización\n6-8\ncaracterísticas, sesgo-varianza, regularización, selección y PCA\n\n\nOtros métodos\n9\nárboles de regresión\n\n\n\nLa secuencia cubre la introducción, las metodologías, los algoritmos y la implementación previstos en la guía docente. La tabla de trazabilidad recoge la correspondencia detallada y el calendario distribuye los contenidos por semanas.",
+    "text": "Recorrido del curso\nUna vez delimitado el problema de regresión, el resto del curso responde de forma progresiva a cuatro preguntas: cómo se aprende una señal, cómo se evalúa sin optimismo, cómo se controla la complejidad y cómo se construye un flujo reproducible con datos reales.\n\n\n\n\n\n\n\n\nBloque del curso\nCapítulos\nContenido principal\n\n\n\n\nFundamentos del aprendizaje predictivo\n1-3\nseñal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales\n\n\nEvaluación y datos\n4-5\nmétricas, validación cruzada, fugas y pipelines de preparación\n\n\nComplejidad y generalización\n6-7\ncaracterísticas, sesgo-varianza y regularización\n\n\nOtros modelos\nsi el calendario lo permite\najustar algún modelo más con lo aprendido, por ejemplo una red pequeña\n\n\n\nLos siete primeros capítulos son el cuerpo del curso. El último bloque es abierto y depende del tiempo que quede: no añade método nuevo, sino que reutiliza el protocolo de evaluación de los capítulos 4 y 5 sobre una familia de modelos distinta.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -64,7 +64,7 @@
     "href": "index.html#cómo-se-trabaja",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Cómo se trabaja",
-    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará explicación teórica, resolución de problemas y trabajo con datos. En conjunto, el curso incluirá:\n\nexposiciones y derivaciones matemáticas que justifiquen los métodos;\nejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;\nlaboratorios en los que se implementen los procedimientos y se analicen sus resultados;\ntrabajo autónomo, tutorías y un proyecto aplicado.\n\nLos apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch. Las herramientas de IA generativa pueden utilizarse de acuerdo con la política de la asignatura, y su uso en el proyecto debe quedar documentado.\nLa evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las fechas y las reglas completas se recogen en el calendario y en la sección de evaluación.\nLa asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.",
+    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará explicación teórica, resolución de problemas y trabajo con datos. En conjunto, el curso incluirá:\n\nexposiciones y derivaciones matemáticas que justifiquen los métodos;\nejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;\nlaboratorios en los que se implementen los procedimientos y se analicen sus resultados;\ntrabajo autónomo, tutorías y un proyecto aplicado.\n\nLos apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch.\n\nQué se espera del código\nLos apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel y bolígrafo, así que de código se pregunta la decisión, no el teclado. En concreto, puede pedirse:\n\nleer un fragmento y decir qué calcula: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;\ndiagnosticar un fragmento con errores de método y justificar cada uno, que es el bloque con más peso de código en el examen;\ncompletar una o dos líneas marcadas, cuando la línea es una fórmula del curso;\npredecir el efecto de un cambio: qué le pasa al número si se intercambian dos índices o se ajusta con el conjunto equivocado;\nordenar los pasos de un protocolo dados desordenados.\n\nNo se pide escribir un programa desde cero, ni recordar la firma de ninguna función: toda llamada que no esté en esta lista se da escrita en el enunciado.\ntorch.linalg.lstsq(A, b).solution                          # mínimos cuadrados\nX @ w                                                      # predicción lineal\n((pred - y) ** 2).mean()                                   # riesgo cuadrático\nnp.std(v, ddof=1) / np.sqrt(len(v))                        # error típico de una media\nKFold(n_splits=5, shuffle=True, random_state=42).split(X)   # bloques de validación cruzada\nX[indices][:, columnas]                                    # filas y columnas\nw -= lr * grad                                             # paso de descenso de gradiente\nLa evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las reglas completas están en la sección de evaluación.\nLa asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -74,7 +74,7 @@
     "href": "index.html#preparación-inicial",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Preparación inicial",
-    "text": "Preparación inicial\nAntes de comenzar el capítulo 1 se recomienda:\n\nrepasar el anexo de cálculo y álgebra y realizar el diagnóstico incluido al final;\nrevisar el repaso de probabilidad;\nconsultar el calendario, la evaluación y la política de uso de IA.",
+    "text": "Preparación inicial\nAntes de comenzar el capítulo 1 se recomienda:\n\nrepasar el anexo de cálculo y álgebra y hacer el diagnóstico que cierra el anexo;\nhacer lo mismo con el repaso de probabilidad, que también termina con un diagnóstico;\nleer la sección de evaluación.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -84,7 +84,7 @@
     "href": "index.html#fuentes-y-agradecimientos",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Fuentes y agradecimientos",
-    "text": "Fuentes y agradecimientos\nLa introducción mediante datos, patrones y funciones, así como el núcleo de fundamentos del curso, se inspira en las notas de Phil Chodrow para el curso CSCI 0451 de Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al programa de la guía docente de CUNEF Universidad.\nLa bibliografía principal y complementaria se recoge en la guía de la asignatura.\nRoi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad",
+    "text": "Fuentes y agradecimientos\nLa introducción mediante datos, patrones y funciones, así como el núcleo de fundamentos del curso, se inspira en las notas de Phil Chodrow para el curso CSCI 0451 de Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al programa de la guía docente de CUNEF Universidad.\nLa bibliografía principal son An Introduction to Statistical Learning de James, Witten, Hastie y Tibshirani y The Elements of Statistical Learning de Hastie, Tibshirani y Friedman. Las referencias concretas se citan en cada capítulo.\nRoi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -104,7 +104,7 @@
     "href": "capitulos/01-senal-ruido.html",
     "title": "1  Datos = señal + ruido",
     "section": "",
-    "text": "Introducción: datos, señal y ruido\nRecordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos observados\n\\[\n\\mathcal{D}=\\{(\\mathbf{x}_i,y_i)\\}_{i=1}^{n},\n\\]\nLa tarea consiste en aprender una función \\(f\\) que, a partir de las características de un caso nuevo, produzca una predicción \\(\\widehat y=f(\\mathbf{x})\\) que se aproxime a su respuesta \\(y\\):\n\\[\n\\widehat y=f(\\mathbf{x})\\approx y.\n\\]\nEl principal problema del aprendizaje supervisado es que la relación entre \\(\\mathbf{x}\\) e \\(y\\) de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la señal sin memorizar el ruido.\nPara entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes.\nCódigo\nimport torch\nfrom matplotlib import pyplot as plt\n\ntorch.manual_seed(42)\n\nn = 20\nx = torch.linspace(0, 10, n)\nsenal = 2 * x + 1\nruido = 3 * torch.randn(n)\ny = senal + ruido\n\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.65)\nPodemos pensar que cada dato contiene una señal, expresada mediante una relación \\(y\\approx f(x)\\), y un ruido que oculta parcialmente esa relación. Esquemáticamente,\n\\[\ny_i=f(x_i)+\\varepsilon_i.\n\\tag{1.1}\\]\nLa respuesta \\(y_i\\) es el valor que observamos. La función \\(f\\) describe el patrón estable que queremos aprender y \\(\\varepsilon_i\\) recoge la variación particular de la observación \\(i\\).",
+    "text": "Introducción: datos, señal y ruido\nRecordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos observados\n\\[\n\\mathcal{D}=\\{(\\mathbf{x}_i,y_i)\\}_{i=1}^{n},\n\\]\nLa tarea consiste en aprender una función \\(f\\) que, a partir de las características de un caso nuevo, produzca una predicción \\(\\widehat y=f(\\mathbf{x})\\) que se aproxime a su respuesta \\(y\\):\n\\[\n\\widehat y=f(\\mathbf{x})\\approx y.\n\\]\nEl principal problema del aprendizaje supervisado es que la relación entre \\(\\mathbf{x}\\) e \\(y\\) de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la señal sin memorizar el ruido.\nPara entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes.\nEl código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una función.\nCódigo\nimport torch\nfrom matplotlib import pyplot as plt\n\ntorch.manual_seed(42)\n\nn = 20\nx = torch.linspace(0, 10, n)\nsenal = 2 * x + 1\nruido = 3 * torch.randn(n)\ny = senal + ruido\n\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.65)\nPodemos pensar que cada dato contiene una señal, expresada mediante una relación \\(y\\approx f(x)\\), y un ruido que oculta parcialmente esa relación. Esquemáticamente,\n\\[\ny_i=f(x_i)+\\varepsilon_i.\n\\tag{1.1}\\]\nLa respuesta \\(y_i\\) es el valor que observamos. La función \\(f\\) describe el patrón estable que queremos aprender y \\(\\varepsilon_i\\) recoge la variación particular de la observación \\(i\\).",
     "crumbs": [
       "Fundamentos del aprendizaje predictivo",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Datos = señal + ruido</span>"
@@ -214,7 +214,7 @@
     "href": "problemas/hoja-01.html#sec-h1-b",
     "title": "Hoja 1",
     "section": "2. Demostración",
-    "text": "2. Demostración\nBloque B. Sale del índice de resultados, así que puede caer tal cual en el examen.\n\nEjercicio 3 Partiendo de \\(Y=f(X)+\\varepsilon\\) con \\(\\mathbb{E}\\!\\left[ \\varepsilon\\,\\vert\\,X \\right]=0\\):\n\nDemuestra que \\(\\mathbb{E}\\!\\left[ Y\\,\\vert\\,X=\\mathbf{x} \\right]=f(\\mathbf{x})\\). Indica en qué paso usas la hipótesis sobre el ruido.\nExplica en una frase qué significa este resultado en una nube de puntos como la de Figura 1.1.\nSi el ruido tuviera media \\(c\\neq0\\) en lugar de cero, ¿qué aprenderíamos al estimar la media condicional? Razónalo.\n\n\n\nEjercicio 4 Sean \\(x_1,\\dots,x_{n}\\) distintos dos a dos.\n\nEscribe la base de Lagrange \\(\\ell_j\\) y comprueba que \\(\\ell_j(x_i) = \\delta_{ij}\\).\nDemuestra Teorema 1.1: existe un polinomio de grado \\(\\leq n-1\\) que pasa por los \\(n\\) puntos.\nConstrúyelo explícitamente para \\((1,3)\\), \\((2,5)\\) y \\((4,2)\\), y comprueba que pasa por los tres.",
+    "text": "2. Demostración\nBloque B. Sale de los resultados demostrados en los capítulos, así que puede caer tal cual en el examen.\n\nEjercicio 3 Partiendo de \\(Y=f(X)+\\varepsilon\\) con \\(\\mathbb{E}\\!\\left[ \\varepsilon\\,\\vert\\,X \\right]=0\\):\n\nDemuestra que \\(\\mathbb{E}\\!\\left[ Y\\,\\vert\\,X=\\mathbf{x} \\right]=f(\\mathbf{x})\\). Indica en qué paso usas la hipótesis sobre el ruido.\nExplica en una frase qué significa este resultado en una nube de puntos como la de Figura 1.1.\nSi el ruido tuviera media \\(c\\neq0\\) en lugar de cero, ¿qué aprenderíamos al estimar la media condicional? Razónalo.\n\n\n\nEjercicio 4 Sean \\(x_1,\\dots,x_{n}\\) distintos dos a dos.\n\nEscribe la base de Lagrange \\(\\ell_j\\) y comprueba que \\(\\ell_j(x_i) = \\delta_{ij}\\).\nDemuestra Teorema 1.1: existe un polinomio de grado \\(\\leq n-1\\) que pasa por los \\(n\\) puntos.\nConstrúyelo explícitamente para \\((1,3)\\), \\((2,5)\\) y \\((4,2)\\), y comprueba que pasa por los tres.",
     "crumbs": [
       "Hojas de problemas",
       "Hoja 1"
@@ -265,105 +265,6 @@
     ]
   },
   {
-    "objectID": "curso/guia.html",
-    "href": "curso/guia.html",
-    "title": "Guía de la asignatura",
-    "section": "",
-    "text": "Ritmo semanal\nTres sesiones por semana, con papeles distintos:\nLa S2 de la semana 5 refuerza la notación matricial necesaria para el capítulo 3, con el bloque de cálculo a mano de su hoja, pero el álgebra se introduce dentro del hilo del modelo lineal y no como un bloque independiente.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#ritmo-semanal",
-    "href": "curso/guia.html#ritmo-semanal",
-    "title": "Guía de la asignatura",
-    "section": "",
-    "text": "Sesión\nContenido\n\n\n\n\nS1\nTeoría\nLa derivación, en pizarra. Sin ordenador\n\n\nS2\nProblemas\nLápiz y papel. Empieza con la derivación de la semana\n\n\nS3\nLaboratorio\nSe completa en directo el cuaderno del capítulo",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#contrato-de-trabajo",
-    "href": "curso/guia.html#contrato-de-trabajo",
-    "title": "Guía de la asignatura",
-    "section": "Contrato de trabajo",
-    "text": "Contrato de trabajo\n6 ECTS son 150 horas. Tres sesiones de 55 minutos durante quince semanas son unas 41 horas de clase, de modo que unas 109 son trabajo fuera del aula, en torno a 7 por semana:\n\n\n\n\nh/semana\n\n\n\n\nLeer el capítulo antes de la S1\n1,5\n\n\nHoja de problemas\n2,0\n\n\nCompletar el cuaderno después de la S3\n1,5\n\n\nEstudio y repaso\n2,0\n\n\nProyecto (solo semanas 10-13)\n2,0\n\n\nTotal fuera de clase\n7 (9 en semanas de proyecto)\n\n\n\nHay una hoja por capítulo, con seis bloques. Los cuatro primeros reproducen los bloques A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. El quinto es de completar código y el sexto de ampliación. Como un capítulo suele ocupar dos semanas, su hoja se reparte entre las dos sesiones de problemas.\nSe resuelven en clase, en la S2, con la misma secuencia todas las semanas: el profesor resuelve uno en la pizarra razonando en voz alta, los estudiantes hacen el siguiente por parejas, y se corrige en la pizarra. Quien hace las nueve hojas llega al examen habiendo visto resolver una quincena de ejercicios de examen y habiendo hecho otros tantos.\nTres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un miniexamen cronometrado de un solo bloque, corregido en clase acto seguido. No cuenta para la nota; sirve para calibrar el tiempo.\nSi una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#el-resultado-de-la-semana",
-    "href": "curso/guia.html#el-resultado-de-la-semana",
-    "title": "Guía de la asignatura",
-    "section": "El resultado de la semana",
-    "text": "El resultado de la semana\nCada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una definición, derivación o argumento central elegido entre los de las tres últimas semanas. La exigencia matemática se concentra así en resultados que justifican decisiones de modelización, optimización o evaluación.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#qué-no-cubre-esta-asignatura",
-    "href": "curso/guia.html#qué-no-cubre-esta-asignatura",
-    "title": "Guía de la asignatura",
-    "section": "Qué NO cubre esta asignatura",
-    "text": "Qué NO cubre esta asignatura\nClasificación. Es la asignatura hermana, Aprendizaje Automático: Clasificación [G249], y comparte con esta buena parte del aparato. Los modelos lineales generalizados se nombran al final como continuación natural, pero no forman parte del temario evaluable.\nTampoco cubrimos inferencia sobre los coeficientes (errores estándar, contrastes, intervalos de confianza), teoría general de optimización ni métodos de ensamble en detalle. El objetivo es construir y evaluar modelos de predicción, no desarrollar un catálogo de algoritmos.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#actividades-formativas-y-metodologías-docentes",
-    "href": "curso/guia.html#actividades-formativas-y-metodologías-docentes",
-    "title": "Guía de la asignatura",
-    "section": "Actividades formativas y metodologías docentes",
-    "text": "Actividades formativas y metodologías docentes\nLas de la guía docente oficial, y dónde caen en este curso:\n\n\n\n\n\n\n\n\n\nActividad formativa\nAquí\n\n\n\n\nAF1\nClase magistral o teórica\nsesión S1 de cada semana\n\n\nAF2\nClase práctica\nsesiones S2 (problemas) y S3 (laboratorio)\n\n\nAF3\nRealización de trabajos\nel proyecto con agentes de IA (semanas 10-13)\n\n\nAF4\nTutorías\nseguimiento del proyecto; checkpoint evaluado en la semana 12\n\n\nAF5\nEstudio independiente\n~5,5 h/semana, según el contrato de trabajo de arriba\n\n\nAF6\nPruebas de evaluación\nparcial 1, defensa del proyecto y examen final\n\n\n\nMetodologías docentes: MD1 clase magistral · MD2 clase práctica · MD3 tutorías.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#asistencia-y-dispositivos",
-    "href": "curso/guia.html#asistencia-y-dispositivos",
-    "title": "Guía de la asignatura",
-    "section": "Asistencia y dispositivos",
-    "text": "Asistencia y dispositivos\nLa asistencia es obligatoria en primera matrícula. Una asistencia inferior al 80 % implica la pérdida del derecho a examen en la convocatoria ordinaria.\nLa guía docente no permite el uso de móviles ni de otros dispositivos electrónicos en el aula salvo indicación del profesor. En esta asignatura, esa indicación es explícita:\n\nS3 (laboratorio): portátil obligatorio.\nS1 (teoría) y S2 (problemas): sin dispositivos. La S2 es el ensayo del examen final, que se hace en papel.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/guia.html#bibliografía",
-    "href": "curso/guia.html#bibliografía",
-    "title": "Guía de la asignatura",
-    "section": "Bibliografía",
-    "text": "Bibliografía\nLa de la guía docente oficial:\n\nC. M. Bishop, Pattern Recognition and Machine Learning. Springer.\nA. Giussani, Applied Machine Learning with Python. Bocconi University Press.\nDeisenroth, Faisal y Ong, Mathematics for Machine Learning. Cambridge University Press.\nBoehmke y Greenwell, Hands-On Machine Learning. CRC Press.\nHastie, Tibshirani y Friedman, The Elements of Statistical Learning. Springer.\n\nComplementaria, y más próxima al enfoque de estos apuntes:\n\nBishop y Bishop, Deep Learning: Foundations and Concepts. Springer. Es la versión actualizada de PRML y sigue el mismo enfoque probabilístico que estos apuntes.\n\n\n\n\n\n\n\nAviso sobre la bibliografía oficial: Boehmke y Greenwell es un libro de R, y esta asignatura es de Python. Conviene usarlo por los conceptos y no por el código.",
-    "crumbs": [
-      "Apéndices",
-      "Guía de la asignatura"
-    ]
-  },
-  {
-    "objectID": "curso/calendario.html",
-    "href": "curso/calendario.html",
-    "title": "Calendario",
-    "section": "",
-    "text": "Fechas pendientes del calendario académico oficial. La estructura por semanas es firme.\n\n\n\nLos capítulos organizan el contenido conceptual y pueden ocupar más de una semana. Hay una hoja de problemas por capítulo, que se reparte entre sus sesiones S2; los laboratorios, en cambio, se numeran por semana para conservar un ritmo de trabajo estable.\n\n\n\n\n\n\n\n\nSem.\nCapítulo\nEvaluación\n\n\n\n\n1\n1 · Señal y ruido: formulación\ndiagnóstico (no evaluado)\n\n\n2\n1 · Señal y ruido: sobreajuste, modelo generador y verosimilitud\n\n\n\n3\n2 · De la verosimilitud a la pérdida\n\n\n\n4\n2 · Gradientes, descenso y PyTorch\n\n\n\n5\n3 · Modelos lineales con muchas variables\npráctica de álgebra matricial en S2\n\n\n6\n3 · Ajuste e implementación con datos reales\nminiexamen cronometrado; se publica el simulacro del parcial\n\n\n7\n4 · Riesgo de generalización, métricas y particiones\nParcial 1 (20 %)\n\n\n8\n4 · Validación cruzada y selección honesta\n\n\n\n9\n5 · Auditoría, fugas y transformaciones\ntaller de agentes I en S3\n\n\n10\n5 · Grupos, series y el pipeline completo\nminiexamen cronometrado; se publica el enunciado del proyecto\n\n\n11\n6 · Características y modelos no lineales\nformación de equipos\n\n\n12\n6 · Sesgo, varianza y curvas de aprendizaje\ncheckpoint del proyecto\n\n\n13\n7 · Ridge, lasso y elección de lambda\nentrega y defensa del proyecto (20 %)\n\n\n14\n8 · Selección de variables y PCA\nminiexamen cronometrado; taller de agentes II\n\n\n15\n9 · Árboles de regresión, cierre y repaso\nsimulacro del examen final\n\n\n\nEl parcial cubre los capítulos 1-3. Puede desplazarse entre las semanas 6 y 7 sin alterar el comienzo del bloque de evaluación.\nEl proyecto no ocupa una semana completa. Se publica en la semana 10, los equipos se forman en la 11, el checkpoint se realiza en la 12 y la defensa en la 13. El trabajo se desarrolla principalmente fuera del aula.",
-    "crumbs": [
-      "Apéndices",
-      "Calendario"
-    ]
-  },
-  {
     "objectID": "curso/evaluacion.html",
     "href": "curso/evaluacion.html",
     "title": "Evaluación",
@@ -383,72 +284,6 @@
     "crumbs": [
       "Apéndices",
       "Evaluación"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html",
-    "href": "curso/politica-ia.html",
-    "title": "Política de uso de IA generativa",
-    "section": "",
-    "text": "Resumen",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html#resumen",
-    "href": "curso/politica-ia.html#resumen",
-    "title": "Política de uso de IA generativa",
-    "section": "",
-    "text": "Contexto\n¿Se puede?\n\n\n\n\nExámenes (parcial y final)\nNo. Son en papel y sin dispositivos\n\n\nHojas de problemas\nSí, y hay que decirlo\n\n\nLaboratorios\nSí\n\n\nProyecto\nSí, y es obligatorio documentarlo",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html#por-qué-no-está-prohibida",
-    "href": "curso/politica-ia.html#por-qué-no-está-prohibida",
-    "title": "Política de uso de IA generativa",
-    "section": "Por qué no está prohibida",
-    "text": "Por qué no está prohibida\nPorque forman parte del trabajo habitual con modelos y porque la guía docente incluye explícitamente una introducción a los agentes de IA para su implementación.",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html#por-qué-hay-que-documentarla",
-    "href": "curso/politica-ia.html#por-qué-hay-que-documentarla",
-    "title": "Política de uso de IA generativa",
-    "section": "Por qué hay que documentarla",
-    "text": "Por qué hay que documentarla\nEl objetivo del proyecto no es que el código exista, sino saber si es correcto. Un agente produce con facilidad pipelines con fuga de información, argumentos de scikit-learn que no existen y métricas de clasificación en problemas de regresión. Detectar esos fallos es la competencia que se evalúa.",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html#bitacora_ia.md",
-    "href": "curso/politica-ia.html#bitacora_ia.md",
-    "title": "Política de uso de IA generativa",
-    "section": "BITACORA_IA.md",
-    "text": "BITACORA_IA.md\nEntregable obligatorio del proyecto. Debe documentar:\n\nAl menos cinco interacciones relevantes: qué se pidió, qué contestó, qué se hizo con la respuesta.\nAl menos dos errores reales del agente, cada uno con: cómo se detectó y cómo se corrigió.\n\nUna bitácora sin errores documentados se interpreta como una bitácora incompleta.",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
-    ]
-  },
-  {
-    "objectID": "curso/politica-ia.html#defensa-individual",
-    "href": "curso/politica-ia.html#defensa-individual",
-    "title": "Política de uso de IA generativa",
-    "section": "Defensa individual",
-    "text": "Defensa individual\nEn la defensa habrá al menos una pregunta dirigida a una persona concreta sobre una celda concreta de su propio repositorio. Quien no pueda explicar su propio código pierde hasta un 40 % de nota individual, sin que ello afecte a la del equipo.",
-    "crumbs": [
-      "Apéndices",
-      "Política de uso de IA generativa"
     ]
   },
   {
@@ -544,7 +379,7 @@
     "href": "curso/algebra.html#diagnóstico",
     "title": "Cálculo y álgebra que vas a necesitar",
     "section": "Diagnóstico",
-    "text": "Diagnóstico\nQuince minutos, sin ordenador. No cuenta para la nota; sirve para saber de qué punto partimos.\n\nEscribe la traspuesta de \\(\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6\\end{pmatrix}\\).\nCon \\(\\mathbf{X}= \\begin{pmatrix} 1 & 0 \\\\ 1 & 1 \\\\ 1 & 2\\end{pmatrix}\\), calcula \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) y di de qué tamaño es.\nCon la misma \\(\\mathbf{X}\\) y \\(\\boldsymbol{w}= (2, -1)^{\\mathsf{T}}\\), calcula \\(\\mathbf{X}\\boldsymbol{w}\\).\n¿Cuánto vale \\(\\nabla\\left(\\boldsymbol{w}^{\\mathsf{T}}\\boldsymbol{w}\\right)\\)?\nSi \\(f(x,y) = x^2\\sin y + y^3\\), calcula \\(\\frac{\\partial f}{\\partial x}\\) y \\(\\frac{\\partial f}{\\partial y}\\).\nExhibe un \\(\\mathbf{v}\\neq\\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v}=\\mathbf{0}\\) para \\(\\mathbf{X}= \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\). ¿Cuál es su rango?\nSean \\(\\mathbf{u} = (1,2,2)^{\\mathsf{T}}\\) y \\(\\mathbf{v} = (3,0,4)^{\\mathsf{T}}\\). Calcula \\(\\mathbf{u}^{\\mathsf{T}}\\mathbf{v}\\), \\(\\left\\lVert \\mathbf{u} \\right\\rVert\\) y \\(\\left\\lVert \\mathbf{v} \\right\\rVert\\).\nSi \\(\\left\\lVert \\mathbf{X}\\mathbf{v} \\right\\rVert^2 = 0\\), ¿qué se puede concluir sobre \\(\\mathbf{X}\\mathbf{v}\\)? ¿Y sobre \\(\\mathbf{v}\\)?",
+    "text": "Diagnóstico\nQuince minutos, sin ordenador. No cuenta para la nota; sirve para saber de qué punto partimos.\n\nEscribe la traspuesta de \\(\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6\\end{pmatrix}\\).\nCon \\(\\mathbf{X}= \\begin{pmatrix} 1 & 0 \\\\ 1 & 1 \\\\ 1 & 2\\end{pmatrix}\\), calcula \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) y di de qué tamaño es.\nCon la misma \\(\\mathbf{X}\\) y \\(\\boldsymbol{w}= (2, -1)^{\\mathsf{T}}\\), calcula \\(\\mathbf{X}\\boldsymbol{w}\\).\n¿Cuánto vale \\(\\nabla\\left(\\boldsymbol{w}^{\\mathsf{T}}\\boldsymbol{w}\\right)\\)?\nSi \\(f(x,y) = x^2\\sin y + y^3\\), calcula \\(\\frac{\\partial f}{\\partial x}\\) y \\(\\frac{\\partial f}{\\partial y}\\).\nExhibe un \\(\\mathbf{v}\\neq\\mathbf{0}\\) con \\(\\mathbf{X}\\mathbf{v}=\\mathbf{0}\\) para \\(\\mathbf{X}= \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\). ¿Cuál es su rango?\nSean \\(\\mathbf{u} = (1,2,2)^{\\mathsf{T}}\\) y \\(\\mathbf{v} = (3,0,4)^{\\mathsf{T}}\\). Calcula \\(\\mathbf{u}^{\\mathsf{T}}\\mathbf{v}\\), \\(\\left\\lVert \\mathbf{u} \\right\\rVert\\) y \\(\\left\\lVert \\mathbf{v} \\right\\rVert\\).\nSi \\(\\left\\lVert \\mathbf{X}\\mathbf{v} \\right\\rVert^2 = 0\\), ¿qué se puede concluir sobre \\(\\mathbf{X}\\mathbf{v}\\)? ¿Y sobre \\(\\mathbf{v}\\)?\n\n\n\n\n\n\n\nNotaSoluciones del diagnóstico\n\n\n\n\n\n\n\\(\\begin{pmatrix} 1 & 4 \\\\ 2 & 5 \\\\ 3 & 6\\end{pmatrix}\\), de tamaño \\(3\\times 2\\): la traspuesta intercambia filas por columnas.\n\\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}= \\begin{pmatrix} 3 & 3 \\\\ 3 & 5\\end{pmatrix}\\), de tamaño \\(2\\times 2\\). Con \\(\\mathbf{X}\\) de tamaño \\(n\\times p\\), el producto \\(\\mathbf{X}^{\\mathsf{T}}\\mathbf{X}\\) es siempre \\(p\\times p\\), y no depende del número de observaciones.\n\\(\\mathbf{X}\\boldsymbol{w}= (2, 1, 0)^{\\mathsf{T}}\\). Es una combinación de las columnas de \\(\\mathbf{X}\\) con pesos \\(2\\) y \\(-1\\), y de ahí que tenga tantas componentes como filas.\n\\(\\nabla(\\boldsymbol{w}^{\\mathsf{T}}\\boldsymbol{w}) = 2\\boldsymbol{w}\\), que es Lema 3 con \\(\\mathbf{A}\\) la identidad.\n\\(\\frac{\\partial f}{\\partial x} = 2x\\sin y\\) y \\(\\frac{\\partial f}{\\partial y} = x^2\\cos y + 3y^2\\): al derivar respecto de una variable, la otra se trata como constante.\nPor ejemplo \\(\\mathbf{v} = (2, -1)^{\\mathsf{T}}\\), y su rango es \\(1\\): la segunda columna es el doble de la primera, así que hay una sola columna independiente. Ese \\(\\mathbf{v}\\) está en el núcleo de Definición 1.\n\\(\\mathbf{u}^{\\mathsf{T}}\\mathbf{v} = 3 + 0 + 8 = 11\\), \\(\\left\\lVert \\mathbf{u} \\right\\rVert = \\sqrt{9} = 3\\) y \\(\\left\\lVert \\mathbf{v} \\right\\rVert = \\sqrt{25} = 5\\).\nQue \\(\\mathbf{X}\\mathbf{v} = \\mathbf{0}\\), por Lema 1: una norma se anula solo en el vector nulo. Sobre \\(\\mathbf{v}\\) no se puede concluir nada salvo que \\(\\mathbf{X}\\) tenga rango completo por columnas; en ese caso su núcleo es trivial y entonces sí, \\(\\mathbf{v} = \\mathbf{0}\\). Esta es exactamente la distinción de la que depende que los mínimos cuadrados tengan solución única.",
     "crumbs": [
       "Apéndices",
       "Cálculo y álgebra que vas a necesitar"
@@ -650,135 +485,14 @@
     ]
   },
   {
-    "objectID": "curso/indice-resultados.html",
-    "href": "curso/indice-resultados.html",
-    "title": "Índice de resultados",
-    "section": "",
-    "text": "Capítulo 1 · Datos = señal + ruido\nTodos los resultados numerados del curso. El bloque B de los exámenes sale de aquí, y de ningún otro sitio. El examen lo redacta el profesor de la asignatura, así que esta lista es un compromiso.",
+    "objectID": "curso/probabilidad.html#diagnóstico",
+    "href": "curso/probabilidad.html#diagnóstico",
+    "title": "Repaso de probabilidad",
+    "section": "Diagnóstico",
+    "text": "Diagnóstico\nQuince minutos, sin ordenador y sin calculadora. No cuenta para la nota; sirve para saber de qué punto partimos. En las cinco primeras preguntas, \\(X\\) tiene densidad \\(p(x) = 2x\\) en el intervalo \\([0,1]\\) y cero fuera.\n\nComprueba que \\(p\\) es una densidad y calcula \\(\\mathbb{P}\\!\\left( X\\leq 1/2 \\right)\\).\nCalcula \\(\\mathbb{E}\\!\\left[ X \\right]\\).\nCalcula \\(\\mathbb{E}\\!\\left[ X^2 \\right]\\) diciendo qué resultado usas, y comprueba que no vale \\(\\mathbb{E}\\!\\left[ X \\right]^2\\).\nCon los dos apartados anteriores, calcula \\(\\mathrm{Var}\\!\\left( X \\right)\\). Después, sin volver a integrar, calcula \\(\\mathbb{E}\\!\\left[ 3X-1 \\right]\\) y \\(\\mathrm{Var}\\!\\left( 3X-1 \\right)\\).\nSean \\(X_1, X_2, X_3\\) tres extracciones independientes de \\(p\\). Escribe su densidad conjunta y di por qué la verosimilitud del curso es un producto.\nSea \\(Z\\sim\\mathcal{N}(0,1)\\) y \\(W = 2Z + 5\\). Di de qué distribución es \\(W\\), con sus parámetros, y qué resultados del anexo lo justifican.\nSea \\(Y = X + \\varepsilon\\) con \\(\\varepsilon\\) independiente de \\(X\\) y \\(\\mathbb{E}\\!\\left[ \\varepsilon \\right] = 0\\). Calcula \\(\\mathbb{E}\\!\\left[ Y\\mid X \\right]\\) y deduce \\(\\mathbb{E}\\!\\left[ Y \\right]\\) diciendo qué resultado usas.\n\n\n\n\n\n\n\nNotaSoluciones del diagnóstico\n\n\n\n\n\n\nEs no negativa en \\([0,1]\\) e integra a uno: \\(\\int_0^1 2x\\,\\mathrm{d}x = \\left[x^2\\right]_0^1 = 1\\). Y \\(\\mathbb{P}\\!\\left( X\\leq 1/2 \\right) = \\int_0^{1/2} 2x\\,\\mathrm{d}x = 1/4\\). Fíjate en que no es \\(1/2\\): la densidad crece, así que la mitad izquierda pesa menos.\n\\(\\mathbb{E}\\!\\left[ X \\right] = \\int_0^1 x\\cdot 2x\\,\\mathrm{d}x = 2/3\\).\nPor Lema 1, con \\(g(x) = x^2\\): \\(\\mathbb{E}\\!\\left[ X^2 \\right] = \\int_0^1 x^2\\cdot 2x\\,\\mathrm{d}x = 1/2\\). Y \\(\\mathbb{E}\\!\\left[ X \\right]^2 = 4/9\\), que es distinto: la esperanza de una función no es la función de la esperanza. Es el error que más veces aparece en el curso.\n\\(\\mathrm{Var}\\!\\left( X \\right) = \\mathbb{E}\\!\\left[ X^2 \\right]-\\mathbb{E}\\!\\left[ X \\right]^2 = 1/2 - 4/9 = 1/18\\). Por Lema 2, \\(\\mathbb{E}\\!\\left[ 3X-1 \\right] = 3\\cdot 2/3 - 1 = 1\\) y \\(\\mathrm{Var}\\!\\left( 3X-1 \\right) = 9\\mathrm{Var}\\!\\left( X \\right) = 1/2\\): la constante no afecta a la varianza y el factor entra al cuadrado.\n\\(p(x_1,x_2,x_3) = 8\\,x_1x_2x_3\\) en el cubo unidad, es decir, el producto de las tres densidades, que es la definición de independencia de la sección correspondiente. De ahí que la verosimilitud de una muestra independiente se escriba como producto y su logaritmo como suma.\n\\(W\\sim\\mathcal{N}(5, 4)\\). La escala sale de Teorema 2 y la traslación de Teorema 1; juntas dicen que una transformación afín de una normal es normal, con media \\(2\\cdot 0+5\\) y varianza \\(2^2\\cdot 1\\). Ojo: la varianza es \\(4\\), no \\(2\\).\n\\(\\mathbb{E}\\!\\left[ Y\\mid X \\right] = X + \\mathbb{E}\\!\\left[ \\varepsilon \\right] = X\\), porque fijado \\(X\\) lo único aleatorio es el ruido. Y por Lema 3, \\(\\mathbb{E}\\!\\left[ Y \\right] = \\mathbb{E}\\!\\left[ \\mathbb{E}\\!\\left[ Y\\mid X \\right] \\right] = \\mathbb{E}\\!\\left[ X \\right]\\). Esta es la cuenta que sostiene el capítulo 1: el modelo describe la media de la respuesta y el ruido no la desplaza.",
     "crumbs": [
       "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-1-datos-señal-ruido",
-    "href": "curso/indice-resultados.html#capítulo-1-datos-señal-ruido",
-    "title": "Índice de resultados",
-    "section": "",
-    "text": "Resultado\nSe demuestra\nDepende de\n\n\n\n\nDef. problema de predicción supervisada\n\n\n\n\nDef. modelo señal + ruido\n\n\n\n\nCor. la señal es la media condicional\nsí\nseñal + ruido\n\n\nDef. error de entrenamiento y de test\n\n\n\n\nDef. sobreajuste\n\n\n\n\nTeo. interpolación exacta\nsí (base de Lagrange)\n\n\n\nDef. densidad normal\n\n\n\n\nTeo. traslación de una variable normal\nen el repaso de probabilidad\ndensidad normal\n\n\nTeo. escala de una variable normal\nen el repaso de probabilidad\ndensidad normal\n\n\nTeo. media y varianza de una variable normal\nen el repaso de probabilidad\ndensidad normal\n\n\nCor. del ruido al objetivo\nsí\ntraslación\n\n\nDef. distribución generadora de los datos\n\n\n\n\nDef. clase de hipótesis y parámetros\n\n\n\n\nDef. modelo lineal-gaussiano\n\n\n\n\nDef. verosimilitud\n\n\n\n\nLema el logaritmo preserva el argmax\nsí\n\n\n\nDef. máxima verosimilitud",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-2-de-la-verosimilitud-a-la-pérdida",
-    "href": "curso/indice-resultados.html#capítulo-2-de-la-verosimilitud-a-la-pérdida",
-    "title": "Índice de resultados",
-    "section": "Capítulo 2 · De la verosimilitud a la pérdida",
-    "text": "Capítulo 2 · De la verosimilitud a la pérdida\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. función de pérdida\n\n\n\n\nDef. riesgo empírico con pérdida cuadrática\n\npérdida y riesgo empírico\n\n\nLema invarianza afín del argmin\nsí\n\n\n\nLema el mejor modelo constante es la media\nsí\n\n\n\nTeo. expansión de la log-verosimilitud\nsí\ndensidad normal\n\n\nCor. MLE = mínimos cuadrados\nsí\ninvarianza afín\n\n\nTeo. perfilado de \\(\\sigma\\)\nsí\nexpansión\n\n\nCor. la log-verosimilitud perfilada\nsí\nperfilado\n\n\nObs. sesgo de \\(\\hat\\sigma^2\\)\nno (fuera de alcance)\n\n\n\nProp. ruido de Laplace ⟹ error absoluto\nsí\nexpansión",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-3-modelos-lineales-con-muchas-variables",
-    "href": "curso/indice-resultados.html#capítulo-3-modelos-lineales-con-muchas-variables",
-    "title": "Índice de resultados",
-    "section": "Capítulo 3 · Modelos lineales con muchas variables",
-    "text": "Capítulo 3 · Modelos lineales con muchas variables\nEn este capítulo varias derivaciones están planteadas como ejercicio en el propio texto. Son igualmente materia del bloque B: la columna Se demuestra dice dónde está la demostración.\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. modelo lineal-gaussiano múltiple\n\nmodelo lineal-gaussiano del cap. 1\n\n\nDef. vector de predictoras y convenio \\(x_{i0}=1\\)\n\n\n\n\nDef. norma euclídea\n\n\n\n\nDef. matriz de diseño\n\nconvenio de la constante\n\n\nDef. vector de residuos\n\nresiduo del cap. 2\n\n\nDe la log-verosimilitud al error cuadrático medio\nsí (ejercicio en el texto)\nexpansión de la log-verosimilitud del cap. 2\n\n\nProp. el riesgo cuadrático en forma matricial\nsí\nnorma euclídea, matriz de diseño\n\n\nTeo. gradiente del riesgo cuadrático\nsí\ngradiente de formas lineal y cuadrática\n\n\nGradiente por componentes\nsí (ejercicio en el texto)\nderivada parcial\n\n\nRecuperar el gradiente de la recta con \\(\\nfeat=1\\)\nsí (ejercicio en el texto)\ngradiente vectorial\n\n\nEcuaciones normales\nsí (ejercicio en el texto)\ngradiente vectorial, condición de primer orden\n\n\nTeo. existencia y unicidad del ajuste\nno (fuera de alcance)\nrango y núcleo",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-4-evaluar-para-generalizar",
-    "href": "curso/indice-resultados.html#capítulo-4-evaluar-para-generalizar",
-    "title": "Índice de resultados",
-    "section": "Capítulo 4 · Evaluar para generalizar",
-    "text": "Capítulo 4 · Evaluar para generalizar\nComo en el capítulo 3, algunas demostraciones están planteadas como ejercicio dentro del texto. Son igualmente materia del bloque B.\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. modelo nulo\n\n\n\n\nLema la mejor constante es la media\nsí\ncondición de primer orden\n\n\nCon pérdida absoluta la mejor constante es la mediana\nsí (ejercicio en el texto)\nconteo de observaciones a cada lado\n\n\nProp. el riesgo en train es optimista en media\nsí\nlem-esperanza-funcion, definición de mínimo\n\n\nTeo. el error de test es insesgado para un modelo fijo\nsí\nlinealidad de la esperanza\n\n\nDef. entrenamiento y test (def-train-test)\n\nel teorema anterior\n\n\nProp. precisión de la estimación de test\nsí\nvarianza de una media de independientes\n\n\nProp. el mínimo de varias estimaciones insesgadas es optimista\nsí\nmonotonía de la esperanza\n\n\nDef. riesgo esperado de un procedimiento (def-riesgo-procedimiento)\n\nriesgo verdadero del cap. 2\n\n\nDef. entrenamiento, validación y test (def-particiones)\n\ndef-train-test, prop. del mínimo\n\n\nLa validación simple es insesgada para \\(\\bar R_{\\ntrain-\\nval}\\)\nsí (ejercicio en el texto)\nteo. del test, def. de riesgo del procedimiento\n\n\nDef. K-fold cross validation\n\nparticiones, riesgo esperado del procedimiento\n\n\n\\(\\CV\\) es insesgada para \\(\\bar R_{\\ntrain(K-1)/K}\\)\nsí (ejercicio en el texto)\nel ejercicio anterior, linealidad de la esperanza\n\n\nDef. diferencia emparejada y error típico emparejado\n\nK-fold cross validation\n\n\nDef. regla de un error típico (def-regla-un-error-tipico)\n\ndiferencia emparejada, prop. del mínimo\n\n\nDef. métricas de regresión: MSE, RMSE, MAE y \\(R^2\\)\n\nriesgo empírico del cap. 2, modelo nulo\n\n\nEl RMSE nunca es menor que el MAE\nsí (ejercicio en el texto)\nvarianza no negativa\n\n\n\\(R^2\\) y MSE ordenan igual sobre una muestra fija\nsí (ejercicio en el texto)\ndefinición de \\(R^2\\)",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-5-preparar-datos-sin-contaminar-la-evaluación",
-    "href": "curso/indice-resultados.html#capítulo-5-preparar-datos-sin-contaminar-la-evaluación",
-    "title": "Índice de resultados",
-    "section": "Capítulo 5 · Preparar datos sin contaminar la evaluación",
-    "text": "Capítulo 5 · Preparar datos sin contaminar la evaluación\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. variables numéricas y categóricas\n\n\n\n\nDef. valor ausente\n\n\n\n\nDef. imputación y columna indicadora\n\nvalor ausente\n\n\nDef. codificación indicadora\n\nvariable categórica\n\n\nDef. categoría de referencia\n\ncodificación indicadora\n\n\nDef. valor extremo\n\n\n\n\nDef. fuga de información\n\nparticiones del cap. 4\n\n\nDef. fuga temporal\n\nfuga de información\n\n\nDef. pipeline y ColumnTransformer\n\n\n\n\nProp. la codificación completa deja la matriz sin rango completo\nsí\nnúcleo y rango del cap. 3\n\n\nCor. la fuga invalida la estimación de test\nsí\nel teorema del test insesgado\n\n\nLa imputación por un valor constante contrae la varianza\nsí (ejercicio de la hoja)\ndefinición de varianza muestral\n\n\nRetransformar el logaritmo da la mediana\nsí (ejercicio de la hoja)\nlos cuantiles se conservan bajo transformaciones crecientes\n\n\nLema la esperanza de una función de una extracción (lem-esperanza-funcion)\nen el repaso de probabilidad\ndefinición de esperanza\n\n\nLema los cuantiles se conservan bajo transformaciones crecientes\nen el repaso de probabilidad\ndefinición de cuantil",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/indice-resultados.html#capítulo-6-complejidad-sesgo-y-varianza",
-    "href": "curso/indice-resultados.html#capítulo-6-complejidad-sesgo-y-varianza",
-    "title": "Índice de resultados",
-    "section": "Capítulo 6 · Complejidad, sesgo y varianza",
-    "text": "Capítulo 6 · Complejidad, sesgo y varianza\n\n\n\n\n\n\n\n\nResultado\nSe demuestra\nDepende de\n\n\n\n\nDef. mapa de características\n\nmodelo lineal del cap. 3\n\n\nProp. todo el capítulo 3 sigue valiendo con \\(\\Phimat\\)\nsí\nriesgo matricial, gradiente y unicidad del cap. 3\n\n\nTeo. descomposición sesgo-varianza (thm-descomposicion)\nsí\nlinealidad de la esperanza, ley de la esperanza total\n\n\nEl rango completo de \\(\\Phimat\\) con potencias equivale a tener \\(g+1\\) valores distintos (exr-h6-phi)\nsí (ejercicio de la hoja)\nnúcleo y rango del cap. 3; raíces de un polinomio\n\n\nElevar al cuadrado una columna indicadora deja la matriz sin rango completo (exr-h6-phi)\nsí (ejercicio de la hoja)\nnúcleo y rango del cap. 3",
-    "crumbs": [
-      "Apéndices",
-      "Índice de resultados"
-    ]
-  },
-  {
-    "objectID": "curso/trazabilidad.html",
-    "href": "curso/trazabilidad.html",
-    "title": "Trazabilidad con la guía docente",
-    "section": "",
-    "text": "Temario\nLa estructura del curso amplía un núcleo de fundamentos de aprendizaje automático con los contenidos prácticos y metodológicos exigidos por la guía docente de G244.\nLos modelos lineales generalizados no constituyen un capítulo propio. Se presentan al final como extensión del principio distribución generadora \\(\\rightarrow\\) pérdida, sin entrar en clasificación ni añadir resultados evaluables.",
-    "crumbs": [
-      "Apéndices",
-      "Trazabilidad con la guía docente"
-    ]
-  },
-  {
-    "objectID": "curso/trazabilidad.html#temario",
-    "href": "curso/trazabilidad.html#temario",
-    "title": "Trazabilidad con la guía docente",
-    "section": "",
-    "text": "Programa oficial\nDesarrollo en el curso\n\n\n\n\nT1 · Conceptos básicos de aprendizaje automático\ncapítulos 1-3\n\n\nT1 · Estado del arte\nguía del proyecto, sección de cierre, y repaso de la semana 15\n\n\nT2 · Análisis y tratamiento de datos\ncapítulo 5 y caso del proyecto\n\n\nT2 · Reducción de dimensiones y selección de variables\ncapítulos 7-8\n\n\nT2 · Validación y métricas de evaluación\ncapítulo 4; transversal desde el 5\n\n\nT3 · Descenso de gradiente\ncapítulo 2 y aplicación en el 3\n\n\nT3 · Métodos lineales\ncapítulos 1-3 y 7\n\n\nT3 · Métodos no lineales\ncapítulos 6 y 9\n\n\nT3 · Métodos basados en reglas\ncapítulo 9\n\n\nT4 · Librerías de programación\nlaboratorios de todos los capítulos; síntesis en el proyecto\n\n\nT4 · Casos de uso y aplicaciones\nlaboratorios y proyecto\n\n\nAgentes de IA para implementar modelos\ntalleres de las semanas 9 y 14, proyecto y política de IA",
-    "crumbs": [
-      "Apéndices",
-      "Trazabilidad con la guía docente"
-    ]
-  },
-  {
-    "objectID": "curso/trazabilidad.html#resultados-de-aprendizaje",
-    "href": "curso/trazabilidad.html#resultados-de-aprendizaje",
-    "title": "Trazabilidad con la guía docente",
-    "section": "Resultados de aprendizaje",
-    "text": "Resultados de aprendizaje\n\n\n\n\n\n\n\nResultado\nDónde se trabaja principalmente\n\n\n\n\nC1 · fundamentos matemáticos y estadísticos\ncapítulos 1-4 y 6-8\n\n\nC6 · análisis exploratorio preliminar\ncapítulo 5 y proyecto\n\n\nH1 · álgebra lineal, cálculo, estadística y cálculo numérico\ncapítulos 2-4 y 6-8\n\n\nH4 · modelos de probabilidad y estadística\ncapítulos 1-4 y 6\n\n\nH8 · métodos de aprendizaje aplicados a datos\nlaboratorios 3-9 y proyecto\n\n\nCO1 · decisiones críticas de almacenamiento, preprocesamiento y análisis\ncapítulos 4-5 y proyecto\n\n\nCO3 · extracción de información de datos homogéneos y heterogéneos\ncapítulos 5 y 8; proyecto",
-    "crumbs": [
-      "Apéndices",
-      "Trazabilidad con la guía docente"
-    ]
-  },
-  {
-    "objectID": "curso/trazabilidad.html#decisiones-de-alcance",
-    "href": "curso/trazabilidad.html#decisiones-de-alcance",
-    "title": "Trazabilidad con la guía docente",
-    "section": "Decisiones de alcance",
-    "text": "Decisiones de alcance\n\nLa convexidad se introduce localmente para justificar mínimos globales; no ocupa un capítulo autónomo.\nLa forma matricial aparece al generalizar el modelo lineal a muchas variables; no se enseña como fin en sí misma.\nValidación cruzada y prevención de fugas preceden a la ingeniería de características y a la selección de modelos.\nLos árboles se limitan a regresión, criterio de división y control de complejidad. Los ensambles solo se sitúan en el mapa final.\nClasificación, inferencia sobre coeficientes, redes neuronales y teoría avanzada de optimización quedan fuera del temario.",
-    "crumbs": [
-      "Apéndices",
-      "Trazabilidad con la guía docente"
-    ]
-  },
-  {
-    "objectID": "curso/trazabilidad.html#ods",
-    "href": "curso/trazabilidad.html#ods",
-    "title": "Trazabilidad con la guía docente",
-    "section": "ODS",
-    "text": "ODS\n\n\n\n\n\n\n\nODS\nContribución\n\n\n\n\n4 · Educación de calidad\nmateriales abiertos, cuadernos reproducibles y evaluación formativa\n\n\n8 · Trabajo decente y crecimiento económico\ncasos de predicción aplicados a decisiones de negocio\n\n\n9 · Industria, innovación e infraestructura\nimplementación reproducible y uso crítico de herramientas de IA",
-    "crumbs": [
-      "Apéndices",
-      "Trazabilidad con la guía docente"
+      "Repaso de probabilidad"
     ]
   }
 ]

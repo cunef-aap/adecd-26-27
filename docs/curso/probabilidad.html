@@ -36,7 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../curso/indice-resultados.html" rel="next">
 <link href="../curso/algebra.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -118,7 +117,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/probabilidad.html">Repaso de probabilidad</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/evaluacion.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/probabilidad.html">Repaso de probabilidad</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -194,26 +193,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../curso/guia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Guía de la asignatura</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../curso/calendario.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calendario</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../curso/evaluacion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Evaluación</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../curso/politica-ia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Política de uso de IA generativa</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -226,18 +207,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Repaso de probabilidad</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Índice de resultados</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../curso/trazabilidad.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Trazabilidad con la guía docente</span></a>
   </div>
 </li>
       </ul>
@@ -260,13 +229,14 @@ window.Quarto = {
   <li><a href="#la-distribución-normal" id="toc-la-distribución-normal" class="nav-link" data-scroll-target="#la-distribución-normal">La distribución normal</a></li>
   <li><a href="#otras-distribuciones-del-curso" id="toc-otras-distribuciones-del-curso" class="nav-link" data-scroll-target="#otras-distribuciones-del-curso">Otras distribuciones del curso</a></li>
   <li><a href="#qué-hay-que-traer-de-estadística" id="toc-qué-hay-que-traer-de-estadística" class="nav-link" data-scroll-target="#qué-hay-que-traer-de-estadística">Qué hay que traer de Estadística</a></li>
+  <li><a href="#diagnóstico" id="toc-diagnóstico" class="nav-link" data-scroll-target="#diagnóstico">Diagnóstico</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/guia.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/probabilidad.html">Repaso de probabilidad</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../curso/evaluacion.html">Apéndices</a></li><li class="breadcrumb-item"><a href="../curso/probabilidad.html">Repaso de probabilidad</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Repaso de probabilidad</h1>
 </div>
@@ -505,6 +475,43 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <li>Manejo básico de integrales: cambio de variable e integración por partes.</li>
 </ul>
 <p>Lo que <strong>no</strong> hace falta: teoremas límite, convergencia, funciones características, teoría de la medida.</p>
+</section>
+<section id="diagnóstico" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico">Diagnóstico</h2>
+<p>Quince minutos, sin ordenador y sin calculadora. No cuenta para la nota; sirve para saber de qué punto partimos. En las cinco primeras preguntas, <span class="math inline">\(X\)</span> tiene densidad <span class="math inline">\(p(x) = 2x\)</span> en el intervalo <span class="math inline">\([0,1]\)</span> y cero fuera.</p>
+<ol type="1">
+<li>Comprueba que <span class="math inline">\(p\)</span> es una densidad y calcula <span class="math inline">\(\mathbb{P}\!\left( X\leq 1/2 \right)\)</span>.</li>
+<li>Calcula <span class="math inline">\(\mathbb{E}\!\left[ X \right]\)</span>.</li>
+<li>Calcula <span class="math inline">\(\mathbb{E}\!\left[ X^2 \right]\)</span> diciendo qué resultado usas, y comprueba que <strong>no</strong> vale <span class="math inline">\(\mathbb{E}\!\left[ X \right]^2\)</span>.</li>
+<li>Con los dos apartados anteriores, calcula <span class="math inline">\(\mathrm{Var}\!\left( X \right)\)</span>. Después, sin volver a integrar, calcula <span class="math inline">\(\mathbb{E}\!\left[ 3X-1 \right]\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( 3X-1 \right)\)</span>.</li>
+<li>Sean <span class="math inline">\(X_1, X_2, X_3\)</span> tres extracciones independientes de <span class="math inline">\(p\)</span>. Escribe su densidad conjunta y di por qué la verosimilitud del curso es un producto.</li>
+<li>Sea <span class="math inline">\(Z\sim\mathcal{N}(0,1)\)</span> y <span class="math inline">\(W = 2Z + 5\)</span>. Di de qué distribución es <span class="math inline">\(W\)</span>, con sus parámetros, y qué resultados del anexo lo justifican.</li>
+<li>Sea <span class="math inline">\(Y = X + \varepsilon\)</span> con <span class="math inline">\(\varepsilon\)</span> independiente de <span class="math inline">\(X\)</span> y <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right] = 0\)</span>. Calcula <span class="math inline">\(\mathbb{E}\!\left[ Y\mid X \right]\)</span> y deduce <span class="math inline">\(\mathbb{E}\!\left[ Y \right]\)</span> diciendo qué resultado usas.</li>
+</ol>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Soluciones del diagnóstico
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Es no negativa en <span class="math inline">\([0,1]\)</span> e integra a uno: <span class="math inline">\(\int_0^1 2x\,\mathrm{d}x = \left[x^2\right]_0^1 = 1\)</span>. Y <span class="math inline">\(\mathbb{P}\!\left( X\leq 1/2 \right) = \int_0^{1/2} 2x\,\mathrm{d}x = 1/4\)</span>. Fíjate en que no es <span class="math inline">\(1/2\)</span>: la densidad crece, así que la mitad izquierda pesa menos.</li>
+<li><span class="math inline">\(\mathbb{E}\!\left[ X \right] = \int_0^1 x\cdot 2x\,\mathrm{d}x = 2/3\)</span>.</li>
+<li>Por <a href="#lem-esperanza-funcion" class="quarto-xref">Lema&nbsp;<span>1</span></a>, con <span class="math inline">\(g(x) = x^2\)</span>: <span class="math inline">\(\mathbb{E}\!\left[ X^2 \right] = \int_0^1 x^2\cdot 2x\,\mathrm{d}x = 1/2\)</span>. Y <span class="math inline">\(\mathbb{E}\!\left[ X \right]^2 = 4/9\)</span>, que es distinto: la esperanza de una función <strong>no</strong> es la función de la esperanza. Es el error que más veces aparece en el curso.</li>
+<li><span class="math inline">\(\mathrm{Var}\!\left( X \right) = \mathbb{E}\!\left[ X^2 \right]-\mathbb{E}\!\left[ X \right]^2 = 1/2 - 4/9 = 1/18\)</span>. Por <a href="#lem-linealidad" class="quarto-xref">Lema&nbsp;<span>2</span></a>, <span class="math inline">\(\mathbb{E}\!\left[ 3X-1 \right] = 3\cdot 2/3 - 1 = 1\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( 3X-1 \right) = 9\mathrm{Var}\!\left( X \right) = 1/2\)</span>: la constante no afecta a la varianza y el factor entra al cuadrado.</li>
+<li><span class="math inline">\(p(x_1,x_2,x_3) = 8\,x_1x_2x_3\)</span> en el cubo unidad, es decir, el producto de las tres densidades, que es la definición de independencia de la sección correspondiente. De ahí que la verosimilitud de una muestra independiente se escriba como producto y su logaritmo como suma.</li>
+<li><span class="math inline">\(W\sim\mathcal{N}(5, 4)\)</span>. La escala sale de <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> y la traslación de <a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1</span></a>; juntas dicen que una transformación afín de una normal es normal, con media <span class="math inline">\(2\cdot 0+5\)</span> y varianza <span class="math inline">\(2^2\cdot 1\)</span>. Ojo: la varianza es <span class="math inline">\(4\)</span>, no <span class="math inline">\(2\)</span>.</li>
+<li><span class="math inline">\(\mathbb{E}\!\left[ Y\mid X \right] = X + \mathbb{E}\!\left[ \varepsilon \right] = X\)</span>, porque fijado <span class="math inline">\(X\)</span> lo único aleatorio es el ruido. Y por <a href="#lem-esperanza-total" class="quarto-xref">Lema&nbsp;<span>3</span></a>, <span class="math inline">\(\mathbb{E}\!\left[ Y \right] = \mathbb{E}\!\left[ \mathbb{E}\!\left[ Y\mid X \right] \right] = \mathbb{E}\!\left[ X \right]\)</span>. Esta es la cuenta que sostiene el capítulo 1: el modelo describe la media de la respuesta y el ruido no la desplaza.</li>
+</ol>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -947,9 +954,6 @@ anterior. -->
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../curso/indice-resultados.html" class="pagination-link" aria-label="Índice de resultados">
-        <span class="nav-page-text">Índice de resultados</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -7,7 +7,7 @@ Escuela Politécnica Superior, CUNEF. Tercer curso, primer semestre, obligatoria
 Departamento de Métodos Cuantitativos. Guía docente 2026-27.
 
 Quince semanas, tres sesiones por semana. Unas 41 horas de clase y unas 109 de trabajo
-autónomo, según el reparto propio de `curso/guia.qmd`; la guía docente oficial no desglosa
+autónomo, según el reparto propio del curso; la guía docente oficial no desglosa
 horas.
 
 ## Temario oficial
@@ -36,7 +36,8 @@ Literal de la guía docente. Once epígrafes más el complemento.
 Complemento: "una breve introducción al uso de agentes de IA para la asistencia en la
 implementación de modelos de aprendizaje automático".
 
-El mapeo epígrafe por epígrafe a capítulos está en `curso/trazabilidad.qmd`. Al escribir un
+El mapeo epígrafe por epígrafe a capítulos estaba en `curso/trazabilidad.qmd`, retirado en
+agosto de 2026 y recuperable del historial de git. Al escribir un
 capítulo hay que comprobar que ese mapeo sigue siendo cierto.
 
 ## Resultados de aprendizaje
@@ -574,9 +575,9 @@ ayuda de implementación · estado del arte y qué queda fuera.
 **No introduce materia nueva.** Encadena sobre un caso propio las decisiones que los capítulos
 han tomado de una en una, y es el índice del informe que hay que entregar.
 **Epígrafes oficiales que cubre**, y esto hay que mantenerlo cierto en
-`curso/trazabilidad.qmd`: "T1 · Estado del arte", "T4 · Casos de uso y aplicaciones" y el
+la trazabilidad retirada: "T1 · Estado del arte", "T4 · Casos de uso y aplicaciones" y el
 complemento sobre agentes de IA, este último junto con los talleres de las semanas 9 y 14 y
-`curso/politica-ia.qmd`.
+la política de uso de IA, retirada del repositorio.
 **Fuente**: el caso bikeshare de `06-regularization.qmd:644-917`, cedido por el capítulo de
 regularización, sirve de esqueleto, con dos correcciones obligatorias: quitar la fuga del
 `get_dummies` previo a la partición y sustituir la validación única por validación cruzada.
@@ -629,11 +630,11 @@ Papel: capítulos 5, 9 y 11, y el proyecto.
 
 Orden de la guía docente: Bishop, *Pattern Recognition and Machine Learning* · Giussani,
 *Applied Machine Learning with Python* · Deisenroth, Faisal y Ong, *Mathematics for Machine
-Learning* · Boehmke y Greenwell, *Hands-On Machine Learning* (que es de R, y `curso/guia.qmd`
+Learning* · Boehmke y Greenwell, *Hands-On Machine Learning* (que es de R, y la guía docente
 lo advierte) · Hastie, Tibshirani y Friedman, *Elements of Statistical Learning*.
 
 En `referencias.bib` hay clave para Hastie (`hastie2009elements`) y para Deisenroth
 (`deisenroth2020mathematics`). **`bishop2023deep` no es el Bishop de la guía oficial**: es
-*Deep Learning: Foundations and Concepts*, de Bishop y Bishop, que `curso/guia.qmd` lista
+*Deep Learning: Foundations and Concepts*, de Bishop y Bishop, que la guía docente lista
 como bibliografía complementaria. No hay clave para *Pattern Recognition and Machine
 Learning*, ni para Giussani, ni para Boehmke y Greenwell. Si se citan, hay que crearla.

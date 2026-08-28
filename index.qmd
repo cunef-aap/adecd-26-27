@@ -129,13 +129,12 @@ cómo se controla la complejidad y cómo se construye un flujo reproducible con 
 |---|---|---|
 | Fundamentos del aprendizaje predictivo | 1-3 | señal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales |
 | Evaluación y datos | 4-5 | métricas, validación cruzada, fugas y pipelines de preparación |
-| Complejidad y generalización | 6-8 | características, sesgo-varianza, regularización, selección y PCA |
-| Otros métodos | 9 | árboles de regresión |
+| Complejidad y generalización | 6-7 | características, sesgo-varianza y regularización |
+| Otros modelos | si el calendario lo permite | ajustar algún modelo más con lo aprendido, por ejemplo una red pequeña |
 
-La secuencia cubre la introducción, las metodologías, los algoritmos y la implementación
-previstos en la guía docente. La [tabla de trazabilidad](curso/trazabilidad.qmd) recoge la
-correspondencia detallada y el [calendario](curso/calendario.qmd) distribuye los contenidos
-por semanas.
+Los siete primeros capítulos son el cuerpo del curso. El último bloque es abierto y depende
+del tiempo que quede: no añade método nuevo, sino que reutiliza el protocolo de evaluación de
+los capítulos 4 y 5 sobre una familia de modelos distinta.
 
 ## Cómo se trabaja
 
@@ -151,14 +150,41 @@ Los apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los
 se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.
 
 El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`,
-`scikit-learn` y PyTorch. Las herramientas de IA generativa pueden utilizarse de acuerdo con la
-[política de la asignatura](curso/politica-ia.qmd), y su uso en el proyecto debe quedar
-documentado.
+`scikit-learn` y PyTorch.
+
+### Qué se espera del código
+
+Los apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el
+mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel y
+bolígrafo, así que **de código se pregunta la decisión, no el teclado**. En concreto, puede
+pedirse:
+
+1. **leer un fragmento y decir qué calcula**: qué cantidad estima, sobre qué conjunto de datos
+   y con qué tamaño de muestra;
+2. **diagnosticar** un fragmento con errores de método y justificar cada uno, que es el bloque
+   con más peso de código en el examen;
+3. **completar una o dos líneas** marcadas, cuando la línea es una fórmula del curso;
+4. **predecir el efecto de un cambio**: qué le pasa al número si se intercambian dos índices o
+   se ajusta con el conjunto equivocado;
+5. **ordenar** los pasos de un protocolo dados desordenados.
+
+No se pide escribir un programa desde cero, ni recordar la firma de ninguna función: **toda
+llamada que no esté en esta lista se da escrita en el enunciado**.
+
+```python
+torch.linalg.lstsq(A, b).solution                          # mínimos cuadrados
+X @ w                                                      # predicción lineal
+((pred - y) ** 2).mean()                                   # riesgo cuadrático
+np.std(v, ddof=1) / np.sqrt(len(v))                        # error típico de una media
+KFold(n_splits=5, shuffle=True, random_state=42).split(X)   # bloques de validación cruzada
+X[indices][:, columnas]                                    # filas y columnas
+w -= lr * grad                                             # paso de descenso de gradiente
+```
 
 La evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no
 libera materia. El examen final abarca todo el programa y exige una calificación mínima de
-5 sobre 10 para aplicar la ponderación. Las fechas y las reglas completas se recogen en el
-[calendario](curso/calendario.qmd) y en la [sección de evaluación](curso/evaluacion.qmd).
+5 sobre 10 para aplicar la ponderación. Las reglas completas están en la [sección de
+evaluación](curso/evaluacion.qmd).
 
 La asistencia es obligatoria en primera matrícula en los términos establecidos por la
 guía docente.
@@ -167,12 +193,11 @@ guía docente.
 
 Antes de comenzar el capítulo 1 se recomienda:
 
-1. repasar el anexo de [cálculo y álgebra](curso/algebra.qmd) y realizar el diagnóstico
-   incluido al final;
-2. revisar el [repaso de probabilidad](curso/probabilidad.qmd);
-3. consultar el [calendario](curso/calendario.qmd), la
-   [evaluación](curso/evaluacion.qmd) y la [política de uso de
-   IA](curso/politica-ia.qmd).
+1. repasar el anexo de [cálculo y álgebra](curso/algebra.qmd) y hacer el diagnóstico que
+   cierra el anexo;
+2. hacer lo mismo con el [repaso de probabilidad](curso/probabilidad.qmd), que también
+   termina con un diagnóstico;
+3. leer la [sección de evaluación](curso/evaluacion.qmd).
 
 ## Fuentes y agradecimientos
 
@@ -182,8 +207,9 @@ del curso, se inspira en las notas de
 Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al
 programa de la guía docente de CUNEF Universidad.
 
-La bibliografía principal y complementaria se recoge en la [guía de la
-asignatura](curso/guia.qmd).
+La bibliografía principal son *An Introduction to Statistical Learning* de James, Witten,
+Hastie y Tibshirani y *The Elements of Statistical Learning* de Hastie, Tibshirani y Friedman.
+Las referencias concretas se citan en cada capítulo.
 
 Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad
 

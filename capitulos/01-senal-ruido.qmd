@@ -42,6 +42,13 @@ señal sin memorizar el ruido.
 Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos
 componentes.
 
+[El código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que
+se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la
+presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores
+de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y
+ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una
+función.]{.nuevo}
+
 ```{python}
 #| code-fold: true
 import torch

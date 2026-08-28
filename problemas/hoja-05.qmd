@@ -76,7 +76,7 @@ d. Los datos no traen fecha. **Explica** cómo habría que repartir si la trajer
 
 ## 2. Demostración {#sec-h5-b}
 
-*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+*Bloque B. Sale de los resultados demostrados en los capítulos, así que puede
 caer tal cual en el examen.*
 
 ::: {#exr-h5-fuga}

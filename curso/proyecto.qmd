@@ -44,7 +44,7 @@ orden en que conviene tomarlas, y el índice del informe que hay que entregar.
 
 ## Agentes de IA como ayuda de implementación
 
-<!-- Protocolo de uso: especificación, generación, pruebas, revisión conceptual, trazabilidad y declaración. Se trabaja en los talleres de las semanas 9 y 14 y se declara en la bitácora del proyecto. Enlaza con curso/politica-ia.qmd. -->
+<!-- Protocolo de uso: especificación, generación, pruebas, revisión conceptual, trazabilidad y declaración. Se trabaja en los talleres de las semanas 9 y 14 y se declara en la bitácora del proyecto. -->
 
 ## Estado del arte y qué queda fuera del curso
 

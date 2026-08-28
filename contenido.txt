@@ -48,13 +48,8 @@ problemas/hoja-01.qmd
 - problemas/hoja-09.qmd
 
 {apéndices}
-curso/guia.qmd
-curso/calendario.qmd
 curso/evaluacion.qmd
-curso/politica-ia.qmd
 - curso/proyecto.qmd
 curso/algebra.qmd
 curso/probabilidad.qmd
-curso/indice-resultados.qmd
 - curso/glosario.qmd
-curso/trazabilidad.qmd

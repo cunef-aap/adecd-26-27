@@ -53,7 +53,7 @@ c. `backward()` devuelve siempre el gradiente correcto del código escrito. **Ra
 
 ## 2. Demostración {#sec-h2-b}
 
-*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+*Bloque B. Sale de los resultados demostrados en los capítulos, así que puede
 caer tal cual en el examen.*
 
 ::: {#exr-h2-invarianza}

@@ -17,10 +17,8 @@ del examen.
 | Segunda, ajuste, unicidad y caso real | los demás |
 
 ::: {.callout-note appearance="simple"}
-El bloque de cálculo a mano de esta hoja recoge la práctica de álgebra matricial que
-`curso/guia.qmd` sitúa en la S2 de la semana 5: producto matriz por vector, traspuesta,
-$\Xt\X$ y rango. El material anterior, escrito contra la numeración por semanas, está en el
-historial de git.
+El bloque de cálculo a mano de esta hoja recoge la práctica de álgebra matricial que el
+capítulo necesita: producto matriz por vector, traspuesta, $\Xt\X$ y rango.
 :::
 
 ## 1. Conceptual {#sec-h3-a}
@@ -65,7 +63,7 @@ b. **Razona** por qué un riesgo de entrenamiento igual a cero no es una buena n
 
 ## 2. Demostración {#sec-h3-b}
 
-*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+*Bloque B. Sale de los resultados demostrados en los capítulos, así que puede
 caer tal cual en el examen.*
 
 ::: {#exr-h3-loglik-mse}

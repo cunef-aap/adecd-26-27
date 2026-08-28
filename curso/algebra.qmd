@@ -239,3 +239,28 @@ partimos.
    $\mathbf{u}\T\mathbf{v}$, $\norm{\mathbf{u}}$ y $\norm{\mathbf{v}}$.
 8. Si $\norm{\X\mathbf{v}}^2 = 0$, ¿qué se puede concluir sobre $\X\mathbf{v}$? ¿Y sobre
    $\mathbf{v}$?
+
+::: {.callout-note collapse="true"}
+## Soluciones del diagnóstico
+
+1. $\begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6\end{pmatrix}$, de tamaño $3\times 2$: la
+   traspuesta intercambia filas por columnas.
+2. $\Xt\X = \begin{pmatrix} 3 & 3 \\ 3 & 5\end{pmatrix}$, de tamaño $2\times 2$. Con
+   $\X$ de tamaño $\nobs\times\nfeat$, el producto $\Xt\X$ es siempre
+   $\nfeat\times\nfeat$, y no depende del número de observaciones.
+3. $\X\coef = (2, 1, 0)\T$. Es una combinación de las columnas de $\X$ con pesos $2$ y
+   $-1$, y de ahí que tenga tantas componentes como filas.
+4. $\grad(\coef\T\coef) = 2\coef$, que es @lem-grad-cuadratica con $\mathbf{A}$ la identidad.
+5. $\pd{\model}{x} = 2x\sin y$ y $\pd{\model}{y} = x^2\cos y + 3y^2$: al derivar respecto
+   de una variable, la otra se trata como constante.
+6. Por ejemplo $\mathbf{v} = (2, -1)\T$, y su rango es $1$: la segunda columna es el doble de
+   la primera, así que hay una sola columna independiente. Ese $\mathbf{v}$ está en el núcleo
+   de @def-nucleo.
+7. $\mathbf{u}\T\mathbf{v} = 3 + 0 + 8 = 11$, $\norm{\mathbf{u}} = \sqrt{9} = 3$ y
+   $\norm{\mathbf{v}} = \sqrt{25} = 5$.
+8. Que $\X\mathbf{v} = \zerov$, por @lem-norma-cero: una norma se anula solo en el vector
+   nulo. Sobre $\mathbf{v}$ no se puede concluir nada **salvo** que $\X$ tenga rango completo
+   por columnas; en ese caso su núcleo es trivial y entonces sí, $\mathbf{v} = \zerov$. Esta
+   es exactamente la distinción de la que depende que los mínimos cuadrados tengan solución
+   única.
+:::

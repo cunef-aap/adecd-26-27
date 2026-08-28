@@ -300,3 +300,49 @@ Si has seguido hasta aquí sin dificultad, vas bien. Lo imprescindible es:
 
 Lo que **no** hace falta: teoremas límite, convergencia, funciones características,
 teoría de la medida.
+
+## Diagnóstico
+
+Quince minutos, sin ordenador y sin calculadora. No cuenta para la nota; sirve para saber de
+qué punto partimos. En las cinco primeras preguntas, $X$ tiene densidad $\pdf(x) = 2x$ en el
+intervalo $[0,1]$ y cero fuera.
+
+1. Comprueba que $\pdf$ es una densidad y calcula $\Prob{X\leq 1/2}$.
+2. Calcula $\E{X}$.
+3. Calcula $\E{X^2}$ diciendo qué resultado usas, y comprueba que **no** vale $\E{X}^2$.
+4. Con los dos apartados anteriores, calcula $\Var{X}$. Después, sin volver a integrar,
+   calcula $\E{3X-1}$ y $\Var{3X-1}$.
+5. Sean $X_1, X_2, X_3$ tres extracciones independientes de $\pdf$. Escribe su densidad
+   conjunta y di por qué la verosimilitud del curso es un producto.
+6. Sea $Z\sim\Normal(0,1)$ y $W = 2Z + 5$. Di de qué distribución es $W$, con sus
+   parámetros, y qué resultados del anexo lo justifican.
+7. Sea $Y = X + \varepsilon$ con $\varepsilon$ independiente de $X$ y $\E{\varepsilon} = 0$.
+   Calcula $\E{Y\mid X}$ y deduce $\E{Y}$ diciendo qué resultado usas.
+
+::: {.callout-note collapse="true"}
+## Soluciones del diagnóstico
+
+1. Es no negativa en $[0,1]$ e integra a uno:
+   $\int_0^1 2x\,\dd x = \left[x^2\right]_0^1 = 1$. Y
+   $\Prob{X\leq 1/2} = \int_0^{1/2} 2x\,\dd x = 1/4$. Fíjate en que no es $1/2$: la
+   densidad crece, así que la mitad izquierda pesa menos.
+2. $\E{X} = \int_0^1 x\cdot 2x\,\dd x = 2/3$.
+3. Por @lem-esperanza-funcion, con $g(x) = x^2$:
+   $\E{X^2} = \int_0^1 x^2\cdot 2x\,\dd x = 1/2$. Y $\E{X}^2 = 4/9$, que es distinto:
+   la esperanza de una función **no** es la función de la esperanza. Es el error que más veces
+   aparece en el curso.
+4. $\Var{X} = \E{X^2}-\E{X}^2 = 1/2 - 4/9 = 1/18$. Por @lem-linealidad,
+   $\E{3X-1} = 3\cdot 2/3 - 1 = 1$ y $\Var{3X-1} = 9\Var{X} = 1/2$: la constante no afecta
+   a la varianza y el factor entra al cuadrado.
+5. $\pdf(x_1,x_2,x_3) = 8\,x_1x_2x_3$ en el cubo unidad, es decir, el producto de las tres
+   densidades, que es la definición de independencia de la sección correspondiente. De ahí
+   que la verosimilitud de una muestra independiente se escriba como producto y su logaritmo
+   como suma.
+6. $W\sim\Normal(5, 4)$. La escala sale de @thm-escala y la traslación de @thm-traslacion;
+   juntas dicen que una transformación afín de una normal es normal, con media $2\cdot 0+5$ y
+   varianza $2^2\cdot 1$. Ojo: la varianza es $4$, no $2$.
+7. $\E{Y\mid X} = X + \E{\varepsilon} = X$, porque fijado $X$ lo único aleatorio es el
+   ruido. Y por @lem-esperanza-total, $\E{Y} = \E{\E{Y\mid X}} = \E{X}$. Esta es la cuenta
+   que sostiene el capítulo 1: el modelo describe la media de la respuesta y el ruido no la
+   desplaza.
+:::

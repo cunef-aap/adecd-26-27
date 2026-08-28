@@ -120,7 +120,7 @@ Las etiquetas actuales usan la numeración antigua y hay que rehacerlas.
 
 ## Índice de resultados
 
-`curso/indice-resultados.qmd` es el contrato del bloque B: el examen sale de ahí y de ningún
+El bloque B sale de los resultados que los capítulos demuestran, y de ningún
 otro sitio. Al escribir un capítulo hay que **añadir sus resultados a ese índice**, con las
 columnas `Resultado | Se demuestra | Depende de`.
 
@@ -148,7 +148,7 @@ La S3 dura 55 minutos y en ella se completa el cuaderno en directo. Medido sobre
 capítulos escritos, un hueco consume entre seis y ocho minutos contando el enunciado, la
 escritura y la corrección, de modo que **el presupuesto es de 6 a 8 huecos por sesión S3**.
 
-Cuántas sesiones le tocan a cada capítulo sale de `curso/calendario.qmd`: los capítulos 1 a 6
+Cuántas sesiones le tocan a cada capítulo lo fija el reparto del curso: los capítulos 1 a 6
 duran dos semanas y tienen dos S3 cada uno; los capítulos 7, 8 y 9 duran una semana y tienen
 una. En total, quince sesiones.
 

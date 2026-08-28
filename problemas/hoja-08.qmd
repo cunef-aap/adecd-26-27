@@ -22,7 +22,7 @@ En construcción. Se escribirá con el capítulo. El modelo a seguir es la
 
 ## 2. Demostración {#sec-h9-b}
 
-*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+*Bloque B. Sale de los resultados demostrados en los capítulos, así que puede
 caer tal cual en el examen.*
 
 <!-- TODO. Uno o dos resultados del índice de resultados de este capítulo. -->

@@ -15,14 +15,9 @@ book:
       chapters:
         - problemas/hoja-01.qmd
   appendices:
-    - curso/guia.qmd
-    - curso/calendario.qmd
     - curso/evaluacion.qmd
-    - curso/politica-ia.qmd
     - curso/algebra.qmd
     - curso/probabilidad.qmd
-    - curso/indice-resultados.qmd
-    - curso/trazabilidad.qmd
   # >>> fin del bloque generado
 format:
   html:

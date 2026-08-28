@@ -118,7 +118,7 @@ borraría en silencio el código de un capítulo entero.
 capitulos/     los 11 capítulos (+ style.py, figuras)
 problemas/     hojas para las sesiones de lápiz y papel
 evaluacion/    parcial, simulacro, banco de preguntas, proyecto
-curso/         guía, calendario, evaluación, política de IA, anexos
+curso/         evaluación, anexos de repaso (álgebra y probabilidad), proyecto, glosario
 assets/        _macros.tex (contrato de notación), estilos, fuentes, logo
 scripts/       filtros Lua + utilidades de construcción
 datos/         conjuntos de datos espejados, con PROCEDENCIA.md
