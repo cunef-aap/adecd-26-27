@@ -1,63 +1,38 @@
 # Hojas de problemas {.unnumbered}
 
-Una hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.
+**Una hoja por capítulo**, para las sesiones S2. Lápiz y papel, sin ordenador. Un capítulo
+suele ocupar dos semanas, así que su hoja se reparte entre las dos sesiones de problemas.
 
 **Los ejercicios se resuelven en clase.** La S2 sigue siempre la misma secuencia: el
 profesor resuelve uno en la pizarra diciendo en voz alta qué puntúa, vosotros hacéis el
 siguiente por parejas, y se corrige en la pizarra. Lo que quede sin ver, con solución
 publicada después.
 
-## Las hojas son el entrenamiento del examen
-
-No hay sesiones aparte de "ejercicios tipo examen", y no hacen falta: **cada hoja está
-construida con la estructura del examen**. Los cinco ejercicios se reparten así:
-
-| Ejercicio | Bloque del examen | Qué entrena |
-|---|---|---|
-| 1 | **A** | Pregunta conceptual corta: *define*, *explica*, *razona*, *analiza* |
-| 2 | **B** | Una demostración del [índice de resultados](../curso/indice-resultados.qmd) |
-| 3 | **C** | Cálculo a mano sobre una tabla pequeña |
-| 4 | **D** | *"Este script tiene errores"*: encontrarlos y justificarlos |
-| 5 |  | Ampliación, opcional. No entra en el examen |
-
-Los cuatro primeros son **nucleares**. Si sigues las quince S2, habrás visto resolver
-quince ejercicios de examen y habrás hecho otros tantos antes de sentarte en el primero.
-
-En la colección de [ejercicios tipo examen resueltos](../evaluacion/ejercicios-tipo-examen.qmd)
-están todos, con la solución que se espera y la rúbrica con la que se puntúan.
-
-## Calibración con reloj
-
-Tres veces en el curso, los últimos 20 minutos de la S2 son un **miniexamen cronometrado**:
-un solo bloque, en silencio, corregido en clase inmediatamente después.
-
-| Semana | Bloque | Sobre |
-|---|---|---|
-| 6 | B, una demostración | capítulos 1 a 5 |
-| 10 | C + D | capítulos 6 a 9 |
-| 14 | B + C | capítulos 10 a 13 |
-
-No cuentan para la nota. Sirven para saber cuánto se tarda de verdad, que es lo que ninguna
-hoja sin reloj enseña.
-
-Además hay dos simulacros completos: el del parcial, publicado con solución en la semana 6,
-y el del examen final, en la semana 15.
-
 ## Las hojas
 
-La hoja $k$ corresponde al capítulo $k$, que se da en la semana $k$.
+Cada hoja tiene seis bloques. Los cuatro primeros reproducen la estructura del examen, el
+quinto es de laboratorio y el sexto es de ampliación. Un bloque puede llevar más de un
+ejercicio.
 
-| Hoja | Capítulo | Estado |
-|---|---|---|
-| [1](hoja-01.qmd) | Datos, patrones y modelos | escrita |
-| [2](hoja-02.qmd) | Señal y ruido | escrita |
-| [3](hoja-03.qmd) | Verosimilitud y MLE | esqueleto |
-| [4](hoja-04.qmd) | Convexidad y riesgo empírico | escrita |
-| [5](hoja-05.qmd) | Gradientes y descenso | **práctica de álgebra matricial** |
-| [6](hoja-06.qmd) | Forma matricial y ecuaciones normales | esqueleto |
-| [7](hoja-07.qmd) | Del dato crudo a X | esqueleto |
-| [8](hoja-08.qmd) | Validación y métricas | esqueleto |
+| Hoja | Capítulo | Ejercicios | Estado |
+|---|---|---:|---|
+| [1](hoja-01.qmd) | 1 · Datos = señal + ruido | 15 | escrita, solucionario en el Campus Virtual |
+| [2](hoja-02.qmd) | 2 · Aprender minimizando | 17 | escrita, solucionario en el Campus Virtual |
+| [3](hoja-03.qmd) | 3 · Modelos lineales con muchas variables | 19 | escrita, solucionario en el Campus Virtual |
+| [4](hoja-04.qmd) | 4 · Evaluar para generalizar | 26 | escrita, solucionario en el Campus Virtual |
+| [5](hoja-05.qmd) | 5 · Preparar datos | 18 | escrita, solucionario en el Campus Virtual |
+| [6](hoja-06.qmd) | 6 · Complejidad, sesgo y varianza | 16 | escrita, solucionario en el Campus Virtual |
+| [7](hoja-07.qmd) | 7 · Regularización | | esqueleto |
+| [8](hoja-08.qmd) | 8 · Selección de variables y dimensión | | esqueleto |
+| [9](hoja-09.qmd) | 9 · Árboles de regresión | | esqueleto |
+
+Los esqueletos se escriben con su capítulo, así que solo aparecen publicadas las hojas de
+los capítulos ya escritos.
+
+Algunos de estos ejercicios ya aparecen planteados dentro de los apuntes, en el punto del
+texto que los motiva. Aquí están recogidos todos juntos, más otros que no salen en el
+capítulo.
 
 ::: {.callout-note appearance="simple"}
-Las soluciones se publican después de la sesión, no antes.
+Las hojas resueltas se publican después de la sesión correspondiente.
 :::

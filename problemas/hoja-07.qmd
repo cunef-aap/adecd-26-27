@@ -6,32 +6,54 @@ $$
 $$
 :::
 
-Capítulo 7, Del dato crudo a X. Los cuatro primeros ejercicios son nucleares y tienen la
-estructura del examen; el quinto es de ampliación.
+Hoja del capítulo 7, Regularización: riesgo penalizado, ridge, lasso, escala de los coeficientes y elección de lambda con validación cruzada.
 
 ::: {.callout-warning appearance="simple"}
-En construcción. El modelo a seguir es la [hoja 2](hoja-02.qmd).
+En construcción. Se escribirá con el capítulo. El modelo a seguir es la
+[hoja 2](hoja-02.qmd).
 :::
 
-## 1. Conceptual
+## 1. Conceptual {#sec-h8-a}
 
-<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
-     (define, explica, razona, analiza). -->
+*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
 
-## 2. Demostración
+<!-- TODO. Tres apartados de respuesta breve, con los verbos del banco: define, explica, razona,
+     analiza. -->
 
-<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-trampa-dummy o @thm-retransformacion. -->
+## 2. Demostración {#sec-h8-b}
 
-## 3. Cálculo a mano
+*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+caer tal cual en el examen.*
 
-<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
+<!-- TODO. Uno o dos resultados del índice de resultados de este capítulo. -->
 
-## 4. Encuentra los errores
+## 3. Cálculo a mano {#sec-h8-c}
 
-<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
-     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
+*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
 
-## 5. Ampliación
+<!-- TODO. Tabla pequeña con números redondos. Verificar los resultados ejecutándolos antes de
+     escribir la solución. -->
 
-<!-- TODO. Opcional, no entra en el examen. -->
+## 4. Encuentra los errores {#sec-h8-d}
+
+*Bloque D. Se puntúa la justificación de cada error.*
+
+<!-- TODO. Fragmento de código con tres errores conceptuales de este capítulo. Al menos uno del
+     tipo que produce un agente. -->
+
+## 5. Completar código {#sec-h8-e}
+
+*Bloque de laboratorio. En el examen puede aparecer una versión corta.*
+
+<!-- TODO. Huecos numerados sobre el código del capítulo, más un apartado que pida razonar sobre
+     el diseño. -->
+
+## 6. Ampliación {#sec-h8-f}
+
+*Opcional. No entra en el examen.*
+
+<!-- TODO. Experimento o extensión que no entra en el examen. -->
+
+::: {.callout-note appearance="simple"}
+Las soluciones se publicarán junto con la hoja.
+:::

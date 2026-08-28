@@ -1,0 +1,35 @@
+---
+title: 'Árboles de regresión'
+subtitle: 'Predicción mediante particiones y reglas'
+---
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## De una fórmula global a reglas locales
+
+<!-- Fenómeno antes que fórmula: una señal con umbrales que ningún modelo lineal sigue bien. Es el capítulo más corto del curso: comparte la semana 15 con el simulacro del examen final. -->
+
+## Predicción dentro de una hoja
+
+<!-- EL RESULTADO EVALUABLE: la media minimiza el error cuadrático dentro de cada región. Demostración de tres líneas. -->
+
+## Elegir una división y construir el árbol
+
+<!-- Criterio de división, construcción voraz y por qué no se busca el árbol óptimo. Cálculo a mano de la primera división para el bloque C. -->
+
+## Controlar la complejidad y seleccionar con validación
+
+<!-- Profundidad, mínimo de observaciones por hoja y poda, elegidos con el protocolo del capítulo 4. Enlaza con la curva en U del capítulo 6. -->
+
+## Qué aprenden los árboles y qué no
+
+<!-- Comparación con los modelos lineales sobre airbnb_madrid.csv. FUERA DE ALCANCE DECLARADO: bagging, bosques aleatorios y boosting se mencionan en un mapa breve y no se desarrollan. -->

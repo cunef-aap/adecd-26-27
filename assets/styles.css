@@ -38,6 +38,10 @@
   --tinta-suave: #55585f;
   --filete: #dcdcd8;
   --filete-tenue: #ececea;
+  /* Solo para revision. No forma parte de la identidad. */
+  --revision: #0f7b5f;
+  /* Material del curso todavia sin usar. Tampoco forma parte de la identidad. */
+  --sinusar: #7a4fa3;
 }
 
 /* --- Etiqueta común: versalitas espaciadas, Aeonik ------------------------ */
@@ -45,6 +49,7 @@
 .proof > p:first-child > .proof-title,
 .sol::before,
 .trampa::before,
+.sinusar::before,
 .cajanegra::before {
   font-family: "Aeonik", system-ui, sans-serif;
   font-size: 0.68rem;
@@ -126,6 +131,7 @@
 
 .sol::before,
 .trampa::before,
+.sinusar::before,
 .cajanegra::before {
   display: block;
   margin-bottom: 0.45rem;
@@ -155,6 +161,27 @@
 .cajanegra::before {
   content: "Fuera de alcance";
   color: var(--tinta-suave);
+}
+
+/* TEMPORAL. Marca material del apéndice que ningún capítulo usa todavía, para
+   poder decidir más adelante si se queda o se quita. No forma parte de la
+   identidad del libro, igual que .nuevo. */
+.sinusar {
+  border-left: 2px dashed var(--sinusar);
+  padding-left: 1.15rem;
+  margin: 1.6rem 0;
+}
+.sinusar::before {
+  content: "Sin usar todavía";
+  color: var(--sinusar);
+}
+.sinusar > p:first-of-type > strong:first-child {
+  display: block;
+  font-family: "Aeonik", system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--sinusar);
+  margin-bottom: 0.3rem;
 }
 
 /* El título del bloque va como **negrita** en el primer párrafo, no como `##`:
@@ -261,4 +288,39 @@ img.sidebar-logo.dark-content { display: none; }
   font-family: "Aeonik", system-ui, sans-serif;
   font-size: 0.78rem;
   color: var(--tinta-suave);
+}
+
+
+/* ===========================================================================
+   Marcado de revision
+   ---------------------------------------------------------------------------
+   TEMPORAL. Marca lo que se ha escrito o reescrito y todavia no se ha
+   revisado. No usa el naranja, que esta reservado a .trampa; el verde es
+   deliberadamente ajeno a la identidad, porque tiene que cantar y tiene que
+   desaparecer. Se quita con `python scripts/aceptar-marcas.py --aceptar`.
+   =========================================================================== */
+span.nuevo {
+  color: var(--revision);
+  background: rgba(15, 123, 95, 0.07);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+div.nuevo {
+  border-left: 2px solid var(--revision);
+  padding-left: 1.15rem;
+  margin: 1.2rem 0;
+}
+
+div.nuevo > *,
+div.nuevo .theorem,
+div.nuevo .proof {
+  color: var(--revision);
+}
+
+div.nuevo .theorem,
+div.nuevo .proof {
+  border-left-color: var(--revision);
 }

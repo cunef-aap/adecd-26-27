@@ -1,0 +1,30 @@
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>

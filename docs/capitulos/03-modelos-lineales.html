@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Modelos lineales con muchas variables – Aprendizaje Automático: Predicción</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../capitulos/04-evaluacion.html" rel="next">
+<link href="../capitulos/02-aprender-minimizando.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos del aprendizaje predictivo</a></li><li class="breadcrumb-item"><a href="../capitulos/03-modelos-lineales.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/img/cunef-logo.png" alt="CUNEF Universidad" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/img/cunef-logo.png" alt="CUNEF Universidad" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Aprendizaje Automático: Predicción</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación de la asignatura</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Evaluación y datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/05-preparacion-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparar datos sin contaminar la evaluación</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Complejidad y generalización</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/06-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Complejidad, sesgo y varianza</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/07-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Regularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/08-seleccion-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Otros métodos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/09-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Árboles de regresión</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hojas de problemas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hojas de problemas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 5</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 6</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 7</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 9</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/guia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guía de la asignatura</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/calendario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Evaluación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/politica-ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Política de uso de IA generativa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/proyecto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto: un flujo completo de predicción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Índice de resultados</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario y notación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trazabilidad con la guía docente</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#de-una-recta-a-muchas-variables-predictoras" id="toc-de-una-recta-a-muchas-variables-predictoras" class="nav-link active" data-scroll-target="#de-una-recta-a-muchas-variables-predictoras">De una recta a muchas variables predictoras</a>
+  <ul class="collapse">
+  <li><a href="#el-modelo-lineal-gaussiano-múltiple" id="toc-el-modelo-lineal-gaussiano-múltiple" class="nav-link" data-scroll-target="#el-modelo-lineal-gaussiano-múltiple">El modelo lineal-gaussiano múltiple</a></li>
+  <li><a href="#log-verosimilitud-y-error-cuadrático-medio" id="toc-log-verosimilitud-y-error-cuadrático-medio" class="nav-link" data-scroll-target="#log-verosimilitud-y-error-cuadrático-medio">Log-verosimilitud y error cuadrático medio</a></li>
+  </ul></li>
+  <li><a href="#la-matriz-de-diseño" id="toc-la-matriz-de-diseño" class="nav-link" data-scroll-target="#la-matriz-de-diseño">La matriz de diseño</a></li>
+  <li><a href="#el-gradiente-del-riesgo-cuadrático" id="toc-el-gradiente-del-riesgo-cuadrático" class="nav-link" data-scroll-target="#el-gradiente-del-riesgo-cuadrático">El gradiente del riesgo cuadrático</a></li>
+  <li><a href="#ajustar-un-modelo-lineal" id="toc-ajustar-un-modelo-lineal" class="nav-link" data-scroll-target="#ajustar-un-modelo-lineal">Ajustar un modelo lineal</a></li>
+  <li><a href="#existencia-unicidad-y-colinealidad" id="toc-existencia-unicidad-y-colinealidad" class="nav-link" data-scroll-target="#existencia-unicidad-y-colinealidad">Existencia, unicidad y colinealidad</a></li>
+  <li><a href="#una-interfaz-común-para-entrenar-modelos" id="toc-una-interfaz-común-para-entrenar-modelos" class="nav-link" data-scroll-target="#una-interfaz-común-para-entrenar-modelos">Una interfaz común para entrenar modelos</a>
+  <ul class="collapse">
+  <li><a href="#la-misma-interfaz-en-scikit-learn" id="toc-la-misma-interfaz-en-scikit-learn" class="nav-link" data-scroll-target="#la-misma-interfaz-en-scikit-learn">La misma interfaz en scikit-learn</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-con-datos-reales" id="toc-ejemplo-con-datos-reales" class="nav-link" data-scroll-target="#ejemplo-con-datos-reales">Ejemplo con datos reales</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos del aprendizaje predictivo</a></li><li class="breadcrumb-item"><a href="../capitulos/03-modelos-lineales.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></h1>
+<p class="subtitle lead">Matrices, gradientes y una implementación reutilizable</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="de-una-recta-a-muchas-variables-predictoras" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="de-una-recta-a-muchas-variables-predictoras">De una recta a muchas variables predictoras</h2>
+<p>El capítulo anterior terminó con un algoritmo de aprendizaje completo para una recta: un modelo probabilístico produce una pérdida, la pérdida produce un riesgo empírico y el gradiente de ese riesgo permite actualizar los parámetros para llegar a los valores que minimizan el riesgo. Usando este procedimiento, aprendimos a ajustar dos parámetros <span class="math inline">\(w_0\)</span> y <span class="math inline">\(w_1\)</span>. No obstante, los modelos modernos cuentan con muchos parámetros a ajustar (algunos LLMs tienen hasta billones). Necesitamos pues aprender a trabajar con modelos con muchas variables predictoras (y por ende muchos parámetros). Empezaremos con el caso sencillo de un modelo lineal con varias variables predictoras.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_plano <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X_plano <span class="op">=</span> torch.randn(n_plano, <span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>w_plano <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.8</span>])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ajuste_plano <span class="op">=</span> w_plano[<span class="dv">0</span>] <span class="op">+</span> X_plano <span class="op">@</span> w_plano[<span class="dv">1</span>:]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y_plano <span class="op">=</span> ajuste_plano <span class="op">+</span> <span class="fl">0.9</span> <span class="op">*</span> torch.randn(n_plano)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">4.4</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">"3d"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> eje <span class="kw">in</span> (ax.xaxis, ax.yaxis, ax.zaxis):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    eje.pane.set_facecolor(<span class="st">"white"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    eje.pane.set_edgecolor(<span class="st">"#dcdcd8"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>rejilla_1, rejilla_2 <span class="op">=</span> torch.meshgrid(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    torch.linspace(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">2.6</span>, <span class="dv">9</span>), torch.linspace(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">2.6</span>, <span class="dv">9</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    indexing<span class="op">=</span><span class="st">"ij"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax.plot_wireframe(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    rejilla_1.numpy(), rejilla_2.numpy(),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    (w_plano[<span class="dv">0</span>] <span class="op">+</span> w_plano[<span class="dv">1</span>] <span class="op">*</span> rejilla_1 <span class="op">+</span> w_plano[<span class="dv">2</span>] <span class="op">*</span> rejilla_2).numpy(),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#ff5700"</span>, lw<span class="op">=</span><span class="fl">0.6</span>, alpha<span class="op">=</span><span class="fl">0.75</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_plano):</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        [X_plano[i, <span class="dv">0</span>].item()] <span class="op">*</span> <span class="dv">2</span>, [X_plano[i, <span class="dv">1</span>].item()] <span class="op">*</span> <span class="dv">2</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        [y_plano[i].item(), ajuste_plano[i].item()],</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>ax.scatter(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    X_plano[:, <span class="dv">0</span>].numpy(), X_plano[:, <span class="dv">1</span>].numpy(), y_plano.numpy(),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span>, s<span class="op">=</span><span class="dv">16</span>, depthshade<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"$x_1$"</span>, labelpad<span class="op">=-</span><span class="dv">4</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"$x_2$"</span>, labelpad<span class="op">=-</span><span class="dv">4</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">"$y$"</span>, labelpad<span class="op">=-</span><span class="dv">6</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>ax.tick_params(labelsize<span class="op">=</span><span class="dv">7</span>, pad<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ax.view_init(elev<span class="op">=</span><span class="dv">16</span>, azim<span class="op">=-</span><span class="dv">62</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-plano-residuos" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-plano-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="6f2b264e" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-3-output-1.png" class="figure-img" width="574" height="559"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-plano-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Un modelo lineal con dos variables predictoras. La señal ya no es una recta, sino un plano, y los residuos siguen siendo la distancia vertical de cada observación a la señal. Con tres variables predictoras o más no hay dibujo posible.
+</figcaption>
+</figure>
+</div>
+<section id="el-modelo-lineal-gaussiano-múltiple" class="level3">
+<h3 class="anchored" data-anchor-id="el-modelo-lineal-gaussiano-múltiple">El modelo lineal-gaussiano múltiple</h3>
+<p>La extensión natural del modelo con el que hemos trabajado al caso con <span class="math inline">\(p\)</span> variables predictoras <span class="math inline">\(x_1, x_2, \ldots, x_{p}\)</span> es la siguiente.</p>
+<div id="def-lineal-gaussiano-multiple" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.1 (Modelo lineal-gaussiano múltiple)</strong></span> Dadas <span class="math inline">\(p\)</span> variables predictoras, el <strong>modelo lineal-gaussiano múltiple</strong> supone que cada respuesta se genera de forma independiente según</p>
+<p><span id="eq-lineal-gaussiano-multiple"><span class="math display">\[
+y_i\,\vert\,\mathbf{x}_i
+\sim\mathcal{N}\Bigl(
+w_0+\sum_{j=1}^{p}w_jx_{ij},\;
+\sigma^2
+\Bigr),
+\qquad i=1,\ldots,n,
+\tag{3.1}\]</span></span></p>
+<p>donde <span class="math inline">\(x_{ij}\)</span> es el valor de la variable predictora <span class="math inline">\(j\)</span> en la observación <span class="math inline">\(i\)</span>.</p>
+</div>
+<p>Para escribir el modelo de forma más compacta introducimos la siguiente notación.</p>
+<div id="def-notacion-vectorial" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.2 (Vector de variables predictoras, vector de coeficientes y convenio de la constante)</strong></span> El <strong>vector de variables predictoras</strong> de la observación <span class="math inline">\(i\)</span> y el <strong>vector de coeficientes</strong> son</p>
+<p><span class="math display">\[
+\mathbf{x}_i=(x_{i0},x_{i1},\ldots,x_{ip})^{\mathsf{T}}\in\mathbb{R}^{p+1},
+\qquad
+\boldsymbol{w}=(w_0,w_1,\ldots,w_{p})^{\mathsf{T}}\in\mathbb{R}^{p+1},
+\]</span></p>
+<p>donde se toma <span class="math inline">\(x_{i0}=1\)</span> para toda observación. Con ese convenio, la media de <a href="#eq-lineal-gaussiano-multiple" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> es el producto escalar de los dos vectores:</p>
+<p><span id="eq-producto-interno"><span class="math display">\[
+\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}
+=\left\langle \mathbf{x}_i, \boldsymbol{w} \right\rangle
+=\sum_{j=0}^{p}w_jx_{ij}
+=w_0+\sum_{j=1}^{p}w_jx_{ij}
+=\hat{y}_i.
+\tag{3.2}\]</span></span></p>
+</div>
+<p>El modelo entero se escribe entonces <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i\sim\mathcal{N}\bigl(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w},\sigma^2\bigr)\)</span>, con independencia de cuántas variables predictoras haya.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="El convenio de la constante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El convenio de la constante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Meter una primera coordenada constante igual a uno simplifica la notación, y es lo que haremos a partir de aquí y hasta el final del curso. Cuando digamos que hay <span class="math inline">\(p\)</span> variables predictoras, el vector <span class="math inline">\(\mathbf{x}_i\)</span> tendrá <span class="math inline">\(p+1\)</span> componentes y el modelo tendrá <span class="math inline">\(p+1\)</span> parámetros.</p>
+</div>
+</div>
+<p>Con <span class="math inline">\(p=1\)</span> el convenio devuelve la recta del capítulo anterior: <span class="math inline">\(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}=w_0+w_1x_i\)</span>, que es <a href="01-senal-ruido.html#eq-senal-lineal-1d" class="quarto-xref">Ecuación&nbsp;<span>1.4</span></a>.</p>
+</section>
+<section id="log-verosimilitud-y-error-cuadrático-medio" class="level3">
+<h3 class="anchored" data-anchor-id="log-verosimilitud-y-error-cuadrático-medio">Log-verosimilitud y error cuadrático medio</h3>
+<p>Habiendo definido el modelo, para aprender sus parámetros hace falta un criterio. Este se obtiene igual que en el capítulo anterior: se escribe la log-verosimilitud del modelo y se aisla la parte de ella que depende de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<div id="exr-loglik-mse" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.1</strong></span> Repite para <a href="#eq-lineal-gaussiano-multiple" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> el razonamiento de <a href="02-aprender-minimizando.html#thm-loglik-mse" class="quarto-xref">Teorema&nbsp;<span>2.1</span></a> y <a href="02-aprender-minimizando.html#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>.</p>
+<ol type="a">
+<li>Escribe la log-verosimilitud <span class="math inline">\(\ell(\boldsymbol{w},\sigma)\)</span> de la muestra, usando que las observaciones son independientes.</li>
+<li>Separa los términos que no dependen de <span class="math inline">\(\boldsymbol{w}\)</span> y comprueba que el resto es <span class="math inline">\(-\frac{n}{2\sigma^2}\hat{R}(\boldsymbol{w})\)</span>, donde <span id="eq-riesgo-suma"><span class="math display">\[
+\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2 .
+\tag{3.3}\]</span></span></li>
+<li>Deduce que, para <span class="math inline">\(\sigma&gt;0\)</span> fijo, maximizar la log-verosimilitud equivale a minimizar <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a>.</li>
+</ol>
+</div>
+<p>Nuestro objetivo será pues buscar:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{w}}\in\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}\hat{R}(\boldsymbol{w}),
+\]</span></p>
+<p>con <span class="math inline">\(\hat{R}\)</span> dado por <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a>, que es el riesgo empírico de <a href="02-aprender-minimizando.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.4</span></a> con pérdida cuadrática.</p>
+<p>Todavía se puede simplificar más la notación. En <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a> quedan un sumatorio sobre las <span class="math inline">\(n\)</span> observaciones y, dentro de cada sumando, un producto escalar sobre las <span class="math inline">\(p+1\)</span> coordenadas. Los dos desaparecen si reunimos las observaciones en una matriz.</p>
+</section>
+</section>
+<section id="la-matriz-de-diseño" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="la-matriz-de-diseño">La matriz de diseño</h2>
+<p>Empecemos por recordar cómo se mide el tamaño de un vector.</p>
+<div id="def-norma-euclidea" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.3 (Norma euclídea)</strong></span> La <strong>norma euclídea</strong> de un vector <span class="math inline">\(\mathbf v=(v_1,\ldots,v_d)^{\mathsf{T}}\in\mathbb{R}^d\)</span> es el número no negativo <span class="math inline">\(\left\lVert \mathbf v \right\rVert\)</span> definido por</p>
+<p><span id="eq-norma"><span class="math display">\[
+\left\lVert \mathbf v \right\rVert^2
+=\mathbf v^{\mathsf{T}}\mathbf v
+=\sum_{j=1}^{d}v_j^2 .
+\tag{3.4}\]</span></span></p>
+</div>
+<p>La norma al cuadrado de un vector es, por tanto, la suma de los cuadrados de sus componentes. Escribiremos siempre <span class="math inline">\(\left\lVert \mathbf v \right\rVert\)</span> sin subíndice, y siempre significará esto.</p>
+<p>Reunimos ahora las <span class="math inline">\(n\)</span> observaciones en un único objeto.</p>
+<div id="def-matriz-diseno" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.4 (Matriz de diseño)</strong></span> La <strong>matriz de diseño</strong> de la muestra es la matriz que tiene por filas los vectores de predictoras traspuestos:</p>
+<p><span class="math display">\[
+\mathbf{X}=\begin{pmatrix}\mathbf{x}_1^{\mathsf{T}}\\ \mathbf{x}_2^{\mathsf{T}}\\ \vdots\\ \mathbf{x}_{n}^{\mathsf{T}}\end{pmatrix}
+=\begin{pmatrix}
+1 &amp; x_{11} &amp; \cdots &amp; x_{1p}\\
+1 &amp; x_{21} &amp; \cdots &amp; x_{2p}\\
+\vdots &amp; \vdots &amp; &amp; \vdots\\
+1 &amp; x_{n1} &amp; \cdots &amp; x_{np}
+\end{pmatrix}
+\in\mathbb{R}^{n\times(p+1)} .
+\]</span></p>
+</div>
+<p>Cada fila es una observación y cada columna una variable predictora. La primera columna es de unos, por el convenio de <a href="#def-notacion-vectorial" class="quarto-xref">Definición&nbsp;<span>3.2</span></a>, y es la que representa el intercepto.</p>
+<p>El producto de una matriz por un vector se define de modo que la componente <span class="math inline">\(i\)</span> del resultado es el producto escalar de la fila <span class="math inline">\(i\)</span> por el vector. Aplicado a <span class="math inline">\(\mathbf{X}\)</span> y a <span class="math inline">\(\boldsymbol{w}\)</span>, eso da</p>
+<p><span id="eq-predicciones"><span class="math display">\[
+\mathbf{X}\boldsymbol{w}
+=\begin{pmatrix}\mathbf{x}_1^{\mathsf{T}}\boldsymbol{w}\\ \mathbf{x}_2^{\mathsf{T}}\boldsymbol{w}\\ \vdots\\ \mathbf{x}_{n}^{\mathsf{T}}\boldsymbol{w}\end{pmatrix}
+=\begin{pmatrix}\hat{y}_1\\ \hat{y}_2\\ \vdots\\ \hat{y}_{n}\end{pmatrix}
+\in\mathbb{R}^{n}.
+\tag{3.5}\]</span></span></p>
+<p>El objeto <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span> es el vector de las <span class="math inline">\(n\)</span> predicciones del modelo.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>AZUL, GRIS, NARANJA <span class="op">=</span> <span class="st">"#151f6c"</span>, <span class="st">"#8b8e95"</span>, <span class="st">"#ff5700"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> celda(ax, columna, fila, texto, color<span class="op">=</span>GRIS, relleno<span class="op">=</span><span class="st">"white"</span>):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ax.add_patch(plt.Rectangle(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        (columna, <span class="op">-</span>fila <span class="op">-</span> <span class="dv">1</span>), <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        facecolor<span class="op">=</span>relleno, edgecolor<span class="op">=</span>color, lw<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ax.text(columna <span class="op">+</span> <span class="fl">0.5</span>, <span class="op">-</span>fila <span class="op">-</span> <span class="fl">0.5</span>, texto, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">8</span>, color<span class="op">=</span>color)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># En las etiquetas de figura solo cabe LaTeX corriente: matplotlib no conoce</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># las macros de _macros.tex.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>diseno <span class="op">=</span> [</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{11}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{12}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{1p}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{21}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{22}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{2p}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    [<span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{n1}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{n2}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{np}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, fila <span class="kw">in</span> <span class="bu">enumerate</span>(diseno):</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c, texto <span class="kw">in</span> <span class="bu">enumerate</span>(fila):</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            celda(ax, c, f, texto, NARANJA, <span class="st">"#fff1ea"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            celda(ax, c, f, texto)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">2.5</span>, <span class="fl">0.6</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{X} </span><span class="er">\</span><span class="vs">in </span><span class="dv">\m</span><span class="vs">athbb{R}</span><span class="dv">^</span><span class="vs">{n</span><span class="ch">\t</span><span class="vs">imes</span><span class="kw">(</span><span class="vs">p</span><span class="op">+</span><span class="vs">1</span><span class="kw">)</span><span class="vs">}</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.1</span>), xytext<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.7</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-|&gt;"</span>, color<span class="op">=</span>NARANJA, lw<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                            mutation_scale<span class="op">=</span><span class="dv">8</span>))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.8</span>, <span class="st">"columna</span><span class="ch">\n</span><span class="st">de unos"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"top"</span>, fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>NARANJA)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">6.0</span>, <span class="op">-</span><span class="fl">2.2</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">imes</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, texto <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="vs">r"</span><span class="dv">$</span><span class="vs">w_0</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">w_1</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">w_p</span><span class="dv">$</span><span class="vs">"</span>]):</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    celda(ax, <span class="fl">6.6</span>, f, texto, AZUL)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.1</span>, <span class="fl">0.6</span>, <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{w}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">8.4</span>, <span class="op">-</span><span class="fl">2.2</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">=</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, texto <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_1</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_2</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>                           <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_n</span><span class="dv">$</span><span class="vs">"</span>]):</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    celda(ax, <span class="fl">9.0</span>, f, texto, NARANJA)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">9.5</span>, <span class="fl">0.6</span>, <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{X}</span><span class="dv">\m</span><span class="vs">athbf{w}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>NARANJA)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">10.5</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">1.3</span>))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>, adjustable<span class="op">=</span><span class="st">"box"</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-matriz-diseno" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-matriz-diseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="d1d338bc" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-4-output-1.png" class="figure-img" width="672" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-matriz-diseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: La matriz de diseño y el producto que produce las predicciones. Cada fila de <span class="math inline">\(\mathbf{X}\)</span> es una observación y cada columna una variable predictora; la primera, en naranja, es la columna de unos que representa el intercepto. El producto <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span> devuelve un valor por observación.
+</figcaption>
+</figure>
+</div>
+<p>Con esto, podemos simplificar la notación.</p>
+<div id="prp-riesgo-matricial" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposición 3.1 (El riesgo cuadrático empírico en forma matricial)</strong></span> Para el modelo lineal con matriz de diseño <span class="math inline">\(\mathbf{X}\)</span>,</p>
+<p><span id="eq-riesgo-matricial"><span class="math display">\[
+\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2
+=\frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2 .
+\tag{3.6}\]</span></span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>Por <a href="#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a>, la componente <span class="math inline">\(i\)</span> del vector <span class="math inline">\(\mathbf{X}\boldsymbol{w}-\mathbf{y}\)</span> es <span class="math inline">\(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}-y_i\)</span>. Por <a href="#eq-norma" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a>, su norma al cuadrado es la suma de los cuadrados de esas componentes,</p>
+<p><span class="math display">\[
+\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2
+=\sum_{i=1}^{n}\bigl(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}-y_i\bigr)^2
+=\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2 ,
+\]</span></p>
+<p>donde la última igualdad se debe a que un cuadrado no distingue el signo. Dividiendo por <span class="math inline">\(n\)</span> se obtiene <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>.</p>
+</div>
+<p>Como <span class="math inline">\(1/n\)</span> es una constante positiva, por <a href="02-aprender-minimizando.html#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a> no cambia dónde está el mínimo, y se puede omitir. El problema de aprendizaje es, por tanto, el siguiente:</p>
+<p><span id="eq-problema-optimizacion"><span class="math display">\[
+\hat{\boldsymbol{w}}\in\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2 .
+\tag{3.7}\]</span></span></p>
+<p>Esta es la forma en la que el problema de mínimos cuadrados aparece en la bibliografía, y la que usaremos de aquí en adelante.</p>
+<p>Para ilustrar la resolución de este problema,en lo que sigue; trabajaremos con datos simulados de <span class="math inline">\(p=5\)</span> variables predictoras, donde conocemos los coeficientes que los han generado.</p>
+<div id="1e4bc44f" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comprobaremos igualdades numéricas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>torch.set_default_dtype(torch.float64)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>w_verdadero <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">3.0</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># con la columna de unos</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.cat([torch.ones(n, <span class="dv">1</span>), torch.randn(n, p)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">@</span> w_verdadero <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> torch.randn(n)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Estilo de los puntos de datos, reutilizado en todas las figuras</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># del capitulo: circulos negros sin relleno y algo transparentes.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>El tercer coeficiente verdadero es cero: la variable predictora <span class="math inline">\(x_3\)</span> no influye en la respuesta. La hemos puesto para tener a mano el caso de una variable que no aporta nada.</p>
+<div id="ea5d3d08" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"X:    "</span>, <span class="bu">tuple</span>(X.shape))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"XtX:  "</span>, <span class="bu">tuple</span>((X.T <span class="op">@</span> X).shape))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Xw:   "</span>, <span class="bu">tuple</span>((X <span class="op">@</span> w_verdadero).shape))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X:     (100, 6)
+XtX:   (6, 6)
+Xw:    (100,)</code></pre>
+</div>
+</div>
+<p>Conviene además dar nombre al vector que aparece dentro de la norma.</p>
+<div id="def-vector-residuos" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.5 (Vector de residuos)</strong></span> El <strong>vector de residuos</strong> de los parámetros <span class="math inline">\(\boldsymbol{w}\)</span> es</p>
+<p><span class="math display">\[
+\mathbf{r}(\boldsymbol{w})=\mathbf{y}-\mathbf{X}\boldsymbol{w}\in\mathbb{R}^{n},
+\]</span></p>
+<p>cuya componente <span class="math inline">\(i\)</span> es el residuo <span class="math inline">\(r_i(\boldsymbol{w})\)</span> de <a href="02-aprender-minimizando.html#def-residuo" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>. Con esto, <span class="math inline">\(\hat{R}(\boldsymbol{w})=\frac{1}{n}\left\lVert \mathbf{r}(\boldsymbol{w}) \right\rVert^2\)</span>.</p>
+</div>
+<p>Pasemos al código. Recordemos del capítulo anterior el reparto en una clase para el modelo, que guarda los parámetros y sabe predecir, y una función suelta para la pérdida. <code>torch</code> escribe el producto matriz por vector con el operador <code>@</code>, de modo que <a href="#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> se traduce literalmente.</p>
+<div id="6e24b0db" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros):</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X <span class="op">@</span> <span class="va">self</span>.w</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">La clase y el método se llaman igual que en el capítulo anterior, y los nombres están elegidos para coincidir con los de las bibliotecas que usaremos después. Volveremos sobre ello al final del capítulo.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="2">Es la única línea que cambia respecto al capítulo anterior, donde ponía <code>self.w[0] + self.w[1] * x</code>. Con <span class="math inline">\(p=1\)</span> y la columna de unos, las dos hacen lo mismo.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="trampa">
+<p><strong>Las formas tienen que casar.</strong> En <code>torch</code>, un vector de <span class="math inline">\(n\)</span> números y una matriz de <span class="math inline">\(n\times1\)</span> son objetos distintos, aunque contengan lo mismo. Si <code>y</code> tiene forma <code>(n,)</code> y las predicciones forma <code>(n, 1)</code>, la resta <code>y - y_pred</code> no da error: <code>torch</code> estira las dos formas hasta hacerlas compatibles y devuelve una matriz <code>(n, n)</code> con todas las diferencias cruzadas, la de cada respuesta con cada predicción. Al promediar esa matriz sale un número perfectamente plausible, calculado con <span class="math inline">\(n^2\)</span> diferencias en lugar de <span class="math inline">\(n\)</span>, y sin ningún aviso.</p>
+<div id="d3d7efa7" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>modelo.w <span class="op">=</span> w_verdadero.clone()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"correcta:"</span>, (y <span class="op">-</span> modelo.predict(X)).shape)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mal:     "</span>, (y.reshape(n, <span class="dv">1</span>) <span class="op">-</span> modelo.predict(X)).shape)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>correcta: torch.Size([100])
+mal:      torch.Size([100, 100])</code></pre>
+</div>
+</div>
+<p>La costumbre que evita el problema es mantener la respuesta como vector de forma <code>(n,)</code> y comprobar con <code>.shape</code> la forma de cada objeto antes de operar.</p>
+</div>
+</section>
+<section id="el-gradiente-del-riesgo-cuadrático" class="level2">
+<h2 class="anchored" data-anchor-id="el-gradiente-del-riesgo-cuadrático">El gradiente del riesgo cuadrático</h2>
+<p>Tenemos el criterio escrito como una función de <span class="math inline">\(p+1\)</span> variables, en la forma compacta de <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>. Para minimizarlo con el algoritmo del capítulo anterior hace falta su gradiente, y lo vamos a obtener directamente en forma vectorial.</p>
+<p>La derivación necesita dos identidades. Las dos se demuestran en el <a href="../curso/algebra.html">repaso de álgebra</a> así que aquí basta con enunciarlas. La primera dice cómo se deriva una forma lineal: para <span class="math inline">\(\mathbf a\in\mathbb{R}^{p+1}\)</span> fijo,</p>
+<p><span id="eq-grad-lineal"><span class="math display">\[
+\nabla\bigl(\mathbf a^{\mathsf{T}}\boldsymbol{w}\bigr)=\mathbf a ,
+\tag{3.8}\]</span></span></p>
+<p>que es <a href="../curso/algebra.html#lem-grad-lineal" class="quarto-xref">Lema&nbsp;<span>2</span></a>. La segunda dice cómo se deriva una forma cuadrática: para <span class="math inline">\(\mathbf A\)</span> simétrica,</p>
+<p><span id="eq-grad-cuadratica"><span class="math display">\[
+\nabla\bigl(\boldsymbol{w}^{\mathsf{T}}\mathbf A\boldsymbol{w}\bigr)=2\mathbf A\boldsymbol{w},
+\tag{3.9}\]</span></span></p>
+<p>que es <a href="../curso/algebra.html#lem-grad-cuadratica" class="quarto-xref">Lema&nbsp;<span>3</span></a>. Usaremos además que el gradiente es lineal, es decir, que el gradiente de una suma es la suma de los gradientes, lo cual se sigue de que la derivada parcial en cada coordenada lo es.</p>
+<div id="thm-gradiente-vectorial" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.1 (Gradiente del riesgo cuadrático)</strong></span> Para el modelo lineal con matriz de diseño <span class="math inline">\(\mathbf{X}\)</span>,</p>
+<p><span id="eq-gradiente-matricial"><span class="math display">\[
+\nabla\hat{R}(\boldsymbol{w})
+=\frac{2}{n}\mathbf{X}^{\mathsf{T}}\bigl(\mathbf{X}\boldsymbol{w}-\mathbf{y}\bigr)
+=-\frac{2}{n}\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w}).
+\tag{3.10}\]</span></span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>Partimos de <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a> y desarrollamos la norma con <a href="#eq-norma" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a>, es decir, como el producto del vector por sí mismo traspuesto:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2
+&amp;=(\mathbf{X}\boldsymbol{w}-\mathbf{y})^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}-\mathbf{y}) \\
+&amp;=\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{y}-\mathbf{y}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}+\mathbf{y}^{\mathsf{T}}\mathbf{y}\\
+&amp;=\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-2\bigl(\mathbf{X}^{\mathsf{T}}\mathbf{y}\bigr)^{\mathsf{T}}\boldsymbol{w}+\mathbf{y}^{\mathsf{T}}\mathbf{y}.
+\end{aligned}
+\]</span></p>
+<p>En el segundo paso se usa la regla de la traspuesta de un producto, <span class="math inline">\((\mathbf A\mathbf
+B)^{\mathsf{T}}=\mathbf B^{\mathsf{T}}\mathbf A^{\mathsf{T}}\)</span>. En el tercero, que los dos términos cruzados son el mismo número, porque cada uno es el traspuesto del otro y ambos son escalares: <span class="math inline">\(\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{y}=(\mathbf{X}^{\mathsf{T}}\mathbf{y})^{\mathsf{T}}\boldsymbol{w}=\mathbf{y}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}\)</span>.</p>
+<p>Ahora derivamos los tres sumandos por separado. Al primero le aplicamos <a href="#eq-grad-cuadratica" class="quarto-xref">Ecuación&nbsp;<span>3.9</span></a> con <span class="math inline">\(\mathbf A=\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span>, que es simétrica por <a href="../curso/algebra.html#exr-xtx-simetrica" class="quarto-xref">Ejercicio&nbsp;<span>1</span></a>, y queda <span class="math inline">\(2\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}\)</span>. Al segundo le aplicamos <a href="#eq-grad-lineal" class="quarto-xref">Ecuación&nbsp;<span>3.8</span></a> con <span class="math inline">\(\mathbf a=\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>, y queda <span class="math inline">\(-2\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>. El tercero no depende de <span class="math inline">\(\boldsymbol{w}\)</span>, así que su gradiente es <span class="math inline">\(\mathbf{0}\)</span>. Reuniendo los tres y dividiendo por <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[
+\nabla\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\bigl(2\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-2\mathbf{X}^{\mathsf{T}}\mathbf{y}\bigr)
+=\frac{2}{n}\mathbf{X}^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}-\mathbf{y}).
+\]</span></p>
+</div>
+<p>El mismo gradiente se puede obtener derivando parcial a parcial, sin notación matricial, y conviene hacerlo una vez.</p>
+<div id="exr-gradiente-componentes" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.2</strong></span> Obtén el gradiente componente a componente y comprueba que coincide con <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a>.</p>
+<ol type="a">
+<li>Escribe <span class="math inline">\(\hat{R}\)</span> sin notación matricial, desarrollando el producto escalar dentro de cada sumando.</li>
+<li>Deriva respecto de <span class="math inline">\(w_k\)</span>, según <a href="02-aprender-minimizando.html#def-parcial" class="quarto-xref">Definición&nbsp;<span>2.5</span></a>, y comprueba que <span id="eq-gradiente-componentes"><span class="math display">\[
+\frac{\partial \hat{R}}{\partial w_k}(\boldsymbol{w})
+=\frac{2}{n}\sum_{i=1}^{n}x_{ik}\bigl(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}-y_i\bigr).
+\tag{3.11}\]</span></span></li>
+<li>Comprueba que la componente <span class="math inline">\(k\)</span> de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> es <a href="#eq-gradiente-componentes" class="quarto-xref">Ecuación&nbsp;<span>3.11</span></a>.</li>
+</ol>
+</div>
+<div id="exr-recupera-gradiente-recta" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.3</strong></span> Comprueba que el capítulo anterior es un caso particular de este. Sea <span class="math inline">\(p=1\)</span>, de modo que <span class="math inline">\(\mathbf{X}=(\mathbf{1}\;\;\mathbf a)\)</span> con <span class="math inline">\(\mathbf a=(x_1,\ldots,x_{n})^{\mathsf{T}}\)</span> la columna del único predictor.</p>
+<ol type="a">
+<li>Escribe las dos componentes de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w})\)</span> en forma de suma.</li>
+<li>Deduce que <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> es exactamente <a href="02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.7</span></a>.</li>
+</ol>
+</div>
+<p>La traducción de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> a código es una línea.</p>
+<div id="dba22c67" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_mse(modelo, X, y):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> modelo.predict(X)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> (X.T <span class="op">@</span> residuos) <span class="op">/</span> y.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Recordemos, en cualquier caso, que no hace falta derivar nada a mano: la diferenciación automática de <a href="02-aprender-minimizando.html#sec-autodiff" class="quarto-xref"><span>Sección 2.10</span></a> calcula el gradiente respecto de todos los parámetros a la vez, independientemente de cuántos haya.</p>
+<div id="454601b8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>modelo_auto.w <span class="op">=</span> torch.zeros(p <span class="op">+</span> <span class="dv">1</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>mse(modelo_auto.predict(X), y).backward()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"gradiente automático:"</span>, modelo_auto.w.grad)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gradiente automático: tensor([-2.3998, -3.0575,  1.3289, -0.4038, -1.3572, -5.8615])</code></pre>
+</div>
+</div>
+<div id="exr-autodiff-coincide" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.4</strong></span> Comprueba que las dos formas de obtener el gradiente dan lo mismo.</p>
+<ol type="a">
+<li>Evalúa <code>grad_mse</code> en unos parámetros cualesquiera y compáralo con el <code>.grad</code> que deja <code>backward()</code> en los mismos parámetros, usando <code>torch.allclose</code>.</li>
+<li>Repite la comprobación en otros dos puntos del espacio de parámetros.</li>
+<li>Explica por qué la comprobación no serviría de nada si <code>grad_mse</code> y la pérdida que derivamos con <code>backward()</code> no fuesen la misma función.</li>
+</ol>
+</div>
+</section>
+<section id="ajustar-un-modelo-lineal" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ajustar-un-modelo-lineal">Ajustar un modelo lineal</h2>
+<p>Con lo visto, el descenso de gradiente de <a href="02-aprender-minimizando.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>2.8</span></a> se aplica sin ningún cambio, porque la actualización <span class="math inline">\(\boldsymbol{w}^{(t+1)}=\boldsymbol{w}^{(t)}-\alpha\nabla\hat{R}(\boldsymbol{w}^{(t)})\)</span> no depende del número de componentes que tiene <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p>Nos faltan las dos piezas que completan la interfaz del capítulo anterior: el optimizador, que guarda la tasa y sabe dar un paso, y el bucle, que vive fuera de las clases. Las dos se copian del capítulo anterior sin tocar una letra, porque ninguna de sus firmas menciona cuántos parámetros hay.</p>
+<div id="655477ba" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        gradiente <span class="op">=</span> grad_mse(<span class="va">self</span>.modelo, X, y)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w <span class="op">=</span> <span class="va">self</span>.modelo.w <span class="op">-</span> <span class="va">self</span>.lr <span class="op">*</span> gradiente</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, X, y, n_iter):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    historia <span class="op">=</span> [mse(modelo.predict(X), y).item()]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iter):</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        optimizador.step(X, y)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        historia.append(mse(modelo.predict(X), y).item())</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.tensor(historia)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Con eso, ajustar el modelo son tres líneas.</p>
+<div id="e92050c8" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>historia_riesgo <span class="op">=</span> train(modelo, GradientDescentOptimizer(modelo, lr<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                        X, y, n_iter<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo inicial:"</span>, <span class="bu">round</span>(historia_riesgo[<span class="dv">0</span>].item(), <span class="dv">4</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo final:  "</span>, <span class="bu">round</span>(historia_riesgo[<span class="op">-</span><span class="dv">1</span>].item(), <span class="dv">6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo inicial: 14.7766
+riesgo final:   0.247588</code></pre>
+</div>
+</div>
+<p>Con dos parámetros pudimos además resolver a mano el sistema <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w})=\mathbf{0}\)</span>. Con <span class="math inline">\(p+1\)</span> parámetros ese sistema sigue siendo lineal, y resoluble de forma analítica.</p>
+<div id="exr-ecuaciones-normales" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.5</strong></span> Iguala el gradiente a cero y obtén el sistema que cumple cualquier punto crítico.</p>
+<ol type="a">
+<li>Parte de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a>, impón <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star)=\mathbf{0}\)</span> y comprueba que la condición equivale a <span id="eq-ecuaciones-normales"><span class="math display">\[
+\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}^\star=\mathbf{X}^{\mathsf{T}}\mathbf{y}.
+\tag{3.12}\]</span></span> Este sistema se conoce como el de las <strong>ecuaciones normales</strong>.</li>
+<li>Di cuántas ecuaciones y cuántas incógnitas tiene, y comprueba que con <span class="math inline">\(p=1\)</span> es el sistema de dos ecuaciones de <a href="02-aprender-minimizando.html#exr-ecuaciones-normales-1d" class="quarto-xref">Ejercicio&nbsp;<span>2.6</span></a>.</li>
+<li>Recordando <a href="02-aprender-minimizando.html#thm-condicion-primer-orden" class="quarto-xref">Teorema&nbsp;<span>2.3</span></a>, di qué relación hay entre las soluciones de <a href="#eq-ecuaciones-normales" class="quarto-xref">Ecuación&nbsp;<span>3.12</span></a> y los mínimos de <span class="math inline">\(\hat{R}\)</span>.</li>
+</ol>
+</div>
+<p>Resolver <a href="#eq-ecuaciones-normales" class="quarto-xref">Ecuación&nbsp;<span>3.12</span></a> da el ajuste sin iterar, y sirve de referencia para comprobar el descenso.</p>
+<div id="da4058da" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>w_exacto <span class="op">=</span> torch.linalg.solve(X.T <span class="op">@</span> X, X.T <span class="op">@</span> y)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"descenso:"</span>, modelo.w)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exacto:  "</span>, w_exacto)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coinciden:"</span>, torch.allclose(modelo.w, w_exacto, atol<span class="op">=</span><span class="fl">1e-6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>descenso: tensor([ 0.9738,  1.9926, -1.5636,  0.0651,  0.5637,  3.0299])
+exacto:   tensor([ 0.9738,  1.9926, -1.5636,  0.0651,  0.5637,  3.0299])
+coinciden: True</code></pre>
+</div>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(historia_riesgo, color<span class="op">=</span><span class="st">"#ff5700"</span>, lw<span class="op">=</span><span class="fl">1.4</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].axhline(mse(X <span class="op">@</span> w_exacto, y).item(), color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>              linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"mínimo exacto"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_yscale(<span class="st">"log"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"iteración"</span>, ylabel<span class="op">=</span><span class="vs">r"riesgo </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat R</span><span class="kw">(</span><span class="dv">\m</span><span class="vs">athbf{w}</span><span class="dv">^</span><span class="vs">{</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="vs">}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"el descenso llega al mínimo"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>limites <span class="op">=</span> [<span class="op">-</span><span class="fl">2.0</span>, <span class="fl">3.5</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(limites, limites, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(w_verdadero.numpy(), w_exacto.numpy(), color<span class="op">=</span><span class="st">"#ff5700"</span>, s<span class="op">=</span><span class="dv">45</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>              zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(p <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].annotate(<span class="vs">fr"</span><span class="dv">$</span><span class="vs">w_</span><span class="sc">{</span>j<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                   (w_verdadero[j].item(), w_exacto[j].item()),</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                   xytext<span class="op">=</span>(<span class="dv">6</span>, <span class="op">-</span><span class="dv">3</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>, fontsize<span class="op">=</span><span class="fl">8.5</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"coeficiente verdadero"</span>, ylabel<span class="op">=</span><span class="st">"coeficiente estimado"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"qué coeficientes hemos recuperado"</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-descenso-riesgo" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-descenso-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="d7b187c8" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-14-output-1.png" class="figure-img" width="1156" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-descenso-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Izquierda: el riesgo a lo largo de las iteraciones, en escala logarítmica, con el mínimo exacto como referencia. Derecha: los seis coeficientes estimados frente a los que generaron los datos; la diagonal es el acierto perfecto. El coeficiente <span class="math inline">\(w_3\)</span>, cuyo valor verdadero es cero, se estima cerca de cero pero no en cero.
+</figcaption>
+</figure>
+</div>
+<p>Cabe entonces preguntarse para qué sirve el descenso de gradiente, si el sistema se puede resolver. Aquí se puede porque la señal es lineal en los parámetros, y eso hace que el gradiente también lo sea. En cuanto la señal deje de serlo, igualar el gradiente a cero producirá un sistema no lineal que no sabremos resolver, mientras que el descenso seguirá funcionando sin cambios. Por eso el descenso es el método general del curso, y resolver el sistema una particularidad de este capítulo.</p>
+</section>
+<section id="existencia-unicidad-y-colinealidad" class="level2">
+<h2 class="anchored" data-anchor-id="existencia-unicidad-y-colinealidad">Existencia, unicidad y colinealidad</h2>
+<p>Queda una pregunta pendiente: si el sistema <a href="#eq-ecuaciones-normales" class="quarto-xref">Ecuación&nbsp;<span>3.12</span></a> tiene solución, y si es única. La respuesta depende de una sola propiedad de la matriz de diseño, su rango, que es el número de columnas linealmente independientes que tiene, en el sentido de <a href="../curso/algebra.html#def-nucleo" class="quarto-xref">Definición&nbsp;<span>1</span></a>.</p>
+<div id="thm-existencia-unicidad" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.2 (Existencia y unicidad del ajuste)</strong></span> El sistema <a href="#eq-ecuaciones-normales" class="quarto-xref">Ecuación&nbsp;<span>3.12</span></a> tiene siempre al menos una solución, y toda solución es un mínimo global de <span class="math inline">\(\hat{R}\)</span>. Si además <span class="math inline">\(\mathop{\mathrm{rank}}\mathbf{X}=p+1\)</span>, la solución es única.</p>
+<p>En cualquier caso, y aunque <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> no sea única, el vector de predicciones <span class="math inline">\(\mathbf{X}\hat{\boldsymbol{w}}\)</span> es el mismo para todas las soluciones.</p>
+</div>
+<div class="cajanegra">
+<p><strong>La demostración queda fuera de alcance.</strong> La de la unicidad es corta y se puede seguir con lo que ya tenemos; la de la existencia necesita proyecciones ortogonales sobre subespacios, un aparato que no se usa en ningún otro punto del curso. Lo que hay que retener es la condición: el rango tiene que ser completo por columnas, y para eso hace falta como mínimo <span class="math inline">\(n\geq p+1\)</span>, porque una matriz no puede tener más columnas independientes que filas.</p>
+</div>
+<p>La última frase del teorema es la que tiene consecuencias prácticas. La forma más directa de que el rango no sea completo es que una variable predictora aparezca dos veces, que es lo que ocurre cuando la misma medida entra en dos variables.</p>
+<div id="8e93b31d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>X_colineal <span class="op">=</span> torch.cat([X, X[:, <span class="dv">1</span>:<span class="dv">2</span>]], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"columnas:"</span>, X_colineal.shape[<span class="dv">1</span>])</span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"rango:   "</span>, torch.linalg.matrix_rank(X_colineal).item())</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Se añade una copia de la columna de <span class="math inline">\(x_1\)</span> al final, así que la matriz tiene siete columnas y dos de ellas son iguales.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>columnas: 7
+rango:    6</code></pre>
+</div>
+</div>
+<p>Siete columnas y rango seis. Ajustemos dos veces, desde puntos de partida distintos, y comparemos.</p>
+<div id="2a84c30d" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ajusta_desde(X_ajuste, w_inicial, n_iter<span class="op">=</span><span class="dv">4000</span>):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    modelo_local <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>X_ajuste.shape[<span class="dv">1</span>])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    modelo_local.w <span class="op">=</span> w_inicial.clone()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    train(modelo_local, GradientDescentOptimizer(modelo_local, lr<span class="op">=</span><span class="fl">0.05</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>          X_ajuste, y, n_iter)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> modelo_local</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>modelo_a <span class="op">=</span> ajusta_desde(X_colineal, torch.zeros(<span class="dv">7</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>modelo_b <span class="op">=</span> ajusta_desde(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    X_colineal, torch.tensor([<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="op">-</span><span class="fl">10.0</span>])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a: w1 = </span><span class="sc">{</span>modelo_a<span class="sc">.</span>w[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">, w6 = </span><span class="sc">{</span>modelo_a<span class="sc">.</span>w[<span class="dv">6</span>]<span class="sc">:.4f}</span><span class="ss">, "</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"suma = </span><span class="sc">{</span>modelo_a<span class="sc">.</span>w[<span class="dv">1</span>] <span class="op">+</span> modelo_a<span class="sc">.</span>w[<span class="dv">6</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"b: w1 = </span><span class="sc">{</span>modelo_b<span class="sc">.</span>w[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">, w6 = </span><span class="sc">{</span>modelo_b<span class="sc">.</span>w[<span class="dv">6</span>]<span class="sc">:.4f}</span><span class="ss">, "</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"suma = </span><span class="sc">{</span>modelo_b<span class="sc">.</span>w[<span class="dv">1</span>] <span class="op">+</span> modelo_b<span class="sc">.</span>w[<span class="dv">6</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgos:"</span>, mse(modelo_a.predict(X_colineal), y).item(),</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>      mse(modelo_b.predict(X_colineal), y).item())</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mayor diferencia entre predicciones:"</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>      (modelo_a.predict(X_colineal)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>       <span class="op">-</span> modelo_b.predict(X_colineal)).<span class="bu">abs</span>().<span class="bu">max</span>().item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a: w1 = 0.9963, w6 = 0.9963, suma = 1.9926
+b: w1 = 10.9963, w6 = -9.0037, suma = 1.9926
+riesgos: 0.24758781367707214 0.2475878136770721
+mayor diferencia entre predicciones: 2.042810365310288e-14</code></pre>
+</div>
+</div>
+<p>Los dos ajustes dan coeficientes muy distintos para <span class="math inline">\(x_1\)</span> y para su copia, y sin embargo el mismo riesgo y las mismas predicciones, tal como anuncia <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>. Lo que coincide es la suma de los dos coeficientes, y coincide con el coeficiente único que <span class="math inline">\(x_1\)</span> recibía cuando la copia no estaba.</p>
+<p>La colinealidad exacta es un caso de laboratorio. Con datos reales lo que ocurre es que dos columnas son casi iguales, y entonces el ajuste es único pero inestable: hay coeficientes muy distintos con un riesgo casi idéntico, y basta cambiar unas pocas observaciones para pasar de unos a otros.</p>
+<div id="exr-mas-variables-que-observaciones" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.6</strong></span> Cuando hay más variables predictoras que observaciones.</p>
+<ol type="a">
+<li>Explica por qué con <span class="math inline">\(n&lt;p+1\)</span> el rango de <span class="math inline">\(\mathbf{X}\)</span> no puede ser completo, y qué dice entonces <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> sobre el ajuste.</li>
+<li>Construye con <code>torch</code> una matriz de diseño con <span class="math inline">\(n=5\)</span> y <span class="math inline">\(p=8\)</span>, ajusta con <code>torch.linalg.lstsq</code> y comprueba que el riesgo del ajuste es cero. Explica por qué eso no es una buena noticia, citando el capítulo 1.</li>
+</ol>
+</div>
+</section>
+<section id="una-interfaz-común-para-entrenar-modelos" class="level2">
+<h2 class="anchored" data-anchor-id="una-interfaz-común-para-entrenar-modelos">Una interfaz común para entrenar modelos</h2>
+<p>Reunimos aquí todas las clases y funciones que hacen falta para entrenar el modelo. Son las del capítulo anterior con dos cambios: <code>predict</code> multiplica por la matriz de diseño, y el optimizador obtiene el gradiente por diferenciación automática, sin usar la fórmula de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a>.</p>
+<div id="589f062c" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros):</span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X <span class="op">@</span> <span class="va">self</span>.w</span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-8"><a href="#annotated-cell-11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-9"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
+<span id="annotated-cell-11-10"><a href="#annotated-cell-11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
+<span id="annotated-cell-11-11"><a href="#annotated-cell-11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-12"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-13"><a href="#annotated-cell-11-13" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer:</span>
+<span id="annotated-cell-11-14"><a href="#annotated-cell-11-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="annotated-cell-11-15"><a href="#annotated-cell-11-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="annotated-cell-11-16"><a href="#annotated-cell-11-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-17" class="code-annotation-target"><a href="#annotated-cell-11-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w.requires_grad_()</span>
+<span id="annotated-cell-11-18"><a href="#annotated-cell-11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-19"><a href="#annotated-cell-11-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-11-20" class="code-annotation-target"><a href="#annotated-cell-11-20" aria-hidden="true" tabindex="-1"></a>        mse(<span class="va">self</span>.modelo.predict(X), y).backward()</span>
+<span id="annotated-cell-11-21"><a href="#annotated-cell-11-21" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-11-22" class="code-annotation-target"><a href="#annotated-cell-11-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad():</span>
+<span id="annotated-cell-11-23"><a href="#annotated-cell-11-23" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.modelo.w <span class="op">-=</span> <span class="va">self</span>.lr <span class="op">*</span> <span class="va">self</span>.modelo.w.grad</span>
+<span id="annotated-cell-11-24"><a href="#annotated-cell-11-24" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-11-25" class="code-annotation-target"><a href="#annotated-cell-11-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w.grad.zero_()</span>
+<span id="annotated-cell-11-26"><a href="#annotated-cell-11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-27"><a href="#annotated-cell-11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-28"><a href="#annotated-cell-11-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, X, y, n_iter):</span>
+<span id="annotated-cell-11-29"><a href="#annotated-cell-11-29" aria-hidden="true" tabindex="-1"></a>    historia <span class="op">=</span> [mse(modelo.predict(X), y).item()]</span>
+<span id="annotated-cell-11-30"><a href="#annotated-cell-11-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iter):</span>
+<span id="annotated-cell-11-31"><a href="#annotated-cell-11-31" aria-hidden="true" tabindex="-1"></a>        optimizador.step(X, y)</span>
+<span id="annotated-cell-11-32"><a href="#annotated-cell-11-32" aria-hidden="true" tabindex="-1"></a>        historia.append(mse(modelo.predict(X), y).item())</span>
+<span id="annotated-cell-11-33"><a href="#annotated-cell-11-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.tensor(historia)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="17" data-code-annotation="1">El optimizador marca los parámetros respecto a los que se va a derivar. Así el modelo queda idéntico al de antes y no tiene que saber cómo se obtiene el gradiente.</span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="20" data-code-annotation="2">La pasada hacia atrás deja las derivadas parciales en <code>self.modelo.w.grad</code>. La fórmula analítica no aparece.</span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="22" data-code-annotation="3">La actualización no debe formar parte del cálculo que se está derivando.</span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="25" data-code-annotation="4"><code>torch</code> acumula gradientes, así que hay que ponerlos a cero antes de la iteración siguiente.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Comprobemos que el ajuste es el mismo.</p>
+<div id="d9ac6243" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>train(modelo_auto, AutogradOptimizer(modelo_auto, lr<span class="op">=</span><span class="fl">0.1</span>), X, y, n_iter<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coincide con la solución exacta:"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      torch.allclose(modelo_auto.w.detach(), w_exacto, atol<span class="op">=</span><span class="fl">1e-6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coincide con la solución exacta: True</code></pre>
+</div>
+</div>
+<p>PyTorch trae además sus propios optimizadores. El descenso de gradiente es <code>torch.optim.SGD</code>, y encaja en esta interfaz sin más que envolverlo en una clase con el mismo método <code>step</code>.</p>
+<div id="b275468b" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SGDOptimizer:</span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>        modelo.w.requires_grad_()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-5" class="code-annotation-target"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.optimizador <span class="op">=</span> torch.optim.SGD([modelo.w], lr<span class="op">=</span>lr)</span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.optimizador.zero_grad()</span>
+<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>        mse(<span class="va">self</span>.modelo.predict(X), y).backward()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-10" class="code-annotation-target"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.optimizador.step()</span>
+<span id="annotated-cell-13-11"><a href="#annotated-cell-13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-12"><a href="#annotated-cell-13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-13"><a href="#annotated-cell-13-13" aria-hidden="true" tabindex="-1"></a>modelo_sgd <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="annotated-cell-13-14"><a href="#annotated-cell-13-14" aria-hidden="true" tabindex="-1"></a>train(modelo_sgd, SGDOptimizer(modelo_sgd, lr<span class="op">=</span><span class="fl">0.1</span>), X, y, n_iter<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="annotated-cell-13-15"><a href="#annotated-cell-13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-16"><a href="#annotated-cell-13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coincide con la solución exacta:"</span>,</span>
+<span id="annotated-cell-13-17"><a href="#annotated-cell-13-17" aria-hidden="true" tabindex="-1"></a>      torch.allclose(modelo_sgd.w.detach(), w_exacto, atol<span class="op">=</span><span class="fl">1e-6</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="5" data-code-annotation="1">Se le pasa la lista de tensores que tiene que actualizar.</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="10" data-code-annotation="2">Hace exactamente lo que hacía <code>AutogradOptimizer.step</code>, incluida la puesta a cero.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coincide con la solución exacta: True</code></pre>
+</div>
+</div>
+<p>Esta última es la que usaremos a partir de aquí. <code>torch.optim</code> ofrece muchos optimizadores con esta misma interfaz, de modo que cambiar de algoritmo será cambiar una línea.</p>
+<section id="la-misma-interfaz-en-scikit-learn" class="level3">
+<h3 class="anchored" data-anchor-id="la-misma-interfaz-en-scikit-learn">La misma interfaz en scikit-learn</h3>
+<p>Hemos construido esta interfaz a mano para ver por dentro qué hace cada pieza. En la práctica no se escribe a mano, porque existe <a href="https://scikit-learn.org">scikit-learn</a>, la biblioteca de aprendizaje automático estándar en Python. Trae implementados los modelos que veremos en el curso, y también las herramientas para preparar los datos, repartir la muestra y validar, que son las que usaremos a partir del capítulo siguiente.</p>
+<p>Su convenio es el que hemos imitado, y es el mismo para todos los modelos que ofrece: cada modelo es un objeto con un método <code>fit</code>, que estima los parámetros a partir de unos datos, y un método <code>predict</code>, que aplica el modelo estimado a observaciones nuevas. Los parámetros estimados quedan guardados en atributos del objeto, con un guion bajo al final del nombre. La ventaja de que el convenio sea único es que cambiar de modelo no obliga a cambiar el resto del código.</p>
+<div id="fa494246" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression <span class="im">as</span> SkLinearRegression</span>
+<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>ajuste_sk <span class="op">=</span> SkLinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>).fit(</span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>    X.numpy(), y.numpy())</span>
+<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"nuestro ajuste :"</span>, [<span class="bu">round</span>(v, <span class="dv">4</span>) <span class="cf">for</span> v <span class="kw">in</span> w_exacto.tolist()])</span>
+<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"scikit-learn   :"</span>, [<span class="bu">round</span>(v, <span class="dv">4</span>) <span class="cf">for</span> v <span class="kw">in</span> ajuste_sk.coef_.tolist()])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="3" data-code-annotation="1"><code>fit_intercept=False</code> porque nuestra <span class="math inline">\(\mathbf{X}\)</span> ya trae la columna de unos. Con el valor por defecto, <code>scikit-learn</code> añadiría su propio intercepto y estimaría un parámetro de más.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>nuestro ajuste : [0.9738, 1.9926, -1.5636, 0.0651, 0.5637, 3.0299]
+scikit-learn   : [0.9738, 1.9926, -1.5636, 0.0651, 0.5637, 3.0299]</code></pre>
+</div>
+</div>
+<p>Los dos ajustes coinciden, y tienen que coincidir: <code>scikit-learn</code> resuelve el mismo problema de mínimos cuadrados con la misma descomposición numérica que <code>torch.linalg.lstsq</code>. Lo que aporta la biblioteca no es un algoritmo distinto, sino todo lo que rodea al ajuste, que es donde se va el trabajo de un proyecto real: transformar las variables, encadenar pasos, repartir la muestra y validar. Usaremos <code>torch</code> para lo que tiene que ver con optimización y <code>scikit-learn</code> para el flujo de trabajo, empezando por el capítulo siguiente.</p>
+</section>
+</section>
+<section id="ejemplo-con-datos-reales" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ejemplo-con-datos-reales">Ejemplo con datos reales</h2>
+<p>Todo lo anterior se ha comprobado sobre datos que hemos simulado nosotros, con la ventaja de conocer los coeficientes verdaderos. Vamos a aplicarlo a un caso donde no los conocemos.</p>
+<p>Usaremos los datos de próstata de <em>The Elements of Statistical Learning</em> <span class="citation" data-cites="hastie2009elements">(<a href="../index.html#ref-hastie2009elements" role="doc-biblioref">Hastie et&nbsp;al. 2009</a>)</span>. Son 97 pacientes con cáncer de próstata. La respuesta es <code>lpsa</code>, el logaritmo del antígeno prostático específico en suero, que es un marcador que se usa para seguir la enfermedad, y las ocho variables predictoras son medidas clínicas tomadas al mismo paciente:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Qué mide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lcavol</code></td>
+<td>logaritmo del volumen del tumor</td>
+</tr>
+<tr class="even">
+<td><code>lweight</code></td>
+<td>logaritmo del peso de la próstata</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>edad del paciente, en años</td>
+</tr>
+<tr class="even">
+<td><code>lbph</code></td>
+<td>logaritmo de la cantidad de hiperplasia benigna</td>
+</tr>
+<tr class="odd">
+<td><code>svi</code></td>
+<td>invasión de las vesículas seminales, 0 o 1</td>
+</tr>
+<tr class="even">
+<td><code>lcp</code></td>
+<td>logaritmo de la penetración capsular</td>
+</tr>
+<tr class="odd">
+<td><code>gleason</code></td>
+<td>puntuación de Gleason, un grado histológico de 6 a 9</td>
+</tr>
+<tr class="even">
+<td><code>pgg45</code></td>
+<td>porcentaje de la muestra con puntuación de Gleason 4 o 5</td>
+</tr>
+</tbody>
+</table>
+<p>Ajustaremos un modelo lineal que prediga <code>lpsa</code> a partir de las ocho.</p>
+<div id="e755bee7" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>prostata <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>predictoras <span class="op">=</span> [<span class="st">"lcavol"</span>, <span class="st">"lweight"</span>, <span class="st">"age"</span>, <span class="st">"lbph"</span>,</span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"svi"</span>, <span class="st">"lcp"</span>, <span class="st">"gleason"</span>, <span class="st">"pgg45"</span>]</span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>X_prostata <span class="op">=</span> torch.cat([</span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a>    torch.ones(<span class="bu">len</span>(prostata), <span class="dv">1</span>),</span>
+<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>    torch.tensor(prostata[predictoras].values, dtype<span class="op">=</span>torch.float64),</span>
+<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11" aria-hidden="true" tabindex="-1"></a>], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="annotated-cell-15-12"><a href="#annotated-cell-15-12" aria-hidden="true" tabindex="-1"></a>y_prostata <span class="op">=</span> torch.tensor(prostata[<span class="st">"lpsa"</span>].values, dtype<span class="op">=</span>torch.float64)</span>
+<span id="annotated-cell-15-13"><a href="#annotated-cell-15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-14"><a href="#annotated-cell-15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"matriz de diseño:"</span>, <span class="bu">tuple</span>(X_prostata.shape))</span>
+<span id="annotated-cell-15-15"><a href="#annotated-cell-15-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"rango:"</span>, torch.linalg.matrix_rank(X_prostata).item())</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="3" data-code-annotation="1">El fichero está en <code>datos/</code> y se lee por ruta relativa.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>matriz de diseño: (97, 9)
+rango: 9</code></pre>
+</div>
+</div>
+<p>La matriz es de <span class="math inline">\(97\times9\)</span>: 97 observaciones, ocho variables predictoras y la columna de unos. Su rango es 9, es decir completo, así que por <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> hay un único mínimo y lo podemos calcular resolviendo las ecuaciones normales.</p>
+<p>La tabla trae además una columna <code>train</code>, con la partición en <em>train</em> y <em>test</em> que usa el libro. No la vamos a utilizar todavía: separar datos para evaluar es el asunto del capítulo siguiente, y aquí ajustamos con las 97 observaciones.</p>
+<div id="4125670e" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>w_prostata <span class="op">=</span> torch.linalg.solve(X_prostata.T <span class="op">@</span> X_prostata,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                                X_prostata.T <span class="op">@</span> y_prostata)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, valor <span class="kw">in</span> <span class="bu">zip</span>([<span class="st">"intercepto"</span>] <span class="op">+</span> predictoras, w_prostata):</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:&gt;10}</span><span class="ss">: </span><span class="sc">{</span>valor<span class="sc">:+.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercepto: +0.1816
+    lcavol: +0.5643
+   lweight: +0.6220
+       age: -0.0212
+      lbph: +0.0967
+       svi: +0.7617
+       lcp: -0.1061
+   gleason: +0.0492
+     pgg45: +0.0045</code></pre>
+</div>
+</div>
+<p>Para saber si el ajuste sirve de algo hace falta algo con lo que compararlo. Lo más sencillo posible es un modelo que ignore las variables predictoras.</p>
+<div id="6462f3fe" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>residuos_prostata <span class="op">=</span> y_prostata <span class="op">-</span> X_prostata <span class="op">@</span> w_prostata</span>
+<span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a>riesgo_ajuste <span class="op">=</span> mse(X_prostata <span class="op">@</span> w_prostata, y_prostata)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-17-4" class="code-annotation-target"><a href="#annotated-cell-17-4" aria-hidden="true" tabindex="-1"></a>riesgo_media <span class="op">=</span> mse(y_prostata.mean(), y_prostata)</span>
+<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-6"><a href="#annotated-cell-17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"riesgo del ajuste: </span><span class="sc">{</span>riesgo_ajuste<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="annotated-cell-17-7"><a href="#annotated-cell-17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"riesgo de predecir siempre la media: </span><span class="sc">{</span>riesgo_media<span class="sc">:.4f}</span><span class="ss">"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="4" data-code-annotation="1">El modelo que predice siempre el mismo valor, la media de las respuestas observadas.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo del ajuste: 0.4439
+riesgo de predecir siempre la media: 1.3187</code></pre>
+</div>
+</div>
+<p>El riesgo del ajuste es <span class="math inline">\(0.4439\)</span> y el de predecir siempre la media, <span class="math inline">\(1.3187\)</span>. Las ocho variables reducen el error cuadrático medio a la tercera parte del que se obtiene sin mirarlas. Sobre si eso es mucho o poco, este capítulo no tiene nada que decir: no hemos definido ninguna escala para juzgarlo, ni ninguna referencia con la que comparar más allá de la media. De esto hablaremos en el capítulo siguiente.</p>
+<p>Queda una sorpresa. Si intentamos ajustar el modelo por descenso de gradiente, con la misma interfaz que ha funcionado en las secciones anteriores, no converge.</p>
+<div id="addacf84" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>modelo_crudo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>historia_crudo <span class="op">=</span> train(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    modelo_crudo, SGDOptimizer(modelo_crudo, lr<span class="op">=</span><span class="fl">1e-3</span>),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    X_prostata, y_prostata, n_iter<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo tras 200 iteraciones:"</span>, historia_crudo[<span class="op">-</span><span class="dv">1</span>].item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo tras 200 iteraciones: inf</code></pre>
+</div>
+</div>
+<p>El riesgo no baja, crece sin límite. Y con una tasa mucho menor baja, pero tan despacio que no llega: con <span class="math inline">\(\alpha=10^{-4}\)</span> y veinte mil iteraciones el riesgo se queda en <span class="math inline">\(0.4825\)</span>, frente al mínimo <span class="math inline">\(0.4439\)</span>, y el intercepto en <span class="math inline">\(0.037\)</span> frente a <span class="math inline">\(0.182\)</span>.</p>
+<p>La causa está en las escalas de las columnas. La media de <code>age</code> es 63.9 y su máximo 79; la de <code>svi</code> es 0.22 y su máximo 1. Mover un parámetro cuya variable toma valores en torno a 70 y mover otro cuya variable vale 0 o 1 tienen efectos muy distintos sobre el riesgo, y eso deforma la superficie que el algoritmo tiene que recorrer: el paso que resulta razonable en una dirección es enorme en la otra.</p>
+<p>La solución completa es materia del capítulo dedicado a preparar los datos. Su forma más simple consiste en restar a cada columna su media y dividirla por su desviación típica, de modo que todas queden en la misma escala.</p>
+<div id="660d4ee2" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Z_prostata <span class="op">=</span> torch.cat([</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    torch.ones(<span class="bu">len</span>(prostata), <span class="dv">1</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    (X_prostata[:, <span class="dv">1</span>:] <span class="op">-</span> X_prostata[:, <span class="dv">1</span>:].mean(<span class="dv">0</span>))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span> X_prostata[:, <span class="dv">1</span>:].std(<span class="dv">0</span>),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>modelo_escalado <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>historia_escalado <span class="op">=</span> train(</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    modelo_escalado, SGDOptimizer(modelo_escalado, lr<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    Z_prostata, y_prostata, n_iter<span class="op">=</span><span class="dv">2000</span>,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>w_escalado_exacto <span class="op">=</span> torch.linalg.solve(Z_prostata.T <span class="op">@</span> Z_prostata,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>                                       Z_prostata.T <span class="op">@</span> y_prostata)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo por descenso:"</span>, historia_escalado[<span class="op">-</span><span class="dv">1</span>].item())</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo exacto:      "</span>,</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>      mse(Z_prostata <span class="op">@</span> w_escalado_exacto, y_prostata).item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo por descenso: 0.44390122410025684
+riesgo exacto:       0.4439012241002568</code></pre>
+</div>
+</div>
+<p>Con las columnas escaladas la tasa <span class="math inline">\(\alpha=0.1\)</span> es estable y el descenso alcanza el mínimo. El riesgo mínimo es el mismo <span class="math inline">\(0.4439\)</span> de antes, porque escalar las columnas no cambia el conjunto de predicciones que el modelo puede producir: solo cambia qué coeficientes las producen.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ajuste_prostata <span class="op">=</span> X_prostata <span class="op">@</span> w_prostata</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>limites <span class="op">=</span> [y_prostata.<span class="bu">min</span>().item() <span class="op">-</span> <span class="fl">0.3</span>, y_prostata.<span class="bu">max</span>().item() <span class="op">+</span> <span class="fl">0.3</span>]</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(limites, limites, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].scatter(y_prostata.numpy(), ajuste_prostata.numpy(), <span class="op">**</span>kw_puntos,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>              zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"lpsa observado"</span>, ylabel<span class="op">=</span><span class="st">"lpsa predicho"</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"observado frente a predicho"</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].axhline(<span class="fl">0.0</span>, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(ajuste_prostata.numpy(), residuos_prostata.numpy(),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>              <span class="op">**</span>kw_puntos, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"lpsa predicho"</span>, ylabel<span class="op">=</span><span class="st">"residuo"</span>,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"residuos frente a valores ajustados"</span>)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-caso-prostata" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-caso-prostata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="97e904c7" class="cell" data-execution_count="25">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-26-output-1.png" class="figure-img" width="1157" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-caso-prostata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: El ajuste sobre los datos de próstata. A la izquierda, lo observado frente a lo predicho, con la diagonal como acierto perfecto. A la derecha, los residuos frente a los valores ajustados: están repartidos alrededor de cero, sin curvatura ni ensanchamiento evidentes, que es lo que cabe esperar si el modelo lineal-gaussiano no va muy desencaminado. Los dos paneles usan las mismas 97 observaciones con las que se ha ajustado el modelo.
+</figcaption>
+</figure>
+</div>
+<p>Esa última frase del pie de la figura es el problema que queda abierto. Hemos ajustado un modelo con ocho variables predictoras, hemos comprobado que el mínimo es único, y hemos medido lo bueno que es sobre las mismas 97 observaciones que hemos usado para elegirlo. El capítulo anterior ya avisó de que esa medida es demasiado favorable. Con los datos simulados podemos ver exactamente cuánto, porque ahí sí conocemos los coeficientes que generaron la respuesta.</p>
+<div id="7df23126" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo del ajuste:              "</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>      mse(X <span class="op">@</span> w_exacto, y).item())</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo de los coeficientes verdaderos:"</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>      mse(X <span class="op">@</span> w_verdadero, y).item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo del ajuste:               0.24758781367707222
+riesgo de los coeficientes verdaderos: 0.25879278680197343</code></pre>
+</div>
+</div>
+<p>El ajuste tiene menos riesgo que la verdad. No es un error de cálculo: <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> se ha elegido para minimizar el riesgo sobre esta muestra concreta, y la verdad no compite en eso. La diferencia es exactamente lo que el ajuste ha aprendido del ruido de estas cien observaciones, y no se repetirá en observaciones nuevas.</p>
+<p>Antes de añadir más variables hace falta poder estimar el error sobre observaciones que el modelo no haya visto. A esto dedicaremos el capítulo siguiente.</p>
+</section>
+<section id="ejercicios" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<div id="exr-recuperar-recta" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.7 (Comprobar que el capítulo 2 es un caso particular)</strong></span> Genera los datos del capítulo anterior, construye la matriz de diseño <span class="math inline">\(\mathbf{X}=(\mathbf{1}\;\;\mathbf
+a)\)</span> de dos columnas y ajusta con <code>LinearRegression</code> y <code>GradientDescentOptimizer</code> de este capítulo. Comprueba que obtienes los mismos coeficientes que allí y relaciona el resultado con <a href="#exr-recupera-gradiente-recta" class="quarto-xref">Ejercicio&nbsp;<span>3.3</span></a>.</p>
+</div>
+<div id="exr-columna-redundante" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.8 (Una variable predictora que no aporta nada)</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Añade a <code>X</code> una columna igual a la suma de dos de las que ya tiene. Comprueba con <code>torch.linalg.matrix_rank</code> que el rango no ha subido.</li>
+<li>Encuentra un vector no nulo del núcleo de la matriz nueva y verifica numéricamente que <span class="math inline">\(\mathbf{X}\mathbf d=\mathbf{0}\)</span>.</li>
+<li>Ajusta desde dos puntos de partida distintos y comprueba las tres afirmaciones de <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>: coeficientes distintos, predicciones iguales, riesgo igual.</li>
+</ol>
+</div>
+<div id="exr-norma-del-gradiente" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.9 (El gradiente como diagnóstico de convergencia)</strong></span> Ajusta el modelo de próstata por descenso de gradiente sobre las columnas escaladas y, cada cien iteraciones, registra <span class="math inline">\(\left\lVert \nabla\hat{R}(\boldsymbol{w}) \right\rVert\)</span>. Represéntalo en escala logarítmica frente a la iteración.</p>
+<ol type="a">
+<li>Explica, usando <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a>, qué significa que esa norma sea pequeña en términos de las variables predictoras y de los residuos.</li>
+<li>Di por qué esa cantidad es mejor criterio de parada que un número fijo de iteraciones.</li>
+</ol>
+</div>
+<div id="exr-escala-y-coeficientes" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.10 (Qué cambia al escalar las columnas)</strong></span> Ajusta el modelo de próstata dos veces, con las columnas crudas y con las columnas escaladas, usando en los dos casos las ecuaciones normales.</p>
+<ol type="a">
+<li>Comprueba que el riesgo mínimo es el mismo y que las predicciones coinciden.</li>
+<li>Comprueba que los coeficientes no coinciden, y deduce la relación exacta entre los coeficientes de las dos versiones para las columnas que no son el intercepto.</li>
+<li>Explica cuál de las dos colecciones de coeficientes permite comparar la importancia de dos variables predictoras entre sí, y por qué.</li>
+</ol>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-hastie2009elements" class="csl-entry" role="listitem">
+Hastie, Trevor, Robert Tibshirani, y Jerome Friedman. 2009. <em>The Elements of Statistical Learning</em>. 2nd ed. Springer.
+</div>
+</div>
+</section>
+
+<p><br><br><span style="color:grey;">© Roi Naveiro, CUNEF Universidad, 2026</span></p></main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../capitulos/02-aprender-minimizando.html" class="pagination-link" aria-label="Aprender minimizando">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../capitulos/04-evaluacion.html" class="pagination-link" aria-label="Evaluar para generalizar">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

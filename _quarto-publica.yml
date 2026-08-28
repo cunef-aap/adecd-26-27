@@ -1,3 +1,11 @@
+# Los solucionarios estan comentados en la lista de capitulos de _quarto.yml, y sin esta
+# exclusion Quarto copiaria su .qmd crudo a docs/, donde seria descargable. El interruptor
+# esta en scripts/soluciones.py.
+project:
+  render:
+    - "*.qmd"
+    - "!problemas/*-soluciones.qmd"
+
 format:
   html:
     filters:

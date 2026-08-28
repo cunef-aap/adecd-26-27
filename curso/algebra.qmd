@@ -44,7 +44,14 @@ para todo $j$.
 :::
 
 Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución
-de mínimos cuadrados (capítulo 6) y la trampa de la variable ficticia (capítulo 7).
+de mínimos cuadrados y la trampa de la variable ficticia.
+
+::: {.sinusar}
+**Ningún capítulo lo cita todavía.** El capítulo 3 enuncia la existencia y la unicidad del
+ajuste pero deja su demostración fuera de alcance, así que no llega a usar este lema. Lo
+necesitará la trampa de la variable ficticia del capítulo 5. Si al escribir ese capítulo
+resulta que tampoco hace falta, este lema se puede quitar.
+:::
 
 ## Matrices
 
@@ -119,7 +126,8 @@ haber más columnas independientes que filas.
 
 No en abstracto: **exhibiendo el vector**. Para probar que unas columnas son dependientes,
 se escribe un $\mathbf{v} \neq \zerov$ concreto y se comprueba que $\X\mathbf{v} = \zerov$.
-Así se hace en el capítulo 7 con la trampa de la variable ficticia.
+Así se hace en el [capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd) con la
+trampa de la variable ficticia.
 :::
 
 ::: {#exr-nucleo}
@@ -136,9 +144,12 @@ resuelve el sistema directamente, que es más rápido y numéricamente más esta
 
 | Matemáticas | Código |
 |---|---|
-| $\mathbf{z} = \mathbf{A}^{-1}\mathbf{b}$ | `np.linalg.solve(A, b)` |
-| mínimos cuadrados | `np.linalg.lstsq(X, y, rcond=None)` |
-| $\rank \X$ | `np.linalg.matrix_rank(X)` |
+| $\mathbf{z} = \mathbf{A}^{-1}\mathbf{b}$ | `torch.linalg.solve(A, b)` |
+| mínimos cuadrados | `torch.linalg.lstsq(X, y).solution` |
+| $\rank \X$ | `torch.linalg.matrix_rank(X)` |
+
+Los mismos nombres existen en `numpy` como `np.linalg.solve`, `np.linalg.lstsq` y
+`np.linalg.matrix_rank`.
 
 ## Derivadas parciales y gradiente
 
@@ -149,6 +160,15 @@ $$
 \grad \model(\coef) = \left( \pd{\model}{w_1}, \dots, \pd{\model}{w_m} \right)\T .
 $$
 
+**Linealidad.** El gradiente de una suma es la suma de los gradientes, y las constantes
+salen fuera:
+$$
+\grad\bigl(a\,\model(\coef) + b\,h(\coef)\bigr)
+= a\,\grad \model(\coef) + b\,\grad h(\coef) .
+$$
+Se sigue de que la derivada parcial en cada coordenada es lineal. Se usa en el capítulo 3
+para derivar por separado los tres sumandos del riesgo cuadrático.
+
 **Regla de la cadena**, en la forma que usaremos: si $\model(\coef) = g(h(\coef))$ con
 $h: \Real^m \to \Real$ y $g:\Real\to\Real$, entonces
 $\grad \model(\coef) = g'(h(\coef))\, \grad h(\coef)$.
@@ -157,10 +177,10 @@ $\grad \model(\coef) = g'(h(\coef))\, \grad h(\coef)$.
 diferenciable, entonces $\grad \model(\coef^\star) = \zerov$. El recíproco es falso:
 $w^3$ tiene derivada nula en $0$ y no hay ahí ni mínimo ni máximo.
 
-## Las dos identidades del capítulo 6
+## Dos identidades para los modelos lineales
 
-Son trabajo previo a la sesión de teoría de la semana 6. Con ellas, el gradiente del
-riesgo sale en tres líneas; sin ellas, la sesión no cabe.
+Se utilizan en el capítulo 3 para obtener el gradiente del riesgo cuadrático en forma
+matricial.
 
 ::: {#lem-grad-lineal}
 ## Gradiente de una forma lineal

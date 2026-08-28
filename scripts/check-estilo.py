@@ -75,6 +75,31 @@ REGLAS = [
         "frase de venta",
         False,
     ),
+    (
+        # El anuncio de la lectura: una frase que presenta la cifra o la tabla que viene
+        # detras, en lugar de darla. Ver la seccion homonima de write-roinaveiro-es.
+        "anuncio",
+        re.compile(
+            r"(ahí (está|están) (el|la|los|las)\b|ahí lo tienes|"
+            r"la lectura es la que|cuenta la historia|"
+            r"conviene leer(los|las) juntos|conviene leerlas juntas|"
+            r"lo que falta es lo contrario|"
+            r"^(eso|esto) ya (es|está)\b)",
+            re.IGNORECASE | re.MULTILINE,
+        ),
+        "anuncio de la lectura: da la cifra o la tabla, no la presentes",
+        False,
+    ),
+    (
+        "intensificador",
+        re.compile(
+            r"\b(de verdad|sin parar|para nada|con enorme fluidez|"
+            r"muchísimo|clarísimo|facilísimo)\b",
+            re.IGNORECASE,
+        ),
+        "intensificador coloquial: sustitúyelo por el dato concreto",
+        False,
+    ),
 ]
 
 SUSTITUCIONES = {"«": '"', "»": '"'}

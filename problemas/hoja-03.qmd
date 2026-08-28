@@ -6,32 +6,330 @@ $$
 $$
 :::
 
-Capítulo 3, Verosimilitud y MLE. Los cuatro primeros ejercicios son nucleares y tienen la
-estructura del examen; el quinto es de ampliación.
+Hoja del capítulo 3, Modelos lineales con muchas variables. El capítulo ocupa dos semanas, así
+que la hoja se reparte entre las dos sesiones de problemas, pero no bloque a bloque: cada
+bloque tiene ejercicios de las dos mitades. Los cuatro primeros bloques tienen la estructura
+del examen.
 
-::: {.callout-warning appearance="simple"}
-En construcción. El modelo a seguir es la [hoja 2](hoja-02.qmd).
+| Sesión | Ejercicios |
+|---|---|
+| Primera, notación y gradiente | @exr-h3-conceptual, @exr-h3-loglik-mse, @exr-h3-gradiente-componentes, @exr-h3-dimensiones, @exr-h3-errores, @exr-h3-completar |
+| Segunda, ajuste, unicidad y caso real | los demás |
+
+::: {.callout-note appearance="simple"}
+El bloque de cálculo a mano de esta hoja recoge la práctica de álgebra matricial que
+`curso/guia.qmd` sitúa en la S2 de la semana 5: producto matriz por vector, traspuesta,
+$\Xt\X$ y rango. El material anterior, escrito contra la numeración por semanas, está en el
+historial de git.
 :::
 
-## 1. Conceptual
+## 1. Conceptual {#sec-h3-a}
 
-<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
-     (define, explica, razona, analiza). -->
+*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
 
-## 2. Demostración
+::: {#exr-h3-conceptual}
+a. **Explica** qué se gana tomando $x_{i0}=1$ en @def-notacion-vectorial, y qué habría que
+   hacer de otro modo con el intercepto en cada fórmula del capítulo.
+b. **Define** la matriz de diseño y **di** qué representa cada una de sus filas y cada una de
+   sus columnas.
+c. Un compañero dice que $\Xt\X$ es una matriz de $\nobs\times\nobs$. **Corrige** la
+   afirmación y **razona** de qué depende su tamaño.
+d. **Razona** por qué el criterio de este capítulo es el mismo del anterior, señalando en qué
+   paso del razonamiento de @exr-h3-loglik-mse habría hecho falta suponer que hay una sola
+   variable predictora.
+e. **Explica** por qué el problema de aprendizaje se puede escribir
+   como @eq-problema-optimizacion, sin el factor $1/\nobs$, y qué resultado del capítulo
+   anterior lo justifica.
+:::
 
-<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-loglik-mse, @lem-media-optima o @thm-perfilado-sigma. -->
+::: {#exr-h3-interpretar}
+a. **Explica** qué mide la componente $k$ de $\grad\Riskh(\coef)$ en términos de la variable
+   predictora $k$ y de los residuos, a partir de @eq-gradiente-matricial.
+b. **Razona** qué se puede afirmar del ajuste cuando esa componente vale cero para todas
+   las variables.
+c. Un compañero ajusta un modelo con las variables `altura_cm` y `altura_m` entre las
+   predictoras, obtiene un coeficiente muy grande para una y muy grande de signo contrario
+   para la otra, y concluye que las dos variables son importantes. **Analiza** la conclusión.
+d. **Compara** lo que el criterio determina siempre con lo que solo determina cuando el rango
+   es completo, citando @thm-existencia-unicidad.
+:::
 
-## 3. Cálculo a mano
+::: {#exr-h3-mas-variables}
+Cuando hay más variables predictoras que observaciones.
 
-<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
+a. **Explica** por qué con $\nobs<\nfeat+1$ el rango de $\X$ no puede ser completo, y qué
+   dice entonces @thm-existencia-unicidad sobre el ajuste.
+b. **Razona** por qué un riesgo de entrenamiento igual a cero no es una buena noticia en ese
+   caso, citando el capítulo 1.
+:::
 
-## 4. Encuentra los errores
+## 2. Demostración {#sec-h3-b}
 
-<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
-     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
+*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+caer tal cual en el examen.*
 
-## 5. Ampliación
+::: {#exr-h3-loglik-mse}
+Considera el modelo lineal-gaussiano múltiple de @def-lineal-gaussiano-multiple: las
+respuestas $y_1,\ldots,y_{\nobs}$ son independientes y
 
-<!-- TODO. Opcional, no entra en el examen. -->
+$$
+\yi\given\xv_i\sim\Normal\bigl(\xv_i\T\coef,\noise^2\bigr),
+$$
+
+con $\noise>0$ conocido y $\xv_i=(1,x_{i1},\ldots,x_{i\nfeat})\T$.
+
+a. **Escribe** la log-verosimilitud $\loglik(\coef,\noise)$ de la muestra, partiendo de la
+   densidad normal y usando la independencia.
+b. **Demuestra** que $\loglik(\coef,\noise)=C-\frac{\nobs}{2\noise^2}\Riskh(\coef)$, donde
+   $C$ no depende de $\coef$ y
+   $\Riskh(\coef)=\frac{1}{\nobs}\sum_{i}\bigl(\yi-\xv_i\T\coef\bigr)^2$.
+c. **Deduce** que, para $\noise$ fijo, maximizar la log-verosimilitud equivale a minimizar
+   $\Riskh$. **Di** qué resultado del capítulo 2 estás usando en este paso.
+:::
+
+::: {#exr-h3-riesgo-matricial}
+**Demuestra** @prp-riesgo-matricial, es decir, que
+$\Riskh(\coef)=\frac{1}{\nobs}\norm{\X\coef-\yv}^2$.
+
+a. **Escribe** la componente $i$ del vector $\X\coef-\yv$ usando @eq-predicciones.
+b. **Aplica** @eq-norma y **comprueba** que se obtiene la suma de los cuadrados de los
+   residuos.
+c. **Explica** por qué da lo mismo escribir $\norm{\X\coef-\yv}^2$ que
+   $\norm{\yv-\X\coef}^2$.
+:::
+
+::: {#exr-h3-gradiente-componentes}
+Obtén el gradiente del riesgo cuadrático componente a componente.
+
+a. **Escribe** $\Riskh$ sin notación matricial, desarrollando el producto escalar dentro de
+   cada sumando.
+b. **Deriva** respecto de $w_k$, según @def-parcial, y **comprueba** que se
+   obtiene @eq-gradiente-componentes.
+c. **Comprueba** que la componente $k$ de @eq-gradiente-matricial coincide con lo anterior.
+   Escribe primero la componente $k$ de $\Xt\mathbf v$ para un $\mathbf v\in\Realn$
+   cualquiera.
+:::
+
+::: {#exr-h3-gradiente-vectorial}
+**Demuestra** @thm-gradiente-vectorial en forma vectorial.
+
+a. **Desarrolla** $\norm{\X\coef-\yv}^2$ como producto del vector por sí mismo traspuesto y
+   agrupa los dos términos cruzados en uno. **Di** qué propiedad del producto escalar usas.
+b. **Deriva** los tres sumandos por separado con @eq-grad-lineal y @eq-grad-cuadratica.
+   **Indica** qué hipótesis necesita la segunda identidad y por qué $\Xt\X$ la cumple.
+c. **Reúne** los tres y **comprueba** que obtienes @eq-gradiente-matricial.
+:::
+
+::: {#exr-h3-ecuaciones-normales}
+a. **Demuestra**, partiendo de @eq-gradiente-matricial, que $\coef^\star$ es un punto crítico
+   de $\Riskh$ si y solo si $\Xt\X\coef^\star=\Xt\yv$.
+b. **Calcula** cuántas ecuaciones y cuántas incógnitas tiene ese sistema, y **comprueba** que
+   con $\nfeat=1$ es el sistema de dos ecuaciones de la hoja anterior.
+c. **Explica** qué relación hay entre las soluciones de ese sistema y los mínimos
+   de $\Riskh$, citando @thm-condicion-primer-orden, y qué hace falta suponer para que la
+   solución sea única.
+:::
+
+::: {#exr-h3-recupera-recta}
+Sea $\nfeat=1$, de modo que $\X=(\onesv\;\;\mathbf a)$ con
+$\mathbf a=(x_1,\ldots,x_{\nobs})\T$ la columna del único predictor.
+
+a. **Escribe** las dos componentes de $\Xt\resid(\coef)$ en forma de suma.
+b. **Deduce** que @eq-gradiente-matricial es exactamente @eq-gradiente-riesgo-1d.
+:::
+
+## 3. Cálculo a mano {#sec-h3-c}
+
+*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
+
+::: {#exr-h3-dimensiones}
+Una muestra tiene $\nobs=200$ observaciones y $\nfeat=7$ variables predictoras.
+
+a. **Calcula** el tamaño de $\X$, de $\coef$, de $\X\coef$, de $\Xt$, de $\Xt\X$ y
+   de $\Xt\yv$.
+b. **Di** cuáles de esos productos están definidos y cuáles no: $\X\Xt$, $\Xt\coef$,
+   $\coef\T\Xt\X\coef$, $\X\yv$.
+c. El sistema de ecuaciones normales, ¿de qué tamaño es? **Compáralo** con el número de
+   observaciones.
+:::
+
+::: {#exr-h3-calculo}
+Considera estas cuatro observaciones con dos variables predictoras.
+
+| $x_1$ | $-1$ | $-1$ | $1$ | $1$ |
+|---|---|---|---|---|
+| $x_2$ | $-1$ | $1$ | $-1$ | $1$ |
+| $y$ | $1$ | $3$ | $3$ | $9$ |
+
+a. **Escribe** la matriz de diseño $\X$, con su columna de unos, y **calcula** $\Xt\X$
+   y $\Xt\yv$.
+b. **Resuelve** las ecuaciones normales y obtén $\coefhat$. Explica por qué el sistema sale
+   tan sencillo mirando $\Xt\X$.
+c. **Calcula** el vector de predicciones $\X\coefhat$, el vector de residuos y el riesgo
+   $\Riskh(\coefhat)$.
+d. **Calcula** $\Riskh(\zerov)$ y $\grad\Riskh(\zerov)$ con @eq-gradiente-matricial.
+e. Con $\lr=0.1$, **calcula** una iteración de descenso desde $\coef^{(0)}=\zerov$ y el
+   riesgo que alcanza.
+f. **Encuentra** el valor de $\lr$ con el que una sola iteración desde $\zerov$ llega
+   exactamente a $\coefhat$. Relaciónalo con la forma de $\Xt\X$ y con lo que dice sobre
+   $\lr=1/(2a)$ el ejercicio de las tasas de la hoja anterior.
+g. **Calcula** el rango de $\X$ y **di** si el ajuste es único.
+:::
+
+::: {#exr-h3-colineal-mano}
+A la matriz del ejercicio anterior se le añade una cuarta columna igual a la de $x_1$.
+
+a. **Escribe** un vector $\mathbf d\neq\zerov$ tal que $\X\mathbf d=\zerov$, y **comprueba**
+   la igualdad multiplicando.
+b. **Calcula** el rango de la matriz nueva.
+c. Si $\coefhat$ es un ajuste, **escribe** otros dos ajustes distintos con el mismo riesgo, y
+   **di** qué tienen en común los tres.
+:::
+
+## 4. Encuentra los errores {#sec-h3-d}
+
+*Bloque D. Se puntúa la justificación de cada error.*
+
+::: {#exr-h3-errores}
+El siguiente fragmento pretende ajustar un modelo lineal con varias variables predictoras.
+Tiene **tres** errores conceptuales. Localízalos y explica en cada caso qué consecuencia
+tiene.
+
+```python
+import torch
+
+X_datos, y = cargar_datos()        # X_datos: (200, 7), y: (200,)
+
+X = X_datos
+
+w = torch.linalg.inv(X.T @ X) @ X.T @ y.reshape(200, 1)
+
+riesgo = ((y - X @ w) ** 2).mean()
+
+print("riesgo del ajuste:", riesgo.item())
+print("intercepto estimado:", w[0].item())
+```
+:::
+
+## 5. Completar código {#sec-h3-e}
+
+*Bloque de laboratorio. En el examen puede aparecer una versión corta.*
+
+::: {#exr-h3-completar}
+Completa las líneas marcadas para reproducir las piezas del capítulo.
+
+```python
+import torch
+
+def matriz_diseno(X_datos):
+    unos = ...                    # (1) columna de unos, forma correcta
+    return ...                    # (2) concatenar delante de X_datos
+
+
+class LinearRegression:
+    def __init__(self, n_parametros):
+        self.w = ...              # (3) parámetros iniciales, todos a cero
+
+    def predict(self, X):
+        return ...                # (4) las n predicciones de una vez
+
+
+def mse(y_pred, y):
+    return ...                    # (5)
+
+
+def grad_mse(modelo, X, y):
+    residuos = ...                # (6)
+    return ...                    # (7) traducción de eq-gradiente-matricial
+```
+
+a. Rellena las siete líneas.
+b. Con $\nobs=200$ y $\nfeat=7$, di qué forma tiene lo que devuelve cada función.
+c. Comprueba tu `grad_mse` contra `backward()` en tres puntos distintos del espacio de
+   parámetros, y explica por qué la comprobación no serviría si `grad_mse` y la pérdida que
+   derivas no fuesen la misma función.
+:::
+
+::: {#exr-h3-completar-optimizador}
+Completa el optimizador con diferenciación automática y el bucle de entrenamiento.
+
+```python
+class AutogradOptimizer:
+    def __init__(self, modelo, lr):
+        self.modelo = modelo
+        self.lr = lr
+        ...                       # (1) marcar los parámetros a derivar
+
+    def step(self, X, y):
+        ...                       # (2) pérdida y pasada hacia atrás
+
+        with ...:                 # (3) contexto que no registra operaciones
+            self.modelo.w -= ...  # (4) la actualización
+
+        ...                       # (5) preparar la siguiente iteración
+
+
+def train(modelo, optimizador, X, y, n_iter):
+    historia = [...]              # (6) riesgo antes de empezar
+    for _ in range(n_iter):
+        ...                       # (7) un paso
+        ...                       # (8) registrar el riesgo
+    return torch.tensor(historia)
+```
+
+a. Rellena las ocho líneas.
+b. Ninguna de las dos firmas menciona cuántas variables predictoras hay. Explica por qué eso
+   permitió pasar del capítulo anterior a este sin tocarlas.
+c. Escribe una clase `SGDOptimizer` con la misma interfaz que use `torch.optim.SGD` por
+   dentro, y comprueba que da el mismo ajuste.
+:::
+
+::: {#exr-h3-caso-particular}
+Genera los datos simulados del capítulo anterior, construye la matriz de diseño de dos
+columnas $\X=(\onesv\;\;\mathbf a)$ y ajusta con `LinearRegression` y `AutogradOptimizer` de
+este capítulo.
+
+a. Comprueba que obtienes los mismos coeficientes que allí.
+b. Relaciona el resultado con @exr-h3-recupera-recta.
+:::
+
+::: {#exr-h3-columna-redundante}
+Parte de la matriz de diseño de los datos simulados del capítulo.
+
+a. Añade una columna igual a la suma de dos de las que ya tiene y comprueba con
+   `torch.linalg.matrix_rank` que el rango no sube.
+b. Encuentra un vector no nulo del núcleo de la matriz nueva y verifica numéricamente que
+   $\X\mathbf d=\zerov$.
+c. Ajusta desde dos puntos de partida distintos y comprueba las tres afirmaciones
+   de @thm-existencia-unicidad: coeficientes distintos, predicciones iguales, riesgo igual.
+:::
+
+## 6. Ampliación {#sec-h3-f}
+
+*Opcional. No entra en el examen.*
+
+::: {#exr-h3-norma-gradiente}
+Ajusta el modelo de próstata por descenso de gradiente sobre las columnas escaladas y, cada
+cien iteraciones, registra $\norm{\grad\Riskh(\coef)}$. Represéntalo en escala logarítmica
+frente a la iteración.
+
+a. Explica, usando @eq-gradiente-matricial, qué significa que esa norma sea pequeña en
+   términos de las variables predictoras y de los residuos.
+b. Di por qué esa cantidad es mejor criterio de parada que un número fijo de iteraciones.
+:::
+
+::: {#exr-h3-escala}
+Ajusta el modelo de próstata dos veces, con las columnas crudas y con las columnas escaladas,
+usando en los dos casos las ecuaciones normales.
+
+a. Comprueba que el riesgo mínimo es el mismo y que las predicciones coinciden.
+b. Comprueba que los coeficientes no coinciden, y deduce la relación exacta entre los
+   coeficientes de las dos versiones para las columnas que no son el intercepto.
+c. Explica cuál de las dos colecciones de coeficientes permite comparar la importancia de dos
+   variables predictoras entre sí, y por qué.
+:::
+
+::: {.callout-note appearance="simple"}
+Las soluciones se publican en el Campus Virtual después de la sesión de
+problemas.
+:::

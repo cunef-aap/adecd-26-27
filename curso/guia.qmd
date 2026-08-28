@@ -17,10 +17,11 @@ Tres sesiones por semana, con papeles distintos:
 |---|---|---|
 | S1 | **Teoría** | La derivación, en pizarra. Sin ordenador |
 | S2 | **Problemas** | Lápiz y papel. Empieza con *la derivación de la semana* |
-
-En la semana 5, la S2 se dedica íntegramente a práctica de álgebra matricial: es el
-requisito de la semana 6 y conviene llegar con él resuelto.
 | S3 | **Laboratorio** | Se completa en directo el cuaderno del capítulo |
+
+La S2 de la semana 5 refuerza la notación matricial necesaria para el capítulo 3, con el
+bloque de cálculo a mano de su hoja, pero el
+álgebra se introduce dentro del hilo del modelo lineal y no como un bloque independiente.
 
 ## Contrato de trabajo
 
@@ -34,16 +35,18 @@ por semana:
 | Hoja de problemas | 2,0 |
 | Completar el cuaderno después de la S3 | 1,5 |
 | Estudio y repaso | 2,0 |
-| Proyecto (solo semanas 10-14) | 2,0 |
+| Proyecto (solo semanas 10-13) | 2,0 |
 | **Total fuera de clase** | **7** (9 en semanas de proyecto) |
 
-Cada hoja tiene **cinco ejercicios**, y los cuatro primeros reproducen los bloques A, B,
-C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores.
+Hay **una hoja por capítulo**, con seis bloques. Los cuatro primeros reproducen los bloques
+A, B, C y D del examen: conceptual, demostración, cálculo a mano y encuentra-los-errores. El
+quinto es de completar código y el sexto de ampliación. Como un capítulo suele ocupar dos
+semanas, su hoja se reparte entre las dos sesiones de problemas.
 
 **Se resuelven en clase, en la S2**, con la misma secuencia todas las semanas: el profesor
 resuelve uno en la pizarra razonando en voz alta, los estudiantes hacen el siguiente por
-parejas, y se corrige en la pizarra. Quien hace las quince hojas llega al examen habiendo
-visto resolver quince ejercicios de examen y habiendo hecho otros tantos.
+parejas, y se corrige en la pizarra. Quien hace las nueve hojas llega al examen habiendo visto
+resolver una quincena de ejercicios de examen y habiendo hecho otros tantos.
 
 Tres veces en el curso (semanas 6, 10 y 14) los últimos 20 minutos de la S2 son un
 **miniexamen cronometrado** de un solo bloque, corregido en clase acto seguido. No cuenta
@@ -51,22 +54,23 @@ para la nota; sirve para calibrar el tiempo.
 
 Si una semana no cabe en ese presupuesto, sobra materia. Conviene decirlo en clase.
 
-## La derivación de la semana
+## El resultado de la semana
 
 Cada S2 empieza con diez minutos en los que una persona reproduce en la pizarra una
-demostración elegida al azar **entre las de las tres últimas semanas**, no entre todas las
-del curso. La lista completa está publicada en el
-[índice de resultados](indice-resultados.qmd) desde el primer día.
+definición, derivación o argumento central elegido **entre los de las tres últimas semanas**.
+La exigencia matemática se concentra así en resultados que justifican decisiones de
+modelización, optimización o evaluación.
 
 ## Qué NO cubre esta asignatura
 
 Clasificación. Es la asignatura hermana, *Aprendizaje Automático: Clasificación* [G249],
-y comparte con esta buena parte del aparato. Aquí la regresión logística aparece una vez,
-como caso particular de los modelos lineales generalizados, y no se evalúa.
+y comparte con esta buena parte del aparato. Los modelos lineales generalizados se nombran
+al final como continuación natural, pero no forman parte del temario evaluable.
 
 Tampoco cubrimos inferencia sobre los coeficientes (errores estándar, contrastes,
-intervalos de confianza). Es una decisión deliberada, explicada en @rem-inferencia. El
-capítulo 15 sí trata la incertidumbre, pero sobre las predicciones, mediante intervalos.
+intervalos de confianza), teoría general de optimización ni métodos de ensamble en detalle.
+El objetivo es construir y evaluar modelos de predicción, no desarrollar un catálogo de
+algoritmos.
 
 ## Actividades formativas y metodologías docentes
 
@@ -76,8 +80,8 @@ Las de la guía docente oficial, y dónde caen en este curso:
 |---|---|---|
 | AF1 | Clase magistral o teórica | sesión **S1** de cada semana |
 | AF2 | Clase práctica | sesiones **S2** (problemas) y **S3** (laboratorio) |
-| AF3 | Realización de trabajos | el proyecto con agentes de IA (semanas 10-14) |
-| AF4 | Tutorías | seguimiento del proyecto; *checkpoint* evaluado en la semana 13 |
+| AF3 | Realización de trabajos | el proyecto con agentes de IA (semanas 10-13) |
+| AF4 | Tutorías | seguimiento del proyecto; *checkpoint* evaluado en la semana 12 |
 | AF5 | Estudio independiente | ~5,5 h/semana, según el contrato de trabajo de arriba |
 | AF6 | Pruebas de evaluación | parcial 1, defensa del proyecto y examen final |
 
@@ -107,8 +111,6 @@ La de la guía docente oficial:
 
 Complementaria, y más próxima al enfoque de estos apuntes:
 
-- Chodrow, *Machine Learning*: notas del curso CSCI 0451, Middlebury College.
-  <https://www.philchodrow.prof/ml-notes-update/>
 - Bishop y Bishop, *Deep Learning: Foundations and Concepts*. Springer. Es la versión
   actualizada de PRML y sigue el mismo enfoque probabilístico que estos apuntes.
 

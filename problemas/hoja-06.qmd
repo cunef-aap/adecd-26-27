@@ -6,32 +6,472 @@ $$
 $$
 :::
 
-Capítulo 6, Forma matricial y ecuaciones normales. Los cuatro primeros ejercicios son nucleares y tienen la
-estructura del examen; el quinto es de ampliación.
+Hoja del capítulo 6, Complejidad, sesgo y varianza. El capítulo ocupa dos semanas, así
+que la hoja se reparte entre las dos sesiones de problemas, y cada bloque tiene
+ejercicios de las dos mitades. Los cuatro primeros bloques tienen la estructura del
+examen.
 
-::: {.callout-warning appearance="simple"}
-En construcción. El modelo a seguir es la [hoja 2](hoja-02.qmd).
+| Sesión | Ejercicios |
+|---|---|
+| Primera, características y modelos no lineales | @exr-h6-conceptual, @exr-h6-caracteristicas, @exr-h6-phi, @exr-h6-monomios-mano, @exr-h6-completar-polinomio |
+| Segunda, sesgo, varianza y curvas de aprendizaje | los demás |
+
+## 1. Conceptual {#sec-h6-a}
+
+*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
+
+::: {#exr-h6-conceptual}
+a. **Explica** por qué el modelo de @eq-modelo-caracteristicas es no lineal en la entrada y
+   a la vez lineal en los parámetros, y **di** qué consecuencia tiene eso para el algoritmo
+   de ajuste.
+b. **Razona** cuál de los dos términos de @eq-descomposicion que dependen del modelo se
+   reduce al ajustar con más observaciones, y cuál no.
+c. **Define** el modelo medio de @eq-modelo-medio y **razona** por qué no se puede calcular
+   a partir de una sola muestra.
+d. **Razona** por qué el riesgo medido sobre las observaciones con las que se ajusta no sube
+   nunca al subir el grado, y por qué el riesgo verdadero acaba subiendo.
+e. **Explica** por qué la validación cruzada del capítulo no separa los grados 3 a 8 con
+   treinta y seis observaciones, y **di** qué criterio evita entregar el grado 8 y qué grado
+   entrega en su lugar.
 :::
 
-## 1. Conceptual
+::: {#exr-h6-caracteristicas}
+El caso práctico eleva a distintos grados las cuatro variables continuas de tamaño.
 
-<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
-     (define, explica, razona, analiza). -->
+a. **Explica** qué columnas añade el grado 2 sobre esas cuatro variables y por qué seis de
+   ellas son interacciones.
+b. **Define** interacción y **di** qué derivada la caracteriza en el modelo
+   de @fig-interaccion.
+c. **Razona** con @eq-descomposicion por qué subir el grado puede aumentar el riesgo
+   esperado, y **di** qué tiene que ver el número de columnas con eso.
+d. **Analiza** por qué el sesgo al cuadrado del procedimiento no tiene que bajar al subir el
+   grado, aunque la clase de hipótesis sea mayor. La tabla del capítulo pasa de $0.0046$ en
+   el grado 3 a $0.0052$ en el grado 4.
+:::
 
-## 2. Demostración
+## 2. Demostración {#sec-h6-b}
 
-<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-ecuaciones-normales o @thm-identidad-fundamental. -->
+*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+caer tal cual en el examen.*
 
-## 3. Cálculo a mano
+::: {#exr-h6-descomposicion}
+Este ejercicio demuestra @thm-descomposicion. Se fija un punto $\xv$, se escribe
+$Y=\model(\xv)+\varepsilon$ para la observación futura y se abrevia
+$\modelh=\modelh_{\data}(\xv)$, $\model=\model(\xv)$ y
+$\bar{\modelh}=\bar{\modelh}(\xv)$. Los cuatro supuestos son los que enumera el capítulo
+antes del teorema.
 
-<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
+a. **Demuestra** que
+   $Y-\modelh=\varepsilon+(\model-\bar{\modelh})+(\bar{\modelh}-\modelh)$ y **calcula**
+   el cuadrado de esa suma, separando los tres cuadrados de los tres productos cruzados.
+b. **Demuestra** que los tres productos cruzados tienen esperanza cero bajo
+   $\Esub{\data,\varepsilon}{\cdot}$, y **di** para cada uno cuál de los cuatro supuestos
+   es el que se usa.
+c. **Calcula** la esperanza de los tres cuadrados que quedan y **di** por qué
+   $\Esub{\varepsilon}{\varepsilon^2}=\noise^2$ y no una cantidad que dependa de $\xv$.
+d. **Demuestra** @eq-descomposicion-global promediando @eq-descomposicion sobre la
+   distribución marginal de $X$, e **identifica** el supuesto que hace que el término del
+   ruido siga siendo un único número.
+e. **Analiza** qué paso de la demostración deja de valer si el par $(\xv,Y)$ pertenece a la
+   muestra $\data$, y **comprueba** que el riesgo en train del grado 9 del capítulo queda
+   por debajo del suelo $\noise^2$ que @eq-descomposicion impone al error esperado sobre una
+   observación nueva.
+:::
 
-## 4. Encuentra los errores
+::: {#exr-h6-phi}
+Todo el capítulo se apoya en que el modelo de @eq-modelo-caracteristicas es el del
+capítulo 3 con $\Phimat$ en lugar de $\X$.
 
-<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
-     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
+a. **Demuestra** @prp-todo-sirve: que el riesgo empírico del modelo
+   de @eq-modelo-caracteristicas es el de @prp-riesgo-matricial con $\Phimat$ en el lugar
+   de $\X$, y que por tanto valen @thm-gradiente-vectorial y @thm-existencia-unicidad.
+   **Di** qué propiedad del mapa $\basisv$ es la que hace funcionar el argumento.
+b. **Demuestra** que, con las características de @eq-caracteristicas-polinomicas de grado
+   $g$, la matriz $\Phimat$ tiene rango completo por columnas si y solo si entre las
+   observaciones hay al menos $g+1$ valores distintos de $x$.
+c. Sea $\Phimat$ una matriz de características en la que una columna es una indicadora
+   $\mathbf m$ de ceros y unos y otra columna es su cuadrado. **Demuestra** que $\Phimat$
+   no tiene rango completo por columnas exhibiendo un vector no nulo del núcleo, y **di**
+   qué le ocurre entonces al ajuste según @thm-existencia-unicidad.
+d. **Explica** con el apartado anterior por qué el paso polinómico del caso práctico va en
+   una rama que no recibe las indicadoras de ausencia, y **di** por qué además va después
+   del imputador.
+:::
 
-## 5. Ampliación
+## 3. Cálculo a mano {#sec-h6-c}
 
-<!-- TODO. Opcional, no entra en el examen. -->
+*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
+
+::: {#exr-h6-descomposicion-mano}
+Un procedimiento de ajuste se aplica a cuatro muestras de entrenamiento y cada uno de los
+cuatro modelos resultantes se evalúa en tres puntos de la rejilla. La tabla recoge las doce
+predicciones y los tres valores de la señal. El ruido tiene varianza $\noise^2=1$, las
+cuatro muestras se tratan como si fueran todas las posibles y equiprobables, de modo que
+$\Esub{\data}{\cdot}$ es el promedio de las cuatro filas, y los tres puntos se toman
+equiprobables bajo la distribución de $X$.
+
+| | $x_1$ | $x_2$ | $x_3$ |
+|---|---:|---:|---:|
+| muestra 1 | $1$ | $-1$ | $-5$ |
+| muestra 2 | $1$ | $1$ | $-5$ |
+| muestra 3 | $3$ | $1$ | $-5$ |
+| muestra 4 | $3$ | $3$ | $-1$ |
+| señal $\model$ | $3$ | $0$ | $-3$ |
+
+a. **Calcula** el modelo medio de @eq-modelo-medio en los tres puntos.
+b. **Calcula** el sesgo al cuadrado y la varianza en cada punto, y con @eq-descomposicion el
+   error cuadrático esperado en cada uno de los tres.
+c. **Comprueba** en cada punto que ese número coincide con el promedio de los cuatro errores
+   cuadráticos contra la señal más $\noise^2$, y **promedia** después los tres términos
+   sobre la rejilla para obtener el riesgo esperado de @eq-descomposicion-global.
+d. **Compara** ese riesgo esperado con el de la regla que predice $0$ en los tres puntos sea
+   cual sea la muestra, y **di** cuánto sesgo al cuadrado ahorra el procedimiento de la
+   tabla y cuánta varianza paga a cambio.
+:::
+
+::: {#exr-h6-monomios-mano}
+Las características de @eq-caracteristicas-polinomicas con una sola variable predictora son
+las potencias. Con $\nfeat$ variables hay que contar además los productos: el número de
+monomios de grado menor o igual que $g$, sin el término constante, es
+$\binom{\nfeat+g}{g}-1$.
+
+a. **Calcula** ese número para $\nfeat=2$ y $\nfeat=8$, con $g=2$ y con $g=3$, y **escribe**
+   los monomios del caso $\nfeat=2$, $g=2$.
+b. **Di** cuántas columnas devuelve `PolynomialFeatures(2, include_bias=False)` sobre las
+   cuatro variables de tamaño del caso práctico, **separa** las lineales, los cuadrados y
+   los productos, y **calcula** cuántas añade respecto del grado 1.
+c. El preparador del caso práctico entrega 88 columnas con grado 1. **Calcula** cuántas
+   entrega con grado 2 y con grado 4, y cuántos parámetros tiene el modelo lineal que va
+   detrás en cada uno de los tres casos.
+d. **Descompón** las 164 características del caso $\nfeat=8$, $g=3$ en las de grado 1, las
+   de grado 2 y las de grado 3, y **razona** con @thm-descomposicion qué término empeora al
+   pasar de 44 a 164 características con el mismo número de observaciones.
+:::
+
+::: {#exr-h6-emparejar-mano}
+Tres candidatos de complejidad creciente se evalúan con la validación cruzada
+de @def-validacion-cruzada sobre los mismos cinco bloques. La tabla da el riesgo de
+validación de cada bloque, en las mismas unidades para los tres.
+
+| candidato | bloque 1 | bloque 2 | bloque 3 | bloque 4 | bloque 5 |
+|---|---:|---:|---:|---:|---:|
+| grado 1 | $31$ | $53$ | $64$ | $75$ | $97$ |
+| grado 3 | $25$ | $49$ | $61$ | $73$ | $97$ |
+| grado 7 | $30$ | $50$ | $60$ | $70$ | $90$ |
+
+a. **Calcula** la estimación $\CV$ de @eq-cv de cada candidato e **identifica** el que tiene
+   el riesgo de validación más bajo.
+b. **Calcula** la diferencia emparejada de @def-diferencia-emparejada de los otros dos
+   frente a él, con su error típico y con el cociente entre las dos cantidades.
+c. **Decide** con la regla de un error típico (@def-regla-un-error-tipico) qué candidato se
+   entrega, y **di** qué dice el cociente del otro.
+d. **Calcula** el error típico de la estimación de cada candidato por separado, a partir de
+   la dispersión de sus cinco bloques, y **explica** qué decisión tomaría la misma regla con
+   esos tres números.
+:::
+
+## 4. Encuentra los errores {#sec-h6-d}
+
+*Bloque D. Se puntúa la justificación de cada error.*
+
+::: {#exr-h6-errores}
+Este fragmento pretende medir los tres términos de @eq-descomposicion-global sobre el
+experimento simulado del capítulo. Tiene **tres** errores conceptuales.
+**Identifícalos** y **explica** qué consecuencia tiene cada uno sobre lo que el fragmento
+imprime y sobre la conclusión que saca.
+
+```python
+import torch
+
+torch.set_default_dtype(torch.float64)
+
+NOISE = 0.2
+rejilla = torch.linspace(0, 2, 400)
+
+
+def senal(x):
+    return torch.sin(torch.pi * x)
+
+
+def caracteristicas(x, grado):
+    return torch.stack([x ** j for j in range(grado + 1)], dim=1)
+
+
+def muchos_ajustes(grado, n=36, repeticiones=2000, semilla=0):
+    torch.manual_seed(semilla)
+    predicciones = torch.empty(repeticiones, len(rejilla))
+    for r in range(repeticiones):
+        xr = torch.rand(n) * 2
+        yr = senal(xr) + NOISE * torch.randn(n)
+        w = torch.linalg.lstsq(caracteristicas(xr, grado), yr).solution
+        predicciones[r] = caracteristicas(rejilla, grado) @ w
+    return predicciones
+
+
+def descompone(grado, n=36):
+    P = muchos_ajustes(grado, n=n)
+    sesgo2 = ((P - senal(rejilla)) ** 2).mean().item()
+    varianza = P[0].var(unbiased=False).item()
+    return sesgo2, varianza, NOISE ** 2 + sesgo2 + varianza
+
+
+for grado in (1, 3, 9):
+    sesgo2, varianza, total = descompone(grado)
+    print(f"grado {grado}: sesgo^2 {sesgo2:.4f}  varianza {varianza:.4f}"
+          f"  riesgo esperado {total:.4f}")
+
+print("el sesgo^2 del grado 1 baja a "
+      f"{descompone(1, n=3000)[0]:.4f} con n = 3000, asi que el sesgo "
+      "de la recta se corrige con mas datos")
+```
+:::
+
+::: {#exr-h6-errores-pipeline}
+Este fragmento pretende elegir el grado del polinomio en los datos de Madrid y comparar el
+grado elegido con el modelo que entregó el capítulo 5. `Recortador`, `codificador`,
+`TAMANO`, `RESTO` y `CATEGORICAS` son los del capítulo, y `cargar_datos` devuelve el reparto
+por anfitrión. Tiene **tres** errores conceptuales. **Identifícalos** y **explica** qué
+consecuencia tiene cada uno.
+
+```python
+import numpy as np
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+train_a, test_a, y_train, y_test = cargar_datos()
+
+
+def pipeline_polinomio(grado):
+    tamano = [("recortar", Recortador()),
+              ("imputar", SimpleImputer(strategy="median",
+                                        add_indicator=True)),
+              ("expandir", PolynomialFeatures(grado,
+                                              include_bias=False)),
+              ("escalar", StandardScaler())]
+    otras = [("recortar", Recortador()),
+             ("imputar", SimpleImputer(strategy="median",
+                                       add_indicator=True)),
+             ("escalar", StandardScaler())]
+    preparar = ColumnTransformer([
+        ("tam", Pipeline(tamano), TAMANO),
+        ("otras", Pipeline(otras), RESTO),
+        ("cat", codificador(), CATEGORICAS)])
+    return Pipeline([("preparar", preparar),
+                     ("modelo", LinearRegression())])
+
+
+perdidas = {}
+for grado in (1, 2, 3, 4):
+    modelo = pipeline_polinomio(grado).fit(train_a, y_train)
+    perdidas[grado] = (modelo.predict(test_a) - y_test) ** 2
+    print(f"grado {grado}: riesgo en test {perdidas[grado].mean():.1f}")
+
+elegido = min(perdidas, key=lambda g: perdidas[g].mean())
+print(f"grado elegido: {elegido}")
+
+for grado in (elegido, 1):
+    p = perdidas[grado]
+    ee = p.std(ddof=1) / np.sqrt(len(p))
+    print(f"grado {grado}: {p.mean():.1f} ± {ee:.1f}")
+print("los dos intervalos se solapan, asi que la mejora sobre el "
+      "capitulo 5 no se distingue del ruido")
+```
+:::
+
+## 5. Completar código {#sec-h6-e}
+
+*Bloque de laboratorio. En el examen puede aparecer una versión corta, con una o dos líneas
+que rellenar.*
+
+::: {#exr-h6-completar-descomposicion}
+El experimento de @fig-variabilidad y la tabla que descompone @eq-descomposicion salen de
+estas dos funciones. Completa los seis huecos.
+
+```python
+import torch
+
+torch.set_default_dtype(torch.float64)
+
+NOISE = 0.2
+REPETICIONES = 2000
+rejilla = torch.linspace(0, 2, 400)
+
+
+def senal(x):
+    return torch.sin(torch.pi * x)
+
+
+def caracteristicas(x, grado):
+    return torch.stack([x ** j for j in range(grado + 1)], dim=1)
+
+
+def muchos_ajustes(grado, n=36, repeticiones=REPETICIONES, semilla=0):
+    torch.manual_seed(semilla)
+    predicciones = torch.empty(repeticiones, len(rejilla))
+    for r in range(repeticiones):
+        xr = torch.rand(n) * 2
+        yr = ...                     # (1) la respuesta con su ruido
+        w = ...                      # (2) el ajuste de esta muestra
+        predicciones[r] = ...        # (3) la curva sobre la rejilla
+    return predicciones
+
+
+def descompone(grado, n=36, repeticiones=REPETICIONES, semilla=0):
+    P = muchos_ajustes(grado, n=n, repeticiones=repeticiones,
+                       semilla=semilla)
+    sesgo2 = ...                     # (4) promediado sobre la rejilla
+    varianza = ...                   # (5) divisor igual a repeticiones
+    return sesgo2, varianza, ...     # (6) el riesgo esperado
+```
+
+a. **Identifica** qué va en cada uno de los seis huecos y **escribe** el bloque completo.
+b. **Comprueba** que para el grado 3 salen un sesgo al cuadrado de $0.0046$ y una varianza
+   de $0.0066$, y que para el grado 9 la varianza es $3.1114$.
+c. **Razona** por qué la varianza se calcula con `unbiased=False` y por qué el promedio
+   sobre una rejilla regular de 400 puntos aproxima la esperanza sobre $X$
+   de @eq-descomposicion-global.
+:::
+
+::: {#exr-h6-completar-polinomio}
+Esta es la función que construye los candidatos del caso práctico, sin el argumento que
+quita el recorte, junto con el bucle que estima su riesgo. `Recortador`, `codificador`,
+`TAMANO`, `RESTO`, `CATEGORICAS`, `train_a`, `y_train_a`, `grupos_a`, `mse` y `np` son los
+del capítulo.
+
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import MissingIndicator, SimpleImputer
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GroupKFold
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+
+def pipeline_polinomio(grado):
+    tamano = [("recortar", Recortador()),
+              ...]              # (1) imputar, expandir y escalar
+
+    otras = [("recortar", Recortador()),
+             ("imputar", ...),  # (2) mediana, con indicadora
+             ("escalar", StandardScaler())]
+
+    preparar = ColumnTransformer([
+        ("tam", Pipeline(tamano), TAMANO),
+        ("faltan", ..., TAMANO),        # (3)
+        ("otras", Pipeline(otras), RESTO),
+        ("cat", codificador(), CATEGORICAS)])
+    return Pipeline([("preparar", preparar),
+                     ("modelo", ...)])  # (4)
+
+
+particion = ...                         # (5) cinco bloques por grupos
+riesgos = []
+for i_ajuste, i_val in particion.split(train_a, y_train_a,
+                                       groups=...):   # (6)
+    modelo = pipeline_polinomio(2)
+    modelo.fit(train_a.iloc[i_ajuste], y_train_a[i_ajuste])
+    riesgos.append(mse(modelo.predict(train_a.iloc[i_val]),
+                       y_train_a[i_val]))
+print(f"CV(5) del grado 2: {np.mean(riesgos):.1f}")
+```
+
+a. **Identifica** qué va en cada uno de los seis huecos y **escribe** el bloque completo.
+b. **Comprueba** que el grado 2 da la estimación del capítulo y **calcula** cuántas columnas
+   produce el preparador con grado 1 y con grado 2.
+c. **Razona** por qué el paso polinómico va después del imputador y antes del escalador, y
+   **di** qué le pasa a la matriz de características si recibe las indicadoras de
+   ausencia.
+:::
+
+## 6. Ampliación {#sec-h6-f}
+
+*Opcional. No entra en el examen.*
+
+::: {#exr-h6-base-local}
+Las potencias no son la única forma de construir características. Otra es colocar gaussianas
+sobre el recorrido de $x$,
+
+$$
+\basis_j(x)=\exp\Bigl(-\frac{(x-c_j)^2}{2h^2}\Bigr),
+$$
+
+con centros $c_1,\ldots,c_{\nbasis}$ repartidos por él y una anchura $h$ común.
+
+a. **Construye** la matriz de características con ocho centros equiespaciados en $[0,2]$ y
+   $h=0.25$, **ajusta** el modelo sobre las treinta y seis observaciones del capítulo y
+   **dibuja** la curva junto a la señal.
+b. **Repite** con $h=0.6$ y **di** cuál de los dos términos de @thm-descomposicion que
+   dependen del modelo crece. **Repite** después con $h=0.05$ y **explica** por qué con
+   treinta y seis observaciones la descomposición no se puede leer; **rehazla** con
+   $\nobs=300$.
+c. **Razona** por qué $h$ es un parámetro de complejidad aunque el número de características
+   no cambie.
+:::
+
+::: {#exr-h6-descomposicion-simulada}
+El capítulo calcula los tres términos de @eq-descomposicion por separado y afirma que suman
+el riesgo esperado.
+
+a. El capítulo comprueba la identidad con las mismas dos mil muestras en los dos caminos, y
+   por eso los dos números coinciden hasta el último decimal. **Explica** por qué esa
+   coincidencia es algebraica y no estadística, y **di** qué comprobación haría falta para
+   que fuera estadística.
+b. **Repite** la tabla con doscientas repeticiones en lugar de dos mil y **explica** qué
+   término se estima peor. **Estima** la varianza del grado 9 con tres semillas distintas y
+   **di** hasta qué cifra se puede leer.
+c. **Comprueba** que el término de ruido no cambia al variar el grado, y **di** qué línea
+   del código lo garantiza por construcción.
+:::
+
+::: {#exr-h6-cv-recupera-el-minimo}
+Con una muestra de treinta y seis observaciones, la validación cruzada del capítulo no
+distingue los grados 3 a 8 y su mínimo cae en el 8.
+
+a. **Repite** la tabla de validación cruzada con $\nobs=100$ y con $\nobs=400$ y **anota**
+   en cada caso el grado del mínimo.
+b. **Compara** en cada caso el error típico entre bloques con la diferencia entre el grado 3
+   y el grado 7 del riesgo esperado. **Explica** la relación con lo que observas en a.
+c. **Repite** la tabla con $\nobs=30$ y diez semillas distintas, y **cuenta** cuántas veces
+   el mínimo cae en cada grado. **Relaciona** la dispersión con @prp-minimo-sesgado.
+:::
+
+::: {#exr-h6-interacciones-dirigidas}
+El grado 2 del caso práctico cruza las variables de tamaño entre sí, pero no con las
+categóricas. La interacción de @fig-interaccion, la que hace que una plaza más valga
+distinto en una vivienda completa y en una habitación privada, no está en ninguno de los
+cuatro candidatos.
+
+a. **Añade** un candidato que multiplique las cuatro variables de tamaño por las indicadoras
+   del tipo de habitación, y **mide** su estimación por validación cruzada. El cruce tiene
+   que ser un transformador dentro del *pipeline*, no una columna añadida a la tabla, para
+   que sus medianas y sus percentiles se estimen en cada bloque: es la regla del capítulo 5.
+b. **Añade** otro que cruce con el distrito en lugar de con el tipo de habitación,
+   **cuenta** cuántas columnas produce y **explica** el resultado con la descomposición.
+c. Un compañero propone probar todos los cruces posibles de una variable numérica por una
+   categórica y quedarse con el mejor. **Di** qué objeción tiene ese plan y qué habría que
+   hacer en su lugar.
+:::
+
+::: {#exr-h6-curvas-aprendizaje}
+El capítulo mide la descomposición con treinta y seis observaciones. Los dos términos que
+dependen del modelo no responden igual al tamaño de la muestra.
+
+a. **Calcula** los tres términos de @eq-descomposicion para los grados 1, 3 y 9 con
+   $\nobs\in\{15,30,60,120,240,480\}$, reutilizando `descompone(grado, n=n)`, y **dibuja**
+   el riesgo esperado frente a $\nobs$ en escala logarítmica.
+b. **Di** en qué valor se aplana la curva del grado 1 y **razona**, con @thm-descomposicion,
+   por qué no baja del suelo de ruido $\noise^2=0.04$.
+c. **Compara** las curvas del grado 3 y del grado 9 y **di** a partir de qué tamaño el grado
+   9 es preferible al grado 3.
+d. **Razona** qué término explica que el grado 9 empiece ocho órdenes de magnitud por encima
+   de los otros dos con quince observaciones, y **relaciónalo** con el número de
+   parámetros.
+:::
+
+::: {.callout-note appearance="simple"}
+Las soluciones se publican en el Campus Virtual después de la sesión de
+problemas.
+:::

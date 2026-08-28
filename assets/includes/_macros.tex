@@ -14,7 +14,7 @@
 \newcommand{\coefhat}{\hat{\boldsymbol{w}}}
 \newcommand{\coefj}{w_j}
 \newcommand{\coefzero}{w_0}
-\newcommand{\coefols}{\hat{\boldsymbol{w}}_{\mathrm{MCO}}}
+\newcommand{\coefols}{\hat{\boldsymbol{w}}_{\mathrm{OLS}}}
 \newcommand{\coefridge}{\hat{\boldsymbol{w}}_{\lambda}}
 
 % ---- Datos y matriz de diseno ----------------------------------------------
@@ -43,25 +43,30 @@
 % ---- Tamanos ----------------------------------------------------------------
 \newcommand{\nobs}{n}
 \newcommand{\nfeat}{p}
-\newcommand{\ntrain}{n_{\mathrm{ent}}}
+\newcommand{\ntrain}{n_{\mathrm{train}}}
 \newcommand{\nval}{n_{\mathrm{val}}}
 \newcommand{\ntest}{n_{\mathrm{test}}}
 \newcommand{\ncal}{n_{\mathrm{cal}}}
 
 % ---- Riesgo y perdidas ------------------------------------------------------
+% Los acronimos van en INGLES (MSE, RMSE, MAE, RSS, SST...): es lo que veran en
+% scikit-learn y en la bibliografia. El nombre completo, en la prosa, va en espanol.
+% \SSR es SS_reg y no SSR, porque en ingles SSR se usa tambien para la suma de
+% cuadrados de los residuos, que aqui es \RSS.
 % R = riesgo VERDADERO ; \Riskh = riesgo EMPIRICO. La distincion es del cap. 8.
 \newcommand{\Risk}{R}
 \newcommand{\Riskh}{\hat{R}}
+\newcommand{\Riskproc}[1]{\bar{R}_{#1}}
 \newcommand{\loss}{\ell}
-\newcommand{\MSE}{\mathrm{ECM}}
-\newcommand{\RMSE}{\mathrm{RECM}}
-\newcommand{\MAE}{\mathrm{EAM}}
-\newcommand{\RSS}{\mathrm{SCR}}
-\newcommand{\SSE}{\mathrm{SCE}}
-\newcommand{\SST}{\mathrm{SCT}}
-\newcommand{\SSR}{\mathrm{SCReg}}
+\newcommand{\MSE}{\mathrm{MSE}}
+\newcommand{\RMSE}{\mathrm{RMSE}}
+\newcommand{\MAE}{\mathrm{MAE}}
+\newcommand{\RSS}{\mathrm{RSS}}
+\newcommand{\SSE}{\mathrm{SSE}}
+\newcommand{\SST}{\mathrm{SST}}
+\newcommand{\SSR}{\mathrm{SS_{reg}}}
 \newcommand{\Rsq}{R^2}
-\newcommand{\CV}{\mathrm{VC}}
+\newcommand{\CV}{\mathrm{CV}}
 
 % ---- Verosimilitud ----------------------------------------------------------
 \newcommand{\Lik}{L}
@@ -92,10 +97,10 @@
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
 \newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
-\DeclareMathOperator{\rank}{rango}
+\DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\kernelop}{nuc}
+\DeclareMathOperator{\kernelop}{null}
 \DeclareMathOperator{\sign}{sign}
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\Realn}{\mathbb{R}^{n}}
@@ -104,15 +109,18 @@
 
 % ---- Probabilidad -----------------------------------------------------------
 \newcommand{\E}[1]{\mathbb{E}\!\left[ #1 \right]}
+\newcommand{\Esub}[2]{\mathbb{E}_{#1}\!\left[ #2 \right]}
 \newcommand{\Var}[1]{\mathrm{Var}\!\left( #1 \right)}
+\newcommand{\Varsub}[2]{\mathrm{Var}_{#1}\!\left( #2 \right)}
 \newcommand{\Cov}[2]{\mathrm{Cov}\!\left( #1, #2 \right)}
 \newcommand{\Prob}[1]{\mathbb{P}\!\left( #1 \right)}
-\DeclareMathOperator{\med}{mediana}
+\DeclareMathOperator{\med}{median}
 
 % ---- Conjuntos y modelos ----------------------------------------------------
 \newcommand{\data}{\mathcal{D}}
-\newcommand{\Dtrain}{\mathcal{D}_{\mathrm{ent}}}
+\newcommand{\Dtrain}{\mathcal{D}_{\mathrm{train}}}
 \newcommand{\Dval}{\mathcal{D}_{\mathrm{val}}}
+\newcommand{\Dajuste}{\mathcal{D}_{\mathrm{ajuste}}}
 \newcommand{\Dtest}{\mathcal{D}_{\mathrm{test}}}
 \newcommand{\fold}[1]{\mathcal{F}_{#1}}
 \newcommand{\model}{f}
@@ -126,4 +134,7 @@
 \newcommand{\pos}[1]{\left( #1 \right)_{+}}
 \newcommand{\softthr}{S}
 \newcommand{\basis}{\varphi}
+% Mapa de caracteristicas del cap. 6: componente escalar, vector y numero.
+\newcommand{\basisv}{\boldsymbol{\varphi}}
+\newcommand{\nbasis}{d}
 \newcommand{\pinball}{\rho_{\tau}}

@@ -26,7 +26,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -36,7 +55,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./capitulos/00-presentacion.html" rel="next">
+<link href="./capitulos/01-senal-ruido.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -46,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-56210221a811a62f3964318d438e7f14.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -75,6 +94,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="assets/styles.css">
 </head>
@@ -88,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Bienvenida</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Presentación de la asignatura</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -120,19 +168,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Bienvenida</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Presentación</span></a>
+ <span class="menu-text">Presentación de la asignatura</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Plantear el problema</span></a>
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -140,20 +182,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  <a href="./capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+  <a href="./capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+  <a href="./capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -161,7 +203,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Minimizar</span></a>
+ <span class="menu-text">Evaluación y datos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -169,20 +211,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
+  <a href="./capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+  <a href="./capitulos/05-preparacion-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparar datos sin contaminar la evaluación</span></span></a>
   </div>
 </li>
       </ul>
@@ -190,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Complejidad y generalización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,14 +234,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="./capitulos/06-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Complejidad, sesgo y varianza</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="./capitulos/07-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Regularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./capitulos/08-seleccion-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -213,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Otros métodos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -221,26 +263,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="./capitulos/09-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Árboles de regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -248,52 +272,12 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Más allá del ruido gaussiano</span></a>
+ <span class="menu-text">Hojas de problemas</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cierre</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Problemas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./problemas/index.html" class="sidebar-item-text sidebar-link">
@@ -348,27 +332,27 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Hoja 8</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./problemas/hoja-09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 9</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./curso/guia.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Guía de la asignatura</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./evaluacion/ejercicios-tipo-examen.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ejercicios tipo examen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -391,6 +375,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./curso/proyecto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto: un flujo completo de predicción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./curso/algebra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
@@ -403,14 +393,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./curso/glosario.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Glosario y notación</span></a>
+  <a href="./curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Índice de resultados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Índice de resultados</span></a>
+  <a href="./curso/glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario y notación</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -431,14 +421,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#bienvenida" id="toc-bienvenida" class="nav-link active" data-scroll-target="#bienvenida">Bienvenida</a>
+  <li><a href="#presentación-de-la-asignatura" id="toc-presentación-de-la-asignatura" class="nav-link active" data-scroll-target="#presentación-de-la-asignatura">Presentación de la asignatura</a>
   <ul class="collapse">
-  <li><a href="#de-qué-va-el-curso" id="toc-de-qué-va-el-curso" class="nav-link" data-scroll-target="#de-qué-va-el-curso">De qué va el curso</a></li>
-  <li><a href="#tres-decisiones" id="toc-tres-decisiones" class="nav-link" data-scroll-target="#tres-decisiones">Tres decisiones</a></li>
-  <li><a href="#un-solo-procedimiento-quince-veces" id="toc-un-solo-procedimiento-quince-veces" class="nav-link" data-scroll-target="#un-solo-procedimiento-quince-veces">Un solo procedimiento, quince veces</a></li>
-  <li><a href="#cómo-está-hecho-esto" id="toc-cómo-está-hecho-esto" class="nav-link" data-scroll-target="#cómo-está-hecho-esto">Cómo está hecho esto</a></li>
-  <li><a href="#por-dónde-empezar" id="toc-por-dónde-empezar" class="nav-link" data-scroll-target="#por-dónde-empezar">Por dónde empezar</a></li>
-  <li><a href="#sobre-estos-apuntes" id="toc-sobre-estos-apuntes" class="nav-link" data-scroll-target="#sobre-estos-apuntes">Sobre estos apuntes</a></li>
+  <li><a href="#qué-es-el-aprendizaje-automático" id="toc-qué-es-el-aprendizaje-automático" class="nav-link" data-scroll-target="#qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</a></li>
+  <li><a href="#modalidades-de-aprendizaje" id="toc-modalidades-de-aprendizaje" class="nav-link" data-scroll-target="#modalidades-de-aprendizaje">Modalidades de aprendizaje</a></li>
+  <li><a href="#el-problema-que-estudia-este-curso" id="toc-el-problema-que-estudia-este-curso" class="nav-link" data-scroll-target="#el-problema-que-estudia-este-curso">El problema que estudia este curso</a></li>
+  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje">Objetivos de aprendizaje</a></li>
+  <li><a href="#recorrido-del-curso" id="toc-recorrido-del-curso" class="nav-link" data-scroll-target="#recorrido-del-curso">Recorrido del curso</a></li>
+  <li><a href="#cómo-se-trabaja" id="toc-cómo-se-trabaja" class="nav-link" data-scroll-target="#cómo-se-trabaja">Cómo se trabaja</a></li>
+  <li><a href="#preparación-inicial" id="toc-preparación-inicial" class="nav-link" data-scroll-target="#preparación-inicial">Preparación inicial</a></li>
+  <li><a href="#fuentes-y-agradecimientos" id="toc-fuentes-y-agradecimientos" class="nav-link" data-scroll-target="#fuentes-y-agradecimientos">Fuentes y agradecimientos</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -466,52 +459,203 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="bienvenida" class="level1 unnumbered">
-<h1 class="unnumbered">Bienvenida</h1>
-<p>Apuntes de <strong>Aprendizaje Automático: Predicción</strong> (G244), asignatura obligatoria de tercer curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.</p>
-<section id="de-qué-va-el-curso" class="level2">
-<h2 class="anchored" data-anchor-id="de-qué-va-el-curso">De qué va el curso</h2>
-<p>Cuando en una nube de puntos se ve un patrón, ese patrón se puede escribir como una función. El curso trata de cómo encontrar esa función a partir de una muestra finita, de forma que prediga bien en observaciones <strong>nuevas</strong>, y de cómo saber si de verdad lo hace. Ajustar la muestra que ya tenemos es fácil y no significa nada: el capítulo 2 lo demuestra en una página.</p>
-<p>Trabajamos el caso supervisado con respuesta numérica, que es aquel en el que el criterio de calidad está bien definido antes de empezar. La <a href="./capitulos/00-presentacion.html">presentación</a> precisa qué queda dentro y qué queda fuera.</p>
-</section>
-<section id="tres-decisiones" class="level2">
-<h2 class="anchored" data-anchor-id="tres-decisiones">Tres decisiones</h2>
-<p>Plantear un problema de predicción consiste en elegir una <strong>clase de hipótesis</strong>, una <strong>pérdida</strong> y un <strong>optimizador</strong>. Todos los métodos del curso salen de rellenar esas tres casillas, y el índice está ordenado según cuál se está rellenando.</p>
-</section>
-<section id="un-solo-procedimiento-quince-veces" class="level2">
-<h2 class="anchored" data-anchor-id="un-solo-procedimiento-quince-veces">Un solo procedimiento, quince veces</h2>
-<p>La casilla de la pérdida no se rellena por gusto. Sale de este procedimiento:</p>
+<section id="presentación-de-la-asignatura" class="level1 unnumbered">
+<h1 class="unnumbered">Presentación de la asignatura</h1>
+<section id="qué-es-el-aprendizaje-automático" class="level2">
+<h2 class="anchored" data-anchor-id="qué-es-el-aprendizaje-automático">Qué es el aprendizaje automático</h2>
 <blockquote class="blockquote">
-<p><strong>(1)</strong> escribe un modelo de datos <code>señal + ruido</code> → <strong>(2)</strong> escribe la verosimilitud → <strong>(3)</strong> toma <code>−log</code> y obtén una pérdida → <strong>(4)</strong> comprueba que es convexa → <strong>(5)</strong> minimízala → <strong>(6)</strong> estima el riesgo con datos que no hayas usado para ajustar.</p>
+<p><strong>Definición (Mitchell).</strong> Se dice que un programa aprende de la experiencia <span class="math inline">\(E\)</span> con respecto a una tarea <span class="math inline">\(T\)</span> y una medida de rendimiento <span class="math inline">\(P\)</span> si su desempeño en <span class="math inline">\(T\)</span>, medido mediante <span class="math inline">\(P\)</span>, mejora con la experiencia <span class="math inline">\(E\)</span> <span class="citation" data-cites="mitchell1997machine">(<a href="index.html#ref-mitchell1997machine" role="doc-biblioref">Mitchell 1997</a>)</span>.</p>
 </blockquote>
-<p>Se deriva entero, a mano, una vez, en los capítulos 2 a 6. A partir de ahí es una plantilla: cambia el paso 1 y aparecen los modelos lineales generalizados; cambia el paso 3 y aparecen <em>ridge</em> y <em>lasso</em>; cambia el paso 5 y aparecen los árboles.</p>
-</section>
-<section id="cómo-está-hecho-esto" class="level2">
-<h2 class="anchored" data-anchor-id="cómo-está-hecho-esto">Cómo está hecho esto</h2>
-<ul>
-<li><strong>Los apuntes son ejecutables.</strong> Las figuras se generan al publicar, con el código que se ve justo encima de ellas. No hay diapositivas.</li>
-<li><strong>Cada capítulo tiene un cuaderno con huecos</strong>, generado del mismo fichero, que se completa en el laboratorio y abre en Google Colab sin instalar nada.</li>
-<li><strong>Se demuestra todo lo que se enuncia.</strong> Cada demostración cierra con ∎; si un resultado no lo lleva, su demostración todavía está por escribir. Lo que queda fuera va marcado como <em>fuera de alcance</em>, con el motivo.</li>
-<li>Al final de cada capítulo hay un <strong>error frecuente</strong>: un fallo realista, demostrado fallando.</li>
-</ul>
-</section>
-<section id="por-dónde-empezar" class="level2">
-<h2 class="anchored" data-anchor-id="por-dónde-empezar">Por dónde empezar</h2>
+<p>La definición contiene tres elementos que deben especificarse para formalizar un problema de aprendizaje:</p>
 <ol type="1">
-<li>Lee la <a href="./capitulos/00-presentacion.html">presentación</a>: estructura de las clases, herramientas, evaluación y horarios.</li>
-<li>Repasa los anexos de <a href="./curso/algebra.html">cálculo y álgebra</a> y de <a href="./curso/probabilidad.html">probabilidad</a>, y haz el diagnóstico de quince minutos que hay al final del primero.</li>
+<li>la <strong>tarea</strong> <span class="math inline">\(T\)</span>, que describe qué debe hacer el programa, como predecir un precio o elegir una acción;</li>
+<li>la <strong>experiencia</strong> <span class="math inline">\(E\)</span>, que reúne la información de la que puede aprender, como una colección de ejemplos, datos sin anotar o la interacción con un entorno;</li>
+<li>la <strong>medida de rendimiento</strong> <span class="math inline">\(P\)</span>, que establece cómo se evaluará su desempeño, como un error de predicción o la recompensa acumulada por una secuencia de decisiones.</li>
 </ol>
 </section>
-<section id="sobre-estos-apuntes" class="level2">
-<h2 class="anchored" data-anchor-id="sobre-estos-apuntes">Sobre estos apuntes</h2>
-<p>La forma de entrar en la materia, la estructura de los capítulos 1 a 6 y el capítulo de convexidad siguen de cerca las notas de <a href="https://www.philchodrow.prof/ml-notes-update/">Phil Chodrow</a> para el curso CSCI 0451 de Middlebury College, usadas con agradecimiento. Como aquel curso trata de clasificación y este de regresión, los ejemplos y buena parte de las demostraciones se han rehecho. Los capítulos 7 y 8, y todo el material de problemas y evaluación, son propios.</p>
+<section id="modalidades-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="modalidades-de-aprendizaje">Modalidades de aprendizaje</h2>
+<p>Según la tarea <span class="math inline">\(T\)</span>, la experiencia <span class="math inline">\(E\)</span> y la forma de medir el rendimiento <span class="math inline">\(P\)</span>, se suelen distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no es una partición estricta: las fronteras son convencionales y un mismo sistema puede combinar modalidades en distintas fases.</p>
+<p><strong>Aprendizaje supervisado.</strong> La experiencia contiene pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span>: para cada caso se observan unas características <span class="math inline">\(\mathbf{x}_i\)</span> y la respuesta correcta <span class="math inline">\(y_i\)</span> asociada a las mismas. La tarea consiste en predecir la respuesta para un nuevo vector de características y el rendimiento se mide comparando predicciones y respuestas. Estimar el precio de una vivienda y decidir si una transacción bancaria es fraudulenta son ejemplos de aprendizaje supervisado.</p>
+<p><strong>Aprendizaje semisupervisado.</strong> Solo una parte de los casos tiene respuesta observada. El algoritmo combina esos pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> con una colección mayor de casos <span class="math inline">\(\mathbf{x}_j\)</span> sin etiquetar. Es útil cuando obtener datos es sencillo, pero etiquetarlos requiere tiempo o conocimiento experto, como ocurre con muchas imágenes médicas.</p>
+<p><strong>Aprendizaje autosupervisado.</strong> No se proporcionan etiquetas externas: el problema de predicción se construye a partir del propio dato. Por ejemplo, se puede ocultar una parte de una imagen y pedir al modelo que la reconstruya, o utilizar las palabras anteriores de un texto para predecir la siguiente. Este tipo de experiencia permite aprender representacione de los datos que después se adaptan a tareas concretas.</p>
+<p><strong>Aprendizaje no supervisado.</strong> Los datos tampoco incluyen una respuesta, pero no se crea una tarea predictiva auxiliar. El objetivo es describir alguna estructura de los datos, por ejemplo agrupando clientes con comportamientos semejantes o representando muchas variables mediante unas pocas dimensiones. El criterio de “calidad” depende aquí del propósito del análisis y suele ser menos directo que en el caso supervisado.</p>
+<p><strong>Aprendizaje por refuerzo.</strong> La experiencia se genera mediante la interacción de un agente con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una recompensa. La tarea es aprender una política de actuación y el rendimiento se mide por la recompensa acumulada. Por ejemplo, un sistema de climatización puede aprender cuándo calentar o enfriar un edificio a partir de una recompensa que combine el confort de sus ocupantes y el coste energético.</p>
+<p>Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante aprendizaje por refuerzo <span class="citation" data-cites="bommasani2021opportunities">(<a href="index.html#ref-bommasani2021opportunities" role="doc-biblioref"><span class="nocase">Bommasani et&nbsp;al.</span> 2021</a>)</span>.</p>
+</section>
+<section id="el-problema-que-estudia-este-curso" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema-que-estudia-este-curso">El problema que estudia este curso</h2>
+<p>La asignatura se centra en el <strong>aprendizaje supervisado</strong>. La experiencia que recibirá la máquina es una muestra de pares</p>
+<p><span class="math display">\[
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n},
+\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{x}_i\)</span> contiene las características observadas del caso <span class="math inline">\(i\)</span> e <span class="math inline">\(y_i\)</span> es su respuesta. La tarea consiste en aprender una función <span class="math inline">\(f\)</span> que, a partir de las características de un caso nuevo, produzca una predicción <span class="math inline">\(\widehat y=f(\mathbf{x})\)</span> que se aproxime a su respuesta <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[
+\widehat y=f(\mathbf{x})\approx y.
+\]</span></p>
+<p>Dentro del aprendizaje supervisado se distinguen dos tareas fundamentales:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tarea</th>
+<th>Tipo de respuesta</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Clasificación</strong></td>
+<td>una categoría de un conjunto finito</td>
+<td>impago o no impago</td>
+</tr>
+<tr class="even">
+<td><strong>Regresión</strong></td>
+<td>un valor numérico</td>
+<td>precio, demanda o coste</td>
+</tr>
+</tbody>
+</table>
+<p>Este curso estudia <strong>regresión</strong>. La medida de rendimiento cuantificará la discrepancia entre <span class="math inline">\(\widehat y\)</span> e <span class="math inline">\(y\)</span>, y el objetivo será que esa discrepancia sea pequeña en casos que no hayan intervenido en el ajuste. La clasificación se desarrolla en la asignatura <em>Aprendizaje Automático: Clasificación</em> (G249).</p>
+<p>La definición general queda así concretada: <span class="math inline">\(T\)</span> es predecir una respuesta numérica, <span class="math inline">\(E\)</span> es una muestra de características y respuestas observadas, y <span class="math inline">\(P\)</span> mide el error en datos nuevos. El <a href="./capitulos/01-senal-ruido.html">capítulo 1</a> comienza en este punto. Separa cada respuesta observada en señal y ruido y plantea la primera pregunta del curso: <strong>¿cómo aprender la estructura que se repite sin memorizar las variaciones particulares de la muestra?</strong></p>
+</section>
+<section id="objetivos-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos-de-aprendizaje">Objetivos de aprendizaje</h2>
+<p>La asignatura combina fundamentos matemáticos y estadísticos con la implementación de métodos de predicción. Al finalizar el curso, el estudiante deberá ser capaz de:</p>
+<ul>
+<li>formular un problema de predicción supervisada, identificando características, respuesta, modelo y criterio de evaluación;</li>
+<li>utilizar herramientas de álgebra lineal, cálculo, probabilidad y estadística para analizar y justificar los métodos estudiados;</li>
+<li>explorar y preparar datos de acuerdo con el objetivo del análisis, evitando fugas de información entre entrenamiento y evaluación;</li>
+<li>ajustar, validar, comparar e interpretar modelos predictivos;</li>
+<li>implementar procedimientos de aprendizaje automático en Python y comunicar de forma razonada sus resultados;</li>
+<li>analizar críticamente las decisiones adoptadas durante el preprocesamiento, el ajuste y la evaluación de un modelo.</li>
+</ul>
+</section>
+<section id="recorrido-del-curso" class="level2">
+<h2 class="anchored" data-anchor-id="recorrido-del-curso">Recorrido del curso</h2>
+<p>Una vez delimitado el problema de regresión, el resto del curso responde de forma progresiva a cuatro preguntas: cómo se aprende una señal, cómo se evalúa sin optimismo, cómo se controla la complejidad y cómo se construye un flujo reproducible con datos reales.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bloque del curso</th>
+<th>Capítulos</th>
+<th>Contenido principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fundamentos del aprendizaje predictivo</td>
+<td>1-3</td>
+<td>señal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales</td>
+</tr>
+<tr class="even">
+<td>Evaluación y datos</td>
+<td>4-5</td>
+<td>métricas, validación cruzada, fugas y pipelines de preparación</td>
+</tr>
+<tr class="odd">
+<td>Complejidad y generalización</td>
+<td>6-8</td>
+<td>características, sesgo-varianza, regularización, selección y PCA</td>
+</tr>
+<tr class="even">
+<td>Otros métodos</td>
+<td>9</td>
+<td>árboles de regresión</td>
+</tr>
+</tbody>
+</table>
+<p>La secuencia cubre la introducción, las metodologías, los algoritmos y la implementación previstos en la guía docente. La <a href="./curso/trazabilidad.html">tabla de trazabilidad</a> recoge la correspondencia detallada y el <a href="./curso/calendario.html">calendario</a> distribuye los contenidos por semanas.</p>
+</section>
+<section id="cómo-se-trabaja" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-se-trabaja">Cómo se trabaja</h2>
+<p>El desarrollo de cada tema combinará explicación teórica, resolución de problemas y trabajo con datos. En conjunto, el curso incluirá:</p>
+<ul>
+<li>exposiciones y derivaciones matemáticas que justifiquen los métodos;</li>
+<li>ejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;</li>
+<li>laboratorios en los que se implementen los procedimientos y se analicen sus resultados;</li>
+<li>trabajo autónomo, tutorías y un proyecto aplicado.</li>
+</ul>
+<p>Los apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.</p>
+<p>El lenguaje de trabajo es <strong>Python</strong>, principalmente con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>scikit-learn</code> y PyTorch. Las herramientas de IA generativa pueden utilizarse de acuerdo con la <a href="./curso/politica-ia.html">política de la asignatura</a>, y su uso en el proyecto debe quedar documentado.</p>
+<p>La evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las fechas y las reglas completas se recogen en el <a href="./curso/calendario.html">calendario</a> y en la <a href="./curso/evaluacion.html">sección de evaluación</a>.</p>
+<p>La asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.</p>
+</section>
+<section id="preparación-inicial" class="level2">
+<h2 class="anchored" data-anchor-id="preparación-inicial">Preparación inicial</h2>
+<p>Antes de comenzar el capítulo 1 se recomienda:</p>
+<ol type="1">
+<li>repasar el anexo de <a href="./curso/algebra.html">cálculo y álgebra</a> y realizar el diagnóstico incluido al final;</li>
+<li>revisar el <a href="./curso/probabilidad.html">repaso de probabilidad</a>;</li>
+<li>consultar el <a href="./curso/calendario.html">calendario</a>, la <a href="./curso/evaluacion.html">evaluación</a> y la <a href="./curso/politica-ia.html">política de uso de IA</a>.</li>
+</ol>
+</section>
+<section id="fuentes-y-agradecimientos" class="level2">
+<h2 class="anchored" data-anchor-id="fuentes-y-agradecimientos">Fuentes y agradecimientos</h2>
+<p>La introducción mediante datos, patrones y funciones, así como el núcleo de fundamentos del curso, se inspira en las notas de <a href="https://www.philchodrow.prof/ml-notes-update/">Phil Chodrow</a> para el curso CSCI 0451 de Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al programa de la guía docente de CUNEF Universidad.</p>
+<p>La bibliografía principal y complementaria se recoge en la <a href="./curso/guia.html">guía de la asignatura</a>.</p>
 <p>Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad</p>
+</section>
+<section id="referencias" class="level2">
+<h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bommasani2021opportunities" class="csl-entry" role="listitem">
+<span class="nocase">Bommasani, Rishi et al.</span> 2021. <em>On the
+Opportunities and Risks of Foundation Models</em>. <a href="https://arxiv.org/abs/2108.07258">https://arxiv.org/abs/2108.07258</a>.
+</div>
+<div id="ref-hastie2009elements" class="csl-entry" role="listitem">
+Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em>The
+Elements of Statistical Learning</em>. 2nd ed. Springer.
+</div>
+<div id="ref-mitchell1997machine" class="csl-entry" role="listitem">
+Mitchell, Tom M. 1997. <em>Machine Learning</em>. McGraw-Hill. <a href="https://www.cs.cmu.edu/~tom/book.html">https://www.cs.cmu.edu/~tom/book.html</a>.
+</div>
+</div>
 
 
 </section>
 </section>
 
 <p><br><br><span style="color:grey;">© Roi Naveiro, CUNEF Universidad, 2026</span></p></main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -916,8 +1060,8 @@ ul.task-list li input[type="checkbox"] {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./capitulos/00-presentacion.html" class="pagination-link" aria-label="Presentación">
-        <span class="nav-page-text">Presentación</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./capitulos/01-senal-ruido.html" class="pagination-link" aria-label="Datos = señal + ruido">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

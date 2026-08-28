@@ -1,0 +1,51 @@
+# El proyecto: un flujo completo de predicción {.unnumbered}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
+
+Esta página no es un capítulo y no tiene semana asignada. Es la guía del **proyecto** que
+`curso/evaluacion.qmd` sitúa en las semanas 10 a 13 y que vale el 20 % de la nota, más el
+cierre del curso que se usa en el repaso de la semana 15.
+
+El proyecto no introduce materia nueva. Lo que pide es encadenar, sobre un caso propio, las
+decisiones que los capítulos han ido tomando de una en una. Las secciones siguientes son el
+orden en que conviene tomarlas, y el índice del informe que hay que entregar.
+
+## Formular el problema antes de abrir los datos
+
+<!-- Unidad de observación, horizonte, variable objetivo, información disponible al predecir y coste de los errores. -->
+
+## Auditar los datos y fijar el protocolo
+
+<!-- Procedencia, calidad, línea base, métrica y particiones elegidas antes de comparar modelos. Capítulos 4 y 5. -->
+
+## Construir candidatos reproducibles
+
+<!-- Pipelines completos para modelo lineal, modelo regularizado, características no lineales y árbol. Capítulos 3, 5, 6, 7 y 9. -->
+
+## Comparar sin utilizar el test
+
+<!-- Mismas particiones, métricas y presupuesto de búsqueda. Tabla de resultados con dispersión entre bloques. Capítulo 4. -->
+
+## Reajustar y evaluar una sola vez
+
+<!-- Elegir, volver a entrenar con los datos disponibles y abrir el test. Separar estimación de rendimiento y despliegue. -->
+
+## Analizar los errores
+
+<!-- Residuos por subgrupos y rangos, casos extremos, estabilidad y límites de validez. -->
+
+## Comunicar y reproducir
+
+<!-- Informe mínimo: objetivo, datos, protocolo, modelo, resultado, incertidumbre, limitaciones y artefactos reproducibles. -->
+
+## Agentes de IA como ayuda de implementación
+
+<!-- Protocolo de uso: especificación, generación, pruebas, revisión conceptual, trazabilidad y declaración. Se trabaja en los talleres de las semanas 9 y 14 y se declara en la bitácora del proyecto. Enlaza con curso/politica-ia.qmd. -->
+
+## Estado del arte y qué queda fuera del curso
+
+<!-- Cubre el epígrafe oficial "T1 · Estado del arte" y el mapa de lo que no entra: GLM para otros tipos de respuesta, ensambles, redes neuronales y clasificación. Sin contenido evaluable nuevo. Se usa en el repaso de la semana 15. -->

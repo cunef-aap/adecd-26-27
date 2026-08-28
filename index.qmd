@@ -1,65 +1,193 @@
-# Bienvenida {.unnumbered}
+# Presentación de la asignatura {.unnumbered}
 
-Apuntes de **Aprendizaje Automático: Predicción** (G244), asignatura obligatoria de tercer
-curso del Doble Grado en ADE y Ciencia de Datos de CUNEF Universidad.
+::: {.content-hidden}
+$$
+{{< include assets/includes/_macros.tex >}}
+$$
+:::
 
-## De qué va el curso
+## Qué es el aprendizaje automático
 
-Cuando en una nube de puntos se ve un patrón, ese patrón se puede escribir como una
-función. El curso trata de cómo encontrar esa función a partir de una muestra finita, de
-forma que prediga bien en observaciones **nuevas**, y de cómo saber si de verdad lo hace.
-Ajustar la muestra que ya tenemos es fácil y no significa nada: el capítulo 2 lo demuestra
-en una página.
+> **Definición (Mitchell).** Se dice que un programa aprende de la experiencia $E$ con
+> respecto a una tarea $T$ y una medida de rendimiento $P$ si su desempeño en $T$, medido
+> mediante $P$, mejora con la experiencia $E$ [@mitchell1997machine].
 
-Trabajamos el caso supervisado con respuesta numérica, que es aquel en el que el criterio
-de calidad está bien definido antes de empezar. La
-[presentación](capitulos/00-presentacion.qmd) precisa qué queda dentro y qué queda fuera.
+La definición contiene tres elementos que deben especificarse para formalizar un problema
+de aprendizaje:
 
-## Tres decisiones
+1. la **tarea** $T$, que describe qué debe hacer el programa, como predecir un precio o
+   elegir una acción;
+2. la **experiencia** $E$, que reúne la información de la que puede aprender, como una
+   colección de ejemplos, datos sin anotar o la interacción con un entorno;
+3. la **medida de rendimiento** $P$, que establece cómo se evaluará su desempeño, como un
+   error de predicción o la recompensa acumulada por una secuencia de decisiones.
 
-Plantear un problema de predicción consiste en elegir una **clase de hipótesis**, una
-**pérdida** y un **optimizador**. Todos los métodos del curso salen de rellenar esas tres
-casillas, y el índice está ordenado según cuál se está rellenando.
+## Modalidades de aprendizaje
 
-## Un solo procedimiento, quince veces
+Según la tarea $T$, la experiencia $E$ y la forma de medir el rendimiento $P$, se suelen
+distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no es una partición
+estricta: las fronteras son convencionales y un mismo sistema puede combinar modalidades
+en distintas fases.
 
-La casilla de la pérdida no se rellena por gusto. Sale de este procedimiento:
+**Aprendizaje supervisado.** La experiencia contiene pares $(\mathbf{x}_i,y_i)$: para cada
+caso se observan unas características $\mathbf{x}_i$ y la respuesta correcta $y_i$ asociada a las mismas. La
+tarea consiste en predecir la respuesta para un nuevo vector de características y el rendimiento se mide
+comparando predicciones y respuestas. Estimar el precio de una vivienda y decidir si una
+transacción bancaria es fraudulenta son ejemplos de aprendizaje supervisado.
 
-> **(1)** escribe un modelo de datos `señal + ruido` → **(2)** escribe la verosimilitud →
-> **(3)** toma `−log` y obtén una pérdida → **(4)** comprueba que es convexa → **(5)**
-> minimízala → **(6)** estima el riesgo con datos que no hayas usado para ajustar.
+**Aprendizaje semisupervisado.** Solo una parte de los casos tiene respuesta observada. El
+algoritmo combina esos pares $(\mathbf{x}_i,y_i)$ con una colección mayor de casos
+$\mathbf{x}_j$ sin etiquetar. Es útil cuando obtener datos es sencillo, pero etiquetarlos
+requiere tiempo o conocimiento experto, como ocurre con muchas imágenes médicas.
 
-Se deriva entero, a mano, una vez, en los capítulos 2 a 6. A partir de ahí es una
-plantilla: cambia el paso 1 y aparecen los modelos lineales generalizados; cambia el paso
-3 y aparecen *ridge* y *lasso*; cambia el paso 5 y aparecen los árboles.
+**Aprendizaje autosupervisado.** No se proporcionan etiquetas externas: el problema de predicción se
+construye a partir del propio dato. Por ejemplo, se puede ocultar una parte de una imagen y pedir al
+modelo que la reconstruya, o utilizar las palabras anteriores de un texto para predecir la
+siguiente. Este tipo de experiencia permite aprender representacione de los datos que después se
+adaptan a tareas concretas.
 
-## Cómo está hecho esto
+**Aprendizaje no supervisado.** Los datos tampoco incluyen una respuesta, pero no se crea
+una tarea predictiva auxiliar. El objetivo es describir alguna estructura de los datos,
+por ejemplo agrupando clientes con comportamientos semejantes o representando muchas
+variables mediante unas pocas dimensiones. El criterio de "calidad" depende aquí del
+propósito del análisis y suele ser menos directo que en el caso supervisado.
 
-- **Los apuntes son ejecutables.** Las figuras se generan al publicar, con el código que se
-  ve justo encima de ellas. No hay diapositivas.
-- **Cada capítulo tiene un cuaderno con huecos**, generado del mismo fichero, que se
-  completa en el laboratorio y abre en Google Colab sin instalar nada.
-- **Se demuestra todo lo que se enuncia.** Cada demostración cierra con ∎; si un resultado
-  no lo lleva, su demostración todavía está por escribir. Lo que queda fuera va marcado
-  como *fuera de alcance*, con el motivo.
-- Al final de cada capítulo hay un **error frecuente**: un fallo realista, demostrado
-  fallando.
+**Aprendizaje por refuerzo.** La experiencia se genera mediante la interacción de un agente
+con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una
+recompensa. La tarea es aprender una política de actuación y el rendimiento se mide por la
+recompensa acumulada. Por ejemplo, un sistema de climatización puede aprender cuándo
+calentar o enfriar un edificio a partir de una recompensa que combine el confort de sus
+ocupantes y el coste energético.
 
-## Por dónde empezar
+Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir
+preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante aprendizaje por refuerzo
+[@bommasani2021opportunities].
 
-1. Lee la [presentación](capitulos/00-presentacion.qmd): estructura de las clases,
-   herramientas, evaluación y horarios.
-2. Repasa los anexos de [cálculo y álgebra](curso/algebra.qmd) y de
-   [probabilidad](curso/probabilidad.qmd), y haz el diagnóstico de quince minutos que hay
-   al final del primero.
 
-## Sobre estos apuntes
+## El problema que estudia este curso
 
-La forma de entrar en la materia, la estructura de los capítulos 1 a 6 y el capítulo de
-convexidad siguen de cerca las notas de
+La asignatura se centra en el **aprendizaje supervisado**. La experiencia que recibirá la máquina es una muestra
+de pares
+
+$$
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{\nobs},
+$$
+
+donde $\mathbf{x}_i$ contiene las características observadas del caso $i$ e $y_i$ es su
+respuesta. La tarea consiste en aprender una función $f$ que, a partir de las
+características de un caso nuevo, produzca una predicción $\widehat y=f(\mathbf{x})$ que
+se aproxime a su respuesta $y$:
+
+$$
+\widehat y=f(\mathbf{x})\approx y.
+$$
+
+Dentro del aprendizaje supervisado se distinguen dos tareas fundamentales:
+
+| Tarea | Tipo de respuesta | Ejemplo |
+|---|---|---|
+| **Clasificación** | una categoría de un conjunto finito | impago o no impago |
+| **Regresión** | un valor numérico | precio, demanda o coste |
+
+Este curso estudia **regresión**. La medida de rendimiento cuantificará la discrepancia
+entre $\widehat y$ e $y$, y el objetivo será que esa discrepancia sea pequeña en casos que
+no hayan intervenido en el ajuste. La clasificación se desarrolla en la asignatura
+*Aprendizaje Automático: Clasificación* (G249).
+
+La definición general queda así concretada: $T$ es predecir una respuesta numérica, $E$
+es una muestra de características y respuestas observadas, y $P$ mide el error en datos
+nuevos. El [capítulo 1](capitulos/01-senal-ruido.qmd) comienza en este punto. Separa cada
+respuesta observada en señal y ruido y plantea la primera pregunta del curso: **¿cómo
+aprender la estructura que se repite sin memorizar las variaciones particulares de la
+muestra?**
+
+## Objetivos de aprendizaje
+
+La asignatura combina
+fundamentos matemáticos y estadísticos con la implementación de métodos de predicción. Al
+finalizar el curso, el estudiante deberá ser capaz de:
+
+- formular un problema de predicción supervisada, identificando características,
+  respuesta, modelo y criterio de evaluación;
+- utilizar herramientas de álgebra lineal, cálculo, probabilidad y estadística para
+  analizar y justificar los métodos estudiados;
+- explorar y preparar datos de acuerdo con el objetivo del análisis, evitando fugas de
+  información entre entrenamiento y evaluación;
+- ajustar, validar, comparar e interpretar modelos predictivos;
+- implementar procedimientos de aprendizaje automático en Python y comunicar de forma
+  razonada sus resultados;
+- analizar críticamente las decisiones adoptadas durante el preprocesamiento, el ajuste y
+  la evaluación de un modelo.
+
+## Recorrido del curso
+
+Una vez delimitado el problema de regresión, el resto del curso responde de forma
+progresiva a cuatro preguntas: cómo se aprende una señal, cómo se evalúa sin optimismo,
+cómo se controla la complejidad y cómo se construye un flujo reproducible con datos reales.
+
+| Bloque del curso | Capítulos | Contenido principal |
+|---|---|---|
+| Fundamentos del aprendizaje predictivo | 1-3 | señal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales |
+| Evaluación y datos | 4-5 | métricas, validación cruzada, fugas y pipelines de preparación |
+| Complejidad y generalización | 6-8 | características, sesgo-varianza, regularización, selección y PCA |
+| Otros métodos | 9 | árboles de regresión |
+
+La secuencia cubre la introducción, las metodologías, los algoritmos y la implementación
+previstos en la guía docente. La [tabla de trazabilidad](curso/trazabilidad.qmd) recoge la
+correspondencia detallada y el [calendario](curso/calendario.qmd) distribuye los contenidos
+por semanas.
+
+## Cómo se trabaja
+
+El desarrollo de cada tema combinará explicación teórica, resolución de problemas y
+trabajo con datos. En conjunto, el curso incluirá:
+
+- exposiciones y derivaciones matemáticas que justifiquen los métodos;
+- ejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;
+- laboratorios en los que se implementen los procedimientos y se analicen sus resultados;
+- trabajo autónomo, tutorías y un proyecto aplicado.
+
+Los apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos
+se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.
+
+El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`,
+`scikit-learn` y PyTorch. Las herramientas de IA generativa pueden utilizarse de acuerdo con la
+[política de la asignatura](curso/politica-ia.qmd), y su uso en el proyecto debe quedar
+documentado.
+
+La evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no
+libera materia. El examen final abarca todo el programa y exige una calificación mínima de
+5 sobre 10 para aplicar la ponderación. Las fechas y las reglas completas se recogen en el
+[calendario](curso/calendario.qmd) y en la [sección de evaluación](curso/evaluacion.qmd).
+
+La asistencia es obligatoria en primera matrícula en los términos establecidos por la
+guía docente.
+
+## Preparación inicial
+
+Antes de comenzar el capítulo 1 se recomienda:
+
+1. repasar el anexo de [cálculo y álgebra](curso/algebra.qmd) y realizar el diagnóstico
+   incluido al final;
+2. revisar el [repaso de probabilidad](curso/probabilidad.qmd);
+3. consultar el [calendario](curso/calendario.qmd), la
+   [evaluación](curso/evaluacion.qmd) y la [política de uso de
+   IA](curso/politica-ia.qmd).
+
+## Fuentes y agradecimientos
+
+La introducción mediante datos, patrones y funciones, así como el núcleo de fundamentos
+del curso, se inspira en las notas de
 [Phil Chodrow](https://www.philchodrow.prof/ml-notes-update/) para el curso CSCI 0451 de
-Middlebury College, usadas con agradecimiento. Como aquel curso trata de clasificación y
-este de regresión, los ejemplos y buena parte de las demostraciones se han rehecho. Los
-capítulos 7 y 8, y todo el material de problemas y evaluación, son propios.
+Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al
+programa de la guía docente de CUNEF Universidad.
+
+La bibliografía principal y complementaria se recoge en la [guía de la
+asignatura](curso/guia.qmd).
 
 Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad
+
+## Referencias
+
+::: {#refs}
+:::

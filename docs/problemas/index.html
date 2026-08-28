@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../problemas/hoja-01.html" rel="next">
-<link href="../capitulos/15-cierre.html" rel="prev">
+<link href="../capitulos/09-arboles.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-56210221a811a62f3964318d438e7f14.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -76,35 +76,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -118,7 +89,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -150,19 +121,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bienvenida</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Presentación</span></a>
+ <span class="menu-text">Presentación de la asignatura</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Plantear el problema</span></a>
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,20 +135,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+  <a href="../capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+  <a href="../capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -191,7 +156,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Minimizar</span></a>
+ <span class="menu-text">Evaluación y datos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -199,20 +164,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
+  <a href="../capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+  <a href="../capitulos/05-preparacion-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparar datos sin contaminar la evaluación</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,7 +179,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Complejidad y generalización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -228,14 +187,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="../capitulos/06-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Complejidad, sesgo y varianza</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="../capitulos/07-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Regularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/08-seleccion-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -243,7 +208,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Otros métodos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,26 +216,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="../capitulos/09-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Árboles de regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -278,52 +225,12 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Más allá del ruido gaussiano</span></a>
+ <span class="menu-text">Hojas de problemas</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cierre</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Problemas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../problemas/index.html" class="sidebar-item-text sidebar-link active">
@@ -378,27 +285,27 @@ window.Quarto = {
  <span class="menu-text">Hoja 8</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 9</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/guia.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Guía de la asignatura</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../evaluacion/ejercicios-tipo-examen.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ejercicios tipo examen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -421,6 +328,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/proyecto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto: un flujo completo de predicción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
@@ -433,14 +346,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Glosario y notación</span></a>
+  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Índice de resultados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Índice de resultados</span></a>
+  <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario y notación</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -461,16 +374,14 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#las-hojas-son-el-entrenamiento-del-examen" id="toc-las-hojas-son-el-entrenamiento-del-examen" class="nav-link active" data-scroll-target="#las-hojas-son-el-entrenamiento-del-examen">Las hojas son el entrenamiento del examen</a></li>
-  <li><a href="#calibración-con-reloj" id="toc-calibración-con-reloj" class="nav-link" data-scroll-target="#calibración-con-reloj">Calibración con reloj</a></li>
-  <li><a href="#las-hojas" id="toc-las-hojas" class="nav-link" data-scroll-target="#las-hojas">Las hojas</a></li>
+  <li><a href="#las-hojas" id="toc-las-hojas" class="nav-link active" data-scroll-target="#las-hojas">Las hojas</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Hojas de problemas</h1>
 </div>
@@ -489,143 +400,86 @@ window.Quarto = {
 </header>
 
 
-<p>Una hoja por capítulo, para la sesión S2. Lápiz y papel, sin ordenador.</p>
+<p><strong>Una hoja por capítulo</strong>, para las sesiones S2. Lápiz y papel, sin ordenador. Un capítulo suele ocupar dos semanas, así que su hoja se reparte entre las dos sesiones de problemas.</p>
 <p><strong>Los ejercicios se resuelven en clase.</strong> La S2 sigue siempre la misma secuencia: el profesor resuelve uno en la pizarra diciendo en voz alta qué puntúa, vosotros hacéis el siguiente por parejas, y se corrige en la pizarra. Lo que quede sin ver, con solución publicada después.</p>
-<section id="las-hojas-son-el-entrenamiento-del-examen" class="level2">
-<h2 class="anchored" data-anchor-id="las-hojas-son-el-entrenamiento-del-examen">Las hojas son el entrenamiento del examen</h2>
-<p>No hay sesiones aparte de “ejercicios tipo examen”, y no hacen falta: <strong>cada hoja está construida con la estructura del examen</strong>. Los cinco ejercicios se reparten así:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Ejercicio</th>
-<th>Bloque del examen</th>
-<th>Qué entrena</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td><strong>A</strong></td>
-<td>Pregunta conceptual corta: <em>define</em>, <em>explica</em>, <em>razona</em>, <em>analiza</em></td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td><strong>B</strong></td>
-<td>Una demostración del <a href="../curso/indice-resultados.html">índice de resultados</a></td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td><strong>C</strong></td>
-<td>Cálculo a mano sobre una tabla pequeña</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td><strong>D</strong></td>
-<td><em>“Este script tiene errores”</em>: encontrarlos y justificarlos</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td></td>
-<td>Ampliación, opcional. No entra en el examen</td>
-</tr>
-</tbody>
-</table>
-<p>Los cuatro primeros son <strong>nucleares</strong>. Si sigues las quince S2, habrás visto resolver quince ejercicios de examen y habrás hecho otros tantos antes de sentarte en el primero.</p>
-<p>En la colección de <a href="../evaluacion/ejercicios-tipo-examen.html">ejercicios tipo examen resueltos</a> están todos, con la solución que se espera y la rúbrica con la que se puntúan.</p>
-</section>
-<section id="calibración-con-reloj" class="level2">
-<h2 class="anchored" data-anchor-id="calibración-con-reloj">Calibración con reloj</h2>
-<p>Tres veces en el curso, los últimos 20 minutos de la S2 son un <strong>miniexamen cronometrado</strong>: un solo bloque, en silencio, corregido en clase inmediatamente después.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Semana</th>
-<th>Bloque</th>
-<th>Sobre</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>6</td>
-<td>B, una demostración</td>
-<td>capítulos 1 a 5</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>C + D</td>
-<td>capítulos 6 a 9</td>
-</tr>
-<tr class="odd">
-<td>14</td>
-<td>B + C</td>
-<td>capítulos 10 a 13</td>
-</tr>
-</tbody>
-</table>
-<p>No cuentan para la nota. Sirven para saber cuánto se tarda de verdad, que es lo que ninguna hoja sin reloj enseña.</p>
-<p>Además hay dos simulacros completos: el del parcial, publicado con solución en la semana 6, y el del examen final, en la semana 15.</p>
-</section>
 <section id="las-hojas" class="level2">
 <h2 class="anchored" data-anchor-id="las-hojas">Las hojas</h2>
-<p>La hoja <span class="math inline">\(k\)</span> corresponde al capítulo <span class="math inline">\(k\)</span>, que se da en la semana <span class="math inline">\(k\)</span>.</p>
+<p>Cada hoja tiene seis bloques. Los cuatro primeros reproducen la estructura del examen, el quinto es de laboratorio y el sexto es de ampliación. Un bloque puede llevar más de un ejercicio.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Hoja</th>
 <th>Capítulo</th>
+<th style="text-align: right;">Ejercicios</th>
 <th>Estado</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><a href="../problemas/hoja-01.html">1</a></td>
-<td>Datos, patrones y modelos</td>
-<td>escrita</td>
+<td>1 · Datos = señal + ruido</td>
+<td style="text-align: right;">15</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="even">
 <td><a href="../problemas/hoja-02.html">2</a></td>
-<td>Señal y ruido</td>
-<td>escrita</td>
+<td>2 · Aprender minimizando</td>
+<td style="text-align: right;">17</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="odd">
 <td><a href="../problemas/hoja-03.html">3</a></td>
-<td>Verosimilitud y MLE</td>
-<td>esqueleto</td>
+<td>3 · Modelos lineales con muchas variables</td>
+<td style="text-align: right;">19</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="even">
 <td><a href="../problemas/hoja-04.html">4</a></td>
-<td>Convexidad y riesgo empírico</td>
-<td>escrita</td>
+<td>4 · Evaluar para generalizar</td>
+<td style="text-align: right;">26</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="odd">
 <td><a href="../problemas/hoja-05.html">5</a></td>
-<td>Gradientes y descenso</td>
-<td><strong>práctica de álgebra matricial</strong></td>
+<td>5 · Preparar datos</td>
+<td style="text-align: right;">18</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="even">
 <td><a href="../problemas/hoja-06.html">6</a></td>
-<td>Forma matricial y ecuaciones normales</td>
-<td>esqueleto</td>
+<td>6 · Complejidad, sesgo y varianza</td>
+<td style="text-align: right;">16</td>
+<td>escrita, solucionario en el Campus Virtual</td>
 </tr>
 <tr class="odd">
 <td><a href="../problemas/hoja-07.html">7</a></td>
-<td>Del dato crudo a X</td>
+<td>7 · Regularización</td>
+<td style="text-align: right;"></td>
 <td>esqueleto</td>
 </tr>
 <tr class="even">
 <td><a href="../problemas/hoja-08.html">8</a></td>
-<td>Validación y métricas</td>
+<td>8 · Selección de variables y dimensión</td>
+<td style="text-align: right;"></td>
+<td>esqueleto</td>
+</tr>
+<tr class="odd">
+<td><a href="../problemas/hoja-09.html">9</a></td>
+<td>9 · Árboles de regresión</td>
+<td style="text-align: right;"></td>
 <td>esqueleto</td>
 </tr>
 </tbody>
 </table>
+<p>Los esqueletos se escriben con su capítulo, así que solo aparecen publicadas las hojas de los capítulos ya escritos.</p>
+<p>Algunos de estos ejercicios ya aparecen planteados dentro de los apuntes, en el punto del texto que los motiva. Aquí están recogidos todos juntos, más otros que no salen en el capítulo.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Las soluciones se publican después de la sesión, no antes.</p>
+<p>Las hojas resueltas se publican después de la sesión correspondiente.</p>
 </div>
 </div>
 </div>
@@ -634,6 +488,36 @@ window.Quarto = {
 </section>
 
 <p><br><br><span style="color:grey;">© Roi Naveiro, CUNEF Universidad, 2026</span></p></main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1036,8 +920,8 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../capitulos/15-cierre.html" class="pagination-link" aria-label="De la predicción a la decisión">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span>
+      <a href="../capitulos/09-arboles.html" class="pagination-link" aria-label="Árboles de regresión">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Árboles de regresión</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

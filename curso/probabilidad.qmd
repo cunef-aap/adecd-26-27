@@ -7,8 +7,8 @@ $$
 :::
 
 Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se
-usan en el capítulo 2. No se ve en clase: se supone conocido de Estadística y se recoge
-aquí para poder consultarlo.
+usan en el [capítulo de señal y ruido](../capitulos/01-senal-ruido.qmd). No se ve en clase:
+se supone conocido de Estadística y se recoge aquí para poder consultarlo.
 
 ## Variables aleatorias continuas
 
@@ -29,7 +29,45 @@ $$
 \Var{X} = \E{(X - \E{X})^2} = \E{X^2} - \E{X}^2 .
 $$
 
-Las dos reglas que usaremos sin parar:
+Con esas dos definiciones se lee ya el hecho que el curso usa más veces sin nombrarlo.
+
+::: {#lem-esperanza-funcion}
+## La esperanza de una función de una extracción
+
+Sea $X$ una variable aleatoria con densidad $\pdf$ y sea $g$ una función **fija**, elegida sin
+mirar los datos, con $\int\abs{g(x)}\,\pdf(x)\,\dd x<\infty$. Entonces
+
+$$
+\Esub{X}{g(X)}=\int g(x)\,\pdf(x)\,\dd x .
+$$ {#eq-esperanza-funcion}
+
+En particular, si $X_1,\ldots,X_{\nobs}$ son extracciones independientes de $\pdf$, entonces
+$\E{g(X_i)}$ es esa misma integral para todo $i$: todas las extracciones tienen la misma
+esperanza. Vale igual para un vector aleatorio con distribución conjunta $P$, escribiendo
+$\Esub{P}{g(X,Y)}$, y así se usa en el capítulo 4.
+:::
+
+::: {.cajanegra}
+**Se da por conocido.** Es la definición de esperanza aplicada a la variable $g(X)$, y es
+materia de Estadística. Se usa en el capítulo 4 para identificar la esperanza de una pérdida
+con el riesgo verdadero, y ahí la hipótesis de que $g$ es fija es exactamente la que separa
+train de test.
+:::
+
+**Respecto de qué se toma una esperanza.** En todo el libro, el subíndice de $\E{\cdot}$
+nombra lo que se promedia, y se escribe siempre que haya más de un candidato posible:
+
+| Notación | Se promedia sobre |
+|---|---|
+| $\Esub{P^\star}{\cdot}$ | una observación nueva $(X,Y)$ extraída de la distribución que genera los datos |
+| $\Esub{X}{\cdot}$ | la distribución marginal de las variables predictoras |
+| $\Esub{\varepsilon}{\cdot}$ | el ruido de una observación |
+| $\Esub{\data}{\cdot}$, $\Esub{\Dtrain}{\cdot}$, $\Esub{\Dtest}{\cdot}$ | las muestras posibles del tamaño y el papel que indique el subíndice |
+
+Cuando dentro de la esperanza hay una sola variable aleatoria y no cabe ambigüedad, como en
+$\E{\varepsilon}$ o $\E{X}$, el subíndice se omite.
+
+Las dos reglas que usaremos con más frecuencia:
 
 ::: {#lem-linealidad}
 ## Linealidad y escala
@@ -37,6 +75,11 @@ Las dos reglas que usaremos sin parar:
 Para $a, b$ constantes, $\E{aX + b} = a\E{X} + b$ y $\Var{aX+b} = a^2\Var{X}$. La
 esperanza es lineal **siempre**; la varianza no, y por eso el $a$ sale al cuadrado y el
 $b$ desaparece.
+:::
+
+::: {.cajanegra}
+**Se da por conocido.** Las dos igualdades salen de la definición de esperanza y de la de
+varianza en tres líneas, y son materia de Estadística. Se aceptan y se usan.
 :::
 
 Además, $\E{X + Y} = \E{X} + \E{Y}$ sin ninguna hipótesis, mientras que
@@ -51,10 +94,12 @@ $$
 \pdf(x_1,\dots,x_{\nobs}) = \prod_{i=1}^{\nobs} \pdf_i(x_i).
 $$
 
-Esa igualdad es la razón de que la verosimilitud del capítulo 2 sea un producto, y de que
+Esa igualdad es la razón de que la verosimilitud del
+[capítulo de señal y ruido](../capitulos/01-senal-ruido.qmd) sea un producto, y de que
 al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: **la independencia
 es una hipótesis del modelo**, no una propiedad de los datos. Cuando falla, falla la
-verosimilitud, y con ella el estimador. En el capítulo 8 veremos un caso concreto: un
+verosimilitud, y con ella el estimador. En el [capítulo de evaluación](../capitulos/04-evaluacion.qmd)
+veremos un caso concreto: un
 anfitrión con doce anuncios en Madrid.
 
 ## Cambio de variable
@@ -66,7 +111,7 @@ $$
 
 El factor de la derecha es el **jacobiano**, y es lo que impide tratar una densidad como
 si fuera una probabilidad. Se usa dos veces en el curso: en @thm-escala y en el sesgo de
-retransformación del capítulo 7.
+retransformación del [capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd).
 
 ## Esperanza condicional
 
@@ -80,17 +125,43 @@ estimar.
 $\E{Y} = \E{\,\E{Y \given X}\,}$.
 :::
 
-Se usa en el capítulo 10, en la descomposición del error en sesgo, varianza y ruido.
+::: {.cajanegra}
+**Se da por conocido.** Es materia de Estadística y se acepta. Lo usa la descomposición
+sesgo-varianza del capítulo 6, para pasar de la descomposición en un punto a la del riesgo.
+:::
 
 ## Cuantiles
 
+::: {#def-cuantil}
+## Cuantil y mediana
+
 El **cuantil** de orden $\tau \in (0,1)$ de $X$ es el valor $q_\tau$ tal que
 $\Prob{X \leq q_\tau} = \tau$. La **mediana** es $q_{0{,}5}$.
+:::
 
-Los cuantiles se conservan bajo transformaciones crecientes: si $g$ es creciente,
-$q_\tau(g(X)) = g(q_\tau(X))$. La media **no** tiene esa propiedad, y de esa asimetría sale
-el resultado del capítulo 7 sobre transformaciones logarítmicas. Los cuantiles reaparecen
-en el capítulo 15, con la regresión cuantílica.
+::: {#lem-cuantil-creciente}
+## Los cuantiles se conservan bajo transformaciones crecientes
+
+Si $g$ es estrictamente creciente, entonces $q_\tau\bigl(g(X)\bigr) = g\bigl(q_\tau(X)\bigr)$
+para todo $\tau \in (0,1)$.
+:::
+
+::: {.proof}
+Como $g$ es estrictamente creciente, los sucesos $\{g(X) \leq g(q)\}$ y $\{X \leq q\}$ son el
+mismo, luego tienen la misma probabilidad. Tomando $q = q_\tau(X)$,
+
+$$
+\Prob{g(X) \leq g\bigl(q_\tau(X)\bigr)} = \Prob{X \leq q_\tau(X)} = \tau ,
+$$
+
+y por definición eso significa que $g(q_\tau(X))$ es el cuantil de orden $\tau$ de $g(X)$.
+:::
+
+La media **no** tiene esa propiedad. De esa asimetría sale el resultado sobre transformaciones
+logarítmicas de la hoja del capítulo 5: al deshacer un logaritmo con la exponencial se recupera
+la mediana de la respuesta y no su media, de modo que la predicción devuelta a euros queda por
+debajo de la media condicional. El capítulo 5 usa @def-cuantil también para el percentil 99 con
+el que recorta los valores extremos.
 
 ## La distribución normal
 
@@ -198,13 +269,21 @@ una se presenta en su capítulo.
 
 | Distribución | Densidad o masa | Soporte | Dónde |
 |---|---|---|---|
-| Normal | $\frac{1}{\noise\sqrt{2\pi}}e^{-(x-\mu)^2/2\noise^2}$ | $\Real$ | caps. 1 y 2 |
-| Laplace | $\frac{1}{2b}e^{-\abs{x-\mu}/b}$ | $\Real$ | cap. 2 |
-| Lognormal | si $\log Y \sim \Normal(\mu,\noise^2)$ | $(0,\infty)$ | cap. 5 |
-| Poisson | $e^{-\lambda}\lambda^{k}/k!$ | $\{0,1,2,\dots\}$ | cap. 12 |
-| Gamma | $\propto x^{\alpha-1}e^{-x/\beta}$ | $(0,\infty)$ | cap. 12 |
+| Normal | $\frac{1}{\noise\sqrt{2\pi}}e^{-(x-\mu)^2/2\noise^2}$ | $\Real$ | señal y ruido; verosimilitud y pérdida |
+| Laplace | $\frac{1}{2b}e^{-\abs{x-\mu}/b}$ | $\Real$ | verosimilitud y pérdida |
+| Lognormal | si $\log Y \sim \Normal(\mu,\noise^2)$ | $(0,\infty)$ | preparación de datos |
+| Poisson | $e^{-\lambda}\lambda^{k}/k!$ | $\{0,1,2,\dots\}$ | mapa final, no evaluable |
+| Gamma | $\propto x^{\alpha-1}e^{-x/\beta}$ | $(0,\infty)$ | mapa final, no evaluable |
 
-De la lognormal usamos un solo hecho, y se demuestra en el capítulo 7: si
+::: {.sinusar}
+**De la tabla, tres filas sin usar.** Los capítulos escritos solo usan la normal, en los
+capítulos 1 y 2, y la de Laplace, en el ejercicio de la pérdida absoluta del capítulo 2. La
+lognormal la necesita el capítulo 5. Poisson y Gamma están ahí por el mapa final del capítulo
+11, que las menciona y no las desarrolla: si ese mapa acaba sin ellas, sus filas se quitan.
+:::
+
+De la lognormal usamos un solo hecho, y se demuestra en el
+[capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd): si
 $Z \sim \Normal(\mu,\noise^2)$, entonces $\E{e^{Z}} = e^{\mu + \noise^2/2}$, que **no** es
 $e^{\mu}$. Esa diferencia es la que hace que exponenciar una predicción hecha en
 logaritmos infravalore sistemáticamente.

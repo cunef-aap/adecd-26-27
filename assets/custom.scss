@@ -187,6 +187,57 @@ div.sourceCode {
   background-color: $code-block-bg;
 }
 pre code { font-size: 0.82rem; line-height: 1.5; }
+
+// Con `code-overflow: wrap`, una línea de código más larga que el bloque se parte
+// en lugar de quedar cortada al borde. Para que la continuación se sangre, cada
+// línea pasa a ser un bloque; los saltos de línea del HTML que hay entre ellas se
+// colapsan, o aparecerían líneas vacías de más, y `min-height` devuelve su altura
+// a las líneas en blanco del código. La sangría es de 1.6em, que no coincide con
+// ningún nivel de indentación de Python, que van de cuatro caracteres en cuatro,
+// para que la continuación no se lea como una sentencia nueva. La primera línea no
+// pierde ancho, porque el `text-indent` negativo compensa el `padding-left`.
+pre.sourceCode code { white-space: normal; }
+pre.sourceCode code > span {
+  display: block;
+  white-space: pre-wrap;
+  padding-left: 1.6em;
+  text-indent: -1.6em;
+  min-height: 1.5em;
+}
+
+// --- Anotaciones de código -------------------------------------------------
+// Los números «# <1>» de las celdas anotadas. Tres correcciones sobre el
+// comportamiento por defecto de Quarto.
+//
+// 1. Al pasar el ratón por una anotación, Quarto crea el resaltado de la línea
+//    como un div con `position: absolute` y lo cuelga del <pre>, dando por
+//    hecho que el <pre> es un bloque contenedor. No lo es por defecto, así que
+//    la banda se posicionaba respecto de un ancestro lejano y aparecía como una
+//    raya horizontal fuera de sitio, cruzando el bloque de código y la barra
+//    lateral. Con `position: relative` cae sobre la línea que le corresponde.
+pre.code-annotation-code { position: relative; }
+
+// 2. Y se ajusta al ancho del bloque: Quarto la extiende 4em hacia la
+//    izquierda para cubrir el canal de los números de línea, que aquí no
+//    existe.
+#code-annotation-line-highlight {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+// 3. El canal de la derecha se pintaba opaco por encima del código y se comía
+//    el final de las líneas largas.
+.code-annotation-gutter,
+.code-annotation-gutter-bg { background-color: transparent !important; }
+
+// El número, con el contraste del texto secundario en lugar del gris de los
+// comentarios, y con fondo propio, que es lo que ahora lo separa del código.
+code.sourceCode .code-annotation-anchor,
+dl.code-annotation-container-grid dt {
+  color: $tinta-suave;
+  border-color: $tinta-suave;
+}
+code.sourceCode .code-annotation-anchor { background-color: $code-block-bg; }
 code:not(pre code) {
   font-size: 0.86em;
   color: $cunef-azul;

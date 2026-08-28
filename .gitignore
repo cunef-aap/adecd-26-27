@@ -14,3 +14,13 @@ _referencia/
 datos/listings*.csv
 
 /.quarto/
+
+# Los apuntes originales de los que hereda el curso: 516 MB, no son de este repositorio.
+ml-notes-update-main/
+
+# Documentos internos, no van a un repositorio publico.
+PLAN_CURSO.md
+guia_docente.pdf
+
+# Los PDF para el Campus Virtual se generan con `make pdfs`.
+pdf/

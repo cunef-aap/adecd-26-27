@@ -1,18 +1,55 @@
 # Glosario y notación {.unnumbered}
 
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
+
 ## Notación del curso
 
 | Objeto | Símbolo | Nota |
 |---|---|---|
 | observaciones / variables | $n$ / $p$ | el curso anterior escribía $m$ para las variables |
-| matriz de diseño | $\mathbf{X} \in \mathbb{R}^{n\times(p+1)}$ | primera columna de unos |
+| matriz de diseño | $\mathbf{X} \in \mathbb{R}^{n\times(p+1)}$ | una fila por observación, primera columna de unos |
 | coeficientes | $\mathbf{w} = (w_0,\dots,w_p)^{\mathsf{T}}$ | |
-| variables expandidas | $\boldsymbol{\Phi}$ | capítulo 9 |
+| característica | $\basis_j(\xv)$ | una columna construida por el mapa |
+| mapa de características | $\basisv$ | de $\Real^{\nfeat}$ a $\Real^{\nbasis}$, @def-mapa-caracteristicas |
+| matriz de características | $\Phimat$ | una fila por observación, $\nbasis$ columnas |
+| número de características | $\nbasis$ | frente a $\nfeat$, que cuenta variables predictoras |
 | riesgo empírico | $\hat{R}(\mathbf{w})$ | **siempre** normalizado por $1/n$ |
 | riesgo verdadero | $R(f)$ | esperanza sobre datos nuevos |
-| escala del ruido | $\sigma$ | se estima (capítulo 3) |
+| riesgo esperado del procedimiento | $\bar{R}_n$ | esperanza del riesgo verdadero sobre muestras de entrenamiento de tamaño $n$ |
+| escala del ruido | $\sigma$ | se estima en el capítulo 2 |
 | tasa de aprendizaje | $\alpha$ | |
 | regularización | $\lambda$ | **scikit-learn la llama `alpha=`** |
+| vector de predictoras | $\mathbf{x}_i \in \mathbb{R}^{p+1}$ | fila $i$ de $\mathbf{X}$, con $x_{i0}=1$ |
+| producto escalar | $\langle \mathbf{x}_i, \mathbf{w} \rangle = \mathbf{x}_i^{\mathsf{T}}\mathbf{w}$ | la predicción de la observación $i$ |
+| predicciones ajustadas | $\mathbf{X}\mathbf{w}$ | un valor por observación |
+| vector de residuos | $\mathbf{r}(\mathbf{w}) = \mathbf{y} - \mathbf{X}\mathbf{w}$ | su componente $i$ es $r_i$ |
+| norma euclídea | $\lVert \mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v}$ | sin subíndice significa siempre $\ell_2$ |
+| gradiente | $\nabla \hat{R}(\mathbf{w})$ | vector de las $p+1$ derivadas parciales |
+| rango | $\operatorname{rank}\mathbf{X}$ | completo por columnas si vale $p+1$ |
+| núcleo | $\operatorname{null}\mathbf{X}$ | los $\mathbf{v}$ con $\mathbf{X}\mathbf{v}=\mathbf{0}$ |
+| ecuaciones normales | $\mathbf{X}^{\mathsf{T}}\mathbf{X}\mathbf{w} = \mathbf{X}^{\mathsf{T}}\mathbf{y}$ | **$\mathbf{X}^{\mathsf{T}}\mathbf{X}$ es $(p+1)\times(p+1)$, no $n\times n$** |
+
+## Notación de la evaluación
+
+Del capítulo 4 en adelante hay tres subconjuntos de datos y hay que decir siempre sobre cuál
+se ha medido un riesgo.
+
+| Objeto | Símbolo | Nota |
+|---|---|---|
+| particiones | $\Dtrain$, $\Dval$, $\Dtest$ | disjuntas, y su unión son las $n$ observaciones |
+| sus tamaños | $\ntrain$, $\nval$, $\ntest$ | $\ntrain+\nval+\ntest=n$ |
+| riesgo medido en una partición | $\Riskh_{\Dtest}(\coef)$ | el subíndice **nunca se omite** al comparar |
+| media de la respuesta | $\ybar$ | la predicción del modelo nulo |
+| suma de cuadrados del modelo y total | $\SSE$, $\SST$ | numerador y denominador de $\Rsq$ |
+| coeficiente de determinación | $\Rsq$ | puede ser negativo fuera de la muestra |
+| bloque $k$ de la validación cruzada | $\fold{k}$ | los $K$ bloques particionan $\Dtrain$ |
+| estimación por validación cruzada | $\CV$ | media de los $K$ riesgos de bloque |
+| diferencia emparejada | $\bar d$ | media de las $K$ diferencias medidas sobre las **mismas** unidades |
+| error típico emparejado | $s_d/\sqrt{K}$ | el único que juzga una diferencia; el de cada media no sirve |
 
 ## $\mathbf{w}$ frente a $\boldsymbol{\beta}$
 
@@ -24,7 +61,7 @@ de las fuentes de referencia del curso. Designan el mismo objeto.
 |---|---|
 | $\mathbf{w}$ | $\boldsymbol{\beta}$ |
 | $\hat{\mathbf{w}}$ | $\hat{\boldsymbol{\beta}}$, $b$ |
-| $\hat{R}(\mathbf{w})$ | $\mathrm{SCR}/n$ |
+| $\hat{R}(\mathbf{w})$ | $\mathrm{RSS}/n$, que ellos escriben $\mathrm{SCR}/n$ |
 
 Además del símbolo, cambia la pregunta: en econometría, cuánto vale el coeficiente; aquí,
 qué valores predicen mejor fuera de la muestra.
@@ -34,9 +71,31 @@ qué valores predicen mejor fuera de la muestra.
 | Español | English | Uso |
 |---|---|---|
 | sobreajuste | *overfitting* | usamos ambos |
-| validación cruzada | *cross-validation* | |
-| fuga de información | *data leakage* | |
-| conjunto de entrenamiento / prueba | *training / test set* | |
+| validación cruzada de $K$ bloques | *K-fold cross validation* | decimos el nombre **en inglés** |
+| dejar uno fuera | *leave-one-out* | el caso $K=\ntrain$, también en inglés |
+| fuga de información | *data leakage* | @def-fuga del cap. 5 |
+| fuga temporal | *temporal leakage* | @def-fuga-temporal |
+| valor ausente | *missing value* | @def-ausente |
+| valor extremo | *outlier* | @def-extremo; distinguir error de cola legítima |
+| categoría de referencia | *reference level*, *baseline category* | @def-referencia |
+| cardinalidad | *cardinality* | número de categorías distintas |
+| recortar, winsorizar | *clipping*, *winsorising* | sustituir la cola por un percentil |
+| imputación | *imputation* | rellenar un valor ausente |
+| indicador de ausencia | *missingness indicator* | la columna que dice si el valor faltaba |
+| codificación indicadora | *one-hot encoding* | una columna por categoría |
+| trampa de la variable ficticia | *dummy variable trap* | el rango deficiente de @prp-trampa-ficticia |
+| reparto por grupos | *group split* | separa grupos enteros, no filas |
+| conjunto de entrenamiento / de test | *training / test set* | decimos **train** y **test**, también en el código: `X_train` |
 | variable ficticia | *dummy variable* | |
 | regresión contraída | *ridge regression* | decimos **ridge** |
+| variable predictora, predictor | *feature, predictor* | en el cap. 6, **característica** es una variable construida |
 | instancia, atributo | *instance, feature* | vocabulario del curso anterior |
+| matriz de diseño | *design matrix* | |
+| colinealidad | *collinearity, multicollinearity* | columnas de $\mathbf{X}$ casi dependientes |
+| mínimos cuadrados ordinarios | *ordinary least squares* | la sigla es **OLS** |
+
+Los **nombres completos van en español** y las **siglas en inglés**, que es lo que aparece
+en `scikit-learn` y en la bibliografía: error cuadrático medio es $\MSE$, raíz del error
+cuadrático medio es $\RMSE$, error absoluto medio es $\MAE$, suma de cuadrados de los
+residuos es $\RSS$, y validación cruzada es $\CV$. En econometría varias de ellas se
+escriben en español (SCR, SCT, SCE); son las mismas cantidades.

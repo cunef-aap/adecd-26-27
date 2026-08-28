@@ -1,0 +1,951 @@
+---
+title: 'Complejidad, sesgo y varianza'
+subtitle: 'Aprender curvas y entender lo que cuestan'
+---
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## La representación decide qué se puede aprender
+
+El capítulo anterior terminó con un diagnóstico: la clase de hipótesis considerada hasta ahora (funciones lineales) puede ser insuficiente.
+
+Conviene ver primero qué tiene de limitante esa suposición. Para ello, simularemos una señal **deliberadamente** no lineal.
+
+```{python}
+#| code-fold: true
+import numpy as np
+import torch
+from matplotlib import pyplot as plt
+
+torch.set_default_dtype(torch.float64)
+
+AZUL, GRIS, NARANJA, TINTA = "#151f6c", "#8b8e95", "#ff5700", "#1b1d21"
+NOISE = 0.2
+REPETICIONES = 2000      
+rejilla = torch.linspace(0, 2, 400)                         
+
+
+def senal(x):
+    return torch.sin(torch.pi * x)
+
+
+def genera(n, semilla):
+    torch.manual_seed(semilla)
+    x = torch.rand(n) * 2
+    return x, senal(x) + NOISE * torch.randn(n)
+
+
+x, y = genera(36, semilla=42)
+print(f"{len(x)} observaciones, entrada en [0, 2], ruido de nivel {NOISE}")
+print(f"suelo de ruido: sigma^2 = {NOISE ** 2:.4f}")
+```
+
+La señal es $\model(x)=\sin(\pi x)$ sobre $[0,2]$. El ruido es gaussiano de nivel $\noise=0.2$, de modo que ningún modelo puede tener un riesgo menor
+que $\noise^2=0.04$.
+
+::: {#fig-senal-cruda}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6.0, 3.2))
+ax.plot(rejilla, senal(rejilla), color=TINTA, lw=1.8, label="señal")
+ax.scatter(x.numpy(), y.numpy(), s=18, color=GRIS, alpha=0.75, zorder=3,
+           label="las 36 observaciones")
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend(fontsize=8.5, loc="lower left")
+plt.tight_layout()
+```
+
+Las treinta y seis observaciones y la señal que las genera. La señal sube en la primera mitad del
+recorrido y baja en la segunda, así que ninguna recta puede seguirla: lo que una recta gane en un tramo lo pierde en el otro.
+:::
+
+Ahora ajustemos una recta, y veamos qué sucede. Utilizaremos un tamaño muestral creciente. Nótese que, al conocer la señal real, podemos calcular estimar el riesgo verdadero.
+
+```{python}
+#---
+def ajusta_recta(x, y):
+    X = torch.stack([torch.ones(len(x)), x], dim=1)
+    return torch.linalg.lstsq(X, y).solution
+
+
+def riesgo_verdadero_recta(w, resolucion=2000):             # <1>
+    rejilla = torch.linspace(0, 2, resolucion)
+    prediccion = w[0] + w[1] * rejilla
+    return ((prediccion - senal(rejilla)) ** 2).mean().item() + NOISE ** 2
+
+
+for n in (30, 300, 3000, 30000):
+    w = ajusta_recta(*genera(n, semilla=42))
+    print(f"n = {n:6d}   riesgo verdadero de la recta ajustada: "
+          f"{riesgo_verdadero_recta(w):.4f}")
+#---
+```
+
+1. Como conocemos la señal, podemos calcular el riesgo verdadero sin muestrear.
+
+El riesgo baja de $0.2809$ a $0.2364$ y ahí se queda. Aumentar el tamaño del conjunto de entrenamiento no es capaz de reducir este riesgo.
+
+::: {#fig-recta-insuficiente}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(1, 2, figsize=(8, 3.0), sharey=True)
+for panel, n in enumerate([30, 3000]):
+    xn, yn = genera(n, semilla=42)
+    w = ajusta_recta(xn, yn)
+    ax[panel].scatter(xn.numpy(), yn.numpy(), s=8, color=GRIS, alpha=0.35,
+                      zorder=2)
+    ax[panel].plot(rejilla, senal(rejilla), color=TINTA, lw=1.8,
+                   label="señal")
+    ax[panel].plot(rejilla, w[0] + w[1] * rejilla, color=NARANJA, lw=1.8,
+                   label="recta ajustada")
+    ax[panel].set(xlabel="$x$", title=f"n = {n}, riesgo "
+                                      f"{riesgo_verdadero_recta(w):.3f}")
+ax[0].set(ylabel="$y$")
+ax[0].legend(fontsize=8.5, loc="lower left")
+plt.tight_layout()
+```
+
+La recta ajustada con treinta observaciones y con cien veces más.
+:::
+
+Lo que necesitamos para reducir este riesgo es una clase de hipótesis que
+contenga funciones no lineales. Hay una forma de conseguirla esto sin abandonar nada de lo que
+sabemos.
+
+::: {#def-mapa-caracteristicas}
+## Mapa de características
+
+Un **mapa de características** es una función $\basisv:\Real^{\nfeat}\to\Real^{\nbasis}$ que
+transforma el vector de variables predictoras en un vector de $\nbasis$ **características**
+$\basisv(\xv)=\bigl(\basis_1(\xv),\ldots,\basis_{\nbasis}(\xv)\bigr)\T$. El modelo asociado
+es
+
+$$
+\model_{\coef}(\xv)=\coef\T\basisv(\xv)=\sum_{j=1}^{\nbasis}\coefj\,\basis_j(\xv),
+$$ {#eq-modelo-caracteristicas}
+
+y la **matriz de características** $\Phimat\in\Real^{\nobs\times\nbasis}$ tiene por fila $i$
+el vector $\basisv(\xv_i)\T$.
+:::
+
+
+Considerando este mapa de características, el modelo generador completo es el gaussiano de @def-modelo-gaussiano, con @eq-modelo-caracteristicas en el lugar de la señal,
+
+$$
+\yi\given\xv_i\sim\Normal\bigl(\coef\T\basisv(\xv_i),\noise^2\bigr),
+$$ {#eq-gaussiano-caracteristicas}
+
+que es el modelo lineal-gaussiano de @def-lineal-gaussiano con $\basisv(\xv_i)$ en lugar de
+$\xv_i$. @cor-mle-minimos-cuadrados sigue aplicando, y ajustar por máxima verosimilitud
+sigue siendo minimizar el riesgo cuadrático.
+
+Es importante señalar que la expresión de @eq-modelo-caracteristicas es **no lineal en la entrada** pero **lineal en los
+parámetros**, esto garantiza lo siguiente.
+
+::: {#prp-todo-sirve}
+## Lo visto en el capítulo 3 sigue aplicando
+
+El problema de minimizar el riesgo cuadrático empírico sobre el modelo @eq-modelo-caracteristicas sobre
+$\coef$ es el mismo problema del capítulo 3 con $\Phimat$ en lugar de $\X$. En particular,
+el gradiente es $\frac{2}{\nobs}\Phimat\T(\Phimat\coef-\yv)$, las ecuaciones normales son
+$\Phimat\T\Phimat\coef=\Phimat\T\yv$, y el ajuste es único si $\Phimat$ tiene rango
+completo por columnas.
+:::
+
+::: {.proof}
+El riesgo empírico es $\Riskh(\coef)=\frac{1}{\nobs}\norm{\yv-\Phimat\coef}^2$,
+que es literalmente la expresión de @prp-riesgo-matricial con $\Phimat$ en el
+lugar de $\X$. Ninguna de las demostraciones del capítulo 3 usa de dónde salen las
+columnas de la matriz, solo que sean números fijos dada la muestra, y las
+características lo son porque $\basisv$ no depende de $\coef$. Por tanto se
+aplican sin cambios @thm-gradiente-vectorial y @thm-existencia-unicidad.
+:::
+
+La consecuencia práctica es que ajustar este nuevo modelo no cuesta ni un algoritmo nuevo ni una
+teoría nueva: simplemente tenemos que construir la nueva matriz de características. 
+
+Comencemos por entender un caso sencillo. Si contamos con una única variable predictora, podemos construir un mapa de características tomando sus potencias hasta un
+grado $d$,
+
+$$
+\basisv(x)=(1,x,x^2,\ldots,x^{d})\T,
+$$ {#eq-caracteristicas-polinomicas}
+
+de modo que la fila $i$ de $\Phimat$ es $(1,x_i,x_i^2,\ldots,x_i^{d})$ y el
+modelo de @eq-modelo-caracteristicas es el polinomio
+
+$$
+\model_{\coef}(x)=\coefzero+w_1x+w_2x^2+\cdots+w_dx^{d}.
+$$
+
+Qué grado $d$ elegir es el asunto que discute este capítulo. Probemos con tres valores diferentes y observemos qué sucede.
+
+```{python}
+#---
+def caracteristicas(x, grado):
+    return torch.stack([x ** j for j in range(grado + 1)], dim=1)
+
+
+def ajusta(x, y, grado):
+    return torch.linalg.lstsq(caracteristicas(x, grado), y).solution
+
+
+def riesgo_verdadero(w, grado, resolucion=2000):
+    rejilla = torch.linspace(0, 2, resolucion)
+    prediccion = caracteristicas(rejilla, grado) @ w
+    return ((prediccion - senal(rejilla)) ** 2).mean().item() + NOISE ** 2
+
+
+print(f"{'grado':>6} {'parámetros':>11} "
+      f"{'riesgo en train':>16} {'riesgo verdadero':>17}")
+for grado in (1, 3, 9):
+    w = ajusta(x, y, grado)
+    en_train = ((caracteristicas(x, grado) @ w - y) ** 2).mean().item()
+    print(f"{grado:6d} {grado + 1:11d} {en_train:16.4f} "
+          f"{riesgo_verdadero(w, grado):17.4f}")
+#---
+```
+
+Como podemos observar, el riesgo en train baja siempre al añadir grado. No obstante, el riesgo verdadero no: baja de $0.2384$ a $0.0546$ y vuelve a subir a $0.0793$. El modelo de grado 1 no es suficientemente **expresivo** mientras que el modelo de grado 9 está 
+**sobreajustado** (recuerda la @def-sobreajuste). El resto de este capítulo trata de arrojar luz sobre estos conceptos.
+
+::: {#fig-tres-grados}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(1, 3, figsize=(9, 2.8), sharey=True)
+for panel, grado in enumerate([1, 3, 9]):
+    w = ajusta(x, y, grado)
+    ax[panel].scatter(x.numpy(), y.numpy(), s=14, color=GRIS, alpha=0.6,
+                      zorder=2)
+    ax[panel].plot(rejilla, senal(rejilla), color=TINTA, lw=1.5,
+                   label="señal")
+    ax[panel].plot(rejilla, caracteristicas(rejilla, grado) @ w,
+                   color=NARANJA, lw=1.8, zorder=3, label="ajuste")
+    ax[panel].set(xlabel="$x$", ylim=(-1.8, 1.8),
+                  title=f"grado {grado}, riesgo "
+                        f"{riesgo_verdadero(w, grado):.3f}")
+ax[0].set(ylabel="$y$")
+ax[0].legend(fontsize=8.5, loc="lower left")
+plt.tight_layout()
+```
+
+Los tres ajustes de la tabla sobre las mismas treinta y seis observaciones. La recta no llega a
+curvarse; el grado 3 sigue aproximadamente la señal; el grado 9 pasa más cerca de los puntos y por eso baja el
+riesgo en train.
+:::
+
+## Características polinómicas e interacciones
+
+Con una sola variable predictora, las características polinómicas son las potencias. Con $\nfeat$ variables hay que decidir además qué productos entre ellas se incluyen.
+
+```{python}
+#---
+from math import comb
+
+print(f"{'variables':>10} "
+      + " ".join(f"{'grado ' + str(g):>10}" for g in (1, 2, 3, 5)))
+for nfeat in (1, 2, 8):
+    cuenta = [comb(nfeat + g, g) - 1 for g in (1, 2, 3, 5)]   # <1>
+    print(f"{nfeat:10d} " + " ".join(f"{c:10d}" for c in cuenta))
+#---
+```
+
+1. El número de monomios de grado menor o igual que $g$ en $\nfeat$ variables es
+   $\binom{\nfeat+g}{g}$, y se resta uno para no contar el término constante, que ya está en
+   la columna de unos.
+
+Con las ocho variables numéricas del capítulo 5, pasar a grado 2 son 44 características y a
+grado 3 son 164. La dimensión crece deprisa, y cada característica nueva es un parámetro más
+que hay que estimar con las mismas observaciones.
+
+Entre esos productos hay uno de especial relevancia. Un término $x_1x_2$ hace que el efecto de $x_1$ sobre la predicción dependa del valor de $x_2$, porque la derivada de
+$\coefzero+w_1x_1+w_2x_2+w_3x_1x_2$ respecto de $x_1$ vale $w_1+w_3x_2$. Ese producto es
+una **interacción**: sin él, el efecto de $x_1$ sobre la predicción es el mismo cualquiera que
+sea el valor de $x_2$. Lo observamos en la siguiente figura.
+
+::: {#fig-interaccion}
+
+```{python}
+#| code-fold: true
+x1 = torch.linspace(0, 1, 100)
+casos = [("sin interacción, $w_3 = 0$", 0.0),
+         ("con interacción, $w_3 = 1.6$", 1.6)]
+
+fig, ax = plt.subplots(1, 2, figsize=(8, 3.0), sharey=True)
+for panel, (titulo, w3) in enumerate(casos):
+    for x2, color in [(0.0, AZUL), (1.0, NARANJA)]:
+        ax[panel].plot(x1, 0.5 + x1 + 0.4 * x2 + w3 * x1 * x2,
+                       color=color, lw=1.8, label=f"$x_2 = {x2:.0f}$")
+    ax[panel].set(xlabel="$x_1$", title=titulo)
+ax[0].set(ylabel="predicción")
+ax[0].legend(fontsize=8.5, loc="upper left")
+plt.tight_layout()
+```
+
+La predicción de $\coefzero+w_1x_1+w_2x_2+w_3x_1x_2$ frente a $x_1$, para dos valores de
+$x_2$. Sin el producto las dos rectas son paralelas. Con él las pendientes son $w_1$ y
+$w_1+w_3$.
+:::
+
+
+## Un algoritmo produce modelos distintos con muestras distintas
+
+Hasta ahora hemos presentado una forma de construir una nueva clase de hipótesis más flexible. No obstante, hemos observado que el riesgo verdadero puede aumentar si nos excedemos con la complejidad (por ejemplo, subiendo demasiado el grado del polinomio).
+
+Para entender por qué ocurre esto, no basta con mirar un único ajuste. Tenemos que evaluar el procedimiento de aprendizaje en su conjunto, estudiando qué sucede si aplicamos nuestro algoritmo a múltiples muestras de entrenamiento distintas extraídas del mismo universo.
+
+En el siguiente experimento vamos a simular 2000 realidades alternativas. En cada una, extraeremos una muestra aleatoria independiente de 36 observaciones, ajustaremos un modelo polinómico y guardaremos la curva resultante. Haremos esto para los grados 1, 3 y 9.
+
+```{python}
+#---
+def muchos_ajustes(grado, n=36, repeticiones=REPETICIONES, semilla=0):
+    torch.manual_seed(semilla)
+    predicciones = torch.empty(repeticiones, len(rejilla))
+    for r in range(repeticiones):
+        xr = torch.rand(n) * 2
+        yr = senal(xr) + NOISE * torch.randn(n)
+        w = torch.linalg.lstsq(caracteristicas(xr, grado), yr).solution
+        predicciones[r] = caracteristicas(rejilla, grado) @ w
+    return predicciones
+#---
+```
+
+::: {#fig-variabilidad}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(1, 3, figsize=(9, 2.8), sharey=True)
+for panel, grado in enumerate([1, 3, 9]):
+    P = muchos_ajustes(grado)
+    for r in range(0, REPETICIONES, REPETICIONES // 100):
+        ax[panel].plot(rejilla, P[r], color=NARANJA, lw=0.6, alpha=0.15)
+    ax[panel].plot(rejilla, P.mean(0), color=NARANJA, lw=2.0,
+                   label="modelo medio")
+    ax[panel].plot(rejilla, senal(rejilla), color=TINTA, lw=1.5,
+                   label="señal")
+    ax[panel].set(xlabel="$x$", title=f"grado {grado}", ylim=(-2.2, 2.2))
+ax[0].set(ylabel="$y$")
+ax[0].legend(fontsize=8.5, loc="lower left")
+plt.tight_layout()
+```
+
+Cien de los dos mil ajustes obtenidos con muestras distintas de treinta y seis observaciones,
+para tres grados. Con grado 1 las rectas casi coinciden entre sí, pero su promedio no se parece a la señal. Con grado 9 el modelo medio sí calca la señal, pero cada curva individual es errática.
+:::
+
+En la figura se ven tres comportamientos marcadamente diferentes.
+
+* Panel izquierdo (Grado 1): Modelo estable pero sistemáticamente equivocado. El modelo es tan rígido que apenas cambia de una muestra a otra; todas las líneas naranjas están muy juntas (baja varianza). Sin embargo, el modelo medio es incapaz de seguir la curvatura de la señal negra real (alto sesgo).
+
+* Panel derecho (Grado 9): Modelo inestable pero centrado. El modelo es tan flexible que persigue el ruido específico de cada muestra de 36 puntos, produciendo curvas que se disparan en todas direcciones (alta varianza). No obstante, si promediamos esas miles de curvas erráticas, el modelo medio calca la señal subyacente casi a la perfección (bajo sesgo).
+
+* El grado 3 (centro) queda entre los dos extremos: es lo bastante flexible para seguir la curva (bajo sesgo), pero lo bastante rígido para no seguir el ruido de cada muestra (baja varianza).
+
+A continuación, formalizamos matemáticamente este fenómeno.
+
+## La descomposición sesgo-varianza
+
+Queremos responder a la siguiente pregunta: si aplicáramos un mismo procedimiento de ajuste (i.e. algoritmo y clase de hipótesis elegida) repetidas veces sobre distintas muestras de datos de un tamaño dado, ¿cuánto se equivocarían en promedio los modelos resultantes al predecir observaciones futuras?
+
+Para formalizar esto, debemos separar el problema en dos niveles. Primero, fijaremos nuestra atención en una sola observación nueva con características $\xv$ concretas (por ejemplo, $x=1.5$). El error de predicción que cometeremos sobre esta observación depende de dos fuentes de aleatoriedad independientes:
+
+1. La procedente de la muestra de entrenamiento ($\data$): Nuestro modelo ajustado $\modelh_{\data}$ es una variable aleatoria, pues depende de la muestra $\data$ (que son $\nobs$ extracciones independientes de la distribución $P^\star$ de @def-riesgo-verdadero) que nos haya tocado para entrenar. Por tanto, calcular el rendimiento promedio exige tomar la esperanza sobre todas las posibles muestras de entrenamiento. Escribimos este valor esperado como $\Esub{\data}{\cdot}$. Con ella se define el **modelo medio**.
+
+$$
+\bar{\modelh}(\xv)=\Esub{\data}{\modelh_{\data}(\xv)} .
+$$ {#eq-modelo-medio}
+
+
+El modelo medio es, punto a punto, la predicción que da el algoritmo en promedio sobre todas las muestras posibles de tamaño $\nobs$. No es un modelo que se pueda ajustar con unos datos concretos, porque para calcularlo hacen falta todas las muestras posibles: es la curva naranja gruesa de @fig-variabilidad, el promedio de las dos mil finas.
+
+2. El ruido del dato futuro ($\varepsilon$): El valor real $Y$ que intentamos predecir no es determinista, pues asumimos que el modelo generador de @def-modelo-gaussiano lo produce como $Y = \model(\xv) + \varepsilon$. Este ruido es estadísticamente independiente de la muestra de entrenamiento $\data$. De forma análoga al punto anterior, utilizaremos el operador $\Esub{\varepsilon}{\cdot}$ para denotar la esperanza sobre la distribución de este nuevo ruido, del cual asumimos que tiene media cero ($\Esub{\varepsilon}{\varepsilon}=0$) y varianza constante ($\Var{\varepsilon}=\noise^2$).
+
+
+Para dar respuesta a la pregunta que abría la sección (cuánto se equivocaría en promedio nuestro procedimiento al predecir), debemos evaluar el error en este punto $\xv$ promediando sobre ambas fuentes de aleatoriedad. Matemáticamente, esta métrica es la esperanza conjunta $\Esub{\data,\varepsilon}{(Y - \modelh_{\data}(\xv))^2}$. El teorema siguiente descompone esta cantidad en tres términos. Para que la identidad se cumpla, hacen falta cuatro supuestos:
+
+1. Pérdida cuadrática. La descomposición es una propiedad algebraica exclusiva del error cuadrático; con otra función de pérdida no existe una descomposición análoga.
+
+2. Muestra aleatoria y ajuste determinista. $\data$ está formada por $\nobs$ extracciones independientes de $P^\star$, y el procedimiento de ajuste es una función determinista de $\data$: toda la aleatoriedad de nuestro modelo proviene exclusivamente de la muestra.
+
+3. Observación futura independiente. El par $(\xv,Y)$ que se predice no pertenece a $\data$, y su ruido intrínseco $\varepsilon$ es independiente de la muestra de entrenamiento y tiene media cero.
+
+4. Varianza del ruido constante. $\Var{\varepsilon}=\noise^2$ no depende de $\xv$. Sin esto, al promediar posteriormente sobre todo el espacio de características $X$, el término del ruido no sería un único número $\noise^2$.
+
+::: {#thm-descomposicion}
+## Descomposición sesgo-varianza
+
+Fijado un punto $\xv$, sea $Y = \model(\xv) + \varepsilon$ la observación futura real. Sea $\modelh_{\data}(\xv)$ la predicción de nuestro algoritmo entrenado con la muestra aleatoria $\data$, y sea $\bar{\modelh}(\xv)$ el modelo medio de @eq-modelo-medio].
+
+Bajo los cuatro supuestos anteriores, el error cuadrático esperado se descompone en:
+
+$$
+\Esub{\data,\varepsilon}{(Y-\modelh_{\data}(\xv))^2} =\underbrace{\noise^2}_{\text{ruido}} +\underbrace{\bigl(\model(\xv) - \bar{\modelh}(\xv)\bigr)^2}_{\text{sesgo}^2} +\underbrace{\Esub{\data}{(\modelh_{\data}(\xv)-\bar{\modelh}(\xv))^2}}_{\text{varianza}} .
+$$ {#eq-descomposicion}
+:::
+
+::: {.proof}
+Para aligerar la notación, escribiremos $\modelh=\modelh_{\data}(\xv)$, $\model=\model(\xv)$ y $\bar{\modelh}=\bar{\modelh}(\xv)$. La demostración comienza expandiendo el error; para ello, sustituimos $Y$ por su definición ($\model + \varepsilon$) y sumamos y restamos el modelo medio $\bar{\modelh}$:
+
+$$
+Y-\modelh = (\model + \varepsilon) - \modelh = \varepsilon + (\model-\bar{\modelh}) + (\bar{\modelh}-\modelh)
+$$
+
+Ahora elevamos esta suma de tres elementos al cuadrado. Obtendremos los tres cuadrados individuales y tres términos cruzados:
+
+$$
+(Y-\modelh)^2 = \varepsilon^2 + (\model-\bar{\modelh})^2 + (\bar{\modelh}-\modelh)^2 + 2\varepsilon(\model-\bar{\modelh}) + 2\varepsilon(\bar{\modelh}-\modelh) + 2(\model-\bar{\modelh})(\bar{\modelh}-\modelh)
+$$
+
+Al aplicar la esperanza conjunta $\Esub{\data,\varepsilon}{\cdot}$, la linealidad de la esperanza nos permite analizar cada componente por separado. Veamos paso a paso cómo los tres términos cruzados se anulan:
+
+1. **El cruce entre el ruido y el sesgo:**
+   $$ 
+   \Esub{\data,\varepsilon}{2\varepsilon(\model-\bar{\modelh})} = 2(\model-\bar{\modelh})\,\Esub{\varepsilon}{\varepsilon} = 0 
+   $$
+   Una vez fijado $\xv$, tanto la señal verdadera $\model$ como el modelo medio $\bar{\modelh}$ son constantes (no dependen de la muestra concreta ni del ruido). Por tanto, salen fuera de la esperanza. Como asumimos que el ruido tiene media cero ($\Esub{\varepsilon}{\varepsilon}=0$), todo el término se anula.
+
+2. **El cruce entre el ruido y la varianza:**
+   $$ 
+   \Esub{\data,\varepsilon}{2\varepsilon(\bar{\modelh}-\modelh)} = 2\,\Esub{\varepsilon}{\varepsilon}\,\Esub{\data}{\bar{\modelh}-\modelh} = 0 
+   $$
+   Aquí resulta vital el tercer supuesto. Como el ruido de la observación futura ($\varepsilon$) es estadísticamente independiente de la muestra de entrenamiento ($\data$), la esperanza conjunta de su producto se separa en el producto de sus esperanzas individuales. Al ser $\Esub{\varepsilon}{\varepsilon}=0$, el término entero desaparece.
+
+3. **El cruce entre el sesgo y la varianza:**
+   $$ \Esub{\data,\varepsilon}{2(\model-\bar{\modelh})(\bar{\modelh}-\modelh)} = 2(\model-\bar{\modelh})\,\Esub{\data}{\bar{\modelh}-\modelh} = 0 $$
+   Este término no contiene $\varepsilon$, por lo que la esperanza actúa únicamente sobre $\data$. La parte constante $(\model-\bar{\modelh})$ sale fuera. Por la propia definición del modelo medio en @eq-modelo-medio, la esperanza de las desviaciones de un modelo respecto a su propia media es cero: $\Esub{\data}{\bar{\modelh}-\modelh} = \bar{\modelh} - \bar{\modelh} = 0$.
+
+Al anularse todos los cruces, solo sobreviven las esperanzas de los tres cuadrados individuales:
+
+$$
+\Esub{\varepsilon}{\varepsilon^2} + (\model-\bar{\modelh})^2 + \Esub{\data}{(\bar{\modelh}-\modelh)^2}
+$$
+
+Como el ruido tiene media cero, sabemos que $\Esub{\varepsilon}{\varepsilon^2} = \Var{\varepsilon} = \noise^2$. Sustituyendo esto, obtenemos exactamente la identidad de @eq-descomposicion.
+:::
+
+Estos tres sumandos no solo explican por qué nos equivocamos, sino que nos dan el diagnóstico exacto de **cómo de bien va a funcionar nuestro procedimiento de aprendizaje** ante datos futuros. Nos dicen si nuestras predicciones fallarán porque somos demasiado rígidos (sesgo), demasiado inestables (varianza) o porque la naturaleza es inherentemente impredecible (ruido):
+
+*   **El ruido** ($\noise^2$) es la varianza intrínseca de $Y$ una vez fijado $\xv$. Ningún procedimiento, por muchos datos que tenga o muy avanzado que sea el algoritmo, bajará de aquí: es el suelo inexpugnable del error que el capítulo 2 anunció.
+
+*   **El sesgo al cuadrado** mide la distancia entre la señal verdadera $\model$ y nuestro modelo medio $\bar{\modelh}$ (la separación entre la curva negra y la curva gruesa naranja de @fig-variabilidad). Este error **no se atenúa con más datos**, ya que un procedimiento demasiado rígido (como ajustar líneas rectas) nunca podrá adoptar una forma curva por muchas observaciones que reciba. Depende exclusivamente de la clase de hipótesis elegida. **La única forma de reducir el sesgo es aumentar la complejidad** del modelo (por ejemplo, subiendo el grado del polinomio o añadiendo variables), dotando a nuestro procedimiento de la capacidad geométrica necesaria para calcar la señal real.
+
+* **La varianza** mide cuánto se mueve un modelo concreto $\modelh_{\data}$ alrededor de su propio promedio $\bar{\modelh}$ por culpa de la muestra específica que le tocó (la dispersión de las finas líneas naranjas). Es el precio directo de la flexibilidad: al aumentar la complejidad para reducir el sesgo, le damos al algoritmo tanta libertad que empieza a perseguir el ruido de cada muestra. Sin embargo, a diferencia del sesgo, la varianza **sí se atenúa con más datos**, ya que un conjunto de entrenamiento más grande estabiliza el algoritmo y evita que el modelo dé bandazos.
+
+La ecuación anterior detalla el error para un solo punto fijo $\xv$. Para calcular el riesgo esperado de @def-riesgo-procedimiento, solo nos falta un último paso: promediar ese resultado sobre todas las posibles características $\xv$ que nos encontraremos en la realidad (es decir, tomar la esperanza sobre la distribución marginal de $X$ bajo $P^\star$).
+
+Como la esperanza es un operador lineal, la descomposición sobrevive intacta a nivel global:
+
+$$
+\Riskproc{\nobs}=\Esub{\data}{\Risk(\modelh_{\data})}
+=\noise^2
++\Esub{X}{\bigl(\model(X)-\bar{\modelh}(X)\bigr)^2}
++\Esub{X}{\Esub{\data}{\bigl(\modelh_{\data}(X)-\bar{\modelh}(X)\bigr)^2}} .
+$$ {#eq-descomposicion-global}
+
+
+Ahora sí, podemos medir de forma rigurosa estos tres componentes sobre el experimento simulado de la sección anterior.
+
+```{python}
+#---
+def descompone(grado, n=36, repeticiones=REPETICIONES, semilla=0):
+    P = muchos_ajustes(grado, n=n, repeticiones=repeticiones,
+                       semilla=semilla)
+    sesgo2 = ((P.mean(0) - senal(rejilla)) ** 2).mean().item()
+    varianza = P.var(0, unbiased=False).mean().item()
+    return sesgo2, varianza, NOISE ** 2 + sesgo2 + varianza
+
+
+print(f"{'grado':>6} {'sesgo^2':>9} {'varianza':>10} "
+      f"{'ruido':>8} {'total':>10}")
+descomposicion = {}
+for grado in range(0, 10):
+    sesgo2, varianza, total = descompone(grado)
+    descomposicion[grado] = (sesgo2, varianza, total)
+    print(f"{grado:6d} {sesgo2:9.4f} {varianza:10.4f} "
+          f"{NOISE ** 2:8.4f} {total:10.4f}")
+#---
+```
+
+La última columna es la suma de los tres términos, y @eq-descomposicion dice que esa suma es
+el riesgo esperado. Conviene comprobarlo midiendo el riesgo esperado por el otro camino: el
+promedio, sobre los dos mil ajustes, del error cuadrático que cada uno comete contra la
+señal.
+
+```{python}
+#---
+def riesgo_directo(grado, n=36, repeticiones=REPETICIONES, semilla=0):
+    P = muchos_ajustes(grado, n=n, repeticiones=repeticiones,
+                       semilla=semilla)
+    return NOISE ** 2 + ((P - senal(rejilla)) ** 2).mean().item()  # <1>
+
+
+print(f"{'grado':>6} {'suma de los tres':>18} {'directo':>10}")
+for grado in (1, 3, 9):
+    print(f"{grado:6d} {descomposicion[grado][2]:18.4f} "
+          f"{riesgo_directo(grado):10.4f}")
+#---
+```
+
+1. Se promedia sobre los dos mil ajustes y sobre la rejilla a la vez, sin separar sesgo de varianza. Los dos caminos usan las mismas dos mil muestras, así que lo que se comprueba es la identidad algebraica de @eq-descomposicion, no el valor de $\noise^2$, que aquí se suma por conocido.
+
+
+La tabla revela la tensión fundamental del aprendizaje automático:
+
+* El sesgo al cuadrado cae drásticamente desde $0.4988$ (grado 0) hasta $0.0046$ al llegar al grado 3. A partir de ahí, apenas varía. La razón geométrica es simple: un polinomio cúbico ya es lo suficientemente flexible para imitar la forma de la onda $\sin(\pi x)$ en este intervalo. Añadir potencias mayores no acerca mucho más el modelo medio a la señal real porque el problema de "falta de capacidad" ya está resuelto.
+
+* **La varianza explota:** La varianza hace exactamente lo contrario. Se mantiene baja hasta el grado 3 ($0.0066$) y luego se descontrola subiendo hasta $3.1114$ para grado 9. El motivo es la sobreparametrización: al intentar estimar 10 parámetros con solo 36 observaciones repartidas al azar, el modelo tiene demasiada libertad. El polinomio persigue el ruido específico de cada muestra y se dispara en los huecos entre los puntos, provocando que la curva cambie radicalmente de una muestra a otra.
+
+* **El riesgo total sigue una curva en U:** La suma de los tres términos (sesgo, varianza y el ruido constante de $0.0400$) es el riesgo esperado. Al chocar la caída del sesgo con la explosión de la varianza, el riesgo total forma una U. El mínimo no está en los extremos, sino en el interior: el grado 3 encuentra el equilibrio óptimo.
+
+
+## La curva en U y lo que la validación cruzada logra ver
+
+La suma de la sección anterior (el riesgo esperado total) solo se puede calcular porque en esta simulación conocemos la señal verdadera y podemos promediar miles de muestras. En el mundo real, solo tenemos una única muestra y la señal es desconocida. 
+
+¿Cómo estimamos entonces esta curva en la práctica? Recordando lo que establecimos en @sec-kfold: la validación cruzada no evalúa el modelo final, sino que **estima el riesgo esperado del procedimiento** de @def-riesgo-procedimiento. Al partir nuestra única muestra en bloques y ajustar múltiples modelos, la cantidad de @eq-cv simula empíricamente esa esperanza $\Esub{\data}{\cdot}$ teórica. Conviene comprobar qué es lo que realmente logra ver frente a la verdad teórica.
+
+```{python}
+#---
+from sklearn.model_selection import KFold
+
+
+def cv_riesgo(grado, x, y, n_bloques=5, semilla=9):
+    particion = KFold(n_splits=n_bloques, shuffle=True,
+                      random_state=semilla)
+    riesgos = []
+    for i_ajuste, i_val in particion.split(x.numpy()):
+        w = torch.linalg.lstsq(caracteristicas(x[i_ajuste], grado),
+                               y[i_ajuste]).solution
+        riesgos.append(((caracteristicas(x[i_val], grado) @ w
+                         - y[i_val]) ** 2).mean().item())
+    return float(np.mean(riesgos)), riesgos
+
+
+print(f"{'grado':>6} {'train':>9} {'CV(5)':>9} {'ee':>7} {'esperado':>10}")
+tabla_cv = {}
+bloques_cv = {}
+for grado in range(0, 10):
+    cv, bloques = cv_riesgo(grado, x, y)
+    w = ajusta(x, y, grado)
+    tabla_cv[grado] = cv
+    bloques_cv[grado] = np.array(bloques)
+    print(f"{grado:6d} "
+          f"{((caracteristicas(x, grado) @ w - y) ** 2).mean():9.4f} "
+          f"{cv:9.4f} {np.std(bloques, ddof=1) / np.sqrt(5):7.4f} "
+          f"{descomposicion[grado][2]:10.4f}")
+#---
+```
+
+::: {#fig-curva-u}
+
+```{python}
+#| code-fold: true
+grados = list(range(10))
+
+fig, ax = plt.subplots(1, 2, figsize=(8.4, 3.2))
+
+ax[0].plot(grados, [descomposicion[g][0] for g in grados], marker="o", ms=4,
+           color=AZUL, label="sesgo$^2$")
+ax[0].plot(grados, [descomposicion[g][1] for g in grados], marker="s", ms=4,
+           color=NARANJA, label="varianza")
+ax[0].plot(grados, [descomposicion[g][2] for g in grados], marker="^", ms=4,
+           color=TINTA, label="riesgo esperado")
+ax[0].axhline(NOISE ** 2, color=GRIS, lw=1, linestyle=":",
+              label=r"ruido $\sigma^2$")
+ax[0].set(xlabel="grado del polinomio", ylabel="riesgo cuadrático medio",
+          yscale="log", title="con la señal conocida")
+ax[0].legend(fontsize=8)
+
+ax[1].plot(grados, [tabla_cv[g] for g in grados], marker="o", ms=4,
+           color=NARANJA, label="CV(5)")
+ax[1].plot(grados, [descomposicion[g][2] for g in grados], marker="^", ms=4,
+           color=TINTA, label="riesgo esperado")
+ax[1].axhline(NOISE ** 2, color=GRIS, lw=1, linestyle=":")
+ax[1].set(xlabel="grado del polinomio", yscale="log",
+          title="con una sola muestra")
+ax[1].legend(fontsize=8)
+
+plt.tight_layout()
+```
+
+A la izquierda, la descomposición: la rama izquierda de la curva del riesgo es sesgo y la
+derecha es varianza. A la derecha, lo que se puede calcular con una sola muestra de treinta y
+seis observaciones. La validación cruzada reproduce la rama izquierda con nitidez y la derecha
+solo a partir del grado 9.
+:::
+
+La comparación de los dos paneles nos advierte de los límites de medir con muestras pequeñas. La validación cruzada ve la rama del sesgo perfectamente: distingue sin ambigüedad los grados 0, 1 y 2 del resto. Sin embargo, en la rama de la varianza fracasa: entre los grados 3 y 8 devuelve valores estancados entre $0.0286$ y $0.0323$, colocando su aparente mínimo en el grado 8.
+
+Aquí debemos separar rigurosamente dos cantidades que conviene no confundir:
+
+1. El error de estimación: La validación cruzada nos promete que el riesgo del grado 8 es $0.0286$, pero la verdad teórica es $0.4239$. La herramienta es demasiado optimista y se equivoca por un factor de quince al evaluar este candidato.
+
+2. El coste de elegir mal: Si caemos en la trampa del mínimo aparente y entregamos el grado 8, el riesgo real será $0.4239$. Si entregamos el grado 3, el riesgo será de $0.0512$. Elegir mal multiplica nuestro error en producción por ocho.
+
+¿Por qué se equivoca la CV? Es @prp-minimo-sesgado otra vez: el mínimo de varias estimaciones ruidosas es optimista y cae donde el ruido lo lleve. La regla de un error típico (@def-regla-un-error-tipico) no mejora esa estimación, pero sí cambia la decisión. Apliquémosla sobre esta tabla, con sus tres pasos.
+
+```{python}
+#---
+def compara_con_campeon(grado, campeon, bloques):
+    d = bloques[grado] - bloques[campeon]
+    return d.mean(), d.std(ddof=1) / np.sqrt(len(d))
+
+
+def regla_un_error_tipico(bloques):                         # <1>
+    campeon = min(bloques, key=lambda g: bloques[g].mean())
+    dentro = []
+    for grado in range(campeon):
+        dif, ee_dif = compara_con_campeon(grado, campeon, bloques)
+        if dif < ee_dif:
+            dentro.append(grado)
+    return campeon, min(dentro, default=campeon)
+
+
+campeon, entregado = regla_un_error_tipico(bloques_cv)
+
+print(f"campeón: grado {campeon}")
+print(f"{'grado':>6} {'diferencia':>12} {'error típico':>14} "
+      f"{'cociente':>10}")
+for grado in range(campeon):
+    dif, ee_dif = compara_con_campeon(grado, campeon, bloques_cv)
+    print(f"{grado:6d} {dif:+12.4f} {ee_dif:14.4f} "
+          f"{dif / ee_dif:10.2f}")
+print(f"\ngrado entregado: {entregado}, con un riesgo esperado de "
+      f"{descomposicion[entregado][2]:.4f}")
+
+reparto = {}                                                # <2>
+for semilla in range(40):
+    otra = {grado: np.array(cv_riesgo(grado, x, y, semilla=semilla)[1])
+            for grado in range(10)}
+    elegido = regla_un_error_tipico(otra)[1]
+    reparto[elegido] = reparto.get(elegido, 0) + 1
+print("con 40 particiones distintas, la regla entrega:",
+      dict(sorted(reparto.items())))
+#---
+```
+
+1. Los tres pasos de @sec-comparar en una función: el campeón es el candidato con la
+   estimación de validación cruzada más baja, y de los más simples que él se entrega el
+   primero cuya desventaja no llegue a un error típico.
+2. La misma regla sobre las mismas treinta y seis observaciones, cambiando solo cómo se
+   reparten en bloques.
+
+El campeón es el grado 8, y cuatro candidatos más simples quedan a menos de un error típico de
+él. La regla se queda con el más simple de los cuatro, el grado 3, con un cociente de $0.48$, y
+ese es también el que minimiza el riesgo esperado, $0.0512$: recupera el mejor candidato y evita
+los $0.4239$ del campeón.
+
+Conviene no leer eso como una garantía. La regla de un error típico es una heurística, y no hay
+ningún resultado que asegure que el candidato que devuelve minimice el riesgo esperado. El
+último bloque de la salida lo mide sobre estas mismas treinta y seis observaciones, cambiando solo la
+partición en bloques: en 27 de las 40 particiones la regla entrega el grado 3, en 10 el grado 4,
+cuyo riesgo esperado es $0.0563$ frente a $0.0512$, y en las 3 restantes un grado más alto.
+
+Lo que la regla cambia es la pregunta que decide. El mínimo de la curva de validación pregunta
+cuál es el número más bajo, y por @prp-minimo-sesgado ese número cae donde lo lleve el ruido. La
+regla pregunta cuál es el candidato más simple cuya desventaja frente al campeón no se "distingue
+del ruido", y esa pregunta se contesta con la diferencia emparejada
+de @def-diferencia-emparejada, que cancela la dificultad común de los bloques y mide mucho mejor
+la comparación que la propia columna `ee`.
+
+
+::: {.cajanegra}
+**El doble descenso queda fuera.** Con clases de hipótesis muy grandes, del orden del número
+de observaciones o mayores, la curva en U deja de ser una U: el riesgo vuelve a bajar pasado
+el punto en que el modelo interpola los datos. El fenómeno se llama doble descenso, es
+importante para entender modelos con millones de parámetros y no es evaluable en este curso,
+porque exige herramientas que no vamos a ver.
+:::
+
+## Caso práctico: la curva en U en los datos de Madrid
+
+Volvamos a los anuncios del capítulo 5, con el mismo reparto por anfitrión y el mismo
+protocolo. El punto de partida es el modelo que aquel capítulo entregó: recorte al percentil
+99, imputación por la mediana con indicadora, estandarización, tipo de habitación y barrio
+agrupado, y un $\RMSE$ de $82.39$ euros en test. La pregunta que intentaremos resolver es si una clase de hipótesis
+más rica lo mejora.
+
+Vamos a subir el grado del polinomio y estudiar qué le sucede al riesgo. Las variables que se
+van a aumentar son las cuatro continuas de tamaño, `accommodates`, `bathrooms`, `bedrooms` y `beds`, y lo único que cambia de un candidato a otro es el grado.
+
+```{python}
+#| code-fold: true
+import warnings
+
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import MissingIndicator, SimpleImputer
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GroupKFold, GroupShuffleSplit
+from sklearn.pipeline import Pipeline
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.preprocessing import (OneHotEncoder, PolynomialFeatures,
+                                   StandardScaler)
+
+warnings.simplefilter("ignore")
+
+anuncios = pd.read_csv("../datos/airbnb_madrid.csv")
+
+NUMERICAS = ["accommodates", "bathrooms", "bedrooms", "beds",
+             "minimum_nights", "number_of_reviews",
+             "review_scores_rating", "availability_365"]
+CATEGORICAS = ["room_type", "neighbourhood_cleansed"]
+TAMANO = ["accommodates", "bathrooms", "bedrooms", "beds"]
+RESTO = [c for c in NUMERICAS if c not in TAMANO]
+
+indices_train, indices_test = next(
+    GroupShuffleSplit(n_splits=1, test_size=0.25, random_state=0)
+    .split(anuncios, groups=anuncios["host_id"]))
+train_a = anuncios.iloc[indices_train]
+test_a = anuncios.iloc[indices_test]
+y_train_a = train_a["price"].to_numpy()
+y_test_a = test_a["price"].to_numpy()
+grupos_a = train_a["host_id"].to_numpy()
+
+
+def mse(y_pred, y):
+    return float(np.mean((np.asarray(y_pred) - np.asarray(y)) ** 2))
+
+
+print(f"train {len(train_a)} anuncios, test {len(test_a)} anuncios")
+```
+
+```{python}
+#---
+class Recortador(BaseEstimator, TransformerMixin):          # <1>
+    """Recorta cada columna al percentil 99 estimado en fit."""
+
+    def fit(self, X, y=None):
+        self.limites_ = np.nanquantile(np.asarray(X, dtype=float),
+                                       0.99, axis=0)
+        return self
+
+    def transform(self, X):
+        return np.minimum(np.asarray(X, dtype=float), self.limites_)
+
+
+def codificador():
+    return OneHotEncoder(drop="first", min_frequency=30,
+                         handle_unknown="infrequent_if_exist",
+                         sparse_output=False)
+#---
+```
+
+1. Las dos piezas son las del capítulo 5, repetidas aquí para que el cuaderno sea autónomo: el recortador y el codificador con `min_frequency=30`.
+
+Para medir el efecto de la complejidad sin cambiar nada más, una única función construye el
+*pipeline* completo a partir del grado que se le pide.
+
+```{python}
+#---
+def pipeline_polinomio(grado, recorte=True):                # <1>
+    tamano = [("recortar", Recortador())] if recorte else []
+    tamano += [("imputar", SimpleImputer(strategy="median")),
+               ("expandir", PolynomialFeatures(grado,
+                                               include_bias=False)),
+               ("escalar", StandardScaler())]               # <2>
+
+    otras = [("recortar", Recortador())] if recorte else []
+    otras += [("imputar", SimpleImputer(strategy="median",
+                                        add_indicator=True)),
+              ("escalar", StandardScaler())]
+
+    preparar = ColumnTransformer([
+        ("tam", Pipeline(tamano), TAMANO),
+        ("faltan", MissingIndicator(), TAMANO),             # <3>
+        ("otras", Pipeline(otras), RESTO),
+        ("cat", codificador(), CATEGORICAS)])
+    return Pipeline([("preparar", preparar),
+                     ("modelo", LinearRegression())])
+
+
+candidatos = {
+    "grado 1 (capítulo 5)": pipeline_polinomio(1),
+    "grado 2": pipeline_polinomio(2),
+    "grado 4": pipeline_polinomio(4),
+    "grado 2 sin recortar": pipeline_polinomio(2, recorte=False),  # <4>
+}
+
+particion = GroupKFold(n_splits=5)
+
+bloques_a = {}
+for nombre, modelo in candidatos.items():
+    riesgos = []
+    for i_ajuste, i_val in particion.split(train_a, y_train_a,
+                                           groups=grupos_a):
+        modelo.fit(train_a.iloc[i_ajuste], y_train_a[i_ajuste])
+        riesgos.append(mse(modelo.predict(train_a.iloc[i_val]),
+                           y_train_a[i_val]))
+    bloques_a[nombre] = np.array(riesgos)
+
+referencia = bloques_a["grado 1 (capítulo 5)"]               # <5>
+print(f"{'candidato':24s} {'cols':>5} {'CV(5)':>9} "
+      f"{'diferencia emparejada':>24}")
+for nombre, modelo in candidatos.items():
+    columnas = (modelo.fit(train_a, y_train_a)
+                .named_steps["preparar"].transform(train_a).shape[1])
+    r = bloques_a[nombre]
+    if nombre == "grado 1 (capítulo 5)":
+        resumen = "referencia"
+    else:
+        d = r - referencia
+        ee = d.std(ddof=1) / np.sqrt(5)
+        resumen = f"{d.mean():+.1f} ± {ee:.1f}"
+    print(f"{nombre:24s} {columnas:5d} {r.mean():9.1f} {resumen:>24}")
+#---
+```
+
+1. Todos los candidatos pasan por la misma preparación y se diferencian solo en el grado, que es aquí el parámetro de complejidad. `PolynomialFeatures` es la herramienta encargada de generar esta complejidad geométrica: toma las variables originales y crea automáticamente nuevas columnas con sus potencias y productos cruzados hasta el grado indicado (por ejemplo, añadiendo el cuadrado del número de camas o multiplicando el número de baños por el de habitaciones). Con grado 1 el paso polinómico no hace nada, así que ese candidato es el modelo exacto que entregó el capítulo 5.
+2. `PolynomialFeatures` va después del imputador, porque si recibiera las indicadoras de ausencia elevaría al cuadrado columnas de ceros y unos, que son iguales a su cuadrado, y la matriz de diseño perdería rango. Y va antes del escalador, para que las columnas nuevas generadas (que pueden alcanzar valores enormes) entren en la misma escala que las demás.
+3. Por eso las indicadoras de las variables de tamaño se añaden en una rama aparte, que no pasa por el paso polinómico.
+4. El candidato de contraste: el mismo grado 2, pero sin el recorte al percentil 99 del capítulo 5.
+5. La comparación es la diferencia emparejada de @def-diferencia-emparejada.
+
+La tabla dice tres cosas.
+
+1. **Algo de flexibilidad baja el sesgo.** El grado 2 añade diez columnas, cuatro cuadrados y
+   seis productos entre pares de variables de tamaño, que son las interacciones de la sección
+   segunda. El riesgo de validación baja $192.1\pm65.5$, casi tres
+   errores típicos: sobre $7096.7$ es una mejora del 3 %, y dice que el modelo lineal del
+   capítulo 5 tenía algo de sesgo por resolver.
+2. **Más flexibilidad se paga en la precisión de la medición.** El grado 4 necesita 153
+   columnas y deja el riesgo en $7927.6$, con una diferencia de $+830.9\pm947.1$. El error
+   típico emparejado se ha multiplicado por catorce respecto de la fila anterior, y con cinco
+   bloques eso deja la comparación sin veredicto: no se puede afirmar que empeore, y tampoco
+   hay ningún indicio de que mejore. La rama derecha de la curva en U no aparece aquí como un
+   riesgo alto y claro, sino como una estimación que se vuelve demasiado imprecisa para
+   decidir.
+3. **La preparación de los datos y la clase de hipótesis no son decisiones independientes.**
+   El mismo grado 2, sin el recorte al percentil 99, deja el riesgo en $10\,229.9$, un 44 %
+   peor que la referencia. Elevar al cuadrado una columna que llega a 167 camas produce
+   valores de otro orden de magnitud, y el ajuste se va detrás de ellos. Su error típico
+   emparejado, $1823.8$, es el mayor de la tabla: el candidato no es peor de forma estable,
+   es inestable de un bloque a otro.
+
+
+```{python}
+#---
+elegido = min(bloques_a, key=lambda k: bloques_a[k].mean())
+final = candidatos[elegido].fit(train_a, y_train_a)
+base = candidatos["grado 1 (capítulo 5)"].fit(train_a, y_train_a)
+
+perdidas = (final.predict(test_a) - y_test_a) ** 2               # <1>
+perdidas_base = (base.predict(test_a) - y_test_a) ** 2
+d = perdidas - perdidas_base
+
+print(f"elegido por CV(5): {elegido}")
+print(f"{'riesgo en test':22s} {perdidas.mean():8.1f} ± "
+      f"{perdidas.std(ddof=1) / np.sqrt(len(perdidas)):5.1f}"
+      f"   RMSE {np.sqrt(perdidas.mean()):6.2f} euros")
+print(f"{'el del capítulo 5':22s} {perdidas_base.mean():8.1f} ± "
+      f"{perdidas_base.std(ddof=1) / np.sqrt(len(perdidas_base)):5.1f}"
+      f"   RMSE {np.sqrt(perdidas_base.mean()):6.2f} euros")
+print(f"diferencia emparejada: {d.mean():+.1f} ± "
+      f"{d.std(ddof=1) / np.sqrt(len(d)):.1f}")
+#---
+```
+
+La validación cruzada elige el grado 2, y el test se abre una vez para medirlo. En esa misma apertura se mide también el modelo del capítulo 5, porque las dos predicciones caen
+sobre los mismos 3784 anuncios y eso permite comparar emparejando; ninguno de los dos candidatos
+se ha elegido mirando el test.
+
+El elegido comete un $\RMSE$ de $80.68$ euros frente a los $82.39$ del capítulo 5. Son $1.7$
+euros sobre una mediana de 124. Los dos modelos se evalúan sobre los mismos 3784 anuncios, así
+que se emparejan igual que en @sec-comparar, con la observación en lugar del bloque como unidad:
+la diferencia emparejada es $-279.6\pm64.5$, más de cuatro errores típicos. El error típico del
+riesgo de cada modelo por separado, unos $570$, no es el que corresponde. La mejora es pequeña y
+es real.
+
+El balance del capítulo es el siguiente. Sabemos construir clases de hipótesis tan flexibles como queramos; hemos demostrado que el error se descompone en ruido, sesgo y varianza; y hemos comprobado cómo la varianza se dispara con la complejidad hasta arruinar el modelo. También hemos aprendido la regla de oro: más datos curan la varianza, pero no el sesgo. Por tanto, ante un resultado insuficiente, nuestro primer paso será siempre diagnosticar en qué rama de la curva en U nos encontramos.
+
+Lo que aún nos falta es un mecanismo para conservar la flexibilidad sin pagar el altísimo precio de la varianza. Hasta ahora, nuestra única forma de estabilizar el algoritmo ha sido amputar características; es decir, retroceder a una clase de hipótesis más pequeña y rígida. El próximo capítulo introduce la gran alternativa a esta renuncia.
+
+## Ejercicios
+
+::: {#exr-base-local}
+## Otra base de características
+
+::: {.nuevo}
+Las potencias no son la única forma de construir características. Otra es colocar gaussianas
+sobre el recorrido de $x$,
+
+$$
+\basis_j(x)=\exp\Bigl(-\frac{(x-c_j)^2}{2h^2}\Bigr),
+$$
+
+con centros $c_1,\ldots,c_{\nbasis}$ repartidos por él y una anchura $h$ común.
+
+a. Construye la matriz de características con ocho centros equiespaciados en $[0,2]$ y
+   $h=0.25$, ajusta el modelo sobre las treinta y seis observaciones del capítulo y dibuja la
+   curva junto a la señal.
+b. Repite con $h=0.6$ y di cuál de los dos términos de @thm-descomposicion que dependen del
+   modelo crece. Repite después con $h=0.05$ y explica por qué con treinta y seis
+   observaciones la descomposición no se puede leer; rehazla con $\nobs=300$.
+c. Razona por qué $h$ es un parámetro de complejidad aunque el número de características no
+   cambie.
+:::
+:::
+
+::: {#exr-descomposicion-simulada}
+## Comprobar la descomposición
+
+El capítulo calcula los tres términos de @eq-descomposicion por separado y afirma que suman
+el riesgo esperado.
+
+a. [El capítulo comprueba la identidad con las mismas dos mil muestras en los dos caminos, y
+   por eso los dos números coinciden hasta el último decimal. Explica por qué esa coincidencia
+   es algebraica y no estadística, y qué comprobación haría falta para que fuera
+   estadística.]{.nuevo}
+b. Repite [la tabla]{.nuevo} con doscientas repeticiones en lugar de dos mil y explica qué
+   término se estima peor. [Estima la varianza del grado 9 con tres semillas distintas y di hasta qué cifra se
+   puede leer.]{.nuevo}
+c. Comprueba que el término de ruido no cambia al variar el grado, y di qué línea del código
+   lo garantiza por construcción.
+:::
+
+::: {#exr-cv-recupera-el-minimo}
+## Cuántas observaciones necesita la validación cruzada
+
+Con una muestra de [treinta y seis]{.nuevo} observaciones, la validación cruzada del capítulo no
+distingue los grados 3 a 8 y su mínimo cae en el [8]{.nuevo}.
+
+a. Repite la tabla de validación cruzada con $\nobs=100$ y con $\nobs=400$ y anota en cada
+   caso el grado del mínimo.
+b. Compara en cada caso el error típico entre bloques con la diferencia entre el grado 3 y
+   el grado 7 del riesgo esperado. Explica la relación con lo que observas en a.
+c. Repite la tabla con $\nobs=30$ y diez semillas distintas, y cuenta cuántas veces el
+   mínimo cae en cada grado. Relaciona la dispersión con @prp-minimo-sesgado.
+:::
+
+::: {#exr-interacciones-dirigidas}
+## Elegir interacciones con un motivo
+
+::: {.nuevo}
+El grado 2 del caso práctico cruza las variables de tamaño entre sí, pero no con las
+categóricas. La interacción de @fig-interaccion, la que hace que una plaza más valga distinto
+en una vivienda completa y en una habitación privada, no está en ninguno de los cuatro
+candidatos.
+
+a. Añade un candidato que multiplique las cuatro variables de tamaño por las indicadoras del
+   tipo de habitación, y mide su estimación por validación cruzada. El cruce tiene que ser un
+   transformador dentro del *pipeline*, no una columna añadida a la tabla, para que sus
+   medianas y sus percentiles se estimen en cada bloque: es la regla del capítulo 5.
+b. Añade otro que cruce con el distrito en lugar de con el tipo de habitación, cuenta cuántas
+   columnas produce y explica el resultado con la descomposición.
+c. Un compañero propone probar todos los cruces posibles de una variable numérica por una
+   categórica y quedarse con el mejor. Di qué objeción tiene ese plan y qué habría
+   que hacer en su lugar.
+:::
+:::

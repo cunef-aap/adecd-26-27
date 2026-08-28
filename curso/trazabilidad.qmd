@@ -1,47 +1,58 @@
 # Trazabilidad con la guía docente {.unnumbered}
 
-Correspondencia entre el temario oficial de G244, los resultados de aprendizaje y las
-semanas de este curso. Sirve para dos cosas: que cualquier revisor pueda comprobar la
-cobertura, y que la pregunta *"¿por qué tantas demostraciones?"* tenga respuesta escrita
-**H1 y H4 la piden literalmente**.
+La estructura del curso amplía un núcleo de fundamentos de aprendizaje automático con los
+contenidos prácticos y metodológicos exigidos por la guía docente de G244.
 
 ## Temario
 
-| Programa oficial | Semanas |
+| Programa oficial | Desarrollo en el curso |
 |---|---|
-| T1 · Conceptos básicos de aprendizaje automático | 1, 2 |
-| T1 · Estado del arte | 1 (breve), **15** (completo) |
-| T2 · Análisis y tratamiento de datos | **5** |
-| T2 · Reducción de dimensiones y selección de variables | 8, **9** |
-| T2 · Validación y métricas de evaluación | **6**, 7 |
-| T3 · Descenso de gradiente | **3**, 4, 12 |
-| T3 · Métodos lineales | 2, **4**, 8, 12 |
-| T3 · Métodos no lineales | **10**, 11 |
-| T3 · Métodos basados en reglas | **13** |
-| T4 · Librerías de programación | transversal (los 15 laboratorios); consolidado en 7 y 14 |
-| T4 · Casos de uso y aplicaciones | 13, **14**, 15 |
-| + Agentes de IA para implementar modelos | 9 (taller I con la higiene), 14 (taller II), proyecto |
+| T1 · Conceptos básicos de aprendizaje automático | capítulos 1-3 |
+| T1 · Estado del arte | [guía del proyecto](proyecto.qmd), sección de cierre, y repaso de la semana 15 |
+| T2 · Análisis y tratamiento de datos | capítulo 5 y caso del proyecto |
+| T2 · Reducción de dimensiones y selección de variables | capítulos 7-8 |
+| T2 · Validación y métricas de evaluación | capítulo 4; transversal desde el 5 |
+| T3 · Descenso de gradiente | capítulo 2 y aplicación en el 3 |
+| T3 · Métodos lineales | capítulos 1-3 y 7 |
+| T3 · Métodos no lineales | capítulos 6 y 9 |
+| T3 · Métodos basados en reglas | capítulo 9 |
+| T4 · Librerías de programación | laboratorios de todos los capítulos; síntesis en el proyecto |
+| T4 · Casos de uso y aplicaciones | laboratorios y [proyecto](proyecto.qmd) |
+| Agentes de IA para implementar modelos | talleres de las semanas 9 y 14, [proyecto](proyecto.qmd) y [política de IA](politica-ia.qmd) |
 
-Dos reordenaciones deliberadas: *estado del arte* se cierra en la semana 15, cuando ya
-tienen las herramientas para entenderlo; y el Tema 4 se imparte como **pista paralela de
-laboratorio** en lugar de como bloque final.
+Los modelos lineales generalizados no constituyen un capítulo propio. Se presentan al final
+como extensión del principio distribución generadora $\rightarrow$ pérdida, sin entrar en
+clasificación ni añadir resultados evaluables.
 
 ## Resultados de aprendizaje
 
-| Resultado | Dónde |
+| Resultado | Dónde se trabaja principalmente |
 |---|---|
-| C1 · fundamentos matemáticos y estadísticos | capítulos 1-6, 8, 10-12, 15 |
-| C6 · análisis exploratorio preliminar | capítulos 1, 7 |
-| H1 · álgebra lineal, cálculo, estadística, cálculo numérico | capítulos 4, 5, 6, 11, 12 |
-| H4 · modelos de probabilidad y estadística | capítulos 2, 3, 10, 14, 15 |
-| H8 · métodos de aprendizaje aplicados a conjuntos de datos | laboratorios 7-15, proyecto |
-| CO1 · pensamiento crítico sobre los datos | capítulos 1, 7, 8, 15 |
-| CO3 · extracción de información de conjuntos heterogéneos | capítulos 7, 12, proyecto |
+| C1 · fundamentos matemáticos y estadísticos | capítulos 1-4 y 6-8 |
+| C6 · análisis exploratorio preliminar | capítulo 5 y proyecto |
+| H1 · álgebra lineal, cálculo, estadística y cálculo numérico | capítulos 2-4 y 6-8 |
+| H4 · modelos de probabilidad y estadística | capítulos 1-4 y 6 |
+| H8 · métodos de aprendizaje aplicados a datos | laboratorios 3-9 y proyecto |
+| CO1 · decisiones críticas de almacenamiento, preprocesamiento y análisis | capítulos 4-5 y proyecto |
+| CO3 · extracción de información de datos homogéneos y heterogéneos | capítulos 5 y 8; proyecto |
+
+## Decisiones de alcance
+
+- La convexidad se introduce localmente para justificar mínimos globales; no ocupa un
+  capítulo autónomo.
+- La forma matricial aparece al generalizar el modelo lineal a muchas variables; no se
+  enseña como fin en sí misma.
+- Validación cruzada y prevención de fugas preceden a la ingeniería de características y a
+  la selección de modelos.
+- Los árboles se limitan a regresión, criterio de división y control de complejidad. Los
+  ensambles solo se sitúan en el mapa final.
+- Clasificación, inferencia sobre coeficientes, redes neuronales y teoría avanzada de
+  optimización quedan fuera del temario.
 
 ## ODS
 
-| ODS | Dónde |
+| ODS | Contribución |
 |---|---|
-| 4 · Educación de calidad | materiales abiertos, cuadernos reproducibles |
-| 8 · Trabajo decente y crecimiento económico | casos de uso de negocio (capítulos 7, 14, 15) |
-| 9 · Industria, innovación e infraestructura | capítulo 15: estado del arte y límites |
+| 4 · Educación de calidad | materiales abiertos, cuadernos reproducibles y evaluación formativa |
+| 8 · Trabajo decente y crecimiento económico | casos de predicción aplicados a decisiones de negocio |
+| 9 · Industria, innovación e infraestructura | implementación reproducible y uso crítico de herramientas de IA |

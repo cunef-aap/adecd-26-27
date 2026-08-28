@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -47,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-56210221a811a62f3964318d438e7f14.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -89,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -121,19 +185,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bienvenida</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/00-presentacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Presentación</span></a>
+ <span class="menu-text">Presentación de la asignatura</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Plantear el problema</span></a>
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -141,20 +199,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/01-datos-y-modelos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos, patrones y modelos</span></span></a>
+  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/02-senal-ruido.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Señal y ruido</span></span></a>
+  <a href="../capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/03-verosimilitud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Verosimilitud y máxima verosimilitud</span></span></a>
+  <a href="../capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -162,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Minimizar</span></a>
+ <span class="menu-text">Evaluación y datos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,20 +228,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/04-convexidad.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Convexidad y riesgo empírico</span></span></a>
+  <a href="../capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/05-gradientes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gradientes y descenso de gradiente</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/06-forma-matricial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Forma matricial y ecuaciones normales</span></span></a>
+  <a href="../capitulos/05-preparacion-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparar datos sin contaminar la evaluación</span></span></a>
   </div>
 </li>
       </ul>
@@ -191,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Del dato crudo al modelo</span></a>
+ <span class="menu-text">Complejidad y generalización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -199,14 +251,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/07-datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">De los datos crudos a la matriz de diseño</span></span></a>
+  <a href="../capitulos/06-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Complejidad, sesgo y varianza</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/08-validacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Validación y métricas</span></span></a>
+  <a href="../capitulos/07-regularizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Regularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/08-seleccion-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
   </div>
 </li>
       </ul>
@@ -214,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Complejidad y regularización</span></a>
+ <span class="menu-text">Otros métodos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -222,26 +280,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../capitulos/09-caracteristicas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Mapas de características</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/10-sesgo-varianza.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Sesgo, varianza y ruido</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/11-regularizacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularización: ridge, lasso y el prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/12-seleccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Selección de variables y reducción de dimensión</span></span></a>
+  <a href="../capitulos/09-arboles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Árboles de regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,52 +289,12 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Más allá del ruido gaussiano</span></a>
+ <span class="menu-text">Hojas de problemas</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/13-arboles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Métodos basados en reglas: árboles de regresión</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/14-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cuando el ruido no es gaussiano: GLM</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cierre</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../capitulos/15-cierre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">De la predicción a la decisión</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Problemas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../problemas/index.html" class="sidebar-item-text sidebar-link">
@@ -349,27 +349,27 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Hoja 8</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 9</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/guia.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Guía de la asignatura</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../evaluacion/ejercicios-tipo-examen.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ejercicios tipo examen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -392,6 +392,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../curso/proyecto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto: un flujo completo de predicción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
   </div>
@@ -404,14 +410,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Glosario y notación</span></a>
+  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Índice de resultados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../curso/indice-resultados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Índice de resultados</span></a>
+  <a href="../curso/glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario y notación</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -432,18 +438,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#conceptual" id="toc-conceptual" class="nav-link active" data-scroll-target="#conceptual">1. Conceptual</a></li>
-  <li><a href="#demostración" id="toc-demostración" class="nav-link" data-scroll-target="#demostración">2. Demostración</a></li>
-  <li><a href="#cálculo-a-mano" id="toc-cálculo-a-mano" class="nav-link" data-scroll-target="#cálculo-a-mano">3. Cálculo a mano</a></li>
-  <li><a href="#encuentra-los-errores" id="toc-encuentra-los-errores" class="nav-link" data-scroll-target="#encuentra-los-errores">4. Encuentra los errores</a></li>
-  <li><a href="#ampliación" id="toc-ampliación" class="nav-link" data-scroll-target="#ampliación">5. Ampliación</a></li>
+  <li><a href="#sec-h6-a" id="toc-sec-h6-a" class="nav-link active" data-scroll-target="#sec-h6-a">1. Conceptual</a></li>
+  <li><a href="#sec-h6-b" id="toc-sec-h6-b" class="nav-link" data-scroll-target="#sec-h6-b">2. Demostración</a></li>
+  <li><a href="#sec-h6-c" id="toc-sec-h6-c" class="nav-link" data-scroll-target="#sec-h6-c">3. Cálculo a mano</a></li>
+  <li><a href="#sec-h6-d" id="toc-sec-h6-d" class="nav-link" data-scroll-target="#sec-h6-d">4. Encuentra los errores</a></li>
+  <li><a href="#sec-h6-e" id="toc-sec-h6-e" class="nav-link" data-scroll-target="#sec-h6-e">5. Completar código</a></li>
+  <li><a href="#sec-h6-f" id="toc-sec-h6-f" class="nav-link" data-scroll-target="#sec-h6-f">6. Ampliación</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/index.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Hoja 6</h1>
 </div>
@@ -462,44 +469,463 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Capítulo 6, Forma matricial y ecuaciones normales. Los cuatro primeros ejercicios son nucleares y tienen la estructura del examen; el quinto es de ampliación.</p>
-<div class="callout callout-style-simple callout-warning no-icon">
+<p>Hoja del capítulo 6, Complejidad, sesgo y varianza. El capítulo ocupa dos semanas, así que la hoja se reparte entre las dos sesiones de problemas, y cada bloque tiene ejercicios de las dos mitades. Los cuatro primeros bloques tienen la estructura del examen.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sesión</th>
+<th>Ejercicios</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Primera, características y modelos no lineales</td>
+<td><a href="#exr-h6-conceptual" class="quarto-xref">Ejercicio&nbsp;<span>1</span></a>, <a href="#exr-h6-caracteristicas" class="quarto-xref">Ejercicio&nbsp;<span>2</span></a>, <a href="#exr-h6-phi" class="quarto-xref">Ejercicio&nbsp;<span>4</span></a>, <a href="#exr-h6-monomios-mano" class="quarto-xref">Ejercicio&nbsp;<span>6</span></a>, <a href="#exr-h6-completar-polinomio" class="quarto-xref">Ejercicio&nbsp;<span>11</span></a></td>
+</tr>
+<tr class="even">
+<td>Segunda, sesgo, varianza y curvas de aprendizaje</td>
+<td>los demás</td>
+</tr>
+</tbody>
+</table>
+<section id="sec-h6-a" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-a">1. Conceptual</h2>
+<p><em>Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.</em></p>
+<div id="exr-h6-conceptual" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> &nbsp;</p>
+<ol type="a">
+<li><strong>Explica</strong> por qué el modelo de <a href="../capitulos/06-complejidad.html#eq-modelo-caracteristicas" class="quarto-xref">Ecuación&nbsp;<span>6.1</span></a> es no lineal en la entrada y a la vez lineal en los parámetros, y <strong>di</strong> qué consecuencia tiene eso para el algoritmo de ajuste.</li>
+<li><strong>Razona</strong> cuál de los dos términos de <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> que dependen del modelo se reduce al ajustar con más observaciones, y cuál no.</li>
+<li><strong>Define</strong> el modelo medio de <a href="../capitulos/06-complejidad.html#eq-modelo-medio" class="quarto-xref">Ecuación&nbsp;<span>6.4</span></a> y <strong>razona</strong> por qué no se puede calcular a partir de una sola muestra.</li>
+<li><strong>Razona</strong> por qué el riesgo medido sobre las observaciones con las que se ajusta no sube nunca al subir el grado, y por qué el riesgo verdadero acaba subiendo.</li>
+<li><strong>Explica</strong> por qué la validación cruzada del capítulo no separa los grados 3 a 8 con treinta y seis observaciones, y <strong>di</strong> qué criterio evita entregar el grado 8 y qué grado entrega en su lugar.</li>
+</ol>
+</div>
+<div id="exr-h6-caracteristicas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> El caso práctico eleva a distintos grados las cuatro variables continuas de tamaño.</p>
+<ol type="a">
+<li><strong>Explica</strong> qué columnas añade el grado 2 sobre esas cuatro variables y por qué seis de ellas son interacciones.</li>
+<li><strong>Define</strong> interacción y <strong>di</strong> qué derivada la caracteriza en el modelo de <a href="../capitulos/06-complejidad.html#fig-interaccion" class="quarto-xref">Figura&nbsp;<span>6.4</span></a>.</li>
+<li><strong>Razona</strong> con <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> por qué subir el grado puede aumentar el riesgo esperado, y <strong>di</strong> qué tiene que ver el número de columnas con eso.</li>
+<li><strong>Analiza</strong> por qué el sesgo al cuadrado del procedimiento no tiene que bajar al subir el grado, aunque la clase de hipótesis sea mayor. La tabla del capítulo pasa de <span class="math inline">\(0.0046\)</span> en el grado 3 a <span class="math inline">\(0.0052\)</span> en el grado 4.</li>
+</ol>
+</div>
+</section>
+<section id="sec-h6-b" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-b">2. Demostración</h2>
+<p><em>Bloque B. Sale del <a href="../curso/indice-resultados.html">índice de resultados</a>, así que puede caer tal cual en el examen.</em></p>
+<div id="exr-h6-descomposicion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Este ejercicio demuestra <a href="../capitulos/06-complejidad.html#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>. Se fija un punto <span class="math inline">\(\mathbf{x}\)</span>, se escribe <span class="math inline">\(Y=f(\mathbf{x})+\varepsilon\)</span> para la observación futura y se abrevia <span class="math inline">\(\hat{f}=\hat{f}_{\mathcal{D}}(\mathbf{x})\)</span>, <span class="math inline">\(f=f(\mathbf{x})\)</span> y <span class="math inline">\(\bar{\hat{f}}=\bar{\hat{f}}(\mathbf{x})\)</span>. Los cuatro supuestos son los que enumera el capítulo antes del teorema.</p>
+<ol type="a">
+<li><strong>Demuestra</strong> que <span class="math inline">\(Y-\hat{f}=\varepsilon+(f-\bar{\hat{f}})+(\bar{\hat{f}}-\hat{f})\)</span> y <strong>calcula</strong> el cuadrado de esa suma, separando los tres cuadrados de los tres productos cruzados.</li>
+<li><strong>Demuestra</strong> que los tres productos cruzados tienen esperanza cero bajo <span class="math inline">\(\mathbb{E}_{\mathcal{D},\varepsilon}\!\left[ \cdot \right]\)</span>, y <strong>di</strong> para cada uno cuál de los cuatro supuestos es el que se usa.</li>
+<li><strong>Calcula</strong> la esperanza de los tres cuadrados que quedan y <strong>di</strong> por qué <span class="math inline">\(\mathbb{E}_{\varepsilon}\!\left[ \varepsilon^2 \right]=\sigma^2\)</span> y no una cantidad que dependa de <span class="math inline">\(\mathbf{x}\)</span>.</li>
+<li><strong>Demuestra</strong> <a href="../capitulos/06-complejidad.html#eq-descomposicion-global" class="quarto-xref">Ecuación&nbsp;<span>6.6</span></a> promediando <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> sobre la distribución marginal de <span class="math inline">\(X\)</span>, e <strong>identifica</strong> el supuesto que hace que el término del ruido siga siendo un único número.</li>
+<li><strong>Analiza</strong> qué paso de la demostración deja de valer si el par <span class="math inline">\((\mathbf{x},Y)\)</span> pertenece a la muestra <span class="math inline">\(\mathcal{D}\)</span>, y <strong>comprueba</strong> que el riesgo en train del grado 9 del capítulo queda por debajo del suelo <span class="math inline">\(\sigma^2\)</span> que <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> impone al error esperado sobre una observación nueva.</li>
+</ol>
+</div>
+<div id="exr-h6-phi" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Todo el capítulo se apoya en que el modelo de <a href="../capitulos/06-complejidad.html#eq-modelo-caracteristicas" class="quarto-xref">Ecuación&nbsp;<span>6.1</span></a> es el del capítulo 3 con <span class="math inline">\(\boldsymbol{\Phi}\)</span> en lugar de <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<ol type="a">
+<li><strong>Demuestra</strong> <a href="../capitulos/06-complejidad.html#prp-todo-sirve" class="quarto-xref">Proposición&nbsp;<span>6.1</span></a>: que el riesgo empírico del modelo de <a href="../capitulos/06-complejidad.html#eq-modelo-caracteristicas" class="quarto-xref">Ecuación&nbsp;<span>6.1</span></a> es el de <a href="../capitulos/03-modelos-lineales.html#prp-riesgo-matricial" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a> con <span class="math inline">\(\boldsymbol{\Phi}\)</span> en el lugar de <span class="math inline">\(\mathbf{X}\)</span>, y que por tanto valen <a href="../capitulos/03-modelos-lineales.html#thm-gradiente-vectorial" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a> y <a href="../capitulos/03-modelos-lineales.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>. <strong>Di</strong> qué propiedad del mapa <span class="math inline">\(\boldsymbol{\varphi}\)</span> es la que hace funcionar el argumento.</li>
+<li><strong>Demuestra</strong> que, con las características de <a href="../capitulos/06-complejidad.html#eq-caracteristicas-polinomicas" class="quarto-xref">Ecuación&nbsp;<span>6.3</span></a> de grado <span class="math inline">\(g\)</span>, la matriz <span class="math inline">\(\boldsymbol{\Phi}\)</span> tiene rango completo por columnas si y solo si entre las observaciones hay al menos <span class="math inline">\(g+1\)</span> valores distintos de <span class="math inline">\(x\)</span>.</li>
+<li>Sea <span class="math inline">\(\boldsymbol{\Phi}\)</span> una matriz de características en la que una columna es una indicadora <span class="math inline">\(\mathbf m\)</span> de ceros y unos y otra columna es su cuadrado. <strong>Demuestra</strong> que <span class="math inline">\(\boldsymbol{\Phi}\)</span> no tiene rango completo por columnas exhibiendo un vector no nulo del núcleo, y <strong>di</strong> qué le ocurre entonces al ajuste según <a href="../capitulos/03-modelos-lineales.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>.</li>
+<li><strong>Explica</strong> con el apartado anterior por qué el paso polinómico del caso práctico va en una rama que no recibe las indicadoras de ausencia, y <strong>di</strong> por qué además va después del imputador.</li>
+</ol>
+</div>
+</section>
+<section id="sec-h6-c" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-c">3. Cálculo a mano</h2>
+<p><em>Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.</em></p>
+<div id="exr-h6-descomposicion-mano" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Un procedimiento de ajuste se aplica a cuatro muestras de entrenamiento y cada uno de los cuatro modelos resultantes se evalúa en tres puntos de la rejilla. La tabla recoge las doce predicciones y los tres valores de la señal. El ruido tiene varianza <span class="math inline">\(\sigma^2=1\)</span>, las cuatro muestras se tratan como si fueran todas las posibles y equiprobables, de modo que <span class="math inline">\(\mathbb{E}_{\mathcal{D}}\!\left[ \cdot \right]\)</span> es el promedio de las cuatro filas, y los tres puntos se toman equiprobables bajo la distribución de <span class="math inline">\(X\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;"><span class="math inline">\(x_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x_3\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>muestra 1</td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-5\)</span></td>
+</tr>
+<tr class="even">
+<td>muestra 2</td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-5\)</span></td>
+</tr>
+<tr class="odd">
+<td>muestra 3</td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-5\)</span></td>
+</tr>
+<tr class="even">
+<td>muestra 4</td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-1\)</span></td>
+</tr>
+<tr class="odd">
+<td>señal <span class="math inline">\(f\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-3\)</span></td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li><strong>Calcula</strong> el modelo medio de <a href="../capitulos/06-complejidad.html#eq-modelo-medio" class="quarto-xref">Ecuación&nbsp;<span>6.4</span></a> en los tres puntos.</li>
+<li><strong>Calcula</strong> el sesgo al cuadrado y la varianza en cada punto, y con <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> el error cuadrático esperado en cada uno de los tres.</li>
+<li><strong>Comprueba</strong> en cada punto que ese número coincide con el promedio de los cuatro errores cuadráticos contra la señal más <span class="math inline">\(\sigma^2\)</span>, y <strong>promedia</strong> después los tres términos sobre la rejilla para obtener el riesgo esperado de <a href="../capitulos/06-complejidad.html#eq-descomposicion-global" class="quarto-xref">Ecuación&nbsp;<span>6.6</span></a>.</li>
+<li><strong>Compara</strong> ese riesgo esperado con el de la regla que predice <span class="math inline">\(0\)</span> en los tres puntos sea cual sea la muestra, y <strong>di</strong> cuánto sesgo al cuadrado ahorra el procedimiento de la tabla y cuánta varianza paga a cambio.</li>
+</ol>
+</div>
+<div id="exr-h6-monomios-mano" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Las características de <a href="../capitulos/06-complejidad.html#eq-caracteristicas-polinomicas" class="quarto-xref">Ecuación&nbsp;<span>6.3</span></a> con una sola variable predictora son las potencias. Con <span class="math inline">\(p\)</span> variables hay que contar además los productos: el número de monomios de grado menor o igual que <span class="math inline">\(g\)</span>, sin el término constante, es <span class="math inline">\(\binom{p+g}{g}-1\)</span>.</p>
+<ol type="a">
+<li><strong>Calcula</strong> ese número para <span class="math inline">\(p=2\)</span> y <span class="math inline">\(p=8\)</span>, con <span class="math inline">\(g=2\)</span> y con <span class="math inline">\(g=3\)</span>, y <strong>escribe</strong> los monomios del caso <span class="math inline">\(p=2\)</span>, <span class="math inline">\(g=2\)</span>.</li>
+<li><strong>Di</strong> cuántas columnas devuelve <code>PolynomialFeatures(2, include_bias=False)</code> sobre las cuatro variables de tamaño del caso práctico, <strong>separa</strong> las lineales, los cuadrados y los productos, y <strong>calcula</strong> cuántas añade respecto del grado 1.</li>
+<li>El preparador del caso práctico entrega 88 columnas con grado 1. <strong>Calcula</strong> cuántas entrega con grado 2 y con grado 4, y cuántos parámetros tiene el modelo lineal que va detrás en cada uno de los tres casos.</li>
+<li><strong>Descompón</strong> las 164 características del caso <span class="math inline">\(p=8\)</span>, <span class="math inline">\(g=3\)</span> en las de grado 1, las de grado 2 y las de grado 3, y <strong>razona</strong> con <a href="../capitulos/06-complejidad.html#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a> qué término empeora al pasar de 44 a 164 características con el mismo número de observaciones.</li>
+</ol>
+</div>
+<div id="exr-h6-emparejar-mano" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Tres candidatos de complejidad creciente se evalúan con la validación cruzada de <a href="../capitulos/04-evaluacion.html#def-validacion-cruzada" class="quarto-xref">Definición&nbsp;<span>4.5</span></a> sobre los mismos cinco bloques. La tabla da el riesgo de validación de cada bloque, en las mismas unidades para los tres.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>candidato</th>
+<th style="text-align: right;">bloque 1</th>
+<th style="text-align: right;">bloque 2</th>
+<th style="text-align: right;">bloque 3</th>
+<th style="text-align: right;">bloque 4</th>
+<th style="text-align: right;">bloque 5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>grado 1</td>
+<td style="text-align: right;"><span class="math inline">\(31\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(53\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(75\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(97\)</span></td>
+</tr>
+<tr class="even">
+<td>grado 3</td>
+<td style="text-align: right;"><span class="math inline">\(25\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(49\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(61\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(73\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(97\)</span></td>
+</tr>
+<tr class="odd">
+<td>grado 7</td>
+<td style="text-align: right;"><span class="math inline">\(30\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(50\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(60\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(70\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(90\)</span></td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li><strong>Calcula</strong> la estimación <span class="math inline">\(\mathrm{CV}\)</span> de <a href="../capitulos/04-evaluacion.html#eq-cv" class="quarto-xref">Ecuación&nbsp;<span>4.2</span></a> de cada candidato e <strong>identifica</strong> el que tiene el riesgo de validación más bajo.</li>
+<li><strong>Calcula</strong> la diferencia emparejada de <a href="../capitulos/04-evaluacion.html#def-diferencia-emparejada" class="quarto-xref">Definición&nbsp;<span>4.6</span></a> de los otros dos frente a él, con su error típico y con el cociente entre las dos cantidades.</li>
+<li><strong>Decide</strong> con la regla de un error típico (<a href="../capitulos/04-evaluacion.html#def-regla-un-error-tipico" class="quarto-xref">Definición&nbsp;<span>4.7</span></a>) qué candidato se entrega, y <strong>di</strong> qué dice el cociente del otro.</li>
+<li><strong>Calcula</strong> el error típico de la estimación de cada candidato por separado, a partir de la dispersión de sus cinco bloques, y <strong>explica</strong> qué decisión tomaría la misma regla con esos tres números.</li>
+</ol>
+</div>
+</section>
+<section id="sec-h6-d" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-d">4. Encuentra los errores</h2>
+<p><em>Bloque D. Se puntúa la justificación de cada error.</em></p>
+<div id="exr-h6-errores" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Este fragmento pretende medir los tres términos de <a href="../capitulos/06-complejidad.html#eq-descomposicion-global" class="quarto-xref">Ecuación&nbsp;<span>6.6</span></a> sobre el experimento simulado del capítulo. Tiene <strong>tres</strong> errores conceptuales. <strong>Identifícalos</strong> y <strong>explica</strong> qué consecuencia tiene cada uno sobre lo que el fragmento imprime y sobre la conclusión que saca.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.set_default_dtype(torch.float64)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>NOISE <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>rejilla <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">400</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> senal(x):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.sin(torch.pi <span class="op">*</span> x)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> caracteristicas(x, grado):</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack([x <span class="op">**</span> j <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(grado <span class="op">+</span> <span class="dv">1</span>)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> muchos_ajustes(grado, n<span class="op">=</span><span class="dv">36</span>, repeticiones<span class="op">=</span><span class="dv">2000</span>, semilla<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(semilla)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    predicciones <span class="op">=</span> torch.empty(repeticiones, <span class="bu">len</span>(rejilla))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(repeticiones):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        xr <span class="op">=</span> torch.rand(n) <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        yr <span class="op">=</span> senal(xr) <span class="op">+</span> NOISE <span class="op">*</span> torch.randn(n)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        w <span class="op">=</span> torch.linalg.lstsq(caracteristicas(xr, grado), yr).solution</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        predicciones[r] <span class="op">=</span> caracteristicas(rejilla, grado) <span class="op">@</span> w</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predicciones</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> descompone(grado, n<span class="op">=</span><span class="dv">36</span>):</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> muchos_ajustes(grado, n<span class="op">=</span>n)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    sesgo2 <span class="op">=</span> ((P <span class="op">-</span> senal(rejilla)) <span class="op">**</span> <span class="dv">2</span>).mean().item()</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    varianza <span class="op">=</span> P[<span class="dv">0</span>].var(unbiased<span class="op">=</span><span class="va">False</span>).item()</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sesgo2, varianza, NOISE <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> sesgo2 <span class="op">+</span> varianza</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> grado <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">9</span>):</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    sesgo2, varianza, total <span class="op">=</span> descompone(grado)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"grado </span><span class="sc">{</span>grado<span class="sc">}</span><span class="ss">: sesgo^2 </span><span class="sc">{</span>sesgo2<span class="sc">:.4f}</span><span class="ss">  varianza </span><span class="sc">{</span>varianza<span class="sc">:.4f}</span><span class="ss">"</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"  riesgo esperado </span><span class="sc">{</span>total<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"el sesgo^2 del grado 1 baja a "</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"</span><span class="sc">{</span>descompone(<span class="dv">1</span>, n<span class="op">=</span><span class="dv">3000</span>)[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss"> con n = 3000, asi que el sesgo "</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"de la recta se corrige con mas datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="exr-h6-errores-pipeline" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Este fragmento pretende elegir el grado del polinomio en los datos de Madrid y comparar el grado elegido con el modelo que entregó el capítulo 5. <code>Recortador</code>, <code>codificador</code>, <code>TAMANO</code>, <code>RESTO</code> y <code>CATEGORICAS</code> son los del capítulo, y <code>cargar_datos</code> devuelve el reparto por anfitrión. Tiene <strong>tres</strong> errores conceptuales. <strong>Identifícalos</strong> y <strong>explica</strong> qué consecuencia tiene cada uno.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures, StandardScaler</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>train_a, test_a, y_train, y_test <span class="op">=</span> cargar_datos()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pipeline_polinomio(grado):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    tamano <span class="op">=</span> [(<span class="st">"recortar"</span>, Recortador()),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              (<span class="st">"imputar"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                        add_indicator<span class="op">=</span><span class="va">True</span>)),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>              (<span class="st">"expandir"</span>, PolynomialFeatures(grado,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                              include_bias<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>              (<span class="st">"escalar"</span>, StandardScaler())]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    otras <span class="op">=</span> [(<span class="st">"recortar"</span>, Recortador()),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>             (<span class="st">"imputar"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                                       add_indicator<span class="op">=</span><span class="va">True</span>)),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>             (<span class="st">"escalar"</span>, StandardScaler())]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    preparar <span class="op">=</span> ColumnTransformer([</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"tam"</span>, Pipeline(tamano), TAMANO),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"otras"</span>, Pipeline(otras), RESTO),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"cat"</span>, codificador(), CATEGORICAS)])</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pipeline([(<span class="st">"preparar"</span>, preparar),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                     (<span class="st">"modelo"</span>, LinearRegression())])</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>perdidas <span class="op">=</span> {}</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> grado <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>):</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    modelo <span class="op">=</span> pipeline_polinomio(grado).fit(train_a, y_train)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    perdidas[grado] <span class="op">=</span> (modelo.predict(test_a) <span class="op">-</span> y_test) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"grado </span><span class="sc">{</span>grado<span class="sc">}</span><span class="ss">: riesgo en test </span><span class="sc">{</span>perdidas[grado]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>elegido <span class="op">=</span> <span class="bu">min</span>(perdidas, key<span class="op">=</span><span class="kw">lambda</span> g: perdidas[g].mean())</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"grado elegido: </span><span class="sc">{</span>elegido<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> grado <span class="kw">in</span> (elegido, <span class="dv">1</span>):</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> perdidas[grado]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    ee <span class="op">=</span> p.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(<span class="bu">len</span>(p))</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"grado </span><span class="sc">{</span>grado<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>p<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> ± </span><span class="sc">{</span>ee<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"los dos intervalos se solapan, asi que la mejora sobre el "</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"capitulo 5 no se distingue del ruido"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="sec-h6-e" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-e">5. Completar código</h2>
+<p><em>Bloque de laboratorio. En el examen puede aparecer una versión corta, con una o dos líneas que rellenar.</em></p>
+<div id="exr-h6-completar-descomposicion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> El experimento de <a href="../capitulos/06-complejidad.html#fig-variabilidad" class="quarto-xref">Figura&nbsp;<span>6.5</span></a> y la tabla que descompone <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> salen de estas dos funciones. Completa los seis huecos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>torch.set_default_dtype(torch.float64)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>NOISE <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>REPETICIONES <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>rejilla <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">400</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> senal(x):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.sin(torch.pi <span class="op">*</span> x)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> caracteristicas(x, grado):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack([x <span class="op">**</span> j <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(grado <span class="op">+</span> <span class="dv">1</span>)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> muchos_ajustes(grado, n<span class="op">=</span><span class="dv">36</span>, repeticiones<span class="op">=</span>REPETICIONES, semilla<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(semilla)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    predicciones <span class="op">=</span> torch.empty(repeticiones, <span class="bu">len</span>(rejilla))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(repeticiones):</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        xr <span class="op">=</span> torch.rand(n) <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        yr <span class="op">=</span> ...                     <span class="co"># (1) la respuesta con su ruido</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        w <span class="op">=</span> ...                      <span class="co"># (2) el ajuste de esta muestra</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        predicciones[r] <span class="op">=</span> ...        <span class="co"># (3) la curva sobre la rejilla</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predicciones</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> descompone(grado, n<span class="op">=</span><span class="dv">36</span>, repeticiones<span class="op">=</span>REPETICIONES, semilla<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> muchos_ajustes(grado, n<span class="op">=</span>n, repeticiones<span class="op">=</span>repeticiones,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                       semilla<span class="op">=</span>semilla)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    sesgo2 <span class="op">=</span> ...                     <span class="co"># (4) promediado sobre la rejilla</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    varianza <span class="op">=</span> ...                   <span class="co"># (5) divisor igual a repeticiones</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sesgo2, varianza, ...     <span class="co"># (6) el riesgo esperado</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="a">
+<li><strong>Identifica</strong> qué va en cada uno de los seis huecos y <strong>escribe</strong> el bloque completo.</li>
+<li><strong>Comprueba</strong> que para el grado 3 salen un sesgo al cuadrado de <span class="math inline">\(0.0046\)</span> y una varianza de <span class="math inline">\(0.0066\)</span>, y que para el grado 9 la varianza es <span class="math inline">\(3.1114\)</span>.</li>
+<li><strong>Razona</strong> por qué la varianza se calcula con <code>unbiased=False</code> y por qué el promedio sobre una rejilla regular de 400 puntos aproxima la esperanza sobre <span class="math inline">\(X\)</span> de <a href="../capitulos/06-complejidad.html#eq-descomposicion-global" class="quarto-xref">Ecuación&nbsp;<span>6.6</span></a>.</li>
+</ol>
+</div>
+<div id="exr-h6-completar-polinomio" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Esta es la función que construye los candidatos del caso práctico, sin el argumento que quita el recorte, junto con el bucle que estima su riesgo. <code>Recortador</code>, <code>codificador</code>, <code>TAMANO</code>, <code>RESTO</code>, <code>CATEGORICAS</code>, <code>train_a</code>, <code>y_train_a</code>, <code>grupos_a</code>, <code>mse</code> y <code>np</code> son los del capítulo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> MissingIndicator, SimpleImputer</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures, StandardScaler</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pipeline_polinomio(grado):</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    tamano <span class="op">=</span> [(<span class="st">"recortar"</span>, Recortador()),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>              ...]              <span class="co"># (1) imputar, expandir y escalar</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    otras <span class="op">=</span> [(<span class="st">"recortar"</span>, Recortador()),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>             (<span class="st">"imputar"</span>, ...),  <span class="co"># (2) mediana, con indicadora</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>             (<span class="st">"escalar"</span>, StandardScaler())]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    preparar <span class="op">=</span> ColumnTransformer([</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"tam"</span>, Pipeline(tamano), TAMANO),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"faltan"</span>, ..., TAMANO),        <span class="co"># (3)</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"otras"</span>, Pipeline(otras), RESTO),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"cat"</span>, codificador(), CATEGORICAS)])</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pipeline([(<span class="st">"preparar"</span>, preparar),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                     (<span class="st">"modelo"</span>, ...)])  <span class="co"># (4)</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>particion <span class="op">=</span> ...                         <span class="co"># (5) cinco bloques por grupos</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>riesgos <span class="op">=</span> []</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i_ajuste, i_val <span class="kw">in</span> particion.split(train_a, y_train_a,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                                       groups<span class="op">=</span>...):   <span class="co"># (6)</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    modelo <span class="op">=</span> pipeline_polinomio(<span class="dv">2</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    modelo.fit(train_a.iloc[i_ajuste], y_train_a[i_ajuste])</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    riesgos.append(mse(modelo.predict(train_a.iloc[i_val]),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                       y_train_a[i_val]))</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CV(5) del grado 2: </span><span class="sc">{</span>np<span class="sc">.</span>mean(riesgos)<span class="sc">:.1f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="a">
+<li><strong>Identifica</strong> qué va en cada uno de los seis huecos y <strong>escribe</strong> el bloque completo.</li>
+<li><strong>Comprueba</strong> que el grado 2 da la estimación del capítulo y <strong>calcula</strong> cuántas columnas produce el preparador con grado 1 y con grado 2.</li>
+<li><strong>Razona</strong> por qué el paso polinómico va después del imputador y antes del escalador, y <strong>di</strong> qué le pasa a la matriz de características si recibe las indicadoras de ausencia.</li>
+</ol>
+</div>
+</section>
+<section id="sec-h6-f" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h6-f">6. Ampliación</h2>
+<p><em>Opcional. No entra en el examen.</em></p>
+<div id="exr-h6-base-local" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Las potencias no son la única forma de construir características. Otra es colocar gaussianas sobre el recorrido de <span class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[
+\varphi_j(x)=\exp\Bigl(-\frac{(x-c_j)^2}{2h^2}\Bigr),
+\]</span></p>
+<p>con centros <span class="math inline">\(c_1,\ldots,c_{d}\)</span> repartidos por él y una anchura <span class="math inline">\(h\)</span> común.</p>
+<ol type="a">
+<li><strong>Construye</strong> la matriz de características con ocho centros equiespaciados en <span class="math inline">\([0,2]\)</span> y <span class="math inline">\(h=0.25\)</span>, <strong>ajusta</strong> el modelo sobre las treinta y seis observaciones del capítulo y <strong>dibuja</strong> la curva junto a la señal.</li>
+<li><strong>Repite</strong> con <span class="math inline">\(h=0.6\)</span> y <strong>di</strong> cuál de los dos términos de <a href="../capitulos/06-complejidad.html#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a> que dependen del modelo crece. <strong>Repite</strong> después con <span class="math inline">\(h=0.05\)</span> y <strong>explica</strong> por qué con treinta y seis observaciones la descomposición no se puede leer; <strong>rehazla</strong> con <span class="math inline">\(n=300\)</span>.</li>
+<li><strong>Razona</strong> por qué <span class="math inline">\(h\)</span> es un parámetro de complejidad aunque el número de características no cambie.</li>
+</ol>
+</div>
+<div id="exr-h6-descomposicion-simulada" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> El capítulo calcula los tres términos de <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> por separado y afirma que suman el riesgo esperado.</p>
+<ol type="a">
+<li>El capítulo comprueba la identidad con las mismas dos mil muestras en los dos caminos, y por eso los dos números coinciden hasta el último decimal. <strong>Explica</strong> por qué esa coincidencia es algebraica y no estadística, y <strong>di</strong> qué comprobación haría falta para que fuera estadística.</li>
+<li><strong>Repite</strong> la tabla con doscientas repeticiones en lugar de dos mil y <strong>explica</strong> qué término se estima peor. <strong>Estima</strong> la varianza del grado 9 con tres semillas distintas y <strong>di</strong> hasta qué cifra se puede leer.</li>
+<li><strong>Comprueba</strong> que el término de ruido no cambia al variar el grado, y <strong>di</strong> qué línea del código lo garantiza por construcción.</li>
+</ol>
+</div>
+<div id="exr-h6-cv-recupera-el-minimo" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 14</strong></span> Con una muestra de treinta y seis observaciones, la validación cruzada del capítulo no distingue los grados 3 a 8 y su mínimo cae en el 8.</p>
+<ol type="a">
+<li><strong>Repite</strong> la tabla de validación cruzada con <span class="math inline">\(n=100\)</span> y con <span class="math inline">\(n=400\)</span> y <strong>anota</strong> en cada caso el grado del mínimo.</li>
+<li><strong>Compara</strong> en cada caso el error típico entre bloques con la diferencia entre el grado 3 y el grado 7 del riesgo esperado. <strong>Explica</strong> la relación con lo que observas en a.</li>
+<li><strong>Repite</strong> la tabla con <span class="math inline">\(n=30\)</span> y diez semillas distintas, y <strong>cuenta</strong> cuántas veces el mínimo cae en cada grado. <strong>Relaciona</strong> la dispersión con <a href="../capitulos/04-evaluacion.html#prp-minimo-sesgado" class="quarto-xref">Proposición&nbsp;<span>4.3</span></a>.</li>
+</ol>
+</div>
+<div id="exr-h6-interacciones-dirigidas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 15</strong></span> El grado 2 del caso práctico cruza las variables de tamaño entre sí, pero no con las categóricas. La interacción de <a href="../capitulos/06-complejidad.html#fig-interaccion" class="quarto-xref">Figura&nbsp;<span>6.4</span></a>, la que hace que una plaza más valga distinto en una vivienda completa y en una habitación privada, no está en ninguno de los cuatro candidatos.</p>
+<ol type="a">
+<li><strong>Añade</strong> un candidato que multiplique las cuatro variables de tamaño por las indicadoras del tipo de habitación, y <strong>mide</strong> su estimación por validación cruzada. El cruce tiene que ser un transformador dentro del <em>pipeline</em>, no una columna añadida a la tabla, para que sus medianas y sus percentiles se estimen en cada bloque: es la regla del capítulo 5.</li>
+<li><strong>Añade</strong> otro que cruce con el distrito en lugar de con el tipo de habitación, <strong>cuenta</strong> cuántas columnas produce y <strong>explica</strong> el resultado con la descomposición.</li>
+<li>Un compañero propone probar todos los cruces posibles de una variable numérica por una categórica y quedarse con el mejor. <strong>Di</strong> qué objeción tiene ese plan y qué habría que hacer en su lugar.</li>
+</ol>
+</div>
+<div id="exr-h6-curvas-aprendizaje" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 16</strong></span> El capítulo mide la descomposición con treinta y seis observaciones. Los dos términos que dependen del modelo no responden igual al tamaño de la muestra.</p>
+<ol type="a">
+<li><strong>Calcula</strong> los tres términos de <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> para los grados 1, 3 y 9 con <span class="math inline">\(n\in\{15,30,60,120,240,480\}\)</span>, reutilizando <code>descompone(grado, n=n)</code>, y <strong>dibuja</strong> el riesgo esperado frente a <span class="math inline">\(n\)</span> en escala logarítmica.</li>
+<li><strong>Di</strong> en qué valor se aplana la curva del grado 1 y <strong>razona</strong>, con <a href="../capitulos/06-complejidad.html#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>, por qué no baja del suelo de ruido <span class="math inline">\(\sigma^2=0.04\)</span>.</li>
+<li><strong>Compara</strong> las curvas del grado 3 y del grado 9 y <strong>di</strong> a partir de qué tamaño el grado 9 es preferible al grado 3.</li>
+<li><strong>Razona</strong> qué término explica que el grado 9 empiece ocho órdenes de magnitud por encima de los otros dos con quince observaciones, y <strong>relaciónalo</strong> con el número de parámetros.</li>
+</ol>
+</div>
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>En construcción. El modelo a seguir es la <a href="../problemas/hoja-02.html">hoja 2</a>.</p>
+<p>Las soluciones se publican en el Campus Virtual después de la sesión de problemas.</p>
 </div>
 </div>
 </div>
-<section id="conceptual" class="level2">
-<h2 class="anchored" data-anchor-id="conceptual">1. Conceptual</h2>
-<!-- TODO. Bloque A: 3 apartados de respuesta breve, con los verbos del banco
-     (define, explica, razona, analiza). -->
-</section>
-<section id="demostración" class="level2">
-<h2 class="anchored" data-anchor-id="demostración">2. Demostración</h2>
-<!-- TODO. Bloque B: una del índice de resultados. Candidatas de este capítulo:
-     @thm-ecuaciones-normales o @thm-identidad-fundamental. -->
-</section>
-<section id="cálculo-a-mano" class="level2">
-<h2 class="anchored" data-anchor-id="cálculo-a-mano">3. Cálculo a mano</h2>
-<!-- TODO. Bloque C: tabla pequeña, números redondos, sin calculadora. -->
-</section>
-<section id="encuentra-los-errores" class="level2">
-<h2 class="anchored" data-anchor-id="encuentra-los-errores">4. Encuentra los errores</h2>
-<!-- TODO. Bloque D: fragmento de código con tres errores conceptuales de este
-     capítulo. Al menos uno debe ser del tipo que produce un agente. -->
-</section>
-<section id="ampliación" class="level2">
-<h2 class="anchored" data-anchor-id="ampliación">5. Ampliación</h2>
-<!-- TODO. Opcional, no entra en el examen. -->
 
 
 </section>
 
 <p><br><br><span style="color:grey;">© Roi Naveiro, CUNEF Universidad, 2026</span></p></main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

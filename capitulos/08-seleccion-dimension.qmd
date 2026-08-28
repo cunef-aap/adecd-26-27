@@ -1,0 +1,39 @@
+---
+title: 'Selección de variables y reducción de dimensión'
+subtitle: 'Elegir o construir representaciones de menor dimensión'
+---
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## Dos objetivos que se confunden
+
+<!-- Predecir mejor y explicar con menos variables no son lo mismo, y las herramientas no son intercambiables. -->
+
+## Estrategias de selección de variables
+
+<!-- Filtros y selección secuencial dentro del protocolo del capítulo 4. Recibe del capítulo 7 qué selección produce el lasso, cuándo es inestable y por qué un cero no equivale a irrelevancia. -->
+
+## Componentes principales
+
+<!-- Motivación geométrica primero: direcciones de máxima varianza. Centrado y producto matriz por vector. SVD solo lo imprescindible; el repaso de álgebra no la tiene y habría que añadirla. -->
+
+## Varianza explicada y número de componentes
+
+<!-- AVISO CONCEPTUAL: la varianza explicada describe X y no garantiza capacidad predictiva sobre y. Evitar presentar PCA como limpieza universal. -->
+
+## Regresión sobre componentes principales
+
+<!-- PCA dentro del Pipeline, ajustado solo en train. El escalado previo es parte del modelo y es una fuga si se aprende sobre todo el conjunto. -->
+
+## Qué se gana y qué se pierde
+
+<!-- Menos dimensión frente a interpretabilidad de los coeficientes. prostate.data para pocas variables y airbnb_madrid.csv para la dimensión alta de las categóricas. -->

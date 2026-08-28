@@ -6,63 +6,499 @@ $$
 $$
 :::
 
-Capítulo 4, Convexidad y riesgo empírico. Los cuatro primeros ejercicios son nucleares y
-tienen la estructura del examen; el quinto es de ampliación.
+Hoja del capítulo 4, Evaluar para generalizar: métricas, línea base, particiones, K-fold
+cross validation y el sesgo de seleccionar con los mismos datos. El capítulo ocupa dos
+semanas, así que la hoja se reparte entre las dos sesiones de problemas, y cada bloque tiene
+ejercicios de las dos mitades. Los cuatro primeros bloques tienen la estructura del examen.
 
-## 1. Conceptual
+| Sesión | Ejercicios |
+|---|---|
+| Primera, métricas y línea base | @exr-h4-conceptual, @exr-h4-linea-base, @exr-h4-media-optima, @exr-h4-mediana, @exr-h4-rmse-mae, @exr-h4-metricas-mano, @exr-h4-nulo-mano, @exr-h4-completar-metricas |
+| Segunda, particiones, selección y validación cruzada | los demás |
 
-**a.** Define función estrictamente convexa y explica qué garantiza la convexidad
-estricta que no garantiza la convexidad a secas.
+## 1. Conceptual {#sec-h4-a}
 
-**b.** Razona por qué @thm-convexa-minimos no basta para asegurar que el problema
-$\argmin_{\coef}\Riskh(\coef)$ tenga solución, y da un ejemplo.
+*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
 
-**c.** El riesgo empírico de un árbol de regresión usa la pérdida cuadrática, que es
-convexa. Explica por qué, a pesar de ello, el problema de ajustar el árbol no es convexo.
+::: {#exr-h4-conceptual}
+a. **Explica** para qué sirve cada uno de los tres conjuntos de @def-particiones, y **di**
+   cuántas veces se consulta cada uno.
+b. Un compañero mide su modelo en test, no le gusta el resultado, cambia una variable y
+   vuelve a medir en test. **Di** qué hipótesis de @thm-test-insesgado ha dejado de
+   cumplirse y en qué se ha convertido su conjunto de test.
+c. **Razona** por qué el riesgo en train de un modelo ajustado es una medida optimista,
+   señalando el paso de la demostración de @thm-test-insesgado que falla.
+d. **Explica** qué significa que el $\Rsq$ de un modelo salga negativo, y por qué eso puede
+   ocurrir en test pero no en train con un modelo lineal que incluya el intercepto.
+e. **Razona** por qué @eq-cv no estima el riesgo de un modelo concreto, y **di** qué estima.
+f. [El reparto de @def-particiones se hace **al azar**. **Razona** qué propiedad
+   de @thm-test-insesgado se apoya en eso, y **di** qué ocurriría si el test se
+   formara con las últimas filas del fichero o con las observaciones de mayor
+   respuesta.]{.nuevo}
+g. [**Distingue** las dos preguntas que el capítulo separa: con qué precisión se estima el
+   riesgo de un modelo fijo, y cuánto varía el riesgo de los modelos que produce un
+   procedimiento. **Di** cuál de las dos responde @prp-precision-test, cuál responde @eq-cv,
+   y cuál hay que informar al entregar un modelo.]{.nuevo}
+h. [El capítulo ordena las ocho variables por su correlación con la respuesta usando **solo**
+   las 67 observaciones de train. **Razona** qué hipótesis se rompería si ese orden se
+   calculara con las 97, y **di** en qué paso de @sec-protocolo queda recogida esa
+   regla.]{.nuevo}
+:::
 
-## 2. Demostración
+::: {#exr-h4-linea-base}
+El modelo nulo de @def-modelo-nulo predice la misma constante para todas las observaciones.
 
-Demuestra @prp-riesgo-convexo: si $\loss(\cdot, y)$ es convexa en su primer argumento y
-$\model(\xv;\coef) = \inner{\coef}{\xv}$, entonces $\Riskh$ es convexa en $\coef$.
-Enuncia y demuestra por el camino los dos lemas que necesitas.
+a. **Explica** por qué hace falta una línea base para interpretar un riesgo, usando como
+   ejemplo que el modelo lineal del capítulo tiene riesgo $0.5213$ en test.
+b. **Razona** por qué la constante del modelo nulo se calcula con las observaciones de train
+   y no con las 97, aunque sea un solo número.
+c. Un modelo tiene un riesgo en test de $1.02$ y el modelo nulo, $1.06$. **Di** qué
+   informarías y qué comprobación harías antes de afirmar que el modelo aporta algo.
+:::
 
-## 3. Cálculo a mano
+::: {#exr-h4-seleccion}
+a. **Explica** con tus palabras el fenómeno de @fig-sesgo-seleccion: [qué cantidad
+   representa cada una de las dos curvas, sobre qué conjunto se calcula, y por qué solo una
+   de ellas baja]{.nuevo}.
+b. Tras probar cuarenta configuraciones, la mejor obtiene un riesgo de validación de $0.31$.
+   **Di** si ese número se puede informar como estimación del rendimiento y **razona** la
+   respuesta con @prp-minimo-sesgado.
+c. **Analiza** en qué se diferencia el problema de esta sección del problema de medir en
+   train, y **di** por qué el de la selección ocurre incluso cuando los datos de validación
+   no se han usado para ajustar nada.
+:::
 
-Para cada una de estas funciones de $\Real$ en $\Real$, decide si es convexa y justifícalo
-con @prp-segunda-derivada o con un contraejemplo explícito. Sin calculadora.
+## 2. Demostración {#sec-h4-b}
 
-**a.** $f(z) = z^2 - 6z + 10$
-**b.** $f(z) = \log(1 + e^{z})$
-**c.** $f(z) = z^3$
-**d.** $f(z) = \max\{0,\ \abs{z} - 1\}$
+*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+caer tal cual en el examen.*
 
-Para la que no sea convexa, da los dos puntos y el $\lambda$ que rompen @eq-convexa.
+::: {#exr-h4-media-optima}
+Sea $\Riskh(c)=\frac{1}{\nobs}\sum_{i=1}^{\nobs}(\yi-c)^2$ el riesgo empírico de la
+constante $c$.
 
-## 4. Encuentra los errores
+a. **Demuestra** @lem-media-optima: el mínimo se alcanza en $c=\ybar$. Indica dónde usas la
+   condición de primer orden y dónde compruebas que es un mínimo y no otro punto crítico.
+b. **Calcula** el valor $\Riskh(\ybar)$ y **di** con qué cantidad estadística coincide.
+c. **Deduce** de lo anterior que el $\Rsq$ del modelo nulo, medido sobre la misma muestra
+   con la que se calculó su constante, vale exactamente cero.
+:::
 
-Tres errores en este razonamiento. Encuéntralos y justifica cada uno.
+::: {#exr-h4-mediana}
+El resultado anterior depende de la pérdida cuadrática.
 
-> Queremos ajustar un modelo minimizando la proporción de predicciones que se desvían más
-> de 50 euros del precio real, porque es el criterio del negocio. La pérdida
-> correspondiente es convexa, ya que solo toma los valores 0 y 1 y por tanto está acotada.
-> Como es convexa, el descenso por gradiente encontrará el mínimo global. Y como el mínimo
-> global es único, el modelo ajustado no depende del punto de partida.
+a. **Escribe** el riesgo empírico de una constante $c$ con la pérdida absoluta,
+   $\frac{1}{\nobs}\sum_i\abs{\yi-c}$, y **explica** por qué no se puede derivar en todo
+   punto.
+b. **Argumenta**, moviendo $c$ un poco a la derecha y contando cuántas observaciones quedan
+   a cada lado, que el mínimo se alcanza en la mediana de la muestra.
+c. **Di** qué consecuencia tiene esto al elegir entre informar del $\MSE$ o del $\MAE$
+   cuando la respuesta tiene valores extremos.
+:::
 
-## 5. Ampliación
+::: {#exr-h4-rmse-mae}
+Sean $a_i=\abs{\residi}$ los residuos en valor absoluto y $\bar a$ su media, que es el
+$\MAE$.
 
-La pérdida de Huber con parámetro $\delta$ es
-$$
-\loss_\delta(r) = \begin{cases}
-\tfrac{1}{2} r^2 & \abs{r} \le \delta \\
-\delta\left(\abs{r} - \tfrac{1}{2}\delta\right) & \abs{r} > \delta .
-\end{cases}
-$$
+a. **Desarrolla** la varianza muestral de los $a_i$ y **comprueba** que
+   $\frac{1}{\nobs}\sum_i(a_i-\bar a)^2=\MSE-\MAE^2$, usando que $a_i^2=\residi^2$.
+b. **Deduce** que $\RMSE\geq\MAE$ para cualquier vector de residuos, y **di** en qué caso se
+   da la igualdad.
+c. **Explica** qué indica, sobre el reparto de los residuos, que el $\RMSE$ sea mucho mayor
+   que el $\MAE$.
+:::
 
-**a.** Comprueba que $\loss_\delta$ y $\loss_\delta'$ son continuas en $r = \pm\delta$.
-**b.** Argumenta que es convexa pero no estrictamente convexa.
-**c.** Estudia qué ocurre cuando $\delta \to \infty$ y cuando $\delta \to 0^{+}$, y explica
-en qué sentido esta pérdida interpola entre las dos primeras de @fig-perdidas.
+::: {#exr-h4-r2-orden}
+Se comparan varios modelos sobre **una misma** muestra de test.
+
+a. **Demuestra** que ordenarlos por $\Rsq$ decreciente y ordenarlos por $\MSE$ creciente da
+   el mismo orden. Identifica qué término de @eq-r2 es el que no depende del modelo.
+b. **Di** qué deja de valer si los dos modelos se han medido sobre muestras distintas, y pon
+   un ejemplo de dos modelos con el mismo $\MSE$ y $\Rsq$ distintos.
+c. **Razona** entonces para qué sirve informar del $\Rsq$ además del $\MSE$.
+:::
+
+::: {#exr-h4-test-insesgado}
+Sea $\coef$ un vector de parámetros fijado sin usar $\Dtest$, y sean las observaciones de
+$\Dtest$ independientes.
+
+a. **Demuestra** @thm-test-insesgado, señalando el paso exacto en el que usas que $\coef$ no
+   depende de $\Dtest$.
+b. Sea ahora $\coefhat$ el minimizador del riesgo empírico sobre $\Dtrain$. **Explica** por
+   qué el paso del apartado anterior no se puede dar con $\Riskh_{\Dtrain}(\coefhat)$,
+   indicando dónde aparece dos veces la observación $i$.
+c. **Demuestra** @prp-train-optimista, es decir, la cadena
+
+   $$
+   \E{\Riskh_{\Dtrain}(\coefhat)}\;\leq\;\Risk(\coef^\star)\;\leq\;\E{\Risk(\coefhat)},
+   $$
+
+   donde $\coef^\star$ minimiza el riesgo verdadero. Usa el apartado a en la primera
+   desigualdad.
+d. **Explica** qué afirmación de los capítulos 1 a 3 queda demostrada con esa cadena.
+:::
+
+::: {#exr-h4-precision-test}
+a. **Demuestra** @prp-precision-test: la varianza de $\Riskh_{\Dtest}(\coef)$ es la varianza
+   de una pérdida individual dividida por $\ntest$. Di qué dos propiedades de la varianza
+   usas.
+b. Supón pérdidas cuadráticas con ruido gaussiano de nivel $\noise$, para las que
+   $\Var{\loss}=2\noise^4$. **Escribe** el error típico de $\Riskh_{\Dtest}$ en función de
+   $\noise$ y de $\ntest$.
+c. **Divide** ese error típico por el riesgo $\noise^2$ y **comprueba** que el error
+   **relativo** es $\sqrt{2/\ntest}$, que no depende de $\noise$.
+d. **Calcula** cuántas observaciones de test hacen falta para un error relativo del 20 %,
+   del 10 % y del 5 %.
+e. **Compara** el resultado con las 30 observaciones de test de los datos de próstata.
+f. [Un compañero entrega dos modelos con riesgos de test de $0.48$ y $0.52$, medidos sobre
+   el mismo conjunto, y un error típico de $0.18$ en los dos casos. **Di** qué se puede
+   afirmar sobre cuál es mejor, **explica** qué criterio has usado, y **razona** por qué el
+   criterio es conservador cuando los dos modelos se miden sobre las mismas
+   observaciones.]{.nuevo}
+:::
+
+::: {#exr-h4-minimo-sesgado}
+Sean $Z_1,\ldots,Z_M$ estimaciones con $\E{Z_k}=q_k$.
+
+a. **Demuestra** @prp-minimo-sesgado: $\E{\min_k Z_k}\leq\min_k q_k$. La demostración cabe
+   en dos líneas; di qué propiedad de la esperanza usas.
+b. Sea $\hat k=\argmin_k Z_k$ el índice elegido. **Razona** por qué de a se deduce que
+   $\E{Z_{\hat k}}\leq\E{q_{\hat k}}$, que es la desigualdad que importa al informar.
+c. **Di** en qué caso la desigualdad de a es una igualdad, y **relaciónalo** con la primera
+   fila de la tabla del experimento del capítulo, donde [$M=1$]{.nuevo}.
+:::
+
+::: {#exr-h4-validacion-insesgada}
+::: {.nuevo}
+Sea $\Dtrain$ una muestra de $\ntrain$ extracciones independientes de $P^\star$, repartida al
+azar y sin mirar los datos en $\Dajuste$, con $\ntrain-\nval$ observaciones, y $\Dval$, con
+$\nval$. El procedimiento $m$ recibe $\Dajuste$ y devuelve $\modelh^{(m)}_{\Dajuste}$, que se
+mide sobre $\Dval$.
+
+a. **Razona** que, fijado $\Dajuste$, el modelo es un objeto fijo y las observaciones de
+   $\Dval$ le son ajenas, de modo que @thm-test-insesgado se aplica con $\Dval$ como muestra
+   de evaluación. **Escribe** la esperanza condicional que resulta.
+b. **Toma** esperanzas sobre $\Dajuste$ y **concluye**, con @def-riesgo-procedimiento, que la
+   validación simple es insesgada para $\Riskproc{\ntrain-\nval}^{(m)}$.
+c. **Di** qué paso deja de valer si el reparto se hace mirando los datos, por ejemplo enviando
+   a $\Dval$ las observaciones peor predichas por un ajuste previo, y **razona** en qué
+   dirección se sesga entonces la estimación.
+d. **Explica** por qué esto no convierte la validación simple en una estimación insesgada del
+   riesgo del modelo que finalmente se entrega.
+:::
+:::
+
+::: {#exr-h4-cv-insesgada}
+::: {.nuevo}
+Con las hipótesis del ejercicio anterior, reparte $\Dtrain$ al azar en $K$ bloques del mismo
+tamaño y llama $n_a=\ntrain(K-1)/K$ al tamaño de cada conjunto de ajuste.
+
+a. **Aplica** el apartado b del ejercicio anterior a un bloque cualquiera $\fold{k}$ y
+   **deduce** que $\Esub{\Dtrain}{\Riskh_{\fold{k}}}=\Riskproc{n_a}^{(m)}$ para todo $k$.
+b. **Concluye** que $\Esub{\Dtrain}{\CV}=\Riskproc{n_a}^{(m)}$, y **di** qué propiedad de la
+   esperanza usas. **Observa** que no hace falta que los $K$ riesgos sean independientes.
+c. Con $\ntrain=67$ y $K=5$ los bloques no pueden ser iguales, y los ajustes usan 53 o 54
+   observaciones. **Di** de qué es media entonces $\Esub{\Dtrain}{\CV}$ y por qué la igualdad
+   del apartado b deja de ser exacta.
+d. **Explica** por qué la insesgadez a tamaño $n_a$ no es insesgadez para
+   $\Riskproc{\ntrain}$, y **relaciónalo** con el supuesto que el capítulo declara al elegir
+   con validación cruzada.
+:::
+:::
+
+## 3. Cálculo a mano {#sec-h4-c}
+
+*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
+
+::: {#exr-h4-metricas-mano}
+Sobre cuatro observaciones de test se comparan dos modelos.
+
+| $y$ | $2$ | $4$ | $6$ | $8$ |
+|---|---|---|---|---|
+| $\yhat$ del modelo $A$ | $3$ | $3$ | $7$ | $7$ |
+| $\yhat$ del modelo $B$ | $2$ | $4$ | $6$ | $4$ |
+
+a. **Calcula** el vector de residuos de cada modelo.
+b. **Calcula** el $\MSE$, el $\RMSE$ y el $\MAE$ de cada uno.
+c. **Calcula** $\ybar$ y $\SST$, y con ellos el $\Rsq$ de cada modelo.
+d. Los dos modelos tienen el mismo $\MAE$. **Di** cuál elegirías y **razona** la respuesta
+   citando @exr-h4-rmse-mae y el caso de igualdad.
+e. **Comprueba** que el orden que dan el $\MSE$ y el $\Rsq$ es el mismo, como
+   pide @exr-h4-r2-orden.
+:::
+
+::: {#exr-h4-nulo-mano}
+Los datos de train son $y=(1,2,3,10)$ y los de test, $y=(5,6)$.
+
+a. **Calcula** la media y la mediana de train.
+b. **Calcula** el $\MSE$ y el $\MAE$ del modelo nulo en train, primero con la media como
+   constante y después con la mediana. **Comprueba** que cada una gana con su propia
+   pérdida.
+c. Con la constante que sale de @lem-media-optima, **calcula** el $\MSE$ en test.
+d. **Calcula** $\SST$ en test y el $\Rsq$ del modelo nulo en test. Sale muy negativo:
+   **explica** de dónde viene esa cifra y por qué no contradice nada.
+e. **Razona** qué pasaría con ese $\Rsq$ si los datos de test fueran $y=(1,10)$ en lugar de
+   $(5,6)$.
+:::
+
+::: {#exr-h4-cv-mano}
+Se aplica K-fold cross validation con $K=3$ sobre seis observaciones de train, y se prueban
+tres candidatos. Estos son los riesgos de cada bloque.
+
+| Candidato | $\Riskh_{\fold{1}}$ | $\Riskh_{\fold{2}}$ | $\Riskh_{\fold{3}}$ |
+|---|---|---|---|
+| $A$ | $0.9$ | $1.5$ | $1.2$ |
+| $B$ | $0.6$ | $2.1$ | $1.5$ |
+| $C$ | $1.1$ | $1.0$ | $1.2$ |
+
+a. **Calcula** cuántas observaciones tiene cada bloque y con cuántas se ajusta cada modelo.
+b. **Calcula** el $\CV$ de los tres candidatos con @eq-cv y **di** cuál se elige.
+c. El candidato $B$ tiene el mejor riesgo de un bloque, $0.6$. **Razona** por qué eso no lo
+   convierte en el elegido.
+d. **Di** si el $\CV$ del candidato elegido se puede informar como estimación de su
+   rendimiento, y **cita** el resultado en el que te apoyas.
+e. **Calcula** cuántos ajustes harían falta con $K=6$, es decir, con *leave-one-out*.
+:::
+
+::: {#exr-h4-emparejar-mano}
+::: {.nuevo}
+Sobre los mismos $K=5$ bloques de validación cruzada se evalúan dos procedimientos: $A$, que
+ajusta dos variables, y $B$, que ajusta tres. Estos son sus riesgos por bloque.
+
+| Candidato | $\fold{1}$ | $\fold{2}$ | $\fold{3}$ | $\fold{4}$ | $\fold{5}$ |
+|---|---|---|---|---|---|
+| $A$ | $2.2$ | $1.6$ | $1.0$ | $0.4$ | $1.3$ |
+| $B$ | $1.6$ | $1.2$ | $0.8$ | $0.4$ | $1.0$ |
+
+Para los errores típicos usa la forma que evita raíces intermedias,
+$\text{EE}=\sqrt{\frac{1}{K(K-1)}\sum_k(x_k-\bar x)^2}$.
+
+a. **Calcula** $\CV_A$ y $\CV_B$ con @eq-cv, y el error típico de cada una de las dos medias.
+b. Trata las dos estimaciones como si se hubieran medido sobre conjuntos distintos, de modo que
+   el error típico de su diferencia sea $\sqrt{\text{EE}_A^2+\text{EE}_B^2}$. **Calcula** el
+   cociente entre la diferencia y ese error típico y **di** qué concluirías.
+c. **Calcula** ahora las diferencias por bloque $d_k$, su media $\bar d$ y su error típico
+   emparejado, siguiendo @def-diferencia-emparejada. **Calcula** el cociente
+   $\bar d/\text{EE}_{\text{dif}}$ y **di** por cuánto se ha reducido el error típico respecto
+   del apartado b.
+d. **Aplica** @def-regla-un-error-tipico tomando $B$ como campeón y **di** qué candidato se
+   entrega. **Di** además cuánto tendría que valer $\bar d$, con el mismo
+   $\text{EE}_{\text{dif}}$, para que se entregara $A$.
+e. En $\fold{4}$ los dos candidatos empatan, y es además el bloque más fácil de los cinco.
+   **Explica** qué parte de la variación desaparece al restar bloque a bloque, y por qué eso
+   hace que los apartados b y c lleguen a conclusiones distintas.
+:::
+:::
+
+## 4. Encuentra los errores {#sec-h4-d}
+
+*Bloque D. Se puntúa la justificación de cada error.*
+
+::: {#exr-h4-errores}
+Este fragmento pretende elegir cuántas variables usar y estimar el rendimiento del modelo
+elegido. Contiene **tres** errores conceptuales. Localízalos y explica la consecuencia de
+cada uno.
+
+```python
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X, y = cargar_datos()                      # 97 observaciones, 8 variables
+X_train, X_test, y_train, y_test = separar(X, y, n_test=30)
+
+mejor = None
+for m in range(1, 9):
+    modelo = LinearRegression().fit(X[:, :m], y)
+    error = np.mean((y_test - modelo.predict(X_test[:, :m])) ** 2)
+    if mejor is None or error < mejor[1]:
+        mejor = (m, error)
+
+print("variables elegidas:", mejor[0])
+print("rendimiento esperado del modelo:", mejor[1])
+```
+:::
+
+::: {#exr-h4-errores-cv}
+Este fragmento pretende aplicar K-fold cross validation y después entregar un modelo. Tiene
+**tres** errores conceptuales. Localízalos y explica en cada caso qué consecuencia tiene.
+
+```python
+from sklearn.model_selection import cross_val_score, KFold
+from sklearn.linear_model import LinearRegression
+
+X, y = cargar_datos()
+
+particion = KFold(n_splits=5, shuffle=True, random_state=0)
+puntuaciones = -cross_val_score(LinearRegression(), X, y,
+                                scoring="neg_mean_squared_error",
+                                cv=particion)
+
+print("estimacion del riesgo:", puntuaciones.min())
+
+# el modelo que se entrega es el del ultimo bloque
+modelo_final = LinearRegression().fit(X[:60], y[:60])
+```
+:::
+
+## 5. Completar código {#sec-h4-e}
+
+*Bloque de laboratorio. En el examen puede aparecer una versión corta, con una o dos líneas
+que rellenar.*
+
+::: {#exr-h4-completar-metricas}
+Completa las líneas marcadas para calcular las cuatro métricas de @def-metricas y el error
+típico de @prp-precision-test.
+
+```python
+import torch
+
+
+def metricas(y_pred, y):
+    residuos = ...                     # (1)
+    sse = ...                          # (2)
+    # con la media de la muestra que se mide
+    sst = ...                          # (3)
+    return {
+        "MSE": ...,                    # (4)
+        "RMSE": ...,                   # (5)
+        "MAE": ...,                    # (6)
+        "R2": ...,                     # (7)
+    }
+
+
+def riesgo_con_error_tipico(y_pred, y):
+    perdidas = ...                     # (8) una perdida por observacion
+    return perdidas.mean(), ...        # (9) el error tipico de esa media
+```
+
+a. Rellena las nueve líneas.
+b. Comprueba sobre los datos de próstata que `metricas` reproduce los números del capítulo,
+   y que el $\Rsq$ del modelo nulo en train sale cero.
+c. En la línea (3), ¿qué cambiaría si `sst` se calculara con la media de train al medir en
+   test? Ejecútalo y di en qué dirección se mueve el $\Rsq$.
+:::
+
+::: {#exr-h4-completar-cv}
+Completa el bucle de K-fold cross validation.
+
+```python
+import numpy as np
+from sklearn.model_selection import KFold
+
+
+def cv_riesgo(X, y, n_bloques=5, semilla=42):
+    particion = KFold(n_splits=n_bloques, shuffle=True,
+                      random_state=semilla)
+    riesgos = []
+    for indices_ajuste, indices_val in particion.split(X.numpy()):
+        # ajustado con los bloques de ajuste
+        candidato = ...                # (1)
+        # evaluado con el bloque que queda
+        riesgos.append(...)            # (2)
+    return ...                         # (3) la estimacion de la definicion
+```
+
+a. Rellena las tres líneas.
+b. Comprueba que la suma de los tamaños de los `indices_val` de los cinco bloques es
+   exactamente $\ntrain$, y explica qué propiedad de @def-validacion-cruzada estás
+   verificando.
+c. Añade una línea que devuelva también la desviación típica de los cinco riesgos, y di qué
+   información aporta que no aporte la media.
+:::
+
+::: {#exr-h4-protocolo-otra-particion}
+Repite el protocolo completo de [@sec-protocolo]{.nuevo}, pero sustituyendo la
+partición del libro por una al azar con `sklearn.model_selection.train_test_split` y
+`random_state=0`, manteniendo 30 observaciones de test.
+
+a. Anota el $m$ elegido, la estimación por K-fold cross validation y el riesgo en test.
+b. Repite con cinco semillas distintas y construye una tabla con los cinco resultados.
+c. Compara la variación entre semillas con el error típico de @prp-precision-test, y di qué
+   parte de esa variación viene de estimar con pocas observaciones y qué parte de que el
+   modelo elegido cambie de una semilla a otra.
+:::
+
+::: {#exr-h4-metricas-atipico}
+Sobre las 30 observaciones de test, calcula las cuatro métricas de @def-metricas [para el
+ modelo de ocho variables]{.nuevo}. Después localiza la observación con el residuo más
+grande en
+valor absoluto, quítala y recalcula las cuatro.
+
+a. Con @exr-h4-rmse-mae a la vista, di cuál de las cuatro métricas cambia proporcionalmente
+   más y por qué.
+b. Explica qué métrica informarías si el coste real de un error creciera de forma
+   proporcional al error, y cuál si creciera más deprisa.
+c. Razona si quitar esa observación para informar del resultado sería aceptable, y qué
+   habría que decir en el informe en cualquier caso.
+:::
+
+## 6. Ampliación {#sec-h4-f}
+
+*Opcional. No entra en el examen.*
+
+::: {#exr-h4-cv-bloques}
+a. Con $K=\ntrain$ cada bloque tiene una sola observación, y el procedimiento se llama
+   *leave-one-out*. Di cuántos ajustes hacen falta y por qué eso lo vuelve caro.
+b. Con $K$ grande, cada modelo se ajusta con casi todas las observaciones. Razona en qué
+   dirección cambia entonces el sesgo de @eq-cv como estimación
+   de [$\Riskproc{\ntrain}$]{.nuevo}.
+c. Ejecuta `cv_riesgo` para $m=5$ con `n_bloques` igual a 3, 5 y 10, y con tres semillas
+   distintas en cada caso. Comenta cuánta variación hay entre semillas frente a cuánta hay
+   entre números de bloques.
+:::
+
+::: {#exr-h4-sesgo-sin-senal}
+Repite el experimento de selección del capítulo quitando la señal, es decir, generando `y`
+como ruido normal sin ninguna dependencia de `x`, y con candidatos que usen **solo** su
+variable inútil.
+
+a. Di cuál es el riesgo verdadero de todos los candidatos antes de ejecutar nada.
+b. Ejecútalo con [$M=100$]{.nuevo}, promediando sobre 200 repeticiones, y compara el riesgo
+   de
+   validación del elegido con su riesgo de test.
+c. Explica por qué este caso es más grave que el de la sección, y qué tendría que ver un
+   analista para darse cuenta de que su modelo no ha aprendido nada.
+d. [Ejecuta una sola repetición con cinco semillas distintas y cuenta en cuántas de las
+   cinco el riesgo de validación queda por debajo del de test. Explica, comparando el sesgo
+   con la dispersión de los riesgos de validación, por qué el fenómeno hay que medirlo en
+   media.]{.nuevo}
+:::
+
+::: {#exr-h4-test-mirado-dos-veces}
+Con los datos de @exr-h4-sesgo-sin-senal, simula el ciclo que @thm-test-insesgado prohíbe:
+ajusta 20 candidatos, elige el mejor **por su riesgo de test** y anota ese riesgo. Después
+mide ese mismo modelo elegido sobre un conjunto nuevo e independiente.
+
+a. Compara los dos números y explica el resultado con @prp-minimo-sesgado.
+b. Explica en qué se ha convertido el conjunto de test en cuanto se ha usado para elegir.
+c. Propón qué habría que haber hecho para poder informar de un número honesto.
+:::
+
+::: {#exr-h4-cv-como-estimador}
+Con datos simulados, donde se puede calcular el riesgo verdadero sobre una muestra enorme,
+compara la estimación por K-fold cross validation con la verdad.
+
+a. Genera 60 observaciones de train con diez variables predictoras normales independientes,
+   de las cuales solo la primera entra en la señal, $\model(\xv)=1+2x_1$, con $\noise=1$.
+   Ajusta el modelo con las once columnas, la de unos incluida.
+b. Calcula $\CV$ con cinco bloques sobre las 60, y el riesgo verdadero del modelo ajustado
+   con las 60 usando 20000 observaciones nuevas.
+c. Repite el experimento 200 veces y compara la media de $\CV$ con la media del
+   riesgo verdadero. Comprueba el signo de la diferencia y relaciónalo con lo dicho
+   tras @def-validacion-cruzada.
+d. Repite con una sola variable predictora en lugar de diez. Comprueba que con ese modelo
+   200 repeticiones no bastan para determinar el signo, comparando la diferencia con su
+   error típico, y explica qué tiene que ver el número de parámetros con el tamaño del
+   efecto.
+e. [Con el montaje del apartado a, y diez candidatos que usan de una a diez variables
+   predictoras, calcula ahora dos diferencias sobre 300 repeticiones: la del $\CV$ del
+   candidato **fijo** de diez variables frente a su riesgo verdadero, y la del **mínimo** de
+   los diez valores de $\CV$ frente al riesgo verdadero del candidato que ese mínimo elige.
+   Comprueba que salen con signos opuestos y explica por qué, citando los dos resultados del
+   capítulo que actúan en cada caso.]{.nuevo}
+:::
 
 ::: {.callout-note appearance="simple"}
-Las soluciones se publican después de la sesión.
+Las soluciones se publican en el Campus Virtual después de la sesión de
+problemas.
 :::

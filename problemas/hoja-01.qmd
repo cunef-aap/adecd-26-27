@@ -6,78 +6,258 @@ $$
 $$
 :::
 
-Capítulo 1, Datos, patrones y modelos. Los cuatro primeros ejercicios son nucleares y
-tienen la estructura del examen; el quinto es de ampliación.
+Hoja del capítulo 1, Datos = señal + ruido. El capítulo ocupa dos semanas, así que la hoja
+se reparte entre las dos sesiones de problemas. Los cuatro primeros bloques tienen la
+estructura del examen; el de completar código es de laboratorio y el último es de ampliación.
 
-## 1. Conceptual
+## 1. Conceptual {#sec-h1-a}
 
-**a.** Define clase de hipótesis y explica, en dos frases, por qué el problema de
-predicción no está bien planteado hasta que se fija una.
+*Bloque A del examen. Respuesta breve, tres o cuatro frases cada apartado.*
 
-**b.** @def-problema exige que las observaciones sobre las que se mide el error no
-pertenezcan a $\data$. Razona qué solución tendría el problema si se suprimiera esa
-condición.
+::: {#exr-h1-conceptual}
+a. Una empresa quiere predecir el consumo eléctrico de un edificio a partir de la
+   temperatura, la hora y el día de la semana. **Identifica** los predictores $\xv$, la
+   respuesta $y$, una posible fuente de señal y dos posibles fuentes de ruido.
+b. **Explica** la diferencia entre $f(\xv)$, $y$ y $\widehat y$ en el modelo señal más
+   ruido. ¿Cuál de las tres queremos aprender y cuáles observamos?
+c. Un compañero afirma que, como $\E{\varepsilon\given X}=0$, cada observación debe estar
+   exactamente sobre la señal. **Corrige** la afirmación e interpreta bien la hipótesis.
+d. Otro compañero te enseña un modelo con error de entrenamiento cero y te dice que ha
+   resuelto el problema. **Razona** qué le contestarías, citando el resultado del capítulo en
+   el que te apoyas.
+:::
 
-**c.** Un compañero dice que su modelo es bueno porque el coeficiente de la variable
-`superficie` es positivo y significativo. Analiza si ese argumento responde a la pregunta
-de este curso.
+::: {#exr-h1-hipotesis}
+El modelo lineal-gaussiano supone que la señal es una recta y que el ruido es normal, de
+media cero y de la misma desviación típica para todas las observaciones.
 
-## 2. Demostración
+a. **Razona** si ese modelo es el proceso que genera los datos o una hipótesis nuestra
+   sobre él, y qué diferencia hay entre las dos cosas.
+b. Para cada una de estas situaciones, **di** qué supuesto del modelo se rompe: el precio
+   de una vivienda crece con la superficie pero cada vez más despacio; la variabilidad de
+   las ventas es mucho mayor en diciembre que en marzo; dos mediciones consecutivas del
+   mismo sensor tienden a errar en el mismo sentido.
+c. **Explica** por qué que un supuesto se rompa no impide ajustar el modelo, y qué es lo
+   que sí limita.
+:::
 
-Sea $\hyp$ la clase de las funciones constantes y $\loss(\yhat, y) = (\yhat - y)^2$.
-Demuestra que el minimizador del riesgo empírico es $\ybar$, y que su valor mínimo es la
-varianza muestral de $y$.
+## 2. Demostración {#sec-h1-b}
 
-*Es el @exr-decisiones del capítulo, con el segundo apartado añadido.*
+*Bloque B. Sale del [índice de resultados](../curso/indice-resultados.qmd), así que puede
+caer tal cual en el examen.*
 
-## 3. Cálculo a mano
+::: {#exr-h1-media-condicional}
+Partiendo de $Y=f(X)+\varepsilon$ con $\E{\varepsilon\given X}=0$:
 
-Sobre estos cuatro datos con un solo predictor:
+a. **Demuestra** que $\E{Y\given X=\xv}=f(\xv)$. Indica en qué paso usas la hipótesis
+   sobre el ruido.
+b. **Explica** en una frase qué significa este resultado en una nube de puntos
+   como la de @fig-senal-ruido.
+c. Si el ruido tuviera media $c\neq0$ en lugar de cero, ¿qué aprenderíamos al estimar la
+   media condicional? **Razónalo**.
+:::
 
-| $i$ | $x_i$ | $y_i$ |
-|---|---|---|
-| 1 | 0 | 1 |
-| 2 | 1 | 3 |
-| 3 | 2 | 3 |
-| 4 | 3 | 5 |
+::: {#exr-h1-lagrange}
+Sean $x_1,\dots,x_{\nobs}$ distintos dos a dos.
 
-**a.** Calcula el riesgo empírico con pérdida cuadrática de los dos modelos
-$\model_1(x) = 1 + x$ y $\model_2(x) = 3$.
+a. Escribe la base de Lagrange $\ell_j$ y comprueba que $\ell_j(x_i) = \delta_{ij}$.
+b. Demuestra @thm-interpolacion: existe un polinomio de grado $\leq \nobs-1$ que pasa por
+   los $\nobs$ puntos.
+c. Constrúyelo explícitamente para $(1,3)$, $(2,5)$ y $(4,2)$, y comprueba que pasa por
+   los tres.
+:::
 
-**b.** Uno de los dos modelos pertenece a la clase de las funciones constantes y el otro a
-la de las afines. Di cuál es cuál y por qué la comparación de sus riesgos empíricos, tal
-como está hecha aquí, no permite concluir cuál predecirá mejor.
+## 3. Cálculo a mano {#sec-h1-c}
 
-## 4. Encuentra los errores
+*Bloque C. Sin calculadora; los números están elegidos para que salgan redondos.*
 
-Tres errores conceptuales en este fragmento. Encuéntralos y justifica cada uno.
+::: {#exr-h1-calculo}
+La señal de un proceso es $f(x)=2x+1$ y se observan estos datos:
+
+| $i$ | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|
+| $x_i$ | 0 | 1 | 2 | 3 |
+| $y_i$ | 2 | 2 | 6 | 8 |
+
+a. Calcula $f(x_i)$ y el ruido $\varepsilon_i=y_i-f(x_i)$ de cada observación.
+b. Calcula la media de los cuatro ruidos. ¿Contradice el resultado la hipótesis
+   $\E{\varepsilon\given X}=0$? Justifícalo distinguiendo una media muestral de una
+   esperanza.
+c. Si aparece un caso nuevo con $x=4$, ¿cuál es la señal? ¿Puede conocerse su respuesta
+   $y$ antes de observar el ruido?
+:::
+
+::: {#exr-h1-densidad}
+Sea $\varepsilon\sim\Normal(0,\noise^2)$ con $\noise=2$.
+
+a. Escribe la densidad $\pdf(z;0,2)$ y evalúala en $z=0$ dejando el resultado en función
+   de $\pi$.
+b. Usando @thm-escala-normal y @thm-traslacion-normal, di qué distribución tiene
+   $3\varepsilon-1$.
+c. Si $\yi=f(x_i)+\varepsilon_i$ con $f(x_i)=5$, ¿qué distribución tiene $\yi$? ¿Y cuál es
+   el valor más probable de $\yi$?
+:::
+
+::: {.nuevo}
+::: {#exr-h1-densidad-uno}
+a. **Evalúa** la densidad normal en $z=\mu$ y **comprueba** que vale $1/(\noise\sqrt{2\pi})$.
+b. **Calcula** ese valor para $\noise=2$, $\noise=1$ y $\noise=0.2$.
+c. Uno de los tres pasa de uno. **Explica** por qué eso no contradice que las probabilidades
+   estén entre cero y uno, y **calcula** a partir de qué valor de $\noise$ ocurre.
+:::
+:::
+
+::: {.nuevo}
+::: {#exr-h1-rejilla}
+La búsqueda por rejilla del capítulo recorre `torch.linspace(-5, 5, 20)` para el intercepto y
+`torch.linspace(-1, 3, 20)` para la pendiente.
+
+a. **Calcula** la separación entre dos valores consecutivos de cada rejilla.
+b. **Comprueba** que ni $\coefzero=1$ ni $w_1=2$ están entre los valores que se prueban, y
+   **di** cuáles son los más cercanos.
+c. **Calcula** cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la
+   mitad la separación de las dos rejillas.
+d. **Razona** qué limitación tiene el método aparte de su coste.
+:::
+:::
+
+::: {#exr-h1-comparar}
+Se ajustan dos modelos sobre estas cuatro observaciones de entrenamiento:
+
+| $x$ | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|
+| $y$ | 2 | 4 | 5 | 9 |
+
+El modelo $A$ predice $\yhat = 2x$. El modelo $B$ predice $\yhat = 2, 4, 5, 9$
+respectivamente, es decir, interpola.
+
+a. Calcula el error de entrenamiento $\Riskh$ de cada modelo.
+b. Llegan dos observaciones nuevas: $(x,y) = (2, 3)$ y $(x,y) = (3, 7)$. El modelo $B$
+   predice sobre ellas lo mismo que predecía en entrenamiento para esos valores de $x$.
+   Calcula el error de test de cada modelo.
+c. ¿Qué modelo elegirías y por qué? Relaciona la respuesta con @def-sobreajuste.
+:::
+
+## 4. Encuentra los errores {#sec-h1-d}
+
+*Bloque D. Se puntúa la justificación de cada error.*
+
+::: {#exr-h1-errores}
+Este fragmento pretende aprender la señal de unos datos. Contiene **tres** errores
+conceptuales. Localízalos y explica la consecuencia de cada uno.
+
+```python
+import numpy as np
+
+x = np.arange(5)
+y = np.array([1.2, 2.7, 5.4, 6.5, 9.1])
+
+# la señal verdadera es la lista de valores observados
+senal = y
+
+def predict(x_nuevo):
+    # devolvemos la respuesta del punto conocido más cercano
+    i = np.argmin(np.abs(x - x_nuevo))
+    return y[i]
+
+# como reproduce los datos, hemos demostrado que aprende
+print(np.allclose([predict(xi) for xi in x], y))
+```
+:::
+
+::: {#exr-h1-errores-grado}
+El siguiente fragmento pretende comparar dos modelos y quedarse con el mejor. Tiene
+**tres** errores conceptuales. Localízalos y explica en cada caso qué consecuencia tiene.
 
 ```python
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
-X, y = cargar_datos()               # (200, 3) y (200,)
+X, y = cargar_datos()                      # 40 observaciones
 
-modelo = LinearRegression().fit(X, y)
-r2 = modelo.score(X, y)
-print(f"R2 = {r2:.3f}")
+Phi = PolynomialFeatures(degree=39).fit_transform(X)
+modelo_a = LinearRegression().fit(Phi, y)
+modelo_b = LinearRegression().fit(X, y)
 
-# probamos con mas variables para ver si mejora
-X2 = np.column_stack([X, X**2, X**3])
-modelo2 = LinearRegression().fit(X2, y)
-print(f"R2 = {modelo2.score(X2, y):.3f}")   # sale mas alto, nos quedamos con este
+error_a = np.mean((y - modelo_a.predict(Phi)) ** 2)
+error_b = np.mean((y - modelo_b.predict(X)) ** 2)
 
-# como el R2 es alto, concluimos que la variable 0 causa y
-print(f"efecto de x0: {modelo2.coef_[0]:.3f}")
+print("gana el modelo a" if error_a < error_b else "gana el modelo b")
+```
+:::
+
+## 5. Completar código {#sec-h1-e}
+
+*Bloque de laboratorio. En el examen puede aparecer una versión corta, con una o dos líneas
+que rellenar.*
+
+::: {#exr-h1-simular}
+Completa las líneas marcadas para simular una muestra del modelo lineal-gaussiano con
+$\coef=(1,2)\T$ y $\noise=3$, y para separar sus dos componentes.
+
+```python
+import torch
+
+torch.manual_seed(0)
+
+n = 40
+x = torch.linspace(0, 10, n)
+
+senal = ...          # (1) la parte estable, f(x) = 1 + 2x
+ruido = ...          # (2) n extracciones normales de media 0 y desviación 3
+y = ...              # (3) la respuesta observada
+
+print("media del ruido:", ...)          # (4)
+print("desviación del ruido:", ...)     # (5)
 ```
 
-## 5. Ampliación
+a. Rellena las cinco líneas.
+b. Ejecuta el bloque con tres semillas distintas. ¿Cambia `senal`? ¿Cambia `y`? Explica
+   por qué.
+c. La media muestral del ruido no sale exactamente cero. ¿Es un error del código?
+   Justifícalo.
+:::
 
-Considera la pérdida asimétrica $\loss(\yhat, y) = c\,(y - \yhat)$ si $\yhat \le y$ y
-$\loss(\yhat, y) = (\yhat - y)$ si $\yhat > y$, con $c > 1$. Sobre la clase de las
-funciones constantes, ¿qué característica de la distribución de $y$ minimiza el riesgo?
-Basta con que lo razones sobre los datos del ejercicio 3 probando valores.
+::: {.nuevo}
+::: {#exr-h1-logaritmos}
+Con los datos simulados del capítulo y $\noise=3$, evalúa `densidad_normal(y, senal, 3.0)`
+para obtener las $\nobs$ densidades individuales.
+
+a. Calcula el producto de las cinco primeras, de las diez primeras y de las veinte. Anota los
+   tres órdenes de magnitud.
+b. Calcula la suma de sus logaritmos en los mismos tres casos.
+c. Con densidades de ese orden, estima a partir de cuántas observaciones el producto se
+   redondearía a cero en coma flotante de doble precisión, que llega hasta $10^{-308}$.
+   Explica qué le pasaría entonces a una búsqueda que compare verosimilitudes.
+:::
+:::
+
+## 6. Ampliación {#sec-h1-f}
+
+*Opcional. No entra en el examen.*
+
+::: {#exr-h1-heterocedastico}
+Simula datos con señal $f(x)=2x+1$ en dos situaciones:
+
+1. ruido normal con desviación típica constante igual a 2;
+2. ruido normal cuya desviación típica sea $0.5+x/2$.
+
+Dibuja ambas muestras junto a la señal. En el segundo caso, ¿sigue siendo razonable
+$\E{Y\given X=x}=f(x)$? ¿Qué propiedad del ruido ha cambiado aunque su media siga siendo
+cero?
+:::
+
+::: {#exr-h1-simulacion}
+Genera $\nobs = 20$ observaciones con $\model(x) = 2x+1$ y ruido normal de desviación 3.
+Ajusta el polinomio interpolador y una recta. Repite el experimento 200 veces, y en cada
+repetición mide el error de ambos modelos sobre 200 observaciones nuevas generadas con la
+misma señal. Dibuja las dos distribuciones de error.
+
+¿Qué le pasa a la distribución del interpolador cuando $\nobs$ crece de 20 a 40?
+:::
 
 ::: {.callout-note appearance="simple"}
-Las soluciones se publican después de la sesión.
+Las soluciones se publican en el Campus Virtual después de la sesión de
+problemas.
 :::

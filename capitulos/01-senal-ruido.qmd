@@ -1,0 +1,850 @@
+---
+title: 'Datos = señal + ruido'
+subtitle: 'Distribuciones generadoras para formular un problema de aprendizaje'
+---
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## Introducción: datos, señal y ruido
+
+Recordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos
+observados
+
+$$
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{\nobs},
+$$
+
+La tarea consiste en aprender una función $f$ que, a partir de las
+características de un caso nuevo, produzca una predicción $\widehat y=f(\mathbf{x})$ que
+se aproxime a su respuesta $y$:
+
+$$
+\widehat y=f(\mathbf{x})\approx y.
+$$
+
+El principal problema del aprendizaje supervisado es que la relación entre $\mathbf{x}$ e
+$y$ de los datos observados no suele ser exacta. Esta relación, puede entenderse como la
+composición de una relación estable "subyacente" y una variación aleatoria que oculta
+parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas
+procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La
+relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la
+señal sin memorizar el ruido.
+
+Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos
+componentes.
+
+```{python}
+#| code-fold: true
+import torch
+from matplotlib import pyplot as plt
+
+torch.manual_seed(42)
+
+n = 20
+x = torch.linspace(0, 10, n)
+senal = 2 * x + 1
+ruido = 3 * torch.randn(n)
+y = senal + ruido
+
+kw_puntos = dict(color="black", facecolors="none", s=40, alpha=0.65)
+```
+
+::: {#fig-senal-ruido}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(x.numpy(), y.numpy(), **kw_puntos, label="datos")
+ax.plot(x.numpy(), senal.numpy(), color="black", linestyle="--", lw=2,
+        label=r"señal: $f(x_i)=2x_i+1$")
+for i in range(n):
+    etiqueta = r"ruido: $\varepsilon_i$" if i == 0 else None
+    ax.plot([x[i].item(), x[i].item()], [senal[i].item(), y[i].item()],
+            color="#ff5700", alpha=0.5,
+            linewidth=0.9, label=etiqueta)
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.tight_layout()
+```
+
+Descomposición ilustrativa de los datos observados (puntos) en una señal subyacente
+(línea discontinua) y ruido (segmentos naranjas).
+:::
+
+Podemos pensar que cada dato contiene una **señal**, expresada mediante una relación
+$y\approx f(x)$, y un **ruido** que oculta parcialmente esa relación. Esquemáticamente,
+
+$$
+\yi=f(x_i)+\varepsilon_i.
+$$ {#eq-senal-ruido}
+
+La respuesta $\yi$ es el valor que observamos. La función $f$ describe el patrón estable
+que queremos aprender y $\varepsilon_i$ recoge la variación particular de la observación
+$i$.
+
+::: {#def-problema}
+## Problema de predicción supervisada
+
+En un problema de predicción supervisada observamos
+
+$$
+\data=\{(\xv_i,\yi)\}_{i=1}^{\nobs},
+\qquad \xv_i\in\Real^{\nfeat},\quad \yi\in\Real,
+$$
+
+y construimos una función $\modelh$ que produzca predicciones
+$\yhat=\modelh(\xv)$ para observaciones nuevas. Aprender no consiste en recordar los
+valores $\yi$, sino en aproximar la señal $f$ que los genera.
+:::
+
+## Sobreajuste
+
+Es importante señalar que el objetivo no es aprender individualmente cada $\yi$ sino la
+función subyacente $f(\mathbf{x})$. Para ilustrar este punto, supongamos que
+ajustemos una función
+que pase exactamente por todos los puntos. Esta operación se denomina **interpolación**.
+
+
+::: {#thm-interpolacion}
+## Interpolación exacta
+
+Sean $x_1,\ldots,x_{\nobs}$ valores distintos dos a dos. Para cualesquiera respuestas
+$y_1,\ldots,y_{\nobs}$ existe un polinomio $P$ de grado a lo sumo $\nobs-1$ tal que
+$P(x_i)=\yi$ para todo $i$.
+:::
+
+<!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
+
+El resultado se demuestra construyendo el polinomio explícitamente, y es el ejercicio del
+bloque B de la hoja 1. Lo que importa aquí es la consecuencia: **el enunciado vale para
+cualesquiera $\yi$**, incluidos unos generados por ruido puro. Un error de entrenamiento
+nulo se puede conseguir siempre y, por tanto, no distingue un modelo que ha aprendido de uno
+que no.
+
+```{python}
+#| code-fold: true
+from scipy import interpolate
+
+interpolador = interpolate.interp1d(x.numpy(), y.numpy(), kind="cubic")
+x_denso = torch.linspace(0, 10, 100)
+y_interpolada = interpolador(x_denso.numpy())
+```
+
+::: {#fig-interpolacion}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(x.numpy(), y.numpy(), **kw_puntos, label="datos")
+ax.plot(x_denso.numpy(), y_interpolada, color="#ff5700", linestyle="--",
+        label="ajuste interpolador")
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.tight_layout()
+```
+
+Una función que interpola exactamente la muestra y, por tanto, ajusta tanto la señal
+como el ruido.
+:::
+
+El problema aquí es que, mientras hemos ajustado perfectamente nuestros datos de
+entrenamiento, el modelo no ha aprendido la señal subyacente $f$. Si generamos nuevas
+observaciones con la misma señal pero con un ruido distinto, veremos que la función
+interpoladora no predice bien los nuevos datos.
+
+```{python}
+#| code-fold: true
+y_nueva = 2 * x_denso + 1 + 3 * torch.randn(len(x_denso))
+```
+
+::: {#fig-trampa}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(x_denso.numpy(), y_nueva.numpy(), **kw_puntos,
+           label="datos nuevos")
+ax.plot(x_denso.numpy(), y_interpolada, color="#ff5700", linestyle="--",
+        label="ajuste interpolador anterior")
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.tight_layout()
+```
+
+Datos nuevos, con la misma señal, comparados con el interpolador construido sobre la
+primera muestra.
+:::
+
+Las curvas innecesarias del interpolador no corresponden a ningún patrón de los datos
+nuevos. Al intentar ajustar el ruido de entrenamiento, hemos dejado de aprender la
+señal.
+
+::: {#def-sobreajuste}
+## Sobreajuste
+
+Hay **sobreajuste** (*overfitting*) cuando un modelo reproduce bien las observaciones con
+las que se ha ajustado y predice mal observaciones nuevas del mismo proceso, porque ha
+aprendido parte del ruido de la muestra en lugar de solo la señal.
+:::
+
+Es uno de los problemas centrales del aprendizaje supervisado y reaparecerá en todo el
+curso. Obsérvese que la definición compara dos cosas, el ajuste sobre los datos usados y el
+error sobre datos nuevos, y que la segunda no se puede medir con los datos de
+entrenamiento. Construir esa medida es el objeto del capítulo dedicado a evaluación.
+
+
+## Modelizar el ruido
+
+Para aprender la señal de @eq-senal-ruido necesitamos poder hablar matemáticamente del
+ruido.
+Vamos a **asumir** que $\varepsilon_1,\ldots,\varepsilon_n$ son variables aleatorias
+**independientes e idénticamente distribuidas** de cierta distribución. Esto significa que
+asumimos que cada nueva observación incorpora una
+extracción distinta de la misma distribución, sin que el ruido de una observación influya
+en el de las demás.
+
+La distribución de ruido que utilizaremos primero es la distribución normal o gaussiana.
+
+```{python}
+#| column: margin
+#| echo: false
+#| fig-cap: "La probabilidad de que una variable normal se encuentre entre $a$ y $b$ es el área bajo su densidad entre esos valores."
+#| label: fig-area-normal
+a, b = -0.3, 0.2
+mu, sigma = 0.0, 0.25
+x_normal = torch.linspace(-1, 1, 200)
+
+
+def densidad_normal(z, media, desviacion):
+    constante = desviacion * (2 * torch.pi) ** 0.5
+    return torch.exp(-0.5 * ((z - media) / desviacion) ** 2) / constante
+
+
+densidad = densidad_normal(x_normal, mu, sigma)
+fig, ax = plt.subplots(figsize=(3, 2))
+ax.plot(x_normal.numpy(), densidad.numpy(), color="black")
+ax.fill_between(
+    x_normal.numpy(),
+    densidad.numpy(),
+    where=((x_normal >= a) & (x_normal <= b)).numpy(),
+    color="#7aa6c2",
+    alpha=0.45,
+)
+ax.set(xlabel="$z$", ylabel=r"$p_\varepsilon(z;\mu,\sigma)$")
+plt.tight_layout()
+```
+
+::: {#def-normal}
+## Distribución normal
+
+Una variable aleatoria $\varepsilon$ sigue una distribución normal con media $\mu$ y
+desviación típica $\noise$ si
+
+$$
+\Prob{a\leq\varepsilon\leq b}
+=\int_a^b \pdf(z;\mu,\noise)\,\dd z,
+$$
+
+donde
+
+$$
+\pdf(z;\mu,\noise)
+=\frac{1}{\noise\sqrt{2\pi}}
+\exp\left(-\frac{(z-\mu)^2}{2\noise^2}\right).
+$$ {#eq-densidad-normal}
+
+Escribimos $\varepsilon\sim\Normal(\mu,\noise^2)$. La función $\pdf$ es su
+**densidad de probabilidad**.
+:::
+
+Como habéis visto en probabilidad, una densidad no es una probabilidad puntual. En una
+variable continua, las
+probabilidades se obtienen integrando la densidad sobre intervalos.
+
+::: {.nuevo}
+::: {#exr-densidad-mayor-que-uno}
+## Una densidad puede pasar de uno
+
+a. Evalúa @eq-densidad-normal en $z=\mu$ y comprueba que el resultado es
+   $1/(\noise\sqrt{2\pi})$.
+b. Calcula ese valor para $\noise=2$, $\noise=1$ y $\noise=0.2$.
+c. Uno de los tres pasa de uno. Explica en una frase por qué eso no contradice que las
+   probabilidades estén entre cero y uno, y encuentra a partir de qué valor de $\noise$
+   ocurre.
+:::
+:::
+
+La fórmula anterior se puede traducir directamente a código vectorizado.
+
+```{python}
+def densidad_normal(z, media, desviacion):
+    constante = desviacion * (2 * torch.pi) ** 0.5
+    return torch.exp(-0.5 * ((z - media) / desviacion) ** 2) / constante
+
+
+#---
+z = torch.tensor([0.0, 1.0, 2.0])
+densidad_normal(z, media=0.0, desviacion=1.0)
+#---
+```
+
+Los dos parámetros controlan la forma de la distribución: $\mu$ determina su centro y
+$\noise$ su dispersión.
+
+::: {#fig-densidades-normales}
+
+```{python}
+#| code-fold: true
+fig, ax = plt.subplots(figsize=(6, 4))
+for media, desviacion in [(0, 1), (0, 2), (2, 1)]:
+    soporte = torch.linspace(media - 4 * desviacion,
+                             media + 4 * desviacion, 200)
+    densidad = densidad_normal(soporte, media, desviacion)
+    ax.plot(
+        soporte.numpy(),
+        densidad.numpy(),
+        label=fr"$\mu={media},\ \sigma={desviacion}$",
+    )
+ax.set(xlabel="$z$", ylabel=r"$p_\varepsilon(z;\mu,\sigma)$")
+ax.legend()
+plt.tight_layout()
+```
+
+Densidades normales para distintas medias y desviaciones típicas.
+:::
+
+Podemos generar ruido normal con `torch.normal`. Al repetir muchas veces la extracción, el
+histograma de los valores se aproxima a la densidad de la distribución.
+
+```{python}
+#---
+media = 0.0
+desviacion = 1.0
+muestra_ruido = torch.normal(media, desviacion, size=(10,))
+torch.round(muestra_ruido, decimals=3)
+#---
+```
+
+```{python}
+#| column: margin
+#| echo: false
+#| fig-cap: "Histograma de 1000 extracciones normales comparado con la densidad que las genera."
+#| label: fig-histograma-normal
+muestras = torch.normal(media, desviacion, size=(1000,))
+soporte = torch.linspace(-4, 4, 200)
+fig, ax = plt.subplots(figsize=(3, 2))
+ax.hist(muestras.numpy(), bins=30, density=True, alpha=0.55,
+        color="#7aa6c2")
+ax.plot(
+    soporte.numpy(),
+    densidad_normal(soporte, media, desviacion).numpy(),
+    color="black",
+)
+ax.set(xlabel="$z$", ylabel="densidad")
+plt.tight_layout()
+```
+
+## Propiedades de la distribución normal
+
+La distribución normal tiene varias propiedades especialmente útiles para modelizar el
+ruido. Las demostraciones completas se encuentran en el
+[repaso de probabilidad](../curso/probabilidad.qmd).
+
+::: {#thm-traslacion-normal}
+## Traslación
+
+Sea $\varepsilon$ una variable normal con media $\mu$ y desviación típica $\noise$.
+Para cualquier constante $c$,
+
+$$
+\varepsilon+c\sim\Normal(\mu+c,\noise^2).
+$$
+
+Por tanto, sumar una constante desplaza el centro de la distribución, pero no cambia su
+desviación típica.
+:::
+
+<!-- demostracion: curso/probabilidad.qmd#thm-traslacion -->
+
+::: {#thm-escala-normal}
+## Escala
+
+Sea $\varepsilon$ una variable normal con media $\mu$ y desviación típica $\noise$.
+Para cualquier constante $a\neq0$,
+
+$$
+a\varepsilon\sim\Normal(a\mu,a^2\noise^2).
+$$
+
+Por tanto, multiplicar una variable normal por $a$ multiplica su media por $a$ y su
+desviación típica por $\abs{a}$.
+:::
+
+<!-- demostracion: curso/probabilidad.qmd#thm-escala -->
+
+Para cualquier variable continua con densidad $p$ se definen la esperanza y la varianza
+mediante
+
+$$
+\E{\varepsilon}=\int_{-\infty}^{\infty} z\,p(z)\,\dd z,
+\qquad
+\Var{\varepsilon}
+=\int_{-\infty}^{\infty}
+\bigl(z-\E{\varepsilon}\bigr)^2p(z)\,\dd z.
+$$
+
+La varianza mide la distancia cuadrática media respecto al centro.
+
+::: {#thm-momentos-normal}
+## Media y varianza de una variable normal
+
+Si $\varepsilon\sim\Normal(\mu,\noise^2)$, entonces:
+
+$$
+\E{\varepsilon}=\mu,
+\qquad
+\Var{\varepsilon}=\noise^2.
+$$
+:::
+
+<!-- demostracion: curso/probabilidad.qmd#thm-momentos -->
+
+Las demostraciones de @thm-traslacion-normal, @thm-escala-normal
+y @thm-momentos-normal se desarrollan en el repaso de probabilidad.
+
+## La normal estándar
+
+La distribución $\Normal(0,1)$ se denomina **normal estándar**. Si
+$Z\sim\Normal(0,1)$, las propiedades de escala y traslación permiten construir cualquier
+otra distribución normal a partir de $Z$. En concreto, definimos
+
+$$
+X=\noise Z+\mu.
+$$
+
+Por @thm-escala-normal y @thm-traslacion-normal,
+$X\sim\Normal(\mu,\noise^2)$. También podemos comprobar sus momentos directamente. Para
+la media,
+
+$$
+\E{X}=\E{\noise Z+\mu}=\noise\E{Z}+\mu=\mu.
+$$
+
+Para la varianza,
+
+$$
+\Var{X}
+=\Var{\noise Z+\mu}
+=\noise^2\Var{Z}
+=\noise^2.
+$$
+
+Hemos utilizado que $\E{Z}=0$, $\Var{Z}=1$, que sumar una constante no altera la
+varianza y que $\Var{aZ}=a^2\Var{Z}$.
+
+La misma construcción aparece en código: se genera primero ruido estándar y después se
+escala y se traslada.
+
+```{python}
+#---
+media = 3.0
+desviacion = 2.0
+n_muestras = 5
+
+ruido_transformado = desviacion * torch.randn(n_muestras) + media
+ruido_directo = torch.normal(media, desviacion, size=(n_muestras,))
+#---
+```
+
+## Ruido gaussiano
+
+Volvamos ahora al modelo señal + ruido:
+
+$$
+\yi=f(x_i)+\varepsilon_i.
+$$
+
+Si suponemos que los errores son independientes y
+$\varepsilon_i\sim\Normal(0,\noise^2)$, la propiedad de traslación implica que
+
+$$
+\yi\given x_i\sim\Normal\bigl(f(x_i),\noise^2\bigr).
+$$ {#eq-ruido-normal}
+
+Cada respuesta se modeliza así como una extracción de una distribución normal centrada
+en la señal. El nivel $\noise$ determina cuánto suelen alejarse los datos de ella.
+
+
+::: {#def-modelo-gaussiano}
+## Modelo gaussiano
+
+El modelo
+
+$$
+\yi=f(x_i)+\varepsilon_i,
+\qquad
+\varepsilon_i\overset{\mathrm{iid}}{\sim}\Normal(0,\noise^2),
+$$
+
+se denomina **modelo generador gaussiano**.
+:::
+
+Hasta ahora hemos utilizado la señal $f(x)=2x+1$. En un problema real $f$ es desconocida
+y debemos decidir en qué familia de funciones vamos a buscarla.
+
+::: {#def-hipotesis}
+## Clase de hipótesis y parámetros
+
+Una **clase de hipótesis** $\hyp$ es el conjunto de funciones permitidas para representar
+la señal. Si las funciones están indexadas por parámetros $\coef$, escribimos
+$\model(\xv;\coef)$.
+:::
+
+El primer caso será la familia de funciones afines.
+
+::: {#def-lineal-gaussiano}
+## Modelo lineal-gaussiano
+
+En una dimensión, un modelo gaussiano cuya señal es
+
+$$
+f_{\coef}(x_i)=\coefzero+w_1 x_i,
+\qquad \coef=(\coefzero,w_1)\T,
+$$ {#eq-senal-lineal-1d}
+
+se denomina **modelo lineal-gaussiano**. Con varios predictores se escribe
+
+$$
+\yi\given\xv_i
+\sim\Normal\bigl(\model(\xv_i;\coef),\noise^2\bigr),
+\qquad
+\model(\xv_i;\coef)
+=\coefzero+\sum_{j=1}^{\nfeat}\coefj x_{ij}.
+$$
+:::
+
+::: {#fig-modelo-generador}
+
+```{python}
+#| code-fold: true
+def dibuja_normal_vertical(ax, x0, media, sigma, ancho=0.4):
+    soporte = torch.linspace(-10, 10, 300)
+    perfil = torch.exp(-(soporte ** 2) / (2 * sigma ** 2))
+    perfil = ancho * perfil / perfil.max()
+    ax.plot(
+        (x0 + perfil).numpy(),
+        (media + soporte).numpy(),
+        color="#4c78a8",
+        alpha=0.5,
+    )
+
+
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.plot(x.numpy(), senal.numpy(), color="black", linestyle="--", lw=2,
+        label=r"señal: $f_{\mathbf{w}}(x_i)=2x_i+1$")
+for x0 in x:
+    dibuja_normal_vertical(ax, x0, 2 * x0 + 1, sigma=3)
+ax.scatter(x.numpy(), y.numpy(), **kw_puntos, label="datos")
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.tight_layout()
+```
+
+En el modelo lineal-gaussiano, cada dato es una extracción de una distribución normal
+centrada en la señal.
+:::
+
+Un valor grande de $\noise$ produce observaciones más alejadas de la señal y hace más
+difícil distinguirla. Un valor pequeño concentra las respuestas cerca de ella.
+
+### Distribuciones generadoras de datos
+
+Una de las razones principales para definir modelos es que nos proporcionan formas
+fundamentadas de pensar en lo que nuestros modelos deben aprender (la señal) y lo que deben
+ignorar (el ruido). Estos modelos también son muy útiles como modelos de dónde provienen los
+datos; es decir, como distribuciones generadoras de datos.
+
+::: {#def-distribucion-generadora}
+## Distribución generadora de datos
+
+Una **distribución generadora de datos**, también llamada **modelo generador**, es un
+modelo probabilístico que describe cómo se producen las observaciones mediante variables
+aleatorias y sus distribuciones. En regresión especifica, como mínimo, la distribución de
+$Y\given X=\xv$.
+:::
+
+El modelo lineal-gaussiano es un ejemplo sencillo. Para simular una respuesta, primero se
+calcula $f_{\coef}(x_i)$, después se extrae
+$\varepsilon_i\sim\Normal(0,\noise^2)$ y finalmente se suman ambas cantidades.
+
+
+Conviene separar desde ahora dos cosas que es fácil confundir.
+
+- El **proceso real** que genera los datos. Lo llamaremos $P^\star$. Existe, es fijo y no lo
+  elegimos nosotros. Es de donde salen las observaciones que tenemos y las que llegarán
+  mañana. Y es desconocido: nunca lo veremos.
+- La **familia de modelos** que proponemos. Sí la elegimos nosotros. El modelo
+  lineal-gaussiano es una familia: todas las rectas, con ruido normal de nivel $\noise$.
+
+Proponer una familia es formular una hipótesis sobre $P^\star$, y una hipótesis puede ser
+falsa. Que la señal real sea curva, o que el ruido tenga colas más pesadas que la normal, no
+impide ajustar el modelo; lo que hace es limitar hasta dónde puede llegar el mejor miembro
+de la familia. En el capítulo siguiente veremos qué consecuencias tiene eso exactamente.
+
+
+::: {.callout-warning title="El modelo generador es una hipótesis"}
+Al proponer un modelo lineal-gaussiano no afirmamos que el mecanismo real sea exactamente
+lineal ni que su ruido sea exactamente normal: adoptamos una aproximación matemática que
+podremos contrastar con los datos. Las conclusiones obtenidas son condicionales a esa
+elección y pueden degradarse si la señal, la distribución del ruido o la independencia
+asumidas no describen adecuadamente el proceso real.
+:::
+
+Una característica muy útil de los modelos generadores de datos es que también nos brindan
+herramientas para medir cómo de bien se ajusta nuestra señal aprendida a los datos
+observados, a través del concepto de verosimilitud.
+
+## Verosimilitud del modelo
+
+Bajo el modelo gaussiano, la densidad de una observación es
+
+$$
+\pdf\bigl(\yi;f_{\coef}(x_i),\noise\bigr)
+=\frac{1}{\noise\sqrt{2\pi}}
+\exp\left(
+-\frac{\bigl(\yi-f_{\coef}(x_i)\bigr)^2}{2\noise^2}
+\right).
+$$
+
+Como las observaciones son independientes, la densidad conjunta es el producto de las
+densidades individuales evaluadas en los valores observados.
+
+::: {#def-verosimilitud}
+## Verosimilitud
+
+La **verosimilitud** de los datos bajo el modelo lineal-gaussiano es
+
+$$
+\Lik(\coef,\noise)
+=\prod_{i=1}^{\nobs}
+\pdf\bigl(\yi;f_{\coef}(x_i),\noise\bigr).
+$$
+:::
+
+Cada factor mide la densidad que el modelo asigna a una observación. Bajo la independencia
+asumida, el producto es la densidad conjunta de toda la muestra. Por ello, comparar
+verosimilitudes permite comparar qué parámetros hacen más compatibles los datos observados
+con el modelo: preferiremos aquellos que asignan mayor densidad conjunta a lo que realmente
+hemos observado.
+
+### Estimador de máxima verosimilitud
+
+Para ajustar la señal elegiremos los parámetros que hacen más compatibles los datos
+observados con el modelo generador. En el modelo gaussiano, desplazar
+$f_{\coef}(x_i)$ lejos de $\yi$ reduce la densidad asignada a esa observación. Por tanto,
+maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar
+conjuntamente las respuestas observadas.
+
+Este criterio también posee buenas propiedades teóricas. Si el modelo está correctamente
+especificado, la señal verdadera pertenece a la clase de hipótesis, los parámetros son
+identificables y se cumplen ciertas condiciones regulares, el estimador de máxima
+verosimilitud es consistente: al crecer la muestra se aproxima al parámetro que generó los
+datos. Bajo esas mismas condiciones, su distribución para muestras grandes es
+aproximadamente normal y aprovecha eficientemente la información disponible. Estas
+propiedades dependen de los supuestos del modelo; no los validan por sí mismas.
+
+::: {#def-mle}
+## Estimación de máxima verosimilitud
+
+Un estimador de máxima verosimilitud es cualquier solución de
+
+$$
+(\coefhat,\noisehat)
+\in\argmax_{\coef,\noise>0}\Lik(\coef,\noise).
+$$
+
+Si $\noise$ se considera conocido, la optimización se realiza únicamente respecto a
+$\coef$.
+:::
+
+::: {.callout-note title="El nivel de ruido queda fuera del foco"}
+Lo que queremos aprender es la señal, así que
+trataremos $\noise$ como un parámetro secundario: lo mantendremos fijo mientras buscamos
+$\coef$ y volveremos a estimarlo al final del capítulo siguiente, donde se demuestra que
+esa decisión no altera la señal aprendida.
+:::
+
+El producto de muchas densidades puede producir números extremadamente pequeños, y esto no
+es una molestia teórica: un ordenador deja de distinguirlos de cero.
+
+::: {.nuevo}
+::: {#exr-verosimilitud-producto}
+## Por qué se toman logaritmos
+
+Con los datos simulados de este capítulo y $\noise=3$, evalúa `densidad_normal(y, senal, 3.0)`
+para obtener las $\nobs$ densidades individuales.
+
+a. Calcula el producto de las cinco primeras, de las diez primeras y de las veinte. Anota los
+   tres órdenes de magnitud.
+b. Calcula la suma de sus logaritmos en los mismos tres casos.
+c. Con densidades del orden de las que has obtenido, estima a partir de cuántas observaciones
+   el producto se redondearía a cero en coma flotante de doble precisión, que llega hasta
+   $10^{-308}$. Explica qué le pasaría entonces a una búsqueda que compare verosimilitudes.
+:::
+:::
+
+Para evitar este problema se utiliza la **log-verosimilitud**,
+
+$$
+\loglik(\coef,\noise)
+=\log\Lik(\coef,\noise)
+=\sum_{i=1}^{\nobs}
+\log\pdf\bigl(\yi;f_{\coef}(x_i),\noise\bigr),
+$$ {#eq-log-verosimilitud}
+
+que convierte productos en sumas y resulta más estable numéricamente.
+
+::: {#lem-log-argmax}
+## El logaritmo preserva el máximo
+
+Como el logaritmo es estrictamente creciente,
+
+$$
+\argmax_{\coef,\noise>0}\Lik(\coef,\noise)
+=\argmax_{\coef,\noise>0}\loglik(\coef,\noise)
+=\argmin_{\coef,\noise>0}\bigl[-\loglik(\coef,\noise)\bigr].
+$$
+:::
+
+::: {.proof}
+Sea $\vartheta=(\coef,\noise)$ y sea
+$\Theta=\Real^{\nfeat+1}\times(0,\infty)$ el espacio de parámetros. Para cualquier
+$\vartheta^\star\in\Theta$,
+
+$$
+\begin{aligned}
+\vartheta^\star\in\argmax_{\vartheta\in\Theta}\Lik(\vartheta)
+&\iff
+\Lik(\vartheta)\leq\Lik(\vartheta^\star)
+\quad\text{para todo }\vartheta\in\Theta \\
+&\iff
+\log\Lik(\vartheta)\leq\log\Lik(\vartheta^\star)
+\quad\text{para todo }\vartheta\in\Theta \\
+&\iff
+\vartheta^\star\in\argmax_{\vartheta\in\Theta}\loglik(\vartheta).
+\end{aligned}
+$$
+
+La segunda equivalencia se debe a que $\Lik(\vartheta)>0$ y el logaritmo es estrictamente
+creciente. Finalmente,
+
+$$
+\loglik(\vartheta)\leq\loglik(\vartheta^\star)
+\iff
+-\loglik(\vartheta^\star)\leq-\loglik(\vartheta),
+$$
+
+de modo que maximizar $\loglik$ equivale a minimizar $-\loglik$.
+:::
+
+En este primer experimento no estimaremos $\noise$: fijaremos
+`sigma_supuesto = 3.0`, el nivel de ruido utilizado para simular los datos, y buscaremos
+únicamente los parámetros $\coef=(w_0,w_1)\T$ de la señal. Esta simplificación permite
+aislar el problema de aprender $f_{\coef}$; el capítulo siguiente mostrará cómo estimar
+también $\noise$.
+
+Para esta búsqueda evaluamos directamente @eq-log-verosimilitud mediante
+`densidad_normal`. Calculamos su valor sobre una rejilla de posibles interceptos y
+pendientes y conservamos la mejor combinación.
+
+```{python}
+#---
+sigma_supuesto = 3.0  # <1>
+mejor_loglik = -float("inf")
+mejores_coeficientes = None
+
+for w0 in torch.linspace(-5, 5, 20):
+    for w1 in torch.linspace(-1, 3, 20):
+        prediccion = w0 + w1 * x  # <2>
+        loglik_actual = torch.log(
+            densidad_normal(y, prediccion, sigma_supuesto)
+        ).sum().item()  # <3>
+
+        if loglik_actual > mejor_loglik:  # <4>
+            mejor_loglik = loglik_actual
+            mejores_coeficientes = (w0.item(), w1.item())
+#---
+```
+
+1. Fijamos el nivel de ruido y preparamos las variables que almacenarán el mejor resultado.
+2. Para cada pareja $(w_0,w_1)$ de la rejilla, calculamos la señal candidata en todos los
+   valores de $x$.
+3. Evaluamos simultáneamente las densidades de todas las observaciones, tomamos sus
+   logaritmos y los sumamos para obtener la log-verosimilitud.
+4. Si la candidata mejora el valor anterior, guardamos su log-verosimilitud y sus
+   parámetros.
+
+::: {#fig-verosimilitud-rejilla}
+
+```{python}
+#| code-fold: true
+w0_hat, w1_hat = mejores_coeficientes
+
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(x.numpy(), y.numpy(), **kw_puntos, label="datos")
+ax.plot(
+    x.numpy(),
+    (w0_hat + w1_hat * x).numpy(),
+    color="#b33b2e",
+    linestyle="--",
+    lw=2,
+    label=r"ajuste: $\hat w_0+\hat w_1x$",
+)
+ax.plot(
+    x.numpy(), senal.numpy(), color="black", linestyle="--", lw=2,
+    label="señal verdadera",
+)
+ax.set(
+    xlabel="$x$",
+    ylabel="$y$",
+    title=(fr"$\ell={mejor_loglik:.2f}$, $\hat w_0={w0_hat:.2f}$, "
+           fr"$\hat w_1={w1_hat:.2f}$"),
+)
+ax.legend()
+plt.tight_layout()
+```
+
+Comparación entre la señal que generó los datos y la recta obtenida maximizando
+heurísticamente la verosimilitud sobre una rejilla.
+:::
+
+::: {.nuevo}
+::: {#exr-resolucion-rejilla}
+## La resolución de la rejilla
+
+La búsqueda ha recorrido `torch.linspace(-5, 5, 20)` para el intercepto y
+`torch.linspace(-1, 3, 20)` para la pendiente.
+
+a. Calcula la separación entre dos valores consecutivos de cada rejilla.
+b. Comprueba que ni $\coefzero=1$ ni $w_1=2$, los valores que generaron los datos, están
+   entre los que se han probado. Di cuáles son los más cercanos.
+c. Calcula cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la mitad
+   la separación de las dos rejillas.
+d. La rejilla nunca puede devolver un valor que no esté en ella. Explica en una frase qué
+   limitación tiene entonces este método, aparte de su coste.
+:::
+:::
+
+La señal aprendida se aproxima a la señal generadora. La búsqueda por rejilla permite
+ver qué significa maximizar la verosimilitud, pero deja de ser viable en cuanto aumenta
+el número de parámetros. A continuación desarrollaremos métodos sistemáticos para resolver
+este problema de aprendizaje.

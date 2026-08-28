@@ -13,8 +13,9 @@ RAIZ = Path(__file__).resolve().parent.parent
 SALIDA = RAIZ / "docs" / "live-notebooks"
 SALIDA.mkdir(parents=True, exist_ok=True)
 
+capitulos = sorted((RAIZ / "capitulos").glob("*.qmd"))
 fallos = []
-for qmd in sorted((RAIZ / "capitulos").glob("*.qmd")):
+for qmd in capitulos:
     print(f"-> {qmd.name}")
     r = subprocess.run(
         ["quarto", "render", str(qmd), "--profile", "notebooks",
@@ -24,6 +25,17 @@ for qmd in sorted((RAIZ / "capitulos").glob("*.qmd")):
     if r.returncode:
         fallos.append(qmd.name)
 
+# Quarto crea este redirect al renderizar un capítulo de un proyecto `book`, pero su
+# destino no existe dentro del directorio de cuadernos.
+(SALIDA / "index.html").unlink(missing_ok=True)
+
 if fallos:
     print("FALLARON: " + ", ".join(fallos), file=sys.stderr)
     sys.exit(1)
+
+# El directorio contiene solo artefactos generados: elimina cuadernos cuyos capítulos ya
+# no formen parte del curso.
+esperados = {f"{qmd.stem}.ipynb" for qmd in capitulos}
+for notebook in SALIDA.glob("*.ipynb"):
+    if notebook.name not in esperados:
+        notebook.unlink()

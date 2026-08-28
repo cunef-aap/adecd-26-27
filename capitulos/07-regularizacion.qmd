@@ -1,0 +1,39 @@
+---
+title: 'Regularización'
+subtitle: 'Controlar la complejidad mediante penalizaciones'
+---
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import style
+```
+:::
+
+## Del riesgo empírico al riesgo penalizado
+
+<!-- La penalización como preferencia entre ajustes de calidad similar. Estrena \reg, y hay que declarar que es lambda en las matemáticas y alpha= en scikit-learn, mientras que \lr es alpha. -->
+
+## Regularización ridge
+
+<!-- Penalización L2, contracción, estabilidad ante colinealidad y geometría. Absorbe por qué la escala importa: la penalización actúa sobre coeficientes, así que estandarizar es parte del modelo. Estrena \coefridge y \coefols. -->
+
+## Regularización lasso
+
+<!-- Penalización L1, coeficientes exactamente cero y diferencia entre predecir e interpretar. Estrena \pos{} y \softthr. -->
+
+## El parámetro de regularización
+
+<!-- Trayectorias de coeficientes desde sin penalización hasta modelo muy restringido. -->
+
+## Elegir lambda con validación cruzada
+
+<!-- Selección dentro de CV, reajuste posterior y evaluación final. Distinguir hiperparámetro de parámetro aprendido. El intercepto no se penaliza. -->
+
+## Caso práctico
+
+<!-- prostate.data: comparar no penalizado, ridge y lasso con las mismas particiones y métricas. Qué selección produce el lasso se cede al capítulo siguiente. -->
