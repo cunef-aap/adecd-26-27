@@ -1,28 +1,58 @@
 # Evaluación {.unnumbered}
 
-Evaluación continua **40 %** + examen final **60 %**. Hace falta un **5/10 en el examen
-final** para promediar. Asistencia obligatoria (80 %).
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
 
-| Actividad | Peso | Cuándo |
-|---|---|---|
-| Parcial 1 | 20 % | semanas 6-7 |
-| Proyecto | 20 % | semanas 12-13 |
-| Examen final | 60 % | convocatoria ordinaria |
+Evaluación continua **40 %** + examen final **60 %**. El examen final abarca todo el contenido
+de la asignatura y requiere una calificación mínima de **5 sobre 10** para optar al aprobado.
+La calificación en actas es sobre 10 puntos. Asistencia obligatoria (80 %).
 
-Los parciales **no son liberatorios**. La evaluación continua es **obligatoria para todo
-el mundo**, incluidos repetidores y estudiantes de intercambio.
+| Actividad | Peso |
+|---|---|
+| Parcial 1 | 20 % |
+| Proyecto | 20 % |
+| Examen final | 60 % |
 
-## Cómo sale la nota de actas
+Las fechas se anuncian en clase. Los trabajos y exámenes parciales **no son liberatorios**, y
+la evaluación continua es **obligatoria para todo el mundo**, incluidos repetidores y
+estudiantes de intercambio.
 
-Estas reglas proceden de la guía docente oficial.
+La asignatura tiene dos convocatorias, **ordinaria** y **extraordinaria**. Las reglas de la
+nota en actas son las mismas en las dos salvo en un punto, que es lo que separa los dos
+apartados siguientes.
+
+## Nota en actas en la convocatoria ordinaria
 
 | Situación | Nota en actas |
 |---|---|
-| Examen final **≥ 5** | 40 % continua + 60 % final |
+| Examen final **≥ 5** | 40 % continua + 60 % examen final |
 | Examen final **< 5** | la nota del examen final |
 | No se presenta al examen final | la nota de la evaluación continua, ponderada al 40 % |
 | No ha calificado ninguna prueba | No Presentado |
 
-En **convocatoria extraordinaria**, la nota de evaluación continua puede sustituirse,
-cuando favorezca al estudiante, por la ponderación entre la continua (40 %) y el examen
-final de la convocatoria ordinaria (60 %).
+La tercera fila conviene leerla despacio: quien no se presenta al examen final no obtiene un
+No Presentado, sino su evaluación continua ponderada al 40 %, que como máximo son 4 puntos.
+
+## Nota en actas en la convocatoria extraordinaria
+
+Las cuatro reglas de arriba se aplican igual, con el examen final de la extraordinaria en
+lugar del de la ordinaria. La única diferencia está en cómo entra la evaluación continua:
+puede sustituirse, **cuando favorezca al estudiante**, por la ponderación entre la propia
+evaluación continua (40 %) y el examen final de la convocatoria ordinaria (60 %).
+
+Es decir, llamando $C$ a la nota de la evaluación continua y $F_{\mathrm{ord}}$ a la del
+examen final de la ordinaria, la componente de continua que entra en la extraordinaria es
+
+$$
+C' = \max\bigl(C,\; 0.4\,C + 0.6\,F_{\mathrm{ord}}\bigr) ,
+$$
+
+y con ella la nota en actas es $0.4\,C' + 0.6\,F_{\mathrm{ext}}$ cuando el examen final de la
+extraordinaria llega a 5. La sustitución nunca baja la nota, porque solo se aplica si mejora:
+a quien hizo un examen ordinario mejor que su evaluación continua, esa nota le acompaña a la
+extraordinaria.
+
+Estas reglas proceden de la guía docente oficial de la asignatura.
