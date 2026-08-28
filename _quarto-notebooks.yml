@@ -18,7 +18,12 @@ format:
 
 filters:
   - quarto
-  - scripts/strip-code.lua
+  # Los cuadernos de los capitulos van COMPLETOS, sin huecos, decidido en agosto de 2026.
+  # Antes iba aqui strip-code.lua, que sustituia el codigo entre centinelas por un
+  # `# TODO: completar en clase`; ahora va strip-delims.lua, que solo borra las lineas
+  # `#---` y deja el codigo entero. Los centinelas siguen en las fuentes porque marcan
+  # el trozo que se escribe en directo al explicar.
+  - scripts/strip-delims.lua
   - scripts/restore-cells.lua
   - scripts/clean-eqref.lua
 

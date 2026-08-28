@@ -142,43 +142,31 @@ Las filas del índice se nombran hoy en prosa ("Teo. interpolación exacta"), no
 etiqueta del entorno, así que no hay forma mecánica de casarlas. Al añadir filas nuevas,
 poner la etiqueta entre paréntesis.
 
-## Presupuesto de huecos por sesión de laboratorio
+## Los cuadernos van completos
 
-La S3 dura 55 minutos y en ella se completa el cuaderno en directo. Medido sobre los
-capítulos escritos, un hueco consume entre seis y ocho minutos contando el enunciado, la
-escritura y la corrección, de modo que **el presupuesto es de 6 a 8 huecos por sesión S3**.
+**Decidido en agosto de 2026: los cuadernos de los capítulos llevan el código entero**, el
+mismo que los apuntes. Antes el perfil `notebooks` aplicaba `scripts/strip-code.lua`, que
+sustituía lo que hubiera entre centinelas `#---` por un `# TODO: completar en clase`; ahora
+aplica `scripts/strip-delims.lua`, que solo borra las líneas `#---` y deja el código.
 
-Cuántas sesiones le tocan a cada capítulo lo fija el reparto del curso: los capítulos 1 a 6
-duran dos semanas y tienen dos S3 cada uno; los capítulos 7, 8 y 9 duran una semana y tienen
-una. En total, quince sesiones.
+Los centinelas siguen en las fuentes y `check-centinelas.py` sigue comprobando que están
+emparejados, pero su significado ha cambiado: ya no marcan un hueco, marcan **el trozo que
+se escribe en directo al explicar**. Con eso, el presupuesto de huecos por sesión que había
+aquí deja de tener sentido y se retira.
 
-| Capítulo | Sesiones S3 | Huecos que le corresponden |
-|---|---:|---:|
-| 1 a 6 | 2 | 12 a 16 |
-| 7 a 9 | 1 | 6 a 8 |
+Lo que sí sigue vigente es qué bloques se explican, y eso se marca en el propio capítulo con
+`.codigo-clave`. El criterio está en `estilo-codigo.md`.
 
-Dos avisos del calendario: la S3 de la semana 9 es el taller de agentes, de modo que el
-capítulo 5 solo tiene tres S3 útiles en sus dos semanas, y la S3 de la semana 14 es el
-segundo taller, de modo que el capítulo 8 se queda sin laboratorio propio.
-
-Un capítulo por debajo de cuatro huecos por sesión deja la S3 medio vacía; por encima de
-nueve, no se acaba. El recuento se comprueba con
-
-    grep -c 'TODO: completar en clase' docs/live-notebooks/NN-nombre.ipynb
-
-**Deuda medida en agosto de 2026**: el capítulo 1 tiene 4 huecos para dos sesiones, es decir
-2 por sesión, y le faltan unos ocho. El 2 va a 5.5, el 3 a 6.5 y el 4 a 5.5, que están en
-rango. Los del 4 se reparten así: la API (`predict`, `mse`, `fit`), la partición, la mejor
-constante, las cuatro métricas, el error típico de la estimación, el experimento de
-selección, las tres piezas de la validación cruzada y el reajuste final con la comparación.
+**No decir en ningún sitio que el cuaderno tiene huecos.** Se corrigió en `curso/colab.qmd`
+y en la primera página del capítulo 1.
 
 ## Cuadernos
 
 **No se escriben a mano.** Salen del mismo `.qmd` del capítulo con `make notebooks`, que
 llama a `scripts/crear-ipynb.py`. Consecuencias al escribir el capítulo:
 
-- Lo que hay entre un par de `#---` se sustituye por `# TODO: completar en clase`. Ese es el
-  hueco del laboratorio.
+- Lo que hay entre un par de `#---` **se conserva**; solo desaparecen las dos líneas
+  centinela. Marcan el trozo que se escribe en directo al explicar, no un hueco.
 - El preámbulo `.content-hidden` **no llega**, así que el primer bloque visible lleva los
   imports reales y la semilla.
 - **Los macros del contrato de notación no hacen falta en el cuaderno: Pandoc los expande**
@@ -213,7 +201,7 @@ llama a `scripts/crear-ipynb.py`. Consecuencias al escribir el capítulo:
 `curso/colab.qmd` es la excepción a la regla anterior: es un anexo, no
 un capítulo, y genera cuaderno porque es donde se aprende a usar la herramienta. Está
 declarado a mano en `_quarto-notebooks.yml` y en `scripts/crear-ipynb.py`, que por defecto
-solo recorre `capitulos/*.qmd`. No tiene huecos `#---`: se ejecuta entero.
+solo recorre `capitulos/*.qmd`. Se ejecuta entero, como todos desde agosto de 2026.
 
 Después de tocar un capítulo, `make notebooks` y comprobar que el `.ipynb` tiene los
 `# TODO: completar en clase` donde tocan y que se ejecuta de arriba abajo en un entorno

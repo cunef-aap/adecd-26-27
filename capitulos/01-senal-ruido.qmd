@@ -45,8 +45,8 @@ componentes.
 
 {{< include ../assets/includes/_colab-link.qmd >}}
 
-[El código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que
-se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la
+[El cuaderno de este capítulo trae el mismo código que los apuntes, completo, para
+ejecutarlo y trastear con él. Lo que se pregunta de código en el examen está fijado en la
 presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores
 de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y
 ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una

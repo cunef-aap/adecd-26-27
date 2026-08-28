@@ -17,25 +17,52 @@ import style
 ```
 :::
 
-Este anexo es lo justo para abrir el cuaderno del capítulo 1, ejecutarlo y modificarlo. No
-enseña a programar: enseña a **ejecutar** y a **leer** el código del curso, que es lo que el
-examen pregunta. Cada bloque de abajo se puede copiar en una celda y lanzar. Si ya manejas
-Python, ve directamente al diagnóstico del final.
+Este anexo es lo justo para abrir un cuaderno del curso, ejecutarlo y modificarlo. No
+enseña a programar: enseña a **ejecutar** y a **leer** el código del curso, que es lo que
+el examen pregunta. Cada bloque de abajo se puede copiar en una celda y lanzar. Si ya
+manejas Python, ve directamente al diagnóstico del final.
+
+{{< include ../assets/includes/_colab-link.qmd >}}
 
 ## Google Colab
 
 Colab ejecuta Python en un ordenador de Google, desde el navegador. **No hay que instalar
-nada**: basta una cuenta de Google. Las bibliotecas del curso (`torch`, `numpy`,
+nada**: basta una cuenta de Google. Las bibliotecas del curso (`torch`, `numpy`, `pandas`,
 `matplotlib`, `scikit-learn`) ya vienen instaladas.
 
-Cada capítulo publica su cuaderno, con los huecos que se completan en el laboratorio, y el
-enlace lo abre en Colab. Este anexo también tiene el suyo, con todas las celdas de abajo:
+Cada capítulo publica su cuaderno con **el código completo**, el mismo que aparece en los
+apuntes, y el enlace de su primera página lo abre en Colab.
 
-{{< include ../assets/includes/_colab-link.qmd >}}
+## Guardar tu copia en Drive
 
-Guardar la copia no es una formalidad: el cuaderno que se abre desde el enlace es de solo
-lectura, así que puedes ejecutarlo, pero si cierras la pestaña **pierdes lo que hayas
-escrito**. La copia en tu Drive es tuya y se guarda sola.
+El cuaderno que se abre desde el enlace es **de solo lectura**. Puedes ejecutarlo, pero si
+cierras la pestaña pierdes todo lo que hayas escrito. Lo primero, siempre, es hacer tu
+copia. Son seis pasos y se hacen una vez por cuaderno:
+
+1. Abre el enlace del cuaderno. Colab lo carga en modo de solo lectura, y arriba verás un
+   aviso de que los cambios no se guardarán.
+2. Menú **Archivo**, arriba a la izquierda. Dentro, **Guardar una copia en Drive**. Si es
+   la primera vez, Google te pedirá permiso para conectar Colab con tu Drive: acéptalo.
+3. Colab abre una **pestaña nueva** con tu copia. Se reconoce porque el título empieza por
+   `Copia de`. La pestaña vieja, la de solo lectura, ya no hace falta y puedes cerrarla.
+4. Comprueba que estás en la copia antes de escribir nada. Si arriba sigue el aviso de solo
+   lectura, estás en la pestaña equivocada.
+5. Renombra el cuaderno con doble clic en el título, por ejemplo
+   `01 senal y ruido - mis notas`. No es obligatorio, pero después habrá siete cuadernos
+   llamados `Copia de` algo.
+6. A partir de aquí **se guarda solo** cada pocos segundos. No hay que pulsar nada.
+
+Tu copia vive en Google Drive, en una carpeta que Colab crea llamada **Colab Notebooks**.
+Para volver a ella otro día tienes dos caminos: entrar en `drive.google.com` y abrir esa
+carpeta, o abrir Colab e ir a **Archivo → Abrir cuaderno**, pestaña **Reciente**.
+
+::: {.callout-note}
+## Tu copia no se actualiza sola
+
+La copia es una foto del cuaderno en el momento en que la hiciste. Si más adelante se
+corrige o se amplía el cuaderno del capítulo en la web, tu copia sigue igual. Cuando eso
+pase, vuelve al enlace y haz una copia nueva; tus notas viejas siguen en la anterior.
+:::
 
 ## Celdas: ejecutar y estado
 
@@ -93,8 +120,8 @@ a, b, media, desviacion
 ## Funciones
 
 `def` define una función: un cálculo con nombre, que recibe argumentos y **devuelve** un
-valor con `return`. El cuerpo va indentado cuatro espacios, y la indentación es obligatoria:
-es lo que marca dónde empieza y acaba la función.
+valor con `return`. El cuerpo va indentado cuatro espacios, y la indentación es
+obligatoria: es lo que marca dónde empieza y acaba la función.
 
 ```{python}
 def recta(x, pendiente, intercepto):
@@ -130,8 +157,8 @@ mejor.
 ## Tensores: los vectores del curso
 
 Los datos del curso no son listas, son **tensores** de `torch`. Un tensor es una tira de
-números sobre la que las operaciones actúan **elemento a elemento**, sin escribir bucles. Es
-la razón de usarlos: la fórmula matemática se traduce casi literalmente.
+números sobre la que las operaciones actúan **elemento a elemento**, sin escribir bucles.
+Es la razón de usarlos: la fórmula matemática se traduce casi literalmente.
 
 ```{python}
 import torch
@@ -155,13 +182,6 @@ torch.randn(4)                  # 4 números al azar de una normal estándar
 torch.normal(3.0, 2.0, size=(4,))   # al azar, con media 3 y desviación 2
 ```
 
-Y las operaciones que hacen falta para leer el capítulo:
-
-```{python}
-y = torch.tensor([1.0, 4.0, 9.0])
-y.sum(), y.max(), len(y), y[0]
-```
-
 Dos métodos que aparecen en todas las celdas y conviene entender:
 
 - **`.item()`** saca el número de un tensor de **un solo** elemento, para poder usarlo como
@@ -170,7 +190,120 @@ Dos métodos que aparecen en todas las celdas y conviene entender:
   `matplotlib` al dibujar.
 
 ```{python}
+y = torch.tensor([1.0, 4.0, 9.0])
 y[0].item(), y.numpy()
+```
+
+## Seleccionar partes de un tensor
+
+Casi todo el curso consiste en separar unos datos de otros: entrenamiento de prueba, un
+bloque de validación del resto. Se hace de tres maneras.
+
+Por **posición**, con un índice o con una rebanada `desde:hasta`, donde el segundo extremo
+no entra:
+
+```{python}
+x = torch.linspace(0, 10, 8)
+x[0], x[-1], x[:3], x[2:5]
+```
+
+Por **condición**, con una máscara de verdadero y falso. La comparación se aplica elemento
+a elemento y devuelve otro tensor:
+
+```{python}
+grandes = x > 5
+grandes, x[grandes], grandes.sum().item()
+```
+
+Y por **lista de índices**, que es como se parten los datos en el capítulo 4:
+
+```{python}
+indices = torch.tensor([0, 2, 4])
+x[indices]
+```
+
+## Dos dimensiones: la matriz de datos
+
+A partir del capítulo 3 los datos no son una tira sino una **tabla**: una fila por
+observación y una columna por variable. En código es un tensor de dos dimensiones.
+
+```{python}
+X = torch.stack([torch.ones(5), torch.linspace(0, 4, 5)], dim=1)
+X
+```
+
+`.shape` da el tamaño como (filas, columnas). Mirar la forma de un tensor es el primer
+diagnóstico cuando algo no cuadra:
+
+```{python}
+X.shape
+```
+
+Se selecciona con dos índices separados por coma: primero filas, después columnas. Los dos
+puntos solos significan "todas":
+
+```{python}
+X[0], X[:, 1]
+```
+
+Y `@` es el producto matricial. Con él, la predicción de un modelo lineal se escribe en
+tres caracteres:
+
+```{python}
+w = torch.tensor([1.0, 2.0])
+X @ w
+```
+
+## Resumir y mostrar números
+
+Un tensor sabe resumirse solo, sin bucles:
+
+```{python}
+y = torch.tensor([2.0, 4.0, 4.0, 5.0])
+y.mean(), y.std(), y.sum(), len(y)
+```
+
+Los resultados del curso son números que hay que leer, así que conviene mostrarlos con los
+decimales justos. La `f` delante de las comillas permite meter un cálculo entre llaves, y
+`:.4f` pide cuatro decimales:
+
+```{python}
+error = ((y - y.mean()) ** 2).mean()
+print(f"error cuadrático medio: {error.item():.4f}")
+```
+
+## Leer datos con pandas
+
+Los conjuntos de datos del curso están publicados, así que se leen directamente desde su
+dirección, sin descargar nada a mano. La biblioteca es `pandas` y el resultado se llama
+**DataFrame**: una tabla con nombres de columna.
+
+```{python}
+import pandas as pd
+
+url = "https://cunef-aap.github.io/adecd-26-27/datos/airbnb_madrid.csv"
+datos = pd.read_csv(url)
+datos.shape
+```
+
+Quince mil filas y diecisiete columnas. `.head(3)` muestra las tres primeras:
+
+```{python}
+datos.head(3)
+```
+
+Una columna se saca por su nombre entre corchetes, y sabe resumirse igual que un tensor:
+
+```{python}
+datos["price"].mean()
+```
+
+Para pasar de una columna de `pandas` a un tensor de `torch`, que es lo que piden los
+modelos del curso:
+
+```{python}
+precio = torch.tensor(datos["price"].values, dtype=torch.float32)
+precio[:5]
 ```
 
 ## Dibujar una figura
@@ -220,7 +353,7 @@ detalle: cambiarla cambia qué modelo se elige.
 | `NameError: name 'x' is not defined` | no has ejecutado la celda donde se define `x`. Ejecuta de arriba abajo |
 | `IndentationError` | falta o sobra la indentación del cuerpo de un `def`, un `for` o un `if` |
 | `TypeError: only one element tensors can be converted...` | `.item()` sobre un tensor de varios elementos |
-| `ModuleNotFoundError` | en Colab no debería pasar; si pasa, ejecuta `!pip install torch` en una celda |
+| `RuntimeError: ... size mismatch` o `shapes cannot be multiplied` | un `@` entre tensores cuyas formas no encajan. Mira los dos `.shape` |
 | Ningún error, pero el número no cuadra | cambiaste una celda de arriba y no la volviste a ejecutar. Reiniciar y ejecutar todo |
 
 El último es el más traicionero, porque no avisa. Ante cualquier resultado que no cuadre, lo
@@ -231,23 +364,32 @@ primero es reiniciar y ejecutar todo.
 Veinte minutos, en Colab. No cuenta para la nota; sirve para saber si puedes seguir el
 laboratorio del capítulo 1.
 
-1. Abre un cuaderno nuevo, guarda una copia en tu Drive y ejecuta una celda con `2 + 2`.
+1. Abre un cuaderno nuevo, guarda una copia en tu Drive, compruébalo mirando el título, y
+   ejecuta una celda con `2 + 2`.
 2. Define `n = 50` y `sigma = 2.0` en una celda, y en **otra** celda calcula `n * sigma`.
    Reinicia el entorno y ejecuta solo la segunda: explica el error que sale.
 3. Crea `x = torch.linspace(0, 1, 5)` y calcula `3 * x - 1` sin escribir ningún bucle.
 4. Escribe una función `cuadrado(z)` que devuelva `z ** 2` y compruébala con un tensor.
 5. Genera diez números de una normal de media $5$ y desviación $2$, y calcula su media con
    `.mean()`.
-6. Dibuja los puntos $(x_i, y_i)$ con `x = torch.linspace(0, 5, 30)` e
-   `y = x ** 2 + torch.randn(30)`, con etiquetas en los dos ejes.
-7. Fija la semilla en `7`, genera `torch.randn(3)`, vuelve a fijarla en `7` y genera otros
-   tres. Di si coinciden y por qué.
+6. Del tensor `t = torch.linspace(0, 20, 11)`, saca los tres primeros valores, los mayores
+   que $12$, y cuántos hay de estos últimos.
+7. Construye una matriz de dos columnas con `torch.stack`: la primera de unos y la segunda
+   `torch.linspace(1, 4, 4)`. Di su `.shape` y calcula su producto por
+   `torch.tensor([2.0, 3.0])`.
+8. Muestra la media de ese producto con dos decimales, usando `print` y una `f`.
+9. Lee el fichero `airbnb_madrid.csv` desde su dirección, di cuántas filas tiene y calcula
+   la media de la columna `bedrooms`.
+10. Dibuja los puntos $(x_i, y_i)$ con `x = torch.linspace(0, 5, 30)` e
+    `y = x ** 2 + torch.randn(30)`, con etiquetas en los dos ejes.
+11. Fija la semilla en `7`, genera `torch.randn(3)`, vuelve a fijarla en `7` y genera otros
+    tres. Di si coinciden y por qué.
 
 ::: {.callout-note collapse="true"}
 ## Soluciones del diagnóstico
 
-1. `2 + 2` da `4`. Si la copia está bien hecha, arriba aparece "Copia de…" y los cambios se
-   guardan solos.
+1. `2 + 2` da `4`. Si la copia está bien hecha, el título empieza por "Copia de" y arriba ya
+   no aparece el aviso de solo lectura.
 2. `NameError: name 'n' is not defined`. Al reiniciar se borran todas las variables, y la
    segunda celda las necesita definidas. Es el error más frecuente del curso, y la causa
    casi siempre es haber ejecutado las celdas en otro orden.
@@ -258,8 +400,17 @@ laboratorio del capítulo 1.
 5. `muestra = torch.normal(5.0, 2.0, size=(10,))` y `muestra.mean()`. La media saldrá cerca
    de $5$, pero no exactamente: con diez números el azar todavía se nota, y de eso trata el
    capítulo 1.
-6. `fig, ax = plt.subplots()`, `ax.scatter(x.numpy(), y.numpy())` y
-   `ax.set(xlabel="$x$", ylabel="$y$")`. Sin los `.numpy()` da error.
-7. Coinciden. Fijar la semilla reinicia el generador al mismo punto, así que la secuencia de
-   números al azar se repite.
+6. `t[:3]` da `tensor([0., 2., 4.])`. La máscara `t > 12` selecciona con `t[t > 12]`, que da
+   `tensor([14., 16., 18., 20.])`, y `(t > 12).sum().item()` da `4`.
+7. `X = torch.stack([torch.ones(4), torch.linspace(1, 4, 4)], dim=1)` tiene
+   `.shape` igual a `torch.Size([4, 2])`, cuatro filas y dos columnas.
+   `X @ torch.tensor([2.0, 3.0])` da `tensor([ 5.,  8., 11., 14.])`.
+8. `print(f"{(X @ torch.tensor([2.0, 3.0])).mean().item():.2f}")` da `9.50`.
+9. `pd.read_csv(url).shape` da `(15000, 17)`, quince mil filas. La media de `bedrooms` sale
+   cerca de $1.4$. Si te sale `nan`, es porque la columna tiene valores ausentes: `.mean()`
+   de pandas los ignora, y el capítulo 5 trata precisamente de qué hacer con ellos.
+10. `fig, ax = plt.subplots()`, `ax.scatter(x.numpy(), y.numpy())` y
+    `ax.set(xlabel="$x$", ylabel="$y$")`. Sin los `.numpy()` da error.
+11. Coinciden. Fijar la semilla reinicia el generador al mismo punto, así que la secuencia
+    de números al azar se repite.
 :::
