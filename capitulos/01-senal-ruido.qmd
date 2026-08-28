@@ -861,9 +861,11 @@ heurísticamente la verosimilitud sobre una rejilla.
 La búsqueda ha recorrido `torch.linspace(-5, 5, 20)` para el intercepto y
 `torch.linspace(-1, 3, 20)` para la pendiente.
 
-a. Calcula la separación entre dos valores consecutivos de cada rejilla.
-b. Comprueba que ni $\coefzero=1$ ni $w_1=2$, los valores que generaron los datos, están
-   entre los que se han probado. Di cuáles son los más cercanos.
+a. Calcula la separación entre dos valores consecutivos de cada rejilla. Deja el resultado
+   en forma de fracción; no sale redondo.
+b. Un valor $v$ cae en la rejilla que empieza en $a$ con paso $h$ si $(v-a)/h$ es entero.
+   Comprueba con ese criterio que ni $\coefzero=1$ ni $w_1=2$, los valores que generaron los
+   datos, están entre los que se han probado.
 c. Calcula cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la mitad
    la separación de las dos rejillas.
 d. La rejilla nunca puede devolver un valor que no esté en ella. Explica en una frase qué

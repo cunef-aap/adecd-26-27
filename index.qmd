@@ -122,9 +122,7 @@ finalizar el curso, el estudiante deberá ser capaz de:
 
 ## Recorrido del curso
 
-Una vez delimitado el problema de regresión, el resto del curso responde de forma
-progresiva a cuatro preguntas: cómo se aprende una señal, cómo se evalúa sin optimismo,
-cómo se controla la complejidad y cómo se construye un flujo reproducible con datos reales.
+El curso se estructura como sigue:
 
 | Bloque del curso | Capítulos | Contenido principal |
 |---|---|---|
@@ -143,8 +141,7 @@ El desarrollo de cada tema combinará:
 3. Resolución de ejercicios conceptuales y matemáticos.
 4. Resolución de ejercicios con código.
 
-El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`,
-`scikit-learn` y PyTorch.
+El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`, `scikit-learn` y PyTorch.
 
 ### Qué se espera del código
 
@@ -201,8 +198,6 @@ La bibliografía de la asignatura es la que recoge la guía docente:
 - Deisenroth, Faisal y Ong, *Mathematics for Machine Learning* [-@deisenroth2020mathematics]
 - Boehmke y Greenwell, *Hands-On Machine Learning with R* [-@boehmke2019hands]
 - Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning* [-@hastie2009elements]
-
-Las referencias concretas se citan en cada capítulo.
 
 Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad
 
