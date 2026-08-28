@@ -22,6 +22,13 @@ book:
   # >>> fin del bloque generado
 format:
   html:
+    # MathJax 4 reparte su tipografia en un fichero por variante y los carga por separado:
+    # cuando el de la caligrafica no llega, `\mathcal{D}` sale como un cuadrado. La salida
+    # SVG lleva los trazos de cada glifo dentro del propio JS, de modo que no descarga
+    # ninguna tipografia y no puede faltar un glifo.
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js
     theme: [cosmo, assets/custom.scss]
     css: assets/styles.css
     # Sangra la continuacion de las lineas de codigo que se parten, segun la
