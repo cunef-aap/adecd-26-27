@@ -21,6 +21,7 @@ _spec = importlib.util.spec_from_file_location(
 _macros = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_macros)
 celda_notacion, nombres_definidos = _macros.celda, _macros.nombres_definidos
+sin_caligrafica = _macros.sin_caligrafica
 
 RAIZ = Path(__file__).resolve().parent.parent
 SALIDA = RAIZ / "docs" / "live-notebooks"
@@ -79,6 +80,7 @@ def notacion_al_principio(ruta: Path) -> None:
 
 
 SITIO = "https://cunef-aap.github.io/adecd-26-27"
+
 # El articulo va en la tabla: la referencia sustituye a `?@etiqueta` dentro de la prosa,
 # y sin articulo queda coja («de definicion Riesgo»).
 TIPOS = {"eq": "la ecuación", "thm": "el teorema", "def": "la definición",
@@ -120,7 +122,8 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
     def pagina(fuente: str) -> str | None:
         return f"{SITIO}/{fuente[:-4]}.html" if fuente in DENTRO else None
 
-    cuenta = {"marcas de revisión": 0, "referencias": 0, "enlaces internos": 0}
+    cuenta = {"marcas de revisión": 0, "referencias": 0, "enlaces internos": 0,
+              "letras caligráficas": 0}
 
     def sin_marca(m):
         cuenta["marcas de revisión"] += 1
@@ -151,6 +154,8 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
         t = re.sub(r'<a href="#([\w-]+)"[^>]*class="quarto-xref">(.*?)</a>', interno, t,
                    flags=re.S)
         t = re.sub(r"\?@([\w-]+)", referencia, t)
+        t, caligraficas = sin_caligrafica(t)
+        cuenta["letras caligráficas"] += caligraficas
         lineas = t.split("\n")
         c["source"] = [l + "\n" for l in lineas[:-1]] + [lineas[-1]]
     ruta.write_text(json.dumps(nb, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

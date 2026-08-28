@@ -22,6 +22,21 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 FUENTE = RAIZ / "assets" / "includes" / "_macros.tex"
 
+# MathJax parte su tipografia en un fichero por variante y los carga por separado. Cuando
+# el de la variante caligrafica no llega, `\mathcal{D}` sale como un cuadrado. La fuente
+# base siempre carga, asi que en el cuaderno las letras caligraficas pasan a redonda.
+# Solo afecta al cuaderno: los apuntes y el PDF se renderizan con KaTeX, que escribe la
+# letra ASCII con una clase de fuente y no depende de esto. A False para volver atras.
+CALIGRAFICA_A_REDONDA = True
+
+
+def sin_caligrafica(texto: str) -> tuple[str, int]:
+    """Pasa `\mathcal{L}` a `\mathrm{L}`. Devuelve el texto y cuantas ha cambiado."""
+    if not CALIGRAFICA_A_REDONDA:
+        return texto, 0
+    return re.subn(r"\\mathcal\{(\w)\}", r"\\mathrm{\1}", texto)
+
+
 AVISO = (
     "<!-- Notacion del curso: define los macros de LaTeX del libro para que la matematica\n"
     "     de este cuaderno, y la de cualquier celda que se escriba en clase, se vea bien\n"
@@ -53,7 +68,8 @@ def traduce(texto: str) -> list[str]:
 
 def bloque() -> str:
     """Las definiciones en un solo `$...$`, que MathJax procesa y no dibuja."""
-    return "$" + "".join(traduce(FUENTE.read_text(encoding="utf-8"))) + "$"
+    definiciones = "".join(traduce(FUENTE.read_text(encoding="utf-8")))
+    return "$" + sin_caligrafica(definiciones)[0] + "$"
 
 
 def celda() -> str:
