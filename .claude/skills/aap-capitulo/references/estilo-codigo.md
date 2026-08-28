@@ -355,11 +355,11 @@ envuelto en una de estas dos marcas, que el CSS rotula:
     ```
     :::
 
-- **`.codigo-clave`**, rotulado «se explica en clase · exigible». El bloque traduce a código
+- **`.codigo-clave`**, rotulado "se explica en clase · exigible". El bloque traduce a código
   una definición o un resultado del capítulo. Va **sin** `#| code-fold: true`, para que se
   lea abierto, y no debe contener nada que no sea exigible: si necesita una línea de estilo
   de figura, esa línea se muda al primer bloque de dibujo que la use.
-- **`.codigo-apoyo`**, rotulado «no exigible · figura». Prepara o dibuja una figura. Va
+- **`.codigo-apoyo`**, rotulado "no exigible · figura". Prepara o dibuja una figura. Va
   **con** `#| code-fold: true`, de modo que el plegado y la marca dicen lo mismo.
 
 No se marcan los bloques que no se ven: el preámbulo `.content-hidden` y los que llevan
