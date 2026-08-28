@@ -563,6 +563,27 @@ el capítulo más corto del curso. El mapa ya pedía "árbol de regresión breve
 
 ---
 
+### `curso/colab.qmd` · primera sesión, antes del capítulo 1
+
+No es un capítulo. Es el anexo de herramienta, escrito en agosto de 2026 porque los alumnos
+llegan sin haber ejecutado Python. Se proyecta en la primera sesión, justo después de la
+presentación, y se publica como apéndice.
+
+**Contenido**: Colab y guardar copia en Drive · celdas, orden de ejecución y estado
+compartido · variables · listas, tuplas y desempaquetado · funciones con argumentos por
+nombre · `for` e `if` · tensores de `torch` y operaciones elemento a elemento, con `.item()`
+y `.numpy()` · el patrón `fig, ax = plt.subplots()` · la semilla · una tabla con los cinco
+errores del primer día · diagnóstico de siete tareas con soluciones plegables.
+**Alcance deliberado**: es exactamente la superficie de Python del capítulo 1, sacada de sus
+dieciséis celdas. Nada más. No enseña a programar, enseña a ejecutar y a leer.
+**Genera cuaderno** y no tiene huecos `#---`: se ejecuta entero. Es la única página de
+`curso/` que ejecuta Python, y por eso su preámbulo oculto necesita
+`sys.path.insert(0, "../capitulos")` para encontrar `style.py`.
+**Enlaza con la introducción** por dos sitios: el primer punto de "Preparación inicial" y el
+párrafo inicial de "Qué se espera del código".
+
+---
+
 ### `curso/proyecto.qmd` · sin semana asignada
 
 No es un capítulo. Es la guía del proyecto (semanas 10 a 13, 20 % de la nota) y el cierre del

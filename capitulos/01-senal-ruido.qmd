@@ -1,6 +1,7 @@
 ---
 title: 'Datos = señal + ruido'
 subtitle: 'Distribuciones generadoras para formular un problema de aprendizaje'
+cuaderno: 01-senal-ruido.ipynb
 ---
 
 ::: {.content-hidden}
@@ -41,6 +42,8 @@ señal sin memorizar el ruido.
 
 Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos
 componentes.
+
+{{< include ../assets/includes/_colab-link.qmd >}}
 
 [El código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que
 se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la

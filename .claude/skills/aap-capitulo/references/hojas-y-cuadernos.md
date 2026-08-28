@@ -181,14 +181,22 @@ llama a `scripts/crear-ipynb.py`. Consecuencias al escribir el capítulo:
   hueco del laboratorio.
 - El preámbulo `.content-hidden` **no llega**, así que el primer bloque visible lleva los
   imports reales y la semilla.
-- El enlace a Colab está **retirado** de la cabecera de los capítulos desde agosto de 2026.
-  `assets/includes/_colab-link.qmd` y la variable `COLLAB_URL` de `_environment` siguen en su
-  sitio, de modo que reactivarlo es volver a poner la línea del include en los nueve
-  capítulos. Los cuadernos se siguen generando.
+- **El enlace a Colab se activa por documento**, desde agosto de 2026. Dos pasos: declarar
+  `cuaderno: <nombre>.ipynb` en la cabecera YAML del `.qmd` y poner
+  `{{< include ../assets/includes/_colab-link.qmd >}}` donde deba salir el enlace. El include
+  construye la URL con `{{< meta cuaderno >}}` sobre el repositorio público, y se oculta en
+  formato `ipynb` para que el cuaderno no se enlace a sí mismo. Lo tienen el capítulo 1 y
+  `curso/colab.qmd`; los demás capítulos lo ganan cuando se publiquen.
+  **No usar `QUARTO_DOCUMENT_FILE`**: Quarto no lo define al renderizar, comprobado.
 - Los divs de referencia cruzada se desanidan con `restore-cells.lua`, de modo que el código
   dentro de `::: {#fig-...}` sí sale como celda ejecutable.
 - El cuaderno se genera con `--no-execute`, así que un error de ejecución no se detecta ahí.
   Se detecta en `make sitio`.
+
+`curso/colab.qmd` es la excepción a «los cuadernos salen de los capítulos»: es un anexo, no
+un capítulo, y genera cuaderno porque es donde se aprende a usar la herramienta. Está
+declarado a mano en `_quarto-notebooks.yml` y en `scripts/crear-ipynb.py`, que por defecto
+solo recorre `capitulos/*.qmd`. No tiene huecos `#---`: se ejecuta entero.
 
 Después de tocar un capítulo, `make notebooks` y comprobar que el `.ipynb` tiene los
 `# TODO: completar en clase` donde tocan y que se ejecuta de arriba abajo en un entorno

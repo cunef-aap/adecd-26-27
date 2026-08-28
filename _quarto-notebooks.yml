@@ -6,6 +6,9 @@ project:
   # cualquier .qmd que haya quedado allí.
   render:
     - capitulos/*.qmd
+    # El anexo de Colab tambien genera cuaderno: es el primer contacto con la herramienta
+    # y se sigue ejecutandolo.
+    - curso/colab.qmd
 
 format:
   ipynb:

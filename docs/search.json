@@ -64,7 +64,17 @@
     "href": "index.html#cómo-se-trabaja",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Cómo se trabaja",
-    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará explicación teórica, resolución de problemas y trabajo con datos. En conjunto, el curso incluirá:\n\nexposiciones y derivaciones matemáticas que justifiquen los métodos;\nejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;\nlaboratorios en los que se implementen los procedimientos y se analicen sus resultados;\ntrabajo autónomo, tutorías y un proyecto aplicado.\n\nLos apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch.\n\nQué se espera del código\nLos apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel y bolígrafo, así que de código se pregunta la decisión, no el teclado. En concreto, puede pedirse:\n\nleer un fragmento y decir qué calcula: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;\ndiagnosticar un fragmento con errores de método y justificar cada uno, que es el bloque con más peso de código en el examen;\ncompletar una o dos líneas marcadas, cuando la línea es una fórmula del curso;\npredecir el efecto de un cambio: qué le pasa al número si se intercambian dos índices o se ajusta con el conjunto equivocado;\nordenar los pasos de un protocolo dados desordenados.\n\nNo se pide escribir un programa desde cero, ni recordar la firma de ninguna función: toda llamada que no esté en esta lista se da escrita en el enunciado.\ntorch.linalg.lstsq(A, b).solution                          # mínimos cuadrados\nX @ w                                                      # predicción lineal\n((pred - y) ** 2).mean()                                   # riesgo cuadrático\nnp.std(v, ddof=1) / np.sqrt(len(v))                        # error típico de una media\nKFold(n_splits=5, shuffle=True, random_state=42).split(X)   # bloques de validación cruzada\nX[indices][:, columnas]                                    # filas y columnas\nw -= lr * grad                                             # paso de descenso de gradiente\nLa evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las reglas completas están en la sección de evaluación.\nLa asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.",
+    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará explicación teórica, resolución de problemas y trabajo con datos. En conjunto, el curso incluirá:\n\nexposiciones y derivaciones matemáticas que justifiquen los métodos;\nejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;\nlaboratorios en los que se implementen los procedimientos y se analicen sus resultados;\ntrabajo autónomo, tutorías y un proyecto aplicado.\n\nLos apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch.\n\nQué se espera del código\nNo se presupone experiencia con Python. El anexo de ejecutar código cubre lo necesario para empezar: abrir un cuaderno en Colab, ejecutar celdas y las construcciones del lenguaje que aparecen en los capítulos. Se explica en la primera sesión.\nLos apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel y bolígrafo, así que de código se pregunta la decisión, no el teclado. En concreto, puede pedirse:\n\nleer un fragmento y decir qué calcula: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;\ndiagnosticar un fragmento con errores de método y justificar cada uno, que es el bloque con más peso de código en el examen;\ncompletar una o dos líneas marcadas, cuando la línea es una fórmula del curso;\npredecir el efecto de un cambio: qué le pasa al número si se intercambian dos índices o se ajusta con el conjunto equivocado;\nordenar los pasos de un protocolo dados desordenados.\n\nNo se pide escribir un programa desde cero, ni recordar la firma de ninguna función: toda llamada que no esté en esta lista se da escrita en el enunciado.\ntorch.linalg.lstsq(A, b).solution                          # mínimos cuadrados\nX @ w                                                      # predicción lineal\n((pred - y) ** 2).mean()                                   # riesgo cuadrático\nnp.std(v, ddof=1) / np.sqrt(len(v))                        # error típico de una media\nKFold(n_splits=5, shuffle=True, random_state=42).split(X)   # bloques de validación cruzada\nX[indices][:, columnas]                                    # filas y columnas\nw -= lr * grad                                             # paso de descenso de gradiente",
+    "crumbs": [
+      "Presentación de la asignatura"
+    ]
+  },
+  {
+    "objectID": "index.html#evaluación-y-asistencia",
+    "href": "index.html#evaluación-y-asistencia",
+    "title": "Aprendizaje Automático: Predicción",
+    "section": "Evaluación y asistencia",
+    "text": "Evaluación y asistencia\nLa evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las reglas completas, incluidas las de la convocatoria extraordinaria, están en la sección de evaluación.\nLa asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -74,7 +84,7 @@
     "href": "index.html#preparación-inicial",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Preparación inicial",
-    "text": "Preparación inicial\nAntes de comenzar el capítulo 1 se recomienda:\n\nrepasar el anexo de cálculo y álgebra y hacer el diagnóstico que cierra el anexo;\nhacer lo mismo con el repaso de probabilidad, que también termina con un diagnóstico;\nleer la sección de evaluación.",
+    "text": "Preparación inicial\nAntes de comenzar el capítulo 1 se recomienda:\n\ntrabajar el anexo de ejecutar código, que enseña a abrir un cuaderno en Google Colab, a ejecutar celdas y las siete construcciones de Python que usa el curso; se explica en la primera sesión y cierra con un diagnóstico;\nrepasar el anexo de cálculo y álgebra y hacer el diagnóstico que cierra el anexo;\nhacer lo mismo con el repaso de probabilidad, que también termina con un diagnóstico;\nleer la sección de evaluación.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -104,7 +114,7 @@
     "href": "capitulos/01-senal-ruido.html",
     "title": "1  Datos = señal + ruido",
     "section": "",
-    "text": "Introducción: datos, señal y ruido\nRecordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos observados\n\\[\n\\mathcal{D}=\\{(\\mathbf{x}_i,y_i)\\}_{i=1}^{n},\n\\]\nLa tarea consiste en aprender una función \\(f\\) que, a partir de las características de un caso nuevo, produzca una predicción \\(\\widehat y=f(\\mathbf{x})\\) que se aproxime a su respuesta \\(y\\):\n\\[\n\\widehat y=f(\\mathbf{x})\\approx y.\n\\]\nEl principal problema del aprendizaje supervisado es que la relación entre \\(\\mathbf{x}\\) e \\(y\\) de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la señal sin memorizar el ruido.\nPara entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes.\nEl código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una función.\nCódigo\nimport torch\nfrom matplotlib import pyplot as plt\n\ntorch.manual_seed(42)\n\nn = 20\nx = torch.linspace(0, 10, n)\nsenal = 2 * x + 1\nruido = 3 * torch.randn(n)\ny = senal + ruido\n\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.65)\nPodemos pensar que cada dato contiene una señal, expresada mediante una relación \\(y\\approx f(x)\\), y un ruido que oculta parcialmente esa relación. Esquemáticamente,\n\\[\ny_i=f(x_i)+\\varepsilon_i.\n\\tag{1.1}\\]\nLa respuesta \\(y_i\\) es el valor que observamos. La función \\(f\\) describe el patrón estable que queremos aprender y \\(\\varepsilon_i\\) recoge la variación particular de la observación \\(i\\).",
+    "text": "Introducción: datos, señal y ruido\nRecordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos observados\n\\[\n\\mathcal{D}=\\{(\\mathbf{x}_i,y_i)\\}_{i=1}^{n},\n\\]\nLa tarea consiste en aprender una función \\(f\\) que, a partir de las características de un caso nuevo, produzca una predicción \\(\\widehat y=f(\\mathbf{x})\\) que se aproxime a su respuesta \\(y\\):\n\\[\n\\widehat y=f(\\mathbf{x})\\approx y.\n\\]\nEl principal problema del aprendizaje supervisado es que la relación entre \\(\\mathbf{x}\\) e \\(y\\) de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la señal sin memorizar el ruido.\nPara entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes.\nAbre el cuaderno de esta página en Google Colab. Lo primero, Archivo → Guardar una copia en Drive.\nEl código de los apuntes está completo y es la referencia; el del cuaderno tiene huecos que se rellenan en el laboratorio. Lo que se pregunta de código en el examen está fijado en la presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una función.\nCódigo\nimport torch\nfrom matplotlib import pyplot as plt\n\ntorch.manual_seed(42)\n\nn = 20\nx = torch.linspace(0, 10, n)\nsenal = 2 * x + 1\nruido = 3 * torch.randn(n)\ny = senal + ruido\n\nkw_puntos = dict(color=\"black\", facecolors=\"none\", s=40, alpha=0.65)\nPodemos pensar que cada dato contiene una señal, expresada mediante una relación \\(y\\approx f(x)\\), y un ruido que oculta parcialmente esa relación. Esquemáticamente,\n\\[\ny_i=f(x_i)+\\varepsilon_i.\n\\tag{1.1}\\]\nLa respuesta \\(y_i\\) es el valor que observamos. La función \\(f\\) describe el patrón estable que queremos aprender y \\(\\varepsilon_i\\) recoge la variación particular de la observación \\(i\\).",
     "crumbs": [
       "Fundamentos del aprendizaje predictivo",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Datos = señal + ruido</span>"
@@ -262,6 +272,127 @@
     "crumbs": [
       "Hojas de problemas",
       "Hoja 1"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html",
+    "href": "curso/colab.html",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "",
+    "text": "Google Colab\nEste anexo es lo justo para abrir el cuaderno del capítulo 1, ejecutarlo y modificarlo. No enseña a programar: enseña a ejecutar y a leer el código del curso, que es lo que el examen pregunta. Cada bloque de abajo se puede copiar en una celda y lanzar. Si ya manejas Python, ve directamente al diagnóstico del final.\nColab ejecuta Python en un ordenador de Google, desde el navegador. No hay que instalar nada: basta una cuenta de Google. Las bibliotecas del curso (torch, numpy, matplotlib, scikit-learn) ya vienen instaladas.\nCada capítulo publica su cuaderno, con los huecos que se completan en el laboratorio, y el enlace lo abre en Colab. Este anexo también tiene el suyo, con todas las celdas de abajo:\nAbre el cuaderno de esta página en Google Colab. Lo primero, Archivo → Guardar una copia en Drive.\nLo primero que hay que hacer al abrirlo:\nArchivo → Guardar una copia en Drive.\nEl cuaderno que se abre desde el enlace es de solo lectura: puedes ejecutarlo, pero si cierras la pestaña pierdes lo que hayas escrito. La copia en tu Drive es tuya y se guarda sola.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#celdas-ejecutar-y-estado",
+    "href": "curso/colab.html#celdas-ejecutar-y-estado",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Celdas: ejecutar y estado",
+    "text": "Celdas: ejecutar y estado\nUn cuaderno es una lista de celdas. Las de código se ejecutan y las de texto solo se leen.\n\nPara ejecutar una celda: Mayús + Intro. Ejecuta y salta a la siguiente.\nEl número entre corchetes a la izquierda, [7], dice que esa celda fue la séptima que se ejecutó. Es el orden de ejecución, no el orden en que está escrita en la página.\nLas celdas comparten estado: una variable definida en una celda sigue existiendo en las siguientes. Por eso el orden importa.\nCuando algo deja de tener sentido: Entorno de ejecución → Reiniciar y ejecutar todo. Eso borra todas las variables y vuelve a ejecutar de arriba abajo, que es el estado limpio.\n\nEsa última opción resuelve la mayoría de los problemas del primer día.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#variables",
+    "href": "curso/colab.html#variables",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Variables",
+    "text": "Variables\nUna variable es un nombre para un valor. Se asigna con =, que no es igualdad matemática sino “guarda esto con este nombre”.\n\nn = 20\nsigma = 3.0\ntitulo = \"señal más ruido\"\nprint(n, sigma, titulo)\n\n20 3.0 señal más ruido\n\n\n20 es un entero y 3.0 un decimal; el punto es la diferencia. Los textos van entre comillas. La última expresión de una celda se muestra sola, sin print:\n\nn * sigma\n\n60.0",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#listas-tuplas-y-desempaquetado",
+    "href": "curso/colab.html#listas-tuplas-y-desempaquetado",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Listas, tuplas y desempaquetado",
+    "text": "Listas, tuplas y desempaquetado\nUna lista se escribe entre corchetes y se indexa desde cero:\n\npesos = [0.2, 0.2, 0.6]\npesos[0], pesos[2], len(pesos)\n\n(0.2, 0.6, 3)\n\n\nLos paréntesis hacen una tupla, que funciona igual pero no se puede modificar. Y una asignación puede repartir varios valores a la vez, algo que el curso usa mucho:\n\na, b = -0.3, 0.2\nmedia, desviacion = 0.0, 1.0\na, b, media, desviacion\n\n(-0.3, 0.2, 0.0, 1.0)",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#funciones",
+    "href": "curso/colab.html#funciones",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Funciones",
+    "text": "Funciones\ndef define una función: un cálculo con nombre, que recibe argumentos y devuelve un valor con return. El cuerpo va indentado cuatro espacios, y la indentación es obligatoria: es lo que marca dónde empieza y acaba la función.\n\ndef recta(x, pendiente, intercepto):\n    return pendiente * x + intercepto\n\nrecta(2.0, 3.0, 1.0)\n\n7.0\n\n\nLos argumentos se pueden pasar por nombre, y así se lee mucho mejor cuando son varios:\n\nrecta(2.0, intercepto=1.0, pendiente=3.0)\n\n7.0",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#bucles-y-condiciones",
+    "href": "curso/colab.html#bucles-y-condiciones",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Bucles y condiciones",
+    "text": "Bucles y condiciones\nfor repite algo para cada elemento de una lista, y if decide. Los dos usan indentación.\n\nmejor = -100.0\nfor candidato in [1.5, 2.0, 2.5]:\n    valor = -(candidato - 2.0) ** 2\n    if valor &gt; mejor:\n        mejor = valor\n        mejor_candidato = candidato\n\nmejor_candidato, mejor\n\n(2.0, -0.0)\n\n\nEse bucle es, en pequeño, el del final del capítulo 1: probar candidatos y quedarse con el mejor.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#tensores-los-vectores-del-curso",
+    "href": "curso/colab.html#tensores-los-vectores-del-curso",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Tensores: los vectores del curso",
+    "text": "Tensores: los vectores del curso\nLos datos del curso no son listas, son tensores de torch. Un tensor es una tira de números sobre la que las operaciones actúan elemento a elemento, sin escribir bucles. Es la razón de usarlos: la fórmula matemática se traduce casi literalmente.\n\nimport torch\n\nx = torch.tensor([0.0, 1.0, 2.0, 3.0])\n2 * x + 1\n\ntensor([1., 3., 5., 7.])\n\n\nCompáralo con una lista: 2 * [0.0, 1.0] repetiría la lista en lugar de multiplicar. Las tres formas de crear tensores que usa el capítulo 1:\n\ntorch.linspace(0, 10, 5)        # 5 valores igualmente espaciados de 0 a 10\n\ntensor([ 0.0000,  2.5000,  5.0000,  7.5000, 10.0000])\n\n\n\ntorch.randn(4)                  # 4 números al azar de una normal estándar\n\ntensor([-0.2918, -0.4349,  1.4200, -0.0751])\n\n\n\ntorch.normal(3.0, 2.0, size=(4,))   # al azar, con media 3 y desviación 2\n\ntensor([2.8230, 5.1166, 0.3255, 5.4390])\n\n\nY las operaciones que hacen falta para leer el capítulo:\n\ny = torch.tensor([1.0, 4.0, 9.0])\ny.sum(), y.max(), len(y), y[0]\n\n(tensor(14.), tensor(9.), 3, tensor(1.))\n\n\nDos métodos que aparecen en todas las celdas y conviene entender:\n\n.item() saca el número de un tensor de un solo elemento, para poder usarlo como un decimal normal. Sobre un tensor de varios da error.\n.numpy() convierte el tensor en un array de numpy, que es lo que entiende matplotlib al dibujar.\n\n\ny[0].item(), y.numpy()\n\n(1.0, array([1., 4., 9.], dtype=float32))",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#dibujar-una-figura",
+    "href": "curso/colab.html#dibujar-una-figura",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Dibujar una figura",
+    "text": "Dibujar una figura\nTodas las figuras del curso siguen el mismo patrón de tres líneas: crear los ejes, dibujar sobre ellos y etiquetar.\n\nfrom matplotlib import pyplot as plt\n\nx = torch.linspace(0, 10, 20)\ny = 2 * x + 1 + 3 * torch.randn(20)\n\nfig, ax = plt.subplots(figsize=(5, 3))\nax.scatter(x.numpy(), y.numpy(), color=\"black\", facecolors=\"none\",\n           label=\"datos\")\nax.plot(x.numpy(), (2 * x + 1).numpy(), color=\"#ff5700\", label=\"señal\")\nax.set(xlabel=\"$x$\", ylabel=\"$y$\")\nax.legend()\nplt.tight_layout()\n\n\n\n\n\n\n\n\nax.scatter pinta puntos y ax.plot una línea. Fíjate en los .numpy(): sin ellos matplotlib no sabe dibujar un tensor.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#la-semilla",
+    "href": "curso/colab.html#la-semilla",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "La semilla",
+    "text": "La semilla\ntorch.randn da números distintos cada vez, así que una figura no saldría dos veces igual. Fijar la semilla hace que la secuencia de números al azar sea siempre la misma:\n\ntorch.manual_seed(42)\nprimera = torch.randn(3)\ntorch.manual_seed(42)\nsegunda = torch.randn(3)\nprimera, segunda\n\n(tensor([0.3367, 0.1288, 0.2345]), tensor([0.3367, 0.1288, 0.2345]))\n\n\nLos dos tensores coinciden. Todos los capítulos fijan la semilla al principio, y de ahí que las cifras del texto sean reproducibles. En el capítulo 4 se verá que la semilla no es un detalle: cambiarla cambia qué modelo se elige.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#los-cinco-errores-del-primer-día",
+    "href": "curso/colab.html#los-cinco-errores-del-primer-día",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Los cinco errores del primer día",
+    "text": "Los cinco errores del primer día\n\n\n\n\n\n\n\nLo que sale en rojo\nQué ha pasado\n\n\n\n\nNameError: name 'x' is not defined\nno has ejecutado la celda donde se define x. Ejecuta de arriba abajo\n\n\nIndentationError\nfalta o sobra la indentación del cuerpo de un def, un for o un if\n\n\nTypeError: only one element tensors can be converted...\n.item() sobre un tensor de varios elementos\n\n\nModuleNotFoundError\nen Colab no debería pasar; si pasa, ejecuta !pip install torch en una celda\n\n\nNingún error, pero el número no cuadra\ncambiaste una celda de arriba y no la volviste a ejecutar. Reiniciar y ejecutar todo\n\n\n\nEl último es el más traicionero, porque no avisa. Ante cualquier resultado que no cuadre, lo primero es reiniciar y ejecutar todo.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
+    ]
+  },
+  {
+    "objectID": "curso/colab.html#diagnóstico",
+    "href": "curso/colab.html#diagnóstico",
+    "title": "Ejecutar código: Python y Colab",
+    "section": "Diagnóstico",
+    "text": "Diagnóstico\nVeinte minutos, en Colab. No cuenta para la nota; sirve para saber si puedes seguir el laboratorio del capítulo 1.\n\nAbre un cuaderno nuevo, guarda una copia en tu Drive y ejecuta una celda con 2 + 2.\nDefine n = 50 y sigma = 2.0 en una celda, y en otra celda calcula n * sigma. Reinicia el entorno y ejecuta solo la segunda: explica el error que sale.\nCrea x = torch.linspace(0, 1, 5) y calcula 3 * x - 1 sin escribir ningún bucle.\nEscribe una función cuadrado(z) que devuelva z ** 2 y compruébala con un tensor.\nGenera diez números de una normal de media \\(5\\) y desviación \\(2\\), y calcula su media con .mean().\nDibuja los puntos \\((x_i, y_i)\\) con x = torch.linspace(0, 5, 30) e y = x ** 2 + torch.randn(30), con etiquetas en los dos ejes.\nFija la semilla en 7, genera torch.randn(3), vuelve a fijarla en 7 y genera otros tres. Di si coinciden y por qué.\n\n\n\n\n\n\n\nNotaSoluciones del diagnóstico\n\n\n\n\n\n\n2 + 2 da 4. Si la copia está bien hecha, arriba aparece “Copia de…” y los cambios se guardan solos.\nNameError: name 'n' is not defined. Al reiniciar se borran todas las variables, y la segunda celda las necesita definidas. Es el error más frecuente del curso, y la causa casi siempre es haber ejecutado las celdas en otro orden.\n3 * x - 1 da tensor([-1.0000, -0.2500, 0.5000, 1.2500, 2.0000]). La operación actúa elemento a elemento: eso es lo que hace innecesario el bucle.\ndef cuadrado(z): return z ** 2, con el cuerpo indentado. Sobre un tensor devuelve otro tensor con cada elemento al cuadrado.\nmuestra = torch.normal(5.0, 2.0, size=(10,)) y muestra.mean(). La media saldrá cerca de \\(5\\), pero no exactamente: con diez números el azar todavía se nota, y de eso trata el capítulo 1.\nfig, ax = plt.subplots(), ax.scatter(x.numpy(), y.numpy()) y ax.set(xlabel=\"$x$\", ylabel=\"$y$\"). Sin los .numpy() da error.\nCoinciden. Fijar la semilla reinicia el generador al mismo punto, así que la secuencia de números al azar se repite.",
+    "crumbs": [
+      "Apéndices",
+      "Ejecutar código: Python y Colab"
     ]
   },
   {

@@ -1,0 +1,269 @@
+---
+cuaderno: colab.ipynb
+---
+
+# Ejecutar código: Python y Colab {.unnumbered}
+
+::: {.content-hidden}
+## Preámbulo: macros de LaTeX y estilo de figuras
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+
+```{python}
+import sys
+sys.path.insert(0, "../capitulos")   # el estilo de figuras vive ahí
+import style
+```
+:::
+
+Este anexo es lo justo para abrir el cuaderno del capítulo 1, ejecutarlo y modificarlo. No
+enseña a programar: enseña a **ejecutar** y a **leer** el código del curso, que es lo que el
+examen pregunta. Cada bloque de abajo se puede copiar en una celda y lanzar. Si ya manejas
+Python, ve directamente al diagnóstico del final.
+
+## Google Colab
+
+Colab ejecuta Python en un ordenador de Google, desde el navegador. **No hay que instalar
+nada**: basta una cuenta de Google. Las bibliotecas del curso (`torch`, `numpy`,
+`matplotlib`, `scikit-learn`) ya vienen instaladas.
+
+Cada capítulo publica su cuaderno, con los huecos que se completan en el laboratorio, y el
+enlace lo abre en Colab. Este anexo también tiene el suyo, con todas las celdas de abajo:
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+Lo primero que hay que hacer al abrirlo:
+
+**Archivo → Guardar una copia en Drive.**
+
+El cuaderno que se abre desde el enlace es de solo lectura: puedes ejecutarlo, pero si
+cierras la pestaña **pierdes lo que hayas escrito**. La copia en tu Drive es tuya y se
+guarda sola.
+
+## Celdas: ejecutar y estado
+
+Un cuaderno es una lista de **celdas**. Las de código se ejecutan y las de texto solo se
+leen.
+
+- Para ejecutar una celda: **Mayús + Intro**. Ejecuta y salta a la siguiente.
+- El número entre corchetes a la izquierda, `[7]`, dice que esa celda fue la séptima que se
+  ejecutó. Es el **orden de ejecución**, no el orden en que está escrita en la página.
+- Las celdas **comparten estado**: una variable definida en una celda sigue existiendo en
+  las siguientes. Por eso el orden importa.
+- Cuando algo deja de tener sentido: **Entorno de ejecución → Reiniciar y ejecutar todo**.
+  Eso borra todas las variables y vuelve a ejecutar de arriba abajo, que es el estado
+  limpio.
+
+Esa última opción resuelve la mayoría de los problemas del primer día.
+
+## Variables
+
+Una variable es un nombre para un valor. Se asigna con `=`, que no es igualdad matemática
+sino "guarda esto con este nombre".
+
+```{python}
+n = 20
+sigma = 3.0
+titulo = "señal más ruido"
+print(n, sigma, titulo)
+```
+
+`20` es un entero y `3.0` un decimal; el punto es la diferencia. Los textos van entre
+comillas. La última expresión de una celda se muestra sola, sin `print`:
+
+```{python}
+n * sigma
+```
+
+## Listas, tuplas y desempaquetado
+
+Una lista se escribe entre corchetes y se indexa **desde cero**:
+
+```{python}
+pesos = [0.2, 0.2, 0.6]
+pesos[0], pesos[2], len(pesos)
+```
+
+Los paréntesis hacen una tupla, que funciona igual pero no se puede modificar. Y una
+asignación puede repartir varios valores a la vez, algo que el curso usa mucho:
+
+```{python}
+a, b = -0.3, 0.2
+media, desviacion = 0.0, 1.0
+a, b, media, desviacion
+```
+
+## Funciones
+
+`def` define una función: un cálculo con nombre, que recibe argumentos y **devuelve** un
+valor con `return`. El cuerpo va indentado cuatro espacios, y la indentación es obligatoria:
+es lo que marca dónde empieza y acaba la función.
+
+```{python}
+def recta(x, pendiente, intercepto):
+    return pendiente * x + intercepto
+
+recta(2.0, 3.0, 1.0)
+```
+
+Los argumentos se pueden pasar **por nombre**, y así se lee mucho mejor cuando son varios:
+
+```{python}
+recta(2.0, intercepto=1.0, pendiente=3.0)
+```
+
+## Bucles y condiciones
+
+`for` repite algo para cada elemento de una lista, y `if` decide. Los dos usan indentación.
+
+```{python}
+mejor = -100.0
+for candidato in [1.5, 2.0, 2.5]:
+    valor = -(candidato - 2.0) ** 2
+    if valor > mejor:
+        mejor = valor
+        mejor_candidato = candidato
+
+mejor_candidato, mejor
+```
+
+Ese bucle es, en pequeño, el del final del capítulo 1: probar candidatos y quedarse con el
+mejor.
+
+## Tensores: los vectores del curso
+
+Los datos del curso no son listas, son **tensores** de `torch`. Un tensor es una tira de
+números sobre la que las operaciones actúan **elemento a elemento**, sin escribir bucles. Es
+la razón de usarlos: la fórmula matemática se traduce casi literalmente.
+
+```{python}
+import torch
+
+x = torch.tensor([0.0, 1.0, 2.0, 3.0])
+2 * x + 1
+```
+
+Compáralo con una lista: `2 * [0.0, 1.0]` repetiría la lista en lugar de multiplicar. Las
+tres formas de crear tensores que usa el capítulo 1:
+
+```{python}
+torch.linspace(0, 10, 5)        # 5 valores igualmente espaciados de 0 a 10
+```
+
+```{python}
+torch.randn(4)                  # 4 números al azar de una normal estándar
+```
+
+```{python}
+torch.normal(3.0, 2.0, size=(4,))   # al azar, con media 3 y desviación 2
+```
+
+Y las operaciones que hacen falta para leer el capítulo:
+
+```{python}
+y = torch.tensor([1.0, 4.0, 9.0])
+y.sum(), y.max(), len(y), y[0]
+```
+
+Dos métodos que aparecen en todas las celdas y conviene entender:
+
+- **`.item()`** saca el número de un tensor de **un solo** elemento, para poder usarlo como
+  un decimal normal. Sobre un tensor de varios da error.
+- **`.numpy()`** convierte el tensor en un array de `numpy`, que es lo que entiende
+  `matplotlib` al dibujar.
+
+```{python}
+y[0].item(), y.numpy()
+```
+
+## Dibujar una figura
+
+Todas las figuras del curso siguen el mismo patrón de tres líneas: crear los ejes, dibujar
+sobre ellos y etiquetar.
+
+```{python}
+from matplotlib import pyplot as plt
+
+x = torch.linspace(0, 10, 20)
+y = 2 * x + 1 + 3 * torch.randn(20)
+
+fig, ax = plt.subplots(figsize=(5, 3))
+ax.scatter(x.numpy(), y.numpy(), color="black", facecolors="none",
+           label="datos")
+ax.plot(x.numpy(), (2 * x + 1).numpy(), color="#ff5700", label="señal")
+ax.set(xlabel="$x$", ylabel="$y$")
+ax.legend()
+plt.tight_layout()
+```
+
+`ax.scatter` pinta puntos y `ax.plot` una línea. Fíjate en los `.numpy()`: sin ellos
+`matplotlib` no sabe dibujar un tensor.
+
+## La semilla
+
+`torch.randn` da números distintos cada vez, así que una figura no saldría dos veces igual.
+Fijar la **semilla** hace que la secuencia de números al azar sea siempre la misma:
+
+```{python}
+torch.manual_seed(42)
+primera = torch.randn(3)
+torch.manual_seed(42)
+segunda = torch.randn(3)
+primera, segunda
+```
+
+Los dos tensores coinciden. Todos los capítulos fijan la semilla al principio, y de ahí que
+las cifras del texto sean reproducibles. En el capítulo 4 se verá que la semilla no es un
+detalle: cambiarla cambia qué modelo se elige.
+
+## Los cinco errores del primer día
+
+| Lo que sale en rojo | Qué ha pasado |
+|---|---|
+| `NameError: name 'x' is not defined` | no has ejecutado la celda donde se define `x`. Ejecuta de arriba abajo |
+| `IndentationError` | falta o sobra la indentación del cuerpo de un `def`, un `for` o un `if` |
+| `TypeError: only one element tensors can be converted...` | `.item()` sobre un tensor de varios elementos |
+| `ModuleNotFoundError` | en Colab no debería pasar; si pasa, ejecuta `!pip install torch` en una celda |
+| Ningún error, pero el número no cuadra | cambiaste una celda de arriba y no la volviste a ejecutar. Reiniciar y ejecutar todo |
+
+El último es el más traicionero, porque no avisa. Ante cualquier resultado que no cuadre, lo
+primero es reiniciar y ejecutar todo.
+
+## Diagnóstico
+
+Veinte minutos, en Colab. No cuenta para la nota; sirve para saber si puedes seguir el
+laboratorio del capítulo 1.
+
+1. Abre un cuaderno nuevo, guarda una copia en tu Drive y ejecuta una celda con `2 + 2`.
+2. Define `n = 50` y `sigma = 2.0` en una celda, y en **otra** celda calcula `n * sigma`.
+   Reinicia el entorno y ejecuta solo la segunda: explica el error que sale.
+3. Crea `x = torch.linspace(0, 1, 5)` y calcula `3 * x - 1` sin escribir ningún bucle.
+4. Escribe una función `cuadrado(z)` que devuelva `z ** 2` y compruébala con un tensor.
+5. Genera diez números de una normal de media $5$ y desviación $2$, y calcula su media con
+   `.mean()`.
+6. Dibuja los puntos $(x_i, y_i)$ con `x = torch.linspace(0, 5, 30)` e
+   `y = x ** 2 + torch.randn(30)`, con etiquetas en los dos ejes.
+7. Fija la semilla en `7`, genera `torch.randn(3)`, vuelve a fijarla en `7` y genera otros
+   tres. Di si coinciden y por qué.
+
+::: {.callout-note collapse="true"}
+## Soluciones del diagnóstico
+
+1. `2 + 2` da `4`. Si la copia está bien hecha, arriba aparece "Copia de…" y los cambios se
+   guardan solos.
+2. `NameError: name 'n' is not defined`. Al reiniciar se borran todas las variables, y la
+   segunda celda las necesita definidas. Es el error más frecuente del curso, y la causa
+   casi siempre es haber ejecutado las celdas en otro orden.
+3. `3 * x - 1` da `tensor([-1.0000, -0.2500, 0.5000, 1.2500, 2.0000])`. La operación actúa
+   elemento a elemento: eso es lo que hace innecesario el bucle.
+4. `def cuadrado(z): return z ** 2`, con el cuerpo indentado. Sobre un tensor devuelve otro
+   tensor con cada elemento al cuadrado.
+5. `muestra = torch.normal(5.0, 2.0, size=(10,))` y `muestra.mean()`. La media saldrá cerca
+   de $5$, pero no exactamente: con diez números el azar todavía se nota, y de eso trata el
+   capítulo 1.
+6. `fig, ax = plt.subplots()`, `ax.scatter(x.numpy(), y.numpy())` y
+   `ax.set(xlabel="$x$", ylabel="$y$")`. Sin los `.numpy()` da error.
+7. Coinciden. Fijar la semilla reinicia el generador al mismo punto, así que la secuencia de
+   números al azar se repite.
+:::

@@ -33,6 +33,10 @@ def publicados() -> set[str]:
 DENTRO = publicados()
 capitulos = [q for q in sorted((RAIZ / "capitulos").glob("*.qmd"))
              if f"capitulos/{q.name}" in DENTRO]
+# El anexo de Colab no es un capitulo, pero es el cuaderno con el que se aprende a usar
+# la herramienta, asi que se genera igual.
+if "curso/colab.qmd" in DENTRO:
+    capitulos.append(RAIZ / "curso" / "colab.qmd")
 if not capitulos:
     print("ningun capitulo publicado en contenido.txt: no hay cuadernos que generar")
 fallos = []

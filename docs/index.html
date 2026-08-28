@@ -247,6 +247,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./curso/colab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ejecutar código: Python y Colab</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./curso/evaluacion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Evaluación</span></a>
   </div>
@@ -286,6 +292,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#qué-se-espera-del-código" id="toc-qué-se-espera-del-código" class="nav-link" data-scroll-target="#qué-se-espera-del-código">Qué se espera del código</a></li>
   </ul></li>
+  <li><a href="#evaluación-y-asistencia" id="toc-evaluación-y-asistencia" class="nav-link" data-scroll-target="#evaluación-y-asistencia">Evaluación y asistencia</a></li>
   <li><a href="#preparación-inicial" id="toc-preparación-inicial" class="nav-link" data-scroll-target="#preparación-inicial">Preparación inicial</a></li>
   <li><a href="#fuentes-y-agradecimientos" id="toc-fuentes-y-agradecimientos" class="nav-link" data-scroll-target="#fuentes-y-agradecimientos">Fuentes y agradecimientos</a></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
@@ -446,6 +453,7 @@ window.Quarto = {
 <p>El lenguaje de trabajo es <strong>Python</strong>, principalmente con <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>scikit-learn</code> y PyTorch.</p>
 <section id="qué-se-espera-del-código" class="level3">
 <h3 class="anchored" data-anchor-id="qué-se-espera-del-código">Qué se espera del código</h3>
+<p>No se presupone experiencia con Python. El anexo de <a href="./curso/colab.html">ejecutar código</a> cubre lo necesario para empezar: abrir un cuaderno en Colab, ejecutar celdas y las construcciones del lenguaje que aparecen en los capítulos. Se explica en la primera sesión.</p>
 <p>Los apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel y bolígrafo, así que <strong>de código se pregunta la decisión, no el teclado</strong>. En concreto, puede pedirse:</p>
 <ol type="1">
 <li><strong>leer un fragmento y decir qué calcula</strong>: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;</li>
@@ -462,14 +470,18 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>).split(X)   <span class="co"># bloques de validación cruzada</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X[indices][:, columnas]                                    <span class="co"># filas y columnas</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>w <span class="op">-=</span> lr <span class="op">*</span> grad                                             <span class="co"># paso de descenso de gradiente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>La evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las reglas completas están en la <a href="./curso/evaluacion.html">sección de evaluación</a>.</p>
-<p>La asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.</p>
 </section>
+</section>
+<section id="evaluación-y-asistencia" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-y-asistencia">Evaluación y asistencia</h2>
+<p>La evaluación consta de un parcial (20 %), un proyecto (20 %) y un examen final (60 %). La evaluación continua es obligatoria y no libera materia. El examen final abarca todo el programa y exige una calificación mínima de 5 sobre 10 para aplicar la ponderación. Las reglas completas, incluidas las de la convocatoria extraordinaria, están en la <a href="./curso/evaluacion.html">sección de evaluación</a>.</p>
+<p>La asistencia es obligatoria en primera matrícula en los términos establecidos por la guía docente.</p>
 </section>
 <section id="preparación-inicial" class="level2">
 <h2 class="anchored" data-anchor-id="preparación-inicial">Preparación inicial</h2>
 <p>Antes de comenzar el capítulo 1 se recomienda:</p>
 <ol type="1">
+<li>trabajar el anexo de <a href="./curso/colab.html">ejecutar código</a>, que enseña a abrir un cuaderno en Google Colab, a ejecutar celdas y las siete construcciones de Python que usa el curso; se explica en la primera sesión y cierra con un diagnóstico;</li>
 <li>repasar el anexo de <a href="./curso/algebra.html">cálculo y álgebra</a> y hacer el diagnóstico que cierra el anexo;</li>
 <li>hacer lo mismo con el <a href="./curso/probabilidad.html">repaso de probabilidad</a>, que también termina con un diagnóstico;</li>
 <li>leer la <a href="./curso/evaluacion.html">sección de evaluación</a>.</li>

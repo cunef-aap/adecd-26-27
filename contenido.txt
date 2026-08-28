@@ -48,6 +48,7 @@ problemas/hoja-01.qmd
 - problemas/hoja-09.qmd
 
 {apéndices}
+curso/colab.qmd
 curso/evaluacion.qmd
 - curso/proyecto.qmd
 curso/algebra.qmd

@@ -1,13 +1,4 @@
 ::: {.content-hidden when-format="ipynb"}
-```{python}
-#| echo: false
-#| output: asis
-import os
-from pathlib import Path
-from IPython.display import Markdown
-
-ipynb = Path(os.environ.get("QUARTO_DOCUMENT_FILE", "x.qmd")).with_suffix(".ipynb").name
-colab = f"{os.environ.get('COLLAB_URL','')}/docs/live-notebooks/{ipynb}"
-Markdown(f"*[Abre el cuaderno para completar en clase]({colab}) en Google Colab.*")
-```
+*[Abre el cuaderno de esta página en Google Colab](https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/{{< meta cuaderno >}}).*
+Lo primero, **Archivo → Guardar una copia en Drive**.
 :::
