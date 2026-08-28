@@ -3,10 +3,10 @@
 ## Estado actual
 
 `problemas/` **está publicado**: el índice, las hojas 1 y 2 con sus solucionarios, y los
-nueve esqueletos de las hojas 3 a 11. `evaluacion/` sigue fuera del libro, con el banco y los
-ejercicios tipo examen escritos contra la estructura antigua de dieciséis capítulos y con
-referencias cruzadas rotas. Al reescribir ese material hay que renumerarlo y comprobar que
-todo `@...` resuelve.
+nueve esqueletos de las hojas 3 a 11. `evaluacion/` sigue fuera del libro, con el banco y
+los ejercicios tipo examen escritos contra la estructura antigua de dieciséis capítulos y
+con referencias cruzadas rotas. Al reescribir ese material hay que renumerarlo y comprobar
+que todo `@...` resuelve.
 
 **Todo lo que se enlace tiene que estar listado en `_quarto.yml`.** Un fichero enlazado y no
 listado no se renderiza: Quarto lo copia como `.qmd` al directorio de salida y el enlace
@@ -26,10 +26,10 @@ Los dos se publican, listados en `_quarto.yml` bajo la parte "Hojas de problemas
 publicar las soluciones basta con comentar sus líneas ahí y quitar el enlace del pie de cada
 hoja.
 
-El enunciado se duplica a propósito. Con una decena de ejercicios por hoja es más robusto que
-un include compartido, que obligaría a separar cada solución de su enunciado. La solución
-resuelta se genera desde la hoja con el ayudante de la skill, de modo que las dos versiones
-no se desincronizan mientras se edite solo la de enunciados.
+El enunciado se duplica a propósito. Con una decena de ejercicios por hoja es más robusto
+que un include compartido, que obligaría a separar cada solución de su enunciado. La
+solución resuelta se genera desde la hoja con el ayudante de la skill, de modo que las dos
+versiones no se desincronizan mientras se edite solo la de enunciados.
 
 ### Los ejercicios vienen de dos sitios
 
@@ -133,10 +133,10 @@ Dos avisos comprobados sobre el estado actual:
    referencias rotas hoy: `def-senal-ruido`, `def-errores`, `def-sobreajuste`,
    `thm-interpolacion`, `lem-media-optima` y `prp-laplace-mae`. Los otros dos,
    `cor-senal-media` y `cor-ruido-objetivo`, son nombres propuestos a partir de la prosa del
-   índice: no aparecen en ningún fichero del repositorio y nadie los cita todavía. Al revisar
-   los capítulos 1 y 2 hay que escribirlos o retirarlos del índice.
-3. Sus números de capítulo son los de la **estructura antigua de dieciséis capítulos**. Antes
-   de fiarse de una fila hay que traducirla a la estructura de nueve.
+   índice: no aparecen en ningún fichero del repositorio y nadie los cita todavía. Al
+   revisar los capítulos 1 y 2 hay que escribirlos o retirarlos del índice.
+3. Sus números de capítulo son los de la **estructura antigua de dieciséis capítulos**.
+   Antes de fiarse de una fila hay que traducirla a la estructura de nueve.
 
 Las filas del índice se nombran hoy en prosa ("Teo. interpolación exacta"), no con la
 etiqueta del entorno, así que no hay forma mecánica de casarlas. Al añadir filas nuevas,
@@ -169,8 +169,8 @@ nueve, no se acaba. El recuento se comprueba con
 **Deuda medida en agosto de 2026**: el capítulo 1 tiene 4 huecos para dos sesiones, es decir
 2 por sesión, y le faltan unos ocho. El 2 va a 5.5, el 3 a 6.5 y el 4 a 5.5, que están en
 rango. Los del 4 se reparten así: la API (`predict`, `mse`, `fit`), la partición, la mejor
-constante, las cuatro métricas, el error típico de la estimación, el experimento de selección,
-las tres piezas de la validación cruzada y el reajuste final con la comparación.
+constante, las cuatro métricas, el error típico de la estimación, el experimento de
+selección, las tres piezas de la validación cruzada y el reajuste final con la comparación.
 
 ## Cuadernos
 
@@ -182,18 +182,18 @@ llama a `scripts/crear-ipynb.py`. Consecuencias al escribir el capítulo:
 - El preámbulo `.content-hidden` **no llega**, así que el primer bloque visible lleva los
   imports reales y la semilla.
 - **El enlace a Colab se activa por documento**, desde agosto de 2026. Dos pasos: declarar
-  `cuaderno: <nombre>.ipynb` en la cabecera YAML del `.qmd` y poner
-  `{{< include ../assets/includes/_colab-link.qmd >}}` donde deba salir el enlace. El include
-  construye la URL con `{{< meta cuaderno >}}` sobre el repositorio público, y se oculta en
-  formato `ipynb` para que el cuaderno no se enlace a sí mismo. Lo tienen el capítulo 1 y
-  `curso/colab.qmd`; los demás capítulos lo ganan cuando se publiquen.
-  **No usar `QUARTO_DOCUMENT_FILE`**: Quarto no lo define al renderizar, comprobado.
+  `cuaderno: <nombre>.ipynb` en la cabecera YAML del `.qmd` y poner `{{< include
+  ../assets/includes/_colab-link.qmd >}}` donde deba salir el enlace. El include construye
+  la URL con `{{< meta cuaderno >}}` sobre el repositorio público, y se oculta en formato
+  `ipynb` para que el cuaderno no se enlace a sí mismo. Lo tienen el capítulo 1 y
+  `curso/colab.qmd`; los demás capítulos lo ganan cuando se publiquen. **No usar
+  `QUARTO_DOCUMENT_FILE`**: Quarto no lo define al renderizar, comprobado.
 - Los divs de referencia cruzada se desanidan con `restore-cells.lua`, de modo que el código
   dentro de `::: {#fig-...}` sí sale como celda ejecutable.
 - El cuaderno se genera con `--no-execute`, así que un error de ejecución no se detecta ahí.
   Se detecta en `make sitio`.
 
-`curso/colab.qmd` es la excepción a «los cuadernos salen de los capítulos»: es un anexo, no
+`curso/colab.qmd` es la excepción a la regla anterior: es un anexo, no
 un capítulo, y genera cuaderno porque es donde se aprende a usar la herramienta. Está
 declarado a mano en `_quarto-notebooks.yml` y en `scripts/crear-ipynb.py`, que por defecto
 solo recorre `capitulos/*.qmd`. No tiene huecos `#---`: se ejecuta entero.

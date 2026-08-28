@@ -33,13 +33,9 @@ enlace lo abre en Colab. Este anexo también tiene el suyo, con todas las celdas
 
 {{< include ../assets/includes/_colab-link.qmd >}}
 
-Lo primero que hay que hacer al abrirlo:
-
-**Archivo → Guardar una copia en Drive.**
-
-El cuaderno que se abre desde el enlace es de solo lectura: puedes ejecutarlo, pero si
-cierras la pestaña **pierdes lo que hayas escrito**. La copia en tu Drive es tuya y se
-guarda sola.
+Guardar la copia no es una formalidad: el cuaderno que se abre desde el enlace es de solo
+lectura, así que puedes ejecutarlo, pero si cierras la pestaña **pierdes lo que hayas
+escrito**. La copia en tu Drive es tuya y se guarda sola.
 
 ## Celdas: ejecutar y estado
 

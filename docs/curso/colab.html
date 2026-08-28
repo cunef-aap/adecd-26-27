@@ -305,9 +305,7 @@ window.Quarto = {
 <p>Colab ejecuta Python en un ordenador de Google, desde el navegador. <strong>No hay que instalar nada</strong>: basta una cuenta de Google. Las bibliotecas del curso (<code>torch</code>, <code>numpy</code>, <code>matplotlib</code>, <code>scikit-learn</code>) ya vienen instaladas.</p>
 <p>Cada capítulo publica su cuaderno, con los huecos que se completan en el laboratorio, y el enlace lo abre en Colab. Este anexo también tiene el suyo, con todas las celdas de abajo:</p>
 <p><em><a href="https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/colab.ipynb">Abre el cuaderno de esta página en Google Colab</a>.</em> Lo primero, <strong>Archivo → Guardar una copia en Drive</strong>.</p>
-<p>Lo primero que hay que hacer al abrirlo:</p>
-<p><strong>Archivo → Guardar una copia en Drive.</strong></p>
-<p>El cuaderno que se abre desde el enlace es de solo lectura: puedes ejecutarlo, pero si cierras la pestaña <strong>pierdes lo que hayas escrito</strong>. La copia en tu Drive es tuya y se guarda sola.</p>
+<p>Guardar la copia no es una formalidad: el cuaderno que se abre desde el enlace es de solo lectura, así que puedes ejecutarlo, pero si cierras la pestaña <strong>pierdes lo que hayas escrito</strong>. La copia en tu Drive es tuya y se guarda sola.</p>
 </section>
 <section id="celdas-ejecutar-y-estado" class="level2">
 <h2 class="anchored" data-anchor-id="celdas-ejecutar-y-estado">Celdas: ejecutar y estado</h2>
@@ -323,7 +321,7 @@ window.Quarto = {
 <section id="variables" class="level2">
 <h2 class="anchored" data-anchor-id="variables">Variables</h2>
 <p>Una variable es un nombre para un valor. Se asigna con <code>=</code>, que no es igualdad matemática sino “guarda esto con este nombre”.</p>
-<div id="fcaf4f9a" class="cell" data-execution_count="2">
+<div id="84166a59" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>titulo <span class="op">=</span> <span class="st">"señal más ruido"</span></span>
@@ -333,7 +331,7 @@ window.Quarto = {
 </div>
 </div>
 <p><code>20</code> es un entero y <code>3.0</code> un decimal; el punto es la diferencia. Los textos van entre comillas. La última expresión de una celda se muestra sola, sin <code>print</code>:</p>
-<div id="cef69f9c" class="cell" data-execution_count="3">
+<div id="cd40331e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">*</span> sigma</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>60.0</code></pre>
@@ -343,7 +341,7 @@ window.Quarto = {
 <section id="listas-tuplas-y-desempaquetado" class="level2">
 <h2 class="anchored" data-anchor-id="listas-tuplas-y-desempaquetado">Listas, tuplas y desempaquetado</h2>
 <p>Una lista se escribe entre corchetes y se indexa <strong>desde cero</strong>:</p>
-<div id="692b2258" class="cell" data-execution_count="4">
+<div id="2d40ef2f" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pesos <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.6</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pesos[<span class="dv">0</span>], pesos[<span class="dv">2</span>], <span class="bu">len</span>(pesos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -351,7 +349,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Los paréntesis hacen una tupla, que funciona igual pero no se puede modificar. Y una asignación puede repartir varios valores a la vez, algo que el curso usa mucho:</p>
-<div id="381ef336" class="cell" data-execution_count="5">
+<div id="5c58accc" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>media, desviacion <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">1.0</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>a, b, media, desviacion</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -363,7 +361,7 @@ window.Quarto = {
 <section id="funciones" class="level2">
 <h2 class="anchored" data-anchor-id="funciones">Funciones</h2>
 <p><code>def</code> define una función: un cálculo con nombre, que recibe argumentos y <strong>devuelve</strong> un valor con <code>return</code>. El cuerpo va indentado cuatro espacios, y la indentación es obligatoria: es lo que marca dónde empieza y acaba la función.</p>
-<div id="c2bf92d9" class="cell" data-execution_count="6">
+<div id="07266073" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> recta(x, pendiente, intercepto):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pendiente <span class="op">*</span> x <span class="op">+</span> intercepto</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -373,7 +371,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Los argumentos se pueden pasar <strong>por nombre</strong>, y así se lee mucho mejor cuando son varios:</p>
-<div id="aea3a325" class="cell" data-execution_count="7">
+<div id="16db6ab1" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>recta(<span class="fl">2.0</span>, intercepto<span class="op">=</span><span class="fl">1.0</span>, pendiente<span class="op">=</span><span class="fl">3.0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>7.0</code></pre>
@@ -383,7 +381,7 @@ window.Quarto = {
 <section id="bucles-y-condiciones" class="level2">
 <h2 class="anchored" data-anchor-id="bucles-y-condiciones">Bucles y condiciones</h2>
 <p><code>for</code> repite algo para cada elemento de una lista, y <code>if</code> decide. Los dos usan indentación.</p>
-<div id="f85a6bb4" class="cell" data-execution_count="8">
+<div id="3e91fa98" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mejor <span class="op">=</span> <span class="op">-</span><span class="fl">100.0</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidato <span class="kw">in</span> [<span class="fl">1.5</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>]:</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    valor <span class="op">=</span> <span class="op">-</span>(candidato <span class="op">-</span> <span class="fl">2.0</span>) <span class="op">**</span> <span class="dv">2</span></span>
@@ -401,7 +399,7 @@ window.Quarto = {
 <section id="tensores-los-vectores-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="tensores-los-vectores-del-curso">Tensores: los vectores del curso</h2>
 <p>Los datos del curso no son listas, son <strong>tensores</strong> de <code>torch</code>. Un tensor es una tira de números sobre la que las operaciones actúan <strong>elemento a elemento</strong>, sin escribir bucles. Es la razón de usarlos: la fórmula matemática se traduce casi literalmente.</p>
-<div id="72221f3d" class="cell" data-execution_count="9">
+<div id="4cd42223" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>])</span>
@@ -411,26 +409,26 @@ window.Quarto = {
 </div>
 </div>
 <p>Compáralo con una lista: <code>2 * [0.0, 1.0]</code> repetiría la lista en lugar de multiplicar. Las tres formas de crear tensores que usa el capítulo 1:</p>
-<div id="be970ee4" class="cell" data-execution_count="10">
+<div id="9c574718" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>)        <span class="co"># 5 valores igualmente espaciados de 0 a 10</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>tensor([ 0.0000,  2.5000,  5.0000,  7.5000, 10.0000])</code></pre>
 </div>
 </div>
-<div id="061384a0" class="cell" data-execution_count="11">
+<div id="3eba81c7" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>torch.randn(<span class="dv">4</span>)                  <span class="co"># 4 números al azar de una normal estándar</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>tensor([-0.2918, -0.4349,  1.4200, -0.0751])</code></pre>
+<pre><code>tensor([ 0.3761, -0.2283,  1.4198, -0.6559])</code></pre>
 </div>
 </div>
-<div id="efa5b937" class="cell" data-execution_count="12">
+<div id="513352f4" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>torch.normal(<span class="fl">3.0</span>, <span class="fl">2.0</span>, size<span class="op">=</span>(<span class="dv">4</span>,))   <span class="co"># al azar, con media 3 y desviación 2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>tensor([2.8230, 5.1166, 0.3255, 5.4390])</code></pre>
+<pre><code>tensor([ 5.6305, -0.2154,  0.5128, -0.2970])</code></pre>
 </div>
 </div>
 <p>Y las operaciones que hacen falta para leer el capítulo:</p>
-<div id="07fe739a" class="cell" data-execution_count="13">
+<div id="ec176fbb" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">4.0</span>, <span class="fl">9.0</span>])</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>y.<span class="bu">sum</span>(), y.<span class="bu">max</span>(), <span class="bu">len</span>(y), y[<span class="dv">0</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -442,7 +440,7 @@ window.Quarto = {
 <li><strong><code>.item()</code></strong> saca el número de un tensor de <strong>un solo</strong> elemento, para poder usarlo como un decimal normal. Sobre un tensor de varios da error.</li>
 <li><strong><code>.numpy()</code></strong> convierte el tensor en un array de <code>numpy</code>, que es lo que entiende <code>matplotlib</code> al dibujar.</li>
 </ul>
-<div id="493634e0" class="cell" data-execution_count="14">
+<div id="e1f1ba72" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">0</span>].item(), y.numpy()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>(1.0, array([1., 4., 9.], dtype=float32))</code></pre>
@@ -452,7 +450,7 @@ window.Quarto = {
 <section id="dibujar-una-figura" class="level2">
 <h2 class="anchored" data-anchor-id="dibujar-una-figura">Dibujar una figura</h2>
 <p>Todas las figuras del curso siguen el mismo patrón de tres líneas: crear los ejes, dibujar sobre ellos y etiquetar.</p>
-<div id="ee9aac15" class="cell" data-execution_count="15">
+<div id="41cef112" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>)</span>
@@ -478,7 +476,7 @@ window.Quarto = {
 <section id="la-semilla" class="level2">
 <h2 class="anchored" data-anchor-id="la-semilla">La semilla</h2>
 <p><code>torch.randn</code> da números distintos cada vez, así que una figura no saldría dos veces igual. Fijar la <strong>semilla</strong> hace que la secuencia de números al azar sea siempre la misma:</p>
-<div id="d06a2c21" class="cell" data-execution_count="16">
+<div id="e21ea697" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>primera <span class="op">=</span> torch.randn(<span class="dv">3</span>)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
