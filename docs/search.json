@@ -64,7 +64,7 @@
     "href": "index.html#cómo-se-trabaja",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Cómo se trabaja",
-    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará:\n\nExplicaciones teóricas en pizarra.\nResolución de ejercicios conceptuales y matemáticos.\nResolución de ejercicios con código.\n\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch.\n\nQué se espera del código\nDurante el curso explicaremos código y lo ejecutaremos en clase. Al finalizar esta sesión, os explicaré de qué forma podéis ejecutar código vosotros mismos a través de Google Colab.\nNo obstante, los exámenes son con papel y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:\n\ncompletar una o dos líneas marcadas;\nleer un fragmento y decir qué calcula: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;\ndiagnosticar un fragmento con errores de método y justificar cada uno, que es el bloque con más peso de código en el examen;\n\nNo se pedirá escribir un programa desde cero.\nEstas preguntas solo pueden versar sobre el código que se explica en clase. Esos bloques están marcados en los apuntes con el rótulo se explica en clase, y son los únicos evaluables. En el capítulo 1, por ejemplo, son seis.\nEl resto del código de los apuntes es accesorio: está para ilustrar un concepto, preparar una figura o hacer que el ejemplo funcione. Se puede leer, y ejecutarlo ayuda a entender, pero no se evalúa.",
+    "text": "Cómo se trabaja\nEl desarrollo de cada tema combinará:\n\nExplicaciones teóricas en pizarra.\nExplicación de código.\nResolución de ejercicios conceptuales y matemáticos.\nResolución de ejercicios con código.\n\nEl lenguaje de trabajo es Python, principalmente con numpy, pandas, matplotlib, scikit-learn y PyTorch.\n\nQué se espera del código\nDurante el curso explicaremos código y lo ejecutaremos en clase. Al finalizar esta sesión, os explicaré de qué forma podéis ejecutar código vosotros mismos a través de Google Colab.\nNo obstante, los exámenes son con papel y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:\n\nCompletar una o dos líneas marcadas;\nLeer un fragmento y decir qué calcula: qué cantidad estima, sobre qué conjunto de datos y con qué tamaño de muestra;\nDiagnosticar encontrar errores en el código.\n\nNo se pedirá escribir un programa desde cero.\nAdemás, estas preguntas solo pueden versar sobre el código que se explica en clase. Esos bloques están marcados en los apuntes con el rótulo se explica en clase, y son los únicos evaluables.\nEl resto del código de los apuntes es accesorio: está para ilustrar un concepto, preparar una figura o hacer que el ejemplo funcione. Se puede leer, y ejecutarlo ayuda a entender, pero no se evalúa.",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -94,7 +94,7 @@
     "href": "index.html#fuentes",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Fuentes",
-    "text": "Fuentes\nLa bibliografía principal son An Introduction to Statistical Learning de James, Witten, Hastie y Tibshirani y The Elements of Statistical Learning de Hastie, Tibshirani y Friedman. Las referencias concretas se citan en cada capítulo.\nRoi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad",
+    "text": "Fuentes\nLa bibliografía de la asignatura es la que recoge la guía docente:\n\nBishop, Pattern Recognition and Machine Learning (2006)\nGiussani, Applied Machine Learning with Python (2020)\nDeisenroth, Faisal y Ong, Mathematics for Machine Learning (2020)\nBoehmke y Greenwell, Hands-On Machine Learning with R (2019)\nHastie, Tibshirani y Friedman, The Elements of Statistical Learning (2009)\n\nLas referencias concretas se citan en cada capítulo.\nRoi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad",
     "crumbs": [
       "Presentación de la asignatura"
     ]
@@ -104,7 +104,7 @@
     "href": "index.html#referencias",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Referencias",
-    "text": "Referencias\n\n\nBommasani, Rishi et al. 2021. On the\nOpportunities and Risks of Foundation Models. https://arxiv.org/abs/2108.07258.\n\n\nMitchell, Tom M. 1997. Machine Learning. McGraw-Hill. https://www.cs.cmu.edu/~tom/book.html.",
+    "text": "Referencias\n\n\nBishop, Christopher M. 2006. Pattern Recognition and Machine\nLearning. Springer.\n\n\nBoehmke, Brad, and Brandon M. Greenwell. 2019. Hands-On Machine Learning with R. Chapman;\nHall/CRC.\n\n\nBommasani, Rishi et al. 2021. On the\nOpportunities and Risks of Foundation Models. https://arxiv.org/abs/2108.07258.\n\n\nDeisenroth, Marc Peter, A. Aldo Faisal, and Cheng Soon Ong. 2020.\nMathematics for Machine Learning. Cambridge University Press.\n\n\nGiussani, Alessandro. 2020. Applied Machine Learning with\nPython. 2nd ed. Bocconi University Press.\n\n\nHastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. The\nElements of Statistical Learning. 2nd ed. Springer.\n\n\nMitchell, Tom M. 1997. Machine Learning. McGraw-Hill. https://www.cs.cmu.edu/~tom/book.html.",
     "crumbs": [
       "Presentación de la asignatura"
     ]

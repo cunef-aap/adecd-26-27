@@ -139,8 +139,9 @@ cómo se controla la complejidad y cómo se construye un flujo reproducible con 
 El desarrollo de cada tema combinará:
 
 1. Explicaciones teóricas en pizarra.
-2. Resolución de ejercicios conceptuales y matemáticos.
-3. Resolución de ejercicios con código.
+2. Explicación de código.
+3. Resolución de ejercicios conceptuales y matemáticos.
+4. Resolución de ejercicios con código.
 
 El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`,
 `scikit-learn` y PyTorch.
@@ -152,19 +153,18 @@ Durante el curso explicaremos código y lo ejecutaremos en clase. Al finalizar e
 No obstante, los exámenes son con papel
 y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:
 
-1. **completar una o dos líneas** marcadas;
+1. **Completar una o dos líneas** marcadas;
 
-2. **leer un fragmento y decir qué calcula**: qué cantidad estima, sobre qué conjunto de
+2. **Leer un fragmento y decir qué calcula**: qué cantidad estima, sobre qué conjunto de
    datos y con qué tamaño de muestra;
 
-3. **diagnosticar** un fragmento con errores de método y justificar cada uno, que es el
-   bloque con más peso de código en el examen;
+3. **Diagnosticar** encontrar errores en el código.
 
 No se pedirá escribir un programa desde cero.
 
-**Estas preguntas solo pueden versar sobre el código que se explica en clase.** Esos bloques
+**Además, estas preguntas solo pueden versar sobre el código que se explica en clase.** Esos bloques
 están marcados en los apuntes con el rótulo *se explica en clase*, y son los únicos
-evaluables. En el capítulo 1, por ejemplo, son seis.
+evaluables. 
 
 El resto del código de los apuntes es accesorio: está para ilustrar un concepto, preparar una
 figura o hacer que el ejemplo funcione. Se puede leer, y ejecutarlo ayuda a entender, pero
@@ -192,11 +192,17 @@ Antes de comenzar se recomienda:
    termina con un diagnóstico;
 3. leer la [sección de evaluación](curso/evaluacion.qmd).
 
-## Fuentes 
+## Fuentes
 
-La bibliografía principal son *An Introduction to Statistical Learning* de James, Witten,
-Hastie y Tibshirani y *The Elements of Statistical Learning* de Hastie, Tibshirani y
-Friedman. Las referencias concretas se citan en cada capítulo.
+La bibliografía de la asignatura es la que recoge la guía docente:
+
+- Bishop, *Pattern Recognition and Machine Learning* [-@bishop2006pattern]
+- Giussani, *Applied Machine Learning with Python* [-@giussani2020applied]
+- Deisenroth, Faisal y Ong, *Mathematics for Machine Learning* [-@deisenroth2020mathematics]
+- Boehmke y Greenwell, *Hands-On Machine Learning with R* [-@boehmke2019hands]
+- Hastie, Tibshirani y Friedman, *The Elements of Statistical Learning* [-@hastie2009elements]
+
+Las referencias concretas se citan en cada capítulo.
 
 Roi Naveiro · Departamento de Métodos Cuantitativos · CUNEF Universidad
 
