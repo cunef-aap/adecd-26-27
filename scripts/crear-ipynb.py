@@ -78,6 +78,85 @@ def notacion_al_principio(ruta: Path) -> None:
     ruta.write_text(json.dumps(nb, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
+SITIO = "https://cunef-aap.github.io/adecd-26-27"
+# El articulo va en la tabla: la referencia sustituye a `?@etiqueta` dentro de la prosa,
+# y sin articulo queda coja («de definicion Riesgo»).
+TIPOS = {"eq": "la ecuación", "thm": "el teorema", "def": "la definición",
+         "prp": "la proposición", "lem": "el lema", "cor": "el corolario",
+         "exm": "el ejemplo", "exr": "el ejercicio", "fig": "la figura",
+         "tbl": "la tabla", "sec": "la sección"}
+
+
+def indice_etiquetas() -> dict[str, tuple[str, str]]:
+    """etiqueta -> (fichero fuente, titulo). Sirve para convertir en enlaces utiles las
+    referencias que un render suelto de un capitulo no sabe resolver."""
+    indice = {}
+    for carpeta in ("capitulos", "curso", "problemas"):
+        for qmd in sorted((RAIZ / carpeta).glob("*.qmd")):
+            lineas = qmd.read_text(encoding="utf-8").split("\n")
+            for i, l in enumerate(lineas):
+                m = re.search(r"\{#((?:" + "|".join(TIPOS) + r")-[\w-]+)\}", l)
+                if not m:
+                    continue
+                titulo = ""
+                for siguiente in lineas[i + 1:i + 3]:
+                    t = siguiente.strip()
+                    if t.startswith("#"):
+                        titulo = t.lstrip("# ").strip()
+                        break
+                indice[m.group(1)] = (f"{carpeta}/{qmd.name}", titulo)
+    return indice
+
+
+def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[str, int]:
+    """Quita del cuaderno lo que en Colab no se ve o no se puede pulsar.
+
+    Un cuaderno es un render suelto de un capitulo de un libro, de modo que arrastra tres
+    cosas que en Colab sobran: las marcas de revision del repositorio, los enlaces internos
+    a anclas que no existen en el cuaderno, y las referencias que Quarto no supo resolver y
+    escribe como `?@etiqueta`. Las dos ultimas se convierten en enlaces a la pagina
+    publicada cuando el capitulo de destino esta publicado, y en texto llano cuando no.
+    """
+    def pagina(fuente: str) -> str | None:
+        return f"{SITIO}/{fuente[:-4]}.html" if fuente in DENTRO else None
+
+    cuenta = {"marcas de revisión": 0, "referencias": 0, "enlaces internos": 0}
+
+    def sin_marca(m):
+        cuenta["marcas de revisión"] += 1
+        return m.group(1)
+
+    def referencia(m):
+        cuenta["referencias"] += 1
+        etiqueta = m.group(1)
+        fuente, titulo = indice.get(etiqueta, ("", ""))
+        nombre = TIPOS.get(etiqueta.split("-")[0], "el resultado")
+        texto = f"{nombre} «{titulo}»" if titulo else f"{nombre} `{etiqueta}`"
+        url = pagina(fuente) if fuente else None
+        return f"[{texto}]({url}#{etiqueta})" if url else texto
+
+    def interno(m):
+        cuenta["enlaces internos"] += 1
+        etiqueta, texto = m.group(1), m.group(2)
+        fuente, _ = indice.get(etiqueta, ("", ""))
+        url = pagina(fuente) if fuente else None
+        return f"[{texto}]({url}#{etiqueta})" if url else texto
+
+    nb = json.loads(ruta.read_text(encoding="utf-8"))
+    for c in nb["cells"]:
+        if c["cell_type"] not in ("markdown", "raw"):
+            continue
+        t = "".join(c["source"])
+        t = re.sub(r'<span class="nuevo">(.*?)</span>', sin_marca, t, flags=re.S)
+        t = re.sub(r'<a href="#([\w-]+)"[^>]*class="quarto-xref">(.*?)</a>', interno, t,
+                   flags=re.S)
+        t = re.sub(r"\?@([\w-]+)", referencia, t)
+        lineas = t.split("\n")
+        c["source"] = [l + "\n" for l in lineas[:-1]] + [lineas[-1]]
+    ruta.write_text(json.dumps(nb, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return {k: v for k, v in cuenta.items() if v}
+
+
 def macros_sin_expandir(ruta: Path) -> list[str]:
     """Macros del contrato que Pandoc no llegó a expandir. Deberían ser cero: si aparece
     alguno, en Colab se vería la secuencia en crudo."""
@@ -91,10 +170,14 @@ def macros_sin_expandir(ruta: Path) -> list[str]:
 
 
 sucios = {}
+indice = indice_etiquetas()
 for qmd in capitulos:
     ruta = SALIDA / f"{qmd.stem}.ipynb"
     if not ruta.exists():
         continue
+    limpiado = limpia_para_colab(ruta, indice)
+    if limpiado:
+        print(f"   {ruta.name}: " + ", ".join(f"{v} {k}" for k, v in limpiado.items()))
     notacion_al_principio(ruta)
     restos = macros_sin_expandir(ruta)
     if restos:
