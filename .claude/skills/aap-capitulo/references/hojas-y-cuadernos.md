@@ -181,6 +181,23 @@ llama a `scripts/crear-ipynb.py`. Consecuencias al escribir el capítulo:
   hueco del laboratorio.
 - El preámbulo `.content-hidden` **no llega**, así que el primer bloque visible lleva los
   imports reales y la semilla.
+- **Los macros del contrato de notación no hacen falta en el cuaderno: Pandoc los expande**
+  al escribir el `ipynb`, los 100, incluidos los nueve `\DeclareMathOperator`. Medido sobre
+  los cinco capítulos escritos: cero macros sin expandir, y las 1065 expresiones
+  matemáticas de sus cuadernos válidas bajo MathJax, que es el motor de Colab.
+  `scripts/crear-ipynb.py` lo comprueba en cada generación y falla si aparece alguno.
+- Aun así, cada cuaderno lleva como **primera celda** la notación del curso, generada por
+  `scripts/macros-mathjax.py`. No es para el cuaderno, es para las celdas nuevas que se
+  teclean **en clase**: sin ella, `$\Riskproc{n}$` escrito en Colab no renderiza. Va en un solo
+  `$...$` de una línea, que MathJax procesa y no dibuja (medido: cero glifos).
+- Ese script traduce dos cosas que MathJax no acepta: `\DeclareMathOperator` pasa a
+  `\newcommand` con `\operatorname`, y **`\coloneqq` pasa a `\mathrel{:=}`**. El segundo
+  falla incluso en la configuración por defecto de MathJax 3, porque vive en la extensión
+  `mathtools`, que Colab no carga. Es decir: **pegar `_macros.tex` tal cual en Colab no
+  funciona**, y por eso existe el traductor.
+- Al buscar macros sin expandir, la regex es `\\([A-Za-z]+)` y **no** `\\(\w+)`: el
+  subrayado es carácter de palabra, así que `\w+` lee `\argmin_w` como `argmin_w` y el
+  macro escapa a la comprobación.
 - **El enlace a Colab se activa por documento**, desde agosto de 2026. Dos pasos: declarar
   `cuaderno: <nombre>.ipynb` en la cabecera YAML del `.qmd` y poner `{{< include
   ../assets/includes/_colab-link.qmd >}}` donde deba salir el enlace. El include construye

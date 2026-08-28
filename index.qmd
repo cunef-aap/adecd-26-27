@@ -133,58 +133,35 @@ cómo se controla la complejidad y cómo se construye un flujo reproducible con 
 | Complejidad y generalización | 6-7 | características, sesgo-varianza y regularización |
 | Otros modelos | si el calendario lo permite | ajustar algún modelo más con lo aprendido, por ejemplo una red pequeña |
 
-Los siete primeros capítulos son el cuerpo del curso. El último bloque es abierto y depende
-del tiempo que quede: no añade método nuevo, sino que reutiliza el protocolo de evaluación
-de los capítulos 4 y 5 sobre una familia de modelos distinta.
 
 ## Cómo se trabaja
 
-El desarrollo de cada tema combinará explicación teórica, resolución de problemas y
-trabajo con datos. En conjunto, el curso incluirá:
+El desarrollo de cada tema combinará:
 
-- exposiciones y derivaciones matemáticas que justifiquen los métodos;
-- ejercicios escritos para aplicar los conceptos y detectar errores de razonamiento;
-- laboratorios en los que se implementen los procedimientos y se analicen sus resultados;
-- trabajo autónomo, tutorías y un proyecto aplicado.
-
-Los apuntes reúnen definiciones, resultados, ejemplos y código ejecutable. Los capítulos
-se acompañarán de hojas de problemas y de cuadernos que pueden utilizarse en Google Colab.
+1. Explicaciones teóricas en pizarra.
+2. Resolución de ejercicios conceptuales y matemáticos.
+3. Resolución de ejercicios con código.
 
 El lenguaje de trabajo es **Python**, principalmente con `numpy`, `pandas`, `matplotlib`,
 `scikit-learn` y PyTorch.
 
 ### Qué se espera del código
 
-No se presupone experiencia con Python. El anexo de [ejecutar código](curso/colab.qmd)
-cubre lo necesario para empezar: abrir un cuaderno en Colab, ejecutar celdas y las
-construcciones del lenguaje que aparecen en los capítulos. Se explica en la primera sesión.
+Durante el curso explicaremos código y lo ejecutaremos en clase. Al finalizar esta sesión, os explicaré de qué forma podéis ejecutar código vosotros mismos a través de Google Colab.
 
-Los apuntes traen el código completo y ejecutable: es la referencia. Los cuadernos traen el
-mismo código con huecos, y esos huecos se rellenan en el laboratorio. El examen es de papel
-y bolígrafo, así que **de código se pregunta la decisión, no el teclado**. En concreto,
-puede pedirse:
+No obstante, los exámenes son con papel
+y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:
 
-1. **leer un fragmento y decir qué calcula**: qué cantidad estima, sobre qué conjunto de
+1. **completar una o dos líneas** marcadas;
+
+2. **leer un fragmento y decir qué calcula**: qué cantidad estima, sobre qué conjunto de
    datos y con qué tamaño de muestra;
-2. **diagnosticar** un fragmento con errores de método y justificar cada uno, que es el
+
+3. **diagnosticar** un fragmento con errores de método y justificar cada uno, que es el
    bloque con más peso de código en el examen;
-3. **completar una o dos líneas** marcadas, cuando la línea es una fórmula del curso;
-4. **predecir el efecto de un cambio**: qué le pasa al número si se intercambian dos índices
-   o se ajusta con el conjunto equivocado;
-5. **ordenar** los pasos de un protocolo dados desordenados.
 
-No se pide escribir un programa desde cero, ni recordar la firma de ninguna función: **toda
-llamada que no esté en esta lista se da escrita en el enunciado**.
+No se pedirá escribir un programa desde cero.
 
-```python
-torch.linalg.lstsq(A, b).solution                          # mínimos cuadrados
-X @ w                                                      # predicción lineal
-((pred - y) ** 2).mean()                                   # riesgo cuadrático
-np.std(v, ddof=1) / np.sqrt(len(v))                        # error típico de una media
-KFold(n_splits=5, shuffle=True, random_state=42).split(X)   # bloques de validación cruzada
-X[indices][:, columnas]                                    # filas y columnas
-w -= lr * grad                                             # paso de descenso de gradiente
-```
 
 ## Evaluación y asistencia
 
@@ -199,24 +176,15 @@ guía docente.
 
 ## Preparación inicial
 
-Antes de comenzar el capítulo 1 se recomienda:
+Antes de comenzar se recomienda:
 
-1. trabajar el anexo de [ejecutar código](curso/colab.qmd), que enseña a abrir un cuaderno
-   en Google Colab, a ejecutar celdas y las siete construcciones de Python que usa el curso;
-   se explica en la primera sesión y cierra con un diagnóstico;
-2. repasar el anexo de [cálculo y álgebra](curso/algebra.qmd) y hacer el diagnóstico que
+1. repasar el anexo de [cálculo y álgebra](curso/algebra.qmd) y hacer el diagnóstico que
    cierra el anexo;
-3. hacer lo mismo con el [repaso de probabilidad](curso/probabilidad.qmd), que también
+2. hacer lo mismo con el [repaso de probabilidad](curso/probabilidad.qmd), que también
    termina con un diagnóstico;
-4. leer la [sección de evaluación](curso/evaluacion.qmd).
+3. leer la [sección de evaluación](curso/evaluacion.qmd).
 
-## Fuentes y agradecimientos
-
-La introducción mediante datos, patrones y funciones, así como el núcleo de fundamentos
-del curso, se inspira en las notas de
-[Phil Chodrow](https://www.philchodrow.prof/ml-notes-update/) para el curso CSCI 0451 de
-Middlebury College. El material se ha adaptado a una asignatura centrada en regresión y al
-programa de la guía docente de CUNEF Universidad.
+## Fuentes 
 
 La bibliografía principal son *An Introduction to Statistical Learning* de James, Witten,
 Hastie y Tibshirani y *The Elements of Statistical Learning* de Hastie, Tibshirani y
