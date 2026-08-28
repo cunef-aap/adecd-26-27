@@ -37,12 +37,14 @@ publicado:                   ## dice que documentos se publican en la web
 datos:                       ## espeja y submuestrea los datasets
 	python scripts/descargar-datos.py
 
-publicar: sitio notebooks marcas   ## fuente al repo privado y sitio al publico
+# Un solo repositorio, publico, con las fuentes y el sitio en docs/. Fuera quedan los
+# examenes y los solucionarios, que .gitignore excluye y se reparten por el Campus Virtual.
+publicar: sitio notebooks marcas   ## render + commit + push
 	python scripts/publicado.py --estado
+	python scripts/comprueba-publicable.py
 	git add -A
 	git commit -m "Actualiza el sitio"
 	git push origin main
-	python scripts/publicar-sitio.py
 
 limpiar:
 	rm -rf docs _completo .quarto _freeze

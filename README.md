@@ -30,39 +30,49 @@ make pdfs        # PDF de capitulos, hojas y anexos -> pdf/
 
 ## Publicación
 
-El sitio se sirve con GitHub Pages desde la carpeta `docs/` de la rama `main`, así que
-**`docs/` se versiona**: lo que hay commiteado es lo que se ve publicado. Para actualizar:
+Un solo repositorio, **público**, con las fuentes y el sitio. GitHub Pages lo sirve desde la
+carpeta `docs/` de la rama `main`, así que **`docs/` se versiona**: lo que hay commiteado es
+lo que se ve publicado.
 
 ```bash
-make publicar    # render + notebooks + commit + push
+make publicar    # render + cuadernos + commit + push
 ```
 
-### Qué se publica: `contenido.txt`
+### Lo único que no va al repositorio
 
-El sitio solo lleva el material con versión definitiva. Quién entra y quién no se declara en
-**`contenido.txt`**, y en ningún otro sitio: las rutas que empiezan por `-` se quedan en
-este repositorio privado.
+`.gitignore` excluye dos cosas, y solo dos:
+
+1. **`evaluacion/`**: banco de preguntas, parcial, simulacro y ejercicios tipo examen.
+2. **`problemas/hoja-*-soluciones.qmd`**: los solucionarios de las hojas.
+
+Las dos se reparten por el Campus Virtual, en PDF, nunca por la web. Viven en local y en
+OneDrive; el historial de git está limpio de ellas. `scripts/comprueba-publicable.py` aborta
+la publicación si alguna llega al índice de git o a `docs/`, y `make publicar` lo ejecuta
+siempre.
+
+### Qué se renderiza: `contenido.txt`
+
+Las fuentes de todo el libro están en el repositorio, pero el **sitio** solo muestra el
+material con versión definitiva. Quién entra y quién no se declara en **`contenido.txt`**: las
+rutas que empiezan por `-` no se renderizan.
 
 ```bash
 make publicado   # lista lo que se publica ahora mismo
 ```
 
-Al terminar un capítulo, quita el `-` de su línea y ejecuta `make publicar`. Tres piezas lo
+Al terminar un capítulo, quita el `-` de su línea y ejecuta `make publicar`. Dos piezas lo
 sostienen:
 
 - `scripts/publicado.py` genera con `contenido.txt` la lista de capítulos de `_quarto.yml`,
   entre dos centinelas. Hace falta un script porque **en un proyecto `book` los perfiles no
   pueden reducir el libro**: `book.chapters` y `project.render` declarados en un
-  `_quarto-PERFIL.yml` se ignoran, y Quarto renderiza todo (comprobado con Quarto 1.10.18).
-- `scripts/enlaces-publicados.lua` desactiva los enlaces a páginas todavía inéditas. Sin él
-  no solo quedarían 404: Quarto trata ese `.qmd` como un recurso y **copia el fuente** a
-  `docs/`, es decir, publicaría el capítulo inédito o el solucionario en versión `.qmd`.
-- `scripts/crear-ipynb.py` genera cuaderno solo de los capítulos publicados, y
-  `scripts/publicar-sitio.py` se niega a subir si encuentra un `.qmd`, un solucionario o un
-  `docs/evaluacion` en la salida.
+  `_quarto-PERFIL.yml` se ignoran y Quarto renderiza todo (comprobado con Quarto 1.10.18).
+- `scripts/enlaces-publicados.lua` desactiva los enlaces a páginas todavía sin renderizar.
+  Sin él no solo quedarían 404: Quarto trata ese `.qmd` como un recurso y **copia el fuente**
+  a `docs/`, que es la vía por la que se publicaría un solucionario.
 
-Los solucionarios nunca se publican en la web: van por el Campus Virtual, en PDF, después de
-cada sesión, que es lo que promete el pie de cada hoja.
+`scripts/crear-ipynb.py` genera cuaderno solo de los capítulos renderizados, porque
+`docs/live-notebooks/` se publica con el sitio.
 
 ### Los PDF salen del libro completo
 

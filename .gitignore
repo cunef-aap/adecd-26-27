@@ -25,8 +25,15 @@ guia_docente.pdf
 # Los PDF para el Campus Virtual se generan con `make pdfs`.
 pdf/
 
-# El clon del repositorio publico del sitio.
-_sitio-publicado/
+# NO van al repositorio, que es publico. Se quedan en local y en OneDrive.
+#   1) examenes: banco de preguntas, parcial, simulacro, ejercicios tipo examen
+#   2) soluciones de las hojas de problemas
+# Los PDF de estos dos se reparten por el Campus Virtual, nunca por la web.
+evaluacion/
+problemas/hoja-*-soluciones.qmd
 
 # El render completo del libro, solo para sacar los PDF.
 _completo/
+
+# El clon del sitio de la etapa de dos repositorios, ya no se usa.
+_sitio-publicado/
