@@ -51,8 +51,7 @@
 .trampa::before,
 .sinusar::before,
 .cajanegra::before,
-.codigo-clave::before,
-.codigo-apoyo::before {
+.codigo-clave::before {
   font-family: "Aeonik", system-ui, sans-serif;
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -135,8 +134,7 @@
 .trampa::before,
 .sinusar::before,
 .cajanegra::before,
-.codigo-clave::before,
-.codigo-apoyo::before {
+.codigo-clave::before {
   display: block;
   margin-bottom: 0.45rem;
 }
@@ -171,12 +169,11 @@
    Qué se explica de cada bloque de código.
    El curso no puede explicar las dieciséis celdas de un capítulo, y no todas
    hacen falta: unas son el contenido y otras solo dibujan la figura que lo
-   ilustra. La marca dice cuáles son cuáles, y con ello qué se explica en clase
-   y qué puede caer en el examen. El criterio está en la presentación de la
-   asignatura, en «Qué se espera del código».
+   ilustra. Se rotula solo lo primero; lo demás va plegado y se reconoce por
+   eso. El criterio está en la presentación de la asignatura, en «Qué se espera
+   del código».
    =========================================================================== */
-.codigo-clave,
-.codigo-apoyo {
+.codigo-clave {
   margin: 1.6rem 0;
   padding-left: 1.15rem;
 }
@@ -189,18 +186,9 @@
   color: var(--azul);
 }
 
-.codigo-apoyo {
-  border-left: 1px dotted var(--filete);
-  color: var(--tinta-suave);
-}
-.codigo-apoyo::before {
-  content: "No exigible · figura";
-  color: var(--tinta-suave);
-}
 
 /* El bloque de codigo dentro de la marca no repite el filete lateral. */
-.codigo-clave div.sourceCode,
-.codigo-apoyo div.sourceCode {
+.codigo-clave div.sourceCode {
   margin-left: 0;
 }
 

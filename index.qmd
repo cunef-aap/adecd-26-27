@@ -162,10 +162,9 @@ y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:
 
 No se pedirá escribir un programa desde cero.
 
-Además, no todo el código de un capítulo cuenta. Cada bloque lleva escrito de qué grupo es:
-los marcados **se explica en clase** traducen a código una definición o un resultado del
-capítulo, y de ellos se pregunta; los marcados **no exigible** solo preparan una figura, se
-dejan plegados y no entran en el examen.
+Además, no todo el código de un capítulo cuenta igual. Los bloques marcados **se explica en
+clase** traducen a código una definición o un resultado del capítulo, y de ellos se pregunta.
+El resto prepara las figuras que ilustran el argumento: va plegado y no entra en el examen.
 
 
 ## Evaluación y asistencia

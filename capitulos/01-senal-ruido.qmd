@@ -53,11 +53,10 @@ ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma 
 función.]{.nuevo}
 
 ::: {.nuevo}
-Cada bloque de código lleva escrito de qué grupo es. Los marcados **se explica en clase** son
-contenido del capítulo: traducen a código una definición o un resultado, y de ellos se pregunta.
-Los marcados **no exigible** solo preparan la figura que ilustra el argumento; se dejan
-plegados, se pueden leer por curiosidad y no entran en el examen. En este capítulo son seis y
-siete respectivamente.
+No todo el código de un capítulo cuenta igual. Los bloques marcados **se explica en clase**
+son contenido: traducen a código una definición o un resultado, y de ellos se pregunta. En
+este capítulo son seis. El resto prepara las figuras que ilustran el argumento, va plegado y
+se puede leer por curiosidad.
 :::
 
 ::: {.codigo-clave}
@@ -77,7 +76,6 @@ y = senal + ruido
 
 ::: {#fig-senal-ruido}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 kw_puntos = dict(color="black", facecolors="none", s=40, alpha=0.65)
@@ -95,7 +93,6 @@ ax.set(xlabel="$x$", ylabel="$y$")
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 Descomposición ilustrativa de los datos observados (puntos) en una señal subyacente
 (línea discontinua) y ruido (segmentos naranjas).
@@ -151,7 +148,6 @@ cualesquiera $\yi$**, incluidos unos generados por ruido puro. Un error de entre
 nulo se puede conseguir siempre y, por tanto, no distingue un modelo que ha aprendido de uno
 que no.
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 from scipy import interpolate
@@ -160,11 +156,9 @@ interpolador = interpolate.interp1d(x.numpy(), y.numpy(), kind="cubic")
 x_denso = torch.linspace(0, 10, 100)
 y_interpolada = interpolador(x_denso.numpy())
 ```
-:::
 
 ::: {#fig-interpolacion}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -175,7 +169,6 @@ ax.set(xlabel="$x$", ylabel="$y$")
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 Una función que interpola exactamente la muestra y, por tanto, ajusta tanto la señal
 como el ruido.
@@ -194,7 +187,6 @@ y_nueva = 2 * x_denso + 1 + 3 * torch.randn(len(x_denso))
 
 ::: {#fig-trampa}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -206,7 +198,6 @@ ax.set(xlabel="$x$", ylabel="$y$")
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 Datos nuevos, con la misma señal, comparados con el interpolador construido sobre la
 primera muestra.
@@ -332,7 +323,6 @@ $\noise$ su dispersión.
 
 ::: {#fig-densidades-normales}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -349,7 +339,6 @@ ax.set(xlabel="$z$", ylabel=r"$p_\varepsilon(z;\mu,\sigma)$")
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 Densidades normales para distintas medias y desviaciones típicas.
 :::
@@ -570,7 +559,6 @@ $$
 
 ::: {#fig-modelo-generador}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 def dibuja_normal_vertical(ax, x0, media, sigma, ancho=0.4):
@@ -595,7 +583,6 @@ ax.set(xlabel="$x$", ylabel="$y$")
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 En el modelo lineal-gaussiano, cada dato es una extracción de una distribución normal
 centrada en la señal.
@@ -835,7 +822,6 @@ for w0 in torch.linspace(-5, 5, 20):
 
 ::: {#fig-verosimilitud-rejilla}
 
-::: {.codigo-apoyo}
 ```{python}
 #| code-fold: true
 w0_hat, w1_hat = mejores_coeficientes
@@ -863,7 +849,6 @@ ax.set(
 ax.legend()
 plt.tight_layout()
 ```
-:::
 
 Comparación entre la señal que generó los datos y la recta obtenida maximizando
 heurísticamente la verosimilitud sobre una rejilla.

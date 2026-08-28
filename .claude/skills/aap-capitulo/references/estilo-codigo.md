@@ -355,22 +355,24 @@ envuelto en una de estas dos marcas, que el CSS rotula:
     ```
     :::
 
-- **`.codigo-clave`**, rotulado "se explica en clase · exigible". El bloque traduce a código
-  una definición o un resultado del capítulo. Va **sin** `#| code-fold: true`, para que se
-  lea abierto, y no debe contener nada que no sea exigible: si necesita una línea de estilo
-  de figura, esa línea se muda al primer bloque de dibujo que la use.
-- **`.codigo-apoyo`**, rotulado "no exigible · figura". Prepara o dibuja una figura. Va
-  **con** `#| code-fold: true`, de modo que el plegado y la marca dicen lo mismo.
+**Se rotula solo lo que hay que explicar.** `.codigo-clave` lleva el rótulo "se explica en
+clase · exigible"; el bloque traduce a código una definición o un resultado del capítulo. Va
+**sin** `#| code-fold: true`, para que se lea abierto, y no debe contener nada que no sea
+exigible: si necesita una línea de estilo de figura, esa línea se muda al primer bloque de
+dibujo que la use.
 
-No se marcan los bloques que no se ven: el preámbulo `.content-hidden` y los que llevan
-`#| echo: false`.
+**Lo demás no se marca.** Hubo una segunda marca, `.codigo-apoyo`, rotulada "no exigible ·
+figura", y se retiró en agosto de 2026: poner un cartel negativo sobre siete bloques de cada
+capítulo era ruido. Los bloques de figura se reconocen porque van **con**
+`#| code-fold: true`, es decir, plegados. Tampoco se marcan los bloques que no se ven: el
+preámbulo `.content-hidden` y los que llevan `#| echo: false`.
 
 **Los huecos `#---` van siempre en un bloque `.codigo-clave`.** Un hueco es tiempo de
 laboratorio, y no se gasta en una figura.
 
 Reparto del capítulo 1, que fija el criterio: seis `.codigo-clave` (generar los datos como
 señal más ruido, generar datos nuevos de la misma distribución, la densidad normal, muestrear
-ruido, la propiedad de posición y escala, y la búsqueda en rejilla de la verosimilitud) y
-siete `.codigo-apoyo`.
+ruido, la propiedad de posición y escala, y la búsqueda en rejilla de la verosimilitud), siete
+bloques de figura sin marcar y tres que no se ven.
 
 La marca no llega al cuaderno: `crear-ipynb.py` desanida los divs y solo queda la celda.
