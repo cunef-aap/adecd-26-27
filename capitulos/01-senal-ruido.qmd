@@ -54,9 +54,9 @@ función.]{.nuevo}
 
 ::: {.nuevo}
 No todo el código de un capítulo cuenta igual. Los bloques marcados **se explica en clase**
-son contenido: traducen a código una definición o un resultado, y de ellos se pregunta. En
-este capítulo son seis. El resto prepara las figuras que ilustran el argumento, va plegado y
-se puede leer por curiosidad.
+son contenido: traducen a código una definición o un resultado, y son los **únicos** sobre
+los que se pregunta. En este capítulo son seis. El resto es accesorio, ilustra el argumento
+o prepara una figura, va plegado y no se evalúa.
 :::
 
 ::: {.codigo-clave}

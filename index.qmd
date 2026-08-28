@@ -162,9 +162,13 @@ y bolígrafo. Las preguntas de código por tanto pueden ser del tipo:
 
 No se pedirá escribir un programa desde cero.
 
-Además, no todo el código de un capítulo cuenta igual. Los bloques marcados **se explica en
-clase** traducen a código una definición o un resultado del capítulo, y de ellos se pregunta.
-El resto prepara las figuras que ilustran el argumento: va plegado y no entra en el examen.
+**Estas preguntas solo pueden versar sobre el código que se explica en clase.** Esos bloques
+están marcados en los apuntes con el rótulo *se explica en clase*, y son los únicos
+evaluables. En el capítulo 1, por ejemplo, son seis.
+
+El resto del código de los apuntes es accesorio: está para ilustrar un concepto, preparar una
+figura o hacer que el ejemplo funcione. Se puede leer, y ejecutarlo ayuda a entender, pero
+**no se evalúa**.
 
 
 ## Evaluación y asistencia
