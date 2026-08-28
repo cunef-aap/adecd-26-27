@@ -17,17 +17,15 @@ import style
 ```
 :::
 
-Este anexo es lo justo para abrir un cuaderno del curso, ejecutarlo y modificarlo. No
-enseña a programar: enseña a **ejecutar** y a **leer** el código del curso, que es lo que
-el examen pregunta. Cada bloque de abajo se puede copiar en una celda y lanzar. Si ya
-manejas Python, ve directamente al diagnóstico del final.
+Este anexo contiene una introducción a Python. Su objetivo no es enseñar a programar sino
+asegurar que sabéis ejecutar código desde Google Colab.
 
 {{< include ../assets/includes/_colab-link.qmd >}}
 
 ## Google Colab
 
 Colab ejecuta Python en un ordenador de Google, desde el navegador. **No hay que instalar
-nada**: basta una cuenta de Google. Las bibliotecas del curso (`torch`, `numpy`, `pandas`,
+nada**: basta una cuenta de Google. Las librerías del curso (`torch`, `numpy`, `pandas`,
 `matplotlib`, `scikit-learn`) ya vienen instaladas.
 
 Cada capítulo publica su cuaderno con **el código completo**, el mismo que aparece en los
@@ -36,20 +34,19 @@ apuntes, y el enlace de su primera página lo abre en Colab.
 ## Guardar tu copia en Drive
 
 El cuaderno que se abre desde el enlace es **de solo lectura**. Puedes ejecutarlo, pero si
-cierras la pestaña pierdes todo lo que hayas escrito. Lo primero, siempre, es hacer tu
-copia. Son seis pasos y se hacen una vez por cuaderno:
+cierras la pestaña pierdes todo lo que hayas escrito. Si quieres una versión propia tendrás
+que hacer tu copia. Son seis pasos y se hacen una vez por cuaderno:
 
 1. Abre el enlace del cuaderno. Colab lo carga en modo de solo lectura, y arriba verás un
    aviso de que los cambios no se guardarán.
-2. Menú **Archivo**, arriba a la izquierda. Dentro, **Guardar una copia en Drive**. Si es
-   la primera vez, Google te pedirá permiso para conectar Colab con tu Drive: acéptalo.
+2. Menú **Archivo**, arriba a la izquierda. Dentro, **Guardar una copia en Drive**. Si es la
+   primera vez, Google te pedirá permiso para conectar Colab con tu Drive: acéptalo.
 3. Colab abre una **pestaña nueva** con tu copia. Se reconoce porque el título empieza por
    `Copia de`. La pestaña vieja, la de solo lectura, ya no hace falta y puedes cerrarla.
 4. Comprueba que estás en la copia antes de escribir nada. Si arriba sigue el aviso de solo
    lectura, estás en la pestaña equivocada.
 5. Renombra el cuaderno con doble clic en el título, por ejemplo
-   `01 senal y ruido - mis notas`. No es obligatorio, pero después habrá siete cuadernos
-   llamados `Copia de` algo.
+   `01 senal y ruido - mis notas`.
 6. A partir de aquí **se guarda solo** cada pocos segundos. No hay que pulsar nada.
 
 Tu copia vive en Google Drive, en una carpeta que Colab crea llamada **Colab Notebooks**.
