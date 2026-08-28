@@ -22,15 +22,18 @@ notebooks: check             ## cuadernos con huecos -> docs/live-notebooks/
 preview:                     ## servidor local con recarga
 	quarto preview --profile publica
 
-pdfs: sitio                  ## PDF de capitulos, hojas y apendices -> pdf/
+pdfs: sitio notebooks        ## PDF de capitulos, hojas y apendices -> pdf/
 	python scripts/crear-pdfs.py
 
+# `quarto render` vacia docs/ de lo que no sale de el, asi que `notebooks` va detras de
+# cada render, no delante. Sin eso el sitio se publica sin los cuadernos ni los datos.
 pdfs-soluciones:             ## PDF de los solucionarios, sin dejarlos publicados
 	python scripts/soluciones.py --mostrar
 	quarto render --profile publica
 	python scripts/crear-pdfs.py --solo hoja
 	python scripts/soluciones.py --ocultar
 	quarto render --profile publica
+	$(MAKE) notebooks
 	@echo
 	@echo "Los solucionarios estan en pdf/problemas/ y vuelven a estar ocultos"
 	@echo "en el sitio. Comprueba con: make soluciones-estado"
@@ -41,11 +44,12 @@ soluciones-estado:           ## dice si los solucionarios se publicarian o no
 datos:                       ## espeja y submuestrea los datasets
 	python scripts/descargar-datos.py
 
-publicar: sitio notebooks marcas
+publicar: sitio notebooks marcas   ## fuente al repo privado y sitio al publico
 	python scripts/soluciones.py --estado
 	git add -A
 	git commit -m "Actualiza el sitio"
 	git push origin main
+	python scripts/publicar-sitio.py
 
 limpiar:
 	rm -rf docs .quarto _freeze

@@ -24,3 +24,6 @@ guia_docente.pdf
 
 # Los PDF para el Campus Virtual se generan con `make pdfs`.
 pdf/
+
+# El clon del repositorio publico del sitio.
+_sitio-publicado/
