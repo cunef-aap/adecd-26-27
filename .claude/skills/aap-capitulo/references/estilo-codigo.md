@@ -342,3 +342,35 @@ modo que no se ejecuta. Puede llamar a funciones que no existen (`cargar_datos()
 cambia. Un experimento que tarde más de unos segundos hay que justificarlo o reducirlo. Los
 1.000 ajustes del experimento de sesgo y varianza del capítulo 6 necesitan solución cerrada
 (`torch.linalg.lstsq`), no descenso de gradiente.
+
+## Qué se explica de cada bloque
+
+El curso no da tiempo a explicar las dieciséis celdas de un capítulo, y no hace falta: unas
+son el contenido y otras solo dibujan la figura que lo ilustra. Cada bloque **visible** va
+envuelto en una de estas dos marcas, que el CSS rotula:
+
+    ::: {.codigo-clave}
+    ```{python}
+    ...
+    ```
+    :::
+
+- **`.codigo-clave`**, rotulado «se explica en clase · exigible». El bloque traduce a código
+  una definición o un resultado del capítulo. Va **sin** `#| code-fold: true`, para que se
+  lea abierto, y no debe contener nada que no sea exigible: si necesita una línea de estilo
+  de figura, esa línea se muda al primer bloque de dibujo que la use.
+- **`.codigo-apoyo`**, rotulado «no exigible · figura». Prepara o dibuja una figura. Va
+  **con** `#| code-fold: true`, de modo que el plegado y la marca dicen lo mismo.
+
+No se marcan los bloques que no se ven: el preámbulo `.content-hidden` y los que llevan
+`#| echo: false`.
+
+**Los huecos `#---` van siempre en un bloque `.codigo-clave`.** Un hueco es tiempo de
+laboratorio, y no se gasta en una figura.
+
+Reparto del capítulo 1, que fija el criterio: seis `.codigo-clave` (generar los datos como
+señal más ruido, generar datos nuevos de la misma distribución, la densidad normal, muestrear
+ruido, la propiedad de posición y escala, y la búsqueda en rejilla de la verosimilitud) y
+siete `.codigo-apoyo`.
+
+La marca no llega al cuaderno: `crear-ipynb.py` desanida los divs y solo queda la celda.
