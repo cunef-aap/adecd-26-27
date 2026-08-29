@@ -32,6 +32,16 @@ CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 
 # (glob dentro de docs, subcarpeta de salida, etiqueta para --solo)
 GRUPOS = [
+    # La presentacion de la asignatura es la portada del libro, y en Canvas se reparte como
+    # un documento mas. Sale a pdf/00-presentacion.pdf, sin subcarpeta.
+    ("index.html", ".", "presentacion"),
+]
+
+# El nombre del PDF sale del .html, salvo estas excepciones. `index` a secas no dice nada
+# en una lista de Canvas, y el cero delante lo deja el primero.
+NOMBRES = {"index": "00-presentacion"}
+
+GRUPOS += [
     ("capitulos/*.html", "capitulos", "capitulo"),
     ("problemas/hoja-*.html", "problemas", "hoja"),
     ("curso/*.html", "curso", "curso"),
@@ -72,7 +82,7 @@ def main() -> int:
         if solo and solo != etiqueta:
             continue
         for html in sorted(fuente.glob(patron)):
-            pdf = SALIDA / carpeta / f"{html.stem}.pdf"
+            pdf = SALIDA / carpeta / f"{NOMBRES.get(html.stem, html.stem)}.pdf"
             if imprime(html, pdf):
                 hechos.append((pdf, pdf.stat().st_size))
             else:

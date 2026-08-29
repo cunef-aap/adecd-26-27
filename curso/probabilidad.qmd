@@ -6,9 +6,8 @@ $$
 $$
 :::
 
-Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se
-usan en el [capítulo de señal y ruido](../capitulos/01-senal-ruido.qmd). No se ve en clase:
-se supone conocido de Estadística y se recoge aquí para poder consultarlo.
+Lo que este curso da por sabido de probabilidad. No se ve en clase:
+se supone conocido de los cursos previos y se recoge aquí para poder consultarlo.
 
 ## Variables aleatorias continuas
 
@@ -29,7 +28,7 @@ $$
 \Var{X} = \E{(X - \E{X})^2} = \E{X^2} - \E{X}^2 .
 $$
 
-Con esas dos definiciones se lee ya el hecho que el curso usa más veces sin nombrarlo.
+Una propiedad importante.
 
 ::: {#lem-esperanza-funcion}
 ## La esperanza de una función de una extracción
@@ -44,22 +43,16 @@ $$ {#eq-esperanza-funcion}
 En particular, si $X_1,\ldots,X_{\nobs}$ son extracciones independientes de $\pdf$, entonces
 $\E{g(X_i)}$ es esa misma integral para todo $i$: todas las extracciones tienen la misma
 esperanza. Vale igual para un vector aleatorio con distribución conjunta $P$, escribiendo
-$\Esub{P}{g(X,Y)}$, y así se usa en el capítulo 4.
+$\Esub{P}{g(X,Y)}$.
 :::
 
-::: {.cajanegra}
-**Se da por conocido.** Es la definición de esperanza aplicada a la variable $g(X)$, y es
-materia de Estadística. Se usa en el capítulo 4 para identificar la esperanza de una pérdida
-con el riesgo verdadero, y ahí la hipótesis de que $g$ es fija es exactamente la que separa
-train de test.
-:::
 
 **Respecto de qué se toma una esperanza.** En todo el libro, el subíndice de $\E{\cdot}$
 nombra lo que se promedia, y se escribe siempre que haya más de un candidato posible:
 
 | Notación | Se promedia sobre |
 |---|---|
-| $\Esub{P^\star}{\cdot}$ | una observación nueva $(X,Y)$ extraída de la distribución que genera los datos |
+| $\Esub{P^\star}{\cdot}$ | una observación nueva $(X,Y)$ extraída de la distribución $P^\star$ que genera los datos |
 | $\Esub{X}{\cdot}$ | la distribución marginal de las variables predictoras |
 | $\Esub{\varepsilon}{\cdot}$ | el ruido de una observación |
 | $\Esub{\data}{\cdot}$, $\Esub{\Dtrain}{\cdot}$, $\Esub{\Dtest}{\cdot}$ | las muestras posibles del tamaño y el papel que indique el subíndice |
