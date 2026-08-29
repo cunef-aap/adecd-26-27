@@ -261,7 +261,7 @@ window.Quarto = {
 </header>
 
 
-<p>Lo que este curso da por sabido de probabilidad, más las propiedades de la normal que se usan en el <a href="../capitulos/01-senal-ruido.html">capítulo de señal y ruido</a>. No se ve en clase: se supone conocido de Estadística y se recoge aquí para poder consultarlo.</p>
+<p>Lo que este curso da por sabido de probabilidad. No se ve en clase: se supone conocido de los cursos previos y se recoge aquí para poder consultarlo.</p>
 <section id="variables-aleatorias-continuas" class="level2">
 <h2 class="anchored" data-anchor-id="variables-aleatorias-continuas">Variables aleatorias continuas</h2>
 <p>Una variable aleatoria continua <span class="math inline">\(X\)</span> queda descrita por su <strong>densidad</strong> <span class="math inline">\(p\)</span>, que cumple <span class="math inline">\(p(x) \geq 0\)</span> y <span class="math inline">\(\int_{-\infty}^{\infty} p(x)\,\mathrm{d}x = 1\)</span>. La probabilidad de caer en un intervalo es el área bajo la densidad: <span class="math display">\[
@@ -273,16 +273,13 @@ window.Quarto = {
 \qquad
 \mathrm{Var}\!\left( X \right) = \mathbb{E}\!\left[ (X - \mathbb{E}\!\left[ X \right])^2 \right] = \mathbb{E}\!\left[ X^2 \right] - \mathbb{E}\!\left[ X \right]^2 .
 \]</span></p>
-<p>Con esas dos definiciones se lee ya el hecho que el curso usa más veces sin nombrarlo.</p>
+<p>Una propiedad importante.</p>
 <div id="lem-esperanza-funcion" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 1 (La esperanza de una función de una extracción)</strong></span> Sea <span class="math inline">\(X\)</span> una variable aleatoria con densidad <span class="math inline">\(p\)</span> y sea <span class="math inline">\(g\)</span> una función <strong>fija</strong>, elegida sin mirar los datos, con <span class="math inline">\(\int\left\lvert g(x) \right\rvert\,p(x)\,\mathrm{d}x&lt;\infty\)</span>. Entonces</p>
 <p><span id="eq-esperanza-funcion"><span class="math display">\[
 \mathbb{E}_{X}\!\left[ g(X) \right]=\int g(x)\,p(x)\,\mathrm{d}x .
 \tag{1}\]</span></span></p>
-<p>En particular, si <span class="math inline">\(X_1,\ldots,X_{n}\)</span> son extracciones independientes de <span class="math inline">\(p\)</span>, entonces <span class="math inline">\(\mathbb{E}\!\left[ g(X_i) \right]\)</span> es esa misma integral para todo <span class="math inline">\(i\)</span>: todas las extracciones tienen la misma esperanza. Vale igual para un vector aleatorio con distribución conjunta <span class="math inline">\(P\)</span>, escribiendo <span class="math inline">\(\mathbb{E}_{P}\!\left[ g(X,Y) \right]\)</span>, y así se usa en el capítulo 4.</p>
-</div>
-<div class="cajanegra">
-<p><strong>Se da por conocido.</strong> Es la definición de esperanza aplicada a la variable <span class="math inline">\(g(X)\)</span>, y es materia de Estadística. Se usa en el capítulo 4 para identificar la esperanza de una pérdida con el riesgo verdadero, y ahí la hipótesis de que <span class="math inline">\(g\)</span> es fija es exactamente la que separa train de test.</p>
+<p>En particular, si <span class="math inline">\(X_1,\ldots,X_{n}\)</span> son extracciones independientes de <span class="math inline">\(p\)</span>, entonces <span class="math inline">\(\mathbb{E}\!\left[ g(X_i) \right]\)</span> es esa misma integral para todo <span class="math inline">\(i\)</span>: todas las extracciones tienen la misma esperanza. Vale igual para un vector aleatorio con distribución conjunta <span class="math inline">\(P\)</span>, escribiendo <span class="math inline">\(\mathbb{E}_{P}\!\left[ g(X,Y) \right]\)</span>.</p>
 </div>
 <p><strong>Respecto de qué se toma una esperanza.</strong> En todo el libro, el subíndice de <span class="math inline">\(\mathbb{E}\!\left[ \cdot \right]\)</span> nombra lo que se promedia, y se escribe siempre que haya más de un candidato posible:</p>
 <table class="caption-top table">
@@ -299,7 +296,7 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\mathbb{E}_{P^\star}\!\left[ \cdot \right]\)</span></td>
-<td>una observación nueva <span class="math inline">\((X,Y)\)</span> extraída de la distribución que genera los datos</td>
+<td>una observación nueva <span class="math inline">\((X,Y)\)</span> extraída de la distribución <span class="math inline">\(P^\star\)</span> que genera los datos</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\mathbb{E}_{X}\!\left[ \cdot \right]\)</span></td>
