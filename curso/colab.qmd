@@ -89,7 +89,7 @@ titulo = "señal más ruido"
 print(n, sigma, titulo)
 ```
 
-`20` es un entero y `3.0` un decimal; el punto es la diferencia. Los textos van entre
+`20` es un entero y `3.0` un decimal. Los textos van entre
 comillas. La última expresión de una celda se muestra sola, sin `print`:
 
 ```{python}
@@ -153,9 +153,8 @@ mejor.
 
 ## Tensores: los vectores del curso
 
-Los datos del curso no son listas, son **tensores** de `torch`. Un tensor es una tira de
+Una parte importante del curso trabaja con **tensores** de `torch`. Un tensor es una tira de
 números sobre la que las operaciones actúan **elemento a elemento**, sin escribir bucles.
-Es la razón de usarlos: la fórmula matemática se traduce casi literalmente.
 
 ```{python}
 import torch
@@ -179,7 +178,7 @@ torch.randn(4)                  # 4 números al azar de una normal estándar
 torch.normal(3.0, 2.0, size=(4,))   # al azar, con media 3 y desviación 2
 ```
 
-Dos métodos que aparecen en todas las celdas y conviene entender:
+Dos métodos que aparecen en muchas celdas:
 
 - **`.item()`** saca el número de un tensor de **un solo** elemento, para poder usarlo como
   un decimal normal. Sobre un tensor de varios da error.
@@ -193,26 +192,25 @@ y[0].item(), y.numpy()
 
 ## Seleccionar partes de un tensor
 
-Casi todo el curso consiste en separar unos datos de otros: entrenamiento de prueba, un
-bloque de validación del resto. Se hace de tres maneras.
+Existen varias formas de indexar tensores:
 
-Por **posición**, con un índice o con una rebanada `desde:hasta`, donde el segundo extremo
-no entra:
+1. Por **posición**, con un índice o un par `desde:hasta`, donde el segundo extremo no
+   entra:
 
 ```{python}
 x = torch.linspace(0, 10, 8)
 x[0], x[-1], x[:3], x[2:5]
 ```
 
-Por **condición**, con una máscara de verdadero y falso. La comparación se aplica elemento
-a elemento y devuelve otro tensor:
+2. Por **condición**, con una máscara de verdadero y falso. La comparación se aplica
+   elemento a elemento y devuelve otro tensor:
 
 ```{python}
 grandes = x > 5
 grandes, x[grandes], grandes.sum().item()
 ```
 
-Y por **lista de índices**, que es como se parten los datos en el capítulo 4:
+Y por **lista de índices**:
 
 ```{python}
 indices = torch.tensor([0, 2, 4])
@@ -229,6 +227,8 @@ X = torch.stack([torch.ones(5), torch.linspace(0, 4, 5)], dim=1)
 X
 ```
 
+Aquí, `dim` indica que ambos vectores han de juntarse por columnas.
+
 `.shape` da el tamaño como (filas, columnas). Mirar la forma de un tensor es el primer
 diagnóstico cuando algo no cuadra:
 
@@ -243,8 +243,7 @@ puntos solos significan "todas":
 X[0], X[:, 1]
 ```
 
-Y `@` es el producto matricial. Con él, la predicción de un modelo lineal se escribe en
-tres caracteres:
+Y `@` es el producto matricial.
 
 ```{python}
 w = torch.tensor([1.0, 2.0])
@@ -253,7 +252,7 @@ X @ w
 
 ## Resumir y mostrar números
 
-Un tensor sabe resumirse solo, sin bucles:
+Los resúmenes estadísticos habituales, no requieren bucles.
 
 ```{python}
 y = torch.tensor([2.0, 4.0, 4.0, 5.0])
@@ -272,8 +271,9 @@ print(f"error cuadrático medio: {error.item():.4f}")
 ## Leer datos con pandas
 
 Los conjuntos de datos del curso están publicados, así que se leen directamente desde su
-dirección, sin descargar nada a mano. La biblioteca es `pandas` y el resultado se llama
-**DataFrame**: una tabla con nombres de columna.
+dirección, sin descargar nada a mano. La librería que usaremos para la lectura es `pandas`.
+Los objetos con los que trabaja se denominan **DataFrame**: una tabla con nombres de
+columna.
 
 ```{python}
 import pandas as pd
@@ -289,24 +289,50 @@ Quince mil filas y diecisiete columnas. `.head(3)` muestra las tres primeras:
 datos.head(3)
 ```
 
-Una columna se saca por su nombre entre corchetes, y sabe resumirse igual que un tensor:
+Una columna se saca por su nombre entre corchetes, y puede resumirse igual que un tensor:
 
 ```{python}
 datos["price"].mean()
 ```
 
-Para pasar de una columna de `pandas` a un tensor de `torch`, que es lo que piden los
-modelos del curso:
+Para pasar de una columna de `pandas` a un tensor de `torch`:
 
 ```{python}
 precio = torch.tensor(datos["price"].values, dtype=torch.float32)
 precio[:5]
 ```
 
+Para llevarse **varias columnas a la vez**, se pasa la lista de nombres. El resultado sigue
+siendo una tabla, y `.dropna()` quita las filas a las que les falte algún valor:
+
+```{python}
+columnas = ["accommodates", "bedrooms", "number_of_reviews"]
+tabla = datos[columnas].dropna()
+tabla.shape
+```
+
+Y esa tabla se convierte en una matriz de `torch` igual que antes, con `.values`. Es
+exactamente la matriz de datos del capítulo 3: una fila por caso y una columna por variable.
+
+```{python}
+X = torch.tensor(tabla.values, dtype=torch.float32)
+X.shape, X[:3]
+```
+
+Hay una segunda forma de seleccionar, por **posición** en lugar de por nombre, que es
+`.iloc`. Lleva dos índices separados por coma, filas y columnas, igual que un tensor de dos
+dimensiones:
+
+```{python}
+datos.iloc[0:3, 0:4]
+```
+
+Entre las dos, en el curso se usa casi siempre la selección por nombre: es más larga de
+escribir pero no se rompe cuando cambia el orden de las columnas.
+
 ## Dibujar una figura
 
-Todas las figuras del curso siguen el mismo patrón de tres líneas: crear los ejes, dibujar
-sobre ellos y etiquetar.
+Para dibujar gráficos, usaremos matplotlib.
 
 ```{python}
 from matplotlib import pyplot as plt
@@ -340,8 +366,7 @@ primera, segunda
 ```
 
 Los dos tensores coinciden. Todos los capítulos fijan la semilla al principio, y de ahí que
-las cifras del texto sean reproducibles. En el capítulo 4 se verá que la semilla no es un
-detalle: cambiarla cambia qué modelo se elige.
+las cifras del texto sean reproducibles. 
 
 ## Los cinco errores del primer día
 
@@ -358,8 +383,7 @@ primero es reiniciar y ejecutar todo.
 
 ## Diagnóstico
 
-Veinte minutos, en Colab. No cuenta para la nota; sirve para saber si puedes seguir el
-laboratorio del capítulo 1.
+Ejercicios de práctica.
 
 1. Abre un cuaderno nuevo, guarda una copia en tu Drive, compruébalo mirando el título, y
    ejecuta una celda con `2 + 2`.

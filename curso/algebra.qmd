@@ -22,14 +22,15 @@ lee como columna.
 $$
 \mathbf{u}\T\mathbf{v} = \sum_{j=1}^{m} u_j v_j .
 $$
-Es un número, no un vector. Y es simétrico: $\mathbf{u}\T\mathbf{v} = \mathbf{v}\T\mathbf{u}$.
+Es un número, no un vector. Y es simétrico: $\mathbf{u}\T\mathbf{v} =
+\mathbf{v}\T\mathbf{u}$.
 
 **Norma euclídea.**
 $$
 \norm{\mathbf{v}}^2 = \mathbf{v}\T\mathbf{v} = \sum_{j=1}^{m} v_j^2 .
 $$
 
-De aquí sale la propiedad que más se usa en el curso, y conviene aislarla:
+Una propiedad importante.
 
 ::: {#lem-norma-cero}
 ## Una norma se anula solo en el vector nulo
@@ -43,15 +44,7 @@ suma de términos no negativos vale cero solo si todos valen cero, es decir, si 
 para todo $j$.
 :::
 
-Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución
-de mínimos cuadrados y la trampa de la variable ficticia.
 
-::: {.sinusar}
-**Ningún capítulo lo cita todavía.** El capítulo 3 enuncia la existencia y la unicidad del
-ajuste pero deja su demostración fuera de alcance, así que no llega a usar este lema. Lo
-necesitará la trampa de la variable ficticia del capítulo 5. Si al escribir ese capítulo
-resulta que tampoco hace falta, este lema se puede quitar.
-:::
 
 ## Matrices
 
@@ -86,7 +79,7 @@ regla de la traspuesta de un producto.)*
 
 ## La matriz de diseño del curso
 
-Conviene fijarla desde ahora porque aparece en todos los capítulos. Con $\nobs$
+Aparecerá en todos los capítulos. Con $\nobs$
 observaciones y $\nfeat$ variables,
 $$
 \X = \begin{pmatrix}
@@ -107,7 +100,8 @@ decir, del tamaño del número de variables, no del de observaciones.
 ## Dependencia lineal, rango y núcleo
 
 Las columnas de $\X$ son **linealmente dependientes** si alguna de ellas se puede escribir
-como combinación de las demás. De forma equivalente, y esta es la formulación que usamos:
+como combinación lineal de las demás. De forma equivalente, y esta es la formulación que
+usamos:
 
 ::: {#def-nucleo}
 ## Núcleo
@@ -118,16 +112,36 @@ linealmente independientes si y solo si $\kernelop(\X) = \{\zerov\}$, y en ese c
 decimos que $\X$ tiene **rango completo por columnas**, o $\rank \X = \nfeat+1$.
 :::
 
+El **rango** de $\X$ es el número de columnas linealmente independientes que tiene. La
+definición del núcleo da la forma de calcularlo: cada dirección $\mathbf{v}\neq\zerov$ con
+$\X\mathbf{v}=\zerov$ delata una columna que se puede escribir con las demás, así que
+
+$$
+\rank \X = (\text{número de columnas}) - \dim \kernelop(\X).
+$$
+
+Con una matriz pequeña se hace a mano: se buscan las combinaciones que dan el vector cero y
+se cuentan. Con una matriz de datos se pide al ordenador, que lo obtiene contando
+cuántas direcciones sobreviven a una descomposición numérica:
+
+```{python}
+#| eval: false
+torch.linalg.matrix_rank(X)
+```
+
+En la práctica esto se usa como diagnóstico: si el rango sale menor que el número de
+columnas, hay una columna redundante y $\Xt\X$ no se puede invertir.
+
 Para que el rango sea completo hace falta, como mínimo, $\nobs \geq \nfeat+1$: no puede
 haber más columnas independientes que filas.
 
 ::: {.callout-tip appearance="simple"}
 ## Cómo se demuestra que hay dependencia
 
-No en abstracto: **exhibiendo el vector**. Para probar que unas columnas son dependientes,
-se escribe un $\mathbf{v} \neq \zerov$ concreto y se comprueba que $\X\mathbf{v} = \zerov$.
-Así se hace en el [capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd) con la
-trampa de la variable ficticia.
+Para probar que unas columnas son dependientes, se escribe un $\mathbf{v} \neq \zerov$
+concreto y se comprueba que $\X\mathbf{v} = \zerov$. Así se hace en el [capítulo de
+preparación de datos](../capitulos/05-preparacion-datos.qmd) con la trampa de la variable
+ficticia.
 :::
 
 ::: {#exr-nucleo}
@@ -141,6 +155,22 @@ Si $\mathbf{A}$ es cuadrada y de rango completo, el sistema $\mathbf{A}\mathbf{z
 \mathbf{b}$ tiene solución única. Formalmente se escribe $\mathbf{z} =
 \mathbf{A}^{-1}\mathbf{b}$, pero **en el ordenador nunca se calcula la inversa**: se
 resuelve el sistema directamente, que es más rápido y numéricamente más estable.
+
+Cuando el sistema no es cuadrado, que es el caso de una matriz de datos con más filas que
+columnas, en general no hay ninguna $\mathbf{z}$ que cumpla todas las ecuaciones a la vez.
+Entonces se busca la que menos se equivoca: la que minimiza $\norm{\X\mathbf{z}-\yv}^2$. Eso
+es **mínimos cuadrados**, y es la operación central del capítulo 3. `torch.linalg.lstsq(X,
+y)` la resuelve, y devuelve un objeto con varios campos, de los que el que interesa es
+`.solution`:
+
+```{python}
+#| eval: false
+coeficientes = torch.linalg.lstsq(X, y).solution
+```
+
+No hay que confundirla con `solve`: `solve` exige una matriz cuadrada de rango completo y
+resuelve el sistema exactamente; `lstsq` admite matrices rectangulares y devuelve el mejor
+ajuste posible.
 
 | Matemáticas | Código |
 |---|---|
@@ -166,8 +196,7 @@ $$
 \grad\bigl(a\,\model(\coef) + b\,h(\coef)\bigr)
 = a\,\grad \model(\coef) + b\,\grad h(\coef) .
 $$
-Se sigue de que la derivada parcial en cada coordenada es lineal. Se usa en el capítulo 3
-para derivar por separado los tres sumandos del riesgo cuadrático.
+Se sigue de que la derivada parcial en cada coordenada es lineal. 
 
 **Regla de la cadena**, en la forma que usaremos: si $\model(\coef) = g(h(\coef))$ con
 $h: \Real^m \to \Real$ y $g:\Real\to\Real$, entonces
@@ -179,8 +208,6 @@ $w^3$ tiene derivada nula en $0$ y no hay ahí ni mínimo ni máximo.
 
 ## Dos identidades para los modelos lineales
 
-Se utilizan en el capítulo 3 para obtener el gradiente del riesgo cuadrático en forma
-matricial.
 
 ::: {#lem-grad-lineal}
 ## Gradiente de una forma lineal
@@ -245,22 +272,23 @@ partimos.
 
 1. $\begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6\end{pmatrix}$, de tamaño $3\times 2$: la
    traspuesta intercambia filas por columnas.
-2. $\Xt\X = \begin{pmatrix} 3 & 3 \\ 3 & 5\end{pmatrix}$, de tamaño $2\times 2$. Con
-   $\X$ de tamaño $\nobs\times\nfeat$, el producto $\Xt\X$ es siempre
-   $\nfeat\times\nfeat$, y no depende del número de observaciones.
-3. $\X\coef = (2, 1, 0)\T$. Es una combinación de las columnas de $\X$ con pesos $2$ y
-   $-1$, y de ahí que tenga tantas componentes como filas.
-4. $\grad(\coef\T\coef) = 2\coef$, que es @lem-grad-cuadratica con $\mathbf{A}$ la identidad.
-5. $\pd{\model}{x} = 2x\sin y$ y $\pd{\model}{y} = x^2\cos y + 3y^2$: al derivar respecto
-   de una variable, la otra se trata como constante.
-6. Por ejemplo $\mathbf{v} = (2, -1)\T$, y su rango es $1$: la segunda columna es el doble de
-   la primera, así que hay una sola columna independiente. Ese $\mathbf{v}$ está en el núcleo
-   de @def-nucleo.
+2. $\Xt\X = \begin{pmatrix} 3 & 3 \\ 3 & 5\end{pmatrix}$, de tamaño $2\times 2$. Con $\X$ de
+   tamaño $\nobs\times\nfeat$, el producto $\Xt\X$ es siempre $\nfeat\times\nfeat$, y no
+   depende del número de observaciones.
+3. $\X\coef = (2, 1, 0)\T$. Es una combinación de las columnas de $\X$ con pesos $2$ y $-1$,
+   y de ahí que tenga tantas componentes como filas.
+4. $\grad(\coef\T\coef) = 2\coef$, que es @lem-grad-cuadratica con $\mathbf{A}$ la
+   identidad.
+5. $\pd{\model}{x} = 2x\sin y$ y $\pd{\model}{y} = x^2\cos y + 3y^2$: al derivar respecto de
+   una variable, la otra se trata como constante.
+6. Por ejemplo $\mathbf{v} = (2, -1)\T$, y su rango es $1$: la segunda columna es el doble
+   de la primera, así que hay una sola columna independiente. Ese $\mathbf{v}$ está en el
+   núcleo de @def-nucleo.
 7. $\mathbf{u}\T\mathbf{v} = 3 + 0 + 8 = 11$, $\norm{\mathbf{u}} = \sqrt{9} = 3$ y
    $\norm{\mathbf{v}} = \sqrt{25} = 5$.
 8. Que $\X\mathbf{v} = \zerov$, por @lem-norma-cero: una norma se anula solo en el vector
-   nulo. Sobre $\mathbf{v}$ no se puede concluir nada **salvo** que $\X$ tenga rango completo
-   por columnas; en ese caso su núcleo es trivial y entonces sí, $\mathbf{v} = \zerov$. Esta
-   es exactamente la distinción de la que depende que los mínimos cuadrados tengan solución
-   única.
+   nulo. Sobre $\mathbf{v}$ no se puede concluir nada **salvo** que $\X$ tenga rango
+   completo por columnas; en ese caso su núcleo es trivial y entonces sí, $\mathbf{v} =
+   \zerov$. Esta es exactamente la distinción de la que depende que los mínimos cuadrados
+   tengan solución única.
 :::

@@ -297,47 +297,49 @@ window.Quarto = {
 </blockquote>
 <p>La definición contiene tres elementos que deben especificarse para formalizar un problema de aprendizaje:</p>
 <ol type="1">
-<li>la <strong>tarea</strong> <span class="math inline">\(T\)</span>, que describe qué debe hacer el programa, como predecir un precio o elegir una acción;</li>
 <li>la <strong>experiencia</strong> <span class="math inline">\(E\)</span>, que reúne la información de la que puede aprender, como una colección de ejemplos, datos sin anotar o la interacción con un entorno;</li>
+<li>la <strong>tarea</strong> <span class="math inline">\(T\)</span>, que describe qué debe hacer el programa, como predecir un precio o elegir una acción;</li>
 <li>la <strong>medida de rendimiento</strong> <span class="math inline">\(P\)</span>, que establece cómo se evaluará su desempeño, como un error de predicción o la recompensa acumulada por una secuencia de decisiones.</li>
 </ol>
 </section>
 <section id="modalidades-de-aprendizaje" class="level2">
 <h2 class="anchored" data-anchor-id="modalidades-de-aprendizaje">Modalidades de aprendizaje</h2>
-<p>Según la tarea <span class="math inline">\(T\)</span>, la experiencia <span class="math inline">\(E\)</span> y la forma de medir el rendimiento <span class="math inline">\(P\)</span>, se suelen distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no es una partición estricta: las fronteras son convencionales y un mismo sistema puede combinar modalidades en distintas fases.</p>
+<p>Según la experiencia <span class="math inline">\(E\)</span>, la tarea <span class="math inline">\(T\)</span> y la forma de medir el rendimiento <span class="math inline">\(P\)</span>, se suelen distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no es una partición estricta: las fronteras son convencionales y un mismo sistema puede combinar modalidades en distintas fases.</p>
 <p><strong>Aprendizaje supervisado.</strong></p>
 <ul>
-<li><span class="math inline">\(E\)</span>: pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span>, donde <span class="math inline">\(\mathbf{x}_i\)</span> son las características de un caso e <span class="math inline">\(y_i\)</span> su respuesta correcta.</li>
-<li><span class="math inline">\(T\)</span>: predecir la respuesta de un caso nuevo del que solo se conocen sus características.</li>
-<li><span class="math inline">\(P\)</span>: cuánto se parecen las predicciones a las respuestas verdaderas.</li>
+<li><span class="math inline">\(E\)</span>: pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span>, donde <span class="math inline">\(\mathbf{x}_i\)</span> son las características de un caso e <span class="math inline">\(y_i\)</span> su respuesta observada.</li>
+<li><span class="math inline">\(T\)</span>: predecir la respuesta de un caso nuevo del que solo se conocen sus características, por ejemplo el precio de una vivienda o si una transacción bancaria es fraudulenta.</li>
+<li><span class="math inline">\(P\)</span>: la discrepancia entre las predicciones y las respuestas observadas.</li>
 </ul>
-<p>Estimar el precio de una vivienda o decidir si una transacción es fraudulenta.</p>
+<p>Es la modalidad que estudia este curso.</p>
 <p><strong>Aprendizaje semisupervisado.</strong></p>
 <ul>
-<li><span class="math inline">\(E\)</span>: unos pocos pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> y muchos casos <span class="math inline">\(\mathbf{x}_j\)</span> sin respuesta.</li>
-<li><span class="math inline">\(T\)</span> y <span class="math inline">\(P\)</span>: las mismas que en el supervisado.</li>
+<li><span class="math inline">\(E\)</span>: unos pocos pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> y muchos casos <span class="math inline">\(\mathbf{x}_j\)</span> sin respuesta observada.</li>
+<li><span class="math inline">\(T\)</span>: la misma que en el supervisado.</li>
+<li><span class="math inline">\(P\)</span>: la misma que en el supervisado.</li>
 </ul>
-<p>Es útil cuando reunir casos es barato y etiquetarlos caro, como en imágenes médicas.</p>
+<p>Se usa cuando obtener los casos es sencillo, pero etiquetarlos requiere tiempo de un especialista, como ocurre al clasificar imágenes médicas.</p>
 <p><strong>Aprendizaje autosupervisado.</strong></p>
 <ul>
-<li><span class="math inline">\(E\)</span>: datos sin etiquetar, de los que se esconde una parte para usarla como respuesta.</li>
-<li><span class="math inline">\(T\)</span>: reconstruir la parte escondida, por ejemplo la palabra siguiente de un texto.</li>
-<li><span class="math inline">\(P\)</span>: el acierto en esa reconstrucción.</li>
+<li><span class="math inline">\(E\)</span>: datos sin etiquetar, de los que se construye una respuesta a partir del propio dato, por ejemplo escondiendo una parte o generando dos versiones alteradas del mismo caso.</li>
+<li><span class="math inline">\(T\)</span>: resolver ese problema construido, como predecir la palabra siguiente de un texto, reconstruir el trozo tapado de una imagen o reconocer que dos versiones vienen del mismo caso.</li>
+<li><span class="math inline">\(P\)</span>: el acierto al resolverlo.</li>
 </ul>
-<p>La tarea es un pretexto: lo que interesa es la representación de los datos que se obtiene de paso, y que después se adapta a tareas concretas.</p>
+<p>Esa tarea rara vez interesa por sí misma. Lo que se busca es la representación de los datos que el modelo construye al resolverla, y que después se adapta a tareas concretas.</p>
 <p><strong>Aprendizaje no supervisado.</strong></p>
 <ul>
-<li><span class="math inline">\(E\)</span>: datos sin respuesta, y sin inventar ninguna.</li>
-<li><span class="math inline">\(T\)</span>: describir la estructura de esos datos, por ejemplo agrupando clientes parecidos o resumiendo muchas variables en unas pocas.</li>
-<li><span class="math inline">\(P\)</span>: no hay una medida única. Depende del propósito del análisis, y esa es la diferencia de fondo con el supervisado.</li>
+<li><span class="math inline">\(E\)</span>: datos sin respuesta, de los que tampoco se construye una tarea predictiva auxiliar.</li>
+<li><span class="math inline">\(T\)</span>: describir la estructura de los datos, por ejemplo agrupando clientes con comportamientos parecidos o resumiendo muchas variables en unas pocas.</li>
+<li><span class="math inline">\(P\)</span>: cada método fija su propio criterio, como la suma de distancias de los casos al centro de su grupo, o el error al reconstruir los datos desde unas pocas dimensiones.</li>
 </ul>
+<p>La diferencia con el supervisado no está en que haya varias medidas posibles, que allí también las hay, sino en que ninguna se compara con una respuesta observada: un buen valor del criterio no garantiza que el resultado sirva para el propósito del análisis.</p>
 <p><strong>Aprendizaje por refuerzo.</strong></p>
 <ul>
-<li><span class="math inline">\(E\)</span>: la interacción con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una recompensa.</li>
+<li><span class="math inline">\(E\)</span>: la interacción de un agente con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una recompensa.</li>
 <li><span class="math inline">\(T\)</span>: aprender una política, es decir, qué acción tomar en cada situación.</li>
-<li><span class="math inline">\(P\)</span>: la recompensa acumulada.</li>
+<li><span class="math inline">\(P\)</span>: la recompensa acumulada a lo largo de una secuencia de decisiones.</li>
 </ul>
-<p>Un sistema de climatización que aprende cuándo calentar un edificio con una recompensa que combine confort y coste energético.</p>
+<p>Un sistema de climatización puede aprender cuándo calentar o enfriar un edificio a partir de una recompensa que combine el confort de sus ocupantes y el coste energético.</p>
 <p>Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante aprendizaje por refuerzo <span class="citation" data-cites="bommasani2021opportunities">(<a href="index.html#ref-bommasani2021opportunities" role="doc-biblioref"><span class="nocase">Bommasani et&nbsp;al.</span> 2021</a>)</span>.</p>
 </section>
 <section id="el-problema-que-estudia-este-curso" class="level2">

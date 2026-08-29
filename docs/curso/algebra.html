@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -269,20 +304,17 @@ window.Quarto = {
 (v_1,\dots,v_m)^{\mathsf{T}}\)</span>, donde la <span class="math inline">\(^{\mathsf{T}}\)</span> indica traspuesta, es decir, que lo escrito en fila se lee como columna.</p>
 <p><strong>Producto escalar.</strong> Para <span class="math inline">\(\mathbf{u}, \mathbf{v} \in \mathbb{R}^m\)</span>, <span class="math display">\[
 \mathbf{u}^{\mathsf{T}}\mathbf{v} = \sum_{j=1}^{m} u_j v_j .
-\]</span> Es un número, no un vector. Y es simétrico: <span class="math inline">\(\mathbf{u}^{\mathsf{T}}\mathbf{v} = \mathbf{v}^{\mathsf{T}}\mathbf{u}\)</span>.</p>
+\]</span> Es un número, no un vector. Y es simétrico: <span class="math inline">\(\mathbf{u}^{\mathsf{T}}\mathbf{v} =
+\mathbf{v}^{\mathsf{T}}\mathbf{u}\)</span>.</p>
 <p><strong>Norma euclídea.</strong> <span class="math display">\[
 \left\lVert \mathbf{v} \right\rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v} = \sum_{j=1}^{m} v_j^2 .
 \]</span></p>
-<p>De aquí sale la propiedad que más se usa en el curso, y conviene aislarla:</p>
+<p>Una propiedad importante.</p>
 <div id="lem-norma-cero" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 1 (Una norma se anula solo en el vector nulo)</strong></span> <span class="math inline">\(\left\lVert \mathbf{v} \right\rVert^2 = 0\)</span> si y solo si <span class="math inline">\(\mathbf{v} = \mathbf{0}\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span><span class="math inline">\(\left\lVert \mathbf{v} \right\rVert^2\)</span> es una suma de cuadrados, luego cada sumando es no negativo. Una suma de términos no negativos vale cero solo si todos valen cero, es decir, si <span class="math inline">\(v_j = 0\)</span> para todo <span class="math inline">\(j\)</span>.</p>
-</div>
-<p>Parece trivial, y es la línea de la que dependen la existencia y unicidad de la solución de mínimos cuadrados y la trampa de la variable ficticia.</p>
-<div class="sinusar">
-<p><strong>Ningún capítulo lo cita todavía.</strong> El capítulo 3 enuncia la existencia y la unicidad del ajuste pero deja su demostración fuera de alcance, así que no llega a usar este lema. Lo necesitará la trampa de la variable ficticia del capítulo 5. Si al escribir ese capítulo resulta que tampoco hace falta, este lema se puede quitar.</p>
 </div>
 </section>
 <section id="matrices" class="level2">
@@ -303,7 +335,7 @@ window.Quarto = {
 </section>
 <section id="la-matriz-de-diseño-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="la-matriz-de-diseño-del-curso">La matriz de diseño del curso</h2>
-<p>Conviene fijarla desde ahora porque aparece en todos los capítulos. Con <span class="math inline">\(n\)</span> observaciones y <span class="math inline">\(p\)</span> variables, <span class="math display">\[
+<p>Aparecerá en todos los capítulos. Con <span class="math inline">\(n\)</span> observaciones y <span class="math inline">\(p\)</span> variables, <span class="math display">\[
 \mathbf{X}= \begin{pmatrix}
 1 &amp; x_{11} &amp; \cdots &amp; x_{1p} \\
 1 &amp; x_{21} &amp; \cdots &amp; x_{2p} \\
@@ -316,10 +348,19 @@ window.Quarto = {
 </section>
 <section id="dependencia-lineal-rango-y-núcleo" class="level2">
 <h2 class="anchored" data-anchor-id="dependencia-lineal-rango-y-núcleo">Dependencia lineal, rango y núcleo</h2>
-<p>Las columnas de <span class="math inline">\(\mathbf{X}\)</span> son <strong>linealmente dependientes</strong> si alguna de ellas se puede escribir como combinación de las demás. De forma equivalente, y esta es la formulación que usamos:</p>
+<p>Las columnas de <span class="math inline">\(\mathbf{X}\)</span> son <strong>linealmente dependientes</strong> si alguna de ellas se puede escribir como combinación lineal de las demás. De forma equivalente, y esta es la formulación que usamos:</p>
 <div id="def-nucleo" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1 (Núcleo)</strong></span> El <strong>núcleo</strong> de <span class="math inline">\(\mathbf{X}\)</span> es el conjunto de vectores que <span class="math inline">\(\mathbf{X}\)</span> envía al cero: <span class="math inline">\(\mathop{\mathrm{null}}(\mathbf{X}) = \{\mathbf{v} : \mathbf{X}\mathbf{v} = \mathbf{0}\}\)</span>. Las columnas de <span class="math inline">\(\mathbf{X}\)</span> son linealmente independientes si y solo si <span class="math inline">\(\mathop{\mathrm{null}}(\mathbf{X}) = \{\mathbf{0}\}\)</span>, y en ese caso decimos que <span class="math inline">\(\mathbf{X}\)</span> tiene <strong>rango completo por columnas</strong>, o <span class="math inline">\(\mathop{\mathrm{rank}}\mathbf{X}= p+1\)</span>.</p>
 </div>
+<p>El <strong>rango</strong> de <span class="math inline">\(\mathbf{X}\)</span> es el número de columnas linealmente independientes que tiene. La definición del núcleo da la forma de calcularlo: cada dirección <span class="math inline">\(\mathbf{v}\neq\mathbf{0}\)</span> con <span class="math inline">\(\mathbf{X}\mathbf{v}=\mathbf{0}\)</span> delata una columna que se puede escribir con las demás, así que</p>
+<p><span class="math display">\[
+\mathop{\mathrm{rank}}\mathbf{X}= (\text{número de columnas}) - \dim \mathop{\mathrm{null}}(\mathbf{X}).
+\]</span></p>
+<p>Con una matriz pequeña se hace a mano: se buscan las combinaciones que dan el vector cero y se cuentan. Con una matriz de datos se pide al ordenador, que lo obtiene contando cuántas direcciones sobreviven a una descomposición numérica:</p>
+<div id="48a4341e" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>torch.linalg.matrix_rank(X)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>En la práctica esto se usa como diagnóstico: si el rango sale menor que el número de columnas, hay una columna redundante y <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> no se puede invertir.</p>
 <p>Para que el rango sea completo hace falta, como mínimo, <span class="math inline">\(n\geq p+1\)</span>: no puede haber más columnas independientes que filas.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -331,7 +372,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>No en abstracto: <strong>exhibiendo el vector</strong>. Para probar que unas columnas son dependientes, se escribe un <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> concreto y se comprueba que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Así se hace en el <span>capítulo de preparación de datos</span> con la trampa de la variable ficticia.</p>
+<p>Para probar que unas columnas son dependientes, se escribe un <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span> concreto y se comprueba que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>. Así se hace en el <span>capítulo de preparación de datos</span> con la trampa de la variable ficticia.</p>
 </div>
 </div>
 <div id="exr-nucleo" class="theorem exercise">
@@ -343,6 +384,11 @@ window.Quarto = {
 <p>Si <span class="math inline">\(\mathbf{A}\)</span> es cuadrada y de rango completo, el sistema <span class="math inline">\(\mathbf{A}\mathbf{z} =
 \mathbf{b}\)</span> tiene solución única. Formalmente se escribe <span class="math inline">\(\mathbf{z} =
 \mathbf{A}^{-1}\mathbf{b}\)</span>, pero <strong>en el ordenador nunca se calcula la inversa</strong>: se resuelve el sistema directamente, que es más rápido y numéricamente más estable.</p>
+<p>Cuando el sistema no es cuadrado, que es el caso de una matriz de datos con más filas que columnas, en general no hay ninguna <span class="math inline">\(\mathbf{z}\)</span> que cumpla todas las ecuaciones a la vez. Entonces se busca la que menos se equivoca: la que minimiza <span class="math inline">\(\left\lVert \mathbf{X}\mathbf{z}-\mathbf{y} \right\rVert^2\)</span>. Eso es <strong>mínimos cuadrados</strong>, y es la operación central del capítulo 3. <code>torch.linalg.lstsq(X, y)</code> la resuelve, y devuelve un objeto con varios campos, de los que el que interesa es <code>.solution</code>:</p>
+<div id="70621e48" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>coeficientes <span class="op">=</span> torch.linalg.lstsq(X, y).solution</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>No hay que confundirla con <code>solve</code>: <code>solve</code> exige una matriz cuadrada de rango completo y resuelve el sistema exactamente; <code>lstsq</code> admite matrices rectangulares y devuelve el mejor ajuste posible.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -379,13 +425,12 @@ window.Quarto = {
 <p><strong>Linealidad.</strong> El gradiente de una suma es la suma de los gradientes, y las constantes salen fuera: <span class="math display">\[
 \nabla\bigl(a\,f(\boldsymbol{w}) + b\,h(\boldsymbol{w})\bigr)
 = a\,\nabla f(\boldsymbol{w}) + b\,\nabla h(\boldsymbol{w}) .
-\]</span> Se sigue de que la derivada parcial en cada coordenada es lineal. Se usa en el capítulo 3 para derivar por separado los tres sumandos del riesgo cuadrático.</p>
+\]</span> Se sigue de que la derivada parcial en cada coordenada es lineal.</p>
 <p><strong>Regla de la cadena</strong>, en la forma que usaremos: si <span class="math inline">\(f(\boldsymbol{w}) = g(h(\boldsymbol{w}))\)</span> con <span class="math inline">\(h: \mathbb{R}^m \to \mathbb{R}\)</span> y <span class="math inline">\(g:\mathbb{R}\to\mathbb{R}\)</span>, entonces <span class="math inline">\(\nabla f(\boldsymbol{w}) = g'(h(\boldsymbol{w}))\, \nabla h(\boldsymbol{w})\)</span>.</p>
 <p><strong>Condición de primer orden.</strong> Si <span class="math inline">\(\boldsymbol{w}^\star\)</span> es un mínimo local de una función diferenciable, entonces <span class="math inline">\(\nabla f(\boldsymbol{w}^\star) = \mathbf{0}\)</span>. El recíproco es falso: <span class="math inline">\(w^3\)</span> tiene derivada nula en <span class="math inline">\(0\)</span> y no hay ahí ni mínimo ni máximo.</p>
 </section>
 <section id="dos-identidades-para-los-modelos-lineales" class="level2">
 <h2 class="anchored" data-anchor-id="dos-identidades-para-los-modelos-lineales">Dos identidades para los modelos lineales</h2>
-<p>Se utilizan en el capítulo 3 para obtener el gradiente del riesgo cuadrático en forma matricial.</p>
 <div id="lem-grad-lineal" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 2 (Gradiente de una forma lineal)</strong></span> Para <span class="math inline">\(\mathbf{a} \in \mathbb{R}^{m}\)</span> fijo, <span class="math inline">\(\nabla\left(\mathbf{a}^{\mathsf{T}}\boldsymbol{w}\right) = \mathbf{a}\)</span>.</p>
 </div>
@@ -447,7 +492,8 @@ window.Quarto = {
 <li><span class="math inline">\(\frac{\partial f}{\partial x} = 2x\sin y\)</span> y <span class="math inline">\(\frac{\partial f}{\partial y} = x^2\cos y + 3y^2\)</span>: al derivar respecto de una variable, la otra se trata como constante.</li>
 <li>Por ejemplo <span class="math inline">\(\mathbf{v} = (2, -1)^{\mathsf{T}}\)</span>, y su rango es <span class="math inline">\(1\)</span>: la segunda columna es el doble de la primera, así que hay una sola columna independiente. Ese <span class="math inline">\(\mathbf{v}\)</span> está en el núcleo de <a href="#def-nucleo" class="quarto-xref">Definición&nbsp;<span>1</span></a>.</li>
 <li><span class="math inline">\(\mathbf{u}^{\mathsf{T}}\mathbf{v} = 3 + 0 + 8 = 11\)</span>, <span class="math inline">\(\left\lVert \mathbf{u} \right\rVert = \sqrt{9} = 3\)</span> y <span class="math inline">\(\left\lVert \mathbf{v} \right\rVert = \sqrt{25} = 5\)</span>.</li>
-<li>Que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>, por <a href="#lem-norma-cero" class="quarto-xref">Lema&nbsp;<span>1</span></a>: una norma se anula solo en el vector nulo. Sobre <span class="math inline">\(\mathbf{v}\)</span> no se puede concluir nada <strong>salvo</strong> que <span class="math inline">\(\mathbf{X}\)</span> tenga rango completo por columnas; en ese caso su núcleo es trivial y entonces sí, <span class="math inline">\(\mathbf{v} = \mathbf{0}\)</span>. Esta es exactamente la distinción de la que depende que los mínimos cuadrados tengan solución única.</li>
+<li>Que <span class="math inline">\(\mathbf{X}\mathbf{v} = \mathbf{0}\)</span>, por <a href="#lem-norma-cero" class="quarto-xref">Lema&nbsp;<span>1</span></a>: una norma se anula solo en el vector nulo. Sobre <span class="math inline">\(\mathbf{v}\)</span> no se puede concluir nada <strong>salvo</strong> que <span class="math inline">\(\mathbf{X}\)</span> tenga rango completo por columnas; en ese caso su núcleo es trivial y entonces sí, <span class="math inline">\(\mathbf{v} =
+\mathbf{0}\)</span>. Esta es exactamente la distinción de la que depende que los mínimos cuadrados tengan solución única.</li>
 </ol>
 </div>
 </div>

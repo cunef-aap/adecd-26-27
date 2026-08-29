@@ -16,16 +16,16 @@ $$
 La definición contiene tres elementos que deben especificarse para formalizar un problema
 de aprendizaje:
 
-1. la **tarea** $T$, que describe qué debe hacer el programa, como predecir un precio o
-   elegir una acción;
-2. la **experiencia** $E$, que reúne la información de la que puede aprender, como una
+1. la **experiencia** $E$, que reúne la información de la que puede aprender, como una
    colección de ejemplos, datos sin anotar o la interacción con un entorno;
+2. la **tarea** $T$, que describe qué debe hacer el programa, como predecir un precio o
+   elegir una acción;
 3. la **medida de rendimiento** $P$, que establece cómo se evaluará su desempeño, como un
    error de predicción o la recompensa acumulada por una secuencia de decisiones.
 
 ## Modalidades de aprendizaje
 
-Según la tarea $T$, la experiencia $E$ y la forma de medir el rendimiento $P$, se suelen
+Según la experiencia $E$, la tarea $T$ y la forma de medir el rendimiento $P$, se suelen
 distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no
 es una partición estricta: las fronteras son convencionales y un mismo sistema puede
 combinar modalidades en distintas fases.
@@ -33,45 +33,56 @@ combinar modalidades en distintas fases.
 **Aprendizaje supervisado.**
 
 - $E$: pares $(\mathbf{x}_i,y_i)$, donde $\mathbf{x}_i$ son las características de un caso e
-  $y_i$ su respuesta correcta.
-- $T$: predecir la respuesta de un caso nuevo del que solo se conocen sus características.
-- $P$: cuánto se parecen las predicciones a las respuestas verdaderas.
+  $y_i$ su respuesta observada.
+- $T$: predecir la respuesta de un caso nuevo del que solo se conocen sus características,
+  por ejemplo el precio de una vivienda o si una transacción bancaria es fraudulenta.
+- $P$: la discrepancia entre las predicciones y las respuestas observadas.
 
-Estimar el precio de una vivienda o decidir si una transacción es fraudulenta.
+Es la modalidad que estudia este curso.
 
 **Aprendizaje semisupervisado.**
 
-- $E$: unos pocos pares $(\mathbf{x}_i,y_i)$ y muchos casos $\mathbf{x}_j$ sin respuesta.
-- $T$ y $P$: las mismas que en el supervisado.
+- $E$: unos pocos pares $(\mathbf{x}_i,y_i)$ y muchos casos $\mathbf{x}_j$ sin respuesta
+  observada.
+- $T$: la misma que en el supervisado.
+- $P$: la misma que en el supervisado.
 
-Es útil cuando reunir casos es barato y etiquetarlos caro, como en imágenes médicas.
+Se usa cuando obtener los casos es sencillo, pero etiquetarlos requiere tiempo de un
+especialista, como ocurre al clasificar imágenes médicas.
 
 **Aprendizaje autosupervisado.**
 
-- $E$: datos sin etiquetar, de los que se esconde una parte para usarla como respuesta.
-- $T$: reconstruir la parte escondida, por ejemplo la palabra siguiente de un texto.
-- $P$: el acierto en esa reconstrucción.
+- $E$: datos sin etiquetar, de los que se construye una respuesta a partir del propio dato,
+  por ejemplo escondiendo una parte o generando dos versiones alteradas del mismo caso.
+- $T$: resolver ese problema construido, como predecir la palabra siguiente de un texto,
+  reconstruir el trozo tapado de una imagen o reconocer que dos versiones vienen del mismo
+  caso.
+- $P$: el acierto al resolverlo.
 
-La tarea es un pretexto: lo que interesa es la representación de los datos que se obtiene de
-paso, y que después se adapta a tareas concretas.
+Esa tarea rara vez interesa por sí misma. Lo que se busca es la representación de los datos
+que el modelo construye al resolverla, y que después se adapta a tareas concretas.
 
 **Aprendizaje no supervisado.**
 
-- $E$: datos sin respuesta, y sin inventar ninguna.
-- $T$: describir la estructura de esos datos, por ejemplo agrupando clientes parecidos o
-  resumiendo muchas variables en unas pocas.
-- $P$: no hay una medida única. Depende del propósito del análisis, y esa es la diferencia
-  de fondo con el supervisado.
+- $E$: datos sin respuesta, de los que tampoco se construye una tarea predictiva auxiliar.
+- $T$: describir la estructura de los datos, por ejemplo agrupando clientes con
+  comportamientos parecidos o resumiendo muchas variables en unas pocas.
+- $P$: cada método fija su propio criterio, como la suma de distancias de los casos al
+  centro de su grupo, o el error al reconstruir los datos desde unas pocas dimensiones.
+
+La diferencia con el supervisado no está en que haya varias medidas posibles, que allí
+también las hay, sino en que ninguna se compara con una respuesta observada: un buen valor
+del criterio no garantiza que el resultado sirva para el propósito del análisis.
 
 **Aprendizaje por refuerzo.**
 
-- $E$: la interacción con un entorno. En cada paso el agente observa una situación, elige una
-  acción y recibe una recompensa.
+- $E$: la interacción de un agente con un entorno. En cada paso el agente observa una
+  situación, elige una acción y recibe una recompensa.
 - $T$: aprender una política, es decir, qué acción tomar en cada situación.
-- $P$: la recompensa acumulada.
+- $P$: la recompensa acumulada a lo largo de una secuencia de decisiones.
 
-Un sistema de climatización que aprende cuándo calentar un edificio con una recompensa que
-combine confort y coste energético.
+Un sistema de climatización puede aprender cuándo calentar o enfriar un edificio a partir de
+una recompensa que combine el confort de sus ocupantes y el coste energético.
 
 Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir
 preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante
