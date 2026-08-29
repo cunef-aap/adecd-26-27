@@ -33,6 +33,8 @@ format:
     css: assets/styles.css
     # Sangra la continuacion de las lineas de codigo que se parten, segun la
     # indentacion de cada linea. El porque, en el propio fichero.
+    # Membrete de los PDF. Solo se ve al imprimir; lo oculta assets/styles.css.
+    include-before-body: assets/logo-impresion.html
     include-after-body: assets/sangrado-codigo.html
     number-depth: 0
     reference-location: margin

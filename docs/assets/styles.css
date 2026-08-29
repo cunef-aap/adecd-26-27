@@ -353,3 +353,37 @@ div.nuevo .theorem,
 div.nuevo .proof {
   border-left-color: var(--revision);
 }
+
+/* ===========================================================================
+   Membrete de los PDF.
+   Los PDF de Canvas salen de imprimir el HTML con Chrome. El logo es un <img>
+   con el fichero incrustado, que inyecta `include-before-body`, y aqui se
+   oculta en pantalla y se coloca al imprimir. Se probaron antes dos vias que
+   no funcionan y conviene no repetir: un elemento `fixed`, que Chrome no
+   imprime, y un `::before` sobre `main.content`, que es una rejilla de Quarto
+   y manda el pseudoelemento a una columna lateral.
+   =========================================================================== */
+.logo-impresion {
+  display: none;
+}
+
+@media print {
+  /* La barra de navegacion superior es del sitio, no del documento. */
+  .quarto-secondary-nav,
+  .quarto-page-breadcrumbs,
+  .quarto-search-button,
+  .quarto-btn-toggle {
+    display: none !important;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+
+  .logo-impresion {
+    display: block;
+    width: 26mm;
+    height: auto;
+    margin: 0 0 6mm auto;
+  }
+}
