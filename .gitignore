@@ -37,3 +37,6 @@ _completo/
 
 # El clon del sitio de la etapa de dos repositorios, ya no se usa.
 _sitio-publicado/
+
+# Calendario y plan de clases: interno, no se publica.
+CALENDARIO.md
