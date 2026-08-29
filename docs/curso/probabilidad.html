@@ -366,17 +366,26 @@ g\bigl(q_\tau(X)\bigr)\)</span> para todo <span class="math inline">\(\tau \in (
 \]</span></p>
 <p>y por definición eso significa que <span class="math inline">\(g(q_\tau(X))\)</span> es el cuantil de orden <span class="math inline">\(\tau\)</span> de <span class="math inline">\(g(X)\)</span>.</p>
 </div>
-<p>La media <strong>no</strong> tiene esa propiedad. De esa asimetría sale el resultado sobre transformaciones logarítmicas de la hoja del capítulo 5: al deshacer un logaritmo con la exponencial se recupera la mediana de la respuesta y no su media, de modo que la predicción devuelta a euros queda por debajo de la media condicional. El capítulo 5 usa <a href="#def-cuantil" class="quarto-xref">Definición&nbsp;<span>1</span></a> también para el percentil 99 con el que recorta los valores extremos.</p>
+<p>La media <strong>no</strong> tiene esa propiedad. Si <span class="math inline">\(g\)</span> no es lineal, en general <span class="math inline">\(\mathbb{E}\!\left[ g(X) \right] \neq g(\mathbb{E}\!\left[ X \right])\)</span>. Basta un ejemplo con dos valores: si <span class="math inline">\(X\)</span> vale <span class="math inline">\(1\)</span> o <span class="math inline">\(3\)</span> con la misma probabilidad, <span class="math inline">\(\mathbb{E}\!\left[ X^2 \right] = 5\)</span> mientras que <span class="math inline">\(\mathbb{E}\!\left[ X \right]^2 = 4\)</span>. La desigualdad de Jensen dice además hacia qué lado falla: si <span class="math inline">\(g\)</span> es convexa, <span class="math inline">\(\mathbb{E}\!\left[ g(X) \right] \geq g(\mathbb{E}\!\left[ X \right])\)</span>.</p>
+<p>De ahí que la mediana de un precio en euros y la mediana de su logaritmo se correspondan, y las medias no.</p>
 </section>
 <section id="la-distribución-normal" class="level2">
 <h2 class="anchored" data-anchor-id="la-distribución-normal">La distribución normal</h2>
-<p>La densidad se define en <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>. Las propiedades siguientes son las únicas que usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como integral y hacer un cambio de variable.</p>
+<div id="def-normal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 2 (Distribución normal)</strong></span> Una variable <span class="math inline">\(\varepsilon\)</span> sigue una <strong>distribución normal</strong> de media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>, y se escribe <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span>, si su densidad es</p>
+<p><span id="eq-normal"><span class="math display">\[
+p(z;\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}\,
+\exp\!\left(-\frac{(z-\mu)^2}{2\sigma^2}\right),
+\qquad z \in \mathbb{R}.
+\tag{2}\]</span></span></p>
+<p>El parámetro <span class="math inline">\(\mu\)</span> sitúa el centro de la campana y <span class="math inline">\(\sigma\)</span> dice cuánto se ensancha. La <strong>normal estándar</strong> es el caso <span class="math inline">\(\mu = 0\)</span>, <span class="math inline">\(\sigma= 1\)</span>.</p>
+</div>
+<p>Algunas propiedades de la normal.</p>
 <div id="lem-normalizacion" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 5 (Constante de normalización)</strong></span> <span class="math inline">\(\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \mathrm{d}z = \sqrt{2\pi}\)</span>.</p>
 </div>
 <div class="cajanegra">
 <p><strong>No lo demostramos</strong></p>
-<p>La demostración pasa por elevar la integral al cuadrado y pasar a coordenadas polares. Es bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.</p>
 </div>
 <div id="thm-traslacion" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 1 (Traslación)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
@@ -384,7 +393,7 @@ g\bigl(q_\tau(X)\bigr)\)</span> para todo <span class="math inline">\(\tau \in (
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) =
 \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}
-u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="../capitulos/01-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
+u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y sustituyendo en <a href="#eq-normal" class="quarto-xref">Ecuación&nbsp;<span>2</span></a> se comprueba que <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>, porque restar <span class="math inline">\(c\)</span> a <span class="math inline">\(u\)</span> y sumárselo a <span class="math inline">\(\mu\)</span> dejan igual la diferencia <span class="math inline">\(u - c - \mu\)</span> que aparece en el exponente.</p>
 </div>
 <div id="thm-escala" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2 (Escala)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
@@ -472,21 +481,17 @@ x .
 </tr>
 </tbody>
 </table>
-<div class="sinusar">
-<p><strong>De la tabla, tres filas sin usar.</strong> Los capítulos escritos solo usan la normal, en los capítulos 1 y 2, y la de Laplace, en el ejercicio de la pérdida absoluta del capítulo 2. La lognormal la necesita el capítulo 5. Poisson y Gamma están ahí por el mapa final del capítulo 11, que las menciona y no las desarrolla: si ese mapa acaba sin ellas, sus filas se quitan.</p>
-</div>
-<p>De la lognormal usamos un solo hecho, y se demuestra en el <span>capítulo de preparación de datos</span>: si <span class="math inline">\(Z \sim \mathcal{N}(\mu,\sigma^2)\)</span>, entonces <span class="math inline">\(\mathbb{E}\!\left[ e^{Z} \right] = e^{\mu + \sigma^2/2}\)</span>, que <strong>no</strong> es <span class="math inline">\(e^{\mu}\)</span>. Esa diferencia es la que hace que exponenciar una predicción hecha en logaritmos infravalore sistemáticamente.</p>
 </section>
 <section id="qué-hay-que-traer-de-estadística" class="level2">
 <h2 class="anchored" data-anchor-id="qué-hay-que-traer-de-estadística">Qué hay que traer de Estadística</h2>
-<p>Si has seguido hasta aquí sin dificultad, vas bien. Lo imprescindible es:</p>
+<p>Un <strong>estimador</strong> es una función de la muestra que se usa para aproximar una cantidad desconocida. Como la muestra es aleatoria, el estimador también lo es: tiene distribución, esperanza y varianza. Se escribe con acento circunflejo, <span class="math inline">\(\hat\theta\)</span> para estimar <span class="math inline">\(\theta\)</span>.</p>
+<p>Tres propiedades suyas se usan a lo largo del curso.</p>
 <ul>
-<li>Densidad, esperanza y varianza de una variable continua.</li>
-<li>Linealidad de la esperanza y <span class="math inline">\(\mathrm{Var}\!\left( aX+b \right) = a^2\mathrm{Var}\!\left( X \right)\)</span>.</li>
-<li>Independencia, y que la densidad conjunta de variables independientes es el producto de las densidades.</li>
-<li>Manejo básico de integrales: cambio de variable e integración por partes.</li>
+<li><strong>Insesgado.</strong> Acierta en promedio, <span class="math inline">\(\mathbb{E}\!\left[ \hat\theta \right] = \theta\)</span>. No dice que acierte en una muestra concreta, sino que si el muestreo se repitiera muchas veces, la media de las estimaciones sería el valor buscado.</li>
+<li><strong>Varianza del estimador.</strong> <span class="math inline">\(\mathrm{Var}\!\left( \hat\theta \right)\)</span> mide cuánto cambia la estimación de una muestra a otra. Un estimador insesgado con varianza grande acierta en promedio y falla en cada intento. A su raíz cuadrada se le llama <strong>error típico</strong>.</li>
+<li><strong>Consistente.</strong> Se acerca al valor buscado a medida que la muestra crece: <span class="math inline">\(\hat\theta\)</span> tiende a <span class="math inline">\(\theta\)</span> cuando <span class="math inline">\(n\to \infty\)</span>. Si no hay sesgo, basta con que la varianza tienda a cero.</li>
 </ul>
-<p>Lo que <strong>no</strong> hace falta: teoremas límite, convergencia, funciones características, teoría de la medida.</p>
+<p>El ejemplo de referencia es la media muestral <span class="math inline">\(\bar X\)</span> de <span class="math inline">\(n\)</span> extracciones independientes de media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>. Es insesgada, porque <span class="math inline">\(\mathbb{E}\!\left[ \bar X \right] = \mu\)</span>; su varianza es <span class="math inline">\(\sigma^2/n\)</span>; y es consistente, porque esa varianza tiende a cero. Las tres cosas salen de la linealidad de la esperanza y de la varianza de una suma de independientes.</p>
 </section>
 <section id="diagnóstico" class="level2">
 <h2 class="anchored" data-anchor-id="diagnóstico">Diagnóstico</h2>

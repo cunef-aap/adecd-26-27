@@ -153,17 +153,33 @@ $$
 y por definición eso significa que $g(q_\tau(X))$ es el cuantil de orden $\tau$ de $g(X)$.
 :::
 
-La media **no** tiene esa propiedad. 
+La media **no** tiene esa propiedad. Si $g$ no es lineal, en general
+$\E{g(X)} \neq g(\E{X})$. Basta un ejemplo con dos valores: si $X$ vale $1$ o $3$ con la
+misma probabilidad, $\E{X^2} = 5$ mientras que $\E{X}^2 = 4$. La desigualdad de Jensen dice
+además hacia qué lado falla: si $g$ es convexa, $\E{g(X)} \geq g(\E{X})$.
 
-\\ To Do: completa un poco
+De ahí que la mediana de un precio en euros y la mediana de su logaritmo se correspondan,
+y las medias no.
 
 ## La distribución normal
 
-\\ To Do: definir primero
+::: {#def-normal}
+## Distribución normal
 
-Las propiedades siguientes son las únicas que
-usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como
-integral y hacer un cambio de variable.
+Una variable $\varepsilon$ sigue una **distribución normal** de media $\mu$ y varianza
+$\noise^2$, y se escribe $\varepsilon \sim \Normal(\mu, \noise^2)$, si su densidad es
+
+$$
+\pdf(z;\mu,\noise) = \frac{1}{\noise\sqrt{2\pi}}\,
+\exp\!\left(-\frac{(z-\mu)^2}{2\noise^2}\right),
+\qquad z \in \Real .
+$$ {#eq-normal}
+
+El parámetro $\mu$ sitúa el centro de la campana y $\noise$ dice cuánto se ensancha. La
+**normal estándar** es el caso $\mu = 0$, $\noise = 1$.
+:::
+
+Algunas propiedades de la normal.
 
 ::: {#lem-normalizacion}
 ## Constante de normalización
@@ -173,9 +189,6 @@ $\displaystyle \int_{-\infty}^{\infty} e^{-z^2/2}\, \dd z = \sqrt{2\pi}$.
 
 ::: {.cajanegra}
 **No lo demostramos**
-
-La demostración pasa por elevar la integral al cuadrado y pasar a coordenadas polares. Es
-bonita y no enseña nada de aprendizaje automático. Se acepta y se sigue.
 :::
 
 ::: {#thm-traslacion}
@@ -189,7 +202,9 @@ $\varepsilon + c \sim \Normal(\mu + c, \noise^2)$.
 Sea $W = \varepsilon + c$. Entonces $\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} =
 \int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$. El cambio de variable $u = x + c$ (con $\dd
 u = \dd x$) transforma la integral en $\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y
-por @eq-densidad-normal $\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
+sustituyendo en @eq-normal se comprueba que
+$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$, porque restar $c$ a $u$ y sumárselo a
+$\mu$ dejan igual la diferencia $u - c - \mu$ que aparece en el exponente.
 :::
 
 ::: {#thm-escala}
@@ -273,32 +288,30 @@ una se presenta en su capítulo.
 | Poisson | $e^{-\lambda}\lambda^{k}/k!$ | $\{0,1,2,\dots\}$ | mapa final, no evaluable |
 | Gamma | $\propto x^{\alpha-1}e^{-x/\beta}$ | $(0,\infty)$ | mapa final, no evaluable |
 
-::: {.sinusar}
-**De la tabla, tres filas sin usar.** Los capítulos escritos solo usan la normal, en los
-capítulos 1 y 2, y la de Laplace, en el ejercicio de la pérdida absoluta del capítulo 2. La
-lognormal la necesita el capítulo 5. Poisson y Gamma están ahí por el mapa final del
-capítulo 11, que las menciona y no las desarrolla: si ese mapa acaba sin ellas, sus filas se
-quitan.
-:::
-
-De la lognormal usamos un solo hecho, y se demuestra en el
-[capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd): si
-$Z \sim \Normal(\mu,\noise^2)$, entonces $\E{e^{Z}} = e^{\mu + \noise^2/2}$, que **no** es
-$e^{\mu}$. Esa diferencia es la que hace que exponenciar una predicción hecha en
-logaritmos infravalore sistemáticamente.
 
 ## Qué hay que traer de Estadística
 
-Si has seguido hasta aquí sin dificultad, vas bien. Lo imprescindible es:
+Un **estimador** es una función de la muestra que se usa para aproximar una cantidad
+desconocida. Como la muestra es aleatoria, el estimador también lo es: tiene distribución,
+esperanza y varianza. Se escribe con acento circunflejo, $\hat\theta$ para estimar $\theta$.
 
-- Densidad, esperanza y varianza de una variable continua.
-- Linealidad de la esperanza y $\Var{aX+b} = a^2\Var{X}$.
-- Independencia, y que la densidad conjunta de variables independientes es el producto de
-  las densidades.
-- Manejo básico de integrales: cambio de variable e integración por partes.
+Tres propiedades suyas se usan a lo largo del curso.
 
-Lo que **no** hace falta: teoremas límite, convergencia, funciones características,
-teoría de la medida.
+- **Insesgado.** Acierta en promedio, $\E{\hat\theta} = \theta$. No dice que acierte en una
+  muestra concreta, sino que si el muestreo se repitiera muchas veces, la media de las
+  estimaciones sería el valor buscado.
+- **Varianza del estimador.** $\Var{\hat\theta}$ mide cuánto cambia la estimación de una
+  muestra a otra. Un estimador insesgado con varianza grande acierta en promedio y falla en
+  cada intento. A su raíz cuadrada se le llama **error típico**.
+- **Consistente.** Se acerca al valor buscado a medida que la muestra crece: $\hat\theta$
+  tiende a $\theta$ cuando $\nobs \to \infty$. Si no hay sesgo, basta con que la varianza
+  tienda a cero.
+
+El ejemplo de referencia es la media muestral $\bar X$ de $\nobs$ extracciones
+independientes de media $\mu$ y varianza $\noise^2$. Es insesgada, porque
+$\E{\bar X} = \mu$; su varianza es $\noise^2/\nobs$; y es consistente, porque esa varianza
+tiende a cero. Las tres cosas salen de la linealidad de la esperanza y de la varianza de
+una suma de independientes.
 
 ## Diagnóstico
 
