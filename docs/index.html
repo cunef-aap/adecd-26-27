@@ -305,11 +305,39 @@ window.Quarto = {
 <section id="modalidades-de-aprendizaje" class="level2">
 <h2 class="anchored" data-anchor-id="modalidades-de-aprendizaje">Modalidades de aprendizaje</h2>
 <p>Según la tarea <span class="math inline">\(T\)</span>, la experiencia <span class="math inline">\(E\)</span> y la forma de medir el rendimiento <span class="math inline">\(P\)</span>, se suelen distinguir varias modalidades de aprendizaje automático. Esta clasificación es útil, pero no es una partición estricta: las fronteras son convencionales y un mismo sistema puede combinar modalidades en distintas fases.</p>
-<p><strong>Aprendizaje supervisado.</strong> La experiencia contiene pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span>: para cada caso se observan unas características <span class="math inline">\(\mathbf{x}_i\)</span> y la respuesta correcta <span class="math inline">\(y_i\)</span> asociada a las mismas. La tarea consiste en predecir la respuesta para un nuevo vector de características y el rendimiento se mide comparando predicciones y respuestas. Estimar el precio de una vivienda y decidir si una transacción bancaria es fraudulenta son ejemplos de aprendizaje supervisado.</p>
-<p><strong>Aprendizaje semisupervisado.</strong> Solo una parte de los casos tiene respuesta observada. El algoritmo combina esos pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> con una colección mayor de casos <span class="math inline">\(\mathbf{x}_j\)</span> sin etiquetar. Es útil cuando obtener datos es sencillo, pero etiquetarlos requiere tiempo o conocimiento experto, como ocurre con muchas imágenes médicas.</p>
-<p><strong>Aprendizaje autosupervisado.</strong> No se proporcionan etiquetas externas: el problema de predicción se construye a partir del propio dato. Por ejemplo, se puede ocultar una parte de una imagen y pedir al modelo que la reconstruya, o utilizar las palabras anteriores de un texto para predecir la siguiente. Este tipo de experiencia permite aprender representacione de los datos que después se adaptan a tareas concretas.</p>
-<p><strong>Aprendizaje no supervisado.</strong> Los datos tampoco incluyen una respuesta, pero no se crea una tarea predictiva auxiliar. El objetivo es describir alguna estructura de los datos, por ejemplo agrupando clientes con comportamientos semejantes o representando muchas variables mediante unas pocas dimensiones. El criterio de “calidad” depende aquí del propósito del análisis y suele ser menos directo que en el caso supervisado.</p>
-<p><strong>Aprendizaje por refuerzo.</strong> La experiencia se genera mediante la interacción de un agente con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una recompensa. La tarea es aprender una política de actuación y el rendimiento se mide por la recompensa acumulada. Por ejemplo, un sistema de climatización puede aprender cuándo calentar o enfriar un edificio a partir de una recompensa que combine el confort de sus ocupantes y el coste energético.</p>
+<p><strong>Aprendizaje supervisado.</strong></p>
+<ul>
+<li><span class="math inline">\(E\)</span>: pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span>, donde <span class="math inline">\(\mathbf{x}_i\)</span> son las características de un caso e <span class="math inline">\(y_i\)</span> su respuesta correcta.</li>
+<li><span class="math inline">\(T\)</span>: predecir la respuesta de un caso nuevo del que solo se conocen sus características.</li>
+<li><span class="math inline">\(P\)</span>: cuánto se parecen las predicciones a las respuestas verdaderas.</li>
+</ul>
+<p>Estimar el precio de una vivienda o decidir si una transacción es fraudulenta.</p>
+<p><strong>Aprendizaje semisupervisado.</strong></p>
+<ul>
+<li><span class="math inline">\(E\)</span>: unos pocos pares <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> y muchos casos <span class="math inline">\(\mathbf{x}_j\)</span> sin respuesta.</li>
+<li><span class="math inline">\(T\)</span> y <span class="math inline">\(P\)</span>: las mismas que en el supervisado.</li>
+</ul>
+<p>Es útil cuando reunir casos es barato y etiquetarlos caro, como en imágenes médicas.</p>
+<p><strong>Aprendizaje autosupervisado.</strong></p>
+<ul>
+<li><span class="math inline">\(E\)</span>: datos sin etiquetar, de los que se esconde una parte para usarla como respuesta.</li>
+<li><span class="math inline">\(T\)</span>: reconstruir la parte escondida, por ejemplo la palabra siguiente de un texto.</li>
+<li><span class="math inline">\(P\)</span>: el acierto en esa reconstrucción.</li>
+</ul>
+<p>La tarea es un pretexto: lo que interesa es la representación de los datos que se obtiene de paso, y que después se adapta a tareas concretas.</p>
+<p><strong>Aprendizaje no supervisado.</strong></p>
+<ul>
+<li><span class="math inline">\(E\)</span>: datos sin respuesta, y sin inventar ninguna.</li>
+<li><span class="math inline">\(T\)</span>: describir la estructura de esos datos, por ejemplo agrupando clientes parecidos o resumiendo muchas variables en unas pocas.</li>
+<li><span class="math inline">\(P\)</span>: no hay una medida única. Depende del propósito del análisis, y esa es la diferencia de fondo con el supervisado.</li>
+</ul>
+<p><strong>Aprendizaje por refuerzo.</strong></p>
+<ul>
+<li><span class="math inline">\(E\)</span>: la interacción con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una recompensa.</li>
+<li><span class="math inline">\(T\)</span>: aprender una política, es decir, qué acción tomar en cada situación.</li>
+<li><span class="math inline">\(P\)</span>: la recompensa acumulada.</li>
+</ul>
+<p>Un sistema de climatización que aprende cuándo calentar un edificio con una recompensa que combine confort y coste energético.</p>
 <p>Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante aprendizaje por refuerzo <span class="citation" data-cites="bommasani2021opportunities">(<a href="index.html#ref-bommasani2021opportunities" role="doc-biblioref"><span class="nocase">Bommasani et&nbsp;al.</span> 2021</a>)</span>.</p>
 </section>
 <section id="el-problema-que-estudia-este-curso" class="level2">
@@ -395,11 +423,6 @@ window.Quarto = {
 <td>Complejidad y generalización</td>
 <td>6-7</td>
 <td>características, sesgo-varianza y regularización</td>
-</tr>
-<tr class="even">
-<td>Otros modelos</td>
-<td>si el calendario lo permite</td>
-<td>ajustar algún modelo más con lo aprendido, por ejemplo una red pequeña</td>
 </tr>
 </tbody>
 </table>

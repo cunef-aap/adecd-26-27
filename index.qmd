@@ -6,6 +6,7 @@ $$
 $$
 :::
 
+
 ## Qué es el aprendizaje automático
 
 > **Definición (Mitchell).** Se dice que un programa aprende de la experiencia $E$ con
@@ -29,36 +30,48 @@ distinguir varias modalidades de aprendizaje automático. Esta clasificación es
 es una partición estricta: las fronteras son convencionales y un mismo sistema puede
 combinar modalidades en distintas fases.
 
-**Aprendizaje supervisado.** La experiencia contiene pares $(\mathbf{x}_i,y_i)$: para cada
-caso se observan unas características $\mathbf{x}_i$ y la respuesta correcta $y_i$ asociada
-a las mismas. La tarea consiste en predecir la respuesta para un nuevo vector de
-características y el rendimiento se mide comparando predicciones y respuestas. Estimar el
-precio de una vivienda y decidir si una transacción bancaria es fraudulenta son ejemplos de
-aprendizaje supervisado.
+**Aprendizaje supervisado.**
 
-**Aprendizaje semisupervisado.** Solo una parte de los casos tiene respuesta observada. El
-algoritmo combina esos pares $(\mathbf{x}_i,y_i)$ con una colección mayor de casos
-$\mathbf{x}_j$ sin etiquetar. Es útil cuando obtener datos es sencillo, pero etiquetarlos
-requiere tiempo o conocimiento experto, como ocurre con muchas imágenes médicas.
+- $E$: pares $(\mathbf{x}_i,y_i)$, donde $\mathbf{x}_i$ son las características de un caso e
+  $y_i$ su respuesta correcta.
+- $T$: predecir la respuesta de un caso nuevo del que solo se conocen sus características.
+- $P$: cuánto se parecen las predicciones a las respuestas verdaderas.
 
-**Aprendizaje autosupervisado.** No se proporcionan etiquetas externas: el problema de
-predicción se construye a partir del propio dato. Por ejemplo, se puede ocultar una parte de
-una imagen y pedir al modelo que la reconstruya, o utilizar las palabras anteriores de un
-texto para predecir la siguiente. Este tipo de experiencia permite aprender representacione
-de los datos que después se adaptan a tareas concretas.
+Estimar el precio de una vivienda o decidir si una transacción es fraudulenta.
 
-**Aprendizaje no supervisado.** Los datos tampoco incluyen una respuesta, pero no se crea
-una tarea predictiva auxiliar. El objetivo es describir alguna estructura de los datos,
-por ejemplo agrupando clientes con comportamientos semejantes o representando muchas
-variables mediante unas pocas dimensiones. El criterio de "calidad" depende aquí del
-propósito del análisis y suele ser menos directo que en el caso supervisado.
+**Aprendizaje semisupervisado.**
 
-**Aprendizaje por refuerzo.** La experiencia se genera mediante la interacción de un agente
-con un entorno. En cada paso el agente observa una situación, elige una acción y recibe una
-recompensa. La tarea es aprender una política de actuación y el rendimiento se mide por la
-recompensa acumulada. Por ejemplo, un sistema de climatización puede aprender cuándo
-calentar o enfriar un edificio a partir de una recompensa que combine el confort de sus
-ocupantes y el coste energético.
+- $E$: unos pocos pares $(\mathbf{x}_i,y_i)$ y muchos casos $\mathbf{x}_j$ sin respuesta.
+- $T$ y $P$: las mismas que en el supervisado.
+
+Es útil cuando reunir casos es barato y etiquetarlos caro, como en imágenes médicas.
+
+**Aprendizaje autosupervisado.**
+
+- $E$: datos sin etiquetar, de los que se esconde una parte para usarla como respuesta.
+- $T$: reconstruir la parte escondida, por ejemplo la palabra siguiente de un texto.
+- $P$: el acierto en esa reconstrucción.
+
+La tarea es un pretexto: lo que interesa es la representación de los datos que se obtiene de
+paso, y que después se adapta a tareas concretas.
+
+**Aprendizaje no supervisado.**
+
+- $E$: datos sin respuesta, y sin inventar ninguna.
+- $T$: describir la estructura de esos datos, por ejemplo agrupando clientes parecidos o
+  resumiendo muchas variables en unas pocas.
+- $P$: no hay una medida única. Depende del propósito del análisis, y esa es la diferencia
+  de fondo con el supervisado.
+
+**Aprendizaje por refuerzo.**
+
+- $E$: la interacción con un entorno. En cada paso el agente observa una situación, elige una
+  acción y recibe una recompensa.
+- $T$: aprender una política, es decir, qué acción tomar en cada situación.
+- $P$: la recompensa acumulada.
+
+Un sistema de climatización que aprende cuándo calentar un edificio con una recompensa que
+combine confort y coste energético.
 
 Un modelo fundacional ilustra por qué estas categorías pueden solaparse: puede recibir
 preentrenamiento autosupervisado y adaptarse después con ejemplos supervisados o mediante
@@ -129,7 +142,6 @@ El curso se estructura como sigue:
 | Fundamentos del aprendizaje predictivo | 1-3 | señal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales |
 | Evaluación y datos | 4-5 | métricas, validación cruzada, fugas y pipelines de preparación |
 | Complejidad y generalización | 6-7 | características, sesgo-varianza y regularización |
-| Otros modelos | si el calendario lo permite | ajustar algún modelo más con lo aprendido, por ejemplo una red pequeña |
 
 
 ## Cómo se trabaja
