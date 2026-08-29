@@ -33,8 +33,8 @@ Una propiedad importante.
 ::: {#lem-esperanza-funcion}
 ## La esperanza de una función de una extracción
 
-Sea $X$ una variable aleatoria con densidad $\pdf$ y sea $g$ una función **fija**, elegida sin
-mirar los datos, con $\int\abs{g(x)}\,\pdf(x)\,\dd x<\infty$. Entonces
+Sea $X$ una variable aleatoria con densidad $\pdf$ y sea $g$ una función **fija**, elegida
+sin mirar los datos, con $\int\abs{g(x)}\,\pdf(x)\,\dd x<\infty$. Entonces
 
 $$
 \Esub{X}{g(X)}=\int g(x)\,\pdf(x)\,\dd x .
@@ -50,12 +50,16 @@ $\Esub{P}{g(X,Y)}$.
 **Respecto de qué se toma una esperanza.** En todo el libro, el subíndice de $\E{\cdot}$
 nombra lo que se promedia, y se escribe siempre que haya más de un candidato posible:
 
-| Notación | Se promedia sobre |
-|---|---|
-| $\Esub{P^\star}{\cdot}$ | una observación nueva $(X,Y)$ extraída de la distribución $P^\star$ que genera los datos |
-| $\Esub{X}{\cdot}$ | la distribución marginal de las variables predictoras |
-| $\Esub{\varepsilon}{\cdot}$ | el ruido de una observación |
-| $\Esub{\data}{\cdot}$, $\Esub{\Dtrain}{\cdot}$, $\Esub{\Dtest}{\cdot}$ | las muestras posibles del tamaño y el papel que indique el subíndice |
+| Notación | Se promedia sobre | Qué integral es |
+|---|---|---|
+| $\Esub{P^\star}{h(X,Y)}$ | una observación nueva $(X,Y)$ extraída de la distribución $P^\star$ que genera los datos | $\int h(\xv,y)\,\pdf^\star(\xv,y)\,\dd\xv\,\dd y$ |
+| $\Esub{X}{h(X)}$ | la distribución marginal de las variables predictoras | $\int h(\xv)\,\pdf_X(\xv)\,\dd\xv$ |
+| $\Esub{\varepsilon}{h(\varepsilon)}$ | el ruido de una observación | $\int h(z)\,\pdf_\varepsilon(z)\,\dd z$ |
+| $\Esub{\Dtrain}{h(\Dtrain)}$ | las muestras de entrenamiento posibles, cada una $\nobs$ extracciones independientes de $P^\star$ | $\int h(\data)\,\prod_{i=1}^{\nobs}\pdf^\star(\xv_i,y_i)\,\dd\data$ |
+
+Las de $\Esub{\data}{\cdot}$ y $\Esub{\Dtest}{\cdot}$ son la última con el tamaño y el papel
+que indique el subíndice. En todas, $h$ es la cantidad que va dentro de la esperanza, y la
+integral se sustituye por una suma si la variable es discreta.
 
 Cuando dentro de la esperanza hay una sola variable aleatoria y no cabe ambigüedad, como en
 $\E{\varepsilon}$ o $\E{X}$, el subíndice se omite.
@@ -65,21 +69,15 @@ Las dos reglas que usaremos con más frecuencia:
 ::: {#lem-linealidad}
 ## Linealidad y escala
 
-Para $a, b$ constantes, $\E{aX + b} = a\E{X} + b$ y $\Var{aX+b} = a^2\Var{X}$. La
-esperanza es lineal **siempre**; la varianza no, y por eso el $a$ sale al cuadrado y el
-$b$ desaparece.
+Para $a, b$ constantes, $\E{aX + b} = a\E{X} + b$ y $\Var{aX+b} = a^2\Var{X}$.
 :::
 
-::: {.cajanegra}
-**Se da por conocido.** Las dos igualdades salen de la definición de esperanza y de la de
-varianza en tres líneas, y son materia de Estadística. Se aceptan y se usan.
-:::
 
 Además, $\E{X + Y} = \E{X} + \E{Y}$ sin ninguna hipótesis, mientras que
 $\Var{X+Y} = \Var{X} + \Var{Y}$ **solo si $X$ e $Y$ son independientes**. En general,
 $\Var{X+Y} = \Var{X} + \Var{Y} + 2\Cov{X}{Y}$.
 
-## Independencia, y por qué la verosimilitud es un producto
+## Independencia
 
 Las variables $X_1,\dots,X_{\nobs}$ son **independientes** si su densidad conjunta es el
 producto de las densidades individuales:
@@ -87,13 +85,17 @@ $$
 \pdf(x_1,\dots,x_{\nobs}) = \prod_{i=1}^{\nobs} \pdf_i(x_i).
 $$
 
-Esa igualdad es la razón de que la verosimilitud del
-[capítulo de señal y ruido](../capitulos/01-senal-ruido.qmd) sea un producto, y de que
-al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: **la independencia
-es una hipótesis del modelo**, no una propiedad de los datos. Cuando falla, falla la
-verosimilitud, y con ella el estimador. En el [capítulo de evaluación](../capitulos/04-evaluacion.qmd)
-veremos un caso concreto: un
-anfitrión con doce anuncios en Madrid.
+De la factorización se siguen las tres consecuencias que se usan sin volver a justificarlas.
+La primera es que la esperanza de un producto se parte:
+$\E{XY} = \E{X}\E{Y}$, y por tanto $\Cov{X}{Y} = 0$. La segunda es que la varianza de una
+suma se parte también, $\Var{X_1+\dots+X_\nobs} = \Var{X_1}+\dots+\Var{X_\nobs}$, lo que
+para $\nobs$ extracciones de la misma distribución con varianza $\noise^2$ da
+$\Var{\bar X} = \noise^2/\nobs$: promediar reduce la varianza en un factor $\nobs$. La
+tercera es que la densidad conjunta de una muestra es el producto de las individuales, que
+es lo que permite escribir la verosimilitud de un conjunto de datos.
+
+Independencia es más fuerte que covarianza cero. Que $\Cov{X}{Y}=0$ solo dice que no hay
+relación lineal; puede haberla de otro tipo, y entonces las variables no son independientes.
 
 ## Cambio de variable
 
@@ -103,14 +105,11 @@ $$
 $$
 
 El factor de la derecha es el **jacobiano**, y es lo que impide tratar una densidad como
-si fuera una probabilidad. Se usa dos veces en el curso: en @thm-escala y en el sesgo de
-retransformación del [capítulo de preparación de datos](../capitulos/05-preparacion-datos.qmd).
+si fuera una probabilidad.
 
 ## Esperanza condicional
 
-$\E{Y \given X = x}$ es la media de $Y$ entre las observaciones con ese valor de $X$. Como
-función de $x$ es la **función de regresión**, y es el objeto que todo el curso intenta
-estimar.
+$\E{Y \given X = x}$ es la media de $Y$ entre las observaciones con ese valor de $X$.
 
 ::: {#lem-esperanza-total}
 ## Ley de la esperanza total
@@ -118,10 +117,14 @@ estimar.
 $\E{Y} = \E{\,\E{Y \given X}\,}$.
 :::
 
-::: {.cajanegra}
-**Se da por conocido.** Es materia de Estadística y se acepta. Lo usa la descomposición
-sesgo-varianza del capítulo 6, para pasar de la descomposición en un punto a la del riesgo.
-:::
+La esperanza de dentro se toma sobre $Y$ con $X$ fijada, y la de fuera sobre $X$. El
+resultado dice que promediar por grupos y después promediar los promedios devuelve la media
+global, siempre que cada grupo pese lo que le toca. Sirve para calcular una esperanza en dos
+pasos cuando el condicionamiento simplifica el primero.
+
+Junto a ella se usa la descomposición análoga de la varianza,
+$\Var{Y} = \E{\Var{Y \given X}} + \Var{\E{Y \given X}}$: la variabilidad total se reparte
+entre la que queda dentro de cada grupo y la que hay entre los grupos.
 
 ## Cuantiles
 
@@ -135,13 +138,13 @@ $\Prob{X \leq q_\tau} = \tau$. La **mediana** es $q_{0{,}5}$.
 ::: {#lem-cuantil-creciente}
 ## Los cuantiles se conservan bajo transformaciones crecientes
 
-Si $g$ es estrictamente creciente, entonces $q_\tau\bigl(g(X)\bigr) = g\bigl(q_\tau(X)\bigr)$
-para todo $\tau \in (0,1)$.
+Si $g$ es estrictamente creciente, entonces $q_\tau\bigl(g(X)\bigr) =
+g\bigl(q_\tau(X)\bigr)$ para todo $\tau \in (0,1)$.
 :::
 
 ::: {.proof}
-Como $g$ es estrictamente creciente, los sucesos $\{g(X) \leq g(q)\}$ y $\{X \leq q\}$ son el
-mismo, luego tienen la misma probabilidad. Tomando $q = q_\tau(X)$,
+Como $g$ es estrictamente creciente, los sucesos $\{g(X) \leq g(q)\}$ y $\{X \leq q\}$ son
+el mismo, luego tienen la misma probabilidad. Tomando $q = q_\tau(X)$,
 
 $$
 \Prob{g(X) \leq g\bigl(q_\tau(X)\bigr)} = \Prob{X \leq q_\tau(X)} = \tau ,
@@ -150,15 +153,15 @@ $$
 y por definición eso significa que $g(q_\tau(X))$ es el cuantil de orden $\tau$ de $g(X)$.
 :::
 
-La media **no** tiene esa propiedad. De esa asimetría sale el resultado sobre transformaciones
-logarítmicas de la hoja del capítulo 5: al deshacer un logaritmo con la exponencial se recupera
-la mediana de la respuesta y no su media, de modo que la predicción devuelta a euros queda por
-debajo de la media condicional. El capítulo 5 usa @def-cuantil también para el percentil 99 con
-el que recorta los valores extremos.
+La media **no** tiene esa propiedad. 
+
+\\ To Do: completa un poco
 
 ## La distribución normal
 
-La densidad se define en @def-normal. Las propiedades siguientes son las únicas que
+\\ To Do: definir primero
+
+Las propiedades siguientes son las únicas que
 usamos, y las cuatro salen de la misma técnica: escribir la función de distribución como
 integral y hacer un cambio de variable.
 
@@ -183,11 +186,10 @@ $\varepsilon + c \sim \Normal(\mu + c, \noise^2)$.
 :::
 
 ::: {.proof}
-Sea $W = \varepsilon + c$. Entonces
-$\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} = \int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$.
-El cambio de variable $u = x + c$ (con $\dd u = \dd x$) transforma la integral en
-$\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y por @eq-densidad-normal
-$\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
+Sea $W = \varepsilon + c$. Entonces $\Prob{W \leq t} = \Prob{\varepsilon \leq t - c} =
+\int_{-\infty}^{t-c} \pdf(x;\mu,\noise)\,\dd x$. El cambio de variable $u = x + c$ (con $\dd
+u = \dd x$) transforma la integral en $\int_{-\infty}^{t} \pdf(u - c;\mu,\noise)\,\dd u$, y
+por @eq-densidad-normal $\pdf(u-c;\mu,\noise) = \pdf(u; \mu+c, \noise)$.
 :::
 
 ::: {#thm-escala}
@@ -201,7 +203,8 @@ $a\varepsilon \sim \Normal(a\mu, a^2\noise^2)$.
 Tomemos $a > 0$; el caso $a<0$ es idéntico salvo que se invierten los límites y aparece
 $\abs{a}$. Sea $W = a\varepsilon$. Entonces
 $$
-\Prob{W \leq t} = \Prob{\varepsilon \leq t/a} = \int_{-\infty}^{t/a} \pdf(x;\mu,\noise)\,\dd x .
+\Prob{W \leq t} = \Prob{\varepsilon \leq t/a} = \int_{-\infty}^{t/a} \pdf(x;\mu,\noise)\,\dd
+x .
 $$
 El cambio de variable $u = ax$, con $\dd u = a\,\dd x$, lleva la integral a
 $\int_{-\infty}^{t} \frac{1}{a}\,\pdf(u/a;\mu,\noise)\,\dd u$. Basta comprobar que el
@@ -218,7 +221,8 @@ El resultado es $\pdf(u; a\mu, a\noise)$.
 ::: {#cor-estandarizacion}
 ## Estandarización
 
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $Z = (\varepsilon - \mu)/\noise \sim \Normal(0,1)$.
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $Z = (\varepsilon - \mu)/\noise \sim
+\Normal(0,1)$.
 :::
 
 ::: {.proof}
@@ -228,7 +232,8 @@ Aplicar @thm-escala con $a = 1/\noise$ y después @thm-traslacion con $c = -\mu/
 ::: {#thm-momentos}
 ## Media y varianza
 
-Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y $\Var{\varepsilon} = \noise^2$.
+Si $\varepsilon \sim \Normal(\mu, \noise^2)$ entonces $\E{\varepsilon} = \mu$ y
+$\Var{\varepsilon} = \noise^2$.
 :::
 
 ::: {.proof}
@@ -271,8 +276,9 @@ una se presenta en su capítulo.
 ::: {.sinusar}
 **De la tabla, tres filas sin usar.** Los capítulos escritos solo usan la normal, en los
 capítulos 1 y 2, y la de Laplace, en el ejercicio de la pérdida absoluta del capítulo 2. La
-lognormal la necesita el capítulo 5. Poisson y Gamma están ahí por el mapa final del capítulo
-11, que las menciona y no las desarrolla: si ese mapa acaba sin ellas, sus filas se quitan.
+lognormal la necesita el capítulo 5. Poisson y Gamma están ahí por el mapa final del
+capítulo 11, que las menciona y no las desarrolla: si ese mapa acaba sin ellas, sus filas se
+quitan.
 :::
 
 De la lognormal usamos un solo hecho, y se demuestra en el
@@ -315,25 +321,23 @@ intervalo $[0,1]$ y cero fuera.
 ::: {.callout-note collapse="true"}
 ## Soluciones del diagnóstico
 
-1. Es no negativa en $[0,1]$ e integra a uno:
-   $\int_0^1 2x\,\dd x = \left[x^2\right]_0^1 = 1$. Y
-   $\Prob{X\leq 1/2} = \int_0^{1/2} 2x\,\dd x = 1/4$. Fíjate en que no es $1/2$: la
+1. Es no negativa en $[0,1]$ e integra a uno: $\int_0^1 2x\,\dd x = \left[x^2\right]_0^1 =
+   1$. Y $\Prob{X\leq 1/2} = \int_0^{1/2} 2x\,\dd x = 1/4$. Fíjate en que no es $1/2$: la
    densidad crece, así que la mitad izquierda pesa menos.
 2. $\E{X} = \int_0^1 x\cdot 2x\,\dd x = 2/3$.
-3. Por @lem-esperanza-funcion, con $g(x) = x^2$:
-   $\E{X^2} = \int_0^1 x^2\cdot 2x\,\dd x = 1/2$. Y $\E{X}^2 = 4/9$, que es distinto:
-   la esperanza de una función **no** es la función de la esperanza. Es el error que más veces
-   aparece en el curso.
-4. $\Var{X} = \E{X^2}-\E{X}^2 = 1/2 - 4/9 = 1/18$. Por @lem-linealidad,
-   $\E{3X-1} = 3\cdot 2/3 - 1 = 1$ y $\Var{3X-1} = 9\Var{X} = 1/2$: la constante no afecta
-   a la varianza y el factor entra al cuadrado.
+3. Por @lem-esperanza-funcion, con $g(x) = x^2$: $\E{X^2} = \int_0^1 x^2\cdot 2x\,\dd x =
+   1/2$. Y $\E{X}^2 = 4/9$, que es distinto: la esperanza de una función **no** es la
+   función de la esperanza. Es el error que más veces aparece en el curso.
+4. $\Var{X} = \E{X^2}-\E{X}^2 = 1/2 - 4/9 = 1/18$. Por @lem-linealidad, $\E{3X-1} = 3\cdot
+   2/3 - 1 = 1$ y $\Var{3X-1} = 9\Var{X} = 1/2$: la constante no afecta a la varianza y el
+   factor entra al cuadrado.
 5. $\pdf(x_1,x_2,x_3) = 8\,x_1x_2x_3$ en el cubo unidad, es decir, el producto de las tres
    densidades, que es la definición de independencia de la sección correspondiente. De ahí
    que la verosimilitud de una muestra independiente se escriba como producto y su logaritmo
    como suma.
 6. $W\sim\Normal(5, 4)$. La escala sale de @thm-escala y la traslación de @thm-traslacion;
-   juntas dicen que una transformación afín de una normal es normal, con media $2\cdot 0+5$ y
-   varianza $2^2\cdot 1$. Ojo: la varianza es $4$, no $2$.
+   juntas dicen que una transformación afín de una normal es normal, con media $2\cdot 0+5$
+   y varianza $2^2\cdot 1$. Ojo: la varianza es $4$, no $2$.
 7. $\E{Y\mid X} = X + \E{\varepsilon} = X$, porque fijado $X$ lo único aleatorio es el
    ruido. Y por @lem-esperanza-total, $\E{Y} = \E{\E{Y\mid X}} = \E{X}$. Esta es la cuenta
    que sostiene el capítulo 1: el modelo describe la media de la respuesta y el ruido no la

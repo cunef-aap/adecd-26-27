@@ -228,7 +228,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#variables-aleatorias-continuas" id="toc-variables-aleatorias-continuas" class="nav-link active" data-scroll-target="#variables-aleatorias-continuas">Variables aleatorias continuas</a></li>
-  <li><a href="#independencia-y-por-qué-la-verosimilitud-es-un-producto" id="toc-independencia-y-por-qué-la-verosimilitud-es-un-producto" class="nav-link" data-scroll-target="#independencia-y-por-qué-la-verosimilitud-es-un-producto">Independencia, y por qué la verosimilitud es un producto</a></li>
+  <li><a href="#independencia" id="toc-independencia" class="nav-link" data-scroll-target="#independencia">Independencia</a></li>
   <li><a href="#cambio-de-variable" id="toc-cambio-de-variable" class="nav-link" data-scroll-target="#cambio-de-variable">Cambio de variable</a></li>
   <li><a href="#esperanza-condicional" id="toc-esperanza-condicional" class="nav-link" data-scroll-target="#esperanza-condicional">Esperanza condicional</a></li>
   <li><a href="#cuantiles" id="toc-cuantiles" class="nav-link" data-scroll-target="#cuantiles">Cuantiles</a></li>
@@ -284,67 +284,71 @@ window.Quarto = {
 <p><strong>Respecto de qué se toma una esperanza.</strong> En todo el libro, el subíndice de <span class="math inline">\(\mathbb{E}\!\left[ \cdot \right]\)</span> nombra lo que se promedia, y se escribe siempre que haya más de un candidato posible:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Notación</th>
 <th>Se promedia sobre</th>
+<th>Qué integral es</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(\mathbb{E}_{P^\star}\!\left[ \cdot \right]\)</span></td>
+<td><span class="math inline">\(\mathbb{E}_{P^\star}\!\left[ h(X,Y) \right]\)</span></td>
 <td>una observación nueva <span class="math inline">\((X,Y)\)</span> extraída de la distribución <span class="math inline">\(P^\star\)</span> que genera los datos</td>
+<td><span class="math inline">\(\int h(\mathbf{x},y)\,p^\star(\mathbf{x},y)\,\mathrm{d}\mathbf{x}\,\mathrm{d}y\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\mathbb{E}_{X}\!\left[ \cdot \right]\)</span></td>
+<td><span class="math inline">\(\mathbb{E}_{X}\!\left[ h(X) \right]\)</span></td>
 <td>la distribución marginal de las variables predictoras</td>
+<td><span class="math inline">\(\int h(\mathbf{x})\,p_X(\mathbf{x})\,\mathrm{d}\mathbf{x}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\mathbb{E}_{\varepsilon}\!\left[ \cdot \right]\)</span></td>
+<td><span class="math inline">\(\mathbb{E}_{\varepsilon}\!\left[ h(\varepsilon) \right]\)</span></td>
 <td>el ruido de una observación</td>
+<td><span class="math inline">\(\int h(z)\,p_\varepsilon(z)\,\mathrm{d}z\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\mathbb{E}_{\mathcal{D}}\!\left[ \cdot \right]\)</span>, <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \cdot \right]\)</span>, <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{test}}}\!\left[ \cdot \right]\)</span></td>
-<td>las muestras posibles del tamaño y el papel que indique el subíndice</td>
+<td><span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ h(\mathcal{D}_{\mathrm{train}}) \right]\)</span></td>
+<td>las muestras de entrenamiento posibles, cada una <span class="math inline">\(n\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span></td>
+<td><span class="math inline">\(\int h(\mathcal{D})\,\prod_{i=1}^{n}p^\star(\mathbf{x}_i,y_i)\,\mathrm{d}\mathcal{D}\)</span></td>
 </tr>
 </tbody>
 </table>
+<p>Las de <span class="math inline">\(\mathbb{E}_{\mathcal{D}}\!\left[ \cdot \right]\)</span> y <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{test}}}\!\left[ \cdot \right]\)</span> son la última con el tamaño y el papel que indique el subíndice. En todas, <span class="math inline">\(h\)</span> es la cantidad que va dentro de la esperanza, y la integral se sustituye por una suma si la variable es discreta.</p>
 <p>Cuando dentro de la esperanza hay una sola variable aleatoria y no cabe ambigüedad, como en <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right]\)</span> o <span class="math inline">\(\mathbb{E}\!\left[ X \right]\)</span>, el subíndice se omite.</p>
 <p>Las dos reglas que usaremos con más frecuencia:</p>
 <div id="lem-linealidad" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 2 (Linealidad y escala)</strong></span> Para <span class="math inline">\(a, b\)</span> constantes, <span class="math inline">\(\mathbb{E}\!\left[ aX + b \right] = a\mathbb{E}\!\left[ X \right] + b\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( aX+b \right) = a^2\mathrm{Var}\!\left( X \right)\)</span>. La esperanza es lineal <strong>siempre</strong>; la varianza no, y por eso el <span class="math inline">\(a\)</span> sale al cuadrado y el <span class="math inline">\(b\)</span> desaparece.</p>
-</div>
-<div class="cajanegra">
-<p><strong>Se da por conocido.</strong> Las dos igualdades salen de la definición de esperanza y de la de varianza en tres líneas, y son materia de Estadística. Se aceptan y se usan.</p>
+<p><span class="theorem-title"><strong>Lema 2 (Linealidad y escala)</strong></span> Para <span class="math inline">\(a, b\)</span> constantes, <span class="math inline">\(\mathbb{E}\!\left[ aX + b \right] = a\mathbb{E}\!\left[ X \right] + b\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( aX+b \right) = a^2\mathrm{Var}\!\left( X \right)\)</span>.</p>
 </div>
 <p>Además, <span class="math inline">\(\mathbb{E}\!\left[ X + Y \right] = \mathbb{E}\!\left[ X \right] + \mathbb{E}\!\left[ Y \right]\)</span> sin ninguna hipótesis, mientras que <span class="math inline">\(\mathrm{Var}\!\left( X+Y \right) = \mathrm{Var}\!\left( X \right) + \mathrm{Var}\!\left( Y \right)\)</span> <strong>solo si <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> son independientes</strong>. En general, <span class="math inline">\(\mathrm{Var}\!\left( X+Y \right) = \mathrm{Var}\!\left( X \right) + \mathrm{Var}\!\left( Y \right) + 2\mathrm{Cov}\!\left( X, Y \right)\)</span>.</p>
 </section>
-<section id="independencia-y-por-qué-la-verosimilitud-es-un-producto" class="level2">
-<h2 class="anchored" data-anchor-id="independencia-y-por-qué-la-verosimilitud-es-un-producto">Independencia, y por qué la verosimilitud es un producto</h2>
+<section id="independencia" class="level2">
+<h2 class="anchored" data-anchor-id="independencia">Independencia</h2>
 <p>Las variables <span class="math inline">\(X_1,\dots,X_{n}\)</span> son <strong>independientes</strong> si su densidad conjunta es el producto de las densidades individuales: <span class="math display">\[
 p(x_1,\dots,x_{n}) = \prod_{i=1}^{n} p_i(x_i).
 \]</span></p>
-<p>Esa igualdad es la razón de que la verosimilitud del <a href="../capitulos/01-senal-ruido.html">capítulo de señal y ruido</a> sea un producto, y de que al tomar logaritmos se convierta en una suma. Conviene tenerlo presente: <strong>la independencia es una hipótesis del modelo</strong>, no una propiedad de los datos. Cuando falla, falla la verosimilitud, y con ella el estimador. En el <span>capítulo de evaluación</span> veremos un caso concreto: un anfitrión con doce anuncios en Madrid.</p>
+<p>De la factorización se siguen las tres consecuencias que se usan sin volver a justificarlas. La primera es que la esperanza de un producto se parte: <span class="math inline">\(\mathbb{E}\!\left[ XY \right] = \mathbb{E}\!\left[ X \right]\mathbb{E}\!\left[ Y \right]\)</span>, y por tanto <span class="math inline">\(\mathrm{Cov}\!\left( X, Y \right) = 0\)</span>. La segunda es que la varianza de una suma se parte también, <span class="math inline">\(\mathrm{Var}\!\left( X_1+\dots+X_n \right) = \mathrm{Var}\!\left( X_1 \right)+\dots+\mathrm{Var}\!\left( X_n \right)\)</span>, lo que para <span class="math inline">\(n\)</span> extracciones de la misma distribución con varianza <span class="math inline">\(\sigma^2\)</span> da <span class="math inline">\(\mathrm{Var}\!\left( \bar X \right) = \sigma^2/n\)</span>: promediar reduce la varianza en un factor <span class="math inline">\(n\)</span>. La tercera es que la densidad conjunta de una muestra es el producto de las individuales, que es lo que permite escribir la verosimilitud de un conjunto de datos.</p>
+<p>Independencia es más fuerte que covarianza cero. Que <span class="math inline">\(\mathrm{Cov}\!\left( X, Y \right)=0\)</span> solo dice que no hay relación lineal; puede haberla de otro tipo, y entonces las variables no son independientes.</p>
 </section>
 <section id="cambio-de-variable" class="level2">
 <h2 class="anchored" data-anchor-id="cambio-de-variable">Cambio de variable</h2>
 <p>Si <span class="math inline">\(Y = g(X)\)</span> con <span class="math inline">\(g\)</span> derivable y estrictamente monótona, la densidad de <span class="math inline">\(Y\)</span> es <span class="math display">\[
 p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1}(y) \right| .
 \]</span></p>
-<p>El factor de la derecha es el <strong>jacobiano</strong>, y es lo que impide tratar una densidad como si fuera una probabilidad. Se usa dos veces en el curso: en <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> y en el sesgo de retransformación del <span>capítulo de preparación de datos</span>.</p>
+<p>El factor de la derecha es el <strong>jacobiano</strong>, y es lo que impide tratar una densidad como si fuera una probabilidad.</p>
 </section>
 <section id="esperanza-condicional" class="level2">
 <h2 class="anchored" data-anchor-id="esperanza-condicional">Esperanza condicional</h2>
-<p><span class="math inline">\(\mathbb{E}\!\left[ Y \,\vert\,X = x \right]\)</span> es la media de <span class="math inline">\(Y\)</span> entre las observaciones con ese valor de <span class="math inline">\(X\)</span>. Como función de <span class="math inline">\(x\)</span> es la <strong>función de regresión</strong>, y es el objeto que todo el curso intenta estimar.</p>
+<p><span class="math inline">\(\mathbb{E}\!\left[ Y \,\vert\,X = x \right]\)</span> es la media de <span class="math inline">\(Y\)</span> entre las observaciones con ese valor de <span class="math inline">\(X\)</span>.</p>
 <div id="lem-esperanza-total" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 3 (Ley de la esperanza total)</strong></span> <span class="math inline">\(\mathbb{E}\!\left[ Y \right] = \mathbb{E}\!\left[ \,\mathbb{E}\!\left[ Y \,\vert\,X \right]\, \right]\)</span>.</p>
 </div>
-<div class="cajanegra">
-<p><strong>Se da por conocido.</strong> Es materia de Estadística y se acepta. Lo usa la descomposición sesgo-varianza del capítulo 6, para pasar de la descomposición en un punto a la del riesgo.</p>
-</div>
+<p>La esperanza de dentro se toma sobre <span class="math inline">\(Y\)</span> con <span class="math inline">\(X\)</span> fijada, y la de fuera sobre <span class="math inline">\(X\)</span>. El resultado dice que promediar por grupos y después promediar los promedios devuelve la media global, siempre que cada grupo pese lo que le toca. Sirve para calcular una esperanza en dos pasos cuando el condicionamiento simplifica el primero.</p>
+<p>Junto a ella se usa la descomposición análoga de la varianza, <span class="math inline">\(\mathrm{Var}\!\left( Y \right) = \mathbb{E}\!\left[ \mathrm{Var}\!\left( Y \,\vert\,X \right) \right] + \mathrm{Var}\!\left( \mathbb{E}\!\left[ Y \,\vert\,X \right] \right)\)</span>: la variabilidad total se reparte entre la que queda dentro de cada grupo y la que hay entre los grupos.</p>
 </section>
 <section id="cuantiles" class="level2">
 <h2 class="anchored" data-anchor-id="cuantiles">Cuantiles</h2>
@@ -352,7 +356,8 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <p><span class="theorem-title"><strong>Definición 1 (Cuantil y mediana)</strong></span> El <strong>cuantil</strong> de orden <span class="math inline">\(\tau \in (0,1)\)</span> de <span class="math inline">\(X\)</span> es el valor <span class="math inline">\(q_\tau\)</span> tal que <span class="math inline">\(\mathbb{P}\!\left( X \leq q_\tau \right) = \tau\)</span>. La <strong>mediana</strong> es <span class="math inline">\(q_{0{,}5}\)</span>.</p>
 </div>
 <div id="lem-cuantil-creciente" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lema 4 (Los cuantiles se conservan bajo transformaciones crecientes)</strong></span> Si <span class="math inline">\(g\)</span> es estrictamente creciente, entonces <span class="math inline">\(q_\tau\bigl(g(X)\bigr) = g\bigl(q_\tau(X)\bigr)\)</span> para todo <span class="math inline">\(\tau \in (0,1)\)</span>.</p>
+<p><span class="theorem-title"><strong>Lema 4 (Los cuantiles se conservan bajo transformaciones crecientes)</strong></span> Si <span class="math inline">\(g\)</span> es estrictamente creciente, entonces <span class="math inline">\(q_\tau\bigl(g(X)\bigr) =
+g\bigl(q_\tau(X)\bigr)\)</span> para todo <span class="math inline">\(\tau \in (0,1)\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Como <span class="math inline">\(g\)</span> es estrictamente creciente, los sucesos <span class="math inline">\(\{g(X) \leq g(q)\}\)</span> y <span class="math inline">\(\{X \leq q\}\)</span> son el mismo, luego tienen la misma probabilidad. Tomando <span class="math inline">\(q = q_\tau(X)\)</span>,</p>
@@ -377,14 +382,17 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <p><span class="theorem-title"><strong>Teorema 1 (Traslación)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(c \in \mathbb{R}\)</span>, entonces <span class="math inline">\(\varepsilon + c \sim \mathcal{N}(\mu + c, \sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) = \int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="../capitulos/01-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
+<p><span class="proof-title"><em>Demostración</em>. </span>Sea <span class="math inline">\(W = \varepsilon + c\)</span>. Entonces <span class="math inline">\(\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t - c \right) =
+\int_{-\infty}^{t-c} p(x;\mu,\sigma)\,\mathrm{d}x\)</span>. El cambio de variable <span class="math inline">\(u = x + c\)</span> (con <span class="math inline">\(\mathrm{d}
+u = \mathrm{d}x\)</span>) transforma la integral en <span class="math inline">\(\int_{-\infty}^{t} p(u - c;\mu,\sigma)\,\mathrm{d}u\)</span>, y por <a href="../capitulos/01-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> <span class="math inline">\(p(u-c;\mu,\sigma) = p(u; \mu+c, \sigma)\)</span>.</p>
 </div>
 <div id="thm-escala" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2 (Escala)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> y <span class="math inline">\(a \neq 0\)</span>, entonces <span class="math inline">\(a\varepsilon \sim \mathcal{N}(a\mu, a^2\sigma^2)\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Tomemos <span class="math inline">\(a &gt; 0\)</span>; el caso <span class="math inline">\(a&lt;0\)</span> es idéntico salvo que se invierten los límites y aparece <span class="math inline">\(\left\lvert a \right\rvert\)</span>. Sea <span class="math inline">\(W = a\varepsilon\)</span>. Entonces <span class="math display">\[
-\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t/a \right) = \int_{-\infty}^{t/a} p(x;\mu,\sigma)\,\mathrm{d}x .
+\mathbb{P}\!\left( W \leq t \right) = \mathbb{P}\!\left( \varepsilon \leq t/a \right) = \int_{-\infty}^{t/a} p(x;\mu,\sigma)\,\mathrm{d}
+x .
 \]</span> El cambio de variable <span class="math inline">\(u = ax\)</span>, con <span class="math inline">\(\mathrm{d}u = a\,\mathrm{d}x\)</span>, lleva la integral a <span class="math inline">\(\int_{-\infty}^{t} \frac{1}{a}\,p(u/a;\mu,\sigma)\,\mathrm{d}u\)</span>. Basta comprobar que el integrando es la densidad buscada: <span class="math display">\[
 \frac{1}{a}\,p\!\left(\frac{u}{a};\mu,\sigma\right)
 = \frac{1}{a\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(u/a-\mu)^2}{2\sigma^2}\right)
@@ -392,7 +400,8 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 \]</span> donde el último paso sale de multiplicar numerador y denominador del exponente por <span class="math inline">\(a^2\)</span>. El resultado es <span class="math inline">\(p(u; a\mu, a\sigma)\)</span>.</p>
 </div>
 <div id="cor-estandarizacion" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corolario 1 (Estandarización)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(Z = (\varepsilon - \mu)/\sigma\sim \mathcal{N}(0,1)\)</span>.</p>
+<p><span class="theorem-title"><strong>Corolario 1 (Estandarización)</strong></span> Si <span class="math inline">\(\varepsilon \sim \mathcal{N}(\mu, \sigma^2)\)</span> entonces <span class="math inline">\(Z = (\varepsilon - \mu)/\sigma\sim
+\mathcal{N}(0,1)\)</span>.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Aplicar <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> con <span class="math inline">\(a = 1/\sigma\)</span> y después <a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1</span></a> con <span class="math inline">\(c = -\mu/\sigma\)</span>.</p>
@@ -504,10 +513,13 @@ p_Y(y) = p_X\!\left(g^{-1}(y)\right) \left| \frac{\mathrm{d}}{\mathrm{d}y} g^{-1
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Es no negativa en <span class="math inline">\([0,1]\)</span> e integra a uno: <span class="math inline">\(\int_0^1 2x\,\mathrm{d}x = \left[x^2\right]_0^1 = 1\)</span>. Y <span class="math inline">\(\mathbb{P}\!\left( X\leq 1/2 \right) = \int_0^{1/2} 2x\,\mathrm{d}x = 1/4\)</span>. Fíjate en que no es <span class="math inline">\(1/2\)</span>: la densidad crece, así que la mitad izquierda pesa menos.</li>
+<li>Es no negativa en <span class="math inline">\([0,1]\)</span> e integra a uno: <span class="math inline">\(\int_0^1 2x\,\mathrm{d}x = \left[x^2\right]_0^1 =
+1\)</span>. Y <span class="math inline">\(\mathbb{P}\!\left( X\leq 1/2 \right) = \int_0^{1/2} 2x\,\mathrm{d}x = 1/4\)</span>. Fíjate en que no es <span class="math inline">\(1/2\)</span>: la densidad crece, así que la mitad izquierda pesa menos.</li>
 <li><span class="math inline">\(\mathbb{E}\!\left[ X \right] = \int_0^1 x\cdot 2x\,\mathrm{d}x = 2/3\)</span>.</li>
-<li>Por <a href="#lem-esperanza-funcion" class="quarto-xref">Lema&nbsp;<span>1</span></a>, con <span class="math inline">\(g(x) = x^2\)</span>: <span class="math inline">\(\mathbb{E}\!\left[ X^2 \right] = \int_0^1 x^2\cdot 2x\,\mathrm{d}x = 1/2\)</span>. Y <span class="math inline">\(\mathbb{E}\!\left[ X \right]^2 = 4/9\)</span>, que es distinto: la esperanza de una función <strong>no</strong> es la función de la esperanza. Es el error que más veces aparece en el curso.</li>
-<li><span class="math inline">\(\mathrm{Var}\!\left( X \right) = \mathbb{E}\!\left[ X^2 \right]-\mathbb{E}\!\left[ X \right]^2 = 1/2 - 4/9 = 1/18\)</span>. Por <a href="#lem-linealidad" class="quarto-xref">Lema&nbsp;<span>2</span></a>, <span class="math inline">\(\mathbb{E}\!\left[ 3X-1 \right] = 3\cdot 2/3 - 1 = 1\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( 3X-1 \right) = 9\mathrm{Var}\!\left( X \right) = 1/2\)</span>: la constante no afecta a la varianza y el factor entra al cuadrado.</li>
+<li>Por <a href="#lem-esperanza-funcion" class="quarto-xref">Lema&nbsp;<span>1</span></a>, con <span class="math inline">\(g(x) = x^2\)</span>: <span class="math inline">\(\mathbb{E}\!\left[ X^2 \right] = \int_0^1 x^2\cdot 2x\,\mathrm{d}x =
+1/2\)</span>. Y <span class="math inline">\(\mathbb{E}\!\left[ X \right]^2 = 4/9\)</span>, que es distinto: la esperanza de una función <strong>no</strong> es la función de la esperanza. Es el error que más veces aparece en el curso.</li>
+<li><span class="math inline">\(\mathrm{Var}\!\left( X \right) = \mathbb{E}\!\left[ X^2 \right]-\mathbb{E}\!\left[ X \right]^2 = 1/2 - 4/9 = 1/18\)</span>. Por <a href="#lem-linealidad" class="quarto-xref">Lema&nbsp;<span>2</span></a>, <span class="math inline">\(\mathbb{E}\!\left[ 3X-1 \right] = 3\cdot
+2/3 - 1 = 1\)</span> y <span class="math inline">\(\mathrm{Var}\!\left( 3X-1 \right) = 9\mathrm{Var}\!\left( X \right) = 1/2\)</span>: la constante no afecta a la varianza y el factor entra al cuadrado.</li>
 <li><span class="math inline">\(p(x_1,x_2,x_3) = 8\,x_1x_2x_3\)</span> en el cubo unidad, es decir, el producto de las tres densidades, que es la definición de independencia de la sección correspondiente. De ahí que la verosimilitud de una muestra independiente se escriba como producto y su logaritmo como suma.</li>
 <li><span class="math inline">\(W\sim\mathcal{N}(5, 4)\)</span>. La escala sale de <a href="#thm-escala" class="quarto-xref">Teorema&nbsp;<span>2</span></a> y la traslación de <a href="#thm-traslacion" class="quarto-xref">Teorema&nbsp;<span>1</span></a>; juntas dicen que una transformación afín de una normal es normal, con media <span class="math inline">\(2\cdot 0+5\)</span> y varianza <span class="math inline">\(2^2\cdot 1\)</span>. Ojo: la varianza es <span class="math inline">\(4\)</span>, no <span class="math inline">\(2\)</span>.</li>
 <li><span class="math inline">\(\mathbb{E}\!\left[ Y\mid X \right] = X + \mathbb{E}\!\left[ \varepsilon \right] = X\)</span>, porque fijado <span class="math inline">\(X\)</span> lo único aleatorio es el ruido. Y por <a href="#lem-esperanza-total" class="quarto-xref">Lema&nbsp;<span>3</span></a>, <span class="math inline">\(\mathbb{E}\!\left[ Y \right] = \mathbb{E}\!\left[ \mathbb{E}\!\left[ Y\mid X \right] \right] = \mathbb{E}\!\left[ X \right]\)</span>. Esta es la cuenta que sostiene el capítulo 1: el modelo describe la media de la respuesta y el ruido no la desplaza.</li>
