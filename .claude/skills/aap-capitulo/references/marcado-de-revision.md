@@ -15,6 +15,8 @@ extensiones.
     Un párrafo entero, un resultado, una demostración o un apartado completo.
     :::
 
+    ## Un encabezado nuevo o renombrado {.nuevo}
+
 Se ve en verde al renderizar con `make sitio` o `make preview`. El verde es deliberadamente
 ajeno a la identidad del libro: tiene que cantar y tiene que desaparecer. **No se usa el
 naranja**, que está reservado a `::: {.trampa}`.
@@ -34,9 +36,23 @@ La granularidad correcta:
 | un pasaje nuevo de varios párrafos, escrito de cero | un div alrededor del pasaje |
 | un resultado, una demostración o un ejercicio nuevos | div alrededor del entorno |
 | una sección en la que solo cambian tres frases | tres spans, **no** un div |
+| una sección nueva, o una que cambia de nombre o de nivel | la clase en el encabezado |
 
 Nunca un div que abarque más de un encabezado, ni un div alrededor de texto que se conserva
 sin tocar. Si al terminar un div contiene párrafos que no se han modificado, hay que partirlo.
+
+### Los encabezados llevan la clase, no un span
+
+Un encabezado no admite ni span ni div: la marca va en su bloque de atributos, y puede
+convivir con otras clases.
+
+    ## Hipótesis sobre el ruido {.nuevo}
+    ## Un anexo que además cambia de nombre {.nuevo .unnumbered}
+
+Al reordenar un capítulo casi todo el trabajo son encabezados, así que sin esto la
+reordenación se entrega sin marcar. `assets/styles.css` los tiñe con las reglas
+`h1.nuevo`…`h4.nuevo`, y `aceptar-marcas.py` los cuenta como tipo `encabezado` y al aceptar
+quita solo `.nuevo`, conservando el resto de clases.
 
 ### La trampa del apartado marcado
 

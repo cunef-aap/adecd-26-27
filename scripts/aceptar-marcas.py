@@ -10,6 +10,8 @@ marcado para que el autor no tenga que releerlo entero:
     un parrafo, un resultado, una demostracion o un apartado entero
     :::
 
+    ## Un encabezado nuevo o renombrado {.nuevo}
+
 Aceptar un cambio es quitarle la marca y dejar el contenido. Este script lo
 hace en bloque, cuando ya se ha revisado el fichero. Para aceptar cambios uno a
 uno basta con borrar la marca a mano en el editor.
@@ -35,6 +37,14 @@ DIRECTORIOS = ("capitulos", "problemas", "evaluacion", "curso")
 SPAN = re.compile(r"\[([^\[\]]*)\]\{\.nuevo\}", re.S)
 ABRE = re.compile(r"^\s*:::+\s*\{\.nuevo\}\s*$")
 CIERRA = re.compile(r"^\s*:::+\s*$")
+# Un encabezado no es span ni div: lleva la clase en su bloque de atributos, que puede
+# traer otras (`{.nuevo .unnumbered}`). Solo se quita `.nuevo`; el resto se conserva.
+ENCABEZADO = re.compile(r"^(#{1,6} .*?)\s*\{([^{}]*\.nuevo[^{}]*)\}\s*$", re.M)
+
+
+def _sin_nuevo(m: re.Match) -> str:
+    resto = " ".join(a for a in m.group(2).split() if a != ".nuevo")
+    return f"{m.group(1)} {{{resto}}}" if resto else m.group(1)
 
 
 def ficheros(argv: list[str]):
@@ -54,12 +64,15 @@ def marcas(texto: str):
     for i, linea in enumerate(texto.splitlines(), 1):
         if ABRE.match(linea):
             encontradas.append((i, "div"))
+        elif ENCABEZADO.match(linea):
+            encontradas.append((i, "encabezado"))
     return sorted(encontradas)
 
 
 def acepta(texto: str) -> tuple[str, int]:
     """Quita las marcas conservando el contenido."""
     texto, n_spans = SPAN.subn(r"\1", texto)
+    texto, n_encabezados = ENCABEZADO.subn(_sin_nuevo, texto)
 
     lineas = texto.splitlines()
     salida = []
@@ -81,7 +94,7 @@ def acepta(texto: str) -> tuple[str, int]:
             else:
                 profundidad += 1
         salida.append(linea)
-    return "\n".join(salida) + "\n", n_spans + n_divs
+    return "\n".join(salida) + "\n", n_spans + n_divs + n_encabezados
 
 
 def main(argv: list[str]) -> int:

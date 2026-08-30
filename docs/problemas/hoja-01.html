@@ -323,17 +323,19 @@ window.Quarto = {
 <div class="nuevo">
 <div id="exr-h1-leer-codigo" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Este es el primer fragmento del capítulo, el que genera los datos del ejemplo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(n)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">87</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(n)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li><strong>Di</strong> qué contiene cada una de las tres variables <code>senal</code>, <code>ruido</code> e <code>y</code>, y con qué símbolo del capítulo se corresponde cada una.</li>
 <li>De las tres, <strong>señala</strong> cuál no podríamos observar nunca en un problema real, y por qué.</li>
-<li><strong>Explica</strong> qué cambia y qué no si se sustituye el <code>42</code> por otro número.</li>
+<li><strong>Explica</strong> qué cambia y qué no si se sustituye el <code>87</code> por otro número.</li>
 <li><strong>Razona</strong> qué le pasaría a la nube de puntos si el <code>3</code> de la tercera línea fuese <code>0.1</code>.</li>
 </ol>
 </div>
@@ -350,17 +352,15 @@ window.Quarto = {
 <li>Si el ruido tuviera media <span class="math inline">\(c\neq0\)</span> en lugar de cero, ¿qué aprenderíamos al estimar la media condicional? <strong>Razónalo</strong>.</li>
 </ol>
 </div>
-<div class="nuevo">
 <div id="exr-h1-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> distintos dos a dos. Se define la <strong>base de Lagrange</strong> como</p>
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> <span class="nuevo">valores entre los que no haya dos iguales</span>. Se define la <strong>base de Lagrange</strong> como</p>
 <p><span class="math display">\[
 \ell_j(x) = \prod_{k\neq j}\frac{x-x_k}{x_j-x_k},
 \qquad j=1,\dots,n.
 \]</span></p>
 <ol type="a">
-<li><strong>Comprueba</strong> que <span class="math inline">\(\ell_j(x_j)=1\)</span> y que <span class="math inline">\(\ell_j(x_i)=0\)</span> cuando <span class="math inline">\(i\neq j\)</span>. Basta sustituir; di también dónde se usa que los <span class="math inline">\(x_i\)</span> sean distintos dos a dos. b. <strong>Deduce</strong> que <span class="math inline">\(P(x)=\sum_{j} y_j\,\ell_j(x)\)</span> pasa por los <span class="math inline">\(n\)</span> puntos, y <strong>di</strong> por qué su grado es a lo sumo <span class="math inline">\(n-1\)</span>. Con eso queda demostrado <a href="../capitulos/01-senal-ruido.html#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>. c.&nbsp;<strong>Constrúyelo</strong> para <span class="math inline">\((1,3)\)</span>, <span class="math inline">\((2,5)\)</span> y <span class="math inline">\((4,2)\)</span>, y comprueba que pasa por los tres.</li>
+<li><strong>Comprueba</strong> que <span class="math inline">\(\ell_j(x_j)=1\)</span> y que <span class="math inline">\(\ell_j(x_i)=0\)</span> cuando <span class="math inline">\(i\neq j\)</span>. Di dónde se usa <span class="nuevo">que no haya dos <span class="math inline">\(x_i\)</span> iguales</span>. b. <strong>Deduce</strong> que <span class="math inline">\(P(x)=\sum_{j} y_j\,\ell_j(x)\)</span> pasa por los <span class="math inline">\(n\)</span> puntos, y <strong>explica</strong> por qué su grado es a lo sumo <span class="math inline">\(n-1\)</span>. Con esto, demuestra el <a href="../capitulos/01-senal-ruido.html#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>. c.&nbsp;<strong>Construye</strong> el polinomio que pasa por <span class="math inline">\((1,3)\)</span>, <span class="math inline">\((2,5)\)</span> y <span class="math inline">\((4,2)\)</span>, y comprueba su grado.</li>
 </ol>
-</div>
 </div>
 </section>
 <section id="sec-h1-c" class="level2">
@@ -413,7 +413,7 @@ window.Quarto = {
 <div id="exr-h1-densidad-uno" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 8</strong></span> &nbsp;</p>
 <ol type="a">
-<li><strong>Evalúa</strong> la densidad normal en <span class="math inline">\(z=\mu\)</span> y <strong>comprueba</strong> que vale <span class="math inline">\(1/(\sigma\sqrt{2\pi})\)</span>. b. <strong>Calcula</strong> ese valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>. c.&nbsp;Uno de los tres pasa de uno. <strong>Explica</strong> por qué eso no contradice que las probabilidades estén entre cero y uno, y <strong>calcula</strong> a partir de qué valor de <span class="math inline">\(\sigma\)</span> ocurre.</li>
+<li><strong>Evalúa</strong> la densidad normal en <span class="math inline">\(z=\mu\)</span> y <strong>calcula</strong> su valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>. b. <strong>Encuentra</strong> a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> es mayor a 1. <strong>Explica</strong> en una frase por qué eso no contradice que la probabilidad esté entre cero y uno.</li>
 </ol>
 </div>
 </div>
@@ -421,10 +421,9 @@ window.Quarto = {
 <div id="exr-h1-rejilla" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 9</strong></span> La búsqueda por rejilla del capítulo recorre <code>torch.linspace(-5, 5, 20)</code> para el intercepto y <code>torch.linspace(-1, 3, 20)</code> para la pendiente.</p>
 <ol type="a">
-<li><strong>Calcula</strong> la separación entre dos valores consecutivos de cada rejilla. Deja el resultado en forma de fracción; no sale redondo.</li>
+<li><strong>Calcula</strong> la separación entre dos valores consecutivos de cada rejilla. Déjala en forma de fracción; no sale redonda.</li>
 <li>Un valor <span class="math inline">\(v\)</span> cae en la rejilla que empieza en <span class="math inline">\(a\)</span> con paso <span class="math inline">\(h\)</span> si <span class="math inline">\((v-a)/h\)</span> es entero. <strong>Comprueba</strong> con ese criterio que ni <span class="math inline">\(w_0=1\)</span> ni <span class="math inline">\(w_1=2\)</span>, que son los valores que generaron los datos, están entre los que se prueban.</li>
-<li><strong>Calcula</strong> cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la mitad la separación de las dos rejillas.</li>
-<li><strong>Razona</strong> qué limitación tiene el método aparte de su coste.</li>
+<li><strong>Calcula</strong> cuántas combinaciones se evalúan y <strong>explica</strong> qué limitación tiene este método aparte de su coste.</li>
 </ol>
 </div>
 </div>

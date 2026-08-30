@@ -265,13 +265,18 @@ window.Quarto = {
   <ul>
   <li><a href="#introducción-datos-señal-y-ruido" id="toc-introducción-datos-señal-y-ruido" class="nav-link active" data-scroll-target="#introducción-datos-señal-y-ruido">Introducción: datos, señal y ruido</a></li>
   <li><a href="#sobreajuste" id="toc-sobreajuste" class="nav-link" data-scroll-target="#sobreajuste">Sobreajuste</a></li>
-  <li><a href="#modelizar-el-ruido" id="toc-modelizar-el-ruido" class="nav-link" data-scroll-target="#modelizar-el-ruido">Modelizar el ruido</a></li>
+  <li><a href="#hipótesis-sobre-el-ruido" id="toc-hipótesis-sobre-el-ruido" class="nav-link" data-scroll-target="#hipótesis-sobre-el-ruido">Hipótesis sobre el ruido</a>
+  <ul class="collapse">
+  <li><a href="#la-distribución-normal" id="toc-la-distribución-normal" class="nav-link" data-scroll-target="#la-distribución-normal">La distribución normal</a></li>
   <li><a href="#propiedades-de-la-distribución-normal" id="toc-propiedades-de-la-distribución-normal" class="nav-link" data-scroll-target="#propiedades-de-la-distribución-normal">Propiedades de la distribución normal</a></li>
   <li><a href="#la-normal-estándar" id="toc-la-normal-estándar" class="nav-link" data-scroll-target="#la-normal-estándar">La normal estándar</a></li>
-  <li><a href="#ruido-gaussiano" id="toc-ruido-gaussiano" class="nav-link" data-scroll-target="#ruido-gaussiano">Ruido gaussiano</a>
-  <ul class="collapse">
-  <li><a href="#distribuciones-generadoras-de-datos" id="toc-distribuciones-generadoras-de-datos" class="nav-link" data-scroll-target="#distribuciones-generadoras-de-datos">Distribuciones generadoras de datos</a></li>
+  <li><a href="#ruido-gaussiano" id="toc-ruido-gaussiano" class="nav-link" data-scroll-target="#ruido-gaussiano">Ruido gaussiano</a></li>
   </ul></li>
+  <li><a href="#hipótesis-sobre-la-señal" id="toc-hipótesis-sobre-la-señal" class="nav-link" data-scroll-target="#hipótesis-sobre-la-señal">Hipótesis sobre la señal</a>
+  <ul class="collapse">
+  <li><a href="#el-modelo-lineal-gaussiano" id="toc-el-modelo-lineal-gaussiano" class="nav-link" data-scroll-target="#el-modelo-lineal-gaussiano">El modelo lineal-gaussiano</a></li>
+  </ul></li>
+  <li><a href="#distribuciones-generadoras-de-datos" id="toc-distribuciones-generadoras-de-datos" class="nav-link" data-scroll-target="#distribuciones-generadoras-de-datos">Distribuciones generadoras de datos</a></li>
   <li><a href="#verosimilitud-del-modelo" id="toc-verosimilitud-del-modelo" class="nav-link" data-scroll-target="#verosimilitud-del-modelo">Verosimilitud del modelo</a>
   <ul class="collapse">
   <li><a href="#estimador-de-máxima-verosimilitud" id="toc-estimador-de-máxima-verosimilitud" class="nav-link" data-scroll-target="#estimador-de-máxima-verosimilitud">Estimador de máxima verosimilitud</a></li>
@@ -307,62 +312,59 @@ window.Quarto = {
 </header>
 
 
+<p><em><a href="https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/01-senal-ruido.ipynb">Abre el cuaderno de esta página en Google Colab</a>.</em> Lo primero, <strong>Archivo → Guardar una copia en Drive</strong>.</p>
 <section id="introducción-datos-señal-y-ruido" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="introducción-datos-señal-y-ruido">Introducción: datos, señal y ruido</h2>
 <p>Recordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos observados</p>
 <p><span class="math display">\[
-\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n},
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n}.
 \]</span></p>
 <p>La tarea consiste en aprender una función <span class="math inline">\(f\)</span> que, a partir de las características de un caso nuevo, produzca una predicción <span class="math inline">\(\widehat y=f(\mathbf{x})\)</span> que se aproxime a su respuesta <span class="math inline">\(y\)</span>:</p>
 <p><span class="math display">\[
 \widehat y=f(\mathbf{x})\approx y.
 \]</span></p>
-<p>El principal problema del aprendizaje supervisado es que la relación entre <span class="math inline">\(\mathbf{x}\)</span> e <span class="math inline">\(y\)</span> de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la señal sin memorizar el ruido.</p>
-<p>Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes.</p>
-<p><em><a href="https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/01-senal-ruido.ipynb">Abre el cuaderno de esta página en Google Colab</a>.</em> Lo primero, <strong>Archivo → Guardar una copia en Drive</strong>.</p>
-<p><span class="nuevo">El cuaderno de este capítulo trae el mismo código que los apuntes, completo, para ejecutarlo y trastear con él. Lo que se pregunta de código en el examen está fijado en la presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una función.</span></p>
-<div class="nuevo">
-<p>No todo el código de un capítulo cuenta igual. Los bloques marcados <strong>se explica en clase</strong> son contenido: traducen a código una definición o un resultado, y son los <strong>únicos</strong> sobre los que se pregunta. En este capítulo son seis. El resto es accesorio, ilustra el argumento o prepara una figura, va plegado y no se evalúa.</p>
-</div>
+<p>El principal problema del aprendizaje supervisado es que la relación entre <span class="math inline">\(\mathbf{x}\)</span> e <span class="math inline">\(y\)</span> de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como <strong>ruido</strong> y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina <strong>señal</strong>. El objetivo del aprendizaje supervisado es <strong>aprender la señal sin memorizar el ruido</strong>.</p>
+<p>Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes. En este conjunto, el vector de características tendrá una sola dimensión.</p>
 <div class="codigo-clave">
-<div id="b01f0532" class="cell" data-execution_count="2">
+<div id="90eafc8f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(n)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">87</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(n)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"señal: </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs">=2x_i</span><span class="op">+</span><span class="vs">1</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="op">=</span> <span class="vs">r"ruido: </span><span class="dv">$</span><span class="ch">\v</span><span class="vs">arepsilon_i</span><span class="dv">$</span><span class="vs">"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ax.plot([x[i].item(), x[i].item()], [senal[i].item(), y[i].item()],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"#ff5700"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="fl">0.9</span>, label<span class="op">=</span>etiqueta)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"señal: </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs">=2x_i</span><span class="op">+</span><span class="vs">1</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="op">=</span> <span class="vs">r"ruido: </span><span class="dv">$</span><span class="ch">\v</span><span class="vs">arepsilon_i</span><span class="dv">$</span><span class="vs">"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ax.plot([x[i].item(), x[i].item()], [senal[i].item(), y[i].item()],</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"#ff5700"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="fl">0.9</span>, label<span class="op">=</span>etiqueta)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="5a1ac8f1" class="cell" data-execution_count="3">
+<div id="95dcf302" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="565" height="374"></p>
 </figure>
 </div>
 </div>
@@ -389,13 +391,14 @@ y_i=f(x_i)+\varepsilon_i.
 </section>
 <section id="sobreajuste" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sobreajuste">Sobreajuste</h2>
-<p>Es importante señalar que el objetivo no es aprender individualmente cada <span class="math inline">\(y_i\)</span> sino la función subyacente <span class="math inline">\(f(\mathbf{x})\)</span>. Para ilustrar este punto, supongamos que ajustemos una función que pase exactamente por todos los puntos. Esta operación se denomina <strong>interpolación</strong>.</p>
+<p>Para comprender por qué el objetivo no es aprender individualmente cada <span class="math inline">\(y_i\)</span> sino la función subyacente <span class="math inline">\(f(\mathbf{x})\)</span>, supongamos que ajustamos una función que pase exactamente por todos los puntos. Esta operación se denomina <strong>interpolación</strong>.</p>
 <div id="thm-interpolacion" class="theorem">
-<p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1,\ldots,x_{n}\)</span> valores distintos dos a dos. Para cualesquiera respuestas <span class="math inline">\(y_1,\ldots,y_{n}\)</span> existe un polinomio <span class="math inline">\(P\)</span> de grado a lo sumo <span class="math inline">\(n-1\)</span> tal que <span class="math inline">\(P(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>.</p>
+<p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1,\ldots,x_{n}\)</span> valores entre los que no haya dos iguales. Para cualesquiera respuestas <span class="math inline">\(y_1,\ldots,y_{n}\)</span> existe un polinomio <span class="math inline">\(P\)</span> de grado a lo sumo <span class="math inline">\(n-1\)</span> tal que <span class="math inline">\(P(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>.</p>
 </div>
 <!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
-<p>El resultado se demuestra construyendo el polinomio explícitamente, y es el ejercicio del bloque B de la hoja 1. Lo que importa aquí es la consecuencia: <strong>el enunciado vale para cualesquiera <span class="math inline">\(y_i\)</span></strong>, incluidos unos generados por ruido puro. Un error de entrenamiento nulo se puede conseguir siempre y, por tanto, no distingue un modelo que ha aprendido de uno que no.</p>
-<div id="1ca4157c" class="cell" data-execution_count="4">
+<p>El resultado se demuestra construyendo el polinomio explícitamente, se deja planteado como ejercicio.</p>
+<p>El teorema anterior vale para cualesquiera <span class="math inline">\(y_i\)</span>, incluidos unos generados por ruido puro. Por tanto, siempre es posible encontrar una función <span class="math inline">\(g\)</span> para la cual <span class="math inline">\(g(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>. Decimos que para <span class="math inline">\(g\)</span> el <strong>error de entrenamiento es nulo</strong>.</p>
+<div id="23ca7241" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
@@ -418,11 +421,11 @@ y_i=f(x_i)+\varepsilon_i.
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="6061e450" class="cell" data-execution_count="5">
+<div id="87771551" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="565" height="374"></p>
 </figure>
 </div>
 </div>
@@ -433,10 +436,11 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 </figcaption>
 </figure>
 </div>
-<p>El problema aquí es que, mientras hemos ajustado perfectamente nuestros datos de entrenamiento, el modelo no ha aprendido la señal subyacente <span class="math inline">\(f\)</span>. Si generamos nuevas observaciones con la misma señal pero con un ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.</p>
+<p>El problema aquí es que, en general, si bien hemos ajustado perfectamente nuestros datos de entrenamiento, el modelo no ha aprendido la señal subyacente <span class="math inline">\(f\)</span>. Es decir, usualmente, <span class="math inline">\(g\neq f\)</span>. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.</p>
 <div class="codigo-clave">
-<div id="bc8e344a" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>y_nueva <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(<span class="bu">len</span>(x_denso))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="d16ca3b5" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y_nueva <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(<span class="bu">len</span>(x_denso))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <details class="code-fold">
@@ -453,11 +457,11 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 <div id="fig-trampa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="8ab12529" class="cell" data-execution_count="7">
+<div id="8b726701" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="566" height="374"></p>
 </figure>
 </div>
 </div>
@@ -468,23 +472,27 @@ Figura&nbsp;1.3: Datos nuevos, con la misma señal, comparados con el interpolad
 </figcaption>
 </figure>
 </div>
-<p>Las curvas innecesarias del interpolador no corresponden a ningún patrón de los datos nuevos. Al intentar ajustar el ruido de entrenamiento, hemos dejado de aprender la señal.</p>
+<p>Las curvas innecesarias del interpolador no corresponden a ningún patrón de los datos nuevos. <strong>Al intentar ajustar el ruido de entrenamiento, hemos dejado de aprender la señal</strong>. A este fenómeno se le conoce con el nombre de <strong>sobreajuste</strong>.</p>
 <div id="def-sobreajuste" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.2 (Sobreajuste)</strong></span> Hay <strong>sobreajuste</strong> (<em>overfitting</em>) cuando un modelo reproduce bien las observaciones con las que se ha ajustado y predice mal observaciones nuevas del mismo proceso, porque ha aprendido parte del ruido de la muestra en lugar de solo la señal.</p>
 </div>
-<p>Es uno de los problemas centrales del aprendizaje supervisado y reaparecerá en todo el curso. Obsérvese que la definición compara dos cosas, el ajuste sobre los datos usados y el error sobre datos nuevos, y que la segunda no se puede medir con los datos de entrenamiento. Construir esa medida es el objeto del capítulo dedicado a evaluación.</p>
+<p>Este es uno de los problemas centrales del aprendizaje supervisado y reaparecerá a lo largo del curso. Obsérvese que la definición compara dos cosas, el ajuste sobre los datos usados y el error sobre datos nuevos, y que la segunda no se puede medir con los datos de entrenamiento. Construir esa medida es el objeto del capítulo dedicado a evaluación.</p>
 </section>
-<section id="modelizar-el-ruido" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="modelizar-el-ruido">Modelizar el ruido</h2>
-<p>Para aprender la señal de <a href="#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a> necesitamos poder hablar matemáticamente del ruido. Vamos a <strong>asumir</strong> que <span class="math inline">\(\varepsilon_1,\ldots,\varepsilon_n\)</span> son variables aleatorias <strong>independientes e idénticamente distribuidas</strong> de cierta distribución. Esto significa que asumimos que cada nueva observación incorpora una extracción distinta de la misma distribución, sin que el ruido de una observación influya en el de las demás.</p>
-<p>La distribución de ruido que utilizaremos primero es la distribución normal o gaussiana.</p>
+<section id="hipótesis-sobre-el-ruido" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="hipótesis-sobre-el-ruido">Hipótesis sobre el ruido</h2>
+<p>Hasta aquí sabemos que ajustar el ruido empeora la predicción, pero no sabemos separarlo de la señal. Para que el problema tenga solución hay que restringirlo. Esto implica hacer <strong>suposiciones</strong>.</p>
+<p>Las suposiciones van por dos vías. Primero necesitamos dotar de cierta estructura al ruido y es a lo que dedicaremos esta sección. También necesitaremos hacer suposiciones sobre la señal: en qué familia de funciones vamos a buscar <span class="math inline">\(f\)</span>. A esto dedicaremos la sección siguiente. Las dos hipótesis, conjuntamente, darán lugar al modelo lineal-gaussiano, que es el punto de partida del resto del curso.</p>
+<p>Empezamos por el ruido. Vamos a <strong>asumir</strong> que <span class="math inline">\(\varepsilon_1,\ldots,\varepsilon_n\)</span> son variables aleatorias <strong>independientes e idénticamente distribuidas</strong> de cierta distribución. Esto significa que asumimos que cada nueva observación incorpora una extracción distinta de la misma distribución, sin que el ruido de una observación influya en el de las demás.</p>
+<section id="la-distribución-normal" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="la-distribución-normal">La distribución normal</h3>
+<p>La distribución de ruido que utilizaremos a lo largo del curso es la distribución normal o gaussiana.</p>
 <div id="cell-fig-area-normal" class="cell page-columns page-full" data-execution_count="8">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
 <div id="fig-area-normal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="377" height="247" class="figure-img">
+<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="278" height="182" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1.4: La probabilidad de que una variable normal se encuentre entre <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> es el área bajo su densidad entre esos valores.
@@ -507,19 +515,16 @@ p(z;\mu,\sigma)
 <p>Escribimos <span class="math inline">\(\varepsilon\sim\mathcal{N}(\mu,\sigma^2)\)</span>. La función <span class="math inline">\(p\)</span> es su <strong>densidad de probabilidad</strong>.</p>
 </div>
 <p>Como habéis visto en probabilidad, una densidad no es una probabilidad puntual. En una variable continua, las probabilidades se obtienen integrando la densidad sobre intervalos.</p>
-<div class="nuevo">
 <div id="exr-densidad-mayor-que-uno" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1.1 (Una densidad puede pasar de uno)</strong></span> &nbsp;</p>
 <ol type="a">
-<li>Evalúa <a href="#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> en <span class="math inline">\(z=\mu\)</span> y comprueba que el resultado es <span class="math inline">\(1/(\sigma\sqrt{2\pi})\)</span>.</li>
-<li>Calcula ese valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>.</li>
-<li>Uno de los tres pasa de uno. Explica en una frase por qué eso no contradice que las probabilidades estén entre cero y uno, y encuentra a partir de qué valor de <span class="math inline">\(\sigma\)</span> ocurre.</li>
+<li>Evalúa <a href="#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a> en <span class="math inline">\(z=\mu\)</span> y calcula su valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>.</li>
+<li>Encuentra a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> es mayor a 1. Explica en una frase por qué eso no contradice que la probabilidad esté entre cero y uno.</li>
 </ol>
-</div>
 </div>
 <p>La fórmula anterior se puede traducir directamente a código vectorizado.</p>
 <div class="codigo-clave">
-<div id="288d81eb" class="cell" data-execution_count="9">
+<div id="f8c843fa" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(z, media, desviacion):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    constante <span class="op">=</span> desviacion <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((z <span class="op">-</span> media) <span class="op">/</span> desviacion) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> constante</span>
@@ -527,7 +532,7 @@ p(z;\mu,\sigma)
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>densidad_normal(z, media<span class="op">=</span><span class="fl">0.0</span>, desviacion<span class="op">=</span><span class="fl">1.0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="89">
 <pre><code>tensor([0.3989, 0.2420, 0.0540])</code></pre>
 </div>
 </div>
@@ -552,11 +557,11 @@ p(z;\mu,\sigma)
 <div id="fig-densidades-normales" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-densidades-normales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e2f414e7" class="cell" data-execution_count="10">
+<div id="b8b5f17b" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="565" height="374"></p>
 </figure>
 </div>
 </div>
@@ -569,34 +574,53 @@ Figura&nbsp;1.5: Densidades normales para distintas medias y desviaciones típic
 </div>
 <p>Podemos generar ruido normal con <code>torch.normal</code>. Al repetir muchas veces la extracción, el histograma de los valores se aproxima a la densidad de la distribución.</p>
 <div class="codigo-clave">
-<div id="51cba323" class="cell" data-execution_count="11">
+<div id="0ae28b7d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>muestra_ruido <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(<span class="dv">10</span>,))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>torch.<span class="bu">round</span>(muestra_ruido, decimals<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>tensor([-1.3300, -0.5430,  0.5470,  0.6430, -0.7900, -0.9060, -0.2610, -0.5470,
-         2.1170, -1.7120])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="91">
+<pre><code>tensor([ 0.2570,  0.7280, -0.3140,  1.4140, -0.3590,  1.2000,  0.1370,  1.2650,
+         2.0110,  0.2640])</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-fig-histograma-normal" class="cell page-columns page-full" data-execution_count="12">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
-<div id="fig-histograma-normal" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(<span class="dv">1000</span>,))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>soporte <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">200</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ax.hist(muestras.numpy(), bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.55</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#7aa6c2"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.plot(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    soporte.numpy(),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    densidad_normal(soporte, media, desviacion).numpy(),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$z$"</span>, ylabel<span class="op">=</span><span class="st">"densidad"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-histograma-normal" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-histograma-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="01-senal-ruido_files/figure-html/fig-histograma-normal-output-1.png" width="377" height="247" class="figure-img">
+<div id="13897331" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-senal-ruido_files/figure-html/cell-13-output-1.png" class="figure-img" width="566" height="374"></p>
+</figure>
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-histograma-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-histograma-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1.6: Histograma de 1000 extracciones normales comparado con la densidad que las genera.
 </figcaption>
 </figure>
 </div>
-</div></div></div>
 </section>
-<section id="propiedades-de-la-distribución-normal" class="level2">
-<h2 class="anchored" data-anchor-id="propiedades-de-la-distribución-normal">Propiedades de la distribución normal</h2>
+<section id="propiedades-de-la-distribución-normal" class="level3">
+<h3 class="anchored" data-anchor-id="propiedades-de-la-distribución-normal">Propiedades de la distribución normal</h3>
 <p>La distribución normal tiene varias propiedades especialmente útiles para modelizar el ruido. Las demostraciones completas se encuentran en el <a href="../curso/probabilidad.html">repaso de probabilidad</a>.</p>
 <div id="thm-traslacion-normal" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 1.2 (Traslación)</strong></span> Sea <span class="math inline">\(\varepsilon\)</span> una variable normal con media <span class="math inline">\(\mu\)</span> y desviación típica <span class="math inline">\(\sigma\)</span>. Para cualquier constante <span class="math inline">\(c\)</span>,</p>
@@ -634,8 +658,8 @@ a\varepsilon\sim\mathcal{N}(a\mu,a^2\sigma^2).
 <!-- demostracion: curso/probabilidad.qmd#thm-momentos -->
 <p>Las demostraciones de <a href="#thm-traslacion-normal" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a>, <a href="#thm-escala-normal" class="quarto-xref">Teorema&nbsp;<span>1.3</span></a> y <a href="#thm-momentos-normal" class="quarto-xref">Teorema&nbsp;<span>1.4</span></a> se desarrollan en el repaso de probabilidad.</p>
 </section>
-<section id="la-normal-estándar" class="level2">
-<h2 class="anchored" data-anchor-id="la-normal-estándar">La normal estándar</h2>
+<section id="la-normal-estándar" class="level3">
+<h3 class="anchored" data-anchor-id="la-normal-estándar">La normal estándar</h3>
 <p>La distribución <span class="math inline">\(\mathcal{N}(0,1)\)</span> se denomina <strong>normal estándar</strong>. Si <span class="math inline">\(Z\sim\mathcal{N}(0,1)\)</span>, las propiedades de escala y traslación permiten construir cualquier otra distribución normal a partir de <span class="math inline">\(Z\)</span>. En concreto, definimos</p>
 <p><span class="math display">\[
 X=\sigma Z+\mu.
@@ -654,18 +678,18 @@ X=\sigma Z+\mu.
 <p>Hemos utilizado que <span class="math inline">\(\mathbb{E}\!\left[ Z \right]=0\)</span>, <span class="math inline">\(\mathrm{Var}\!\left( Z \right)=1\)</span>, que sumar una constante no altera la varianza y que <span class="math inline">\(\mathrm{Var}\!\left( aZ \right)=a^2\mathrm{Var}\!\left( Z \right)\)</span>.</p>
 <p>La misma construcción aparece en código: se genera primero ruido estándar y después se escala y se traslada.</p>
 <div class="codigo-clave">
-<div id="2224b6bb" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">2.0</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_muestras <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ruido_transformado <span class="op">=</span> desviacion <span class="op">*</span> torch.randn(n_muestras) <span class="op">+</span> media</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ruido_directo <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(n_muestras,))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0e294383" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n_muestras <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ruido_transformado <span class="op">=</span> desviacion <span class="op">*</span> torch.randn(n_muestras) <span class="op">+</span> media</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>ruido_directo <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(n_muestras,))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
-<section id="ruido-gaussiano" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="ruido-gaussiano">Ruido gaussiano</h2>
+<section id="ruido-gaussiano" class="level3">
+<h3 class="anchored" data-anchor-id="ruido-gaussiano">Ruido gaussiano</h3>
 <p>Volvamos ahora al modelo señal + ruido:</p>
 <p><span class="math display">\[
 y_i=f(x_i)+\varepsilon_i.
@@ -684,10 +708,16 @@ y_i=f(x_i)+\varepsilon_i,
 \]</span></p>
 <p>se denomina <strong>modelo generador gaussiano</strong>.</p>
 </div>
+</section>
+</section>
+<section id="hipótesis-sobre-la-señal" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="hipótesis-sobre-la-señal">Hipótesis sobre la señal</h2>
 <p>Hasta ahora hemos utilizado la señal <span class="math inline">\(f(x)=2x+1\)</span>. En un problema real <span class="math inline">\(f\)</span> es desconocida y debemos decidir en qué familia de funciones vamos a buscarla.</p>
 <div id="def-hipotesis" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.5 (Clase de hipótesis y parámetros)</strong></span> Una <strong>clase de hipótesis</strong> <span class="math inline">\(\mathcal{F}\)</span> es el conjunto de funciones permitidas para representar la señal. Si las funciones están indexadas por parámetros <span class="math inline">\(\boldsymbol{w}\)</span>, escribimos <span class="math inline">\(f(\mathbf{x};\boldsymbol{w})\)</span>.</p>
 </div>
+<section id="el-modelo-lineal-gaussiano" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="el-modelo-lineal-gaussiano">El modelo lineal-gaussiano</h3>
 <p>El primer caso será la familia de funciones afines.</p>
 <div id="def-lineal-gaussiano" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.6 (Modelo lineal-gaussiano)</strong></span> En una dimensión, un modelo gaussiano cuya señal es</p>
@@ -706,36 +736,36 @@ f(\mathbf{x}_i;\boldsymbol{w})
 </div>
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dibuja_normal_vertical(ax, x0, media, sigma, ancho<span class="op">=</span><span class="fl">0.4</span>):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    soporte <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">300</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    perfil <span class="op">=</span> torch.exp(<span class="op">-</span>(soporte <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    perfil <span class="op">=</span> ancho <span class="op">*</span> perfil <span class="op">/</span> perfil.<span class="bu">max</span>()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        (x0 <span class="op">+</span> perfil).numpy(),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        (media <span class="op">+</span> soporte).numpy(),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#4c78a8"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"señal: </span><span class="dv">$</span><span class="vs">f_{</span><span class="dv">\m</span><span class="vs">athbf{w}}</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs">=2x_i</span><span class="op">+</span><span class="vs">1</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x0 <span class="kw">in</span> x:</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    dibuja_normal_vertical(ax, x0, <span class="dv">2</span> <span class="op">*</span> x0 <span class="op">+</span> <span class="dv">1</span>, sigma<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dibuja_normal_vertical(ax, x0, media, sigma, ancho<span class="op">=</span><span class="fl">0.4</span>):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    soporte <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">300</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    perfil <span class="op">=</span> torch.exp(<span class="op">-</span>(soporte <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    perfil <span class="op">=</span> ancho <span class="op">*</span> perfil <span class="op">/</span> perfil.<span class="bu">max</span>()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        (x0 <span class="op">+</span> perfil).numpy(),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        (media <span class="op">+</span> soporte).numpy(),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#4c78a8"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ax.plot(x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="vs">r"señal: </span><span class="dv">$</span><span class="vs">f_{</span><span class="dv">\m</span><span class="vs">athbf{w}}</span><span class="kw">(</span><span class="vs">x_i</span><span class="kw">)</span><span class="vs">=2x_i</span><span class="op">+</span><span class="vs">1</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x0 <span class="kw">in</span> x:</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    dibuja_normal_vertical(ax, x0, <span class="dv">2</span> <span class="op">*</span> x0 <span class="op">+</span> <span class="dv">1</span>, sigma<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$y$"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-modelo-generador" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-modelo-generador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="5d904b99" class="cell" data-execution_count="14">
+<div id="76c711a3" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="565" height="374"></p>
 </figure>
 </div>
 </div>
@@ -747,8 +777,11 @@ Figura&nbsp;1.7: En el modelo lineal-gaussiano, cada dato es una extracción de 
 </figure>
 </div>
 <p>Un valor grande de <span class="math inline">\(\sigma\)</span> produce observaciones más alejadas de la señal y hace más difícil distinguirla. Un valor pequeño concentra las respuestas cerca de ella.</p>
-<section id="distribuciones-generadoras-de-datos" class="level3">
-<h3 class="anchored" data-anchor-id="distribuciones-generadoras-de-datos">Distribuciones generadoras de datos</h3>
+</section>
+</section>
+<section id="distribuciones-generadoras-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="distribuciones-generadoras-de-datos">Distribuciones generadoras de datos</h2>
+<p>Hasta ahora hemos supuesto tres cosas: que la señal pertenece a una familia de funciones que elegimos nosotros, en este caso las rectas; que el ruido es normal y de media cero; y que los ruidos de observaciones distintas son independientes y comparten la misma desviación típica <span class="math inline">\(\sigma\)</span>. Ninguna de las tres se ha deducido de los datos. Las tres son hipótesis de trabajo, y ninguna tiene por qué cumplirse.</p>
 <p>Una de las razones principales para definir modelos es que nos proporcionan formas fundamentadas de pensar en lo que nuestros modelos deben aprender (la señal) y lo que deben ignorar (el ruido). Estos modelos también son muy útiles como modelos de dónde provienen los datos; es decir, como distribuciones generadoras de datos.</p>
 <div id="def-distribucion-generadora" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.7 (Distribución generadora de datos)</strong></span> Una <strong>distribución generadora de datos</strong>, también llamada <strong>modelo generador</strong>, es un modelo probabilístico que describe cómo se producen las observaciones mediante variables aleatorias y sus distribuciones. En regresión especifica, como mínimo, la distribución de <span class="math inline">\(Y\,\vert\,X=\mathbf{x}\)</span>.</p>
@@ -759,22 +792,11 @@ Figura&nbsp;1.7: En el modelo lineal-gaussiano, cada dato es una extracción de 
 <li>El <strong>proceso real</strong> que genera los datos. Lo llamaremos <span class="math inline">\(P^\star\)</span>. Existe, es fijo y no lo elegimos nosotros. Es de donde salen las observaciones que tenemos y las que llegarán mañana. Y es desconocido: nunca lo veremos.</li>
 <li>La <strong>familia de modelos</strong> que proponemos. Sí la elegimos nosotros. El modelo lineal-gaussiano es una familia: todas las rectas, con ruido normal de nivel <span class="math inline">\(\sigma\)</span>.</li>
 </ul>
-<p>Proponer una familia es formular una hipótesis sobre <span class="math inline">\(P^\star\)</span>, y una hipótesis puede ser falsa. Que la señal real sea curva, o que el ruido tenga colas más pesadas que la normal, no impide ajustar el modelo; lo que hace es limitar hasta dónde puede llegar el mejor miembro de la familia. En el capítulo siguiente veremos qué consecuencias tiene eso exactamente.</p>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="El modelo generador es una hipótesis">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>El modelo generador es una hipótesis
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Al proponer un modelo lineal-gaussiano no afirmamos que el mecanismo real sea exactamente lineal ni que su ruido sea exactamente normal: adoptamos una aproximación matemática que podremos contrastar con los datos. Las conclusiones obtenidas son condicionales a esa elección y pueden degradarse si la señal, la distribución del ruido o la independencia asumidas no describen adecuadamente el proceso real.</p>
-</div>
+<p>Una familia no es un proceso generador, sino un conjunto de procesos generadores. Cada valor concreto de <span class="math inline">\((\boldsymbol{w},\sigma)\)</span> describe una manera distinta de producir datos, así que el modelo lineal-gaussiano contiene infinitos procesos, uno por cada recta y cada nivel de ruido. Ajustar el modelo es elegir uno de ellos; proponer el modelo es apostar a que <span class="math inline">\(P^\star\)</span> está entre los candidatos. Por tanto, proponer una familia es formular una hipótesis sobre <span class="math inline">\(P^\star\)</span>, y una hipótesis puede ser falsa. Que la señal real sea curva, o que el ruido tenga colas más pesadas que la normal, no impide ajustar el modelo; pero puede afectar a la calidad del modelo ajustado.</p>
+<div id="def-bien-especificado" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 1.8 (Modelo bien especificado)</strong></span> Un modelo está <strong>bien especificado</strong> cuando el proceso real <span class="math inline">\(P^\star\)</span> pertenece a la familia que propone, es decir, cuando algún valor de los parámetros lo reproduce exactamente. En caso contrario está <strong>mal especificado</strong>.</p>
 </div>
 <p>Una característica muy útil de los modelos generadores de datos es que también nos brindan herramientas para medir cómo de bien se ajusta nuestra señal aprendida a los datos observados, a través del concepto de verosimilitud.</p>
-</section>
 </section>
 <section id="verosimilitud-del-modelo" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="verosimilitud-del-modelo">Verosimilitud del modelo</h2>
@@ -786,9 +808,9 @@ p\bigl(y_i;f_{\boldsymbol{w}}(x_i),\sigma\bigr)
 -\frac{\bigl(y_i-f_{\boldsymbol{w}}(x_i)\bigr)^2}{2\sigma^2}
 \right).
 \]</span></p>
-<p>Como las observaciones son independientes, la densidad conjunta es el producto de las densidades individuales evaluadas en los valores observados.</p>
+<p>Como las observaciones son independientes (por hipótesis), la densidad conjunta es el producto de las densidades individuales evaluadas en los valores observados.</p>
 <div id="def-verosimilitud" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.8 (Verosimilitud)</strong></span> La <strong>verosimilitud</strong> de los datos bajo el modelo lineal-gaussiano es</p>
+<p><span class="theorem-title"><strong>Definición 1.9 (Verosimilitud)</strong></span> La <strong>verosimilitud</strong> de los datos bajo el modelo lineal-gaussiano es</p>
 <p><span class="math display">\[
 L(\boldsymbol{w},\sigma)
 =\prod_{i=1}^{n}
@@ -798,15 +820,14 @@ p\bigl(y_i;f_{\boldsymbol{w}}(x_i),\sigma\bigr).
 <p>Cada factor mide la densidad que el modelo asigna a una observación. Bajo la independencia asumida, el producto es la densidad conjunta de toda la muestra. Por ello, comparar verosimilitudes permite comparar qué parámetros hacen más compatibles los datos observados con el modelo: preferiremos aquellos que asignan mayor densidad conjunta a lo que realmente hemos observado.</p>
 <section id="estimador-de-máxima-verosimilitud" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="estimador-de-máxima-verosimilitud">Estimador de máxima verosimilitud</h3>
-<p>Para ajustar la señal elegiremos los parámetros que hacen más compatibles los datos observados con el modelo generador. En el modelo gaussiano, desplazar <span class="math inline">\(f_{\boldsymbol{w}}(x_i)\)</span> lejos de <span class="math inline">\(y_i\)</span> reduce la densidad asignada a esa observación. Por tanto, maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar conjuntamente las respuestas observadas.</p>
-<p>Este criterio también posee buenas propiedades teóricas. Si el modelo está correctamente especificado, la señal verdadera pertenece a la clase de hipótesis, los parámetros son identificables y se cumplen ciertas condiciones regulares, el estimador de máxima verosimilitud es consistente: al crecer la muestra se aproxima al parámetro que generó los datos. Bajo esas mismas condiciones, su distribución para muestras grandes es aproximadamente normal y aprovecha eficientemente la información disponible. Estas propiedades dependen de los supuestos del modelo; no los validan por sí mismas.</p>
+<p>Dado un modelo, podemos ajustar la señal eligiendo los parámetros que hacen más compatibles los datos observados con el modelo generador. Un criterio muy extendido para hacer esto, consiste en escoger los <span class="math inline">\(\boldsymbol{w}\)</span> que maximicen la verosimilitud. En el modelo gaussiano, desplazar <span class="math inline">\(f_{\boldsymbol{w}}(x_i)\)</span> lejos de <span class="math inline">\(y_i\)</span> reduce la densidad asignada a esa observación. Maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar conjuntamente las respuestas observadas.</p>
+<p>El criterio tiene además ciertas garantías teóricas. Por ejemplo, si el modelo está bien especificado en el sentido de <a href="#def-bien-especificado" class="quarto-xref">Definición&nbsp;<span>1.8</span></a>, si dos valores distintos de los parámetros no producen nunca la misma distribución, propiedad que se llama <strong>identificabilidad</strong>, y si se cumplen otras condiciones técnicas, entonces el estimador de máxima verosimilitud es <strong>consistente</strong>: al crecer la muestra, <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> se acerca al valor de los parámetros que generó los datos.</p>
 <div id="def-mle" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 1.9 (Estimación de máxima verosimilitud)</strong></span> Un estimador de máxima verosimilitud es cualquier solución de</p>
+<p><span class="theorem-title"><strong>Definición 1.10 (Estimación de máxima verosimilitud)</strong></span> Un estimador de máxima verosimilitud es cualquier solución de</p>
 <p><span class="math display">\[
 (\hat{\boldsymbol{w}},\hat{\sigma})
 \in\mathop{\mathrm{arg\,max}}_{\boldsymbol{w},\sigma&gt;0}L(\boldsymbol{w},\sigma).
 \]</span></p>
-<p>Si <span class="math inline">\(\sigma\)</span> se considera conocido, la optimización se realiza únicamente respecto a <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="El nivel de ruido queda fuera del foco">
 <div class="callout-header d-flex align-content-center">
@@ -821,8 +842,7 @@ p\bigl(y_i;f_{\boldsymbol{w}}(x_i),\sigma\bigr).
 <p>Lo que queremos aprender es la señal, así que trataremos <span class="math inline">\(\sigma\)</span> como un parámetro secundario: lo mantendremos fijo mientras buscamos <span class="math inline">\(\boldsymbol{w}\)</span> y volveremos a estimarlo al final del capítulo siguiente, donde se demuestra que esa decisión no altera la señal aprendida.</p>
 </div>
 </div>
-<p>El producto de muchas densidades puede producir números extremadamente pequeños, y esto no es una molestia teórica: un ordenador deja de distinguirlos de cero.</p>
-<div class="nuevo">
+<p>El producto de muchas densidades puede producir números extremadamente pequeños, esto causa problemas numéricos, pues un ordenador deja de distinguir estos números de cero. Lo observamos en el siguiente ejercicio.</p>
 <div id="exr-verosimilitud-producto" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1.2 (Por qué se toman logaritmos)</strong></span> Con los datos simulados de este capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
 <ol type="a">
@@ -830,7 +850,6 @@ p\bigl(y_i;f_{\boldsymbol{w}}(x_i),\sigma\bigr).
 <li>Calcula la suma de sus logaritmos en los mismos tres casos.</li>
 <li>Con densidades del orden de las que has obtenido, estima a partir de cuántas observaciones el producto se redondearía a cero en coma flotante de doble precisión, que llega hasta <span class="math inline">\(10^{-308}\)</span>. Explica qué le pasaría entonces a una búsqueda que compare verosimilitudes.</li>
 </ol>
-</div>
 </div>
 <p>Para evitar este problema se utiliza la <strong>log-verosimilitud</strong>,</p>
 <p><span id="eq-log-verosimilitud"><span class="math display">\[
@@ -871,67 +890,82 @@ L(\vartheta)\leq L(\vartheta^\star)
 \]</span></p>
 <p>de modo que maximizar <span class="math inline">\(\ell\)</span> equivale a minimizar <span class="math inline">\(-\ell\)</span>.</p>
 </div>
-<p>En este primer experimento no estimaremos <span class="math inline">\(\sigma\)</span>: fijaremos <code>sigma_supuesto = 3.0</code>, el nivel de ruido utilizado para simular los datos, y buscaremos únicamente los parámetros <span class="math inline">\(\boldsymbol{w}=(w_0,w_1)^{\mathsf{T}}\)</span> de la señal. Esta simplificación permite aislar el problema de aprender <span class="math inline">\(f_{\boldsymbol{w}}\)</span>; el capítulo siguiente mostrará cómo estimar también <span class="math inline">\(\sigma\)</span>.</p>
+<p>Con esto ya tenemos un criterio completo para elegir los parámetros: nos quedamos con los <span class="math inline">\((\boldsymbol{w},\sigma)\)</span> que maximizan la log-verosimilitud de <a href="#eq-log-verosimilitud" class="quarto-xref">Ecuación&nbsp;<span>1.5</span></a> o, lo que es lo mismo, con los que minimizan <span class="math inline">\(-\ell\)</span>. Vamos a aplicarlo a los datos simulados del capítulo.</p>
+<p>De momento damos el nivel de ruido por conocido y lo fijamos en <code>sigma_supuesto = 3.0</code>, el valor con el que se generaron los datos, y buscaremos únicamente los parámetros <span class="math inline">\(\boldsymbol{w}=(w_0,w_1)^{\mathsf{T}}\)</span> de la señal. Esta simplificación permite aislar el problema de aprender <span class="math inline">\(f_{\boldsymbol{w}}\)</span>; el capítulo siguiente mostrará cómo estimar también <span class="math inline">\(\sigma\)</span>.</p>
 <p>Para esta búsqueda evaluamos directamente <a href="#eq-log-verosimilitud" class="quarto-xref">Ecuación&nbsp;<span>1.5</span></a> mediante <code>densidad_normal</code>. Calculamos su valor sobre una rejilla de posibles interceptos y pendientes y conservamos la mejor combinación.</p>
 <div class="codigo-clave">
-<div id="b6dc7578" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
-<span id="annotated-cell-14-3"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
-<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">20</span>):</span>
-<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w1 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">20</span>):</span>
-<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7" aria-hidden="true" tabindex="-1"></a>        prediccion <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
-<span id="annotated-cell-14-8"><a href="#annotated-cell-14-8" aria-hidden="true" tabindex="-1"></a>        loglik_actual <span class="op">=</span> torch.log(</span>
-<span id="annotated-cell-14-9"><a href="#annotated-cell-14-9" aria-hidden="true" tabindex="-1"></a>            densidad_normal(y, prediccion, sigma_supuesto)</span>
-<span id="annotated-cell-14-10"><a href="#annotated-cell-14-10" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>().item()</span>
-<span id="annotated-cell-14-11"><a href="#annotated-cell-14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-14-12"><a href="#annotated-cell-14-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> loglik_actual <span class="op">&gt;</span> mejor_loglik:</span>
-<span id="annotated-cell-14-13"><a href="#annotated-cell-14-13" aria-hidden="true" tabindex="-1"></a>            mejor_loglik <span class="op">=</span> loglik_actual</span>
-<span id="annotated-cell-14-14"><a href="#annotated-cell-14-14" aria-hidden="true" tabindex="-1"></a>            mejores_coeficientes <span class="op">=</span> (w0.item(), w1.item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="bfee9d7a" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">20</span>):</span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w1 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">20</span>):</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-7" class="code-annotation-target"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a>        prediccion <span class="op">=</span> w0 <span class="op">+</span> w1 <span class="op">*</span> x</span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>        loglik_actual <span class="op">=</span> torch.log(</span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a>            densidad_normal(y, prediccion, sigma_supuesto)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-15-10" class="code-annotation-target"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>().item()</span>
+<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-15-12" class="code-annotation-target"><a href="#annotated-cell-15-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> loglik_actual <span class="op">&gt;</span> mejor_loglik:</span>
+<span id="annotated-cell-15-13"><a href="#annotated-cell-15-13" aria-hidden="true" tabindex="-1"></a>            mejor_loglik <span class="op">=</span> loglik_actual</span>
+<span id="annotated-cell-15-14"><a href="#annotated-cell-15-14" aria-hidden="true" tabindex="-1"></a>            mejores_coeficientes <span class="op">=</span> (w0.item(), w1.item())</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="1" data-code-annotation="1">Fijamos el nivel de ruido y preparamos las variables que almacenarán el mejor resultado.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="7" data-code-annotation="2">Para cada pareja <span class="math inline">\((w_0,w_1)\)</span> de la rejilla, calculamos la señal candidata en todos los valores de <span class="math inline">\(x\)</span>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="10" data-code-annotation="3">Evaluamos simultáneamente las densidades de todas las observaciones, tomamos sus logaritmos y los sumamos para obtener la log-verosimilitud.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="12" data-code-annotation="4">Si la candidata mejora el valor anterior, guardamos su log-verosimilitud y sus parámetros.</span>
+</dd>
+</dl>
 </div>
 </div>
-<ol type="1">
-<li>Fijamos el nivel de ruido y preparamos las variables que almacenarán el mejor resultado.</li>
-<li>Para cada pareja <span class="math inline">\((w_0,w_1)\)</span> de la rejilla, calculamos la señal candidata en todos los valores de <span class="math inline">\(x\)</span>.</li>
-<li>Evaluamos simultáneamente las densidades de todas las observaciones, tomamos sus logaritmos y los sumamos para obtener la log-verosimilitud.</li>
-<li>Si la candidata mejora el valor anterior, guardamos su log-verosimilitud y sus parámetros.</li>
-</ol>
+</div>
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>w0_hat, w1_hat <span class="op">=</span> mejores_coeficientes</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>ax.plot(</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    x.numpy(),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    (w0_hat <span class="op">+</span> w1_hat <span class="op">*</span> x).numpy(),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#b33b2e"</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="vs">r"ajuste: </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_0</span><span class="op">+</span><span class="er">\</span><span class="vs">hat w_1x</span><span class="dv">$</span><span class="vs">"</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>ax.plot(</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"señal verdadera"</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">"$x$"</span>,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>(<span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ell=</span><span class="sc">{</span>mejor_loglik<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">, </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_0=</span><span class="sc">{</span>w0_hat<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">, "</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>           <span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_1=</span><span class="sc">{</span>w1_hat<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>),</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>w0_hat, w1_hat <span class="op">=</span> mejores_coeficientes</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(x.numpy(), y.numpy(), <span class="op">**</span>kw_puntos, label<span class="op">=</span><span class="st">"datos"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>ax.plot(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    x.numpy(),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    (w0_hat <span class="op">+</span> w1_hat <span class="op">*</span> x).numpy(),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#b33b2e"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="vs">r"ajuste: </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_0</span><span class="op">+</span><span class="er">\</span><span class="vs">hat w_1x</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>ax.plot(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    x.numpy(), senal.numpy(), color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"señal verdadera"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">"$x$"</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"$y$"</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>(<span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ell=</span><span class="sc">{</span>mejor_loglik<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">, </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_0=</span><span class="sc">{</span>w0_hat<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">, "</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>           <span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat w_1=</span><span class="sc">{</span>w1_hat<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>),</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-verosimilitud-rejilla" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-verosimilitud-rejilla-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="cf8c7ddf" class="cell" data-execution_count="16">
+<div id="1f0493f4" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="767" height="507"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="565" height="374"></p>
 </figure>
 </div>
 </div>
@@ -941,17 +975,6 @@ L(\vartheta)\leq L(\vartheta^\star)
 Figura&nbsp;1.8: Comparación entre la señal que generó los datos y la recta obtenida maximizando heurísticamente la verosimilitud sobre una rejilla.
 </figcaption>
 </figure>
-</div>
-<div class="nuevo">
-<div id="exr-resolucion-rejilla" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1.3 (La resolución de la rejilla)</strong></span> La búsqueda ha recorrido <code>torch.linspace(-5, 5, 20)</code> para el intercepto y <code>torch.linspace(-1, 3, 20)</code> para la pendiente.</p>
-<ol type="a">
-<li>Calcula la separación entre dos valores consecutivos de cada rejilla. Deja el resultado en forma de fracción; no sale redondo.</li>
-<li>Un valor <span class="math inline">\(v\)</span> cae en la rejilla que empieza en <span class="math inline">\(a\)</span> con paso <span class="math inline">\(h\)</span> si <span class="math inline">\((v-a)/h\)</span> es entero. Comprueba con ese criterio que ni <span class="math inline">\(w_0=1\)</span> ni <span class="math inline">\(w_1=2\)</span>, los valores que generaron los datos, están entre los que se han probado.</li>
-<li>Calcula cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la mitad la separación de las dos rejillas.</li>
-<li>La rejilla nunca puede devolver un valor que no esté en ella. Explica en una frase qué limitación tiene entonces este método, aparte de su coste.</li>
-</ol>
-</div>
 </div>
 <p>La señal aprendida se aproxima a la señal generadora. La búsqueda por rejilla permite ver qué significa maximizar la verosimilitud, pero deja de ser viable en cuanto aumenta el número de parámetros. A continuación desarrollaremos métodos sistemáticos para resolver este problema de aprendizaje.</p>
 

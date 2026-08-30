@@ -15,13 +15,15 @@ import style
 ```
 :::
 
+{{< include ../assets/includes/_colab-link.qmd >}}
+
 ## Introducción: datos, señal y ruido
 
 Recordemos que, en el aprendizaje automático supervisado, partimos de un conjunto de datos
 observados
 
 $$
-\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{\nobs},
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{\nobs}.
 $$
 
 La tarea consiste en aprender una función $f$ que, a partir de las
@@ -35,36 +37,19 @@ $$
 El principal problema del aprendizaje supervisado es que la relación entre $\mathbf{x}$ e
 $y$ de los datos observados no suele ser exacta. Esta relación, puede entenderse como la
 composición de una relación estable "subyacente" y una variación aleatoria que oculta
-parcialmente esa relación. Esta variación se conoce como ruido y puede tener distintas
+parcialmente esa relación. Esta variación se conoce como **ruido** y puede tener distintas
 procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La
-relación estable se denomina señal. El objetivo del aprendizaje supervisado es aprender la
-señal sin memorizar el ruido.
+relación estable se denomina **señal**. El objetivo del aprendizaje supervisado es
+**aprender la señal sin memorizar el ruido**.
 
 Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos
-componentes.
-
-{{< include ../assets/includes/_colab-link.qmd >}}
-
-[El cuaderno de este capítulo trae el mismo código que los apuntes, completo, para
-ejecutarlo y trastear con él. Lo que se pregunta de código en el examen está fijado en la
-presentación de la asignatura: leer un fragmento y decir qué calcula, diagnosticar sus errores
-de método, completar una línea que sea una fórmula del curso, predecir el efecto de un cambio y
-ordenar los pasos de un procedimiento. Ninguna pregunta exige recordar la firma de una
-función.]{.nuevo}
-
-::: {.nuevo}
-No todo el código de un capítulo cuenta igual. Los bloques marcados **se explica en clase**
-son contenido: traducen a código una definición o un resultado, y son los **únicos** sobre
-los que se pregunta. En este capítulo son seis. El resto es accesorio, ilustra el argumento
-o prepara una figura, va plegado y no se evalúa.
-:::
+componentes. En este conjunto, el vector de características tendrá una sola dimensión.
 
 ::: {.codigo-clave}
 ```{python}
 import torch
-from matplotlib import pyplot as plt
 
-torch.manual_seed(42)
+torch.manual_seed(87)
 
 n = 20
 x = torch.linspace(0, 10, n)
@@ -78,6 +63,8 @@ y = senal + ruido
 
 ```{python}
 #| code-fold: true
+from matplotlib import pyplot as plt
+
 kw_puntos = dict(color="black", facecolors="none", s=40, alpha=0.65)
 
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -126,27 +113,27 @@ valores $\yi$, sino en aproximar la señal $f$ que los genera.
 
 ## Sobreajuste
 
-Es importante señalar que el objetivo no es aprender individualmente cada $\yi$ sino la
-función subyacente $f(\mathbf{x})$. Para ilustrar este punto, supongamos que
-ajustemos una función
-que pase exactamente por todos los puntos. Esta operación se denomina **interpolación**.
+Para comprender por qué el objetivo no es aprender individualmente cada $\yi$ sino la
+función subyacente $f(\mathbf{x})$, supongamos que ajustamos una función que pase
+exactamente por todos los puntos. Esta operación se denomina **interpolación**.
 
 
 ::: {#thm-interpolacion}
 ## Interpolación exacta
 
-Sean $x_1,\ldots,x_{\nobs}$ valores distintos dos a dos. Para cualesquiera respuestas
-$y_1,\ldots,y_{\nobs}$ existe un polinomio $P$ de grado a lo sumo $\nobs-1$ tal que
-$P(x_i)=\yi$ para todo $i$.
+Sean $x_1,\ldots,x_{\nobs}$ valores entre los que no haya dos iguales. Para
+cualesquiera respuestas $y_1,\ldots,y_{\nobs}$ existe un polinomio $P$ de grado a lo sumo
+$\nobs-1$ tal que $P(x_i)=\yi$ para todo $i$.
 :::
 
 <!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
 
-El resultado se demuestra construyendo el polinomio explícitamente, y es el ejercicio del
-bloque B de la hoja 1. Lo que importa aquí es la consecuencia: **el enunciado vale para
-cualesquiera $\yi$**, incluidos unos generados por ruido puro. Un error de entrenamiento
-nulo se puede conseguir siempre y, por tanto, no distingue un modelo que ha aprendido de uno
-que no.
+El resultado se demuestra construyendo el polinomio explícitamente, se deja planteado como
+ejercicio.
+
+El teorema anterior vale para cualesquiera $\yi$, incluidos unos generados por ruido puro.
+Por tanto, siempre es posible encontrar una función $g$ para la cual $g(x_i)=y_i$ para todo
+$i$. Decimos que para $g$ el **error de entrenamiento es nulo**.
 
 ```{python}
 #| code-fold: true
@@ -174,13 +161,14 @@ Una función que interpola exactamente la muestra y, por tanto, ajusta tanto la 
 como el ruido.
 :::
 
-El problema aquí es que, mientras hemos ajustado perfectamente nuestros datos de
-entrenamiento, el modelo no ha aprendido la señal subyacente $f$. Si generamos nuevas
-observaciones con la misma señal pero con un ruido distinto, veremos que la función
-interpoladora no predice bien los nuevos datos.
+El problema aquí es que, en general, si bien hemos ajustado perfectamente nuestros datos de
+entrenamiento, el modelo no ha aprendido la señal subyacente $f$. Es decir, usualmente,
+$g\neq f$. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un
+ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.
 
 ::: {.codigo-clave}
 ```{python}
+x_denso = torch.linspace(0, 10, 100)
 y_nueva = 2 * x_denso + 1 + 3 * torch.randn(len(x_denso))
 ```
 :::
@@ -204,8 +192,8 @@ primera muestra.
 :::
 
 Las curvas innecesarias del interpolador no corresponden a ningún patrón de los datos
-nuevos. Al intentar ajustar el ruido de entrenamiento, hemos dejado de aprender la
-señal.
+nuevos. **Al intentar ajustar el ruido de entrenamiento, hemos dejado de aprender la
+señal**. A este fenómeno se le conoce con el nombre de **sobreajuste**.
 
 ::: {#def-sobreajuste}
 ## Sobreajuste
@@ -215,23 +203,33 @@ las que se ha ajustado y predice mal observaciones nuevas del mismo proceso, por
 aprendido parte del ruido de la muestra en lugar de solo la señal.
 :::
 
-Es uno de los problemas centrales del aprendizaje supervisado y reaparecerá en todo el
-curso. Obsérvese que la definición compara dos cosas, el ajuste sobre los datos usados y el
-error sobre datos nuevos, y que la segunda no se puede medir con los datos de
+Este es uno de los problemas centrales del aprendizaje supervisado y reaparecerá a lo largo
+del curso. Obsérvese que la definición compara dos cosas, el ajuste sobre los datos usados y
+el error sobre datos nuevos, y que la segunda no se puede medir con los datos de
 entrenamiento. Construir esa medida es el objeto del capítulo dedicado a evaluación.
 
+## Hipótesis sobre el ruido
 
-## Modelizar el ruido
+Hasta aquí sabemos que ajustar el ruido empeora la predicción, pero no sabemos separarlo de
+la señal. Para que el problema tenga solución hay que restringirlo. Esto implica hacer
+**suposiciones**.
 
-Para aprender la señal de @eq-senal-ruido necesitamos poder hablar matemáticamente del
-ruido.
-Vamos a **asumir** que $\varepsilon_1,\ldots,\varepsilon_n$ son variables aleatorias
-**independientes e idénticamente distribuidas** de cierta distribución. Esto significa que
-asumimos que cada nueva observación incorpora una
-extracción distinta de la misma distribución, sin que el ruido de una observación influya
-en el de las demás.
+Las suposiciones van por dos vías. Primero necesitamos dotar de cierta estructura al ruido y
+es a lo que dedicaremos esta sección. También necesitaremos hacer suposiciones sobre la
+señal: en qué familia de funciones vamos a buscar $f$. A esto dedicaremos la sección
+siguiente. Las dos hipótesis, conjuntamente, darán lugar al modelo lineal-gaussiano, que es
+el punto de partida del resto del curso.
 
-La distribución de ruido que utilizaremos primero es la distribución normal o gaussiana.
+Empezamos por el ruido. Vamos a **asumir** que
+$\varepsilon_1,\ldots,\varepsilon_n$ son variables aleatorias **independientes e
+idénticamente distribuidas** de cierta distribución. Esto significa que asumimos que cada
+nueva observación incorpora una extracción distinta de la misma distribución, sin que el
+ruido de una observación influya en el de las demás.
+
+### La distribución normal
+
+La distribución de ruido que utilizaremos a lo largo del curso es la distribución normal o
+gaussiana.
 
 ```{python}
 #| column: margin
@@ -289,17 +287,14 @@ Como habéis visto en probabilidad, una densidad no es una probabilidad puntual.
 variable continua, las
 probabilidades se obtienen integrando la densidad sobre intervalos.
 
-::: {.nuevo}
 ::: {#exr-densidad-mayor-que-uno}
 ## Una densidad puede pasar de uno
 
-a. Evalúa @eq-densidad-normal en $z=\mu$ y comprueba que el resultado es
-   $1/(\noise\sqrt{2\pi})$.
-b. Calcula ese valor para $\noise=2$, $\noise=1$ y $\noise=0.2$.
-c. Uno de los tres pasa de uno. Explica en una frase por qué eso no contradice que las
-   probabilidades estén entre cero y uno, y encuentra a partir de qué valor de $\noise$
-   ocurre.
-:::
+a. Evalúa @eq-densidad-normal en $z=\mu$ y calcula su valor para $\noise=2$, $\noise=1$ y
+   $\noise=0.2$.
+b. Encuentra a partir de qué valor de $\noise$ la densidad evaluada en $z=\mu$ es mayor
+   a 1. Explica en una frase por qué eso no contradice que la probabilidad esté entre cero
+   y uno.
 :::
 
 La fórmula anterior se puede traducir directamente a código vectorizado.
@@ -357,14 +352,13 @@ torch.round(muestra_ruido, decimals=3)
 ```
 :::
 
+::: {#fig-histograma-normal}
+
 ```{python}
-#| column: margin
-#| echo: false
-#| fig-cap: "Histograma de 1000 extracciones normales comparado con la densidad que las genera."
-#| label: fig-histograma-normal
+#| code-fold: true
 muestras = torch.normal(media, desviacion, size=(1000,))
 soporte = torch.linspace(-4, 4, 200)
-fig, ax = plt.subplots(figsize=(3, 2))
+fig, ax = plt.subplots(figsize=(6, 4))
 ax.hist(muestras.numpy(), bins=30, density=True, alpha=0.55,
         color="#7aa6c2")
 ax.plot(
@@ -376,7 +370,10 @@ ax.set(xlabel="$z$", ylabel="densidad")
 plt.tight_layout()
 ```
 
-## Propiedades de la distribución normal
+Histograma de 1000 extracciones normales comparado con la densidad que las genera.
+:::
+
+### Propiedades de la distribución normal
 
 La distribución normal tiene varias propiedades especialmente útiles para modelizar el
 ruido. Las demostraciones completas se encuentran en el
@@ -444,7 +441,7 @@ $$
 Las demostraciones de @thm-traslacion-normal, @thm-escala-normal
 y @thm-momentos-normal se desarrollan en el repaso de probabilidad.
 
-## La normal estándar
+### La normal estándar
 
 La distribución $\Normal(0,1)$ se denomina **normal estándar**. Si
 $Z\sim\Normal(0,1)$, las propiedades de escala y traslación permiten construir cualquier
@@ -490,7 +487,7 @@ ruido_directo = torch.normal(media, desviacion, size=(n_muestras,))
 ```
 :::
 
-## Ruido gaussiano
+### Ruido gaussiano
 
 Volvamos ahora al modelo señal + ruido:
 
@@ -523,6 +520,8 @@ $$
 se denomina **modelo generador gaussiano**.
 :::
 
+## Hipótesis sobre la señal
+
 Hasta ahora hemos utilizado la señal $f(x)=2x+1$. En un problema real $f$ es desconocida
 y debemos decidir en qué familia de funciones vamos a buscarla.
 
@@ -533,6 +532,8 @@ Una **clase de hipótesis** $\hyp$ es el conjunto de funciones permitidas para r
 la señal. Si las funciones están indexadas por parámetros $\coef$, escribimos
 $\model(\xv;\coef)$.
 :::
+
+### El modelo lineal-gaussiano
 
 El primer caso será la familia de funciones afines.
 
@@ -591,7 +592,15 @@ centrada en la señal.
 Un valor grande de $\noise$ produce observaciones más alejadas de la señal y hace más
 difícil distinguirla. Un valor pequeño concentra las respuestas cerca de ella.
 
-### Distribuciones generadoras de datos
+## Distribuciones generadoras de datos
+
+Hasta ahora hemos supuesto tres cosas: que la
+señal pertenece a una familia de funciones que elegimos nosotros, en este caso las rectas;
+que el ruido es normal y de media cero; y que los ruidos de observaciones distintas son
+independientes y comparten la misma desviación típica $\noise$. Ninguna de las tres se ha
+deducido de los datos. Las tres son hipótesis de trabajo, y ninguna tiene por qué
+cumplirse.
+
 
 Una de las razones principales para definir modelos es que nos proporcionan formas
 fundamentadas de pensar en lo que nuestros modelos deben aprender (la señal) y lo que deben
@@ -620,18 +629,21 @@ Conviene separar desde ahora dos cosas que es fácil confundir.
 - La **familia de modelos** que proponemos. Sí la elegimos nosotros. El modelo
   lineal-gaussiano es una familia: todas las rectas, con ruido normal de nivel $\noise$.
 
-Proponer una familia es formular una hipótesis sobre $P^\star$, y una hipótesis puede ser
-falsa. Que la señal real sea curva, o que el ruido tenga colas más pesadas que la normal, no
-impide ajustar el modelo; lo que hace es limitar hasta dónde puede llegar el mejor miembro
-de la familia. En el capítulo siguiente veremos qué consecuencias tiene eso exactamente.
+Una familia no es un proceso generador, sino un conjunto de procesos generadores. Cada valor
+concreto de $(\coef,\noise)$ describe una manera distinta de producir datos, así que el
+modelo lineal-gaussiano contiene infinitos procesos, uno por cada recta y cada nivel de
+ruido. Ajustar el modelo es elegir uno de ellos; proponer el modelo es apostar a que
+$P^\star$ está entre los candidatos. Por tanto, proponer una familia es formular una
+hipótesis sobre $P^\star$, y una hipótesis puede ser falsa. Que la señal real sea curva, o
+que el ruido tenga colas más pesadas que la normal, no impide ajustar el modelo; pero puede
+afectar a la calidad del modelo ajustado.
 
+::: {#def-bien-especificado}
+## Modelo bien especificado
 
-::: {.callout-warning title="El modelo generador es una hipótesis"}
-Al proponer un modelo lineal-gaussiano no afirmamos que el mecanismo real sea exactamente
-lineal ni que su ruido sea exactamente normal: adoptamos una aproximación matemática que
-podremos contrastar con los datos. Las conclusiones obtenidas son condicionales a esa
-elección y pueden degradarse si la señal, la distribución del ruido o la independencia
-asumidas no describen adecuadamente el proceso real.
+Un modelo está **bien especificado** cuando el proceso real $P^\star$ pertenece a la familia
+que propone, es decir, cuando algún valor de los parámetros lo reproduce exactamente. En
+caso contrario está **mal especificado**.
 :::
 
 Una característica muy útil de los modelos generadores de datos es que también nos brindan
@@ -650,8 +662,8 @@ $$
 \right).
 $$
 
-Como las observaciones son independientes, la densidad conjunta es el producto de las
-densidades individuales evaluadas en los valores observados.
+Como las observaciones son independientes (por hipótesis), la densidad conjunta es el
+producto de las densidades individuales evaluadas en los valores observados.
 
 ::: {#def-verosimilitud}
 ## Verosimilitud
@@ -673,19 +685,19 @@ hemos observado.
 
 ### Estimador de máxima verosimilitud
 
-Para ajustar la señal elegiremos los parámetros que hacen más compatibles los datos
-observados con el modelo generador. En el modelo gaussiano, desplazar
-$f_{\coef}(x_i)$ lejos de $\yi$ reduce la densidad asignada a esa observación. Por tanto,
-maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar
+Dado un modelo, podemos ajustar la señal eligiendo los parámetros que hacen más compatibles
+los datos observados con el modelo generador. Un criterio muy extendido para hacer esto,
+consiste en escoger los $\coef$ que maximicen la verosimilitud. En el modelo gaussiano,
+desplazar $f_{\coef}(x_i)$ lejos de $\yi$ reduce la densidad asignada a esa observación.
+Maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar
 conjuntamente las respuestas observadas.
 
-Este criterio también posee buenas propiedades teóricas. Si el modelo está correctamente
-especificado, la señal verdadera pertenece a la clase de hipótesis, los parámetros son
-identificables y se cumplen ciertas condiciones regulares, el estimador de máxima
-verosimilitud es consistente: al crecer la muestra se aproxima al parámetro que generó los
-datos. Bajo esas mismas condiciones, su distribución para muestras grandes es
-aproximadamente normal y aprovecha eficientemente la información disponible. Estas
-propiedades dependen de los supuestos del modelo; no los validan por sí mismas.
+El criterio tiene además ciertas garantías teóricas. Por ejemplo, si el modelo está bien
+especificado en el sentido de @def-bien-especificado, si dos valores distintos de los
+parámetros no producen nunca la misma distribución, propiedad que se llama
+**identificabilidad**, y si se cumplen otras condiciones técnicas, entonces el estimador de
+máxima verosimilitud es **consistente**: al crecer la muestra, $\coefhat$ se acerca al valor
+de los parámetros que generó los datos.
 
 ::: {#def-mle}
 ## Estimación de máxima verosimilitud
@@ -697,8 +709,6 @@ $$
 \in\argmax_{\coef,\noise>0}\Lik(\coef,\noise).
 $$
 
-Si $\noise$ se considera conocido, la optimización se realiza únicamente respecto a
-$\coef$.
 :::
 
 ::: {.callout-note title="El nivel de ruido queda fuera del foco"}
@@ -708,10 +718,10 @@ $\coef$ y volveremos a estimarlo al final del capítulo siguiente, donde se demu
 esa decisión no altera la señal aprendida.
 :::
 
-El producto de muchas densidades puede producir números extremadamente pequeños, y esto no
-es una molestia teórica: un ordenador deja de distinguirlos de cero.
+El producto de muchas densidades puede producir números extremadamente pequeños, esto causa
+problemas numéricos, pues un ordenador deja de distinguir estos números de cero. Lo
+observamos en el siguiente ejercicio.
 
-::: {.nuevo}
 ::: {#exr-verosimilitud-producto}
 ## Por qué se toman logaritmos
 
@@ -724,7 +734,6 @@ b. Calcula la suma de sus logaritmos en los mismos tres casos.
 c. Con densidades del orden de las que has obtenido, estima a partir de cuántas observaciones
    el producto se redondearía a cero en coma flotante de doble precisión, que llega hasta
    $10^{-308}$. Explica qué le pasaría entonces a una búsqueda que compare verosimilitudes.
-:::
 :::
 
 Para evitar este problema se utiliza la **log-verosimilitud**,
@@ -781,11 +790,15 @@ $$
 de modo que maximizar $\loglik$ equivale a minimizar $-\loglik$.
 :::
 
-En este primer experimento no estimaremos $\noise$: fijaremos
-`sigma_supuesto = 3.0`, el nivel de ruido utilizado para simular los datos, y buscaremos
-únicamente los parámetros $\coef=(w_0,w_1)\T$ de la señal. Esta simplificación permite
-aislar el problema de aprender $f_{\coef}$; el capítulo siguiente mostrará cómo estimar
-también $\noise$.
+Con esto ya tenemos un criterio completo para elegir los parámetros: nos quedamos con los
+$(\coef,\noise)$ que maximizan la log-verosimilitud de @eq-log-verosimilitud o, lo que es lo
+mismo, con los que minimizan $-\loglik$. Vamos a aplicarlo a los datos simulados del
+capítulo.
+
+De momento damos el nivel de ruido por conocido y lo fijamos en `sigma_supuesto = 3.0`, el
+valor con el que se generaron los datos, y buscaremos únicamente los parámetros
+$\coef=(w_0,w_1)\T$ de la señal. Esta simplificación permite aislar el problema de aprender
+$f_{\coef}$; el capítulo siguiente mostrará cómo estimar también $\noise$.
 
 Para esta búsqueda evaluamos directamente @eq-log-verosimilitud mediante
 `densidad_normal`. Calculamos su valor sobre una rejilla de posibles interceptos y
@@ -810,7 +823,6 @@ for w0 in torch.linspace(-5, 5, 20):
             mejores_coeficientes = (w0.item(), w1.item())
 #---
 ```
-:::
 
 1. Fijamos el nivel de ruido y preparamos las variables que almacenarán el mejor resultado.
 2. Para cada pareja $(w_0,w_1)$ de la rejilla, calculamos la señal candidata en todos los
@@ -819,6 +831,7 @@ for w0 in torch.linspace(-5, 5, 20):
    logaritmos y los sumamos para obtener la log-verosimilitud.
 4. Si la candidata mejora el valor anterior, guardamos su log-verosimilitud y sus
    parámetros.
+:::
 
 ::: {#fig-verosimilitud-rejilla}
 
@@ -854,24 +867,6 @@ Comparación entre la señal que generó los datos y la recta obtenida maximizan
 heurísticamente la verosimilitud sobre una rejilla.
 :::
 
-::: {.nuevo}
-::: {#exr-resolucion-rejilla}
-## La resolución de la rejilla
-
-La búsqueda ha recorrido `torch.linspace(-5, 5, 20)` para el intercepto y
-`torch.linspace(-1, 3, 20)` para la pendiente.
-
-a. Calcula la separación entre dos valores consecutivos de cada rejilla. Deja el resultado
-   en forma de fracción; no sale redondo.
-b. Un valor $v$ cae en la rejilla que empieza en $a$ con paso $h$ si $(v-a)/h$ es entero.
-   Comprueba con ese criterio que ni $\coefzero=1$ ni $w_1=2$, los valores que generaron los
-   datos, están entre los que se han probado.
-c. Calcula cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la mitad
-   la separación de las dos rejillas.
-d. La rejilla nunca puede devolver un valor que no esté en ella. Explica en una frase qué
-   limitación tiene entonces este método, aparte de su coste.
-:::
-:::
 
 La señal aprendida se aproxima a la señal generadora. La búsqueda por rejilla permite
 ver qué significa maximizar la verosimilitud, pero deja de ser viable en cuanto aumenta

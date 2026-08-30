@@ -52,7 +52,9 @@ c. **Explica** por qué que un supuesto se rompa no impide ajustar el modelo, y 
 Este es el primer fragmento del capítulo, el que genera los datos del ejemplo.
 
 ```python
-torch.manual_seed(42)
+import torch
+
+torch.manual_seed(87)
 
 n = 20
 x = torch.linspace(0, 10, n)
@@ -64,7 +66,7 @@ y = senal + ruido
 a. **Di** qué contiene cada una de las tres variables `senal`, `ruido` e `y`, y con qué
    símbolo del capítulo se corresponde cada una.
 b. De las tres, **señala** cuál no podríamos observar nunca en un problema real, y por qué.
-c. **Explica** qué cambia y qué no si se sustituye el `42` por otro número.
+c. **Explica** qué cambia y qué no si se sustituye el `87` por otro número.
 d. **Razona** qué le pasaría a la nube de puntos si el `3` de la tercera línea fuese `0.1`.
 :::
 :::
@@ -85,22 +87,22 @@ c. Si el ruido tuviera media $c\neq0$ en lugar de cero, ¿qué aprenderíamos al
    media condicional? **Razónalo**.
 :::
 
-::: {.nuevo}
 ::: {#exr-h1-lagrange}
-Sean $x_1,\dots,x_{\nobs}$ distintos dos a dos. Se define la **base de Lagrange** como
+Sean $x_1,\dots,x_{\nobs}$ [valores entre los que no haya dos iguales]{.nuevo}. Se define
+la **base de Lagrange** como
 
 $$
 \ell_j(x) = \prod_{k\neq j}\frac{x-x_k}{x_j-x_k},
 \qquad j=1,\dots,\nobs .
 $$
 
-a. **Comprueba** que $\ell_j(x_j)=1$ y que $\ell_j(x_i)=0$ cuando $i\neq j$. Basta
-sustituir; di también dónde se usa que los $x_i$ sean distintos dos a dos. b. **Deduce** que
-$P(x)=\sum_{j} y_j\,\ell_j(x)$ pasa por los $\nobs$ puntos, y **di** por qué su grado es a
-lo sumo $\nobs-1$. Con eso queda demostrado @thm-interpolacion. c. **Constrúyelo** para
-$(1,3)$, $(2,5)$ y $(4,2)$, y comprueba que pasa por los tres.
+a. **Comprueba** que $\ell_j(x_j)=1$ y que $\ell_j(x_i)=0$ cuando $i\neq j$. Di dónde se usa
+[que no haya dos $x_i$ iguales]{.nuevo}. b. **Deduce** que $P(x)=\sum_{j} y_j\,\ell_j(x)$
+pasa por los $\nobs$ puntos, y **explica** por qué su grado es a lo sumo $\nobs-1$. Con
+esto, demuestra el @thm-interpolacion. c. **Construye** el polinomio que pasa por $(1,3)$,
+$(2,5)$ y $(4,2)$, y comprueba su grado.
 :::
-:::
+
 
 ## 3. Cálculo a mano {#sec-h1-c}
 
@@ -135,11 +137,10 @@ c. Si $\yi=f(x_i)+\varepsilon_i$ con $f(x_i)=5$, ¿qué distribución tiene $\yi
 
 ::: {.nuevo}
 ::: {#exr-h1-densidad-uno}
-a. **Evalúa** la densidad normal en $z=\mu$ y **comprueba** que vale
-$1/(\noise\sqrt{2\pi})$. b. **Calcula** ese valor para $\noise=2$, $\noise=1$ y
-$\noise=0.2$. c. Uno de los tres pasa de uno. **Explica** por qué eso no contradice que las
-probabilidades estén entre cero y uno, y **calcula** a partir de qué valor de $\noise$
-ocurre.
+a. **Evalúa** la densidad normal en $z=\mu$ y **calcula** su valor para $\noise=2$,
+$\noise=1$ y $\noise=0.2$. b. **Encuentra** a partir de qué valor de $\noise$ la densidad
+evaluada en $z=\mu$ es mayor a 1. **Explica** en una frase por qué eso no contradice que la
+probabilidad esté entre cero y uno.
 :::
 :::
 
@@ -148,14 +149,13 @@ ocurre.
 La búsqueda por rejilla del capítulo recorre `torch.linspace(-5, 5, 20)` para el intercepto
 y `torch.linspace(-1, 3, 20)` para la pendiente.
 
-a. **Calcula** la separación entre dos valores consecutivos de cada rejilla. Deja el
-   resultado en forma de fracción; no sale redondo.
+a. **Calcula** la separación entre dos valores consecutivos de cada rejilla. Déjala en
+   forma de fracción; no sale redonda.
 b. Un valor $v$ cae en la rejilla que empieza en $a$ con paso $h$ si $(v-a)/h$ es entero.
    **Comprueba** con ese criterio que ni $\coefzero=1$ ni $w_1=2$, que son los valores que
    generaron los datos, están entre los que se prueban.
-c. **Calcula** cuántas combinaciones se evalúan, y cuántas harían falta para reducir a la
-   mitad la separación de las dos rejillas.
-d. **Razona** qué limitación tiene el método aparte de su coste.
+c. **Calcula** cuántas combinaciones se evalúan y **explica** qué limitación tiene este
+   método aparte de su coste.
 :::
 :::
 

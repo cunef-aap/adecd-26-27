@@ -343,6 +343,15 @@ div.nuevo {
   margin: 1.2rem 0;
 }
 
+/* Un encabezado renombrado o nuevo se marca con `## Titulo {.nuevo}`. No es span ni
+   div, asi que necesita su propia regla. */
+h1.nuevo,
+h2.nuevo,
+h3.nuevo,
+h4.nuevo {
+  color: var(--revision);
+}
+
 div.nuevo > *,
 div.nuevo .theorem,
 div.nuevo .proof {

@@ -342,12 +342,13 @@ evalúa el modelo contra sí mismo, sino contra la realidad. Eso tiene dos conse
 según
 que la familia contenga o no a $P^\star$.
 
-Si la contiene, se dice que el modelo está **bien especificado**, y al crecer la muestra los
-parámetros aprendidos se acercan a los que generaron los datos. Si no la contiene, el modelo
-está **mal especificado**, y al crecer la muestra los parámetros no se acercan a ninguna
-verdad, porque la verdad no está entre los candidatos: se acercan al mejor miembro de la
-familia, el que menos riesgo tiene. Que la familia sea falsa no estropea el criterio; lo que
-hace es poner un suelo a lo que se puede conseguir con ella.
+[Si la contiene, el modelo está bien especificado en el sentido de @def-bien-especificado,
+y al crecer la muestra los parámetros aprendidos se acercan a los que generaron los datos.
+Si no la contiene, está mal especificado, y al crecer la muestra los parámetros no se
+acercan a ninguna verdad, porque la verdad no está entre los candidatos: se acercan al
+mejor miembro de la familia, el que menos riesgo tiene.]{.nuevo} Que la familia sea falsa
+no estropea el criterio; lo que hace es poner un suelo a lo que se puede conseguir con
+ella.
 
 
 El problema inmediato es otro: $P^\star$ es desconocida, así que la esperanza
