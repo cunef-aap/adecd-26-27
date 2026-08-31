@@ -123,6 +123,7 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
         return f"{SITIO}/{fuente[:-4]}.html" if fuente in DENTRO else None
 
     cuenta = {"marcas de revisión": 0, "referencias": 0, "enlaces internos": 0,
+              "enlaces a documentos": 0, "comentarios internos": 0,
               "letras caligráficas": 0}
 
     def sin_marca(m):
@@ -145,19 +146,44 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
         url = pagina(fuente) if fuente else None
         return f"[{texto}]({url}#{etiqueta})" if url else texto
 
+    def enlace_qmd(m):
+        """`[texto](../curso/probabilidad.qmd)` no se puede pulsar en Colab: el cuaderno
+        vive suelto en Drive y no hay ningun `..` al lado. Se cambia por la pagina
+        publicada, y si ese documento no se publica se queda solo el texto."""
+        texto, destino = m.group(1), m.group(2)
+        fuente = destino.lstrip("./").split("#")[0]
+        ancla = destino.split("#")[1] if "#" in destino else ""
+        url = pagina(fuente)
+        if not url:
+            return texto
+        cuenta["enlaces a documentos"] += 1
+        return f"[{texto}]({url}{'#' + ancla if ancla else ''})"
+
+    def sin_comentario(m):
+        cuenta["comentarios internos"] += 1
+        return ""
+
     nb = json.loads(ruta.read_text(encoding="utf-8"))
     for c in nb["cells"]:
         if c["cell_type"] not in ("markdown", "raw"):
             continue
         t = "".join(c["source"])
+        # Los marcadores `<!-- demostracion: ... -->` son para check-capitulo.py. En una
+        # celda cruda de Colab no se ocultan: se leen tal cual.
+        t = re.sub(r"<!--.*?-->", sin_comentario, t, flags=re.S)
         t = re.sub(r'<span class="nuevo">(.*?)</span>', sin_marca, t, flags=re.S)
         t = re.sub(r'<a href="#([\w-]+)"[^>]*class="quarto-xref">(.*?)</a>', interno, t,
                    flags=re.S)
         t = re.sub(r"\?@([\w-]+)", referencia, t)
+        t = re.sub(r"\[([^\]]+)\]\(([^)]*\.qmd(?:#[\w-]+)?)\)", enlace_qmd, t)
         t, caligraficas = sin_caligrafica(t)
         cuenta["letras caligráficas"] += caligraficas
         lineas = t.split("\n")
         c["source"] = [l + "\n" for l in lineas[:-1]] + [lineas[-1]]
+    # Una celda que se queda vacia al quitarle el comentario sale en Colab como un hueco.
+    nb["cells"] = [c for c in nb["cells"]
+                   if c["cell_type"] not in ("markdown", "raw")
+                   or "".join(c["source"]).strip()]
     ruta.write_text(json.dumps(nb, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     return {k: v for k, v in cuenta.items() if v}
 

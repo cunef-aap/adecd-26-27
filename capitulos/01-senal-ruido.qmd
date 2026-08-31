@@ -298,6 +298,10 @@ c. Con $\noise=0.2$ esa densidad vale $1.995$, algo menos de 2. Di cuál de las 
    cero y uno según @def-normal, y calcula el área del rectángulo de base
    $[\mu-0.2,\mu+0.2]$ y altura 2 para acotar la probabilidad de ese intervalo y comprobar
    que no llega a uno.
+
+::: {.content-hidden when-format="ipynb"}
+*Es el ejercicio -@exr-h1-densidad-uno de la [hoja 1](../problemas/hoja-01.qmd).*
+:::
 :::
 
 La fórmula anterior se puede traducir directamente a código vectorizado.
@@ -738,6 +742,10 @@ c. Toma $10^{-1}$ como valor típico de una de esas densidades. Calcula a partir
    observaciones el producto baja de $10^{-308}$, el orden en que la coma flotante de doble
    precisión empieza a perder los números pequeños, y di qué devolvería la comparación entre
    dos verosimilitudes cuando las dos se han redondeado a cero.
+
+::: {.content-hidden when-format="ipynb"}
+*Es el ejercicio -@exr-h1-logaritmos de la [hoja 1](../problemas/hoja-01.qmd).*
+:::
 :::
 
 Para evitar este problema se utiliza la **log-verosimilitud**,
