@@ -163,7 +163,7 @@ como el ruido.
 
 El problema aquí es que, en general, si bien hemos ajustado perfectamente nuestros datos de
 entrenamiento, el modelo no ha aprendido la señal subyacente $f$. Es decir, usualmente,
-$g\neq f$. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un
+$P\neq f$. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un
 ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.
 
 ::: {.codigo-clave}
