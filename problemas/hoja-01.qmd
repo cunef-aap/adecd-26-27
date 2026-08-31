@@ -64,7 +64,7 @@ import style
 import torch
 from matplotlib import pyplot as plt
 
-torch.manual_seed(20)
+torch.manual_seed(19)
 
 n = 60
 x = torch.linspace(0, 10, n)
@@ -76,13 +76,16 @@ y1 = recta + abanico * torch.randn(n)
 y2 = arco + 1.2 * torch.randn(n)
 
 # Una sola distribucion para las sesenta, mezcla de dos escalas: da
-# colas mas pesadas que la normal.
-grande = torch.rand(n) < 0.12
-escala = torch.where(grande, torch.tensor(9.0), torch.tensor(1.2))
+# colas mas pesadas que la normal. Con p = 0.15 salen del orden de nueve
+# puntos de la escala grande, de modo que el rasgo no depende de uno solo.
+grande = torch.rand(n) < 0.15
+escala = torch.where(grande, torch.tensor(5.0), torch.tensor(1.2))
 y3 = recta + escala * torch.randn(n)
 
-# Ruido con memoria: cada uno arrastra el 90 % del anterior.
-rho, dispersion = 0.90, 3.0
+# Ruido con memoria: cada uno arrastra el 90 % del anterior. La
+# dispersion es la misma que la del panel limpio, 2.4, para que lo unico
+# que los distinga sea la dependencia.
+rho, dispersion = 0.90, 2.4
 innovacion = dispersion * (1 - rho ** 2) ** 0.5 * torch.randn(n)
 ruido4 = torch.zeros(n)
 ruido4[0] = dispersion * torch.randn(1)
@@ -253,8 +256,8 @@ c. Si aparece un caso nuevo con $x=4$, ¿cuál es la señal? ¿Puede conocerse s
 ::: {#exr-h1-densidad}
 Sea $\varepsilon\sim\Normal(0,\noise^2)$ con $\noise=2$.
 
-a. Escribe la densidad $\pdf(z;0,2)$ y evalúala en $z=0$ dejando el resultado en función
-   de $\pi$.
+a. Escribe la densidad $\pdf(z;0,2)$ y **evalúala** en $z=2$, dejando el resultado en
+   función de $\pi$ y de $e$.
 b. Usando @thm-escala-normal y @thm-traslacion-normal, di qué distribución tiene
    $3\varepsilon-1$.
 c. Sea $\yi=f(x_i)+\varepsilon_i$ con $f(x_i)=5$. **Di** qué distribución tiene $\yi$,

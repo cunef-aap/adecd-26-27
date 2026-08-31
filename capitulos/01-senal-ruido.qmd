@@ -132,8 +132,8 @@ El resultado se demuestra construyendo el polinomio explícitamente, se deja pla
 ejercicio.
 
 El teorema anterior vale para cualesquiera $\yi$, incluidos unos generados por ruido puro.
-Por tanto, siempre es posible encontrar una función $g$ para la cual $g(x_i)=y_i$ para todo
-$i$. Decimos que para $g$ el **error de entrenamiento es nulo**.
+Por tanto, siempre es posible encontrar una función $P$ para la cual $P(x_i)=y_i$ para todo
+$i$. Decimos que para $P$ el **error de entrenamiento es nulo**.
 
 ```{python}
 #| code-fold: true
@@ -292,9 +292,12 @@ probabilidades se obtienen integrando la densidad sobre intervalos.
 
 a. Evalúa @eq-densidad-normal en $z=\mu$ y calcula su valor para $\noise=2$, $\noise=1$ y
    $\noise=0.2$.
-b. Encuentra a partir de qué valor de $\noise$ la densidad evaluada en $z=\mu$ es mayor
-   a 1. Explica en una frase por qué eso no contradice que la probabilidad esté entre cero
-   y uno.
+b. Calcula a partir de qué valor de $\noise$ la densidad evaluada en $z=\mu$ pasa de uno.
+c. Con $\noise=0.2$ esa densidad vale $1.995$, algo menos de 2. Di cuál de las dos
+   cantidades $\pdf(z;\mu,\noise)$ y $\Prob{a\leq\varepsilon\leq b}$ tiene que estar entre
+   cero y uno según @def-normal, y calcula el área del rectángulo de base
+   $[\mu-0.2,\mu+0.2]$ y altura 2 para acotar la probabilidad de ese intervalo y comprobar
+   que no llega a uno.
 :::
 
 La fórmula anterior se puede traducir directamente a código vectorizado.
@@ -728,12 +731,13 @@ observamos en el siguiente ejercicio.
 Con los datos simulados de este capítulo y $\noise=3$, evalúa `densidad_normal(y, senal, 3.0)`
 para obtener las $\nobs$ densidades individuales.
 
-a. Calcula el producto de las cinco primeras, de las diez primeras y de las veinte. Anota los
-   tres órdenes de magnitud.
+a. Calcula el producto de las cinco primeras, de las diez primeras y de las veinte. Anota
+   los tres órdenes de magnitud.
 b. Calcula la suma de sus logaritmos en los mismos tres casos.
-c. Con densidades del orden de las que has obtenido, estima a partir de cuántas observaciones
-   el producto se redondearía a cero en coma flotante de doble precisión, que llega hasta
-   $10^{-308}$. Explica qué le pasaría entonces a una búsqueda que compare verosimilitudes.
+c. Toma $10^{-1}$ como valor típico de una de esas densidades. Calcula a partir de cuántas
+   observaciones el producto baja de $10^{-308}$, el orden en que la coma flotante de doble
+   precisión empieza a perder los números pequeños, y di qué devolvería la comparación entre
+   dos verosimilitudes cuando las dos se han redondeado a cero.
 :::
 
 Para evitar este problema se utiliza la **log-verosimilitud**,
