@@ -537,7 +537,7 @@ y debemos decidir en qué familia de funciones vamos a buscarla.
 
 Una **clase de hipótesis** $\hyp$ es el conjunto de funciones permitidas para representar
 la señal. Si las funciones están indexadas por parámetros $\coef$, escribimos
-$\model(\xv;\coef)$.
+$\model(\xv;\coef)$ o $f_{\coef}(x_i)$.
 :::
 
 ### El modelo lineal-gaussiano

@@ -14,9 +14,35 @@ from pathlib import Path
 CUERPO = r"::: \{{#{id}\}}\n(.*?)\n:::\n"
 
 
+def cuerpo_del_div(lineas: list[str], apertura: int) -> tuple[str, int]:
+    """Cuerpo de un div y la linea de su cierre, contando los divs anidados.
+
+    Hace falta contar: un ejercicio puede llevar dentro una figura, que es otro div, y
+    quedarse con el primer `:::` que aparezca corta el enunciado por la mitad. Paso por
+    ese aro: el solucionario de la hoja 1 tenia la solucion metida entre la figura y los
+    apartados, y el comparador no lo veia porque cometia el mismo error en los dos lados.
+    """
+    profundidad = 1
+    for i in range(apertura + 1, len(lineas)):
+        l = lineas[i].rstrip()
+        if l.startswith(":::"):
+            if re.fullmatch(r":::+", l):
+                profundidad -= 1
+                if profundidad == 0:
+                    return "\n".join(lineas[apertura + 1:i]), i
+            else:
+                profundidad += 1
+    raise ValueError(f"div sin cerrar que abre en la linea {apertura + 1}")
+
+
 def enunciados(texto: str, sufijo: str = "") -> dict[str, str]:
-    patron = re.compile(r"::: \{#(exr-[\w-]+)\}\n(.*?)\n:::\n", re.S)
-    return {m.group(1): m.group(2) for m in patron.finditer(texto)}
+    lineas = texto.split("\n")
+    fuera = {}
+    for i, l in enumerate(lineas):
+        m = re.fullmatch(r"::: \{#(exr-[\w-]+)\}", l.rstrip())
+        if m:
+            fuera[m.group(1)] = cuerpo_del_div(lineas, i)[0]
+    return fuera
 
 
 # El solucionario repite el enunciado, pero todo lo que sea etiqueta suya tiene que llevar

@@ -144,7 +144,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
-<body class="nav-sidebar floating slimcontent quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -273,7 +273,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 <!-- Membrete de los PDF. El logo va incrustado porque este fragmento se incluye en
      paginas a distinta profundidad y una ruta relativa no valdria para todas.
      En pantalla no se ve: lo oculta .logo-impresion en assets/styles.css.
@@ -300,7 +300,7 @@ window.Quarto = {
 
 
 <p>Hoja del capítulo 1, Datos = señal + ruido.</p>
-<section id="sec-h1-a" class="level2 page-columns page-full">
+<section id="sec-h1-a" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-a">1. Conceptual</h2>
 <div id="exr-h1-conceptual" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1</strong></span> &nbsp;</p>
@@ -309,7 +309,7 @@ window.Quarto = {
 <li>Un compañero afirma que, como <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon_i \right]=0\)</span>, cada observación debe estar exactamente sobre la señal. <strong>Corrige</strong> la afirmación en una frase y <strong>di</strong> qué miden los segmentos naranjas de <a href="../capitulos/01-senal-ruido.html#fig-senal-ruido" class="quarto-xref">Figura&nbsp;<span>1.1</span></a> y cuál de estas dos cantidades vale cero en promedio: uno cualquiera de esos segmentos o su media con signo.</li>
 </ol>
 </div>
-<div id="exr-h1-hipotesis" class="theorem exercise page-columns page-full">
+<div id="exr-h1-hipotesis" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 2</strong></span> El modelo lineal-gaussiano de <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a> supone que, para <span class="math inline">\(i=1,\ldots,n\)</span>:</p>
 <p>H1. <strong>Aditividad.</strong> El ruido entra sumando, y no multiplicando ni de ninguna otra forma: <span class="math inline">\(y_i=f(x_i)+\varepsilon_i\)</span>, como en <a href="../capitulos/01-senal-ruido.html#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>.</p>
 <p>H2. <strong>Señal afín.</strong> La clase de hipótesis de <a href="../capitulos/01-senal-ruido.html#def-hipotesis" class="quarto-xref">Definición&nbsp;<span>1.5</span></a> en la que se busca la señal es la de las rectas: <span class="math inline">\(f_{\boldsymbol{w}}(x_i)=w_0+w_1x_i\)</span>, como en <a href="../capitulos/01-senal-ruido.html#eq-senal-lineal-1d" class="quarto-xref">Ecuación&nbsp;<span>1.4</span></a>.</p>
@@ -318,30 +318,30 @@ window.Quarto = {
 <p>H5. <strong>Misma desviación típica.</strong> Todos los ruidos tienen el mismo nivel, <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon_i \right)=\sigma^2\)</span>, con un único <span class="math inline">\(\sigma&gt;0\)</span>.</p>
 <p>H6. <strong>Independencia.</strong> Los ruidos de observaciones distintas son independientes: saber cuánto vale <span class="math inline">\(\varepsilon_i\)</span> no dice nada sobre <span class="math inline">\(\varepsilon_j\)</span> cuando <span class="math inline">\(j\neq i\)</span>.</p>
 <p>De H3 a H6 son las cuatro hipótesis sobre el ruido, que se resumen en <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de <a href="../capitulos/01-senal-ruido.html#def-modelo-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.4</span></a>.</p>
-<p><a href="#fig-h1-violaciones" class="quarto-xref">Figura&nbsp;<span>1</span></a> muestra seis muestras simuladas, todas con <span class="math inline">\(n=60\)</span> puntos y dibujadas en la misma escala. En las seis el ruido entra sumando, así que la primera hipótesis se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no falla ninguna, y es el (6). Responde cada uno de los siguientes apartados de forma razonada.</p>
-<div id="fig-h1-violaciones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<p><a href="#fig-h1-violaciones" class="quarto-xref">Figura&nbsp;<span>1</span></a> muestra seis muestras simuladas, todas con <span class="math inline">\(n=60\)</span> puntos y dibujadas en la misma escala. Debajo de cada panel está el código con el que se generó, la señal y el ruido, con <span class="math inline">\(y_i\)</span> igual a la suma de los dos. En las seis el ruido entra sumando, así que H1 se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no falla ninguna, y es el (6). Responde cada apartado de forma razonada.</p>
+<div id="fig-h1-violaciones" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-h1-violaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="aac22e7d" class="cell" data-execution_count="1">
+<div id="c62ce75d" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hoja-01_files/figure-html/cell-2-output-1.png" class="figure-img" width="819" height="520"></p>
+<p><img src="hoja-01_files/figure-html/cell-2-output-1.png" width="701" height="490" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-h1-violaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Seis muestras simuladas con <span class="math inline">\(n=60\)</span> observaciones cada una, en la misma escala. Un trazo gris une las observaciones en orden creciente de <span class="math inline">\(x\)</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h1-violaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Seis muestras simuladas con <span class="math inline">\(n=60\)</span> observaciones cada una, en la misma escala. Debajo de cada panel, la señal y el ruido con los que se generó; la respuesta es la suma. <code>randn</code> da extracciones normales estándar y <code>rand</code>, uniformes en <span class="math inline">\([0,1)\)</span>. Un trazo gris une las observaciones en orden creciente de <span class="math inline">\(x\)</span>.
 </figcaption>
 </figure>
 </div>
 <ol type="a">
 <li>En el panel (1) cada ruido es normal e independiente de los demás. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué rasgo del dibujo la delata.</li>
-<li>En el panel (2) los ruidos son independientes y todos tienen la misma desviación típica. <strong>Identifica</strong> la hipótesis que falla.</li>
+<li>En el panel (2) los ruidos son independientes y todos tienen la misma desviación típica. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> en qué te apoyas, en la señal o en el dibujo.</li>
 <li>En el panel (3) los sesenta ruidos son independientes y salen todos de una misma distribución. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué rasgo del dibujo la delata.</li>
-<li>En el panel (4) la señal sí es una recta y todos los ruidos tienen la misma desviación típica. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué diferencia ves entre este panel y el (6), que tiene la misma recta y una dispersión parecida.</li>
+<li>En el panel (4) todos los ruidos tienen la misma desviación típica, y su señal, como se ve debajo, es la misma recta que la del panel (6). <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué diferencia ves entre los dos paneles.</li>
 <li>En el panel (5) los ruidos son normales e independientes. <strong>Identifica</strong> las <strong>dos</strong> hipótesis que fallan.</li>
 <li>H4 no falla en ningún panel. Escribe <span class="math inline">\(\varepsilon_i=c+\eta_i\)</span> con <span class="math inline">\(\mathbb{E}\!\left[ \eta_i \right]=0\)</span>, sustitúyelo en <span class="math inline">\(y_i=w_0+w_1x_i+\varepsilon_i\)</span> y <strong>di</strong> qué otra recta genera exactamente los mismos <span class="math inline">\(y_i\)</span>. <strong>Razona</strong> con ello por qué ningún dibujo de puntos puede mostrar que H4 falla.</li>
 </ol>

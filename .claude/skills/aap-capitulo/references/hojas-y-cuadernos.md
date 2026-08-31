@@ -74,6 +74,28 @@ examen.
 - Los números de los cálculos a mano se comprueban ejecutándolos antes de escribir la
   solución. Nunca se publican sin verificar.
 
+### Cómo se escribe una solución
+
+Dos reglas suyas, de agosto de 2026, después de leer el solucionario de la hoja 1 y
+encontrárselo con 380 palabras y seis citas por ejercicio.
+
+**Al grano, telegráfico o casi.** Entre 60 y 110 palabras por solución, y menos si el
+ejercicio es de cálculo. El profesor la lee en clase mientras corrige en la pizarra, así que
+una solución larga no se puede usar. Se conservan la respuesta de cada apartado, todos los
+números y el paso de álgebra que hace falta para creerse el resultado. Se van la
+reformulación del enunciado, las transiciones, los "obsérvese que", los matices de segundo
+orden, las comprobaciones alternativas y las moralejas. Valen las frases sin verbo y las
+listas. Los bloques de código no se recortan: son lo que se proyecta.
+
+**Como máximo una cita `@etiqueta` por solución.** Renderizadas salen como "de
+Definición 1.4" o "por Teorema 1.3", un número sin nombre que obliga a ir a buscarlo. Se
+cita solo cuando el resultado citado **es** la respuesta; muchas soluciones se quedan con
+cero. Todo lo demás se nombra en prosa: "por interpolación exacta", "por la propiedad de
+escala de la normal", "es sobreajuste". El nombre informa, el número no.
+
+Las dos reglas valen también para las soluciones que van dentro de un capítulo y para las de
+`evaluacion/`.
+
 ### Bloque D
 
 Fragmento en ` ```python ` **sin llaves**, de modo que no se ejecuta. Exactamente **tres**

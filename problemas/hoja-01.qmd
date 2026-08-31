@@ -1,3 +1,9 @@
+---
+# El pie de figura va debajo, no en el margen: la hoja lleva una figura de seis paneles y
+# en el PDF el pie de margen se imprime encima de ella.
+fig-cap-location: bottom
+---
+
 # Hoja 1 {.unnumbered}
 
 ::: {.content-hidden}
@@ -48,9 +54,10 @@ De H3 a H6 son las cuatro hipótesis sobre el ruido, que se resumen en
 $\varepsilon_i\iid\Normal(0,\noise^2)$ de @def-modelo-gaussiano.
 
 @fig-h1-violaciones muestra seis muestras simuladas, todas con $\nobs=60$ puntos y
-dibujadas en la misma escala. En las seis el ruido entra sumando, así que la primera
-hipótesis se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no
-falla ninguna, y es el (6). Responde cada uno de los siguientes apartados de forma razonada.
+dibujadas en la misma escala. Debajo de cada panel está el código con el que se generó, la
+señal y el ruido, con $\yi$ igual a la suma de los dos. En las seis el ruido entra sumando,
+así que H1 se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no
+falla ninguna, y es el (6). Responde cada apartado de forma razonada.
 
 ::: {#fig-h1-violaciones}
 
@@ -96,40 +103,58 @@ y4 = recta + ruido4
 y5 = arco + abanico * torch.randn(n)
 y6 = recta + 2.4 * torch.randn(n)
 
-muestras = [y1, y2, y3, y4, y5, y6]
-todas = torch.cat(muestras)
+RECTA = "senal = 2 + 2.2*x"
+ARCO = "senal = 2 + 8.5*x - 0.78*x**2"
+
+# Cada panel dice con que se genero: la senal y el ruido. Sin el ruido no se
+# puede decidir que hipotesis falla.
+muestras = [
+    (y1, RECTA, "ruido = (0.35 + 0.75*x) * randn(n)"),
+    (y2, ARCO, "ruido = 1.2 * randn(n)"),
+    (y3, RECTA, "s = where(rand(n) < 0.15, 5.0, 1.2)\n"
+                "ruido = s * randn(n)"),
+    (y4, RECTA, "ruido[0] = 2.4 * randn(1)\n"
+                "ruido[i] = 0.9*ruido[i-1] + nuevo"),
+    (y5, ARCO, "ruido = (0.35 + 0.75*x) * randn(n)"),
+    (y6, RECTA, "ruido = 2.4 * randn(n)"),
+]
+todas = torch.cat([y for y, _, _ in muestras])
 margen = 0.05 * (todas.max() - todas.min())
 limites = (todas.min().item() - margen.item(),
            todas.max().item() + margen.item())
 
-fig, ejes = plt.subplots(2, 3, figsize=(6.4, 4.1))
-for k, (ax, y) in enumerate(zip(ejes.ravel(), muestras), start=1):
+fig, ejes = plt.subplots(2, 3, figsize=(7.4, 5.2))
+for k, (ax, (y, senal, ruido)) in enumerate(zip(ejes.ravel(), muestras),
+                                            start=1):
     ax.plot(x.numpy(), y.numpy(), color=style.GRIS, lw=0.7,
             alpha=0.8, zorder=1)
     ax.scatter(x.numpy(), y.numpy(), s=10, color=style.TINTA,
                zorder=2)
     ax.set(title=f"({k})", xticks=[], yticks=[], ylim=limites)
-for ax in ejes[1, :]:
-    ax.set_xlabel("$x$")
+    ax.set_xlabel(f"{senal}\n{ruido}", family="monospace",
+                  fontsize=6.5, linespacing=1.5)
 for ax in ejes[:, 0]:
     ax.set_ylabel("$y$")
 plt.tight_layout()
 ```
 
-Seis muestras simuladas con $\nobs=60$ observaciones cada una, en la misma escala. Un trazo
-gris une las observaciones en orden creciente de $x$.
+Seis muestras simuladas con $\nobs=60$ observaciones cada una, en la misma escala. Debajo de
+cada panel, la señal y el ruido con los que se generó; la respuesta es la suma. `randn` da
+extracciones normales estándar y `rand`, uniformes en $[0,1)$. Un trazo gris une las
+observaciones en orden creciente de $x$.
 :::
 
 a. En el panel (1) cada ruido es normal e independiente de los demás. **Identifica** la
    hipótesis que falla y **di** qué rasgo del dibujo la delata.
 b. En el panel (2) los ruidos son independientes y todos tienen la misma desviación típica.
-   **Identifica** la hipótesis que falla.
+   **Identifica** la hipótesis que falla y **di** en qué te apoyas, en la señal o en el
+   dibujo.
 c. En el panel (3) los sesenta ruidos son independientes y salen todos de una misma
    distribución. **Identifica** la hipótesis que falla y **di** qué rasgo del dibujo la
    delata.
-d. En el panel (4) la señal sí es una recta y todos los ruidos tienen la misma desviación
-   típica. **Identifica** la hipótesis que falla y **di** qué diferencia ves entre este
-   panel y el (6), que tiene la misma recta y una dispersión parecida.
+d. En el panel (4) todos los ruidos tienen la misma desviación típica, y su señal, como se
+   ve debajo, es la misma recta que la del panel (6). **Identifica** la hipótesis que falla
+   y **di** qué diferencia ves entre los dos paneles.
 e. En el panel (5) los ruidos son normales e independientes. **Identifica** las **dos**
    hipótesis que fallan.
 f. H4 no falla en ningún panel. Escribe $\varepsilon_i=c+\eta_i$ con

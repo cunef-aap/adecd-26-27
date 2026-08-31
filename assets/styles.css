@@ -400,6 +400,14 @@ div.nuevo .proof {
     height: auto !important;
   }
 
+  /* El pie de figura al imprimir NO se arregla desde aqui. Anotado para no volver a
+     intentarlo: con `fig-cap-location: margin` el pie es una celda de la rejilla de la
+     figura, en la columna del margen, y al imprimir esa columna no existe. `position:
+     static` no hace nada; `grid-column: unset` hace desaparecer el pie; mandarlo a la
+     columna del cuerpo lo deja en la misma FILA que la imagen; y `display: block` sobre la
+     figura lo hace chocar con el texto siguiente. La solucion esta en el documento, no en
+     el CSS: `fig-cap-location: bottom` en su cabecera YAML. Lo llevan las hojas. */
+
   .logo-impresion {
     display: block;
     width: 26mm;
