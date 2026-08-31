@@ -163,7 +163,7 @@ y las medias no.
 
 ## La distribución normal
 
-::: {#def-normal}
+::: {#def-normal-repaso}
 ## Distribución normal
 
 Una variable $\varepsilon$ sigue una **distribución normal** de media $\mu$ y varianza

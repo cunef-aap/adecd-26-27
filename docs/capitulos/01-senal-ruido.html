@@ -326,7 +326,7 @@ window.Quarto = {
 <p>El principal problema del aprendizaje supervisado es que la relación entre <span class="math inline">\(\mathbf{x}\)</span> e <span class="math inline">\(y\)</span> de los datos observados no suele ser exacta. Esta relación, puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como <strong>ruido</strong> y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina <strong>señal</strong>. El objetivo del aprendizaje supervisado es <strong>aprender la señal sin memorizar el ruido</strong>.</p>
 <p>Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes. En este conjunto, el vector de características tendrá una sola dimensión.</p>
 <div class="codigo-clave">
-<div id="90eafc8f" class="cell" data-execution_count="2">
+<div id="4a83495a" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">87</span>)</span>
@@ -360,11 +360,11 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="95dcf302" class="cell" data-execution_count="3">
+<div id="3d1d991a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -398,7 +398,7 @@ y_i=f(x_i)+\varepsilon_i.
 <!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
 <p>El resultado se demuestra construyendo el polinomio explícitamente, se deja planteado como ejercicio.</p>
 <p>El teorema anterior vale para cualesquiera <span class="math inline">\(y_i\)</span>, incluidos unos generados por ruido puro. Por tanto, siempre es posible encontrar una función <span class="math inline">\(g\)</span> para la cual <span class="math inline">\(g(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>. Decimos que para <span class="math inline">\(g\)</span> el <strong>error de entrenamiento es nulo</strong>.</p>
-<div id="23ca7241" class="cell" data-execution_count="4">
+<div id="6de30290" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
@@ -421,11 +421,11 @@ y_i=f(x_i)+\varepsilon_i.
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="87771551" class="cell" data-execution_count="5">
+<div id="fefca84c" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -438,7 +438,7 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 </div>
 <p>El problema aquí es que, en general, si bien hemos ajustado perfectamente nuestros datos de entrenamiento, el modelo no ha aprendido la señal subyacente <span class="math inline">\(f\)</span>. Es decir, usualmente, <span class="math inline">\(g\neq f\)</span>. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.</p>
 <div class="codigo-clave">
-<div id="d16ca3b5" class="cell" data-execution_count="6">
+<div id="181d9b2e" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y_nueva <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(<span class="bu">len</span>(x_denso))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -457,11 +457,11 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 <div id="fig-trampa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="8b726701" class="cell" data-execution_count="7">
+<div id="f3242fb5" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="566" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -492,7 +492,7 @@ Figura&nbsp;1.3: Datos nuevos, con la misma señal, comparados con el interpolad
 <div id="fig-area-normal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="278" height="182" class="figure-img">
+<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="377" height="247" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1.4: La probabilidad de que una variable normal se encuentre entre <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> es el área bajo su densidad entre esos valores.
@@ -524,7 +524,7 @@ p(z;\mu,\sigma)
 </div>
 <p>La fórmula anterior se puede traducir directamente a código vectorizado.</p>
 <div class="codigo-clave">
-<div id="f8c843fa" class="cell" data-execution_count="9">
+<div id="9c628f08" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(z, media, desviacion):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    constante <span class="op">=</span> desviacion <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((z <span class="op">-</span> media) <span class="op">/</span> desviacion) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> constante</span>
@@ -532,7 +532,7 @@ p(z;\mu,\sigma)
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>densidad_normal(z, media<span class="op">=</span><span class="fl">0.0</span>, desviacion<span class="op">=</span><span class="fl">1.0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="89">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>tensor([0.3989, 0.2420, 0.0540])</code></pre>
 </div>
 </div>
@@ -557,11 +557,11 @@ p(z;\mu,\sigma)
 <div id="fig-densidades-normales" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-densidades-normales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="b8b5f17b" class="cell" data-execution_count="10">
+<div id="7d0acad9" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -574,12 +574,12 @@ Figura&nbsp;1.5: Densidades normales para distintas medias y desviaciones típic
 </div>
 <p>Podemos generar ruido normal con <code>torch.normal</code>. Al repetir muchas veces la extracción, el histograma de los valores se aproxima a la densidad de la distribución.</p>
 <div class="codigo-clave">
-<div id="0ae28b7d" class="cell" data-execution_count="11">
+<div id="77348ddd" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>muestra_ruido <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(<span class="dv">10</span>,))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>torch.<span class="bu">round</span>(muestra_ruido, decimals<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="91">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>tensor([ 0.2570,  0.7280, -0.3140,  1.4140, -0.3590,  1.2000,  0.1370,  1.2650,
          2.0110,  0.2640])</code></pre>
 </div>
@@ -603,11 +603,11 @@ Figura&nbsp;1.5: Densidades normales para distintas medias y desviaciones típic
 <div id="fig-histograma-normal" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-histograma-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="13897331" class="cell" data-execution_count="12">
+<div id="f566766d" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-13-output-1.png" class="figure-img" width="566" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-13-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -678,7 +678,7 @@ X=\sigma Z+\mu.
 <p>Hemos utilizado que <span class="math inline">\(\mathbb{E}\!\left[ Z \right]=0\)</span>, <span class="math inline">\(\mathrm{Var}\!\left( Z \right)=1\)</span>, que sumar una constante no altera la varianza y que <span class="math inline">\(\mathrm{Var}\!\left( aZ \right)=a^2\mathrm{Var}\!\left( Z \right)\)</span>.</p>
 <p>La misma construcción aparece en código: se genera primero ruido estándar y después se escala y se traslada.</p>
 <div class="codigo-clave">
-<div id="0e294383" class="cell" data-execution_count="13">
+<div id="5a83ba1e" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">2.0</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n_muestras <span class="op">=</span> <span class="dv">5</span></span>
@@ -761,11 +761,11 @@ f(\mathbf{x}_i;\boldsymbol{w})
 <div id="fig-modelo-generador" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-modelo-generador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="76c711a3" class="cell" data-execution_count="14">
+<div id="729775c0" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -894,7 +894,7 @@ L(\vartheta)\leq L(\vartheta^\star)
 <p>De momento damos el nivel de ruido por conocido y lo fijamos en <code>sigma_supuesto = 3.0</code>, el valor con el que se generaron los datos, y buscaremos únicamente los parámetros <span class="math inline">\(\boldsymbol{w}=(w_0,w_1)^{\mathsf{T}}\)</span> de la señal. Esta simplificación permite aislar el problema de aprender <span class="math inline">\(f_{\boldsymbol{w}}\)</span>; el capítulo siguiente mostrará cómo estimar también <span class="math inline">\(\sigma\)</span>.</p>
 <p>Para esta búsqueda evaluamos directamente <a href="#eq-log-verosimilitud" class="quarto-xref">Ecuación&nbsp;<span>1.5</span></a> mediante <code>densidad_normal</code>. Calculamos su valor sobre una rejilla de posibles interceptos y pendientes y conservamos la mejor combinación.</p>
 <div class="codigo-clave">
-<div id="bfee9d7a" class="cell" data-execution_count="15">
+<div id="c6fbb6d6" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
 <span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
@@ -961,11 +961,11 @@ L(\vartheta)\leq L(\vartheta^\star)
 <div id="fig-verosimilitud-rejilla" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-verosimilitud-rejilla-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="1f0493f4" class="cell" data-execution_count="16">
+<div id="a7a14175" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>

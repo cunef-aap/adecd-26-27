@@ -19,6 +19,29 @@ def enunciados(texto: str, sufijo: str = "") -> dict[str, str]:
     return {m.group(1): m.group(2) for m in patron.finditer(texto)}
 
 
+# El solucionario repite el enunciado, pero todo lo que sea etiqueta suya tiene que llevar
+# el sufijo -sol: si no, la misma etiqueta queda definida dos veces en el libro y Quarto
+# resuelve la cita al documento equivocado sin avisar. Al comparar se quita el sufijo, de
+# modo que ese renombrado no cuenta como desalineado.
+SUFIJO_ETIQUETA = re.compile(r"(\{#[\w-]+?)-sol(\})")
+SUFIJO_CITA = re.compile(r"(@(?:fig|tbl|exr|sec)-[\w-]+?)-sol\b")
+
+
+def sin_sufijo(cuerpo: str) -> str:
+    cuerpo = SUFIJO_ETIQUETA.sub(r"\1\2", cuerpo)
+    return SUFIJO_CITA.sub(r"\1", cuerpo)
+
+
+ETIQUETA_PROPIA = re.compile(r"\{#((?:fig|tbl|sec)-[\w-]+)\}")
+CITA_PROPIA = re.compile(r"@((?:fig|tbl|sec)-h\d[\w-]+)\b")
+
+
+def con_sufijo(cuerpo: str) -> str:
+    """Pone -sol en las etiquetas y citas que el solucionario define él mismo."""
+    cuerpo = ETIQUETA_PROPIA.sub(lambda m: "{#" + m.group(1) + "-sol}", cuerpo)
+    return CITA_PROPIA.sub(lambda m: "@" + m.group(1) + "-sol", cuerpo)
+
+
 def main() -> int:
     comprueba = "--comprueba" in sys.argv
     rutas = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -43,11 +66,11 @@ def main() -> int:
             destino_id = f"{clave}-sol"
             if destino_id not in destino:
                 continue
-            if destino[destino_id] == cuerpo:
+            if sin_sufijo(destino[destino_id]) == cuerpo:
                 continue
             cambiados.append(destino_id)
             viejo = f"::: {{#{destino_id}}}\n{destino[destino_id]}\n:::\n"
-            nuevo = f"::: {{#{destino_id}}}\n{cuerpo}\n:::\n"
+            nuevo = f"::: {{#{destino_id}}}\n{con_sufijo(cuerpo)}\n:::\n"
             assert texto.count(viejo) == 1, destino_id
             texto = texto.replace(viejo, nuevo)
         if comprueba:

@@ -389,6 +389,17 @@ div.nuevo .proof {
     margin: 14mm;
   }
 
+  /* Chrome no reescala las figuras al imprimir: una figura mas ancha que la caja se
+     recorta por la derecha sin avisar, y en pantalla no se nota porque la pagina es
+     mas ancha. Vale para cualquier figura del libro, no solo para la que lo descubrio. */
+  img,
+  svg,
+  .quarto-figure img,
+  .cell-output-display img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
   .logo-impresion {
     display: block;
     width: 26mm;
