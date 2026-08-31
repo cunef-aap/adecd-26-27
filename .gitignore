@@ -32,6 +32,10 @@ pdf/
 evaluacion/
 problemas/hoja-*-soluciones.qmd
 
+# Banco de ejercicios: cada entrada lleva su solucion completa, asi que es material
+# interno. De aqui salen los ejercicios de las hojas futuras, ya sin solucion.
+banco/
+
 # El render completo del libro, solo para sacar los PDF.
 _completo/
 

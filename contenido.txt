@@ -47,6 +47,16 @@ problemas/hoja-01.qmd
 - problemas/hoja-08.qmd
 - problemas/hoja-09.qmd
 
+[Banco de ejercicios]
+- banco/index.qmd
+- banco/cap-01.qmd
+- banco/cap-02.qmd
+- banco/cap-03.qmd
+- banco/cap-04.qmd
+- banco/cap-05.qmd
+- banco/cap-06.qmd
+- banco/cap-07.qmd
+
 {apéndices}
 curso/colab.qmd
 curso/evaluacion.qmd

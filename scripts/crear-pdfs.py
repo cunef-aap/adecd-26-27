@@ -45,6 +45,7 @@ GRUPOS += [
     ("capitulos/*.html", "capitulos", "capitulo"),
     ("problemas/hoja-*.html", "problemas", "hoja"),
     ("curso/*.html", "curso", "curso"),
+    ("banco/*.html", "banco", "banco"),
 ]
 
 

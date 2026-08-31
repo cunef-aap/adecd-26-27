@@ -2,7 +2,8 @@
 """Aborta si algo que no debe publicarse ha llegado al indice de git o a docs/.
 
 El repositorio es publico y lleva las fuentes del libro. Solo dos cosas se quedan fuera, y
-.gitignore las excluye: los examenes de evaluacion/ y los solucionarios de las hojas. Esta
+.gitignore las excluye: los examenes de evaluacion/, los solucionarios de las hojas y el
+banco de ejercicios, que lleva las soluciones dentro. Esta
 comprobacion es la red por si alguien las anade con `git add -f` o por si un enlace desde
 una pagina publicada arrastra un .qmd inedito a docs/, que es algo que Quarto hace solo.
 """
@@ -25,7 +26,8 @@ def main() -> int:
     problemas = []
 
     prohibidos = [f for f in rastreados()
-                  if f.startswith("evaluacion/") or "-soluciones.qmd" in f]
+                  if f.startswith("evaluacion/") or f.startswith("banco/")
+                  or "-soluciones.qmd" in f]
     if prohibidos:
         problemas.append("git rastrea material que no puede ser publico:\n  "
                          + "\n  ".join(prohibidos))
@@ -42,8 +44,9 @@ def main() -> int:
         if colados:
             problemas.append("solucionarios en docs/:\n  "
                              + "\n  ".join(str(f.relative_to(DOCS)) for f in colados))
-        if (DOCS / "evaluacion").exists():
-            problemas.append("docs/evaluacion existe: material de examen en el sitio")
+        for carpeta in ("evaluacion", "banco"):
+            if (DOCS / carpeta).exists():
+                problemas.append(f"docs/{carpeta} existe: material interno en el sitio")
 
     if problemas:
         print("\n\n".join(problemas), file=sys.stderr)
