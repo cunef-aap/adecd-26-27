@@ -299,18 +299,8 @@ window.Quarto = {
 </header>
 
 
-<div class="nuevo">
-<p>Hoja del capítulo 1, Datos = señal + ruido. El capítulo ocupa dos semanas y la hoja se reparte entre las dos sesiones de problemas. Los cuatro primeros bloques reproducen la estructura del examen escrito. El quinto sirve para practicar el código que se explica en clase y el sexto es opcional.</p>
-<p>No se evalúan figuras ni la sintaxis de <code>matplotlib</code>. Cuando se pide leer o completar código, el fragmento procede de un bloque marcado como exigible en el capítulo.</p>
-<ul>
-<li>Primera sesión, señal, ruido y sobreajuste: se trabajan <a href="#exr-h1-conceptual" class="quarto-xref">Ejercicio&nbsp;<span>1</span></a>, después <a href="#exr-h1-sobreajuste" class="quarto-xref">Ejercicio&nbsp;<span>3</span></a>, <a href="#exr-h1-lagrange" class="quarto-xref">Ejercicio&nbsp;<span>6</span></a> y <a href="#exr-h1-densidad-uno" class="quarto-xref">Ejercicio&nbsp;<span>7</span></a>, y se cierra con <a href="#exr-h1-errores-simular" class="quarto-xref">Ejercicio&nbsp;<span>10</span></a>.</li>
-<li>Segunda sesión, modelo generador y verosimilitud: los demás.</li>
-</ul>
-</div>
 <section id="sec-h1-a" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-a">1. Conceptual</h2>
-<p><em>Bloque A del examen. Respuesta breve, tres o cuatro frases por apartado.</em></p>
-<div class="nuevo">
 <div id="exr-h1-conceptual" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1</strong></span> Para predecir el precio de venta de una vivienda se usan su superficie, su número de habitaciones y su barrio. Para cierta vivienda,</p>
 <p><span class="math display">\[
@@ -320,91 +310,109 @@ window.Quarto = {
 \]</span></p>
 <p>donde los precios están medidos en miles de euros.</p>
 <ol type="a">
-<li><strong>Identifica</strong> los predictores, la respuesta y el valor de <span class="math inline">\(p\)</span>.</li>
+<li><strong>Identifica</strong> los predictores y la respuesta.</li>
 <li><strong>Calcula</strong> el ruido <span class="math inline">\(\varepsilon=y-f(\mathbf{x})\)</span> y <strong>explica</strong> qué significa su signo.</li>
 <li><strong>Di</strong> cuáles de <span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(f(\mathbf{x})\)</span> y <span class="math inline">\(\varepsilon\)</span> observaríamos en un problema real. <strong>Razona</strong> por qué no podemos separar señal y ruido a partir de una sola respuesta sin hacer hipótesis.</li>
 <li>Llega otra vivienda con los mismos predictores. <strong>Di</strong> cuál es el centro de su distribución de respuestas y <strong>explica</strong> por qué no tiene que venderse por 305.</li>
 </ol>
 </div>
-</div>
-<div class="nuevo">
 <div id="exr-h1-hipotesis" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> En todos los casos siguientes el ruido entra sumando, <span class="math inline">\(Y=f(x)+\varepsilon\)</span>. Contrasta cada caso con las hipótesis del modelo lineal-gaussiano: señal afín; ruidos normales, de media cero, con una misma varianza e independientes. En el caso B, <span class="math inline">\(x_i\in[0,4]\)</span>; en el D, <span class="math inline">\(n\)</span> es par.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> En todos los casos siguientes el ruido entra sumando, <span class="math inline">\(Y=f(x)+\varepsilon\)</span>. Contrasta cada caso con las cinco hipótesis del modelo lineal-gaussiano:</p>
+<ol type="1">
+<li>La señal es una función afín.</li>
+<li>Cada error sigue una distribución normal.</li>
+<li>Cada error tiene media cero.</li>
+<li>Todos los errores tienen la misma varianza.</li>
+<li>Los errores de observaciones distintas son independientes.</li>
+</ol>
+<p>En el caso B, los <span class="math inline">\(x_i\)</span> toman al menos dos valores distintos en <span class="math inline">\([0,4]\)</span>; en el D, <span class="math inline">\(n\)</span> es par.</p>
 <ul>
 <li>A: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
 <li>B: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y ruidos independientes con <span class="math inline">\(\varepsilon_i\sim\mathcal{N}(0,(1+x_i)^2)\)</span>.</li>
-<li>C: <span class="math inline">\(f(x)=w_0+w_1x+w_2x^2\)</span> y <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
+<li>C: <span class="math inline">\(f(x)=w_0+w_1x+w_2x^2\)</span>, con <span class="math inline">\(w_2\neq0\)</span>, y <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
 <li>D: <span class="math inline">\(f(x)=w_0+w_1x\)</span>, <span class="math inline">\(\varepsilon_{2k-1}=Z_k\)</span> y <span class="math inline">\(\varepsilon_{2k}=Z_k\)</span>, con <span class="math inline">\(Z_k\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
 <li>E: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y ruidos independientes con probabilidad <span class="math inline">\(1/2\)</span> de valer <span class="math inline">\(-2\)</span> y <span class="math inline">\(1/2\)</span> de valer <span class="math inline">\(2\)</span>.</li>
 </ul>
 <ol type="a">
-<li>Para cada caso de B a E, <strong>identifica</strong> la hipótesis que falla. Si falla más de una, indícalas todas.</li>
+<li>Para cada caso de B a E, <strong>identifica</strong> cuáles de las hipótesis 1 a 5 fallan. Si falla más de una, indícalas todas.</li>
 <li><strong>Indica</strong> cuál de los cinco casos pertenece a la familia lineal-gaussiana, según el modelo de <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>.</li>
 <li>Aunque el proceso real sea uno de B a E, todavía se puede ajustar por máxima verosimilitud un modelo lineal-gaussiano. <strong>Explica</strong> por qué eso no convierte el modelo ajustado en un modelo bien especificado.</li>
 </ol>
 </div>
-</div>
-<div class="nuevo">
 <div id="exr-h1-sobreajuste" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Dos modelos se han ajustado con las cuatro primeras observaciones de la tabla. Después se han observado cuatro respuestas nuevas para los mismos valores de <span class="math inline">\(x\)</span>. El modelo B memoriza la respuesta de entrenamiento asociada a cada valor de <span class="math inline">\(x\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> El modelo A usa la señal afín <span class="math inline">\(\hat{f}_A(x)=1+2x\)</span>. El modelo B es un interpolador flexible. Los dos se han ajustado con las cuatro observaciones de entrenamiento siguientes:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
-<th style="text-align: right;"><span class="math inline">\(x=1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=0\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(x=2\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(x=3\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(x=4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=8\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(y\)</span> de entrenamiento</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">17</td>
 </tr>
 <tr class="even">
 <td>predicción de A</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">17</td>
 </tr>
 <tr class="odd">
 <td>predicción de B</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(y\)</span> nueva</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">7</td>
 <td style="text-align: right;">8</td>
+<td style="text-align: right;">17</td>
 </tr>
+</tbody>
+</table>
+<p>Después llegan cuatro casos nuevos, con valores de <span class="math inline">\(x\)</span> distintos de los usados para ajustar:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;"><span class="math inline">\(x=1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=5\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=7\)</span></th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td>predicción de A sobre los casos nuevos</td>
+<td><span class="math inline">\(y\)</span> nueva</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">6</td>
 <td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">16</td>
 </tr>
 <tr class="even">
-<td>predicción de B sobre los casos nuevos</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">9</td>
+<td>predicción de A</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td>predicción de B</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">18</td>
 </tr>
 </tbody>
 </table>
 <p>Para cuatro respuestas, define el error cuadrático medio como</p>
 <p><span class="math display">\[
-\mathrm{MSE}=\frac{1}{4}\sum_{i=1}^{4}(y_i-\widehat y_i)^2.
+\mathrm{MSE}=\frac{1}{4}\sum_{i=1}^{4}(y_i-\hat{y}_i)^2.
 \]</span></p>
 <ol type="a">
 <li><strong>Calcula</strong> el error de entrenamiento de A y de B.</li>
@@ -412,12 +420,9 @@ window.Quarto = {
 <li><strong>Identifica</strong> qué modelo presenta sobreajuste según <a href="../capitulos/01-senal-ruido.html#def-sobreajuste" class="quarto-xref">Definición&nbsp;<span>1.2</span></a>. <strong>Explica</strong> por qué el error de entrenamiento no basta para elegir con qué modelo predecirías el caso siguiente.</li>
 </ol>
 </div>
-</div>
 </section>
 <section id="sec-h1-b" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-b">2. Demostración</h2>
-<p><em>Bloque B. Sale de los resultados desarrollados en el capítulo y puede aparecer tal cual en el examen.</em></p>
-<div class="nuevo">
 <div id="exr-h1-media-senal" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Supón que, para un valor fijo <span class="math inline">\(X=\mathbf{x}\)</span>,</p>
 <p><span class="math display">\[
@@ -430,19 +435,8 @@ Y=f(\mathbf{x})+\varepsilon,
 <li>Si <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right]=c\neq0\)</span>, <strong>calcula</strong> la media condicional y <strong>explica</strong> por qué la hipótesis de media cero permite identificar <span class="math inline">\(f\)</span> con el centro de la respuesta.</li>
 </ol>
 </div>
-</div>
-<div class="nuevo">
-<div id="exr-h1-log-argmax" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Sea <span class="math inline">\(h:\Theta\to(0,\infty)\)</span> y sea <span class="math inline">\(\vartheta^\star\in\Theta\)</span>.</p>
-<ol type="a">
-<li><strong>Demuestra</strong> que <span class="math inline">\(\vartheta^\star\in\mathop{\mathrm{arg\,max}}_{\vartheta}h(\vartheta)\)</span> si y solo si <span class="math inline">\(\vartheta^\star\in\mathop{\mathrm{arg\,max}}_{\vartheta}\log h(\vartheta)\)</span>. Escribe la comparación que debe cumplirse para todo <span class="math inline">\(\vartheta\)</span> e indica dónde se usa que el logaritmo es estrictamente creciente.</li>
-<li><strong>Deduce</strong> que maximizar <span class="math inline">\(\log h\)</span> equivale a minimizar <span class="math inline">\(-\log h\)</span>.</li>
-<li><strong>Explica</strong> por qué se exige que <span class="math inline">\(h\)</span> sea positiva al aplicar el resultado a una verosimilitud.</li>
-</ol>
-</div>
-</div>
 <div id="exr-h1-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> valores entre los que no haya dos iguales. Se define la <strong>base de Lagrange</strong> como</p>
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> valores entre los que no haya dos iguales. Se define la <strong>base de Lagrange</strong> como</p>
 <p><span class="math display">\[
 \ell_j(x)=\prod_{\substack{1\leq k\leq n\\ k\neq j}}
 \frac{x-x_k}{x_j-x_k},
@@ -456,18 +450,16 @@ Y=f(\mathbf{x})+\varepsilon,
 </section>
 <section id="sec-h1-c" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-c">3. Cálculo a mano</h2>
-<p><em>Bloque C. Sin ordenador. Basta dejar indicados <span class="math inline">\(e\)</span> y <span class="math inline">\(\sqrt{2\pi}\)</span> cuando aparezcan.</em></p>
 <div id="exr-h1-densidad-uno" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> &nbsp;</p>
 <ol type="a">
 <li><strong>Evalúa</strong> la densidad normal en <span class="math inline">\(z=\mu\)</span> y <strong>calcula</strong> su valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>.</li>
 <li><strong>Calcula</strong> a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> pasa de uno.</li>
 <li>Con <span class="math inline">\(\sigma=0.2\)</span> esa densidad vale <span class="math inline">\(1.995\)</span>, algo menos de 2. <strong>Di</strong> cuál de las dos cantidades <span class="math inline">\(p(z;\mu,\sigma)\)</span> y <span class="math inline">\(\mathbb{P}\!\left( a\leq\varepsilon\leq b \right)\)</span> tiene que estar entre cero y uno según <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>, y <strong>calcula</strong> el área del rectángulo de base <span class="math inline">\([\mu-0.2,\mu+0.2]\)</span> y altura 2 para acotar la probabilidad de ese intervalo y comprobar que no llega a uno.</li>
 </ol>
 </div>
-<div class="nuevo">
 <div id="exr-h1-verosimilitud" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Se observan tres respuestas y se comparan dos señales candidatas. Se supone ruido normal de desviación típica <span class="math inline">\(\sigma=1\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Se observan tres respuestas y se comparan dos señales candidatas. Se supone ruido normal de desviación típica <span class="math inline">\(\sigma=1\)</span>.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -500,20 +492,13 @@ Y=f(\mathbf{x})+\varepsilon,
 </table>
 <ol type="a">
 <li><p><strong>Calcula</strong> los tres residuos y la suma de sus cuadrados, <span class="math inline">\(S_A\)</span> y <span class="math inline">\(S_B\)</span>, para cada señal.</p></li>
-<li><p>Partiendo de la densidad normal y de la independencia, <strong>comprueba</strong> que</p>
-<p><span class="math display">\[
-L_A=(2\pi)^{-3/2}e^{-S_A/2},
-\qquad
-L_B=(2\pi)^{-3/2}e^{-S_B/2}.
-\]</span></p></li>
+<li><p>Partiendo de la densidad normal y de la independencia, <strong>calcula</strong> la verosimilitud de cada señal candidata en función de <span class="math inline">\(S_A\)</span> y <span class="math inline">\(S_B\)</span>. Deja indicados <span class="math inline">\(e\)</span> y <span class="math inline">\(\pi\)</span> sin aproximar.</p></li>
 <li><p><strong>Calcula</strong> el cociente <span class="math inline">\(L_A/L_B\)</span> y <strong>elige</strong> la señal de máxima verosimilitud sin aproximar <span class="math inline">\(e\)</span> ni <span class="math inline">\(\pi\)</span>.</p></li>
 <li><p><strong>Identifica</strong> qué paso del apartado b dejaría de estar justificado si las tres respuestas no fueran independientes.</p></li>
 </ol>
 </div>
-</div>
-<div class="nuevo">
 <div id="exr-h1-rejilla" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Una búsqueda por rejilla prueba <span class="math inline">\(m=10\)</span> valores de cada uno de los <span class="math inline">\(q\)</span> parámetros y evalúa todas sus combinaciones.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Una búsqueda por rejilla prueba <span class="math inline">\(m=10\)</span> valores de cada uno de los <span class="math inline">\(q\)</span> parámetros y evalúa todas sus combinaciones.</p>
 <ol type="a">
 <li><strong>Calcula</strong> cuántas evaluaciones requiere una recta, con <span class="math inline">\(q=2\)</span>.</li>
 <li><strong>Calcula</strong> cuántas requiere un modelo con <span class="math inline">\(q=8\)</span> y otro con <span class="math inline">\(q=20\)</span>.</li>
@@ -521,13 +506,11 @@ L_B=(2\pi)^{-3/2}e^{-S_B/2}.
 <li><strong>Explica</strong> por qué una rejilla más fina mejora la resolución pero no resuelve el problema de escala.</li>
 </ol>
 </div>
-</div>
 </section>
 <section id="sec-h1-d" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-d">4. Encuentra los errores</h2>
-<p><em>Bloque D. Se puntúan la localización, la consecuencia y la corrección de cada error.</em></p>
 <div id="exr-h1-errores-simular" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Este fragmento pretende simular una muestra del modelo descrito en <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, con señal <span class="math inline">\(f(x)=2+3x\)</span> y ruido <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de desviación típica <span class="math inline">\(\sigma=2\)</span>. Los comentarios describen lo que el fragmento debería hacer. Contiene <strong>tres</strong> errores conceptuales, uno por línea. No obstante, se ejecuta sin dar ningún error.</p>
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Este fragmento pretende simular una muestra del modelo descrito en <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, con señal <span class="math inline">\(f(x)=2+3x\)</span> y ruido <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de desviación típica <span class="math inline">\(\sigma=2\)</span>. Los comentarios describen lo que el fragmento debería hacer. Contiene <strong>tres</strong> errores conceptuales, uno por línea. No obstante, se ejecuta sin dar ningún error.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
@@ -552,12 +535,8 @@ L_B=(2\pi)^{-3/2}e^{-S_B/2}.
 </section>
 <section id="sec-h1-e" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-e">5. Completar y comprobar código</h2>
-<div class="nuevo">
-<p><em>Bloque de laboratorio. En el examen solo puede aparecer una versión corta de código que se ha explicado en clase.</em></p>
-</div>
-<div class="nuevo">
 <div id="exr-h1-completar-rejilla" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Completa las líneas marcadas para reproducir la búsqueda por rejilla del capítulo.</p>
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Completa las líneas marcadas para reproducir la búsqueda por rejilla del capítulo.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
@@ -578,9 +557,8 @@ L_B=(2\pi)^{-3/2}e^{-S_B/2}.
 <li><strong>Di</strong> qué candidato seleccionaría el fragmento si se invirtiera la desigualdad de la línea (4).</li>
 </ol>
 </div>
-</div>
 <div id="exr-h1-logaritmos" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Con los datos simulados del capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Con los datos simulados del capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
 <ol type="a">
 <li><strong>Calcula</strong> el producto de las cinco primeras, de las diez primeras y de las veinte. Anota los tres órdenes de magnitud.</li>
 <li><strong>Calcula</strong> la suma de sus logaritmos en los mismos tres casos.</li>
@@ -590,10 +568,8 @@ L_B=(2\pi)^{-3/2}e^{-S_B/2}.
 </section>
 <section id="sec-h1-f" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-f">6. Ampliación</h2>
-<p><em>Opcional. No entra en el examen.</em></p>
-<div class="nuevo">
 <div id="exr-h1-especificacion" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> El proceso real satisface</p>
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> El proceso real satisface</p>
 <p><span class="math display">\[
 Y\,\vert\,X=x\sim\mathcal{N}(1+x+x^2,1),
 \qquad x\in[-2,2],
@@ -605,17 +581,6 @@ Y\,\vert\,X=x\sim\mathcal{N}(1+x+x^2,1),
 <li><strong>Distingue</strong> qué parte del error se debe al ruido y cuál a la señal que la familia no puede representar.</li>
 <li><strong>Razona</strong> si aumentar indefinidamente el tamaño de la muestra elimina necesariamente los dos errores.</li>
 </ol>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Las soluciones se publican en el Campus Virtual después de la sesión de problemas.</p>
-</div>
-</div>
 </div>
 
 

@@ -16,7 +16,7 @@ ejercicio.
 
 | Hoja | Capítulo | Ejercicios | Estado |
 |---|---|---:|---|
-| [1](hoja-01.qmd) | 1 · Datos = señal + ruido | 13 | escrita, solucionario en el Campus Virtual |
+| [1](hoja-01.qmd) | 1 · Datos = señal + ruido | 12 | escrita, solucionario en el Campus Virtual |
 | [2](hoja-02.qmd) | 2 · Aprender minimizando | 17 | escrita, solucionario en el Campus Virtual |
 | [3](hoja-03.qmd) | 3 · Modelos lineales con muchas variables | 19 | escrita, solucionario en el Campus Virtual |
 | [4](hoja-04.qmd) | 4 · Evaluar para generalizar | 26 | escrita, solucionario en el Campus Virtual |

@@ -26,14 +26,13 @@ $$
 \data=\{(\xv_i,\yi)\}_{i=1}^{\nobs}.
 $$
 
-::: {.nuevo}
+
 La tarea consiste en aprender una función $\modelh$ que, a partir de las características
 de un caso nuevo, produzca una predicción que se aproxime a su respuesta $y$:
 
 $$
 \yhat=\modelh(\xv)\approx y.
 $$
-:::
 
 El principal problema del aprendizaje supervisado es que la relación entre $\xv$ e
 $y$ de los datos observados no suele ser exacta. Esta relación puede entenderse como la
@@ -97,20 +96,6 @@ La respuesta $\yi$ es el valor que observamos. La función $f$ describe el patr�
 que queremos aprender y $\varepsilon_i$ recoge la variación particular de la observación
 $i$.
 
-::: {.nuevo}
-La ecuación por sí sola no determina una separación única entre señal y ruido. Para
-cualquier constante $c$, la misma respuesta admite la descomposición
-
-$$
-f(x_i)+\varepsilon_i
-=\bigl[f(x_i)+c\bigr]+\bigl[\varepsilon_i-c\bigr].
-$$
-
-Por eso necesitamos fijar qué entendemos por ruido. En la sección de ruido gaussiano
-impondremos que su media sea cero para cada valor del predictor; esa condición dará un
-significado preciso a la señal.
-:::
-
 ::: {#def-problema}
 ## Problema de predicción supervisada
 
@@ -143,19 +128,13 @@ $\nobs-1$ tal que $P(x_i)=\yi$ para todo $i$.
 
 <!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
 
-[La demostración construye ese polinomio de forma explícita y se propone como
-ejercicio.]{.nuevo}
+La demostración construye ese polinomio de forma explícita y se propone como
+ejercicio.
 
 El teorema anterior vale para cualesquiera $\yi$, incluidos unos generados por ruido puro.
 Por tanto, siempre es posible encontrar una función $P$ para la cual $P(x_i)=y_i$ para todo
 $i$. Decimos que para $P$ el **error de entrenamiento es nulo**.
 
-::: {.nuevo}
-El resultado garantiza la existencia de un polinomio global de grado a lo sumo
-$\nobs-1$. Para la figura utilizaremos, en cambio, un interpolador cúbico por tramos. Ambos
-pasan por todas las observaciones y tienen error de entrenamiento nulo, pero no son la
-misma construcción ni tienen por qué producir la misma función fuera de esos puntos.
-:::
 
 ```{python}
 #| code-fold: true
@@ -242,13 +221,11 @@ señal: en qué familia de funciones vamos a buscar $f$. A esto dedicaremos la s
 siguiente. Las dos hipótesis, conjuntamente, darán lugar al modelo lineal-gaussiano, que
 es el punto de partida del resto del curso.
 
-::: {.nuevo}
 Empezamos por el ruido y condicionamos el análisis a los valores observados de los
 predictores. Dados esos valores, vamos a **asumir** que
 $\varepsilon_1,\ldots,\varepsilon_{\nobs}$ son variables aleatorias **independientes e
 idénticamente distribuidas**. Cada observación incorpora así una extracción distinta de
 la misma distribución, sin que el ruido de una observación influya en el de las demás.
-:::
 
 ### La distribución normal
 
@@ -307,7 +284,7 @@ Escribimos $\varepsilon\sim\Normal(\mu,\noise^2)$. La función $\pdf$ es su
 **densidad de probabilidad**.
 :::
 
-[Una densidad no es una probabilidad puntual.]{.nuevo} En una variable continua, las
+Una densidad no es una probabilidad puntual. En una variable continua, las
 probabilidades se obtienen integrando la densidad sobre intervalos.
 
 ::: {#exr-densidad-mayor-que-uno}
@@ -409,7 +386,7 @@ La distribución normal tiene varias propiedades especialmente útiles para mode
 ruido. Las demostraciones completas se encuentran en el
 [repaso de probabilidad](../curso/probabilidad.qmd).
 
-::: {.nuevo}
+
 **Traslación.** El [resultado de
 traslación](../curso/probabilidad.qmd#thm-traslacion) establece que, si
 $\varepsilon\sim\Normal(\mu,\noise^2)$ y $c$ es una constante,
@@ -430,7 +407,7 @@ $$
 
 Por tanto, multiplicar una variable normal por $a$ multiplica su media por $a$ y su
 desviación típica por $\abs{a}$.
-:::
+
 
 Para cualquier variable continua con densidad $p$ se definen la esperanza y la varianza
 mediante
@@ -445,7 +422,6 @@ $$
 
 La varianza mide la distancia cuadrática media respecto al centro.
 
-::: {.nuevo}
 **Media y varianza.** El [resultado sobre los
 momentos](../curso/probabilidad.qmd#thm-momentos) establece que, para
 $\varepsilon\sim\Normal(\mu,\noise^2)$,
@@ -455,7 +431,7 @@ $$
 \qquad
 \Var{\varepsilon}=\noise^2.
 $$
-:::
+
 
 ### La normal estándar
 
@@ -467,11 +443,9 @@ $$
 X=\noise Z+\mu.
 $$
 
-::: {.nuevo}
 Por los resultados de [escala](../curso/probabilidad.qmd#thm-escala) y
 [traslación](../curso/probabilidad.qmd#thm-traslacion),
 $X\sim\Normal(\mu,\noise^2)$.
-:::
 
 También podemos comprobar sus momentos directamente. Para la media,
 
@@ -515,11 +489,9 @@ $$
 \yi=f(x_i)+\varepsilon_i.
 $$
 
-::: {.nuevo}
 Condicionamos en los predictores observados $x_1,\ldots,x_{\nobs}$ y suponemos que, dados
 esos valores, los errores son independientes y
 $\varepsilon_i\sim\Normal(0,\noise^2)$. La propiedad de traslación implica entonces que
-:::
 
 $$
 \yi\given x_i\sim\Normal\bigl(f(x_i),\noise^2\bigr).
@@ -528,7 +500,6 @@ $$ {#eq-ruido-normal}
 Cada respuesta se modeliza así como una extracción de una distribución normal centrada
 en la señal. El nivel $\noise$ determina cuánto suelen alejarse los datos de ella.
 
-::: {.nuevo}
 Por el [resultado sobre los momentos](../curso/probabilidad.qmd#thm-momentos), la media y
 la varianza condicionales son
 
@@ -539,10 +510,7 @@ $$
 $$
 
 La señal $f(x)$ es, por tanto, la media de la respuesta para cada valor fijo $x$ del
-predictor. La condición de ruido con media cero es la que identifica esta descomposición:
-si se permitiera desplazar la media del ruido, el mismo proceso admitiría distintas
-señales.
-:::
+predictor.
 
 ::: {#def-modelo-gaussiano}
 ## Modelo gaussiano
@@ -645,7 +613,7 @@ fundamentadas de pensar en lo que nuestros modelos deben aprender (la señal) y 
 ignorar (el ruido). Estos modelos también son muy útiles como modelos de dónde
 provienen los datos; es decir, como distribuciones generadoras de datos.
 
-::: {.nuevo}
+
 ::: {#def-distribucion-generadora}
 ## Distribución generadora de datos
 
@@ -655,14 +623,11 @@ aleatorias y sus distribuciones. Un modelo completo describe la distribución co
 $(X,Y)$. En regresión podemos especificar solo la distribución condicional de
 $Y\given X=\xv$ y dejar fuera del modelo la distribución de los predictores.
 :::
-:::
 
 El modelo lineal-gaussiano es un ejemplo sencillo. Para simular una respuesta, primero se
 calcula $f_{\coef}(x_i)$, después se extrae
 $\varepsilon_i\sim\Normal(0,\noise^2)$ y finalmente se suman ambas cantidades.
 
-
-::: {.nuevo}
 Conviene separar desde ahora dos cosas que es fácil confundir.
 
 - El **proceso real** que genera los datos. Denotamos por $P^\star$ su distribución
@@ -678,9 +643,7 @@ Ajustar el modelo es elegir una de ellas; proponer la familia es apostar a que l
 distribución condicional real está entre las candidatas. Esa hipótesis puede ser falsa.
 Que la señal real sea curva o que el ruido tenga colas más pesadas que la normal no impide
 ajustar el modelo, pero puede afectar a la calidad del resultado.
-:::
 
-::: {.nuevo}
 ::: {#def-bien-especificado}
 ## Modelo bien especificado
 
@@ -690,7 +653,6 @@ $\xv$. En caso
 contrario está **mal especificado**. Esta definición no exige modelizar la distribución
 marginal de $X$.
 :::
-:::
 
 Una característica muy útil de los modelos generadores de datos es que también nos
 brindan herramientas para medir cómo de bien se ajusta nuestra señal aprendida a los datos
@@ -698,7 +660,7 @@ observados, a través del concepto de verosimilitud.
 
 ## Verosimilitud del modelo
 
-::: {.nuevo}
+
 Condicionamos en los predictores observados. Bajo el modelo gaussiano, la densidad
 condicional de una respuesta es
 
@@ -712,9 +674,7 @@ $$
 
 La independencia condicional de las respuestas implica que su densidad conjunta, dados
 los predictores, es el producto de estas densidades individuales.
-:::
 
-::: {.nuevo}
 ::: {#def-verosimilitud}
 ## Verosimilitud
 
@@ -724,27 +684,25 @@ $$
 \Lik(\coef,\noise)
 =\pdf(\yv\given\X;\coef,\noise)
 =\prod_{i=1}^{\nobs}
-\pdf\bigl(\yi\given x_i;\coef,\noise\bigr).
+\pdf\bigl(\yi\given x_i;\coef,\noise\bigr),
 $$
 
-Los datos observados se mantienen fijos al considerar $\Lik$ como función de los
-parámetros $(\coef,\noise)$.
-:::
+donde $\X$ es una matriz que recoge todas las observaciones de los predictores. Los datos
+observados se mantienen fijos al considerar $\Lik$ como función de los parámetros
+$(\coef,\noise)$.
 :::
 
-::: {.nuevo}
 Cada factor mide la densidad que el modelo asigna a una respuesta. El producto es la
-densidad conjunta condicional de todas las respuestas dados los predictores observados; no
-incluye una densidad para $X$. Comparar verosimilitudes permite así determinar qué
-parámetros hacen más compatibles las respuestas observadas con el modelo.
-:::
+densidad conjunta condicional de todas las respuestas dados los predictores observados.
+Comparar verosimilitudes permite así determinar qué parámetros hacen más compatibles las
+respuestas observadas con el modelo.
 
 ### Estimador de máxima verosimilitud
 
 Dado un modelo, podemos ajustar la señal eligiendo los parámetros que hacen más
 compatibles los datos observados con el modelo generador.
-[Un criterio muy extendido consiste en
-escoger $(\coef,\noise)$ para maximizar la verosimilitud.]{.nuevo} En el modelo gaussiano,
+Un criterio muy extendido consiste en
+escoger $(\coef,\noise)$ para maximizar la verosimilitud. En el modelo gaussiano,
 desplazar $f_{\coef}(x_i)$ lejos de $\yi$ reduce la densidad asignada a esa observación.
 Maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar
 conjuntamente las respuestas observadas.
@@ -768,12 +726,12 @@ $\coef$ y volveremos a estimarlo al final del capítulo siguiente, donde se demu
 esa decisión no altera la señal aprendida.
 :::
 
-::: {.nuevo}
-El producto de muchas densidades puede entrar en el rango subnormal de la representación
-en coma flotante y, con suficientes factores, redondearse a cero. En ese caso se pierde la
-posibilidad de comparar dos verosimilitudes pequeñas. Lo observamos en el siguiente
-ejercicio.
-:::
+
+El producto de muchas densidades puede alcanzar valores tan reducidos que superen el
+límite de precisión de la representación en coma flotante, terminando por redondearse a
+cero si hay suficientes factores. Cuando esto ocurre, resulta imposible comparar dos
+verosimilitudes pequeñas. Lo analizaremos en el siguiente ejercicio.
+
 
 ::: {#exr-verosimilitud-producto}
 ## Por qué se toman logaritmos
@@ -796,14 +754,13 @@ c. Toma $10^{-1}$ como valor típico de una de esas densidades. Calcula a partir
 
 Para evitar este problema se utiliza la **log-verosimilitud**,
 
-::: {.nuevo}
 $$
 \loglik(\coef,\noise)
 =\log\Lik(\coef,\noise)
 =\sum_{i=1}^{\nobs}
 \log\pdf\bigl(\yi\given x_i;\coef,\noise\bigr),
 $$ {#eq-log-verosimilitud}
-:::
+
 
 que convierte productos en sumas y resulta más estable numéricamente.
 

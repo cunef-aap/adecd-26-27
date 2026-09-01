@@ -6,27 +6,11 @@ $$
 $$
 :::
 
-::: {.nuevo}
-Hoja del capítulo 1, Datos = señal + ruido. El capítulo ocupa dos semanas y la hoja se
-reparte entre las dos sesiones de problemas. Los cuatro primeros bloques reproducen la
-estructura del examen escrito. El quinto sirve para practicar el código que se explica en
-clase y el sexto es opcional.
-
-No se evalúan figuras ni la sintaxis de `matplotlib`. Cuando se pide leer o completar
-código, el fragmento procede de un bloque marcado como exigible en el capítulo.
-
-- Primera sesión, señal, ruido y sobreajuste: se trabajan @exr-h1-conceptual,
-  después @exr-h1-sobreajuste, @exr-h1-lagrange y @exr-h1-densidad-uno, y se cierra
-  con @exr-h1-errores-simular.
-- Segunda sesión, modelo generador y verosimilitud: los demás.
-:::
 
 ## 1. Conceptual {#sec-h1-a}
 
-*Bloque A del examen. Respuesta breve, tres o cuatro frases por apartado.*
-
-::: {.nuevo}
 ::: {#exr-h1-conceptual}
+
 Para predecir el precio de venta de una vivienda se usan su superficie, su número de
 habitaciones y su barrio. Para cierta vivienda,
 
@@ -38,7 +22,7 @@ $$
 
 donde los precios están medidos en miles de euros.
 
-a. **Identifica** los predictores, la respuesta y el valor de $\nfeat$.
+a. **Identifica** los predictores y la respuesta.
 b. **Calcula** el ruido $\varepsilon=y-f(\xv)$ y **explica** qué significa su signo.
 c. **Di** cuáles de $\xv$, $y$, $f(\xv)$ y $\varepsilon$ observaríamos en un problema
    real.
@@ -47,53 +31,64 @@ c. **Di** cuáles de $\xv$, $y$, $f(\xv)$ y $\varepsilon$ observaríamos en un p
 d. Llega otra vivienda con los mismos predictores. **Di** cuál es el centro de su
    distribución de respuestas y **explica** por qué no tiene que venderse por 305.
 :::
-:::
 
-::: {.nuevo}
+
 ::: {#exr-h1-hipotesis}
 En todos los casos siguientes el ruido entra sumando, $Y=f(x)+\varepsilon$. Contrasta cada
-caso con las hipótesis del modelo lineal-gaussiano: señal afín; ruidos normales, de media
-cero, con una misma varianza e independientes. En el caso B, $x_i\in[0,4]$; en el D, $\nobs$
-es par.
+caso con las cinco hipótesis del modelo lineal-gaussiano:
+
+1. La señal es una función afín.
+2. Cada error sigue una distribución normal.
+3. Cada error tiene media cero.
+4. Todos los errores tienen la misma varianza.
+5. Los errores de observaciones distintas son independientes.
+
+En el caso B, los $x_i$ toman al menos dos valores distintos en $[0,4]$; en el D,
+$\nobs$ es par.
 
 - A: $f(x)=\coefzero+w_1x$ y $\varepsilon_i\iid\Normal(0,4)$.
 - B: $f(x)=\coefzero+w_1x$ y ruidos independientes con
   $\varepsilon_i\sim\Normal(0,(1+x_i)^2)$.
-- C: $f(x)=\coefzero+w_1x+w_2x^2$ y $\varepsilon_i\iid\Normal(0,4)$.
+- C: $f(x)=\coefzero+w_1x+w_2x^2$, con $w_2\neq0$, y
+  $\varepsilon_i\iid\Normal(0,4)$.
 - D: $f(x)=\coefzero+w_1x$, $\varepsilon_{2k-1}=Z_k$ y $\varepsilon_{2k}=Z_k$, con
   $Z_k\iid\Normal(0,4)$.
 - E: $f(x)=\coefzero+w_1x$ y ruidos independientes con probabilidad $1/2$ de valer
   $-2$ y $1/2$ de valer $2$.
 
-a. Para cada caso de B a E, **identifica** la hipótesis que falla. Si falla más de una,
-   indícalas todas.
+a. Para cada caso de B a E, **identifica** cuáles de las hipótesis 1 a 5 fallan. Si
+   falla más de una, indícalas todas.
 b. **Indica** cuál de los cinco casos pertenece a la familia lineal-gaussiana, según el
    modelo de @def-lineal-gaussiano.
 c. Aunque el proceso real sea uno de B a E, todavía se puede ajustar por máxima
    verosimilitud un modelo lineal-gaussiano. **Explica** por qué eso no convierte el modelo
    ajustado en un modelo bien especificado.
 :::
-:::
 
-::: {.nuevo}
+
 ::: {#exr-h1-sobreajuste}
-Dos modelos se han ajustado con las cuatro primeras observaciones de la tabla. Después se
-han observado cuatro respuestas nuevas para los mismos valores de $x$. El modelo B memoriza
-la respuesta de entrenamiento asociada a cada valor de $x$.
+El modelo A usa la señal afín $\modelh_A(x)=1+2x$. El modelo B es un interpolador
+flexible. Los dos se han ajustado con las cuatro observaciones de entrenamiento siguientes:
 
-| | $x=1$ | $x=2$ | $x=3$ | $x=4$ |
+| | $x=0$ | $x=2$ | $x=4$ | $x=8$ |
 |---|---:|---:|---:|---:|
-| $y$ de entrenamiento | 2 | 4 | 5 | 9 |
-| predicción de A | 2 | 4 | 6 | 8 |
-| predicción de B | 2 | 4 | 5 | 9 |
-| $y$ nueva | 1 | 5 | 7 | 8 |
-| predicción de A sobre los casos nuevos | 2 | 4 | 6 | 8 |
-| predicción de B sobre los casos nuevos | 2 | 4 | 5 | 9 |
+| $y$ de entrenamiento | 1 | 5 | 8 | 17 |
+| predicción de A | 1 | 5 | 9 | 17 |
+| predicción de B | 1 | 5 | 8 | 17 |
+
+Después llegan cuatro casos nuevos, con valores de $x$ distintos de los usados para
+ajustar:
+
+| | $x=1$ | $x=3$ | $x=5$ | $x=7$ |
+|---|---:|---:|---:|---:|
+| $y$ nueva | 2 | 8 | 10 | 16 |
+| predicción de A | 3 | 7 | 11 | 15 |
+| predicción de B | 0 | 10 | 8 | 18 |
 
 Para cuatro respuestas, define el error cuadrático medio como
 
 $$
-\MSE=\frac{1}{4}\sum_{i=1}^{4}(y_i-\widehat y_i)^2.
+\MSE=\frac{1}{4}\sum_{i=1}^{4}(\yi-\yhati)^2.
 $$
 
 a. **Calcula** el error de entrenamiento de A y de B.
@@ -102,14 +97,9 @@ c. **Identifica** qué modelo presenta sobreajuste según @def-sobreajuste. **Ex
    qué el error de entrenamiento no basta para elegir con qué modelo predecirías el caso
    siguiente.
 :::
-:::
 
 ## 2. Demostración {#sec-h1-b}
 
-*Bloque B. Sale de los resultados desarrollados en el capítulo y puede aparecer tal cual en
-el examen.*
-
-::: {.nuevo}
 ::: {#exr-h1-media-senal}
 Supón que, para un valor fijo $X=\xv$,
 
@@ -123,21 +113,6 @@ b. **Demuestra** que $\E{Y\given X=\xv}=f(\xv)$ y que
    $\Var{Y\given X=\xv}=\noise^2$.
 c. Si $\E{\varepsilon}=c\neq0$, **calcula** la media condicional y **explica** por qué la
    hipótesis de media cero permite identificar $f$ con el centro de la respuesta.
-:::
-:::
-
-::: {.nuevo}
-::: {#exr-h1-log-argmax}
-Sea $h:\Theta\to(0,\infty)$ y sea $\vartheta^\star\in\Theta$.
-
-a. **Demuestra** que $\vartheta^\star\in\argmax_{\vartheta}h(\vartheta)$ si y solo si
-   $\vartheta^\star\in\argmax_{\vartheta}\log h(\vartheta)$. Escribe la comparación que
-   debe cumplirse para todo $\vartheta$ e indica dónde se usa que el logaritmo es
-   estrictamente creciente.
-b. **Deduce** que maximizar $\log h$ equivale a minimizar $-\log h$.
-c. **Explica** por qué se exige que $h$ sea positiva al aplicar el resultado a una
-   verosimilitud.
-:::
 :::
 
 ::: {#exr-h1-lagrange}
@@ -158,7 +133,6 @@ b. **Deduce** que $P(x)=\sum_j y_j\ell_j(x)$ pasa por los $\nobs$ puntos y **exp
 
 ## 3. Cálculo a mano {#sec-h1-c}
 
-*Bloque C. Sin ordenador. Basta dejar indicados $e$ y $\sqrt{2\pi}$ cuando aparezcan.*
 
 ::: {#exr-h1-densidad-uno}
 a. **Evalúa** la densidad normal en $z=\mu$ y **calcula** su valor para $\noise=2$,
@@ -172,7 +146,6 @@ c. Con $\noise=0.2$ esa densidad vale $1.995$, algo menos de 2. **Di** cuál de 
    que no llega a uno.
 :::
 
-::: {.nuevo}
 ::: {#exr-h1-verosimilitud}
 Se observan tres respuestas y se comparan dos señales candidatas. Se supone ruido normal de
 desviación típica $\noise=1$.
@@ -185,22 +158,16 @@ desviación típica $\noise=1$.
 
 a. **Calcula** los tres residuos y la suma de sus cuadrados, $S_A$ y $S_B$, para cada
    señal.
-b. Partiendo de la densidad normal y de la independencia, **comprueba** que
-
-   $$
-   \Lik_A=(2\pi)^{-3/2}e^{-S_A/2},
-   \qquad
-   \Lik_B=(2\pi)^{-3/2}e^{-S_B/2}.
-   $$
+b. Partiendo de la densidad normal y de la independencia, **calcula** la verosimilitud de
+   cada señal candidata en función de $S_A$ y $S_B$. Deja indicados $e$ y $\pi$ sin
+   aproximar.
 
 c. **Calcula** el cociente $\Lik_A/\Lik_B$ y **elige** la señal de máxima verosimilitud
    sin aproximar $e$ ni $\pi$.
 d. **Identifica** qué paso del apartado b dejaría de estar justificado si las tres
    respuestas no fueran independientes.
 :::
-:::
 
-::: {.nuevo}
 ::: {#exr-h1-rejilla}
 Una búsqueda por rejilla prueba $m=10$ valores de cada uno de los $q$ parámetros y evalúa
 todas sus combinaciones.
@@ -213,11 +180,8 @@ c. Un ordenador evalúa un millón de combinaciones por segundo. Usando
 d. **Explica** por qué una rejilla más fina mejora la resolución pero no resuelve el
    problema de escala.
 :::
-:::
 
 ## 4. Encuentra los errores {#sec-h1-d}
-
-*Bloque D. Se puntúan la localización, la consecuencia y la corrección de cada error.*
 
 ::: {#exr-h1-errores-simular}
 Este fragmento pretende simular una muestra del modelo descrito en @def-lineal-gaussiano,
@@ -252,12 +216,6 @@ b. **Corrige** las tres líneas, escribiéndolas como deberían estar.
 
 ## 5. Completar y comprobar código {#sec-h1-e}
 
-::: {.nuevo}
-*Bloque de laboratorio. En el examen solo puede aparecer una versión corta de código que
-se ha explicado en clase.*
-:::
-
-::: {.nuevo}
 ::: {#exr-h1-completar-rejilla}
 Completa las líneas marcadas para reproducir la búsqueda por rejilla del capítulo.
 
@@ -284,7 +242,6 @@ c. **Explica** por qué la línea (3) suma logaritmos y qué representa
 d. **Di** qué candidato seleccionaría el fragmento si se invirtiera la desigualdad de la
    línea (4).
 :::
-:::
 
 ::: {#exr-h1-logaritmos}
 Con los datos simulados del capítulo y $\noise=3$, evalúa
@@ -301,9 +258,6 @@ c. Toma $10^{-1}$ como valor típico de una de esas densidades. **Calcula** a pa
 
 ## 6. Ampliación {#sec-h1-f}
 
-*Opcional. No entra en el examen.*
-
-::: {.nuevo}
 ::: {#exr-h1-especificacion}
 El proceso real satisface
 
@@ -321,9 +275,4 @@ c. **Distingue** qué parte del error se debe al ruido y cuál a la señal que l
    puede representar.
 d. **Razona** si aumentar indefinidamente el tamaño de la muestra elimina necesariamente
    los dos errores.
-:::
-:::
-
-::: {.callout-note appearance="simple"}
-Las soluciones se publican en el Campus Virtual después de la sesión de problemas.
 :::

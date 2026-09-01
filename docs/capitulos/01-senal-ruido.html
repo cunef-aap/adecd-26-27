@@ -319,16 +319,14 @@ window.Quarto = {
 <p><span class="math display">\[
 \mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n}.
 \]</span></p>
-<div class="nuevo">
 <p>La tarea consiste en aprender una función <span class="math inline">\(\hat{f}\)</span> que, a partir de las características de un caso nuevo, produzca una predicción que se aproxime a su respuesta <span class="math inline">\(y\)</span>:</p>
 <p><span class="math display">\[
 \hat{y}=\hat{f}(\mathbf{x})\approx y.
 \]</span></p>
-</div>
 <p>El principal problema del aprendizaje supervisado es que la relación entre <span class="math inline">\(\mathbf{x}\)</span> e <span class="math inline">\(y\)</span> de los datos observados no suele ser exacta. Esta relación puede entenderse como la composición de una relación estable “subyacente” y una variación aleatoria que oculta parcialmente esa relación. Esta variación se conoce como <strong>ruido</strong> y puede tener distintas procedencias: errores de medición, factores no observados, cambios en el entorno, etc. La relación estable se denomina <strong>señal</strong>. El objetivo del aprendizaje supervisado es <strong>aprender la señal sin memorizar el ruido</strong>.</p>
 <p>Para entenderlo mejor, construyamos un conjunto de datos sencillo que contenga ambos componentes. En este conjunto, el vector de características tendrá una sola dimensión.</p>
 <div class="codigo-clave">
-<div id="02b262c7" class="cell" data-execution_count="2">
+<div id="f26d56e7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">87</span>)</span>
@@ -362,11 +360,11 @@ window.Quarto = {
 <div id="fig-senal-ruido" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-senal-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="7f3abc49" class="cell" data-execution_count="3">
+<div id="0c434cfa" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-4-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -382,14 +380,6 @@ Figura&nbsp;1.1: Descomposición ilustrativa de los datos observados (puntos) en
 y_i=f(x_i)+\varepsilon_i.
 \tag{1.1}\]</span></span></p>
 <p>La respuesta <span class="math inline">\(y_i\)</span> es el valor que observamos. La función <span class="math inline">\(f\)</span> describe el patrón estable que queremos aprender y <span class="math inline">\(\varepsilon_i\)</span> recoge la variación particular de la observación <span class="math inline">\(i\)</span>.</p>
-<div class="nuevo">
-<p>La ecuación por sí sola no determina una separación única entre señal y ruido. Para cualquier constante <span class="math inline">\(c\)</span>, la misma respuesta admite la descomposición</p>
-<p><span class="math display">\[
-f(x_i)+\varepsilon_i
-=\bigl[f(x_i)+c\bigr]+\bigl[\varepsilon_i-c\bigr].
-\]</span></p>
-<p>Por eso necesitamos fijar qué entendemos por ruido. En la sección de ruido gaussiano impondremos que su media sea cero para cada valor del predictor; esa condición dará un significado preciso a la señal.</p>
-</div>
 <div id="def-problema" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.1 (Problema de predicción supervisada)</strong></span> En un problema de predicción supervisada observamos</p>
 <p><span class="math display">\[
@@ -406,12 +396,9 @@ f(x_i)+\varepsilon_i
 <p><span class="theorem-title"><strong>Teorema 1.1 (Interpolación exacta)</strong></span> Sean <span class="math inline">\(x_1,\ldots,x_{n}\)</span> valores entre los que no haya dos iguales. Para cualesquiera respuestas <span class="math inline">\(y_1,\ldots,y_{n}\)</span> existe un polinomio <span class="math inline">\(P\)</span> de grado a lo sumo <span class="math inline">\(n-1\)</span> tal que <span class="math inline">\(P(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>.</p>
 </div>
 <!-- demostracion: problemas/hoja-01.qmd#exr-h1-lagrange -->
-<p><span class="nuevo">La demostración construye ese polinomio de forma explícita y se propone como ejercicio.</span></p>
+<p>La demostración construye ese polinomio de forma explícita y se propone como ejercicio.</p>
 <p>El teorema anterior vale para cualesquiera <span class="math inline">\(y_i\)</span>, incluidos unos generados por ruido puro. Por tanto, siempre es posible encontrar una función <span class="math inline">\(P\)</span> para la cual <span class="math inline">\(P(x_i)=y_i\)</span> para todo <span class="math inline">\(i\)</span>. Decimos que para <span class="math inline">\(P\)</span> el <strong>error de entrenamiento es nulo</strong>.</p>
-<div class="nuevo">
-<p>El resultado garantiza la existencia de un polinomio global de grado a lo sumo <span class="math inline">\(n-1\)</span>. Para la figura utilizaremos, en cambio, un interpolador cúbico por tramos. Ambos pasan por todas las observaciones y tienen error de entrenamiento nulo, pero no son la misma construcción ni tienen por qué producir la misma función fuera de esos puntos.</p>
-</div>
-<div id="546d92f2" class="cell" data-execution_count="4">
+<div id="c40f04bf" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> interpolate</span>
@@ -434,11 +421,11 @@ f(x_i)+\varepsilon_i
 <div id="fig-interpolacion" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-interpolacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="1c19ba01" class="cell" data-execution_count="5">
+<div id="ef72e0ee" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-6-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -451,7 +438,7 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 </div>
 <p>El problema aquí es que, en general, si bien hemos ajustado perfectamente nuestros datos de entrenamiento, el modelo no ha aprendido la señal subyacente <span class="math inline">\(f\)</span>. Es decir, usualmente, <span class="math inline">\(P\neq f\)</span>. En nuestro caso, si generamos nuevas observaciones con la misma señal pero con un ruido distinto, veremos que la función interpoladora no predice bien los nuevos datos.</p>
 <div class="codigo-clave">
-<div id="4eab08f7" class="cell" data-execution_count="6">
+<div id="dcff41a8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x_denso <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y_nueva <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x_denso <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(<span class="bu">len</span>(x_denso))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -470,11 +457,11 @@ Figura&nbsp;1.2: Una función que interpola exactamente la muestra y, por tanto,
 <div id="fig-trampa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trampa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="9a953042" class="cell" data-execution_count="7">
+<div id="b04923e7" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="566" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-8-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -495,9 +482,7 @@ Figura&nbsp;1.3: Datos nuevos, con la misma señal, comparados con el interpolad
 <h2 class="anchored" data-anchor-id="hipótesis-sobre-el-ruido">Hipótesis sobre el ruido</h2>
 <p>Hasta aquí sabemos que ajustar el ruido empeora la predicción, pero no sabemos separarlo de la señal. Para que el problema tenga solución hay que restringirlo. Esto implica hacer <strong>suposiciones</strong>.</p>
 <p>Las suposiciones van por dos vías. Primero necesitamos dotar de cierta estructura al ruido y es a lo que dedicaremos esta sección. También necesitaremos hacer suposiciones sobre la señal: en qué familia de funciones vamos a buscar <span class="math inline">\(f\)</span>. A esto dedicaremos la sección siguiente. Las dos hipótesis, conjuntamente, darán lugar al modelo lineal-gaussiano, que es el punto de partida del resto del curso.</p>
-<div class="nuevo">
 <p>Empezamos por el ruido y condicionamos el análisis a los valores observados de los predictores. Dados esos valores, vamos a <strong>asumir</strong> que <span class="math inline">\(\varepsilon_1,\ldots,\varepsilon_{n}\)</span> son variables aleatorias <strong>independientes e idénticamente distribuidas</strong>. Cada observación incorpora así una extracción distinta de la misma distribución, sin que el ruido de una observación influya en el de las demás.</p>
-</div>
 <section id="la-distribución-normal" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="la-distribución-normal">La distribución normal</h3>
 <p>La distribución de ruido que utilizaremos a lo largo del curso es la distribución normal o gaussiana.</p>
@@ -507,7 +492,7 @@ Figura&nbsp;1.3: Datos nuevos, con la misma señal, comparados con el interpolad
 <div id="fig-area-normal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="278" height="182" class="figure-img">
+<img src="01-senal-ruido_files/figure-html/fig-area-normal-output-1.png" width="377" height="247" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-area-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1.4: Probabilidad como área bajo una densidad normal.
@@ -529,7 +514,7 @@ p(z;\mu,\sigma)
 \tag{1.2}\]</span></span></p>
 <p>Escribimos <span class="math inline">\(\varepsilon\sim\mathcal{N}(\mu,\sigma^2)\)</span>. La función <span class="math inline">\(p\)</span> es su <strong>densidad de probabilidad</strong>.</p>
 </div>
-<p><span class="nuevo">Una densidad no es una probabilidad puntual.</span> En una variable continua, las probabilidades se obtienen integrando la densidad sobre intervalos.</p>
+<p>Una densidad no es una probabilidad puntual. En una variable continua, las probabilidades se obtienen integrando la densidad sobre intervalos.</p>
 <div id="exr-densidad-mayor-que-uno" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1.1 (Una densidad puede pasar de uno)</strong></span> &nbsp;</p>
 <ol type="a">
@@ -537,11 +522,11 @@ p(z;\mu,\sigma)
 <li>Calcula a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> pasa de uno.</li>
 <li>Con <span class="math inline">\(\sigma=0.2\)</span> esa densidad vale <span class="math inline">\(1.995\)</span>, algo menos de 2. Di cuál de las dos cantidades <span class="math inline">\(p(z;\mu,\sigma)\)</span> y <span class="math inline">\(\mathbb{P}\!\left( a\leq\varepsilon\leq b \right)\)</span> tiene que estar entre cero y uno según <a href="#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>, y calcula el área del rectángulo de base <span class="math inline">\([\mu-0.2,\mu+0.2]\)</span> y altura 2 para acotar la probabilidad de ese intervalo y comprobar que no llega a uno.</li>
 </ol>
-<p><em>Es el ejercicio <a href="../problemas/hoja-01.html#exr-h1-densidad-uno" class="quarto-xref"><span>7</span></a> de la <a href="../problemas/hoja-01.html">hoja 1</a>.</em></p>
+<p><em>Es el ejercicio <a href="../problemas/hoja-01.html#exr-h1-densidad-uno" class="quarto-xref"><span>6</span></a> de la <a href="../problemas/hoja-01.html">hoja 1</a>.</em></p>
 </div>
 <p>La fórmula anterior se puede traducir directamente a código vectorizado.</p>
 <div class="codigo-clave">
-<div id="f7127c84" class="cell" data-execution_count="9">
+<div id="e090d245" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> densidad_normal(z, media, desviacion):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    constante <span class="op">=</span> desviacion <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> torch.pi) <span class="op">**</span> <span class="fl">0.5</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((z <span class="op">-</span> media) <span class="op">/</span> desviacion) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> constante</span>
@@ -549,7 +534,7 @@ p(z;\mu,\sigma)
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>densidad_normal(z, media<span class="op">=</span><span class="fl">0.0</span>, desviacion<span class="op">=</span><span class="fl">1.0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>tensor([0.3989, 0.2420, 0.0540])</code></pre>
 </div>
 </div>
@@ -574,11 +559,11 @@ p(z;\mu,\sigma)
 <div id="fig-densidades-normales" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-densidades-normales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="2b07daf2" class="cell" data-execution_count="10">
+<div id="563dd932" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-11-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -591,12 +576,12 @@ Figura&nbsp;1.5: Densidades normales para distintas medias y desviaciones típic
 </div>
 <p>Podemos generar ruido normal con <code>torch.normal</code>. Al repetir muchas veces la extracción, el histograma de los valores se aproxima a la densidad de la distribución.</p>
 <div class="codigo-clave">
-<div id="a93b37fb" class="cell" data-execution_count="11">
+<div id="16d8bce8" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>muestra_ruido <span class="op">=</span> torch.normal(media, desviacion, size<span class="op">=</span>(<span class="dv">10</span>,))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>torch.<span class="bu">round</span>(muestra_ruido, decimals<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>tensor([ 0.2570,  0.7280, -0.3140,  1.4140, -0.3590,  1.2000,  0.1370,  1.2650,
          2.0110,  0.2640])</code></pre>
 </div>
@@ -620,11 +605,11 @@ Figura&nbsp;1.5: Densidades normales para distintas medias y desviaciones típic
 <div id="fig-histograma-normal" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-histograma-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="8b403da6" class="cell" data-execution_count="12">
+<div id="b4c9eb11" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-13-output-1.png" class="figure-img" width="566" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-13-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -639,7 +624,6 @@ Figura&nbsp;1.6: Histograma de 1000 extracciones normales comparado con la densi
 <section id="propiedades-de-la-distribución-normal" class="level3">
 <h3 class="anchored" data-anchor-id="propiedades-de-la-distribución-normal">Propiedades de la distribución normal</h3>
 <p>La distribución normal tiene varias propiedades especialmente útiles para modelizar el ruido. Las demostraciones completas se encuentran en el <a href="../curso/probabilidad.html">repaso de probabilidad</a>.</p>
-<div class="nuevo">
 <p><strong>Traslación.</strong> El <a href="../curso/probabilidad.html#thm-traslacion">resultado de traslación</a> establece que, si <span class="math inline">\(\varepsilon\sim\mathcal{N}(\mu,\sigma^2)\)</span> y <span class="math inline">\(c\)</span> es una constante,</p>
 <p><span class="math display">\[
 \varepsilon+c\sim\mathcal{N}(\mu+c,\sigma^2).
@@ -650,7 +634,6 @@ Figura&nbsp;1.6: Histograma de 1000 extracciones normales comparado con la densi
 a\varepsilon\sim\mathcal{N}(a\mu,a^2\sigma^2).
 \]</span></p>
 <p>Por tanto, multiplicar una variable normal por <span class="math inline">\(a\)</span> multiplica su media por <span class="math inline">\(a\)</span> y su desviación típica por <span class="math inline">\(\left\lvert a \right\rvert\)</span>.</p>
-</div>
 <p>Para cualquier variable continua con densidad <span class="math inline">\(p\)</span> se definen la esperanza y la varianza mediante</p>
 <p><span class="math display">\[
 \mathbb{E}\!\left[ \varepsilon \right]=\int_{-\infty}^{\infty} z\,p(z)\,\mathrm{d}z,
@@ -660,14 +643,12 @@ a\varepsilon\sim\mathcal{N}(a\mu,a^2\sigma^2).
 \bigl(z-\mathbb{E}\!\left[ \varepsilon \right]\bigr)^2p(z)\,\mathrm{d}z.
 \]</span></p>
 <p>La varianza mide la distancia cuadrática media respecto al centro.</p>
-<div class="nuevo">
 <p><strong>Media y varianza.</strong> El <a href="../curso/probabilidad.html#thm-momentos">resultado sobre los momentos</a> establece que, para <span class="math inline">\(\varepsilon\sim\mathcal{N}(\mu,\sigma^2)\)</span>,</p>
 <p><span class="math display">\[
 \mathbb{E}\!\left[ \varepsilon \right]=\mu,
 \qquad
 \mathrm{Var}\!\left( \varepsilon \right)=\sigma^2.
 \]</span></p>
-</div>
 </section>
 <section id="la-normal-estándar" class="level3">
 <h3 class="anchored" data-anchor-id="la-normal-estándar">La normal estándar</h3>
@@ -675,9 +656,7 @@ a\varepsilon\sim\mathcal{N}(a\mu,a^2\sigma^2).
 <p><span class="math display">\[
 X=\sigma Z+\mu.
 \]</span></p>
-<div class="nuevo">
 <p>Por los resultados de <a href="../curso/probabilidad.html#thm-escala">escala</a> y <a href="../curso/probabilidad.html#thm-traslacion">traslación</a>, <span class="math inline">\(X\sim\mathcal{N}(\mu,\sigma^2)\)</span>.</p>
-</div>
 <p>También podemos comprobar sus momentos directamente. Para la media,</p>
 <p><span class="math display">\[
 \mathbb{E}\!\left[ X \right]=\mathbb{E}\!\left[ \sigma Z+\mu \right]=\sigma\mathbb{E}\!\left[ Z \right]+\mu=\mu.
@@ -692,7 +671,7 @@ X=\sigma Z+\mu.
 <p>Hemos utilizado que <span class="math inline">\(\mathbb{E}\!\left[ Z \right]=0\)</span>, <span class="math inline">\(\mathrm{Var}\!\left( Z \right)=1\)</span>, que sumar una constante no altera la varianza y que <span class="math inline">\(\mathrm{Var}\!\left( aZ \right)=a^2\mathrm{Var}\!\left( Z \right)\)</span>.</p>
 <p>La misma construcción aparece en código: se genera primero ruido estándar y después se escala y se traslada.</p>
 <div class="codigo-clave">
-<div id="915d9825" class="cell" data-execution_count="13">
+<div id="4b7cf0d0" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>desviacion <span class="op">=</span> <span class="fl">2.0</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n_muestras <span class="op">=</span> <span class="dv">5</span></span>
@@ -708,22 +687,18 @@ X=\sigma Z+\mu.
 <p><span class="math display">\[
 y_i=f(x_i)+\varepsilon_i.
 \]</span></p>
-<div class="nuevo">
 <p>Condicionamos en los predictores observados <span class="math inline">\(x_1,\ldots,x_{n}\)</span> y suponemos que, dados esos valores, los errores son independientes y <span class="math inline">\(\varepsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span>. La propiedad de traslación implica entonces que</p>
-</div>
 <p><span id="eq-ruido-normal"><span class="math display">\[
 y_i\,\vert\,x_i\sim\mathcal{N}\bigl(f(x_i),\sigma^2\bigr).
 \tag{1.3}\]</span></span></p>
 <p>Cada respuesta se modeliza así como una extracción de una distribución normal centrada en la señal. El nivel <span class="math inline">\(\sigma\)</span> determina cuánto suelen alejarse los datos de ella.</p>
-<div class="nuevo">
 <p>Por el <a href="../curso/probabilidad.html#thm-momentos">resultado sobre los momentos</a>, la media y la varianza condicionales son</p>
 <p><span class="math display">\[
 \mathbb{E}\!\left[ y_i\,\vert\,x_i \right]=f(x_i),
 \qquad
 \mathrm{Var}\!\left( y_i\,\vert\,x_i \right)=\sigma^2.
 \]</span></p>
-<p>La señal <span class="math inline">\(f(x)\)</span> es, por tanto, la media de la respuesta para cada valor fijo <span class="math inline">\(x\)</span> del predictor. La condición de ruido con media cero es la que identifica esta descomposición: si se permitiera desplazar la media del ruido, el mismo proceso admitiría distintas señales.</p>
-</div>
+<p>La señal <span class="math inline">\(f(x)\)</span> es, por tanto, la media de la respuesta para cada valor fijo <span class="math inline">\(x\)</span> del predictor.</p>
 <div id="def-modelo-gaussiano" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.4 (Modelo gaussiano)</strong></span> El modelo</p>
 <p><span class="math display">\[
@@ -786,11 +761,11 @@ f(\mathbf{x}_i;\boldsymbol{w})
 <div id="fig-modelo-generador" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-modelo-generador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="6993f4b5" class="cell" data-execution_count="14">
+<div id="fc52c0de" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-15-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
@@ -808,30 +783,23 @@ Figura&nbsp;1.7: En el modelo lineal-gaussiano, cada dato es una extracción de 
 <h2 class="anchored" data-anchor-id="distribuciones-generadoras-de-datos">Distribuciones generadoras de datos</h2>
 <p>Hasta ahora hemos supuesto tres cosas: que la señal pertenece a una familia de funciones que elegimos nosotros, en este caso las rectas; que el ruido es normal y de media cero; y que los ruidos de observaciones distintas son independientes y comparten la misma desviación típica <span class="math inline">\(\sigma\)</span>. Ninguna de las tres se ha deducido de los datos. Las tres son hipótesis de trabajo, y ninguna tiene por qué cumplirse.</p>
 <p>Una de las razones principales para definir modelos es que nos proporcionan formas fundamentadas de pensar en lo que nuestros modelos deben aprender (la señal) y lo que deben ignorar (el ruido). Estos modelos también son muy útiles como modelos de dónde provienen los datos; es decir, como distribuciones generadoras de datos.</p>
-<div class="nuevo">
 <div id="def-distribucion-generadora" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.7 (Distribución generadora de datos)</strong></span> Una <strong>distribución generadora de datos</strong>, también llamada <strong>modelo generador</strong>, es un modelo probabilístico que describe cómo se producen las observaciones mediante variables aleatorias y sus distribuciones. Un modelo completo describe la distribución conjunta de <span class="math inline">\((X,Y)\)</span>. En regresión podemos especificar solo la distribución condicional de <span class="math inline">\(Y\,\vert\,X=\mathbf{x}\)</span> y dejar fuera del modelo la distribución de los predictores.</p>
 </div>
-</div>
 <p>El modelo lineal-gaussiano es un ejemplo sencillo. Para simular una respuesta, primero se calcula <span class="math inline">\(f_{\boldsymbol{w}}(x_i)\)</span>, después se extrae <span class="math inline">\(\varepsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span> y finalmente se suman ambas cantidades.</p>
-<div class="nuevo">
 <p>Conviene separar desde ahora dos cosas que es fácil confundir.</p>
 <ul>
 <li>El <strong>proceso real</strong> que genera los datos. Denotamos por <span class="math inline">\(P^\star\)</span> su distribución conjunta de <span class="math inline">\((X,Y)\)</span>. Existe, es fijo, no lo elegimos y es desconocido. En regresión nos interesa en particular la distribución condicional real <span class="math inline">\(P^\star(\,\cdot\,\vert\,X=\mathbf{x})\)</span> de la respuesta.</li>
 <li>La <strong>familia de modelos condicionales</strong> que proponemos. Sí la elegimos nosotros. El modelo lineal-gaussiano contiene todas las medias afines con ruido normal de nivel <span class="math inline">\(\sigma\)</span>; no propone una distribución para <span class="math inline">\(X\)</span>.</li>
 </ul>
 <p>Cada valor concreto de <span class="math inline">\((\boldsymbol{w},\sigma)\)</span> describe una distribución condicional distinta. Ajustar el modelo es elegir una de ellas; proponer la familia es apostar a que la distribución condicional real está entre las candidatas. Esa hipótesis puede ser falsa. Que la señal real sea curva o que el ruido tenga colas más pesadas que la normal no impide ajustar el modelo, pero puede afectar a la calidad del resultado.</p>
-</div>
-<div class="nuevo">
 <div id="def-bien-especificado" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.8 (Modelo bien especificado)</strong></span> Un modelo de regresión está <strong>bien especificado</strong> cuando existe un valor de sus parámetros que reproduce <span class="math inline">\(P^\star(\,\cdot\,\vert\,X=\mathbf{x})\)</span> para todo valor relevante de <span class="math inline">\(\mathbf{x}\)</span>. En caso contrario está <strong>mal especificado</strong>. Esta definición no exige modelizar la distribución marginal de <span class="math inline">\(X\)</span>.</p>
-</div>
 </div>
 <p>Una característica muy útil de los modelos generadores de datos es que también nos brindan herramientas para medir cómo de bien se ajusta nuestra señal aprendida a los datos observados, a través del concepto de verosimilitud.</p>
 </section>
 <section id="verosimilitud-del-modelo" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="verosimilitud-del-modelo">Verosimilitud del modelo</h2>
-<div class="nuevo">
 <p>Condicionamos en los predictores observados. Bajo el modelo gaussiano, la densidad condicional de una respuesta es</p>
 <p><span class="math display">\[
 p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr)
@@ -841,25 +809,20 @@ p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr)
 \right).
 \]</span></p>
 <p>La independencia condicional de las respuestas implica que su densidad conjunta, dados los predictores, es el producto de estas densidades individuales.</p>
-</div>
-<div class="nuevo">
 <div id="def-verosimilitud" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.9 (Verosimilitud)</strong></span> La <strong>verosimilitud</strong> de los datos bajo el modelo lineal-gaussiano es</p>
 <p><span class="math display">\[
 L(\boldsymbol{w},\sigma)
 =p(\mathbf{y}\,\vert\,\mathbf{X};\boldsymbol{w},\sigma)
 =\prod_{i=1}^{n}
-p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr).
+p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr),
 \]</span></p>
-<p>Los datos observados se mantienen fijos al considerar <span class="math inline">\(L\)</span> como función de los parámetros <span class="math inline">\((\boldsymbol{w},\sigma)\)</span>.</p>
+<p>donde <span class="math inline">\(\mathbf{X}\)</span> es una matriz que recoge todas las observaciones de los predictores. Los datos observados se mantienen fijos al considerar <span class="math inline">\(L\)</span> como función de los parámetros <span class="math inline">\((\boldsymbol{w},\sigma)\)</span>.</p>
 </div>
-</div>
-<div class="nuevo">
-<p>Cada factor mide la densidad que el modelo asigna a una respuesta. El producto es la densidad conjunta condicional de todas las respuestas dados los predictores observados; no incluye una densidad para <span class="math inline">\(X\)</span>. Comparar verosimilitudes permite así determinar qué parámetros hacen más compatibles las respuestas observadas con el modelo.</p>
-</div>
+<p>Cada factor mide la densidad que el modelo asigna a una respuesta. El producto es la densidad conjunta condicional de todas las respuestas dados los predictores observados. Comparar verosimilitudes permite así determinar qué parámetros hacen más compatibles las respuestas observadas con el modelo.</p>
 <section id="estimador-de-máxima-verosimilitud" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="estimador-de-máxima-verosimilitud">Estimador de máxima verosimilitud</h3>
-<p>Dado un modelo, podemos ajustar la señal eligiendo los parámetros que hacen más compatibles los datos observados con el modelo generador. <span class="nuevo">Un criterio muy extendido consiste en escoger <span class="math inline">\((\boldsymbol{w},\sigma)\)</span> para maximizar la verosimilitud.</span> En el modelo gaussiano, desplazar <span class="math inline">\(f_{\boldsymbol{w}}(x_i)\)</span> lejos de <span class="math inline">\(y_i\)</span> reduce la densidad asignada a esa observación. Maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar conjuntamente las respuestas observadas.</p>
+<p>Dado un modelo, podemos ajustar la señal eligiendo los parámetros que hacen más compatibles los datos observados con el modelo generador. Un criterio muy extendido consiste en escoger <span class="math inline">\((\boldsymbol{w},\sigma)\)</span> para maximizar la verosimilitud. En el modelo gaussiano, desplazar <span class="math inline">\(f_{\boldsymbol{w}}(x_i)\)</span> lejos de <span class="math inline">\(y_i\)</span> reduce la densidad asignada a esa observación. Maximizar la verosimilitud favorece una señal alrededor de la cual el modelo pueda explicar conjuntamente las respuestas observadas.</p>
 <div id="def-mle" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 1.10 (Estimación de máxima verosimilitud)</strong></span> Un estimador de máxima verosimilitud es cualquier solución de</p>
 <p><span class="math display">\[
@@ -880,9 +843,7 @@ p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr).
 <p>Lo que queremos aprender es la señal, así que trataremos <span class="math inline">\(\sigma\)</span> como un parámetro secundario: lo mantendremos fijo mientras buscamos <span class="math inline">\(\boldsymbol{w}\)</span> y volveremos a estimarlo al final del capítulo siguiente, donde se demuestra que esa decisión no altera la señal aprendida.</p>
 </div>
 </div>
-<div class="nuevo">
-<p>El producto de muchas densidades puede entrar en el rango subnormal de la representación en coma flotante y, con suficientes factores, redondearse a cero. En ese caso se pierde la posibilidad de comparar dos verosimilitudes pequeñas. Lo observamos en el siguiente ejercicio.</p>
-</div>
+<p>El producto de muchas densidades puede alcanzar valores tan reducidos que superen el límite de precisión de la representación en coma flotante, terminando por redondearse a cero si hay suficientes factores. Cuando esto ocurre, resulta imposible comparar dos verosimilitudes pequeñas. Lo analizaremos en el siguiente ejercicio.</p>
 <div id="exr-verosimilitud-producto" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 1.2 (Por qué se toman logaritmos)</strong></span> Con los datos simulados de este capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
 <ol type="a">
@@ -890,17 +851,15 @@ p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr).
 <li>Calcula la suma de sus logaritmos en los mismos tres casos.</li>
 <li>Toma <span class="math inline">\(10^{-1}\)</span> como valor típico de una de esas densidades. Calcula a partir de cuántas observaciones el producto baja de <span class="math inline">\(10^{-308}\)</span>, el orden en que la coma flotante de doble precisión empieza a perder los números pequeños, y di qué devolvería la comparación entre dos verosimilitudes cuando las dos se han redondeado a cero.</li>
 </ol>
-<p><em>Es el ejercicio <a href="../problemas/hoja-01.html#exr-h1-logaritmos" class="quarto-xref"><span>12</span></a> de la <a href="../problemas/hoja-01.html">hoja 1</a>.</em></p>
+<p><em>Es el ejercicio <a href="../problemas/hoja-01.html#exr-h1-logaritmos" class="quarto-xref"><span>11</span></a> de la <a href="../problemas/hoja-01.html">hoja 1</a>.</em></p>
 </div>
 <p>Para evitar este problema se utiliza la <strong>log-verosimilitud</strong>,</p>
-<div class="nuevo">
 <p><span id="eq-log-verosimilitud"><span class="math display">\[
 \ell(\boldsymbol{w},\sigma)
 =\log L(\boldsymbol{w},\sigma)
 =\sum_{i=1}^{n}
 \log p\bigl(y_i\,\vert\,x_i;\boldsymbol{w},\sigma\bigr),
 \tag{1.5}\]</span></span></p>
-</div>
 <p>que convierte productos en sumas y resulta más estable numéricamente.</p>
 <div id="lem-log-argmax" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lema 1.1 (El logaritmo preserva el máximo)</strong></span> Como el logaritmo es estrictamente creciente,</p>
@@ -937,7 +896,7 @@ L(\vartheta)\leq L(\vartheta^\star)
 <p>De momento damos el nivel de ruido por conocido y lo fijamos en <code>sigma_supuesto = 3.0</code>, el valor con el que se generaron los datos, y buscaremos únicamente los parámetros <span class="math inline">\(\boldsymbol{w}=(w_0,w_1)^{\mathsf{T}}\)</span> de la señal. Esta simplificación permite aislar el problema de aprender <span class="math inline">\(f_{\boldsymbol{w}}\)</span>; el capítulo siguiente mostrará cómo estimar también <span class="math inline">\(\sigma\)</span>.</p>
 <p>Para esta búsqueda evaluamos directamente <a href="#eq-log-verosimilitud" class="quarto-xref">Ecuación&nbsp;<span>1.5</span></a> mediante <code>densidad_normal</code>. Calculamos su valor sobre una rejilla de posibles interceptos y pendientes y conservamos la mejor combinación.</p>
 <div class="codigo-clave">
-<div id="ad6c9e90" class="cell" data-execution_count="15">
+<div id="b519327a" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
 <span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
 <span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
@@ -1004,11 +963,11 @@ L(\vartheta)\leq L(\vartheta^\star)
 <div id="fig-verosimilitud-rejilla" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-verosimilitud-rejilla-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="43e8d930" class="cell" data-execution_count="16">
+<div id="f0ebbd7e" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="565" height="374"></p>
+<p><img src="01-senal-ruido_files/figure-html/cell-17-output-1.png" class="figure-img" width="767" height="507"></p>
 </figure>
 </div>
 </div>
