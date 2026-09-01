@@ -1,0 +1,465 @@
+---
+# El pie de figura va debajo, no en el margen: la hoja lleva una figura de seis paneles y
+# en el PDF el pie de margen se imprime encima de ella.
+fig-cap-location: bottom
+---
+
+# Hoja 1 {.unnumbered}
+
+::: {.content-hidden}
+$$
+{{< include ../assets/includes/_macros.tex >}}
+$$
+:::
+
+Hoja del capítulo 1, Datos = señal + ruido.
+
+## 1. Conceptual {#sec-h1-a}
+
+::: {#exr-h1-conceptual}
+a. Una empresa quiere predecir el consumo eléctrico diario de un edificio a partir de la
+   temperatura media del día, la hora de apertura y el día de la semana. **Identifica** los
+   predictores $\xv$, la respuesta $y$ y el número de predictores $\nfeat$. **Di** cuál de
+   estos tres factores pertenece a la señal y cuáles al ruido: la temperatura del día, el
+   redondeo a la unidad que hace el contador y una huelga de transporte que no consta en los
+   datos.
+b. Un compañero afirma que, como $\E{\varepsilon_i}=0$, cada observación debe estar
+   exactamente sobre la señal. **Corrige** la afirmación en una frase y **di** qué miden
+   los segmentos naranjas de @fig-senal-ruido y cuál de estas dos cantidades vale cero en
+   promedio: uno cualquiera de esos segmentos o su media con signo.
+:::
+
+::: {#exr-h1-hipotesis}
+El modelo lineal-gaussiano de @def-lineal-gaussiano supone que,
+para $i=1,\ldots,\nobs$:
+
+H1. **Aditividad.** El ruido entra sumando, y no multiplicando ni de ninguna otra forma:
+$\yi=f(x_i)+\varepsilon_i$, como en @eq-senal-ruido.
+
+H2. **Señal afín.** La clase de hipótesis de @def-hipotesis en la que se busca la señal es
+la de las rectas: $f_{\coef}(x_i)=\coefzero+w_1x_i$, como en @eq-senal-lineal-1d.
+
+H3. **Normalidad.** Cada ruido sigue una distribución normal, la de @def-normal, con la
+densidad de @eq-densidad-normal.
+
+H4. **Media cero.** El ruido no desplaza la señal en promedio: $\E{\varepsilon_i}=0$.
+
+H5. **Misma desviación típica.** Todos los ruidos tienen el mismo nivel,
+$\Var{\varepsilon_i}=\noise^2$, con un único $\noise>0$.
+
+H6. **Independencia.** Los ruidos de observaciones distintas son independientes: saber
+cuánto vale $\varepsilon_i$ no dice nada sobre $\varepsilon_j$ cuando $j\neq i$.
+
+De H3 a H6 son las cuatro hipótesis sobre el ruido, que se resumen en
+$\varepsilon_i\iid\Normal(0,\noise^2)$ de @def-modelo-gaussiano.
+
+@fig-h1-violaciones muestra seis muestras simuladas, todas con $\nobs=60$ puntos y
+dibujadas en la misma escala. Debajo de cada panel está el código con el que se generó, la
+señal y el ruido, con $\yi$ igual a la suma de los dos. En las seis el ruido entra sumando,
+así que H1 se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no
+falla ninguna, y es el (6). Responde cada apartado de forma razonada.
+
+::: {#fig-h1-violaciones}
+
+```{python}
+#| echo: false
+import sys
+
+sys.path.insert(0, "../capitulos")
+
+import style
+import torch
+from matplotlib import pyplot as plt
+
+torch.manual_seed(19)
+
+n = 60
+x = torch.linspace(0, 10, n)
+recta = 2 + 2.2 * x
+arco = 2 + 8.5 * x - 0.78 * x ** 2
+abanico = 0.35 + 0.75 * x
+
+y1 = recta + abanico * torch.randn(n)
+y2 = arco + 1.2 * torch.randn(n)
+
+# Una sola distribucion para las sesenta, mezcla de dos escalas: da
+# colas mas pesadas que la normal. Con p = 0.15 salen del orden de nueve
+# puntos de la escala grande, de modo que el rasgo no depende de uno solo.
+grande = torch.rand(n) < 0.15
+escala = torch.where(grande, torch.tensor(5.0), torch.tensor(1.2))
+y3 = recta + escala * torch.randn(n)
+
+# Ruido con memoria: cada uno arrastra el 90 % del anterior. La
+# dispersion es la misma que la del panel limpio, 2.4, para que lo unico
+# que los distinga sea la dependencia.
+rho, dispersion = 0.90, 2.4
+innovacion = dispersion * (1 - rho ** 2) ** 0.5 * torch.randn(n)
+ruido4 = torch.zeros(n)
+ruido4[0] = dispersion * torch.randn(1)
+for i in range(1, n):
+    ruido4[i] = rho * ruido4[i - 1] + innovacion[i]
+y4 = recta + ruido4
+
+y5 = arco + abanico * torch.randn(n)
+y6 = recta + 2.4 * torch.randn(n)
+
+RECTA = "senal = 2 + 2.2*x"
+ARCO = "senal = 2 + 8.5*x - 0.78*x**2"
+
+# Cada panel dice con que se genero: la senal y el ruido. Sin el ruido no se
+# puede decidir que hipotesis falla.
+muestras = [
+    (y1, RECTA, "ruido = (0.35 + 0.75*x) * randn(n)"),
+    (y2, ARCO, "ruido = 1.2 * randn(n)"),
+    (y3, RECTA, "s = where(rand(n) < 0.15, 5.0, 1.2)\n"
+                "ruido = s * randn(n)"),
+    (y4, RECTA, "ruido[0] = 2.4 * randn(1)\n"
+                "ruido[i] = 0.9*ruido[i-1] + nuevo"),
+    (y5, ARCO, "ruido = (0.35 + 0.75*x) * randn(n)"),
+    (y6, RECTA, "ruido = 2.4 * randn(n)"),
+]
+todas = torch.cat([y for y, _, _ in muestras])
+margen = 0.05 * (todas.max() - todas.min())
+limites = (todas.min().item() - margen.item(),
+           todas.max().item() + margen.item())
+
+fig, ejes = plt.subplots(2, 3, figsize=(7.4, 5.2))
+for k, (ax, (y, senal, ruido)) in enumerate(zip(ejes.ravel(), muestras),
+                                            start=1):
+    ax.plot(x.numpy(), y.numpy(), color=style.GRIS, lw=0.7,
+            alpha=0.8, zorder=1)
+    ax.scatter(x.numpy(), y.numpy(), s=10, color=style.TINTA,
+               zorder=2)
+    ax.set(title=f"({k})", xticks=[], yticks=[], ylim=limites)
+    ax.set_xlabel(f"{senal}\n{ruido}", family="monospace",
+                  fontsize=6.5, linespacing=1.5)
+for ax in ejes[:, 0]:
+    ax.set_ylabel("$y$")
+plt.tight_layout()
+```
+
+Seis muestras simuladas con $\nobs=60$ observaciones cada una, en la misma escala. Debajo de
+cada panel, la señal y el ruido con los que se generó; la respuesta es la suma. `randn` da
+extracciones normales estándar y `rand`, uniformes en $[0,1)$. Un trazo gris une las
+observaciones en orden creciente de $x$.
+:::
+
+a. En el panel (1) cada ruido es normal e independiente de los demás. **Identifica** la
+   hipótesis que falla y **di** qué rasgo del dibujo la delata.
+b. En el panel (2) los ruidos son independientes y todos tienen la misma desviación típica.
+   **Identifica** la hipótesis que falla y **di** en qué te apoyas, en la señal o en el
+   dibujo.
+c. En el panel (3) los sesenta ruidos son independientes y salen todos de una misma
+   distribución. **Identifica** la hipótesis que falla y **di** qué rasgo del dibujo la
+   delata.
+d. En el panel (4) todos los ruidos tienen la misma desviación típica, y su señal, como se
+   ve debajo, es la misma recta que la del panel (6). **Identifica** la hipótesis que falla
+   y **di** qué diferencia ves entre los dos paneles.
+e. En el panel (5) los ruidos son normales e independientes. **Identifica** las **dos**
+   hipótesis que fallan.
+f. H4 no falla en ningún panel. Escribe $\varepsilon_i=c+\eta_i$ con
+   $\E{\eta_i}=0$, sustitúyelo en $\yi=\coefzero+w_1x_i+\varepsilon_i$ y **di** qué otra
+   recta genera exactamente los mismos $\yi$. **Razona** con ello por qué ningún dibujo de
+   puntos puede mostrar que H4 falla.
+:::
+
+
+::: {#exr-h1-leer-codigo}
+Este es el primer fragmento del capítulo, el que genera los datos del ejemplo.
+
+```python
+import torch
+
+torch.manual_seed(87)
+
+n = 20
+x = torch.linspace(0, 10, n)
+senal = 2 * x + 1
+ruido = 3 * torch.randn(n)
+y = senal + ruido
+```
+
+a. **Explica** qué contiene cada una de las tres variables `senal`, `ruido` e `y`, y con qué
+   símbolo del capítulo se corresponde cada una.
+b. De las tres, **señala** cuál o cuáles no podríamos observar nunca en un problema real, y
+   por qué.
+c. **Di** cuáles de las cuatro variables `x`, `senal`, `ruido` e `y` cambian si se
+   sustituye el `87` por otro número, y cuáles no.
+d. **Razona** qué le pasaría a la nube de puntos si el `3` de la línea que genera `ruido`
+   fuese `0.1`.
+:::
+
+::: {#exr-h1-vecino}
+Este fragmento pretende aprender la señal de unos datos y comprobar que lo ha conseguido.
+Léelo entero antes de responder. En él, `.abs()` toma el valor absoluto elemento a elemento
+y `.mean()` promedia los valores de un tensor, de modo que el número que imprime la última
+línea es el promedio de los cuadrados de las diferencias entre lo que predice el modelo y la
+respuesta observada.
+
+```python
+import torch
+
+x = torch.linspace(0, 4, 5)
+y = torch.tensor([1.2, 2.7, 5.4, 6.5, 9.1])
+
+def predice(x_nuevo):
+    # .argmin() da la posición del valor más pequeño de un tensor,
+    # así que i es el punto conocido más cercano a x_nuevo
+    i = (x - x_nuevo).abs().argmin()
+    return y[i]
+
+prediccion = torch.tensor([predice(xi) for xi in x])
+error = ((prediccion - y) ** 2).mean()
+
+# error del modelo
+print(error.item())
+```
+
+a. **Explica** en una frase qué devuelve `predice(x_nuevo)` para un valor cualquiera de
+   `x_nuevo`, es decir, cómo predice este modelo.
+b. **Calcula**, sin ejecutar el código, cuánto valdrá el error que imprime la última línea.
+c. **Di** sobre qué valores de $x$ y frente a qué respuestas se calcula ese error.
+d. Llega una observación nueva del mismo proceso, $(x,y)=(2.4,\,4.4)$. **Calcula** lo que
+   predice el modelo y el cuadrado de su error. **Explica** por qué este modelo está
+   sobreajustado.
+:::
+
+## 2. Demostración {#sec-h1-b}
+
+
+::: {#exr-h1-media-condicional}
+Partiendo de $Y=f(X)+\varepsilon$ con $\E{\varepsilon\given X}=0$:
+
+a. **Demuestra** que $\E{Y\given X=\xv}=f(\xv)$. Indica en qué paso usas la hipótesis sobre
+   el ruido.
+b. En @fig-senal-ruido los segmentos naranjas miden $\yi-f(x_i)$. Supón que en $x=5$ se
+   observaran mil respuestas del mismo proceso. **Calcula** hacia qué valor tiende la media
+   de esos mil segmentos y hacia qué valor tiende la media de esas mil respuestas.
+c. Si el ruido tuviera media $c\neq0$ en lugar de cero, ¿cuál sería la media condicional?
+   **Razónalo**.
+:::
+
+::: {#exr-h1-lagrange}
+Sean $x_1,\dots,x_{\nobs}$ valores entre los que no haya dos iguales. Se define
+la **base de Lagrange** como
+
+$$
+\ell_j(x) = \prod_{\substack{1\leq k\leq\nobs \\ k\neq j}}\frac{x-x_k}{x_j-x_k},
+\qquad j=1,\dots,\nobs .
+$$
+
+a. **Comprueba** que $\ell_j(x_j)=1$ y que $\ell_j(x_i)=0$ cuando $i\neq j$. **Di** dónde se
+   usa que no haya dos $x_i$ iguales.
+b. **Deduce** que $P(x)=\sum_{j} y_j\,\ell_j(x)$ pasa por los $\nobs$ puntos, y **explica**
+   por qué su grado es a lo sumo $\nobs-1$. Con esto, **demuestra** el @thm-interpolacion.
+c. **Construye** el polinomio que pasa por $(1,3)$, $(2,5)$ y $(4,2)$ y **calcula** su
+   grado.
+:::
+
+
+## 3. Cálculo a mano {#sec-h1-c}
+
+*Bloque C. A mano. Los números salen redondos salvo donde el enunciado avisa de lo
+contrario; para los que llevan $\sqrt{2\pi}$ basta con dejarlo indicado o usar $2.5066$.*
+
+::: {#exr-h1-calculo}
+La señal de un proceso es $f(x)=2x+1$ y se observan estos datos:
+
+| $i$ | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|
+| $x_i$ | 0 | 1 | 2 | 3 |
+| $y_i$ | 2 | 2 | 6 | 8 |
+
+a. Calcula $f(x_i)$ y el ruido $\varepsilon_i=y_i-f(x_i)$ de cada observación.
+b. Calcula la media de los cuatro ruidos. ¿Contradice el resultado la hipótesis
+   $\E{\varepsilon\given X}=0$? Justifícalo distinguiendo una media muestral de una
+   esperanza.
+c. Si aparece un caso nuevo con $x=4$, ¿cuál es la señal? ¿Puede conocerse su respuesta
+   $y$ antes de observar el ruido?
+:::
+
+::: {#exr-h1-densidad}
+Sea $\varepsilon\sim\Normal(0,\noise^2)$ con $\noise=2$.
+
+a. Escribe la densidad $\pdf(z;0,2)$ y **evalúala** en $z=2$, dejando el resultado en
+   función de $\pi$ y de $e$.
+b. Usando @thm-escala-normal y @thm-traslacion-normal, di qué distribución tiene
+   $3\varepsilon-1$.
+c. Sea $\yi=f(x_i)+\varepsilon_i$ con $f(x_i)=5$. **Di** qué distribución tiene $\yi$,
+   citando @eq-ruido-normal, y **calcula** en qué valor de $\yi$ alcanza su máximo la
+   densidad.
+:::
+
+::: {#exr-h1-densidad-uno}
+a. **Evalúa** la densidad normal en $z=\mu$ y **calcula** su valor para $\noise=2$,
+   $\noise=1$ y $\noise=0.2$.
+b. **Calcula** a partir de qué valor de $\noise$ la densidad evaluada en $z=\mu$ pasa de
+   uno.
+c. Con $\noise=0.2$ esa densidad vale $1.995$, algo menos de 2. **Di** cuál de las dos
+   cantidades
+   $\pdf(z;\mu,\noise)$ y $\Prob{a\leq\varepsilon\leq b}$ tiene que estar entre cero y uno
+   según @def-normal, y **calcula** el área del rectángulo de base $[\mu-0.2,\mu+0.2]$ y
+   altura 2 para acotar la probabilidad de ese intervalo y comprobar que no llega a uno.
+:::
+
+::: {#exr-h1-rejilla}
+La búsqueda por rejilla del capítulo recorre `torch.linspace(-5, 5, 20)` para el intercepto
+y `torch.linspace(-1, 3, 20)` para la pendiente.
+
+a. **Calcula** la separación entre dos valores consecutivos de cada rejilla. Déjala en
+   forma de fracción; no sale redonda.
+b. Un valor $v$ cae en la rejilla que empieza en $a$ con paso $h$ si $(v-a)/h$ es entero.
+   **Comprueba** con ese criterio que ni $\coefzero=1$ ni $w_1=2$, que son los valores que
+   generaron los datos, están entre los que se prueban.
+c. **Calcula** cuántas combinaciones evalúa el bucle y cuántas habría que evaluar si
+   dividiésemos el paso de las dos rejillas por un entero $k$.
+:::
+
+::: {#exr-h1-comparar}
+El capítulo nombra el error de entrenamiento, pero no lo define como número. Lo definimos
+aquí. Dado un conjunto $\data=\{(x_i,\yi)\}_{i=1}^{\nobs}$ y un modelo ya ajustado
+$\modelh$, como el de @def-problema, el **error cuadrático medio** de $\modelh$ sobre
+$\data$ es
+
+$$
+\Riskh_{\data}(\modelh)
+=\frac{1}{\nobs}\sum_{i=1}^{\nobs}\bigl(\yi-\modelh(x_i)\bigr)^2 .
+$$
+
+Cuando $\data$ es el conjunto $\Dtrain$ con el que se ajustó el modelo, a esta cantidad la
+llamamos **error de entrenamiento** y la escribimos $\Riskh_{\Dtrain}$. Cuando $\data$ es un
+conjunto $\Dtest$ de observaciones nuevas del mismo proceso, que no se han usado para
+ajustar, la llamamos **error de test** y la escribimos $\Riskh_{\Dtest}$.
+
+Se ajustan dos modelos sobre estas cuatro observaciones de entrenamiento:
+
+| $x$ | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|
+| $y$ | 2 | 4 | 5 | 9 |
+
+El modelo $A$ predice $\yhat = 2x$. El modelo $B$ predice $\yhat = 2, 4, 5, 9$
+respectivamente, es decir, interpola.
+
+a. **Calcula** $\Riskh_{\Dtrain}$ de cada modelo.
+b. Llegan dos observaciones nuevas: $(x,y) = (2, 3)$ y $(x,y) = (3, 7)$. El modelo $B$
+   predice sobre ellas lo mismo que predecía en entrenamiento para esos valores de $x$.
+   **Calcula** $\Riskh_{\Dtest}$ de cada modelo.
+c. **Identifica** cuál de los dos modelos presenta sobreajuste según @def-sobreajuste y
+   **di** qué número del apartado a y cuál del apartado b comprueban cada una de las dos
+   condiciones de esa definición. **Di** además con cuál de los dos predecirías una
+   observación nueva.
+:::
+
+## 4. Encuentra los errores {#sec-h1-d}
+
+::: {#exr-h1-errores-simular}
+Este fragmento pretende simular una muestra del modelo lineal-gaussiano de
+@def-lineal-gaussiano, con señal $f(x)=2+3x$ y ruido $\varepsilon_i\iid\Normal(0,\noise^2)$
+de desviación típica $\noise=2$. Los comentarios describen lo que el fragmento debería
+hacer. Contiene **tres** errores conceptuales, uno por línea. No obstante, se ejecuta sin
+dar ningún error.
+
+```python
+import torch
+
+torch.manual_seed(0)
+
+n = 10
+x = torch.linspace(0, 9, n)
+
+# la señal del modelo, f(x) = 2 + 3x
+senal = 2 + 3 * x
+
+# ruido normal de media cero y varianza 4
+ruido_estandar = torch.randn(1)
+ruido = 4 * ruido_estandar
+
+# la respuesta observada
+y = senal * ruido
+```
+
+a. **Identifica** las tres líneas con error y razona qué errores conceptuales presentan.
+b. **Corrige** las tres líneas, escribiéndolas como deberían estar.
+:::
+
+
+
+## 5. Completar código {#sec-h1-e}
+
+*Este bloque se hace con ordenador. En el examen se preguntaría únicamente la parte de
+completar.*
+
+::: {#exr-h1-simular}
+Completa las líneas marcadas para simular una muestra del modelo lineal-gaussiano con
+$\coef=(1,2)\T$ y $\noise=3$, y para separar sus dos componentes.
+
+```python
+import torch
+
+torch.manual_seed(0)
+
+n = 40
+x = torch.linspace(0, 10, n)
+
+senal = ...          # (1) la parte estable, f(x) = 1 + 2x
+ruido = ...          # (2) n extracciones normales de media 0 y desviación 3
+y = ...              # (3) la respuesta observada
+
+print("media del ruido:", ...)          # (4)
+print("desviación del ruido:", ...)     # (5)
+```
+
+a. Rellena las cinco líneas.
+b. **Ejecuta** el bloque con tres semillas distintas, cambiando el argumento de
+   `torch.manual_seed`. ¿Cambia `senal`? ¿Cambia `y`? **Explica** por qué.
+c. Vuelve a la semilla 0. La media muestral del ruido no sale exactamente cero. **Explica**
+   si eso es un error del código. **Ejecuta** después el bloque con `n = 4000` y **di** qué
+   le pasa a esa media y qué le pasa a la desviación típica muestral del ruido.
+:::
+
+
+::: {#exr-h1-logaritmos}
+Con los datos simulados del capítulo y $\noise=3$, evalúa `densidad_normal(y, senal, 3.0)`
+para obtener las $\nobs$ densidades individuales.
+
+a. **Calcula** el producto de las cinco primeras, de las diez primeras y de las veinte.
+   Anota los tres órdenes de magnitud.
+b. **Calcula** la suma de sus logaritmos en los mismos tres casos.
+c. Toma $10^{-1}$ como valor típico de una de esas densidades. **Calcula** a partir de
+   cuántas observaciones el producto baja de $10^{-308}$, el orden en que la coma flotante
+   de doble precisión empieza a perder los números pequeños, y **di** qué devolvería la
+   comparación entre dos verosimilitudes cuando las dos se han redondeado a cero.
+:::
+
+
+## 6. Ampliación {#sec-h1-f}
+
+*No entra en el examen.*
+
+::: {#exr-h1-heterocedastico}
+Simula $\nobs=40$ observaciones con señal $f(x)=2x+1$ y $x$ entre 0 y 10, en dos
+situaciones:
+
+1. ruido normal con desviación típica constante igual a 2;
+2. ruido normal cuya desviación típica sea $0.5+x/2$.
+
+a. **Dibuja** las dos muestras junto a la señal, con los mismos ejes.
+b. **Di** si en la segunda situación sigue valiendo $\E{Y\given X=x}=f(x)$, y **razónalo**
+   con la hipótesis de media cero.
+c. **Identifica** cuál de las hipótesis H1 a H6 de @exr-h1-hipotesis deja de cumplirse en la
+   segunda situación, aunque la media del ruido siga siendo cero.
+:::
+
+::: {#exr-h1-simulacion}
+Genera $\nobs=20$ observaciones con $\model(x)=2x+1$ y ruido normal de desviación 3. Ajusta
+dos modelos: el interpolador cúbico de @fig-interpolacion y una recta, esta última con la
+búsqueda por rejilla del capítulo. Repite el experimento 200 veces y, en cada repetición,
+mide sobre 200 observaciones nuevas generadas con la misma señal el error de test
+$\Riskh_{\Dtest}$ de @exr-h1-comparar para los dos modelos.
+
+a. **Dibuja** las dos distribuciones de error de test en el mismo histograma.
+b. **Calcula** la mediana de cada una y **di** cuántas veces mayor es la del interpolador.
+c. **Repite** todo con $\nobs=40$ y **compara** las dos medianas con las del apartado b.
+   **Di** cuál de las dos baja y cuál se queda donde estaba, y relaciona el resultado
+   con @def-sobreajuste.
+:::

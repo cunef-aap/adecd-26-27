@@ -267,7 +267,7 @@ window.Quarto = {
   <li><a href="#sec-h1-b" id="toc-sec-h1-b" class="nav-link" data-scroll-target="#sec-h1-b">2. Demostración</a></li>
   <li><a href="#sec-h1-c" id="toc-sec-h1-c" class="nav-link" data-scroll-target="#sec-h1-c">3. Cálculo a mano</a></li>
   <li><a href="#sec-h1-d" id="toc-sec-h1-d" class="nav-link" data-scroll-target="#sec-h1-d">4. Encuentra los errores</a></li>
-  <li><a href="#sec-h1-e" id="toc-sec-h1-e" class="nav-link" data-scroll-target="#sec-h1-e">5. Completar código</a></li>
+  <li><a href="#sec-h1-e" id="toc-sec-h1-e" class="nav-link" data-scroll-target="#sec-h1-e">5. Completar y comprobar código</a></li>
   <li><a href="#sec-h1-f" id="toc-sec-h1-f" class="nav-link" data-scroll-target="#sec-h1-f">6. Ampliación</a></li>
   </ul>
 </nav>
@@ -299,203 +299,102 @@ window.Quarto = {
 </header>
 
 
-<p>Hoja del capítulo 1, Datos = señal + ruido.</p>
+<div class="nuevo">
+<p>Hoja del capítulo 1, Datos = señal + ruido. El capítulo ocupa dos semanas y la hoja se reparte entre las dos sesiones de problemas. Los cuatro primeros bloques reproducen la estructura del examen escrito. El quinto sirve para practicar el código que se explica en clase y el sexto es opcional.</p>
+<p>No se evalúan figuras ni la sintaxis de <code>matplotlib</code>. Cuando se pide leer o completar código, el fragmento procede de un bloque marcado como exigible en el capítulo.</p>
+<ul>
+<li>Primera sesión, señal, ruido y sobreajuste: se trabajan <a href="#exr-h1-conceptual" class="quarto-xref">Ejercicio&nbsp;<span>1</span></a>, después <a href="#exr-h1-sobreajuste" class="quarto-xref">Ejercicio&nbsp;<span>3</span></a>, <a href="#exr-h1-lagrange" class="quarto-xref">Ejercicio&nbsp;<span>6</span></a> y <a href="#exr-h1-densidad-uno" class="quarto-xref">Ejercicio&nbsp;<span>7</span></a>, y se cierra con <a href="#exr-h1-errores-simular" class="quarto-xref">Ejercicio&nbsp;<span>10</span></a>.</li>
+<li>Segunda sesión, modelo generador y verosimilitud: los demás.</li>
+</ul>
+</div>
 <section id="sec-h1-a" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-a">1. Conceptual</h2>
+<p><em>Bloque A del examen. Respuesta breve, tres o cuatro frases por apartado.</em></p>
+<div class="nuevo">
 <div id="exr-h1-conceptual" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> &nbsp;</p>
-<ol type="a">
-<li>Una empresa quiere predecir el consumo eléctrico diario de un edificio a partir de la temperatura media del día, la hora de apertura y el día de la semana. <strong>Identifica</strong> los predictores <span class="math inline">\(\mathbf{x}\)</span>, la respuesta <span class="math inline">\(y\)</span> y el número de predictores <span class="math inline">\(p\)</span>. <strong>Di</strong> cuál de estos tres factores pertenece a la señal y cuáles al ruido: la temperatura del día, el redondeo a la unidad que hace el contador y una huelga de transporte que no consta en los datos.</li>
-<li>Un compañero afirma que, como <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon_i \right]=0\)</span>, cada observación debe estar exactamente sobre la señal. <strong>Corrige</strong> la afirmación en una frase y <strong>di</strong> qué miden los segmentos naranjas de <a href="../capitulos/01-senal-ruido.html#fig-senal-ruido" class="quarto-xref">Figura&nbsp;<span>1.1</span></a> y cuál de estas dos cantidades vale cero en promedio: uno cualquiera de esos segmentos o su media con signo.</li>
-</ol>
-</div>
-<div id="exr-h1-hipotesis" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> El modelo lineal-gaussiano de <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a> supone que, para <span class="math inline">\(i=1,\ldots,n\)</span>:</p>
-<p>H1. <strong>Aditividad.</strong> El ruido entra sumando, y no multiplicando ni de ninguna otra forma: <span class="math inline">\(y_i=f(x_i)+\varepsilon_i\)</span>, como en <a href="../capitulos/01-senal-ruido.html#eq-senal-ruido" class="quarto-xref">Ecuación&nbsp;<span>1.1</span></a>.</p>
-<p>H2. <strong>Señal afín.</strong> La clase de hipótesis de <a href="../capitulos/01-senal-ruido.html#def-hipotesis" class="quarto-xref">Definición&nbsp;<span>1.5</span></a> en la que se busca la señal es la de las rectas: <span class="math inline">\(f_{\boldsymbol{w}}(x_i)=w_0+w_1x_i\)</span>, como en <a href="../capitulos/01-senal-ruido.html#eq-senal-lineal-1d" class="quarto-xref">Ecuación&nbsp;<span>1.4</span></a>.</p>
-<p>H3. <strong>Normalidad.</strong> Cada ruido sigue una distribución normal, la de <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>, con la densidad de <a href="../capitulos/01-senal-ruido.html#eq-densidad-normal" class="quarto-xref">Ecuación&nbsp;<span>1.2</span></a>.</p>
-<p>H4. <strong>Media cero.</strong> El ruido no desplaza la señal en promedio: <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon_i \right]=0\)</span>.</p>
-<p>H5. <strong>Misma desviación típica.</strong> Todos los ruidos tienen el mismo nivel, <span class="math inline">\(\mathrm{Var}\!\left( \varepsilon_i \right)=\sigma^2\)</span>, con un único <span class="math inline">\(\sigma&gt;0\)</span>.</p>
-<p>H6. <strong>Independencia.</strong> Los ruidos de observaciones distintas son independientes: saber cuánto vale <span class="math inline">\(\varepsilon_i\)</span> no dice nada sobre <span class="math inline">\(\varepsilon_j\)</span> cuando <span class="math inline">\(j\neq i\)</span>.</p>
-<p>De H3 a H6 son las cuatro hipótesis sobre el ruido, que se resumen en <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de <a href="../capitulos/01-senal-ruido.html#def-modelo-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.4</span></a>.</p>
-<p><a href="#fig-h1-violaciones" class="quarto-xref">Figura&nbsp;<span>1</span></a> muestra seis muestras simuladas, todas con <span class="math inline">\(n=60\)</span> puntos y dibujadas en la misma escala. Debajo de cada panel está el código con el que se generó, la señal y el ruido, con <span class="math inline">\(y_i\)</span> igual a la suma de los dos. En las seis el ruido entra sumando, así que H1 se cumple siempre. En cinco paneles falla alguna de las otras; en el que queda no falla ninguna, y es el (6). Responde cada apartado de forma razonada.</p>
-<div id="fig-h1-violaciones" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-h1-violaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="c62ce75d" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hoja-01_files/figure-html/cell-2-output-1.png" width="701" height="490" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h1-violaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Seis muestras simuladas con <span class="math inline">\(n=60\)</span> observaciones cada una, en la misma escala. Debajo de cada panel, la señal y el ruido con los que se generó; la respuesta es la suma. <code>randn</code> da extracciones normales estándar y <code>rand</code>, uniformes en <span class="math inline">\([0,1)\)</span>. Un trazo gris une las observaciones en orden creciente de <span class="math inline">\(x\)</span>.
-</figcaption>
-</figure>
-</div>
-<ol type="a">
-<li>En el panel (1) cada ruido es normal e independiente de los demás. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué rasgo del dibujo la delata.</li>
-<li>En el panel (2) los ruidos son independientes y todos tienen la misma desviación típica. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> en qué te apoyas, en la señal o en el dibujo.</li>
-<li>En el panel (3) los sesenta ruidos son independientes y salen todos de una misma distribución. <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué rasgo del dibujo la delata.</li>
-<li>En el panel (4) todos los ruidos tienen la misma desviación típica, y su señal, como se ve debajo, es la misma recta que la del panel (6). <strong>Identifica</strong> la hipótesis que falla y <strong>di</strong> qué diferencia ves entre los dos paneles.</li>
-<li>En el panel (5) los ruidos son normales e independientes. <strong>Identifica</strong> las <strong>dos</strong> hipótesis que fallan.</li>
-<li>H4 no falla en ningún panel. Escribe <span class="math inline">\(\varepsilon_i=c+\eta_i\)</span> con <span class="math inline">\(\mathbb{E}\!\left[ \eta_i \right]=0\)</span>, sustitúyelo en <span class="math inline">\(y_i=w_0+w_1x_i+\varepsilon_i\)</span> y <strong>di</strong> qué otra recta genera exactamente los mismos <span class="math inline">\(y_i\)</span>. <strong>Razona</strong> con ello por qué ningún dibujo de puntos puede mostrar que H4 falla.</li>
-</ol>
-</div>
-<div id="exr-h1-leer-codigo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Este es el primer fragmento del capítulo, el que genera los datos del ejemplo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">87</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> torch.randn(n)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">+</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="a">
-<li><strong>Explica</strong> qué contiene cada una de las tres variables <code>senal</code>, <code>ruido</code> e <code>y</code>, y con qué símbolo del capítulo se corresponde cada una.</li>
-<li>De las tres, <strong>señala</strong> cuál o cuáles no podríamos observar nunca en un problema real, y por qué.</li>
-<li><strong>Di</strong> cuáles de las cuatro variables <code>x</code>, <code>senal</code>, <code>ruido</code> e <code>y</code> cambian si se sustituye el <code>87</code> por otro número, y cuáles no.</li>
-<li><strong>Razona</strong> qué le pasaría a la nube de puntos si el <code>3</code> de la línea que genera <code>ruido</code> fuese <code>0.1</code>.</li>
-</ol>
-</div>
-<div id="exr-h1-vecino" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Este fragmento pretende aprender la señal de unos datos y comprobar que lo ha conseguido. Léelo entero antes de responder. En él, <code>.abs()</code> toma el valor absoluto elemento a elemento y <code>.mean()</code> promedia los valores de un tensor, de modo que el número que imprime la última línea es el promedio de los cuadrados de las diferencias entre lo que predice el modelo y la respuesta observada.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([<span class="fl">1.2</span>, <span class="fl">2.7</span>, <span class="fl">5.4</span>, <span class="fl">6.5</span>, <span class="fl">9.1</span>])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predice(x_nuevo):</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># .argmin() da la posición del valor más pequeño de un tensor,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># así que i es el punto conocido más cercano a x_nuevo</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> (x <span class="op">-</span> x_nuevo).<span class="bu">abs</span>().argmin()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y[i]</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>prediccion <span class="op">=</span> torch.tensor([predice(xi) <span class="cf">for</span> xi <span class="kw">in</span> x])</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>error <span class="op">=</span> ((prediccion <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># error del modelo</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(error.item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="a">
-<li><strong>Explica</strong> en una frase qué devuelve <code>predice(x_nuevo)</code> para un valor cualquiera de <code>x_nuevo</code>, es decir, cómo predice este modelo.</li>
-<li><strong>Calcula</strong>, sin ejecutar el código, cuánto valdrá el error que imprime la última línea.</li>
-<li><strong>Di</strong> sobre qué valores de <span class="math inline">\(x\)</span> y frente a qué respuestas se calcula ese error.</li>
-<li>Llega una observación nueva del mismo proceso, <span class="math inline">\((x,y)=(2.4,\,4.4)\)</span>. <strong>Calcula</strong> lo que predice el modelo y el cuadrado de su error. <strong>Explica</strong> por qué este modelo está sobreajustado.</li>
-</ol>
-</div>
-</section>
-<section id="sec-h1-b" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h1-b">2. Demostración</h2>
-<div id="exr-h1-media-condicional" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Partiendo de <span class="math inline">\(Y=f(X)+\varepsilon\)</span> con <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon\,\vert\,X \right]=0\)</span>:</p>
-<ol type="a">
-<li><strong>Demuestra</strong> que <span class="math inline">\(\mathbb{E}\!\left[ Y\,\vert\,X=\mathbf{x} \right]=f(\mathbf{x})\)</span>. Indica en qué paso usas la hipótesis sobre el ruido.</li>
-<li>En <a href="../capitulos/01-senal-ruido.html#fig-senal-ruido" class="quarto-xref">Figura&nbsp;<span>1.1</span></a> los segmentos naranjas miden <span class="math inline">\(y_i-f(x_i)\)</span>. Supón que en <span class="math inline">\(x=5\)</span> se observaran mil respuestas del mismo proceso. <strong>Calcula</strong> hacia qué valor tiende la media de esos mil segmentos y hacia qué valor tiende la media de esas mil respuestas.</li>
-<li>Si el ruido tuviera media <span class="math inline">\(c\neq0\)</span> en lugar de cero, ¿cuál sería la media condicional? <strong>Razónalo</strong>.</li>
-</ol>
-</div>
-<div id="exr-h1-lagrange" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> valores entre los que no haya dos iguales. Se define la <strong>base de Lagrange</strong> como</p>
+<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> Para predecir el precio de venta de una vivienda se usan su superficie, su número de habitaciones y su barrio. Para cierta vivienda,</p>
 <p><span class="math display">\[
-\ell_j(x) = \prod_{\substack{1\leq k\leq n\\ k\neq j}}\frac{x-x_k}{x_j-x_k},
-\qquad j=1,\dots,n.
+\mathbf{x}=(90,3,\text{Centro})^{\mathsf{T}},
+\qquad f(\mathbf{x})=280,
+\qquad y=305,
 \]</span></p>
+<p>donde los precios están medidos en miles de euros.</p>
 <ol type="a">
-<li><strong>Comprueba</strong> que <span class="math inline">\(\ell_j(x_j)=1\)</span> y que <span class="math inline">\(\ell_j(x_i)=0\)</span> cuando <span class="math inline">\(i\neq j\)</span>. <strong>Di</strong> dónde se usa que no haya dos <span class="math inline">\(x_i\)</span> iguales.</li>
-<li><strong>Deduce</strong> que <span class="math inline">\(P(x)=\sum_{j} y_j\,\ell_j(x)\)</span> pasa por los <span class="math inline">\(n\)</span> puntos, y <strong>explica</strong> por qué su grado es a lo sumo <span class="math inline">\(n-1\)</span>. Con esto, <strong>demuestra</strong> el <a href="../capitulos/01-senal-ruido.html#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>.</li>
-<li><strong>Construye</strong> el polinomio que pasa por <span class="math inline">\((1,3)\)</span>, <span class="math inline">\((2,5)\)</span> y <span class="math inline">\((4,2)\)</span> y <strong>calcula</strong> su grado.</li>
+<li><strong>Identifica</strong> los predictores, la respuesta y el valor de <span class="math inline">\(p\)</span>.</li>
+<li><strong>Calcula</strong> el ruido <span class="math inline">\(\varepsilon=y-f(\mathbf{x})\)</span> y <strong>explica</strong> qué significa su signo.</li>
+<li><strong>Di</strong> cuáles de <span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(f(\mathbf{x})\)</span> y <span class="math inline">\(\varepsilon\)</span> observaríamos en un problema real. <strong>Razona</strong> por qué no podemos separar señal y ruido a partir de una sola respuesta sin hacer hipótesis.</li>
+<li>Llega otra vivienda con los mismos predictores. <strong>Di</strong> cuál es el centro de su distribución de respuestas y <strong>explica</strong> por qué no tiene que venderse por 305.</li>
 </ol>
 </div>
-</section>
-<section id="sec-h1-c" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h1-c">3. Cálculo a mano</h2>
-<p><em>Bloque C. A mano. Los números salen redondos salvo donde el enunciado avisa de lo contrario; para los que llevan <span class="math inline">\(\sqrt{2\pi}\)</span> basta con dejarlo indicado o usar <span class="math inline">\(2.5066\)</span>.</em></p>
-<div id="exr-h1-calculo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> La señal de un proceso es <span class="math inline">\(f(x)=2x+1\)</span> y se observan estos datos:</p>
+</div>
+<div class="nuevo">
+<div id="exr-h1-hipotesis" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> En todos los casos siguientes el ruido entra sumando, <span class="math inline">\(Y=f(x)+\varepsilon\)</span>. Contrasta cada caso con las hipótesis del modelo lineal-gaussiano: señal afín; ruidos normales, de media cero, con una misma varianza e independientes. En el caso B, <span class="math inline">\(x_i\in[0,4]\)</span>; en el D, <span class="math inline">\(n\)</span> es par.</p>
+<ul>
+<li>A: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
+<li>B: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y ruidos independientes con <span class="math inline">\(\varepsilon_i\sim\mathcal{N}(0,(1+x_i)^2)\)</span>.</li>
+<li>C: <span class="math inline">\(f(x)=w_0+w_1x+w_2x^2\)</span> y <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
+<li>D: <span class="math inline">\(f(x)=w_0+w_1x\)</span>, <span class="math inline">\(\varepsilon_{2k-1}=Z_k\)</span> y <span class="math inline">\(\varepsilon_{2k}=Z_k\)</span>, con <span class="math inline">\(Z_k\overset{\text{iid}}{\sim}\mathcal{N}(0,4)\)</span>.</li>
+<li>E: <span class="math inline">\(f(x)=w_0+w_1x\)</span> y ruidos independientes con probabilidad <span class="math inline">\(1/2\)</span> de valer <span class="math inline">\(-2\)</span> y <span class="math inline">\(1/2\)</span> de valer <span class="math inline">\(2\)</span>.</li>
+</ul>
+<ol type="a">
+<li>Para cada caso de B a E, <strong>identifica</strong> la hipótesis que falla. Si falla más de una, indícalas todas.</li>
+<li><strong>Indica</strong> cuál de los cinco casos pertenece a la familia lineal-gaussiana, según el modelo de <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>.</li>
+<li>Aunque el proceso real sea uno de B a E, todavía se puede ajustar por máxima verosimilitud un modelo lineal-gaussiano. <strong>Explica</strong> por qué eso no convierte el modelo ajustado en un modelo bien especificado.</li>
+</ol>
+</div>
+</div>
+<div class="nuevo">
+<div id="exr-h1-sobreajuste" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Dos modelos se han ajustado con las cuatro primeras observaciones de la tabla. Después se han observado cuatro respuestas nuevas para los mismos valores de <span class="math inline">\(x\)</span>. El modelo B memoriza la respuesta de entrenamiento asociada a cada valor de <span class="math inline">\(x\)</span>.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th><span class="math inline">\(i\)</span></th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
+<th></th>
+<th style="text-align: right;"><span class="math inline">\(x=1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x=4\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(x_i\)</span></td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td><span class="math inline">\(y\)</span> de entrenamiento</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(y_i\)</span></td>
+<td>predicción de A</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">8</td>
 </tr>
-</tbody>
-</table>
-<ol type="a">
-<li>Calcula <span class="math inline">\(f(x_i)\)</span> y el ruido <span class="math inline">\(\varepsilon_i=y_i-f(x_i)\)</span> de cada observación.</li>
-<li>Calcula la media de los cuatro ruidos. ¿Contradice el resultado la hipótesis <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon\,\vert\,X \right]=0\)</span>? Justifícalo distinguiendo una media muestral de una esperanza.</li>
-<li>Si aparece un caso nuevo con <span class="math inline">\(x=4\)</span>, ¿cuál es la señal? ¿Puede conocerse su respuesta <span class="math inline">\(y\)</span> antes de observar el ruido?</li>
-</ol>
-</div>
-<div id="exr-h1-densidad" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Sea <span class="math inline">\(\varepsilon\sim\mathcal{N}(0,\sigma^2)\)</span> con <span class="math inline">\(\sigma=2\)</span>.</p>
-<ol type="a">
-<li>Escribe la densidad <span class="math inline">\(p(z;0,2)\)</span> y <strong>evalúala</strong> en <span class="math inline">\(z=2\)</span>, dejando el resultado en función de <span class="math inline">\(\pi\)</span> y de <span class="math inline">\(e\)</span>.</li>
-<li>Usando <a href="../capitulos/01-senal-ruido.html#thm-escala-normal" class="quarto-xref">Teorema&nbsp;<span>1.3</span></a> y <a href="../capitulos/01-senal-ruido.html#thm-traslacion-normal" class="quarto-xref">Teorema&nbsp;<span>1.2</span></a>, di qué distribución tiene <span class="math inline">\(3\varepsilon-1\)</span>.</li>
-<li>Sea <span class="math inline">\(y_i=f(x_i)+\varepsilon_i\)</span> con <span class="math inline">\(f(x_i)=5\)</span>. <strong>Di</strong> qué distribución tiene <span class="math inline">\(y_i\)</span>, citando <a href="../capitulos/01-senal-ruido.html#eq-ruido-normal" class="quarto-xref">Ecuación&nbsp;<span>1.3</span></a>, y <strong>calcula</strong> en qué valor de <span class="math inline">\(y_i\)</span> alcanza su máximo la densidad.</li>
-</ol>
-</div>
-<div id="exr-h1-densidad-uno" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> &nbsp;</p>
-<ol type="a">
-<li><strong>Evalúa</strong> la densidad normal en <span class="math inline">\(z=\mu\)</span> y <strong>calcula</strong> su valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>.</li>
-<li><strong>Calcula</strong> a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> pasa de uno.</li>
-<li>Con <span class="math inline">\(\sigma=0.2\)</span> esa densidad vale <span class="math inline">\(1.995\)</span>, algo menos de 2. <strong>Di</strong> cuál de las dos cantidades <span class="math inline">\(p(z;\mu,\sigma)\)</span> y <span class="math inline">\(\mathbb{P}\!\left( a\leq\varepsilon\leq b \right)\)</span> tiene que estar entre cero y uno según <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>, y <strong>calcula</strong> el área del rectángulo de base <span class="math inline">\([\mu-0.2,\mu+0.2]\)</span> y altura 2 para acotar la probabilidad de ese intervalo y comprobar que no llega a uno.</li>
-</ol>
-</div>
-<div id="exr-h1-rejilla" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> La búsqueda por rejilla del capítulo recorre <code>torch.linspace(-5, 5, 20)</code> para el intercepto y <code>torch.linspace(-1, 3, 20)</code> para la pendiente.</p>
-<ol type="a">
-<li><strong>Calcula</strong> la separación entre dos valores consecutivos de cada rejilla. Déjala en forma de fracción; no sale redonda.</li>
-<li>Un valor <span class="math inline">\(v\)</span> cae en la rejilla que empieza en <span class="math inline">\(a\)</span> con paso <span class="math inline">\(h\)</span> si <span class="math inline">\((v-a)/h\)</span> es entero. <strong>Comprueba</strong> con ese criterio que ni <span class="math inline">\(w_0=1\)</span> ni <span class="math inline">\(w_1=2\)</span>, que son los valores que generaron los datos, están entre los que se prueban.</li>
-<li><strong>Calcula</strong> cuántas combinaciones evalúa el bucle y cuántas habría que evaluar si dividiésemos el paso de las dos rejillas por un entero <span class="math inline">\(k\)</span>.</li>
-</ol>
-</div>
-<div id="exr-h1-comparar" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> El capítulo nombra el error de entrenamiento, pero no lo define como número. Lo definimos aquí. Dado un conjunto <span class="math inline">\(\mathcal{D}=\{(x_i,y_i)\}_{i=1}^{n}\)</span> y un modelo ya ajustado <span class="math inline">\(\hat{f}\)</span>, como el de <a href="../capitulos/01-senal-ruido.html#def-problema" class="quarto-xref">Definición&nbsp;<span>1.1</span></a>, el <strong>error cuadrático medio</strong> de <span class="math inline">\(\hat{f}\)</span> sobre <span class="math inline">\(\mathcal{D}\)</span> es</p>
-<p><span class="math display">\[
-\hat{R}_{\mathcal{D}}(\hat{f})
-=\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\hat{f}(x_i)\bigr)^2 .
-\]</span></p>
-<p>Cuando <span class="math inline">\(\mathcal{D}\)</span> es el conjunto <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> con el que se ajustó el modelo, a esta cantidad la llamamos <strong>error de entrenamiento</strong> y la escribimos <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{train}}}\)</span>. Cuando <span class="math inline">\(\mathcal{D}\)</span> es un conjunto <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> de observaciones nuevas del mismo proceso, que no se han usado para ajustar, la llamamos <strong>error de test</strong> y la escribimos <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{test}}}\)</span>.</p>
-<p>Se ajustan dos modelos sobre estas cuatro observaciones de entrenamiento:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><span class="math inline">\(x\)</span></th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td><span class="math inline">\(y\)</span></td>
+<td>predicción de B</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(y\)</span> nueva</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td>predicción de A sobre los casos nuevos</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td>predicción de B sobre los casos nuevos</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">5</td>
@@ -503,66 +402,185 @@ Figura&nbsp;1: Seis muestras simuladas con <span class="math inline">\(n=60\)</s
 </tr>
 </tbody>
 </table>
-<p>El modelo <span class="math inline">\(A\)</span> predice <span class="math inline">\(\hat{y}= 2x\)</span>. El modelo <span class="math inline">\(B\)</span> predice <span class="math inline">\(\hat{y}= 2, 4, 5, 9\)</span> respectivamente, es decir, interpola.</p>
+<p>Para cuatro respuestas, define el error cuadrático medio como</p>
+<p><span class="math display">\[
+\mathrm{MSE}=\frac{1}{4}\sum_{i=1}^{4}(y_i-\widehat y_i)^2.
+\]</span></p>
 <ol type="a">
-<li><strong>Calcula</strong> <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{train}}}\)</span> de cada modelo.</li>
-<li>Llegan dos observaciones nuevas: <span class="math inline">\((x,y) = (2, 3)\)</span> y <span class="math inline">\((x,y) = (3, 7)\)</span>. El modelo <span class="math inline">\(B\)</span> predice sobre ellas lo mismo que predecía en entrenamiento para esos valores de <span class="math inline">\(x\)</span>. <strong>Calcula</strong> <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{test}}}\)</span> de cada modelo.</li>
-<li><strong>Identifica</strong> cuál de los dos modelos presenta sobreajuste según <a href="../capitulos/01-senal-ruido.html#def-sobreajuste" class="quarto-xref">Definición&nbsp;<span>1.2</span></a> y <strong>di</strong> qué número del apartado a y cuál del apartado b comprueban cada una de las dos condiciones de esa definición. <strong>Di</strong> además con cuál de los dos predecirías una observación nueva.</li>
+<li><strong>Calcula</strong> el error de entrenamiento de A y de B.</li>
+<li><strong>Calcula</strong> el error sobre las respuestas nuevas de A y de B.</li>
+<li><strong>Identifica</strong> qué modelo presenta sobreajuste según <a href="../capitulos/01-senal-ruido.html#def-sobreajuste" class="quarto-xref">Definición&nbsp;<span>1.2</span></a>. <strong>Explica</strong> por qué el error de entrenamiento no basta para elegir con qué modelo predecirías el caso siguiente.</li>
 </ol>
+</div>
+</div>
+</section>
+<section id="sec-h1-b" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h1-b">2. Demostración</h2>
+<p><em>Bloque B. Sale de los resultados desarrollados en el capítulo y puede aparecer tal cual en el examen.</em></p>
+<div class="nuevo">
+<div id="exr-h1-media-senal" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Supón que, para un valor fijo <span class="math inline">\(X=\mathbf{x}\)</span>,</p>
+<p><span class="math display">\[
+Y=f(\mathbf{x})+\varepsilon,
+\qquad \varepsilon\sim\mathcal{N}(0,\sigma^2).
+\]</span></p>
+<ol type="a">
+<li><strong>Deduce</strong>, mediante la propiedad de traslación, la distribución de <span class="math inline">\(Y\,\vert\,X=\mathbf{x}\)</span>.</li>
+<li><strong>Demuestra</strong> que <span class="math inline">\(\mathbb{E}\!\left[ Y\,\vert\,X=\mathbf{x} \right]=f(\mathbf{x})\)</span> y que <span class="math inline">\(\mathrm{Var}\!\left( Y\,\vert\,X=\mathbf{x} \right)=\sigma^2\)</span>.</li>
+<li>Si <span class="math inline">\(\mathbb{E}\!\left[ \varepsilon \right]=c\neq0\)</span>, <strong>calcula</strong> la media condicional y <strong>explica</strong> por qué la hipótesis de media cero permite identificar <span class="math inline">\(f\)</span> con el centro de la respuesta.</li>
+</ol>
+</div>
+</div>
+<div class="nuevo">
+<div id="exr-h1-log-argmax" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Sea <span class="math inline">\(h:\Theta\to(0,\infty)\)</span> y sea <span class="math inline">\(\vartheta^\star\in\Theta\)</span>.</p>
+<ol type="a">
+<li><strong>Demuestra</strong> que <span class="math inline">\(\vartheta^\star\in\mathop{\mathrm{arg\,max}}_{\vartheta}h(\vartheta)\)</span> si y solo si <span class="math inline">\(\vartheta^\star\in\mathop{\mathrm{arg\,max}}_{\vartheta}\log h(\vartheta)\)</span>. Escribe la comparación que debe cumplirse para todo <span class="math inline">\(\vartheta\)</span> e indica dónde se usa que el logaritmo es estrictamente creciente.</li>
+<li><strong>Deduce</strong> que maximizar <span class="math inline">\(\log h\)</span> equivale a minimizar <span class="math inline">\(-\log h\)</span>.</li>
+<li><strong>Explica</strong> por qué se exige que <span class="math inline">\(h\)</span> sea positiva al aplicar el resultado a una verosimilitud.</li>
+</ol>
+</div>
+</div>
+<div id="exr-h1-lagrange" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Sean <span class="math inline">\(x_1,\dots,x_{n}\)</span> valores entre los que no haya dos iguales. Se define la <strong>base de Lagrange</strong> como</p>
+<p><span class="math display">\[
+\ell_j(x)=\prod_{\substack{1\leq k\leq n\\ k\neq j}}
+\frac{x-x_k}{x_j-x_k},
+\qquad j=1,\dots,n.
+\]</span></p>
+<ol type="a">
+<li><strong>Comprueba</strong> que <span class="math inline">\(\ell_j(x_j)=1\)</span> y que <span class="math inline">\(\ell_j(x_i)=0\)</span> cuando <span class="math inline">\(i\neq j\)</span>. <strong>Di</strong> dónde se usa que no haya dos <span class="math inline">\(x_i\)</span> iguales.</li>
+<li><strong>Deduce</strong> que <span class="math inline">\(P(x)=\sum_j y_j\ell_j(x)\)</span> pasa por los <span class="math inline">\(n\)</span> puntos y <strong>explica</strong> por qué su grado es a lo sumo <span class="math inline">\(n-1\)</span>. Con esto, <strong>demuestra</strong> <a href="../capitulos/01-senal-ruido.html#thm-interpolacion" class="quarto-xref">Teorema&nbsp;<span>1.1</span></a>.</li>
+</ol>
+</div>
+</section>
+<section id="sec-h1-c" class="level2">
+<h2 class="anchored" data-anchor-id="sec-h1-c">3. Cálculo a mano</h2>
+<p><em>Bloque C. Sin ordenador. Basta dejar indicados <span class="math inline">\(e\)</span> y <span class="math inline">\(\sqrt{2\pi}\)</span> cuando aparezcan.</em></p>
+<div id="exr-h1-densidad-uno" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> &nbsp;</p>
+<ol type="a">
+<li><strong>Evalúa</strong> la densidad normal en <span class="math inline">\(z=\mu\)</span> y <strong>calcula</strong> su valor para <span class="math inline">\(\sigma=2\)</span>, <span class="math inline">\(\sigma=1\)</span> y <span class="math inline">\(\sigma=0.2\)</span>.</li>
+<li><strong>Calcula</strong> a partir de qué valor de <span class="math inline">\(\sigma\)</span> la densidad evaluada en <span class="math inline">\(z=\mu\)</span> pasa de uno.</li>
+<li>Con <span class="math inline">\(\sigma=0.2\)</span> esa densidad vale <span class="math inline">\(1.995\)</span>, algo menos de 2. <strong>Di</strong> cuál de las dos cantidades <span class="math inline">\(p(z;\mu,\sigma)\)</span> y <span class="math inline">\(\mathbb{P}\!\left( a\leq\varepsilon\leq b \right)\)</span> tiene que estar entre cero y uno según <a href="../capitulos/01-senal-ruido.html#def-normal" class="quarto-xref">Definición&nbsp;<span>1.3</span></a>, y <strong>calcula</strong> el área del rectángulo de base <span class="math inline">\([\mu-0.2,\mu+0.2]\)</span> y altura 2 para acotar la probabilidad de ese intervalo y comprobar que no llega a uno.</li>
+</ol>
+</div>
+<div class="nuevo">
+<div id="exr-h1-verosimilitud" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Se observan tres respuestas y se comparan dos señales candidatas. Se supone ruido normal de desviación típica <span class="math inline">\(\sigma=1\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y_i\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(f_A(x_i)=1+2x_i\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(f_B(x_i)=2+x_i\)</span></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li><p><strong>Calcula</strong> los tres residuos y la suma de sus cuadrados, <span class="math inline">\(S_A\)</span> y <span class="math inline">\(S_B\)</span>, para cada señal.</p></li>
+<li><p>Partiendo de la densidad normal y de la independencia, <strong>comprueba</strong> que</p>
+<p><span class="math display">\[
+L_A=(2\pi)^{-3/2}e^{-S_A/2},
+\qquad
+L_B=(2\pi)^{-3/2}e^{-S_B/2}.
+\]</span></p></li>
+<li><p><strong>Calcula</strong> el cociente <span class="math inline">\(L_A/L_B\)</span> y <strong>elige</strong> la señal de máxima verosimilitud sin aproximar <span class="math inline">\(e\)</span> ni <span class="math inline">\(\pi\)</span>.</p></li>
+<li><p><strong>Identifica</strong> qué paso del apartado b dejaría de estar justificado si las tres respuestas no fueran independientes.</p></li>
+</ol>
+</div>
+</div>
+<div class="nuevo">
+<div id="exr-h1-rejilla" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Una búsqueda por rejilla prueba <span class="math inline">\(m=10\)</span> valores de cada uno de los <span class="math inline">\(q\)</span> parámetros y evalúa todas sus combinaciones.</p>
+<ol type="a">
+<li><strong>Calcula</strong> cuántas evaluaciones requiere una recta, con <span class="math inline">\(q=2\)</span>.</li>
+<li><strong>Calcula</strong> cuántas requiere un modelo con <span class="math inline">\(q=8\)</span> y otro con <span class="math inline">\(q=20\)</span>.</li>
+<li>Un ordenador evalúa un millón de combinaciones por segundo. Usando <span class="math inline">\(1\text{ año}\approx3\cdot10^7\)</span> segundos, <strong>calcula</strong> cuántos años tardaría con <span class="math inline">\(q=20\)</span>.</li>
+<li><strong>Explica</strong> por qué una rejilla más fina mejora la resolución pero no resuelve el problema de escala.</li>
+</ol>
+</div>
 </div>
 </section>
 <section id="sec-h1-d" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-d">4. Encuentra los errores</h2>
+<p><em>Bloque D. Se puntúan la localización, la consecuencia y la corrección de cada error.</em></p>
 <div id="exr-h1-errores-simular" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Este fragmento pretende simular una muestra del modelo lineal-gaussiano de <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, con señal <span class="math inline">\(f(x)=2+3x\)</span> y ruido <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de desviación típica <span class="math inline">\(\sigma=2\)</span>. Los comentarios describen lo que el fragmento debería hacer. Contiene <strong>tres</strong> errores conceptuales, uno por línea. No obstante, se ejecuta sin dar ningún error.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">9</span>, n)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># la señal del modelo, f(x) = 2 + 3x</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> x</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ruido normal de media cero y varianza 4</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ruido_estandar <span class="op">=</span> torch.randn(<span class="dv">1</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> ruido_estandar</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># la respuesta observada</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">*</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Este fragmento pretende simular una muestra del modelo descrito en <a href="../capitulos/01-senal-ruido.html#def-lineal-gaussiano" class="quarto-xref">Definición&nbsp;<span>1.6</span></a>, con señal <span class="math inline">\(f(x)=2+3x\)</span> y ruido <span class="math inline">\(\varepsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,\sigma^2)\)</span> de desviación típica <span class="math inline">\(\sigma=2\)</span>. Los comentarios describen lo que el fragmento debería hacer. Contiene <strong>tres</strong> errores conceptuales, uno por línea. No obstante, se ejecuta sin dar ningún error.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">9</span>, n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># la señal del modelo, f(x) = 2 + 3x</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> x</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ruido normal de media cero y varianza 4</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ruido_estandar <span class="op">=</span> torch.randn(<span class="dv">1</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> ruido_estandar</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># la respuesta observada</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> senal <span class="op">*</span> ruido</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li><strong>Identifica</strong> las tres líneas con error y razona qué errores conceptuales presentan.</li>
+<li><strong>Identifica</strong> las tres líneas con error y <strong>razona</strong> qué error conceptual presenta cada una.</li>
 <li><strong>Corrige</strong> las tres líneas, escribiéndolas como deberían estar.</li>
 </ol>
 </div>
 </section>
 <section id="sec-h1-e" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h1-e">5. Completar código</h2>
-<p><em>Este bloque se hace con ordenador. En el examen se preguntaría únicamente la parte de completar.</em></p>
-<div id="exr-h1-simular" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> Completa las líneas marcadas para simular una muestra del modelo lineal-gaussiano con <span class="math inline">\(\boldsymbol{w}=(1,2)^{\mathsf{T}}\)</span> y <span class="math inline">\(\sigma=3\)</span>, y para separar sus dos componentes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">40</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>senal <span class="op">=</span> ...          <span class="co"># (1) la parte estable, f(x) = 1 + 2x</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ruido <span class="op">=</span> ...          <span class="co"># (2) n extracciones normales de media 0 y desviación 3</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ...              <span class="co"># (3) la respuesta observada</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"media del ruido:"</span>, ...)          <span class="co"># (4)</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"desviación del ruido:"</span>, ...)     <span class="co"># (5)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<h2 class="anchored" data-anchor-id="sec-h1-e">5. Completar y comprobar código</h2>
+<div class="nuevo">
+<p><em>Bloque de laboratorio. En el examen solo puede aparecer una versión corta de código que se ha explicado en clase.</em></p>
+</div>
+<div class="nuevo">
+<div id="exr-h1-completar-rejilla" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Completa las líneas marcadas para reproducir la búsqueda por rejilla del capítulo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sigma_supuesto <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mejor_loglik <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">"inf"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mejores_coeficientes <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w0 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">20</span>):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w1 <span class="kw">in</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">20</span>):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        prediccion <span class="op">=</span> ...                                  <span class="co"># (1)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        densidades <span class="op">=</span> densidad_normal(..., ..., ...)       <span class="co"># (2)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        loglik_actual <span class="op">=</span> ...                               <span class="co"># (3)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ...:                                           <span class="co"># (4)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            mejor_loglik <span class="op">=</span> loglik_actual</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            mejores_coeficientes <span class="op">=</span> ...                    <span class="co"># (5)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li>Rellena las cinco líneas.</li>
-<li><strong>Ejecuta</strong> el bloque con tres semillas distintas, cambiando el argumento de <code>torch.manual_seed</code>. ¿Cambia <code>senal</code>? ¿Cambia <code>y</code>? <strong>Explica</strong> por qué.</li>
-<li>Vuelve a la semilla 0. La media muestral del ruido no sale exactamente cero. <strong>Explica</strong> si eso es un error del código. <strong>Ejecuta</strong> después el bloque con <code>n = 4000</code> y <strong>di</strong> qué le pasa a esa media y qué le pasa a la desviación típica muestral del ruido.</li>
+<li><strong>Rellena</strong> las cinco líneas.</li>
+<li><strong>Calcula</strong> cuántas veces se ejecuta la línea (2).</li>
+<li><strong>Explica</strong> por qué la línea (3) suma logaritmos y qué representa <code>mejores_coeficientes</code> al terminar.</li>
+<li><strong>Di</strong> qué candidato seleccionaría el fragmento si se invirtiera la desigualdad de la línea (4).</li>
 </ol>
 </div>
+</div>
 <div id="exr-h1-logaritmos" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 14</strong></span> Con los datos simulados del capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Con los datos simulados del capítulo y <span class="math inline">\(\sigma=3\)</span>, evalúa <code>densidad_normal(y, senal, 3.0)</code> para obtener las <span class="math inline">\(n\)</span> densidades individuales.</p>
 <ol type="a">
 <li><strong>Calcula</strong> el producto de las cinco primeras, de las diez primeras y de las veinte. Anota los tres órdenes de magnitud.</li>
 <li><strong>Calcula</strong> la suma de sus logaritmos en los mismos tres casos.</li>
@@ -572,26 +590,32 @@ Figura&nbsp;1: Seis muestras simuladas con <span class="math inline">\(n=60\)</s
 </section>
 <section id="sec-h1-f" class="level2">
 <h2 class="anchored" data-anchor-id="sec-h1-f">6. Ampliación</h2>
-<p><em>No entra en el examen.</em></p>
-<div id="exr-h1-heterocedastico" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 15</strong></span> Simula <span class="math inline">\(n=40\)</span> observaciones con señal <span class="math inline">\(f(x)=2x+1\)</span> y <span class="math inline">\(x\)</span> entre 0 y 10, en dos situaciones:</p>
-<ol type="1">
-<li>ruido normal con desviación típica constante igual a 2;</li>
-<li>ruido normal cuya desviación típica sea <span class="math inline">\(0.5+x/2\)</span>.</li>
-</ol>
+<p><em>Opcional. No entra en el examen.</em></p>
+<div class="nuevo">
+<div id="exr-h1-especificacion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> El proceso real satisface</p>
+<p><span class="math display">\[
+Y\,\vert\,X=x\sim\mathcal{N}(1+x+x^2,1),
+\qquad x\in[-2,2],
+\]</span></p>
+<p>pero se ajusta la familia lineal-gaussiana con señal <span class="math inline">\(f_{\boldsymbol{w}}(x)=w_0+w_1x\)</span>.</p>
 <ol type="a">
-<li><strong>Dibuja</strong> las dos muestras junto a la señal, con los mismos ejes.</li>
-<li><strong>Di</strong> si en la segunda situación sigue valiendo <span class="math inline">\(\mathbb{E}\!\left[ Y\,\vert\,X=x \right]=f(x)\)</span>, y <strong>razónalo</strong> con la hipótesis de media cero.</li>
-<li><strong>Identifica</strong> cuál de las hipótesis H1 a H6 de <a href="#exr-h1-hipotesis" class="quarto-xref">Ejercicio&nbsp;<span>2</span></a> deja de cumplirse en la segunda situación, aunque la media del ruido siga siendo cero.</li>
+<li><strong>Razona</strong> si la familia está bien especificada.</li>
+<li><strong>Explica</strong> por qué la máxima verosimilitud sigue pudiendo elegir una recta aunque <span class="math inline">\(P^\star\)</span> no pertenezca a la familia.</li>
+<li><strong>Distingue</strong> qué parte del error se debe al ruido y cuál a la señal que la familia no puede representar.</li>
+<li><strong>Razona</strong> si aumentar indefinidamente el tamaño de la muestra elimina necesariamente los dos errores.</li>
 </ol>
 </div>
-<div id="exr-h1-simulacion" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 16</strong></span> Genera <span class="math inline">\(n=20\)</span> observaciones con <span class="math inline">\(f(x)=2x+1\)</span> y ruido normal de desviación 3. Ajusta dos modelos: el interpolador cúbico de <a href="../capitulos/01-senal-ruido.html#fig-interpolacion" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> y una recta, esta última con la búsqueda por rejilla del capítulo. Repite el experimento 200 veces y, en cada repetición, mide sobre 200 observaciones nuevas generadas con la misma señal el error de test <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{test}}}\)</span> de <a href="#exr-h1-comparar" class="quarto-xref">Ejercicio&nbsp;<span>11</span></a> para los dos modelos.</p>
-<ol type="a">
-<li><strong>Dibuja</strong> las dos distribuciones de error de test en el mismo histograma.</li>
-<li><strong>Calcula</strong> la mediana de cada una y <strong>di</strong> cuántas veces mayor es la del interpolador.</li>
-<li><strong>Repite</strong> todo con <span class="math inline">\(n=40\)</span> y <strong>compara</strong> las dos medianas con las del apartado b. <strong>Di</strong> cuál de las dos baja y cuál se queda donde estaba, y relaciona el resultado con <a href="../capitulos/01-senal-ruido.html#def-sobreajuste" class="quarto-xref">Definición&nbsp;<span>1.2</span></a>.</li>
-</ol>
+</div>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Las soluciones se publican en el Campus Virtual después de la sesión de problemas.</p>
+</div>
+</div>
 </div>
 
 
