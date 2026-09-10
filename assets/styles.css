@@ -381,12 +381,63 @@ div.nuevo .proof {
   .quarto-secondary-nav,
   .quarto-page-breadcrumbs,
   .quarto-search-button,
-  .quarto-btn-toggle {
+  .quarto-btn-toggle,
+  .page-navigation,
+  .callout-btn-toggle {
     display: none !important;
   }
 
   @page {
     margin: 14mm;
+  }
+
+  /* Las secciones en rejilla de Quarto pueden solaparse al cambiar de pagina.
+     Al imprimir, el texto sigue un flujo normal; las figuras conservan su rejilla. */
+  body,
+  #quarto-content,
+  main.content,
+  main.content > section,
+  main.content section.level2,
+  main.content section.level3 {
+    display: block !important;
+  }
+
+  body,
+  #quarto-content,
+  main.content {
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* En papel no se pueden desplegar las demostraciones opcionales. */
+  .callout-collapse {
+    display: block !important;
+    height: auto !important;
+  }
+
+  /* Mantener los titulos con el texto siguiente y los bloques cortos completos.
+     Si un ejercicio ocupa mas de una pagina, Chrome puede dividirlo igualmente. */
+  h1, h2, h3, h4, h5, h6,
+  .theorem > p:first-child,
+  .codigo-clave::before,
+  .sol::before {
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  .theorem.definition,
+  .theorem.exercise,
+  .codigo-clave,
+  .sol,
+  .cajanegra,
+  .callout,
+  .quarto-figure,
+  figure,
+  div.sourceCode,
+  pre {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
   }
 
   /* Chrome no reescala las figuras al imprimir: una figura mas ancha que la caja se

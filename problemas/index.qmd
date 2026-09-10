@@ -1,23 +1,19 @@
 # Hojas de problemas {.unnumbered}
 
-**Una hoja por capítulo**, para las sesiones S2. Lápiz y papel, sin ordenador. Un capítulo
-suele ocupar dos semanas, así que su hoja se reparte entre las dos sesiones de problemas.
-
-**Los ejercicios se resuelven en clase.** La S2 sigue siempre la misma secuencia: el
-profesor resuelve uno en la pizarra diciendo en voz alta qué puntúa, vosotros hacéis el
-siguiente por parejas, y se corrige en la pizarra. Lo que quede sin ver, con solución
-publicada después.
+**Una hoja por capítulo**, para practicar en papel los razonamientos y cálculos del examen.
+En clase resolveremos una selección de ejercicios; el resto permite practicar por cuenta
+propia. Las soluciones se facilitan después por el Campus Virtual.
 
 ## Las hojas
 
-Cada hoja tiene seis bloques. Los cuatro primeros reproducen la estructura del examen, el
-quinto es de laboratorio y el sexto es de ampliación. Un bloque puede llevar más de un
-ejercicio.
+Las hojas revisadas combinan preguntas conceptuales, demostraciones breves, cálculos,
+detección de errores y código para completar en papel. Los borradores de temas posteriores
+pueden conservar ampliaciones pendientes de ajustar al calendario.
 
 | Hoja | Capítulo | Ejercicios | Estado |
 |---|---|---:|---|
 | [1](hoja-01.qmd) | 1 · Datos = señal + ruido | 12 | escrita, solucionario en el Campus Virtual |
-| [2](hoja-02.qmd) | 2 · Aprender minimizando | 17 | escrita, solucionario en el Campus Virtual |
+| [2](hoja-02.qmd) | 2 · Aprender minimizando | 12 | revisada; solucionario preparado, aún privado |
 | [3](hoja-03.qmd) | 3 · Modelos lineales con muchas variables | 19 | escrita, solucionario en el Campus Virtual |
 | [4](hoja-04.qmd) | 4 · Evaluar para generalizar | 26 | escrita, solucionario en el Campus Virtual |
 | [5](hoja-05.qmd) | 5 · Preparar datos | 18 | escrita, solucionario en el Campus Virtual |
@@ -29,9 +25,8 @@ ejercicio.
 Los esqueletos se escriben con su capítulo, así que solo aparecen publicadas las hojas de
 los capítulos ya escritos.
 
-Algunos de estos ejercicios ya aparecen planteados dentro de los apuntes, en el punto del
-texto que los motiva. Aquí están recogidos todos juntos, más otros que no salen en el
-capítulo.
+Algunos ejercicios retoman los planteados en los apuntes; otros permiten aplicar lo
+aprendido a ejemplos distintos.
 
 ::: {.callout-note appearance="simple"}
 Las hojas resueltas se publican después de la sesión correspondiente.

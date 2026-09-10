@@ -11,9 +11,11 @@ book:
     - part: "Fundamentos del aprendizaje predictivo"
       chapters:
         - capitulos/01-senal-ruido.qmd
+        - capitulos/02-aprender-minimizando.qmd
     - part: "Hojas de problemas"
       chapters:
         - problemas/hoja-01.qmd
+        - problemas/hoja-02.qmd
   appendices:
     - curso/colab.qmd
     - curso/evaluacion.qmd

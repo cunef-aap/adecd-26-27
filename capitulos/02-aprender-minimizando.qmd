@@ -1,6 +1,7 @@
 ---
 title: 'Aprender minimizando'
 subtitle: 'Del riesgo empírico al descenso de gradiente'
+cuaderno: 02-aprender-minimizando.ipynb
 ---
 
 ::: {.content-hidden}
@@ -14,6 +15,8 @@ import style
 ```
 :::
 
+{{< include ../assets/includes/_colab-link.qmd >}}
+
 ## Del modelo a un problema de optimización
 
 En el capítulo anterior propusimos el modelo lineal-gaussiano
@@ -23,7 +26,7 @@ Y_i\given X_i=x_i
 \sim\Normal\bigl(\coefzero+w_1x_i,\noise^2\bigr)
 $$
 
-Para extraer la señal y poder realizar predicciones,buscamos los valores de
+Para extraer la señal y poder realizar predicciones, buscamos los valores de
 $(\coefzero,w_1)$ que hacían más verosímiles los datos. La
 búsqueda sobre una rejilla permitió visualizar la idea, pero no constituye un método de
 aprendizaje viable.
@@ -47,13 +50,15 @@ Necesitamos reformular el aprendizaje como un problema que pueda resolverse sin 
 los parámetros posibles. El proceso tendrá tres pasos:
 
 
-1. convertir la verosimilitud en una función de coste, es decir; una función que nos indica
+1. convertir la verosimilitud en una función de coste, es decir, una función que nos indica
    la calidad de los valores de los parámetros (a mayor coste, peor calidad);
 2. calcular cómo cambia ese coste cuando cambian los parámetros;
 3. actualizar los parámetros en una dirección que lo reduzca.
 
 Para ilustrar los conceptos de este capítulo, simularemos datos con la misma señal del
-capítulo anterior.
+capítulo anterior. Cambiamos la muestra: ahora usamos 40 valores de $x$ entre $-2$ y $2$
+y ruido con $\noise=1$. Centrar los valores de $x$ alrededor de cero simplificará la
+geometría del riesgo; la señal generadora sigue siendo $1+2x$.
 
 
 ```{python}
@@ -118,7 +123,7 @@ def marca_minimo(ax, w0, w1):
 
 Empecemos por el primer paso. La función que recorrimos sobre la rejilla era la
 log-verosimilitud del modelo lineal-gaussiano. Vamos a desarrollarla hasta ver qué parte de
-ella depende de los parámetros de la señal.
+ella depende de los parámetros de la señal. Recuerda, de momento, asumimos que el nivel de ruido $\noise$ es conocido y fijo.
 
 ::: {#thm-loglik-mse}
 ## Desarrollo de la log-verosimilitud gaussiana
@@ -159,10 +164,11 @@ $$
 $$
 :::
 
-Miremos el resultado. El primer sumando no contiene $\coef$, así que es el mismo para
-cualquier señal que probemos. Todo lo que la verosimilitud dice sobre los parámetros de la
-señal está en el segundo sumando, y ahí $\coef$ solo aparece dentro de una suma de
-cuadrados de diferencias entre lo observado y lo predicho. Esa cantidad merece un nombre.
+El primer sumando no contiene $\coef$, así que es el mismo para cualquier señal que probemos.
+Todo lo que la verosimilitud dice sobre los parámetros de la señal está en el segundo
+sumando, y ahí $\coef$ solo aparece dentro de una suma de cuadrados de diferencias entre
+lo observado y lo predicho. Cada una de esas diferencias es un residuo; la media de sus
+cuadrados es el error cuadrático medio.
 
 ::: {#def-residuo}
 ## Residuo y error cuadrático medio
@@ -198,7 +204,7 @@ Para extraer de aquí un problema de optimización utilizaremos un hecho sencill
 ::: {#lem-invarianza-afin}
 ## Invarianza afín del minimizador
 
-Si $a>0$ y $b$ no depende de $\coef$, entonces
+Si $a>0$ y $b$ son constantes que no dependen de $\coef$, entonces
 
 $$
 \argmin_{\coef}\bigl[a h(\coef)+b\bigr]
@@ -244,7 +250,8 @@ $\loglik$ equivale a minimizar $-\loglik$.
 
 
 Ya tenemos la función de coste que pedía el primer paso: el error cuadrático medio.
-Buscar la señal más verosímil es buscar la que deja los residuos más pequeños, y eso es un
+Buscar la señal más verosímil es buscar la que minimiza la suma de los cuadrados de los
+residuos, y eso es un
 problema de mínimos cuadrados.
 
 ::: {.callout-note title="El nivel de ruido queda fuera del foco"}
@@ -285,35 +292,17 @@ $\loss_{\mathrm{abs}}(y,\widehat y)=\abs{y-\widehat y}$, que crece de forma prop
 error en lugar de castigar los errores grandes con más intensidad. Elegir una pérdida es
 decidir qué entendemos por una buena predicción.
 
-::: {#exr-mae-laplace}
-## Una pérdida distinta sale de un ruido distinto
-
-La distribución de Laplace con centro $\mu$ y escala $b>0$ tiene densidad
-
-$$
-\pdf(z;\mu,b)=\frac{1}{2b}\exp\left(-\frac{\abs{z-\mu}}{b}\right).
-$$
-
-Supón un modelo $\yi=f_{\coef}(x_i)+\varepsilon_i$ con
-$\varepsilon_i\iid\Laplacedist(0,b)$ y $b$ fijo.
-
-a. Escribe la log-verosimilitud de la muestra.
-b. Repite el razonamiento de este apartado y comprueba que maximizarla equivale a
-   minimizar el error absoluto medio $\frac{1}{\nobs}\sum_i\abs{\residi(\coef)}$.
-c. Explica en una frase por qué esa pérdida se ve menos afectada que la cuadrática por una
-   observación muy alejada del resto.
-:::
-
-La pérdida evalúa un caso. El objetivo predictivo, en cambio, se refiere a casos futuros, y
-para hablar de ellos necesitamos describir de dónde salen los datos.
+La pérdida mide el error en una observación. Pero queremos que el modelo prediga bien
+observaciones nuevas, no solo una en particular. El siguiente paso es medir qué pérdida
+esperamos obtener al predecir datos del proceso real.
 
 ## Riesgo poblacional y riesgo empírico
 
 En el capítulo anterior separamos el proceso real que genera los datos, $P^\star$, de la
-familia de modelos que proponemos. Toda observación, la de la muestra y la que llegará
-mañana, es una extracción de $P^\star$. Escribimos $(X,Y)\sim P^\star$ para una observación
-nueva, tomada al azar del mismo proceso y con independencia de las que ya tenemos. Lo que
-nos interesa no es acertar en las observaciones que ya hemos visto, sino en esas.
+familia de modelos que proponemos. Escribimos $(X,Y)\sim P^\star$ para una observación
+nueva, independiente de las que hemos utilizado para entrenar. Esta distribución describe
+tanto las entradas $X$ como las respuestas $Y$.
+
 
 ::: {#def-riesgo-verdadero}
 ## Riesgo
@@ -330,31 +319,16 @@ donde el subíndice indica que la esperanza se toma sobre una observación nueva
 $(X,Y)$ extraída de $P^\star$.
 :::
 
-El riesgo es lo que querríamos minimizar. Conviene saber desde ahora que no se
-puede llevar a cero: ni siquiera la señal verdadera predice el ruido de una observación
-futura, así que hay un suelo de error que ninguna elección de parámetros baja. En el
-capítulo dedicado a sesgo y varianza mediremos exactamente ese suelo.
 
 Obsérvese dónde aparece cada cosa en @eq-riesgo-verdadero. La esperanza se toma sobre
 $P^\star$, el proceso real; la familia de modelos solo entra a través de $f_{\coef}$. El
 criterio, por tanto, mide lo que nos importa aunque nuestra hipótesis sea falsa: no se
-evalúa el modelo contra sí mismo, sino contra la realidad. Eso tiene dos consecuencias,
-según
-que la familia contenga o no a $P^\star$.
+evalúa el modelo contra sí mismo, sino contra la realidad.
 
-[Si la contiene, el modelo está bien especificado en el sentido de @def-bien-especificado,
-y al crecer la muestra los parámetros aprendidos se acercan a los que generaron los datos.
-Si no la contiene, está mal especificado, y al crecer la muestra los parámetros no se
-acercan a ninguna verdad, porque la verdad no está entre los candidatos: se acercan al
-mejor miembro de la familia, el que menos riesgo tiene.]{.nuevo} Que la familia sea falsa
-no estropea el criterio; lo que hace es poner un suelo a lo que se puede conseguir con
-ella.
-
-
-El problema inmediato es otro: $P^\star$ es desconocida, así que la esperanza
-de @eq-riesgo-verdadero no se puede calcular. Solo disponemos de la muestra observada
-$\data=\{(x_i,y_i)\}_{i=1}^{\nobs}$. Si no podemos promediar sobre $P^\star$, promediamos
-sobre los datos que sí tenemos.
+El objetivo es, pues, minimizar el riesgo poblacional. El problema es que no conocemos
+$P^\star$ y no podemos calcular esa esperanza. Solo disponemos de la muestra observada
+$\data=\{(x_i,y_i)\}_{i=1}^{\nobs}$. En lugar de promediar sobre el proceso real,
+promediaremos sobre los datos que sí tenemos.
 
 
 ::: {#def-riesgo-empirico}
@@ -394,35 +368,19 @@ Es decir, el problema de mínimos cuadrados al que llegamos desde la verosimilit
 problema de minimización del riesgo empírico. A partir de aquí escribiremos
 $\Riskh(\coef)$, sin el subíndice de la muestra, y lo llamaremos riesgo cuadrático empírico.
 
-Y no es casualidad que la verosimilitud haya acabado produciendo un riesgo empírico.
-Cualquier modelo probabilístico define una pérdida: si el modelo asigna a cada respuesta la
-densidad $\pdf(y\given x;\vartheta)$, basta tomar
-$\loss_{\log}(\vartheta;x,y)=-\log\pdf(y\given x;\vartheta)$. Como las observaciones se
-consideran independientes, el riesgo empírico de esa pérdida es
-
-$$
-\Riskh_{\log,\data}(\vartheta)
-=-\frac{1}{\nobs}\sum_{i=1}^{\nobs}
-\log\pdf(\yi\given x_i;\vartheta)
-=-\frac{1}{\nobs}\log\Lik(\vartheta),
-$$ {#eq-riesgo-logaritmico}
-
-y minimizarlo es maximizar la verosimilitud. El modelo gaussiano da la pérdida cuadrática y
-el de @exr-mae-laplace da la absoluta.
-
 Queda una advertencia, y conviene entenderla bien. Estamos usando la misma muestra para dos
 cosas distintas: para **elegir** $\coefhat$ y para **medir** cómo de bueno es. Cuando eso
-ocurre, la medida sale demasiado favorable. La intuición es la siguiente. El entrenamiento
+ocurre, la medida tiende a ser demasiado favorable. La intuición es la siguiente. El entrenamiento
 se queda con los parámetros que mejor encajan en la muestra de entrenamiento, con su ruido
 concreto. Parte de ese buen encaje se debe a la señal, y se repetirá en observaciones
 nuevas. Otra parte se debe a haber acertado con el ruido de estas observaciones, y no se
 repetirá, porque las observaciones nuevas traen su propio ruido. Al evaluar sobre los mismos
 datos, las dos partes cuentan por igual, pero la segunda es un espejismo.
 
-El interpolador del capítulo anterior es el caso extremo de ese espejismo: el riesgo
-empírico es exactamente cero pero el modelo no tiene capacidad predictiva (no generaliza).
-Cuanto más flexible es la clase de modelos, más margen hay para ajustar ruido y más
-optimista resulta la medida.
+El interpolador del capítulo anterior muestra por qué hay que distinguir los dos riesgos:
+su riesgo empírico es exactamente cero, pero eso no garantiza un riesgo pequeño sobre
+observaciones nuevas. Una clase más flexible deja más margen para ajustar ruido; el buen
+ajuste sobre entrenamiento no basta para decidir si esa flexibilidad mejora la predicción.
 
 En el capítulo dedicado a evaluación construiremos estimaciones honestas del rendimiento
 fuera de la muestra, y ahí quedará resuelto. Aquí nos centramos en el problema de
@@ -485,7 +443,6 @@ Calcula el gradiente de cada función.
 
 a. $h(w_0,w_1)=3w_0^2-2w_0w_1+w_1^3$.
 b. $h(w_0,w_1)=(w_0+2w_1-5)^2$.
-c. $h(w_0,w_1,w_2)=\exp(w_0w_1)+w_2\log w_1$, con $w_1>0$.
 :::
 
 
@@ -526,6 +483,7 @@ La fórmula se traduce a código con las tres piezas que reutilizaremos durante 
 curso: una clase que guarda los parámetros y sabe predecir, una función que mide el error, y
 una función que calcula el gradiente.
 
+::: {.codigo-clave}
 ```{python}
 #---
 class LinearRegression:                                   # <1>
@@ -549,12 +507,13 @@ def grad_mse(modelo, x, y):                      # <3>
 #---
 ```
 
-1. El modelo guarda los parámetros y expone `predict`. Es lo único que cambiará en los
-   capítulos siguientes, cuando la señal tenga muchas variables.
+1. El modelo guarda los parámetros y expone `predict`. Cuando la señal tenga varias
+   variables cambiaremos su representación y la expresión de la predicción.
 2. La pérdida es una función suelta que recibe predicciones y respuestas. No depende del
-   modelo, así que se puede cambiar sin tocar nada más.
+   modelo.
 3. La traducción literal de @eq-gradiente-riesgo-1d. Dejará de hacer falta en cuanto
    sepamos calcular derivadas de forma automática.
+:::
 
 Por ejemplo, en $\coef=(0,0)\T$ el gradiente es
 
@@ -572,23 +531,22 @@ pendiente. Para justificar esta lectura necesitamos entender la geometría del g
 ## Geometría del gradiente
 
 Una función diferenciable se aproxima localmente por una función lineal. Para un cambio
-pequeño $\mathbf d$ en los parámetros,
+pequeño $\mathbf d$ en los parámetros, el cambio de la función es aproximadamente
 
 $$
-h(\coef+\mathbf d)
-=h(\coef)+\grad h(\coef)\T\mathbf d
-+o\bigl(\norm{\mathbf d}\bigr).
+h(\coef+\mathbf d)-h(\coef)
+\approx\grad h(\coef)\T\mathbf d.
 $$ {#eq-aproximacion-primer-orden}
 
-El producto $\grad h(\coef)\T\mathbf d$ aproxima el cambio en la función. Si restringimos
-la longitud del movimiento, el gradiente determina las direcciones que más aumentan y
-reducen ese valor.
+Si este producto es negativo, esperamos que un desplazamiento suficientemente pequeño
+reduzca la función. El gradiente permite elegir en qué dirección movernos.
+
 
 ::: {#prp-direccion-descenso}
 ## Dirección de máximo descenso local
 
-Si $\grad h(\coef)\neq\zerov$, entre todas las direcciones unitarias $\mathbf u$, la que
-más reduce la función al movernos un poco es
+Si $h$ es diferenciable y $\grad h(\coef)\neq\zerov$, entre todas las direcciones
+unitarias $\mathbf u$, la que produce el mayor descenso a primer orden es
 
 $$
 \mathbf u=-\frac{\grad h(\coef)}{\norm{\grad h(\coef)}}.
@@ -596,11 +554,12 @@ $$
 :::
 
 
+:::: {.callout-note collapse="true" title="Demostración no exigible"}
 ::: {.proof}
 Movernos una distancia pequeña $s>0$ en la dirección unitaria $\mathbf u$ cambia el valor de
 la función, según @eq-aproximacion-primer-orden, en aproximadamente
 $s\,\mathbf u\T\grad h(\coef)$. Como $s$ es positivo, elegir la dirección que más reduce la
-función es elegir la que hace $\mathbf u\T\grad h(\coef)$ lo más negativo posible.
+función a primer orden es elegir la que hace $\mathbf u\T\grad h(\coef)$ lo más negativo posible.
 
 Ese producto escalar se puede escribir con el ángulo $\vartheta$ que forman los dos
 vectores:
@@ -618,11 +577,13 @@ controlar es $\cos\vartheta$, que vale como poco $-1$.
 Ese mínimo se alcanza cuando $\vartheta=\pi$, es decir, cuando $\mathbf u$ apunta en sentido
 exactamente opuesto al gradiente. 
 :::
+::::
 
 El mismo cálculo dice dos cosas más, que conviene retener. La dirección que más **aumenta**
 la función es la del gradiente, con $\cos\vartheta=1$. Y las direcciones en las que la
 función no cambia, a primer orden, son las perpendiculares al gradiente, con
-$\cos\vartheta=0$: son las que siguen la curva de nivel. Por eso el gradiente es
+$\cos\vartheta=0$: son las direcciones tangentes a la curva de nivel, allí donde el
+gradiente no se anula. Por eso el gradiente es
 perpendicular a las curvas de nivel.
 
 Podemos verlo sobre las curvas de nivel del riesgo de nuestros datos. Cada curva une
@@ -672,7 +633,7 @@ discontinuo es perpendicular a ella. Ese segmento queda pegado a la curva de niv
 la lectura geométrica de la demostración.
 :::
 
-## Resolver que el gradiente sea cero
+## Encontrar el mínimo
 
 La geometría ya dice dónde puede estar un mínimo: en un punto donde el gradiente se anula,
 porque en cualquier otro sitio hay una dirección que reduce la función. Empecemos por lo
@@ -695,6 +656,7 @@ $\grad h(\coef^\star)=\zerov$.
 :::
 
 
+:::: {.callout-note collapse="true" title="Demostración no exigible"}
 ::: {.proof}
 Para cada coordenada $j$, definimos la función de una variable
 $g_j(s)=h(\coef^\star+s\mathbf e_j)$. Como $\coef^\star$ es un mínimo local de $h$,
@@ -707,12 +669,12 @@ $$
 Esto se cumple para todas las coordenadas, luego
 $\grad h(\coef^\star)=\zerov$.
 :::
+::::
 
-El resultado necesita que alrededor de $\coef^\star$ haya margen: que podamos movernos un
-poco en cualquier dirección sin salirnos del conjunto donde buscamos. Aquí siempre se
-cumple,
-porque buscamos en todo $\Real^q$. Si hubiera restricciones y el mínimo cayera justo en el
-borde de la región permitida, el gradiente no tendría por qué anularse.
+Aquí buscamos los parámetros sin restricciones, en todo $\Real^q$. La condición anterior
+se aplica a este caso; no tiene por qué cumplirse en un mínimo situado en el borde de una
+región restringida.
+
 
 
 El recíproco no es cierto para una función cualquiera: $h(w)=w^3$ tiene gradiente cero
@@ -732,6 +694,7 @@ Si $\coef^\star$ es un punto crítico de @eq-riesgo-recta, entonces es un mínim
 Si los valores $x_i$ no son todos iguales, ese mínimo es único.
 :::
 
+:::: {.callout-note collapse="true" title="Demostración no exigible"}
 ::: {.proof}
 Sea $\mathbf d=(d_0,d_1)\T$ cualquier desplazamiento. La predicción cambia en
 $d_0+d_1x_i$, por lo que
@@ -756,6 +719,7 @@ La igualdad solo puede ocurrir si $d_0+d_1x_i=0$ para todas las observaciones. S
 dos valores distintos de $x_i$, al restar ambas ecuaciones se obtiene $d_1=0$ y después
 $d_0=0$. Por tanto, ningún otro parámetro alcanza el mismo mínimo.
 :::
+::::
 
 
 Juntando las dos piezas: para la recta basta con resolver $\grad\Riskh(\coef)=\zerov$, y
@@ -774,16 +738,18 @@ a. Comprueba que el sistema se puede escribir como
    \coefzero\bar x+w_1\overline{x^2}=\overline{xy},
    $$
    donde la barra denota la media sobre las $\nobs$ observaciones.
-b. Resuélvelo y comprueba que
+b. Para $\bar x=0$ y $\overline{x^2}>0$, resuelve el sistema y comprueba que
+
+
    $$
-   \widehat w_1=\frac{\overline{xy}-\bar x\,\bar y}{\overline{x^2}-\bar x^2},
+   \widehat w_0=\bar y,
    \qquad
-   \widehat w_0=\bar y-\widehat w_1\bar x.
+   \widehat w_1=\frac{\overline{xy}}{\overline{x^2}}.
    $$
-c. ¿Bajo qué condición sobre los $x_i$ tiene solución única? Relaciónalo con lo que dice
-   sobre la unicidad @prp-minimo-riesgo-cuadratico.
-d. Calcula $\widehat w_0$ y $\widehat w_1$ para los datos del capítulo con `torch` y
-   compáralos con la señal generadora.
+
+
+c. Como comprobación opcional con código, calcula $\widehat w_0$ y $\widehat w_1$ para
+   los datos del capítulo y compáralos con la señal generadora.
 :::
 
 Con dos parámetros el sistema es de dos ecuaciones y se resuelve a mano. Con veinte
@@ -817,7 +783,9 @@ $$ {#eq-descenso}
 
 
 Cada iteración hace dos cosas: evaluar el gradiente en los parámetros actuales y dar un paso
-en sentido contrario. La tasa $\lr$ decide la longitud del paso. Es el algoritmo entero.
+en sentido contrario. La tasa $\lr$ escala el paso: su longitud es
+$\lr\norm{\grad\Riskh(\coef^{(t)})}$, de modo que depende también de la magnitud del
+gradiente. Es el algoritmo entero.
 
 Conviene verlo primero en una dimensión, donde el gradiente es una derivada y la geometría
 cabe en un dibujo.
@@ -879,37 +847,24 @@ pronunciada y se acortan al acercarse al mínimo, porque la longitud del paso es
 a la magnitud de la derivada.
 :::
 
-Esa figura enseña una propiedad que no es evidente en @eq-descenso: el algoritmo "frena"
-solo. Cerca del mínimo el gradiente es pequeño, así que los pasos se acortan sin que haya
-que programar nada. Y sugiere la garantía que buscamos, que un paso suficientemente corto
-siempre mejora.
+En esta figura los pasos se acortan al acercarse al mínimo, porque el gradiente se hace
+pequeño. Pero un gradiente pequeño no certifica por sí solo que estemos cerca de un mínimo:
+también puede aparecer junto a otro tipo de punto crítico. La garantía que podemos
+establecer ahora es local: desde un punto con gradiente no nulo, una tasa suficientemente
+pequeña reduce el riesgo.
 
 ::: {#prp-descenso-desciende}
 ## Un paso suficientemente pequeño reduce el riesgo
 
-Si $\grad\Riskh(\coef)\neq\zerov$, existe $\bar\lr>0$ tal que
-
-$$
-\Riskh\bigl(\coef-\lr\grad\Riskh(\coef)\bigr)<\Riskh(\coef)
-$$
-
-para todo $0<\lr<\bar\lr$.
+Si el riesgo es diferenciable y su gradiente no es cero, un paso en sentido contrario al
+gradiente reduce el riesgo cuando la tasa es suficientemente pequeña. Esto no garantiza
+que cualquier tasa funcione ni que toda la sucesión converja al mínimo.
 :::
 
-<!-- demostracion: exr-paso-pequeno -->
-
-::: {#exr-paso-pequeno}
-## Demostración de que un paso pequeño mejora
-
-Demuestra @prp-descenso-desciende.
-
-a. Define $\phi(\lr)=\Riskh\bigl(\coef-\lr\grad\Riskh(\coef)\bigr)$, que es una función de
-   una sola variable, y explica qué representa $\phi(0)$.
-b. Calcula $\phi'(0)$ con la regla de la cadena y comprueba que vale
-   $-\norm{\grad\Riskh(\coef)}^2$.
-c. Deduce el resultado a partir del signo de $\phi'(0)$.
-d. Explica por qué el enunciado no dice que cualquier $\lr>0$ funcione.
+::: {.cajanegra}
+**Demostración no exigible.**
 :::
+
 
 La proposición garantiza que existe un paso lo bastante corto, pero no dice cuál. Y la tasa
 importa: si es demasiado grande, el algoritmo sobrepasa el mínimo y puede alejarse de él.
@@ -961,35 +916,29 @@ ax[1].legend()
 plt.tight_layout()
 ```
 
-Izquierda: descenso de gradiente sobre $h(w)=(w-w^\star)^2$, cuyo umbral de estabilidad es
-$\lr=1$. Una tasa por encima del umbral sobrepasa el mínimo en cada paso y aumenta la
-distancia hasta él. Derecha: lo mismo sobre el riesgo de los datos del capítulo, en escala
-logarítmica. Su umbral es $\lr\approx0.713$, así que $0.75$ diverge y llega a un riesgo de
-unos catorce mil en cuarenta iteraciones, mientras que $0.02$ es estable pero tan lenta que
-en cuarenta iteraciones todavía no ha llegado.
+Izquierda: una tasa pequeña acerca los parámetros al mínimo; otra mayor permite acercarse
+oscilando; una excesiva los aleja. Derecha: riesgo de los datos del capítulo, en escala
+logarítmica. Con $\lr=0.75$ crece, con $\lr=0.02$ disminuye lentamente y con $\lr=0.1$
+se aproxima al mínimo en pocas iteraciones. La tasa adecuada depende del problema.
 :::
+
 
 ::: {#exr-tasa-cuadratica}
-## Los regímenes de la tasa de aprendizaje
+## El efecto de la tasa de aprendizaje
 
-Sea $h(w)=a(w-w^\star)^2$, con $a>0$ y $w^{(0)}\neq w^\star$.
+Sea $h(w)=w^2$ y partamos de $w^{(0)}=1$.
 
-a. Comprueba que el descenso de gradiente satisface
-   $w^{(t)}-w^\star=(1-2\lr a)^t\bigl(w^{(0)}-w^\star\bigr)$.
-b. Deduce que la sucesión converge si y solo si $\abs{1-2\lr a}<1$, es decir, si
-   $0<\lr<1/a$.
-c. Describe qué ocurre en cada uno de estos casos: $\lr<1/(2a)$, $\lr=1/(2a)$,
-   $1/(2a)<\lr<1/a$, $\lr=1/a$ y $\lr>1/a$.
-d. Comprueba tus respuestas reproduciendo @fig-tasa-aprendizaje con otras tasas.
+a. Calcula dos pasos de descenso para cada tasa: $\lr=1/4$, $\lr=3/4$ y $\lr=5/4$.
+b. Compara los valores de $h$ y la distancia al mínimo. ¿Cambiar de lado respecto al
+   mínimo implica necesariamente alejarse de él?
 :::
 
-En la práctica no se calcula el umbral, entre otras cosas porque una función de varios
-parámetros no tiene una única curvatura. Se prueban unas pocas tasas separadas por factores
-de diez, por ejemplo $0.01$, $0.1$ y $1$, y se mira la curva del riesgo a lo largo
-de las iteraciones: si sube o zigzaguea, la tasa es demasiado grande; si baja de forma casi
-imperceptible, es demasiado pequeña. Se toma la mayor que descienda de forma estable. En el
-capítulo dedicado a preparar los datos veremos que escalar las variables hace que esa
-elección sea mucho menos delicada.
+
+
+En la práctica observamos el riesgo durante las iteraciones: si crece de forma sostenida,
+conviene reducir la tasa. Si apenas baja, la tasa puede ser demasiado pequeña, aunque
+también podemos estar cerca de un punto crítico. Como muestra @exr-tasa-cuadratica,
+oscilar alrededor del mínimo no implica divergir.
 
 ## Implementar el descenso de gradiente
 
@@ -997,13 +946,8 @@ elección sea mucho menos delicada.
 Al modelo y a la pérdida les falta una tercera pieza: el **optimizador**, que guarda la tasa
 de aprendizaje y sabe dar un paso. Con eso, entrenar es escribir un bucle.
 
-Esta separación en una clase para el modelo y otra para el optimizador es la praxis
-habitual, y es la que siguen PyTorch y scikit-learn. El modelo guarda los parámetros y sabe
-predecir; el optimizador guarda el modelo y sabe cambiarle los parámetros. Ninguno de los
-dos conoce la pérdida, que es una función suelta, ni el bucle, que vive fuera. Mantendremos
-esta interfaz hasta el final del curso, y por eso sus nombres van en inglés, igual que en
-esas dos bibliotecas.
 
+::: {.codigo-clave}
 ```{python}
 #---
 class GradientDescentOptimizer:
@@ -1017,26 +961,36 @@ class GradientDescentOptimizer:
 #---
 ```
 
-1. Es la única línea que dependerá de haber derivado a mano. Todo lo demás sobrevivirá sin
-   cambios cuando el gradiente lo calcule el ordenador.
+1. Esta línea usa la fórmula que hemos derivado a mano. Con diferenciación automática
+   mantendremos la misma actualización matemática, pero cambiará la forma de obtener y
+   gestionar el gradiente.
+:::
 
 El bucle vive fuera de las clases, igual que el historial que guardamos para poder dibujar
 después.
 
+::: {.codigo-clave}
 ```{python}
 #---
 def train(modelo, optimizador, x, y, n_iter):
-    historia_w = [modelo.w.detach().clone()]
+    historia_w = [modelo.w.detach().clone()]          # <1>
     historia_riesgo = [mse(modelo.predict(x), y).item()]
 
     for _ in range(n_iter):
-        optimizador.step(x, y)
+        optimizador.step(x, y)                       # <2>
         historia_w.append(modelo.w.detach().clone())
         historia_riesgo.append(mse(modelo.predict(x), y).item())
 
     return torch.stack(historia_w), torch.tensor(historia_riesgo)
 #---
 ```
+
+1. `detach()` separa el tensor del cálculo de derivadas y `clone()` guarda una copia,
+   para que las actualizaciones posteriores no cambien lo ya guardado. Veremos las
+   derivadas automáticas en el siguiente apartado.
+2. Cada vuelta da un paso y registra los parámetros y el riesgo resultantes. Como también
+   guardamos el estado inicial, el historial contiene `n_iter + 1` estados.
+:::
 
 Partimos de $\coef^{(0)}=(0,0)\T$ y usamos $\lr=0.1$. Con el gradiente que calculamos
 antes, la primera actualización es aproximadamente
@@ -1107,7 +1061,7 @@ plt.tight_layout()
 ```
 
 Izquierda: la trayectoria sobre la superficie del riesgo, con un punto por iteración y
-flechas en las cuatro primeras. La estrella marca los parámetros que generaron los datos,
+flechas en algunas de las primeras iteraciones. La estrella marca los parámetros que generaron los datos,
 $(1,2)\T$, que no coinciden exactamente con el mínimo. Derecha: las 51 rectas
 correspondientes, superpuestas; donde el naranja es más denso, el algoritmo ha pasado más
 iteraciones.
@@ -1119,6 +1073,7 @@ iteraciones.
 Aquí hemos fijado el número de iteraciones para poder observar toda la trayectoria. En una
 implementación práctica se establece además una tolerancia y se detiene el algoritmo cuando
 el cambio de los parámetros o la mejora del riesgo son suficientemente pequeños.
+
 
 ## Diferenciación automática {#sec-autodiff}
 
@@ -1236,12 +1191,13 @@ y productos.
 Esto es la **diferenciación automática en modo inverso**: una pasada hacia delante que
 calcula los valores intermedios y una pasada hacia atrás que propaga las derivadas.
 
-### Por qué esto es barato
+Calcular el gradiente respecto a **todos los parámetros** en modo inverso tiene un coste
+del mismo orden que ejecutar el programa que calcula el riesgo. Esa es la ventaja de la
+diferenciación automática. Las diferencias finitas, en cambio, aproximan cada parcial
+variando un parámetro y ejecutando de nuevo el programa. Necesitan tantas evaluaciones
+como parámetros: si una evaluación tiene coste lineal en su número, el cálculo del
+gradiente tiene coste cuadrático.
 
-La pasada hacia atrás recorre cada flecha del grafo exactamente una vez, igual que la pasada
-hacia delante. Por tanto obtener el gradiente **respecto a todos los parámetros a la vez**
-cuesta un múltiplo pequeño y constante de lo que cuesta evaluar la función una sola vez, sin
-importar cuántos parámetros haya.
 
 ### Cómo se usa en PyTorch
 
@@ -1250,6 +1206,7 @@ valor, se llama a `backward()` y el resultado aparece en `.grad`. Comprobémoslo
 ejemplo que se puede derivar de cabeza: $c=ab+a+b$, cuyas parciales son
 $\partial c/\partial a=b+1$ y $\partial c/\partial b=a+1$.
 
+::: {.codigo-clave}
 ```{python}
 #---
 a = torch.tensor(2.0, requires_grad=True)   # <1>
@@ -1266,13 +1223,16 @@ print("dc/db =", b.grad.item(), " esperado:", 2.0 + 1)
 1. `requires_grad=True` marca los tensores respecto a los que se derivará. PyTorch registra
    a partir de ahí las operaciones en las que participan.
 2. La pasada hacia delante. Al mismo tiempo se construye el grafo.
-3. La pasada hacia atrás. Deposita cada derivada parcial en el `.grad` del tensor
-   correspondiente.
+3. La pasada hacia atrás. Acumula cada derivada parcial en el `.grad` del parámetro
+   correspondiente. Aquí ambos parámetros son tensores creados directamente con
+   `requires_grad=True`, no resultados intermedios del grafo.
+:::
 
-Aplicado a nuestra recta, sirve para comprobar la derivación de @eq-gradiente-riesgo-1d.
+Como comprobación opcional, comparamos el gradiente automático con la fórmula
+de @eq-gradiente-riesgo-1d.
 
 ```{python}
-#---
+#| code-fold: true
 modelo_prueba = LinearRegression()
 modelo_prueba.w = torch.tensor([0.5, 1.5], requires_grad=True)
 
@@ -1285,13 +1245,14 @@ print("gradiente manual:    ", gradiente_manual)
 print("gradiente automático:", modelo_prueba.w.grad)
 print("coinciden:", torch.allclose(gradiente_manual, modelo_prueba.w.grad,
                                    atol=1e-5))
-#---
 ```
+
 
 
 Con esto, el optimizador ya no necesita conocer la fórmula del gradiente. Lo único que
 cambia es el método `step`.
 
+::: {.codigo-clave}
 ```{python}
 #---
 class AutogradOptimizer(GradientDescentOptimizer):
@@ -1311,6 +1272,8 @@ class AutogradOptimizer(GradientDescentOptimizer):
    `torch.no_grad()` modifica los parámetros sin añadir esa operación al grafo.
 3. PyTorch **acumula** gradientes por defecto. Los ponemos a cero antes de la siguiente
    iteración para que cada paso utilice solo el gradiente actual.
+:::
+
 
 El bucle de entrenamiento no cambia, y el resultado tampoco.
 
@@ -1329,11 +1292,13 @@ print("coincide con el gradiente manual:",
 #---
 ```
 
-Esta es exactamente la estructura que PyTorch ofrece de serie. `torch.optim.SGD` hace lo
-mismo que `AutogradOptimizer`, y a partir de aquí será lo que usemos.
+En la práctica, PyTorch ofrece esta actualización mediante `torch.optim.SGD`, de modo que
+no tenemos que programarla a mano. El bucle pone los gradientes a cero, los calcula con
+`backward()` y llama a `step()` para actualizar los parámetros. Este último fragmento
+queda como referencia de uso: **no es código exigible en este capítulo**.
 
 ```{python}
-#---
+#| code-fold: true
 modelo_sgd = LinearRegression()
 modelo_sgd.w = torch.zeros(2, requires_grad=True)
 optimizador_sgd = torch.optim.SGD([modelo_sgd.w], lr=0.1)
@@ -1344,7 +1309,6 @@ for _ in range(50):
     optimizador_sgd.step()
 
 print(modelo_sgd.w.detach())
-#---
 ```
 
 ## La señal aprendida
@@ -1371,6 +1335,7 @@ $$
 $$ {#eq-sigma-mle}
 :::
 
+:::: {.callout-note collapse="true" title="Demostración no exigible"}
 ::: {.proof}
 Partimos de @eq-loglik-riesgo, donde ahora escribimos $\Riskh(\coef)$ en lugar de
 $\MSE(\coef)$ porque son la misma cantidad. Tratando $\coef$ como fijo,
@@ -1386,10 +1351,22 @@ La derivada es positiva cuando $\noise^2<\Riskh(\coef)$ y negativa cuando
 $\noise^2>\Riskh(\coef)$. Por tanto, la log-verosimilitud crece hasta
 $\noise^2=\Riskh(\coef)$ y decrece después; ese punto es su máximo global.
 :::
+::::
 
-La lectura es directa: el nivel de ruido estimado es la raíz del riesgo que hemos
-conseguido. Y como @eq-sigma-mle vale para cualquier $\coef$, la estimación de $\noise$ no
-compite con la de la señal: primero se minimiza el riesgo y después se calcula $\noisehat$.
+Para entender por qué podemos ajustar primero la señal, volvamos a @eq-loglik-riesgo.
+La log-verosimilitud es una constante menos un múltiplo positivo del error cuadrático
+medio. Cambiar $\noise$ modifica esa constante y ese múltiplo, pero no qué recta deja
+menor error. Por tanto, la recta más verosímil es la misma para cualquier $\noise>0$:
+podemos encontrarla sin conocer el nivel de ruido.
+
+Una vez elegida esa recta, la mantenemos fija y estimamos $\noise$ con @eq-sigma-mle:
+$\noisehat=\sqrt{\Riskh(\coefhat)}$, siempre que el riesgo mínimo sea positivo. El primer
+paso elige la señal; el segundo mide cuánto se separan de ella las respuestas observadas.
+
+$\noisehat$ mide la dispersión residual bajo el modelo propuesto, no un ruido verdadero
+que conozcamos. Si la señal está mal ajustada, los residuos recogen también ese error.
+El caso de ajuste exacto queda fuera de la fórmula: con riesgo cero no existe un máximo
+de verosimilitud con $\noise>0$.
 
 
 ```{python}
@@ -1430,10 +1407,10 @@ plt.tight_layout()
 
 Datos observados, señal generadora y señal aprendida minimizando el riesgo cuadrático
 empírico mediante descenso de gradiente. Los segmentos grises son los residuos, y
-$\noisehat$ es la raíz de su media cuadrática.
+$\noisehat$ es la raíz de la media de sus cuadrados.
 :::
 
-Los parámetros estimados no coinciden exactamente con $(1,2)\T$. No deberían hacerlo en
+Los parámetros estimados no coinciden exactamente con $(1,2)\T$. No tienen por qué hacerlo en
 una muestra finita: los datos contienen una realización concreta del ruido y
 $\coefhat$ minimiza el riesgo de esa muestra. Con otras realizaciones obtendríamos otras
 estimaciones. 
@@ -1448,49 +1425,7 @@ el orden en que las hemos ido necesitando:
 4. un **gradiente**, que dice en qué dirección moverse (@eq-gradiente-riesgo-1d);
 5. unos **parámetros aprendidos**, que salen de iterar la actualización (@eq-descenso).
 
-Cada pieza depende solo de la anterior, y por eso se pueden cambiar de una en una. Cambiar
-la distribución del ruido cambia la pérdida y deja intacto el resto; cambiar la familia de
-señales cambia el gradiente y deja intacto el criterio.
-
 
 Hasta ahora hemos trabajado en realizar predicciones cuando solo contamos con una variable
 predictora. En el siguiente capítulo, comenzaremos a trabajar con modelos de más de una
 característica.
-
-## Ejercicios
-
-::: {#exr-dos-iteraciones}
-## Dos iteraciones a mano
-
-Considera los datos $(1,2)$, $(2,3)$ y $(3,5)$, los parámetros iniciales
-$\coef^{(0)}=(0,0)\T$ y $\lr=0.1$. Calcula dos iteraciones de descenso de gradiente
-utilizando @eq-gradiente-riesgo-1d. Anota en cada una las predicciones, los residuos, el
-gradiente, los nuevos parámetros y el riesgo.
-:::
-
-::: {#exr-tasas-descenso}
-## Comparar tasas de aprendizaje
-
-Entrena el modelo del capítulo con $\lr\in\{0.02,0.1,0.75\}$ usando `train` y
-`GradientDescentOptimizer`. Representa el riesgo durante las primeras 40 iteraciones y
-explica las diferencias. Comprueba qué ocurre con $\lr=0.75$ y relaciónalo con lo que pide
-demostrar @exr-tasa-cuadratica.
-:::
-
-::: {#exr-acumulacion-gradientes}
-## Acumulación de gradientes
-
-Elimina la línea `self.modelo.w.grad.zero_()` de `AutogradOptimizer` y registra tanto el
-riesgo como la norma del gradiente almacenado durante veinte iteraciones. Explica por qué la
-actualización ya no corresponde a @eq-descenso aunque cada llamada a `backward()` sea
-correcta.
-:::
-
-::: {#exr-escala-objetivo}
-## Escala del criterio
-
-Para $\noise$ fijo, implementa la log-verosimilitud negativa
-de @eq-loglik-riesgo y comprueba que su minimizador coincide con el del riesgo cuadrático.
-Compara sus gradientes para $\noise\in\{0.5,1,3\}$ y deduce cómo debería cambiar la tasa
-de aprendizaje para mantener actualizaciones de tamaño semejante.
-:::

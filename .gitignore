@@ -20,6 +20,7 @@ ml-notes-update-main/
 
 # Documentos internos, no van a un repositorio publico.
 PLAN_CURSO.md
+ESTADO_CURSO.md
 guia_docente.pdf
 
 # Los PDF para el Campus Virtual se generan con `make pdfs`.
