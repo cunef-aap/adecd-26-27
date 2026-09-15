@@ -324,7 +324,3 @@ c. Los gradientes de dos iteraciones, calculados por separado, son $(-4,-2)\T$ y
 d. Si un programa se ejecuta sin errores, ¿basta eso para afirmar que minimiza
    la pérdida que queríamos? Justifica tu respuesta.
 :::
-
-::: {.callout-note appearance="simple"}
-Las soluciones se publican en el Campus Virtual después de la sesión de problemas.
-:::
