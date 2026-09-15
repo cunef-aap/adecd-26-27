@@ -6,57 +6,138 @@ $$
 $$
 :::
 
-Todos los ejercicios se resuelven en papel. Se puede usar código después para comprobar
-los cálculos, pero no hace falta ejecutarlo para responder.
+Los ejercicios 1–6 reproducen los seis ejercicios del capítulo 2, en el mismo orden:
+el 3 de esta hoja es el 2.3 del capítulo, el 4 es el 2.4, etc.
 
-## 1. Conceptual {#sec-h2-a}
+Todo se resuelve en papel, salvo la comprobación opcional con código del ejercicio 5c.
+Después puedes usar código para comprobar los cálculos. Si necesitas afianzar las
+bases, empieza por los ejercicios 7 y 8 antes de volver a las derivadas de los ejercicios
+3 y 4.
 
-::: {#exr-h2-conceptual}
-a. **Explica** por qué minimizar el error cuadrático medio y maximizar la verosimilitud del
-   modelo lineal-gaussiano son el mismo problema, y de qué depende esa equivalencia.
-b. **Explica** la diferencia entre $\Risk(\coef)$ y $\Riskh(\coef)$, indicando cuál
-   podemos calcular con la muestra. ¿Basta obtener $\Riskh(\coefhat)=0$ para afirmar que
-   predeciremos sin error observaciones nuevas?
-c. **Di** qué papel juega el factor $1/\nobs$ del riesgo empírico: qué cambia y qué no
-   cambia si se sustituye por la suma sin dividir.
+## Ejercicios del capítulo
+
+::: {#exr-h2-coste-rejilla}
+## El coste de buscar por rejilla
+
+Supón que pruebas $m$ valores distintos de cada parámetro y evalúas la verosimilitud en
+todas las combinaciones.
+
+a. ¿Cuántas evaluaciones hacen falta para una recta, que tiene dos parámetros?
+b. ¿Y para un modelo con $q$ parámetros?
+c. Con $m=10$ y $q=20$, calcula el número de evaluaciones. Compáralo con el número de
+   segundos que han transcurrido desde el Big Bang, unos $4\cdot10^{17}$.
 :::
 
-## 2. Demostración {#sec-h2-b}
+Recuerda que $a>0$ y $b$ son constantes que no dependen de $\coef$.
 
 ::: {#exr-h2-invarianza}
-Sean $a>0$ y $b$ constantes que no dependen de $\coef$.
+## Demostración de la invarianza afín
 
-a. **Demuestra** @lem-invarianza-afin: que
-   $\argmin_{\coef}[a h(\coef)+b]=\argmin_{\coef}h(\coef)$. Toma dos valores cualesquiera
-   $\coef_1$ y $\coef_2$ y comprueba que la transformación conserva el orden.
-b. **Explica** por qué la hipótesis $a>0$ es necesaria, con un contraejemplo para $a<0$.
-c. **Indica** dónde se usa este lema en la demostración de @cor-mle-minimos-cuadrados.
+Demuestra @lem-invarianza-afin. Toma dos valores cualesquiera $\coef_1$ y $\coef_2$ y
+comprueba que la transformación conserva el orden entre $h(\coef_1)$ y $h(\coef_2)$.
+Explica después por qué la hipótesis $a>0$ es necesaria, dando un contraejemplo con $a<0$.
 :::
-
-::: {#exr-h2-gradiente}
-Sea $f_{\coef}(x_i)=\coefzero+w_1x_i$ y $\residi(\coef)=\yi-\coefzero-w_1x_i$.
-
-a. Deriva el riesgo cuadrático empírico respecto de $\coefzero$, tratando $w_1$ como
-   constante.
-b. Deriva respecto de $w_1$.
-c. Apila las dos parciales y comprueba que obtienes @eq-gradiente-riesgo-1d.
-d. Interpreta en una frase qué significa que las dos componentes valgan cero.
-:::
-
-## 3. Cálculo a mano {#sec-h2-c}
 
 ::: {#exr-h2-parciales}
+## Practicar derivadas parciales
+
 Calcula el gradiente de cada función.
 
 a. $h(w_0,w_1)=3w_0^2-2w_0w_1+w_1^3$.
 b. $h(w_0,w_1)=(w_0+2w_1-5)^2$.
-c. Para la función del apartado a, **comprueba** que $\grad h(0,0)=\zerov$.
-   **Evalúa** $h(0,w_1)$ para valores pequeños de $w_1$ positivos y negativos.
-   ¿Es $(0,0)$ un mínimo? **Explica** qué permite concluir esto sobre la condición
-   de gradiente cero.
+:::
+
+::: {#exr-h2-gradiente}
+## Demostración del gradiente
+
+Demuestra @eq-gradiente-riesgo-1d.
+
+a. Deriva @eq-riesgo-recta respecto de $\coefzero$ tratando $w_1$ como constante, y aplica
+   la regla de la cadena a cada sumando.
+b. Repite el cálculo respecto de $w_1$.
+c. Apila las dos parciales y comprueba que obtienes la expresión del enunciado.
+d. Escribe qué significa que las dos componentes sean cero, en términos de los residuos.
+:::
+
+El ejercicio 5 queda como ampliación: anticipa el sistema de ecuaciones del tema 3 y
+no es exigible en este capítulo. Puedes pasar directamente al 6.
+
+::: {#exr-h2-ecuaciones}
+## Resolver el sistema exactamente
+
+Iguala a cero las dos componentes de @eq-gradiente-riesgo-1d.
+
+a. Comprueba que el sistema se puede escribir como
+   $$
+   \coefzero+w_1\bar x=\bar y,
+   \qquad
+   \coefzero\bar x+w_1\overline{x^2}=\overline{xy},
+   $$
+   donde la barra denota la media sobre las $\nobs$ observaciones.
+b. Para $\bar x=0$ y $\overline{x^2}>0$, resuelve el sistema y comprueba que
+
+
+   $$
+   \widehat w_0=\bar y,
+   \qquad
+   \widehat w_1=\frac{\overline{xy}}{\overline{x^2}}.
+   $$
+
+
+c. Como comprobación opcional con código, calcula $\widehat w_0$ y $\widehat w_1$ para
+   los datos del capítulo y compáralos con la señal generadora.
+:::
+
+::: {#exr-h2-tasa}
+## El efecto de la tasa de aprendizaje
+
+Sea $h(w)=w^2$ y partamos de $w^{(0)}=1$.
+
+a. Calcula dos pasos de descenso para cada tasa: $\lr=1/4$, $\lr=3/4$ y $\lr=5/4$.
+b. Compara los valores de $h$ y la distancia al mínimo. ¿Cambiar de lado respecto al
+   mínimo implica necesariamente alejarse de él?
+:::
+
+## Práctica básica
+
+::: {#exr-h2-predicciones}
+## De las predicciones al riesgo
+
+Considera las cuatro observaciones
+
+| $x$ | $-1$ | $-1$ | 1 | 1 |
+|---|---:|---:|---:|---:|
+| $y$ | 0 | 2 | 2 | 4 |
+
+Usamos la recta $f_{\coef}(x)=\coefzero+w_1x$ y el residuo
+$\residi=\yi-f_{\coef}(x_i)$.
+
+a. Con $\coef=(0,0)\T$, calcula las cuatro predicciones y los cuatro residuos.
+b. Eleva los residuos al cuadrado y calcula su media: ese es el riesgo cuadrático
+   empírico.
+c. Repite los cálculos con $\coef=(2,1)\T$. ¿Qué recta tiene menor riesgo? Bajo el
+   modelo lineal-gaussiano del capítulo, con $\noise>0$ fijo, ¿cuál tiene mayor
+   verosimilitud? Explica la relación entre ambos criterios.
+:::
+
+::: {#exr-h2-parciales-basicas}
+## Derivar una coordenada cada vez
+
+a. Para $h(w_0,w_1)=w_0^2+3w_1$, calcula las dos derivadas parciales.
+   ¿Por qué desaparece $3w_1$ al derivar respecto de $w_0$?
+b. Repite el cálculo para $h(w_0,w_1)=2w_0-w_1^2$.
+c. Para $h(w_0,w_1)=(w_0+w_1-1)^2$, escribe $u=w_0+w_1-1$ y completa:
+   $$
+   \pd{h}{w_0}=2u\cdot\underbrace{\phantom{1}}_{?},
+   \qquad
+   \pd{h}{w_1}=2u\cdot\underbrace{\phantom{1}}_{?}.
+   $$
+d. Escribe el gradiente de cada una de las tres funciones en $(w_0,w_1)=(1,0)$.
 :::
 
 ::: {#exr-h2-perdidas}
+## Comparar dos formas de medir el error
+
 Dos modelos producen los siguientes residuos sobre las mismas cuatro observaciones:
 
 | Modelo | $r_1$ | $r_2$ | $r_3$ | $r_4$ |
@@ -64,113 +145,123 @@ Dos modelos producen los siguientes residuos sobre las mismas cuatro observacion
 | A | 0 | 0 | 0 | 6 |
 | B | 2 | 2 | 2 | 2 |
 
-a. **Calcula** el error cuadrático medio y el error absoluto medio de cada modelo.
-b. **Indica** cuál prefieres con cada pérdida y **explica** por qué cambia la elección.
+a. Calcula el error cuadrático medio y el error absoluto medio de cada modelo.
+b. Indica cuál prefieres con cada pérdida. ¿Qué efecto tiene elevar al cuadrado el
+   residuo grande del modelo A?
+c. ¿Has calculado riesgos empíricos o poblacionales? Si un tercer modelo tuviera
+   todos sus residuos de entrenamiento a cero, ¿garantizaría eso predecir sin error
+   datos nuevos?
+d. Si usas la suma de cuadrados en vez de su media, ¿cambia la recta que minimiza
+   la pérdida? ¿Por cuánto se multiplican el valor de la pérdida y su gradiente?
 :::
 
 ::: {#exr-h2-calculo}
-Considera las cuatro observaciones
+## Dos pasos para ajustar una recta
 
-| $x$ | $-1$ | $-1$ | 1 | 1 |
-|---|---:|---:|---:|---:|
-| $y$ | 0 | 2 | 2 | 4 |
+Usa los datos del ejercicio 7. Partimos de $\coef^{(0)}=(0,0)\T$, donde el gradiente
+del riesgo cuadrático es $(-4,-2)\T$, y tomamos $\lr=1/4$.
 
-Ajustamos una recta $f_{\coef}(x)=\coefzero+w_1x$ por mínimos cuadrados.
+a. Calcula la primera actualización
+   $\coef^{(1)}=\coef^{(0)}-\lr\grad\Riskh(\coef^{(0)})$.
+b. Completa esta tabla con los parámetros de la primera actualización:
 
-a. En $\coef^{(0)}=(0,0)\T$, **calcula** las predicciones, los residuos,
-   $\Riskh(\coef^{(0)})$ y $\grad\Riskh(\coef^{(0)})$.
-b. Con $\lr=1/4$, **calcula** dos iteraciones de descenso de gradiente. Recalcula el
-   gradiente en los parámetros de la primera iteración antes de dar el segundo paso.
-c. **Comprueba** que $\coefhat=(2,1)\T$ tiene gradiente cero. **Justifica** con
-   el resultado de @prp-minimo-riesgo-cuadratico que es el mínimo global único;
-   no se pide demostrar esa proposición.
-d. **Calcula** el riesgo en $\coefhat$ y **explica** por qué, para $\noise$ fijo, ninguna
-   otra recta tiene una verosimilitud gaussiana mayor.
-e. **Calcula** $\noisehat$ con la fórmula del capítulo. **Razona** por qué no podemos
-   afirmar que los residuos obtenidos sean exactamente los ruidos que generaron los datos.
+   | $x_i$ | $y_i$ | $f_{\coef^{(1)}}(x_i)$ | $\residi$ | $x_i\residi$ |
+   |---:|---:|---:|---:|---:|
+   | $-1$ | 0 | | | |
+   | $-1$ | 2 | | | |
+   | 1 | 2 | | | |
+   | 1 | 4 | | | |
+
+   Usa $\grad\Riskh=-\frac{2}{4}(\sum_i\residi,\sum_i x_i\residi)\T$ para obtener
+   el nuevo gradiente y calcula la segunda actualización.
+c. Comprueba que $\coefhat=(2,1)\T$ tiene gradiente cero. Justifica con el resultado
+   de @prp-minimo-riesgo-cuadratico que es el mínimo global único; no se pide demostrar
+   esa proposición.
+d. Sabemos por el ejercicio 7 que $\Riskh(\coefhat)=1$. Calcula
+   $\noisehat=\sqrt{\Riskh(\coefhat)}$. ¿Podemos afirmar que los residuos son
+   exactamente los ruidos que generaron los datos?
 :::
 
-::: {#exr-h2-tasa}
-Queremos minimizar $h(w)=(w-1)^2$ mediante descenso de gradiente, partiendo de $w^{(0)}=0$.
+::: {#exr-h2-punto-critico}
+## Derivada cero no siempre significa mínimo
 
-a. **Calcula** $h'(w)$ y escribe la actualización $w^{(t+1)}$.
-b. **Calcula** las dos primeras iteraciones para cada tasa de aprendizaje
-   $\lr\in\{1/4,3/4,5/4\}$. Anota también el valor de $h$ después de cada paso.
-c. En los dos pasos calculados, **identifica** qué tasa se acerca al mínimo sin cruzarlo,
-   cuál se acerca cambiando de lado y cuál se aleja. ¿Cambiar de lado respecto al mínimo
-   implica necesariamente alejarse de él? **Justifica** con tus cálculos.
+Considera $h(w)=w^2$ y $g(w)=w^3$.
+
+a. Calcula $h'(0)$ y $g'(0)$.
+b. Evalúa ambas funciones en $w=-1/10$, $w=0$ y $w=1/10$.
+c. Sabemos que $w^2\geq0$ para todo $w$, mientras que $w^3<0$ para cualquier
+   $w<0$, por pequeño que sea $\abs{w}$. ¿Tiene cada función un mínimo en cero?
+   ¿Basta que la derivada valga cero para que haya un mínimo?
 :::
+
+## Del cálculo al código
+
+En los ejercicios de código se pide completar o interpretar las operaciones del
+capítulo en papel, no escribir programas de memoria. No se evalúa cómo hacer gráficos.
 
 ::: {#exr-h2-retropropagacion}
-El riesgo de una sola observación es $h(\coef)=(y-\coefzero-w_1x)^2$. Toma
-$\coef=(2,1)\T$, $x=4$ e $y=3$.
+## La regla de la cadena, paso a paso
+
+Para una observación, $h(\coef)=(y-\coefzero-w_1x)^2$.
+Toma $\coef=(1,2)\T$, $x=3$ e $y=4$.
 
 a. Calcula $h_1=w_1x$, $h_2=\coefzero+h_1$, $h_3=y-h_2$ y $h_4=h_3^2$.
-b. Recorre el grafo hacia atrás y obtén $\partial h_4/\partial \coefzero$ y
-   $\partial h_4/\partial w_1$, escribiendo la derivada local que usas en cada paso.
-c. Deriva la expresión original directamente y comprueba que sale lo mismo.
+b. Las derivadas locales son
+   $$
+   \pd{h_4}{h_3}=2h_3,\quad
+   \pd{h_3}{h_2}=-1,\quad
+   \pd{h_2}{\coefzero}=1,\quad
+   \pd{h_2}{h_1}=1,\quad
+   \pd{h_1}{w_1}=x.
+   $$
+   Sustituye los valores y calcula
+   $$
+   \pd{h_4}{\coefzero}=(2h_3)(-1)(1),
+   \qquad
+   \pd{h_4}{w_1}=(2h_3)(-1)(1)(x).
+   $$
+c. Deriva directamente $(4-\coefzero-3w_1)^2$ respecto de cada parámetro y evalúa
+   en $(1,2)$. Comprueba que obtienes lo mismo.
 :::
-
-## 4. Encuentra los errores {#sec-h2-d}
-
-::: {#exr-h2-errores-autodiff}
-Este fragmento pretende ajustar una recta por descenso de gradiente con diferenciación
-automática. Contiene **tres** errores. Los datos `x` e `y` son tensores de números reales
-del mismo tamaño.
-
-```python
-import torch
-
-w = torch.zeros(2)
-
-for paso in range(20):
-    riesgo = ((y - (w[0] + w[1] * x)) ** 2).mean()
-    riesgo.backward()
-    with torch.no_grad():
-        w += 0.1 * w.grad
-```
-
-a. **Identifica** el primer error que impide ejecutar el bucle y **corrígelo**.
-b. Una vez corregido, **localiza** los otros dos errores y **explica** cómo afectan a la
-   actualización. Escribe la corrección de cada uno.
-c. Si un programa de entrenamiento se ejecuta sin errores, ¿basta eso para afirmar que
-   minimiza la pérdida que queríamos? **Justifica** tu respuesta.
-:::
-
-## 5. Completar código {#sec-h2-e}
 
 ::: {#exr-h2-completar}
-Completa las líneas marcadas para reproducir las tres piezas del capítulo.
+## Modelo, pérdida y gradiente
+
+Completa las cuatro operaciones señaladas.
 
 ```python
 import torch
 
 class LinearRegression:
     def __init__(self, n_parametros=2):
-        self.w = ...              # (1) parámetros iniciales, todos a cero
+        self.w = torch.zeros(n_parametros)
 
     def predict(self, x):
-        return ...                # (2) la recta w0 + w1 x
+        return ...                # (1) la recta w0 + w1 x
 
 
 def mse(y_pred, y):
-    return ...                    # (3) media de los residuos al cuadrado
+    return ...                    # (2) media de residuos al cuadrado
 
 
 def grad_mse(modelo, x, y):
-    residuos = ...                # (4)
+    residuos = y - modelo.predict(x)
     return torch.stack((
-        ...,                      # (5) componente de w0
-        ...,                      # (6) componente de w1
+        ...,                      # (3) componente de w0
+        ...,                      # (4) componente de w1
     ))
 ```
 
-a. Rellena las seis líneas.
-b. **Explica** por qué `mse` recibe las predicciones y no el modelo. Si sustituimos
-   `mse` por el error absoluto medio, ¿podemos seguir usando `grad_mse` sin cambiarlo?
+a. Rellena las cuatro líneas.
+b. Con los datos del ejercicio 7 y un modelo recién creado, ¿qué valores devuelven
+   `mse(modelo.predict(x), y)` y `grad_mse(modelo, x, y)`?
+c. Si sustituimos `mse` por el error absoluto medio, ¿podemos seguir usando
+   `grad_mse` sin cambiarlo?
 :::
 
 ::: {#exr-h2-train}
+## Un paso y un bucle de entrenamiento
+
 Usa las funciones del ejercicio anterior para completar el optimizador y el entrenamiento.
 
 ```python
@@ -196,43 +287,44 @@ def train(modelo, optimizador, x, y, n_iter):
     return torch.stack(historia_w), torch.tensor(historia_riesgo)
 ```
 
-a. **Completa** las cuatro líneas.
-b. Si `n_iter=2`, **indica** cuántos vectores guarda `historia_w` y a qué momentos del
-   entrenamiento corresponden.
-c. `detach().clone()` guarda una copia sin conservar el cálculo de derivadas.
-   **Explica** por qué queremos conservar una copia de los parámetros de cada iteración,
-   en lugar de referencias a un único tensor que puede seguir modificándose.
+a. Completa las cuatro líneas. Las instrucciones para guardar los resultados ya
+   están dadas.
+b. Usamos los datos del ejercicio 7, parámetros iniciales $(0,0)\T$, `lr=1/4` y
+   `n_iter=2`. ¿Qué tres vectores guarda `historia_w`? Puedes usar tus cálculos
+   del ejercicio 10.
+c. Dentro del bucle, ¿se guarda el riesgo antes o después de actualizar los parámetros?
+   Señala la línea que permite saberlo.
 :::
 
-::: {#exr-h2-completar-auto}
-Completa el optimizador con diferenciación automática. El modelo se ha creado con
-`modelo.w = torch.zeros(2, requires_grad=True)`.
+::: {#exr-h2-errores-autodiff}
+## Tres errores de diferenciación automática
+
+Este fragmento pretende ajustar una recta por descenso de gradiente con diferenciación
+automática. Contiene tres errores. Los datos `x` e `y` son tensores de números reales
+del mismo tamaño.
 
 ```python
-class AutogradOptimizer:
-    def __init__(self, modelo, lr):
-        self.modelo = modelo
-        self.lr = lr
+import torch
 
-    def step(self, x, y):
-        riesgo = ...              # (1) predicción y pérdida
-        ...                       # (2) pasada hacia atrás
+w = torch.zeros(2)
 
-        with ...:                 # (3) no registrar la actualización
-            self.modelo.w -= ...  # (4) descenso de gradiente
-
-        ...                       # (5) preparar la siguiente iteración
+for paso in range(20):
+    riesgo = ((y - (w[0] + w[1] * x)) ** 2).mean()
+    riesgo.backward()
+    with torch.no_grad():
+        w += 0.1 * w.grad
 ```
 
-a. **Completa** las cinco líneas.
-b. **Explica** qué cambia respecto a `GradientDescentOptimizer` y por qué no hace falta
-   cambiar `train`.
+a. Falta indicar que queremos derivar respecto de `w`. Corrige su inicialización.
+b. Corrige el signo de la actualización y añade la instrucción que evita acumular
+   gradientes entre iteraciones.
 c. Los gradientes de dos iteraciones, calculados por separado, son $(-4,-2)\T$ y
-   $(-2,-1)\T$. Si no se limpia `.grad` entre ambas, **calcula** qué vector contendrá
-   después del segundo `backward()`.
+   $(-2,-1)\T$. Si no se limpia `.grad` entre ambas, ¿qué vector contendrá después
+   del segundo `backward()`?
+d. Si un programa se ejecuta sin errores, ¿basta eso para afirmar que minimiza
+   la pérdida que queríamos? Justifica tu respuesta.
 :::
 
 ::: {.callout-note appearance="simple"}
-Las soluciones se publican en el Campus Virtual después de la sesión de
-problemas.
+Las soluciones se publican en el Campus Virtual después de la sesión de problemas.
 :::

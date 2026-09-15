@@ -3,9 +3,11 @@
 
 .PHONY: check marcas sitio notebooks preview publicar datos limpiar pdfs publicado
 
-check:                       ## centinelas emparejados + reglas mecánicas de estilo
+check:                       ## centinelas, estilo y correspondencia de ejercicios
 	python scripts/check-centinelas.py
 	python scripts/check-estilo.py
+	python scripts/comprueba-ejercicios-capitulo.py capitulos/02-aprender-minimizando.qmd problemas/hoja-02.qmd
+	python scripts/test-comprueba-ejercicios-capitulo.py
 
 marcas:                      ## marcas de revisión .nuevo sin aceptar
 	python scripts/aceptar-marcas.py --listar

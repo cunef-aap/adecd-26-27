@@ -13,7 +13,7 @@ pueden conservar ampliaciones pendientes de ajustar al calendario.
 | Hoja | Capítulo | Ejercicios | Estado |
 |---|---|---:|---|
 | [1](hoja-01.qmd) | 1 · Datos = señal + ruido | 12 | escrita, solucionario en el Campus Virtual |
-| [2](hoja-02.qmd) | 2 · Aprender minimizando | 12 | revisada; solucionario preparado, aún privado |
+| [2](hoja-02.qmd) | 2 · Aprender minimizando | 15 | alineada con el capítulo; práctica guiada; solucionario privado |
 | [3](hoja-03.qmd) | 3 · Modelos lineales con muchas variables | 19 | escrita, solucionario en el Campus Virtual |
 | [4](hoja-04.qmd) | 4 · Evaluar para generalizar | 26 | escrita, solucionario en el Campus Virtual |
 | [5](hoja-05.qmd) | 5 · Preparar datos | 18 | escrita, solucionario en el Campus Virtual |

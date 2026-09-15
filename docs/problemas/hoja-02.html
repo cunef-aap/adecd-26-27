@@ -275,11 +275,9 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#sec-h2-a" id="toc-sec-h2-a" class="nav-link active" data-scroll-target="#sec-h2-a">1. Conceptual</a></li>
-  <li><a href="#sec-h2-b" id="toc-sec-h2-b" class="nav-link" data-scroll-target="#sec-h2-b">2. Demostración</a></li>
-  <li><a href="#sec-h2-c" id="toc-sec-h2-c" class="nav-link" data-scroll-target="#sec-h2-c">3. Cálculo a mano</a></li>
-  <li><a href="#sec-h2-d" id="toc-sec-h2-d" class="nav-link" data-scroll-target="#sec-h2-d">4. Encuentra los errores</a></li>
-  <li><a href="#sec-h2-e" id="toc-sec-h2-e" class="nav-link" data-scroll-target="#sec-h2-e">5. Completar código</a></li>
+  <li><a href="#ejercicios-del-capítulo" id="toc-ejercicios-del-capítulo" class="nav-link active" data-scroll-target="#ejercicios-del-capítulo">Ejercicios del capítulo</a></li>
+  <li><a href="#práctica-básica" id="toc-práctica-básica" class="nav-link" data-scroll-target="#práctica-básica">Práctica básica</a></li>
+  <li><a href="#del-cálculo-al-código" id="toc-del-cálculo-al-código" class="nav-link" data-scroll-target="#del-cálculo-al-código">Del cálculo al código</a></li>
   </ul>
 </nav>
     </div>
@@ -310,50 +308,110 @@ window.Quarto = {
 </header>
 
 
-<p>Todos los ejercicios se resuelven en papel. Se puede usar código después para comprobar los cálculos, pero no hace falta ejecutarlo para responder.</p>
-<section id="sec-h2-a" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h2-a">1. Conceptual</h2>
-<div id="exr-h2-conceptual" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> &nbsp;</p>
+<p>Los ejercicios 1–6 reproducen los seis ejercicios del capítulo 2, en el mismo orden: el 3 de esta hoja es el 2.3 del capítulo, el 4 es el 2.4, etc.</p>
+<p>Todo se resuelve en papel, salvo la comprobación opcional con código del ejercicio 5c. Después puedes usar código para comprobar los cálculos. Si necesitas afianzar las bases, empieza por los ejercicios 7 y 8 antes de volver a las derivadas de los ejercicios 3 y 4.</p>
+<section id="ejercicios-del-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicios-del-capítulo">Ejercicios del capítulo</h2>
+<div id="exr-h2-coste-rejilla" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 1 (El coste de buscar por rejilla)</strong></span> Supón que pruebas <span class="math inline">\(m\)</span> valores distintos de cada parámetro y evalúas la verosimilitud en todas las combinaciones.</p>
 <ol type="a">
-<li><strong>Explica</strong> por qué minimizar el error cuadrático medio y maximizar la verosimilitud del modelo lineal-gaussiano son el mismo problema, y de qué depende esa equivalencia.</li>
-<li><strong>Explica</strong> la diferencia entre <span class="math inline">\(R(\boldsymbol{w})\)</span> y <span class="math inline">\(\hat{R}(\boldsymbol{w})\)</span>, indicando cuál podemos calcular con la muestra. ¿Basta obtener <span class="math inline">\(\hat{R}(\hat{\boldsymbol{w}})=0\)</span> para afirmar que predeciremos sin error observaciones nuevas?</li>
-<li><strong>Di</strong> qué papel juega el factor <span class="math inline">\(1/n\)</span> del riesgo empírico: qué cambia y qué no cambia si se sustituye por la suma sin dividir.</li>
+<li>¿Cuántas evaluaciones hacen falta para una recta, que tiene dos parámetros?</li>
+<li>¿Y para un modelo con <span class="math inline">\(q\)</span> parámetros?</li>
+<li>Con <span class="math inline">\(m=10\)</span> y <span class="math inline">\(q=20\)</span>, calcula el número de evaluaciones. Compáralo con el número de segundos que han transcurrido desde el Big Bang, unos <span class="math inline">\(4\cdot10^{17}\)</span>.</li>
 </ol>
 </div>
-</section>
-<section id="sec-h2-b" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h2-b">2. Demostración</h2>
+<p>Recuerda que <span class="math inline">\(a&gt;0\)</span> y <span class="math inline">\(b\)</span> son constantes que no dependen de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 <div id="exr-h2-invarianza" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> Sean <span class="math inline">\(a&gt;0\)</span> y <span class="math inline">\(b\)</span> constantes que no dependen de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
-<ol type="a">
-<li><strong>Demuestra</strong> <a href="../capitulos/02-aprender-minimizando.html#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a>: que <span class="math inline">\(\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}[a h(\boldsymbol{w})+b]=\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}h(\boldsymbol{w})\)</span>. Toma dos valores cualesquiera <span class="math inline">\(\boldsymbol{w}_1\)</span> y <span class="math inline">\(\boldsymbol{w}_2\)</span> y comprueba que la transformación conserva el orden.</li>
-<li><strong>Explica</strong> por qué la hipótesis <span class="math inline">\(a&gt;0\)</span> es necesaria, con un contraejemplo para <span class="math inline">\(a&lt;0\)</span>.</li>
-<li><strong>Indica</strong> dónde se usa este lema en la demostración de <a href="../capitulos/02-aprender-minimizando.html#cor-mle-minimos-cuadrados" class="quarto-xref">Corolario&nbsp;<span>2.1</span></a>.</li>
-</ol>
+<p><span class="theorem-title"><strong>Ejercicio 2 (Demostración de la invarianza afín)</strong></span> Demuestra <a href="../capitulos/02-aprender-minimizando.html#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a>. Toma dos valores cualesquiera <span class="math inline">\(\boldsymbol{w}_1\)</span> y <span class="math inline">\(\boldsymbol{w}_2\)</span> y comprueba que la transformación conserva el orden entre <span class="math inline">\(h(\boldsymbol{w}_1)\)</span> y <span class="math inline">\(h(\boldsymbol{w}_2)\)</span>. Explica después por qué la hipótesis <span class="math inline">\(a&gt;0\)</span> es necesaria, dando un contraejemplo con <span class="math inline">\(a&lt;0\)</span>.</p>
 </div>
-<div id="exr-h2-gradiente" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Sea <span class="math inline">\(f_{\boldsymbol{w}}(x_i)=w_0+w_1x_i\)</span> y <span class="math inline">\(r_i(\boldsymbol{w})=y_i-w_0-w_1x_i\)</span>.</p>
-<ol type="a">
-<li>Deriva el riesgo cuadrático empírico respecto de <span class="math inline">\(w_0\)</span>, tratando <span class="math inline">\(w_1\)</span> como constante.</li>
-<li>Deriva respecto de <span class="math inline">\(w_1\)</span>.</li>
-<li>Apila las dos parciales y comprueba que obtienes <a href="../capitulos/02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</li>
-<li>Interpreta en una frase qué significa que las dos componentes valgan cero.</li>
-</ol>
-</div>
-</section>
-<section id="sec-h2-c" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h2-c">3. Cálculo a mano</h2>
 <div id="exr-h2-parciales" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Calcula el gradiente de cada función.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3 (Practicar derivadas parciales)</strong></span> Calcula el gradiente de cada función.</p>
 <ol type="a">
 <li><span class="math inline">\(h(w_0,w_1)=3w_0^2-2w_0w_1+w_1^3\)</span>.</li>
 <li><span class="math inline">\(h(w_0,w_1)=(w_0+2w_1-5)^2\)</span>.</li>
-<li>Para la función del apartado a, <strong>comprueba</strong> que <span class="math inline">\(\nabla h(0,0)=\mathbf{0}\)</span>. <strong>Evalúa</strong> <span class="math inline">\(h(0,w_1)\)</span> para valores pequeños de <span class="math inline">\(w_1\)</span> positivos y negativos. ¿Es <span class="math inline">\((0,0)\)</span> un mínimo? <strong>Explica</strong> qué permite concluir esto sobre la condición de gradiente cero.</li>
+</ol>
+</div>
+<div id="exr-h2-gradiente" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 4 (Demostración del gradiente)</strong></span> Demuestra <a href="../capitulos/02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</p>
+<ol type="a">
+<li>Deriva <a href="../capitulos/02-aprender-minimizando.html#eq-riesgo-recta" class="quarto-xref">Ecuación&nbsp;<span>2.5</span></a> respecto de <span class="math inline">\(w_0\)</span> tratando <span class="math inline">\(w_1\)</span> como constante, y aplica la regla de la cadena a cada sumando.</li>
+<li>Repite el cálculo respecto de <span class="math inline">\(w_1\)</span>.</li>
+<li>Apila las dos parciales y comprueba que obtienes la expresión del enunciado.</li>
+<li>Escribe qué significa que las dos componentes sean cero, en términos de los residuos.</li>
+</ol>
+</div>
+<p>El ejercicio 5 queda como ampliación: anticipa el sistema de ecuaciones del tema 3 y no es exigible en este capítulo. Puedes pasar directamente al 6.</p>
+<div id="exr-h2-ecuaciones" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 5 (Resolver el sistema exactamente)</strong></span> Iguala a cero las dos componentes de <a href="../capitulos/02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</p>
+<ol type="a">
+<li><p>Comprueba que el sistema se puede escribir como <span class="math display">\[
+w_0+w_1\bar x=\bar y,
+\qquad
+w_0\bar x+w_1\overline{x^2}=\overline{xy},
+\]</span> donde la barra denota la media sobre las <span class="math inline">\(n\)</span> observaciones.</p></li>
+<li><p>Para <span class="math inline">\(\bar x=0\)</span> y <span class="math inline">\(\overline{x^2}&gt;0\)</span>, resuelve el sistema y comprueba que</p>
+<p><span class="math display">\[
+\widehat w_0=\bar y,
+\qquad
+\widehat w_1=\frac{\overline{xy}}{\overline{x^2}}.
+\]</span></p></li>
+<li><p>Como comprobación opcional con código, calcula <span class="math inline">\(\widehat w_0\)</span> y <span class="math inline">\(\widehat w_1\)</span> para los datos del capítulo y compáralos con la señal generadora.</p></li>
+</ol>
+</div>
+<div id="exr-h2-tasa" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6 (El efecto de la tasa de aprendizaje)</strong></span> Sea <span class="math inline">\(h(w)=w^2\)</span> y partamos de <span class="math inline">\(w^{(0)}=1\)</span>.</p>
+<ol type="a">
+<li>Calcula dos pasos de descenso para cada tasa: <span class="math inline">\(\alpha=1/4\)</span>, <span class="math inline">\(\alpha=3/4\)</span> y <span class="math inline">\(\alpha=5/4\)</span>.</li>
+<li>Compara los valores de <span class="math inline">\(h\)</span> y la distancia al mínimo. ¿Cambiar de lado respecto al mínimo implica necesariamente alejarse de él?</li>
+</ol>
+</div>
+</section>
+<section id="práctica-básica" class="level2">
+<h2 class="anchored" data-anchor-id="práctica-básica">Práctica básica</h2>
+<div id="exr-h2-predicciones" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7 (De las predicciones al riesgo)</strong></span> Considera las cuatro observaciones</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(-1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(-1\)</span></th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y\)</span></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+<p>Usamos la recta <span class="math inline">\(f_{\boldsymbol{w}}(x)=w_0+w_1x\)</span> y el residuo <span class="math inline">\(r_i=y_i-f_{\boldsymbol{w}}(x_i)\)</span>.</p>
+<ol type="a">
+<li>Con <span class="math inline">\(\boldsymbol{w}=(0,0)^{\mathsf{T}}\)</span>, calcula las cuatro predicciones y los cuatro residuos.</li>
+<li>Eleva los residuos al cuadrado y calcula su media: ese es el riesgo cuadrático empírico.</li>
+<li>Repite los cálculos con <span class="math inline">\(\boldsymbol{w}=(2,1)^{\mathsf{T}}\)</span>. ¿Qué recta tiene menor riesgo? Bajo el modelo lineal-gaussiano del capítulo, con <span class="math inline">\(\sigma&gt;0\)</span> fijo, ¿cuál tiene mayor verosimilitud? Explica la relación entre ambos criterios.</li>
+</ol>
+</div>
+<div id="exr-h2-parciales-basicas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8 (Derivar una coordenada cada vez)</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Para <span class="math inline">\(h(w_0,w_1)=w_0^2+3w_1\)</span>, calcula las dos derivadas parciales. ¿Por qué desaparece <span class="math inline">\(3w_1\)</span> al derivar respecto de <span class="math inline">\(w_0\)</span>?</li>
+<li>Repite el cálculo para <span class="math inline">\(h(w_0,w_1)=2w_0-w_1^2\)</span>.</li>
+<li>Para <span class="math inline">\(h(w_0,w_1)=(w_0+w_1-1)^2\)</span>, escribe <span class="math inline">\(u=w_0+w_1-1\)</span> y completa: <span class="math display">\[
+\frac{\partial h}{\partial w_0}=2u\cdot\underbrace{\phantom{1}}_{?},
+\qquad
+\frac{\partial h}{\partial w_1}=2u\cdot\underbrace{\phantom{1}}_{?}.
+\]</span></li>
+<li>Escribe el gradiente de cada una de las tres funciones en <span class="math inline">\((w_0,w_1)=(1,0)\)</span>.</li>
 </ol>
 </div>
 <div id="exr-h2-perdidas" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Dos modelos producen los siguientes residuos sobre las mismas cuatro observaciones:</p>
+<p><span class="theorem-title"><strong>Ejercicio 9 (Comparar dos formas de medir el error)</strong></span> Dos modelos producen los siguientes residuos sobre las mismas cuatro observaciones:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -382,154 +440,165 @@ window.Quarto = {
 </tbody>
 </table>
 <ol type="a">
-<li><strong>Calcula</strong> el error cuadrático medio y el error absoluto medio de cada modelo.</li>
-<li><strong>Indica</strong> cuál prefieres con cada pérdida y <strong>explica</strong> por qué cambia la elección.</li>
+<li>Calcula el error cuadrático medio y el error absoluto medio de cada modelo.</li>
+<li>Indica cuál prefieres con cada pérdida. ¿Qué efecto tiene elevar al cuadrado el residuo grande del modelo A?</li>
+<li>¿Has calculado riesgos empíricos o poblacionales? Si un tercer modelo tuviera todos sus residuos de entrenamiento a cero, ¿garantizaría eso predecir sin error datos nuevos?</li>
+<li>Si usas la suma de cuadrados en vez de su media, ¿cambia la recta que minimiza la pérdida? ¿Por cuánto se multiplican el valor de la pérdida y su gradiente?</li>
 </ol>
 </div>
 <div id="exr-h2-calculo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Considera las cuatro observaciones</p>
+<p><span class="theorem-title"><strong>Ejercicio 10 (Dos pasos para ajustar una recta)</strong></span> Usa los datos del ejercicio 7. Partimos de <span class="math inline">\(\boldsymbol{w}^{(0)}=(0,0)^{\mathsf{T}}\)</span>, donde el gradiente del riesgo cuadrático es <span class="math inline">\((-4,-2)^{\mathsf{T}}\)</span>, y tomamos <span class="math inline">\(\alpha=1/4\)</span>.</p>
+<ol type="a">
+<li><p>Calcula la primera actualización <span class="math inline">\(\boldsymbol{w}^{(1)}=\boldsymbol{w}^{(0)}-\alpha\nabla\hat{R}(\boldsymbol{w}^{(0)})\)</span>.</p></li>
+<li><p>Completa esta tabla con los parámetros de la primera actualización:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th><span class="math inline">\(x\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(-1\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(-1\)</span></th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">1</th>
+<th style="text-align: right;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(f_{\boldsymbol{w}^{(1)}}(x_i)\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(r_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x_ir_i\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(y\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-1\)</span></td>
 <td style="text-align: right;">0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(-1\)</span></td>
 <td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">4</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 </tbody>
 </table>
-<p>Ajustamos una recta <span class="math inline">\(f_{\boldsymbol{w}}(x)=w_0+w_1x\)</span> por mínimos cuadrados.</p>
-<ol type="a">
-<li>En <span class="math inline">\(\boldsymbol{w}^{(0)}=(0,0)^{\mathsf{T}}\)</span>, <strong>calcula</strong> las predicciones, los residuos, <span class="math inline">\(\hat{R}(\boldsymbol{w}^{(0)})\)</span> y <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^{(0)})\)</span>.</li>
-<li>Con <span class="math inline">\(\alpha=1/4\)</span>, <strong>calcula</strong> dos iteraciones de descenso de gradiente. Recalcula el gradiente en los parámetros de la primera iteración antes de dar el segundo paso.</li>
-<li><strong>Comprueba</strong> que <span class="math inline">\(\hat{\boldsymbol{w}}=(2,1)^{\mathsf{T}}\)</span> tiene gradiente cero. <strong>Justifica</strong> con el resultado de <a href="../capitulos/02-aprender-minimizando.html#prp-minimo-riesgo-cuadratico" class="quarto-xref">Proposición&nbsp;<span>2.2</span></a> que es el mínimo global único; no se pide demostrar esa proposición.</li>
-<li><strong>Calcula</strong> el riesgo en <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> y <strong>explica</strong> por qué, para <span class="math inline">\(\sigma\)</span> fijo, ninguna otra recta tiene una verosimilitud gaussiana mayor.</li>
-<li><strong>Calcula</strong> <span class="math inline">\(\hat{\sigma}\)</span> con la fórmula del capítulo. <strong>Razona</strong> por qué no podemos afirmar que los residuos obtenidos sean exactamente los ruidos que generaron los datos.</li>
+<p>Usa <span class="math inline">\(\nabla\hat{R}=-\frac{2}{4}(\sum_ir_i,\sum_i x_ir_i)^{\mathsf{T}}\)</span> para obtener el nuevo gradiente y calcula la segunda actualización.</p></li>
+<li><p>Comprueba que <span class="math inline">\(\hat{\boldsymbol{w}}=(2,1)^{\mathsf{T}}\)</span> tiene gradiente cero. Justifica con el resultado de <a href="../capitulos/02-aprender-minimizando.html#prp-minimo-riesgo-cuadratico" class="quarto-xref">Proposición&nbsp;<span>2.2</span></a> que es el mínimo global único; no se pide demostrar esa proposición.</p></li>
+<li><p>Sabemos por el ejercicio 7 que <span class="math inline">\(\hat{R}(\hat{\boldsymbol{w}})=1\)</span>. Calcula <span class="math inline">\(\hat{\sigma}=\sqrt{\hat{R}(\hat{\boldsymbol{w}})}\)</span>. ¿Podemos afirmar que los residuos son exactamente los ruidos que generaron los datos?</p></li>
 </ol>
 </div>
-<div id="exr-h2-tasa" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Queremos minimizar <span class="math inline">\(h(w)=(w-1)^2\)</span> mediante descenso de gradiente, partiendo de <span class="math inline">\(w^{(0)}=0\)</span>.</p>
+<div id="exr-h2-punto-critico" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 11 (Derivada cero no siempre significa mínimo)</strong></span> Considera <span class="math inline">\(h(w)=w^2\)</span> y <span class="math inline">\(g(w)=w^3\)</span>.</p>
 <ol type="a">
-<li><strong>Calcula</strong> <span class="math inline">\(h'(w)\)</span> y escribe la actualización <span class="math inline">\(w^{(t+1)}\)</span>.</li>
-<li><strong>Calcula</strong> las dos primeras iteraciones para cada tasa de aprendizaje <span class="math inline">\(\alpha\in\{1/4,3/4,5/4\}\)</span>. Anota también el valor de <span class="math inline">\(h\)</span> después de cada paso.</li>
-<li>En los dos pasos calculados, <strong>identifica</strong> qué tasa se acerca al mínimo sin cruzarlo, cuál se acerca cambiando de lado y cuál se aleja. ¿Cambiar de lado respecto al mínimo implica necesariamente alejarse de él? <strong>Justifica</strong> con tus cálculos.</li>
+<li>Calcula <span class="math inline">\(h'(0)\)</span> y <span class="math inline">\(g'(0)\)</span>.</li>
+<li>Evalúa ambas funciones en <span class="math inline">\(w=-1/10\)</span>, <span class="math inline">\(w=0\)</span> y <span class="math inline">\(w=1/10\)</span>.</li>
+<li>Sabemos que <span class="math inline">\(w^2\geq0\)</span> para todo <span class="math inline">\(w\)</span>, mientras que <span class="math inline">\(w^3&lt;0\)</span> para cualquier <span class="math inline">\(w&lt;0\)</span>, por pequeño que sea <span class="math inline">\(\left\lvert w \right\rvert\)</span>. ¿Tiene cada función un mínimo en cero? ¿Basta que la derivada valga cero para que haya un mínimo?</li>
 </ol>
 </div>
+</section>
+<section id="del-cálculo-al-código" class="level2">
+<h2 class="anchored" data-anchor-id="del-cálculo-al-código">Del cálculo al código</h2>
+<p>En los ejercicios de código se pide completar o interpretar las operaciones del capítulo en papel, no escribir programas de memoria. No se evalúa cómo hacer gráficos.</p>
 <div id="exr-h2-retropropagacion" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> El riesgo de una sola observación es <span class="math inline">\(h(\boldsymbol{w})=(y-w_0-w_1x)^2\)</span>. Toma <span class="math inline">\(\boldsymbol{w}=(2,1)^{\mathsf{T}}\)</span>, <span class="math inline">\(x=4\)</span> e <span class="math inline">\(y=3\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 12 (La regla de la cadena, paso a paso)</strong></span> Para una observación, <span class="math inline">\(h(\boldsymbol{w})=(y-w_0-w_1x)^2\)</span>. Toma <span class="math inline">\(\boldsymbol{w}=(1,2)^{\mathsf{T}}\)</span>, <span class="math inline">\(x=3\)</span> e <span class="math inline">\(y=4\)</span>.</p>
 <ol type="a">
 <li>Calcula <span class="math inline">\(h_1=w_1x\)</span>, <span class="math inline">\(h_2=w_0+h_1\)</span>, <span class="math inline">\(h_3=y-h_2\)</span> y <span class="math inline">\(h_4=h_3^2\)</span>.</li>
-<li>Recorre el grafo hacia atrás y obtén <span class="math inline">\(\partial h_4/\partial w_0\)</span> y <span class="math inline">\(\partial h_4/\partial w_1\)</span>, escribiendo la derivada local que usas en cada paso.</li>
-<li>Deriva la expresión original directamente y comprueba que sale lo mismo.</li>
+<li>Las derivadas locales son <span class="math display">\[
+\frac{\partial h_4}{\partial h_3}=2h_3,\quad
+\frac{\partial h_3}{\partial h_2}=-1,\quad
+\frac{\partial h_2}{\partial w_0}=1,\quad
+\frac{\partial h_2}{\partial h_1}=1,\quad
+\frac{\partial h_1}{\partial w_1}=x.
+\]</span> Sustituye los valores y calcula <span class="math display">\[
+\frac{\partial h_4}{\partial w_0}=(2h_3)(-1)(1),
+\qquad
+\frac{\partial h_4}{\partial w_1}=(2h_3)(-1)(1)(x).
+\]</span></li>
+<li>Deriva directamente <span class="math inline">\((4-w_0-3w_1)^2\)</span> respecto de cada parámetro y evalúa en <span class="math inline">\((1,2)\)</span>. Comprueba que obtienes lo mismo.</li>
 </ol>
 </div>
-</section>
-<section id="sec-h2-d" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h2-d">4. Encuentra los errores</h2>
-<div id="exr-h2-errores-autodiff" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Este fragmento pretende ajustar una recta por descenso de gradiente con diferenciación automática. Contiene <strong>tres</strong> errores. Los datos <code>x</code> e <code>y</code> son tensores de números reales del mismo tamaño.</p>
+<div id="exr-h2-completar" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 13 (Modelo, pérdida y gradiente)</strong></span> Completa las cuatro operaciones señaladas.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.zeros(<span class="dv">2</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paso <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    riesgo <span class="op">=</span> ((y <span class="op">-</span> (w[<span class="dv">0</span>] <span class="op">+</span> w[<span class="dv">1</span>] <span class="op">*</span> x)) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    riesgo.backward()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        w <span class="op">+=</span> <span class="fl">0.1</span> <span class="op">*</span> w.grad</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros<span class="op">=</span><span class="dv">2</span>):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, x):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ...                <span class="co"># (1) la recta w0 + w1 x</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ...                    <span class="co"># (2) media de residuos al cuadrado</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_mse(modelo, x, y):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> modelo.predict(x)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack((</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        ...,                      <span class="co"># (3) componente de w0</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        ...,                      <span class="co"># (4) componente de w1</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li><strong>Identifica</strong> el primer error que impide ejecutar el bucle y <strong>corrígelo</strong>.</li>
-<li>Una vez corregido, <strong>localiza</strong> los otros dos errores y <strong>explica</strong> cómo afectan a la actualización. Escribe la corrección de cada uno.</li>
-<li>Si un programa de entrenamiento se ejecuta sin errores, ¿basta eso para afirmar que minimiza la pérdida que queríamos? <strong>Justifica</strong> tu respuesta.</li>
-</ol>
-</div>
-</section>
-<section id="sec-h2-e" class="level2">
-<h2 class="anchored" data-anchor-id="sec-h2-e">5. Completar código</h2>
-<div id="exr-h2-completar" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Completa las líneas marcadas para reproducir las tres piezas del capítulo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros<span class="op">=</span><span class="dv">2</span>):</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> ...              <span class="co"># (1) parámetros iniciales, todos a cero</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, x):</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ...                <span class="co"># (2) la recta w0 + w1 x</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ...                    <span class="co"># (3) media de los residuos al cuadrado</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_mse(modelo, x, y):</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> ...                <span class="co"># (4)</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack((</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        ...,                      <span class="co"># (5) componente de w0</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        ...,                      <span class="co"># (6) componente de w1</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="a">
-<li>Rellena las seis líneas.</li>
-<li><strong>Explica</strong> por qué <code>mse</code> recibe las predicciones y no el modelo. Si sustituimos <code>mse</code> por el error absoluto medio, ¿podemos seguir usando <code>grad_mse</code> sin cambiarlo?</li>
+<li>Rellena las cuatro líneas.</li>
+<li>Con los datos del ejercicio 7 y un modelo recién creado, ¿qué valores devuelven <code>mse(modelo.predict(x), y)</code> y <code>grad_mse(modelo, x, y)</code>?</li>
+<li>Si sustituimos <code>mse</code> por el error absoluto medio, ¿podemos seguir usando <code>grad_mse</code> sin cambiarlo?</li>
 </ol>
 </div>
 <div id="exr-h2-train" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Usa las funciones del ejercicio anterior para completar el optimizador y el entrenamiento.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, x, y):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        gradiente <span class="op">=</span> ...                    <span class="co"># (1)</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w <span class="op">=</span> ...                <span class="co"># (2)</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, x, y, n_iter):</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    historia_w <span class="op">=</span> [modelo.w.detach().clone()]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    historia_riesgo <span class="op">=</span> [mse(modelo.predict(x), y).item()]</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iter):</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        ...                                <span class="co"># (3) un paso de actualización</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        historia_w.append(modelo.w.detach().clone())</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        historia_riesgo.append(...)         <span class="co"># (4) riesgo actualizado</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack(historia_w), torch.tensor(historia_riesgo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="theorem-title"><strong>Ejercicio 14 (Un paso y un bucle de entrenamiento)</strong></span> Usa las funciones del ejercicio anterior para completar el optimizador y el entrenamiento.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, x, y):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        gradiente <span class="op">=</span> ...                    <span class="co"># (1)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w <span class="op">=</span> ...                <span class="co"># (2)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, x, y, n_iter):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    historia_w <span class="op">=</span> [modelo.w.detach().clone()]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    historia_riesgo <span class="op">=</span> [mse(modelo.predict(x), y).item()]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iter):</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        ...                                <span class="co"># (3) un paso de actualización</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        historia_w.append(modelo.w.detach().clone())</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        historia_riesgo.append(...)         <span class="co"># (4) riesgo actualizado</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack(historia_w), torch.tensor(historia_riesgo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li><strong>Completa</strong> las cuatro líneas.</li>
-<li>Si <code>n_iter=2</code>, <strong>indica</strong> cuántos vectores guarda <code>historia_w</code> y a qué momentos del entrenamiento corresponden.</li>
-<li><code>detach().clone()</code> guarda una copia sin conservar el cálculo de derivadas. <strong>Explica</strong> por qué queremos conservar una copia de los parámetros de cada iteración, en lugar de referencias a un único tensor que puede seguir modificándose.</li>
+<li>Completa las cuatro líneas. Las instrucciones para guardar los resultados ya están dadas.</li>
+<li>Usamos los datos del ejercicio 7, parámetros iniciales <span class="math inline">\((0,0)^{\mathsf{T}}\)</span>, <code>lr=1/4</code> y <code>n_iter=2</code>. ¿Qué tres vectores guarda <code>historia_w</code>? Puedes usar tus cálculos del ejercicio 10.</li>
+<li>Dentro del bucle, ¿se guarda el riesgo antes o después de actualizar los parámetros? Señala la línea que permite saberlo.</li>
 </ol>
 </div>
-<div id="exr-h2-completar-auto" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Completa el optimizador con diferenciación automática. El modelo se ha creado con <code>modelo.w = torch.zeros(2, requires_grad=True)</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, x, y):</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        riesgo <span class="op">=</span> ...              <span class="co"># (1) predicción y pérdida</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        ...                       <span class="co"># (2) pasada hacia atrás</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> ...:                 <span class="co"># (3) no registrar la actualización</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.modelo.w <span class="op">-=</span> ...  <span class="co"># (4) descenso de gradiente</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        ...                       <span class="co"># (5) preparar la siguiente iteración</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="exr-h2-errores-autodiff" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 15 (Tres errores de diferenciación automática)</strong></span> Este fragmento pretende ajustar una recta por descenso de gradiente con diferenciación automática. Contiene tres errores. Los datos <code>x</code> e <code>y</code> son tensores de números reales del mismo tamaño.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.zeros(<span class="dv">2</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paso <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    riesgo <span class="op">=</span> ((y <span class="op">-</span> (w[<span class="dv">0</span>] <span class="op">+</span> w[<span class="dv">1</span>] <span class="op">*</span> x)) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    riesgo.backward()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        w <span class="op">+=</span> <span class="fl">0.1</span> <span class="op">*</span> w.grad</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li><strong>Completa</strong> las cinco líneas.</li>
-<li><strong>Explica</strong> qué cambia respecto a <code>GradientDescentOptimizer</code> y por qué no hace falta cambiar <code>train</code>.</li>
-<li>Los gradientes de dos iteraciones, calculados por separado, son <span class="math inline">\((-4,-2)^{\mathsf{T}}\)</span> y <span class="math inline">\((-2,-1)^{\mathsf{T}}\)</span>. Si no se limpia <code>.grad</code> entre ambas, <strong>calcula</strong> qué vector contendrá después del segundo <code>backward()</code>.</li>
+<li>Falta indicar que queremos derivar respecto de <code>w</code>. Corrige su inicialización.</li>
+<li>Corrige el signo de la actualización y añade la instrucción que evita acumular gradientes entre iteraciones.</li>
+<li>Los gradientes de dos iteraciones, calculados por separado, son <span class="math inline">\((-4,-2)^{\mathsf{T}}\)</span> y <span class="math inline">\((-2,-1)^{\mathsf{T}}\)</span>. Si no se limpia <code>.grad</code> entre ambas, ¿qué vector contendrá después del segundo <code>backward()</code>?</li>
+<li>Si un programa se ejecuta sin errores, ¿basta eso para afirmar que minimiza la pérdida que queríamos? Justifica tu respuesta.</li>
 </ol>
 </div>
 <div class="callout callout-style-simple callout-note no-icon">
