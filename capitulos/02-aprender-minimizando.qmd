@@ -985,9 +985,12 @@ def train(modelo, optimizador, x, y, n_iter):
 #---
 ```
 
-1. `detach()` separa el tensor del cálculo de derivadas y `clone()` guarda una copia,
-   para que las actualizaciones posteriores no cambien lo ya guardado. Veremos las
-   derivadas automáticas en el siguiente apartado.
+1. Para el historial solo necesitamos los valores actuales de los parámetros. `clone()`
+   hace una copia que no cambia al actualizar el original. PyTorch también permite calcular
+   derivadas automáticamente, como veremos en el siguiente apartado. `detach()` devuelve
+   los mismos valores tratados como constantes para ese cálculo, sin modificar el tensor
+   original. Aquí no es necesario, porque calculamos el gradiente a mano; lo incluimos para
+   reutilizar el bucle después.
 2. Cada vuelta da un paso y registra los parámetros y el riesgo resultantes. Como también
    guardamos el estado inicial, el historial contiene `n_iter + 1` estados.
 :::
@@ -1320,9 +1323,18 @@ El ajuste final permite distinguir tres objetos:
 - las respuestas observadas $y_i$, que incluyen ruido.
 
 
-Queda cerrar el asunto que aparcamos al principio. Aprender la señal no exigió decidir nada
-sobre $\noise$, pero el modelo gaussiano lo tiene entre sus parámetros y la verosimilitud
-también sabe estimarlo.
+Recordemos que hasta ahora habíamos supuesto conocido el nivel de ruido $\noise$.
+Supongamos que no lo conocemos: debemos estimar tanto los parámetros de la recta como
+el nivel de ruido.
+
+Podemos seguir ajustando primero la recta. Por @eq-loglik-riesgo, si comparamos dos
+rectas con el mismo $\noise>0$, la de menor error cuadrático medio tiene mayor
+log-verosimilitud. Esto vale para cualquier $\noise>0$: cambiar el nivel de ruido no
+cambia qué recta es preferible. Por tanto, buscamos $\coefhat$ minimizando $\Riskh$,
+como hemos hecho hasta ahora.
+
+Fijada esa recta, sus residuos ya son conocidos y solo queda estimar $\noise$.
+El siguiente resultado da el valor que maximiza la log-verosimilitud.
 
 ::: {#thm-perfilado-sigma}
 ## Estimación del nivel de ruido
@@ -1353,15 +1365,19 @@ $\noise^2=\Riskh(\coef)$ y decrece después; ese punto es su máximo global.
 :::
 ::::
 
-Para entender por qué podemos ajustar primero la señal, volvamos a @eq-loglik-riesgo.
-La log-verosimilitud es una constante menos un múltiplo positivo del error cuadrático
-medio. Cambiar $\noise$ modifica esa constante y ese múltiplo, pero no qué recta deja
-menor error. Por tanto, la recta más verosímil es la misma para cualquier $\noise>0$:
-podemos encontrarla sin conocer el nivel de ruido.
+Aplicando @eq-sigma-mle a la recta ajustada, estimamos la desviación típica como la raíz
+de la media de sus residuos al cuadrado:
 
-Una vez elegida esa recta, la mantenemos fija y estimamos $\noise$ con @eq-sigma-mle:
-$\noisehat=\sqrt{\Riskh(\coefhat)}$, siempre que el riesgo mínimo sea positivo. El primer
-paso elige la señal; el segundo mide cuánto se separan de ella las respuestas observadas.
+$$
+\noisehat
+=\sqrt{\frac{1}{\nobs}\sum_{i=1}^{\nobs}
+\bigl(\yi-f_{\coefhat}(x_i)\bigr)^2}
+=\sqrt{\Riskh(\coefhat)},
+$$
+
+siempre que el riesgo mínimo sea positivo. Así completamos el ajuste: la recta fija los
+centros de las distribuciones normales y $\noisehat$ fija su dispersión, sin modificar
+la señal aprendida.
 
 $\noisehat$ mide la dispersión residual bajo el modelo propuesto, no un ruido verdadero
 que conozcamos. Si la señal está mal ajustada, los residuos recogen también ese error.

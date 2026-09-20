@@ -346,7 +346,7 @@ Y_i\,\vert\,X_i=x_i
 <li>actualizar los parámetros en una dirección que lo reduzca.</li>
 </ol>
 <p>Para ilustrar los conceptos de este capítulo, simularemos datos con la misma señal del capítulo anterior. Cambiamos la muestra: ahora usamos 40 valores de <span class="math inline">\(x\)</span> entre <span class="math inline">\(-2\)</span> y <span class="math inline">\(2\)</span> y ruido con <span class="math inline">\(\sigma=1\)</span>. Centrar los valores de <span class="math inline">\(x\)</span> alrededor de cero simplificará la geometría del riesgo; la señal generadora sigue siendo <span class="math inline">\(1+2x\)</span>.</p>
-<div id="f97cbaa7" class="cell" data-execution_count="2">
+<div id="6f371e67" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
@@ -364,7 +364,7 @@ Y_i\,\vert\,X_i=x_i
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="563bee7b" class="cell" data-execution_count="3">
+<div id="3061c9b6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilidades de figura que reutilizan varias secciones. El azul y el gris</span></span>
@@ -616,7 +616,7 @@ R(\boldsymbol{w})
 </div>
 <p>La fórmula se traduce a código con las tres piezas que reutilizaremos durante todo el curso: una clase que guarda los parámetros y sabe predecir, una función que mide el error, y una función que calcula el gradiente.</p>
 <div class="codigo-clave">
-<div id="58660c1b" class="cell" data-execution_count="4">
+<div id="a3315d69" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
 <span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros<span class="op">=</span><span class="dv">2</span>):</span>
 <span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
@@ -654,7 +654,7 @@ R(\boldsymbol{w})
 </div>
 </div>
 <p>Por ejemplo, en <span class="math inline">\(\boldsymbol{w}=(0,0)^{\mathsf{T}}\)</span> el gradiente es</p>
-<div id="324233dd" class="cell" data-execution_count="5">
+<div id="e2b06292" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grad_mse(modelo, x, y)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -742,7 +742,7 @@ h(\boldsymbol{w}+\mathbf d)-h(\boldsymbol{w})
 <div id="fig-gradiente-riesgo" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-gradiente-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="d2477d89" class="cell" data-execution_count="6">
+<div id="ba61e395" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -910,7 +910,7 @@ w_0\bar x+w_1\overline{x^2}=\overline{xy},
 <div id="fig-intuicion-descenso" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-intuicion-descenso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="9e133d78" class="cell" data-execution_count="7">
+<div id="88b4d898" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -979,7 +979,7 @@ Figura&nbsp;2.2: Cinco iteraciones de descenso de gradiente sobre una función d
 <div id="fig-tasa-aprendizaje" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-tasa-aprendizaje-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="f002aa39" class="cell" data-execution_count="8">
+<div id="257de3b0" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1007,7 +1007,7 @@ Figura&nbsp;2.3: Izquierda: una tasa pequeña acerca los parámetros al mínimo;
 <h2 class="anchored" data-anchor-id="implementar-el-descenso-de-gradiente">Implementar el descenso de gradiente</h2>
 <p>Al modelo y a la pérdida les falta una tercera pieza: el <strong>optimizador</strong>, que guarda la tasa de aprendizaje y sabe dar un paso. Con eso, entrenar es escribir un bucle.</p>
 <div class="codigo-clave">
-<div id="90b8d767" class="cell" data-execution_count="9">
+<div id="1a54defe" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
 <span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
 <span id="annotated-cell-14-3"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
@@ -1028,7 +1028,7 @@ Figura&nbsp;2.3: Izquierda: una tasa pequeña acerca los parámetros al mínimo;
 </div>
 <p>El bucle vive fuera de las clases, igual que el historial que guardamos para poder dibujar después.</p>
 <div class="codigo-clave">
-<div id="e68eac73" class="cell" data-execution_count="10">
+<div id="6b73bc5b" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, x, y, n_iter):</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>    historia_w <span class="op">=</span> [modelo.w.detach().clone()]</span>
 <span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>    historia_riesgo <span class="op">=</span> [mse(modelo.predict(x), y).item()]</span>
@@ -1043,7 +1043,7 @@ Figura&nbsp;2.3: Izquierda: una tasa pequeña acerca los parámetros al mínimo;
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1"><code>detach()</code> separa el tensor del cálculo de derivadas y <code>clone()</code> guarda una copia, para que las actualizaciones posteriores no cambien lo ya guardado. Veremos las derivadas automáticas en el siguiente apartado.</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1">Para el historial solo necesitamos los valores actuales de los parámetros. <code>clone()</code> hace una copia que no cambia al actualizar el original. PyTorch también permite calcular derivadas automáticamente, como veremos en el siguiente apartado. <code>detach()</code> devuelve los mismos valores tratados como constantes para ese cálculo, sin modificar el tensor original. Aquí no es necesario, porque calculamos el gradiente a mano; lo incluimos para reutilizar el bucle después.</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
@@ -1060,7 +1060,7 @@ Figura&nbsp;2.3: Izquierda: una tasa pequeña acerca los parámetros al mínimo;
 -0.1\begin{pmatrix}-2.18\\-5.62\end{pmatrix}
 =\begin{pmatrix}0.22\\0.56\end{pmatrix}.
 \]</span></p>
-<div id="0465fb52" class="cell" data-execution_count="11">
+<div id="19ae3220" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>optimizador <span class="op">=</span> GradientDescentOptimizer(modelo, lr<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>historia_w, historia_riesgo <span class="op">=</span> train(modelo, optimizador, x, y, n_iter<span class="op">=</span><span class="dv">50</span>)</span>
@@ -1116,7 +1116,7 @@ riesgo = 1.2779</code></pre>
 <div id="fig-trayectoria-descenso" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-trayectoria-descenso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="50473281" class="cell" data-execution_count="12">
+<div id="3e27a838" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1200,7 +1200,7 @@ h_4=h_3^2 ,
 <div id="fig-grafo-operaciones" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-grafo-operaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="ff72f4ed" class="cell" data-execution_count="13">
+<div id="270d802f" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1241,7 +1241,7 @@ Figura&nbsp;2.5: El grafo de operaciones del riesgo de una observación. En azul
 <h3 class="anchored" data-anchor-id="cómo-se-usa-en-pytorch">Cómo se usa en PyTorch</h3>
 <p>Se marca con <code>requires_grad_()</code> aquello respecto a lo que se quiere derivar, se calcula el valor, se llama a <code>backward()</code> y el resultado aparece en <code>.grad</code>. Comprobémoslo con un ejemplo que se puede derivar de cabeza: <span class="math inline">\(c=ab+a+b\)</span>, cuyas parciales son <span class="math inline">\(\partial c/\partial a=b+1\)</span> y <span class="math inline">\(\partial c/\partial b=a+1\)</span>.</p>
 <div class="codigo-clave">
-<div id="4b6aaf1b" class="cell" data-execution_count="14">
+<div id="739dce46" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> torch.tensor(<span class="fl">2.0</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
 <span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.tensor(<span class="fl">3.0</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
 <span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1273,7 +1273,7 @@ dc/db = 3.0  esperado: 3.0</code></pre>
 </div>
 </div>
 <p>Como comprobación opcional, comparamos el gradiente automático con la fórmula de <a href="#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</p>
-<div id="3ea819d8" class="cell" data-execution_count="15">
+<div id="5d6f26a1" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>modelo_prueba <span class="op">=</span> LinearRegression()</span>
@@ -1297,7 +1297,7 @@ coinciden: True</code></pre>
 </div>
 <p>Con esto, el optimizador ya no necesita conocer la fórmula del gradiente. Lo único que cambia es el método <code>step</code>.</p>
 <div class="codigo-clave">
-<div id="d2917977" class="cell" data-execution_count="16">
+<div id="7559e0bf" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer(GradientDescentOptimizer):</span>
 <span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, x, y):</span>
 <span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a>        riesgo <span class="op">=</span> mse(<span class="va">self</span>.modelo.predict(x), y)</span>
@@ -1326,7 +1326,7 @@ coinciden: True</code></pre>
 </div>
 </div>
 <p>El bucle de entrenamiento no cambia, y el resultado tampoco.</p>
-<div id="84b65d2e" class="cell" data-execution_count="17">
+<div id="7ce03198" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>modelo_auto.w <span class="op">=</span> torch.zeros(<span class="dv">2</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1343,7 +1343,7 @@ coincide con el gradiente manual: True</code></pre>
 </div>
 </div>
 <p>En la práctica, PyTorch ofrece esta actualización mediante <code>torch.optim.SGD</code>, de modo que no tenemos que programarla a mano. El bucle pone los gradientes a cero, los calcula con <code>backward()</code> y llama a <code>step()</code> para actualizar los parámetros. Este último fragmento queda como referencia de uso: <strong>no es código exigible en este capítulo</strong>.</p>
-<div id="070cd4af" class="cell" data-execution_count="18">
+<div id="0b7a0705" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>modelo_sgd <span class="op">=</span> LinearRegression()</span>
@@ -1371,7 +1371,9 @@ coincide con el gradiente manual: True</code></pre>
 <li>la señal estimada <span class="math inline">\(f_{\hat{\boldsymbol{w}}}(x)=\widehat w_0+\widehat w_1x\)</span>;</li>
 <li>las respuestas observadas <span class="math inline">\(y_i\)</span>, que incluyen ruido.</li>
 </ul>
-<p>Queda cerrar el asunto que aparcamos al principio. Aprender la señal no exigió decidir nada sobre <span class="math inline">\(\sigma\)</span>, pero el modelo gaussiano lo tiene entre sus parámetros y la verosimilitud también sabe estimarlo.</p>
+<p>Recordemos que hasta ahora habíamos supuesto conocido el nivel de ruido <span class="math inline">\(\sigma\)</span>. Supongamos que no lo conocemos: debemos estimar tanto los parámetros de la recta como el nivel de ruido.</p>
+<p>Podemos seguir ajustando primero la recta. Por <a href="#eq-loglik-riesgo" class="quarto-xref">Ecuación&nbsp;<span>2.2</span></a>, si comparamos dos rectas con el mismo <span class="math inline">\(\sigma&gt;0\)</span>, la de menor error cuadrático medio tiene mayor log-verosimilitud. Esto vale para cualquier <span class="math inline">\(\sigma&gt;0\)</span>: cambiar el nivel de ruido no cambia qué recta es preferible. Por tanto, buscamos <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> minimizando <span class="math inline">\(\hat{R}\)</span>, como hemos hecho hasta ahora.</p>
+<p>Fijada esa recta, sus residuos ya son conocidos y solo queda estimar <span class="math inline">\(\sigma\)</span>. El siguiente resultado da el valor que maximiza la log-verosimilitud.</p>
 <div id="thm-perfilado-sigma" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 2.4 (Estimación del nivel de ruido)</strong></span> Para <span class="math inline">\(\boldsymbol{w}\)</span> fijo y <span class="math inline">\(\hat{R}(\boldsymbol{w})&gt;0\)</span>, el valor de <span class="math inline">\(\sigma&gt;0\)</span> que maximiza la log-verosimilitud gaussiana satisface</p>
 <p><span id="eq-sigma-mle"><span class="math display">\[
@@ -1403,10 +1405,16 @@ coincide con el gradiente manual: True</code></pre>
 </div>
 </div>
 </div>
-<p>Para entender por qué podemos ajustar primero la señal, volvamos a <a href="#eq-loglik-riesgo" class="quarto-xref">Ecuación&nbsp;<span>2.2</span></a>. La log-verosimilitud es una constante menos un múltiplo positivo del error cuadrático medio. Cambiar <span class="math inline">\(\sigma\)</span> modifica esa constante y ese múltiplo, pero no qué recta deja menor error. Por tanto, la recta más verosímil es la misma para cualquier <span class="math inline">\(\sigma&gt;0\)</span>: podemos encontrarla sin conocer el nivel de ruido.</p>
-<p>Una vez elegida esa recta, la mantenemos fija y estimamos <span class="math inline">\(\sigma\)</span> con <a href="#eq-sigma-mle" class="quarto-xref">Ecuación&nbsp;<span>2.9</span></a>: <span class="math inline">\(\hat{\sigma}=\sqrt{\hat{R}(\hat{\boldsymbol{w}})}\)</span>, siempre que el riesgo mínimo sea positivo. El primer paso elige la señal; el segundo mide cuánto se separan de ella las respuestas observadas.</p>
+<p>Aplicando <a href="#eq-sigma-mle" class="quarto-xref">Ecuación&nbsp;<span>2.9</span></a> a la recta ajustada, estimamos la desviación típica como la raíz de la media de sus residuos al cuadrado:</p>
+<p><span class="math display">\[
+\hat{\sigma}
+=\sqrt{\frac{1}{n}\sum_{i=1}^{n}
+\bigl(y_i-f_{\hat{\boldsymbol{w}}}(x_i)\bigr)^2}
+=\sqrt{\hat{R}(\hat{\boldsymbol{w}})},
+\]</span></p>
+<p>siempre que el riesgo mínimo sea positivo. Así completamos el ajuste: la recta fija los centros de las distribuciones normales y <span class="math inline">\(\hat{\sigma}\)</span> fija su dispersión, sin modificar la señal aprendida.</p>
 <p><span class="math inline">\(\hat{\sigma}\)</span> mide la dispersión residual bajo el modelo propuesto, no un ruido verdadero que conozcamos. Si la señal está mal ajustada, los residuos recogen también ese error. El caso de ajuste exacto queda fuera de la fórmula: con riesgo cero no existe un máximo de verosimilitud con <span class="math inline">\(\sigma&gt;0\)</span>.</p>
-<div id="fab7240e" class="cell" data-execution_count="19">
+<div id="011233ad" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sigma_hat <span class="op">=</span> torch.sqrt(mse(modelo.predict(x), y))</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"w0 estimado = </span><span class="sc">{</span>modelo<span class="sc">.</span>w[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
@@ -1444,7 +1452,7 @@ sigma estimada = 1.1305</code></pre>
 <div id="fig-descenso-ajuste" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-descenso-ajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="04ed303f" class="cell" data-execution_count="20">
+<div id="340fad64" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
