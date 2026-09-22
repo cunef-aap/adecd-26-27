@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Genera un .ipynb por capitulo con el codigo entre centinelas sustituido
-por un hueco, para completar en vivo en clase.
+"""Genera un .ipynb por capitulo con el codigo completo para Google Colab.
 
 Solo genera los cuadernos de los capitulos PUBLICADOS en contenido.txt: docs/ se sube a un
 repositorio publico, asi que un cuaderno de un capitulo todavia inedito se publicaria con el.
@@ -8,12 +7,16 @@ repositorio publico, asi que un cuaderno de un capitulo todavia inedito se publi
 Adaptado de PhilChodrow/ml-notes-update (scripts/create-ipynb.py), sin la
 importacion de dotenv que alli sobra y no esta en requirements.txt.
 """
+import ast
 import importlib.util
+import io
 import json
 import re
 import subprocess
 import sys
+import tokenize
 from pathlib import Path
+from urllib.parse import quote
 
 # El fichero lleva guion, que no es un nombre de modulo valido, asi que se carga a mano.
 _spec = importlib.util.spec_from_file_location(
@@ -25,7 +28,6 @@ sin_caligrafica = _macros.sin_caligrafica
 
 RAIZ = Path(__file__).resolve().parent.parent
 SALIDA = RAIZ / "docs" / "live-notebooks"
-SALIDA.mkdir(parents=True, exist_ok=True)
 
 def publicados() -> set[str]:
     """Rutas de contenido.txt sin el `-` que marca lo no publicado."""
@@ -48,30 +50,12 @@ capitulos = [q for q in sorted((RAIZ / "capitulos").glob("*.qmd"))
 # la herramienta, asi que se genera igual.
 if "curso/colab.qmd" in DENTRO:
     capitulos.append(RAIZ / "curso" / "colab.qmd")
-if not capitulos:
-    print("ningun capitulo publicado en contenido.txt: no hay cuadernos que generar")
-fallos = []
-for qmd in capitulos:
-    print(f"-> {qmd.name}")
-    r = subprocess.run(
-        ["quarto", "render", str(qmd), "--profile", "notebooks",
-         "--to", "ipynb", "--output", f"{qmd.stem}.ipynb", "--no-execute"],
-        cwd=RAIZ,
-    )
-    if r.returncode:
-        fallos.append(qmd.name)
-
-# Quarto crea este redirect al renderizar un capítulo de un proyecto `book`, pero su
-# destino no existe dentro del directorio de cuadernos.
-(SALIDA / "index.html").unlink(missing_ok=True)
-
-
 def notacion_al_principio(ruta: Path) -> None:
     """Mete la celda de notación como primera celda, y sin duplicarla."""
     nb = json.loads(ruta.read_text(encoding="utf-8"))
     marca = "scripts/macros-mathjax.py"
     nb["cells"] = [c for c in nb["cells"] if marca not in "".join(c["source"])]
-    nb["cells"].insert(0, {"cell_type": "markdown", "metadata": {},
+    nb["cells"].insert(0, {"cell_type": "markdown", "id": "notacion-del-curso", "metadata": {},
                            "source": celda_notacion().split("\n")})
     # `source` es una lista de líneas y cada una lleva su salto, salvo la última.
     fuente = nb["cells"][0]["source"]
@@ -80,6 +64,36 @@ def notacion_al_principio(ruta: Path) -> None:
 
 
 SITIO = "https://cunef-aap.github.io/adecd-26-27"
+DATOS_PUBLICOS = "https://raw.githubusercontent.com/cunef-aap/adecd-26-27/main/datos"
+
+
+def datos_para_colab(codigo: str, carpeta: Path = RAIZ / "datos") -> tuple[str, int]:
+    """Adapta solo los literales de rutas de datos, no los apuntes ni sus renders.
+
+    Colab abre el cuaderno suelto, sin la carpeta ../datos del repositorio. Lee
+    los mismos archivos desde GitHub; la generación con --no-execute no los descarga.
+    """
+    if "../datos/" not in codigo:
+        return codigo, 0
+    tokens = list(tokenize.generate_tokens(io.StringIO(codigo).readline))
+    cambios = 0
+    for i, token in enumerate(tokens):
+        if token.type != tokenize.STRING:
+            continue
+        try:
+            valor = ast.literal_eval(token.string)
+        except (ValueError, SyntaxError):
+            continue
+        if not isinstance(valor, str) or not valor.startswith("../datos/"):
+            continue
+        nombre = valor.removeprefix("../datos/")
+        ruta = (carpeta / nombre).resolve()
+        if not ruta.is_relative_to(carpeta.resolve()) or not ruta.is_file():
+            raise ValueError(f"ruta de datos no válida para Colab: {valor}")
+        url = f"{DATOS_PUBLICOS}/{quote(ruta.relative_to(carpeta.resolve()).as_posix())}"
+        tokens[i] = token._replace(string=repr(url))
+        cambios += 1
+    return tokenize.untokenize(tokens), cambios
 
 # El articulo va en la tabla: la referencia sustituye a `?@etiqueta` dentro de la prosa,
 # y sin articulo queda coja («de definicion Riesgo»).
@@ -124,7 +138,7 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
 
     cuenta = {"marcas de revisión": 0, "referencias": 0, "enlaces internos": 0,
               "enlaces a documentos": 0, "comentarios internos": 0,
-              "letras caligráficas": 0}
+              "letras caligráficas": 0, "rutas de datos": 0}
 
     def sin_marca(m):
         cuenta["marcas de revisión"] += 1
@@ -165,6 +179,11 @@ def limpia_para_colab(ruta: Path, indice: dict[str, tuple[str, str]]) -> dict[st
 
     nb = json.loads(ruta.read_text(encoding="utf-8"))
     for c in nb["cells"]:
+        if c["cell_type"] == "code":
+            codigo, cambios = datos_para_colab("".join(c["source"]))
+            c["source"] = codigo.splitlines(keepends=True)
+            cuenta["rutas de datos"] += cambios
+            continue
         if c["cell_type"] not in ("markdown", "raw"):
             continue
         t = "".join(c["source"])
@@ -200,33 +219,51 @@ def macros_sin_expandir(ruta: Path) -> list[str]:
                    if m in nombres_definidos()})
 
 
-sucios = {}
-indice = indice_etiquetas()
-for qmd in capitulos:
-    ruta = SALIDA / f"{qmd.stem}.ipynb"
-    if not ruta.exists():
-        continue
-    limpiado = limpia_para_colab(ruta, indice)
-    if limpiado:
-        print(f"   {ruta.name}: " + ", ".join(f"{v} {k}" for k, v in limpiado.items()))
-    notacion_al_principio(ruta)
-    restos = macros_sin_expandir(ruta)
-    if restos:
-        sucios[ruta.name] = restos
+def main() -> int:
+    SALIDA.mkdir(parents=True, exist_ok=True)
+    if not capitulos:
+        print("ningun capitulo publicado en contenido.txt: no hay cuadernos que generar")
+    fallos = []
+    for qmd in capitulos:
+        print(f"-> {qmd.name}", flush=True)
+        r = subprocess.run(
+            ["quarto", "render", str(qmd), "--profile", "notebooks",
+             "--to", "ipynb", "--output", f"{qmd.stem}.ipynb", "--no-execute"],
+            cwd=RAIZ,
+        )
+        if r.returncode:
+            fallos.append(qmd.name)
 
-if sucios:
-    print("MACROS SIN EXPANDIR (se verían en crudo en Colab):", file=sys.stderr)
-    for nombre, restos in sucios.items():
-        print(f"  {nombre}: {', '.join(restos)}", file=sys.stderr)
-    sys.exit(1)
+    # Quarto crea un redirect cuyo destino no existe dentro de los cuadernos.
+    (SALIDA / "index.html").unlink(missing_ok=True)
+    if fallos:
+        print("FALLARON: " + ", ".join(fallos), file=sys.stderr)
+        return 1
 
-if fallos:
-    print("FALLARON: " + ", ".join(fallos), file=sys.stderr)
-    sys.exit(1)
+    sucios = {}
+    indice = indice_etiquetas()
+    for qmd in capitulos:
+        ruta = SALIDA / f"{qmd.stem}.ipynb"
+        limpiado = limpia_para_colab(ruta, indice)
+        if limpiado:
+            print(f"   {ruta.name}: " + ", ".join(f"{v} {k}" for k, v in limpiado.items()))
+        notacion_al_principio(ruta)
+        restos = macros_sin_expandir(ruta)
+        if restos:
+            sucios[ruta.name] = restos
+    if sucios:
+        print("MACROS SIN EXPANDIR (se verían en crudo en Colab):", file=sys.stderr)
+        for nombre, restos in sucios.items():
+            print(f"  {nombre}: {', '.join(restos)}", file=sys.stderr)
+        return 1
 
-# El directorio contiene solo artefactos generados: elimina cuadernos cuyos capítulos ya
-# no formen parte del curso.
-esperados = {f"{qmd.stem}.ipynb" for qmd in capitulos}
-for notebook in SALIDA.glob("*.ipynb"):
-    if notebook.name not in esperados:
-        notebook.unlink()
+    # Solo artefactos generados: retira cuadernos de capítulos que ya no se publican.
+    esperados = {f"{qmd.stem}.ipynb" for qmd in capitulos}
+    for notebook in SALIDA.glob("*.ipynb"):
+        if notebook.name not in esperados:
+            notebook.unlink()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

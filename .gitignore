@@ -39,6 +39,7 @@ banco/
 
 # El render completo del libro, solo para sacar los PDF.
 _completo/
+_quarto-completo.yml
 
 # El clon del sitio de la etapa de dos repositorios, ya no se usa.
 _sitio-publicado/

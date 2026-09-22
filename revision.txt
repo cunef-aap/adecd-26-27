@@ -1,0 +1,3 @@
+# Material adicional para revisar en local, sin publicarlo.
+# Se añade al contenido público, conservando el orden de contenido.txt.
+problemas/hoja-03-soluciones.qmd

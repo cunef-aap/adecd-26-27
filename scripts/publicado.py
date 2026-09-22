@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
-"""Escribe la lista de capitulos de _quarto.yml a partir de contenido.txt.
+"""Genera las listas independientes de los perfiles de Quarto.
 
-El sitio publico solo lleva el material con version definitiva; el resto se queda en el
-repositorio privado. Quien decide que entra es contenido.txt, y este script lo traduce al
-bloque de capitulos de _quarto.yml, entre dos centinelas.
+La base _quarto.yml no debe contener chapters ni appendices: esas listas se
+combinan con las del perfil y pueden introducir paginas que no le corresponden.
+El perfil revision es el predeterminado del editor y nunca escribe en docs/.
 
-Hace falta un script porque en un proyecto `book` de Quarto los perfiles NO pueden reducir
-el libro: `book.chapters` y `project.render` declarados en un `_quarto-PERFIL.yml` se
-ignoran, y Quarto renderiza todos los capitulos de _quarto.yml. Comprobado con Quarto
-1.10.18.
-
-    python scripts/publicado.py --sitio      # solo lo publicado -> para `make sitio`
-    python scripts/publicado.py --completo   # todo el libro     -> para `make pdfs`
+    python scripts/publicado.py --sitio      # contenido.txt -> perfil publica
+    python scripts/publicado.py --revision   # publico + revision.txt -> privado
+    python scripts/publicado.py --completo   # todo el libro -> privado
     python scripts/publicado.py --estado
-
-`make sitio` deja siempre _quarto.yml en modo --sitio, que es el estado normal del
-repositorio.
 """
 from __future__ import annotations
 
@@ -24,8 +17,8 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-CONFIG = RAIZ / "_quarto.yml"
 CONTENIDO = RAIZ / "contenido.txt"
+REVISION = RAIZ / "revision.txt"
 ABRE = "  # <<< generado por scripts/publicado.py a partir de contenido.txt"
 CIERRA = "  # >>> fin del bloque generado"
 
@@ -72,9 +65,41 @@ def bloque(capitulos: list, apendices: list, todo: bool) -> str:
     return "\n".join(lineas)
 
 
-def escribe(todo: bool) -> tuple[int, int]:
+def selecciona_revision(capitulos: list, apendices: list) -> tuple[list, list]:
+    extras = {
+        linea.strip() for linea in REVISION.read_text(encoding="utf-8").splitlines()
+        if linea.strip() and not linea.lstrip().startswith("#")
+    }
+    conocidos = {ruta for _, ruta, _ in capitulos + apendices}
+    desconocidos = extras - conocidos
+    if desconocidos:
+        raise SystemExit("revision.txt contiene rutas ajenas a contenido.txt: "
+                         + ", ".join(sorted(desconocidos)))
+    def incluye(filas):
+        return [(parte, ruta, publico or ruta in extras)
+                for parte, ruta, publico in filas]
+    return incluye(capitulos), incluye(apendices)
+
+
+def escribe(todo: bool = False, revision: bool = False) -> tuple[int, int]:
+    if todo and revision:
+        raise ValueError("elige revision o completo, no ambos")
+    perfil = "completo" if todo else "revision" if revision else "publica"
+    config = RAIZ / f"_quarto-{perfil}.yml"
     capitulos, apendices = lee_contenido()
-    texto = CONFIG.read_text(encoding="utf-8")
+    if revision:
+        capitulos, apendices = selecciona_revision(capitulos, apendices)
+    if config.exists():
+        texto = config.read_text(encoding="utf-8")
+    else:
+        salida = "_completo" if todo else "_completo/local" if revision else "docs"
+        texto = (
+            f"project:\n  output-dir: {salida}\n\n"
+            "format:\n  html:\n    filters:\n"
+            "      - scripts/strip-delims.lua\n"
+            "      - scripts/enlaces-publicados.lua\n\n"
+            f"book:\n{ABRE}\n{CIERRA}\n"
+        )
     nuevo = f"{ABRE}\n{bloque(capitulos, apendices, todo)}\n{CIERRA}"
     if ABRE in texto:
         patron = re.compile(re.escape(ABRE) + r".*?" + re.escape(CIERRA), re.S)
@@ -83,9 +108,9 @@ def escribe(todo: bool) -> tuple[int, int]:
         # primera vez: sustituye el bloque chapters/appendices escrito a mano
         patron = re.compile(r"^  chapters:\n.*?(?=^\S|\Z)", re.S | re.M)
         if not patron.search(texto):
-            raise SystemExit("no encuentro el bloque `chapters:` de _quarto.yml")
+            raise SystemExit(f"no encuentro el bloque chapters en {config.name}")
         texto = patron.sub(nuevo + "\n", texto, count=1)
-    CONFIG.write_text(texto, encoding="utf-8")
+    config.write_text(texto, encoding="utf-8")
     total = len(capitulos) + len(apendices)
     dentro = sum(1 for _, _, p in capitulos + apendices if todo or p)
     return dentro, total
@@ -95,10 +120,13 @@ if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "--estado"
     if arg == "--sitio":
         d, t = escribe(todo=False)
-        print(f"_quarto.yml en modo sitio: {d} de {t} documentos")
+        print(f"_quarto-publica.yml: {d} de {t} documentos, salida docs/")
+    elif arg == "--revision":
+        d, t = escribe(revision=True)
+        print(f"_quarto-revision.yml: {d} de {t} documentos, salida _completo/local/")
     elif arg == "--completo":
         d, t = escribe(todo=True)
-        print(f"_quarto.yml en modo completo: {d} de {t} documentos")
+        print(f"_quarto-completo.yml: {d} de {t} documentos, salida _completo/")
     elif arg == "--estado":
         caps, aps = lee_contenido()
         pub = [r for _, r, p in caps + aps if p]

@@ -1,21 +1,21 @@
 # Contenido del libro y qué parte de él se publica en la web.
 #
 # Una ruta por línea. Las que empiezan por `-` NO se publican: se quedan en el
-# repositorio privado hasta que tengan versión definitiva. Los corchetes abren una parte
+# borrador hasta que tengan versión definitiva. Los corchetes abren una parte
 # del libro, y una parte cuyos capítulos estén todos sin publicar desaparece del sitio.
 #
 # Al terminar un capítulo, quita el `-` de su línea y ejecuta `make publicar`.
 #
 # Este fichero es la única fuente de verdad: `scripts/publicado.py` genera con él la lista
-# de capítulos de _quarto.yml. Un perfil de Quarto no sirve para esto, porque en un
-# proyecto `book` las claves `book.chapters` y `project.render` del perfil se ignoran.
+# de capítulos de _quarto-publica.yml. La base _quarto.yml no contiene esa lista;
+# los perfiles de revisión y del libro completo tienen sus propias selecciones.
 
 index.qmd
 
 [Fundamentos del aprendizaje predictivo]
 capitulos/01-senal-ruido.qmd
 capitulos/02-aprender-minimizando.qmd
-- capitulos/03-modelos-lineales.qmd
+capitulos/03-modelos-lineales.qmd
 
 [Evaluación y datos]
 - capitulos/04-evaluacion.qmd
@@ -35,7 +35,7 @@ problemas/hoja-01.qmd
 - problemas/hoja-01-soluciones.qmd
 problemas/hoja-02.qmd
 - problemas/hoja-02-soluciones.qmd
-- problemas/hoja-03.qmd
+problemas/hoja-03.qmd
 - problemas/hoja-03-soluciones.qmd
 - problemas/hoja-04.qmd
 - problemas/hoja-04-soluciones.qmd

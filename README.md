@@ -23,8 +23,8 @@ make datos
 # 4. Construir
 make check       # los centinelas #--- están emparejados
 make sitio       # sitio -> docs/
-make notebooks   # cuadernos con huecos -> docs/live-notebooks/
-make preview     # servidor local
+make notebooks   # cuadernos completos -> docs/live-notebooks/
+make preview     # revisión privada -> _completo/local/
 make pdfs        # PDF de capitulos, hojas y anexos -> pdf/
 ```
 
@@ -40,12 +40,13 @@ make publicar    # render + cuadernos + commit + push
 
 ### Lo único que no va al repositorio
 
-`.gitignore` excluye dos cosas, y solo dos:
+`.gitignore` excluye el material privado:
 
 1. **`evaluacion/`**: banco de preguntas, parcial, simulacro y ejercicios tipo examen.
 2. **`problemas/hoja-*-soluciones.qmd`**: los solucionarios de las hojas.
+3. **`banco/`** y **`pdf/`**: ejercicios resueltos y documentos para el Campus Virtual.
 
-Las dos se reparten por el Campus Virtual, en PDF, nunca por la web. Viven en local y en
+Estos materiales se reparten por el Campus Virtual, en PDF, nunca por la web. Viven en local y en
 OneDrive; el historial de git está limpio de ellas. `scripts/comprueba-publicable.py` aborta
 la publicación si alguna llega al índice de git o a `docs/`, y `make publicar` lo ejecuta
 siempre.
@@ -60,13 +61,12 @@ rutas que empiezan por `-` no se renderizan.
 make publicado   # lista lo que se publica ahora mismo
 ```
 
-Al terminar un capítulo, quita el `-` de su línea y ejecuta `make publicar`. Dos piezas lo
+Al aceptar un capítulo para la web, quita el `-` de su línea y ejecuta `make publicar`. Dos piezas lo
 sostienen:
 
-- `scripts/publicado.py` genera con `contenido.txt` la lista de capítulos de `_quarto.yml`,
-  entre dos centinelas. Hace falta un script porque **en un proyecto `book` los perfiles no
-  pueden reducir el libro**: `book.chapters` y `project.render` declarados en un
-  `_quarto-PERFIL.yml` se ignoran y Quarto renderiza todo (comprobado con Quarto 1.10.18).
+- `scripts/publicado.py --sitio` genera con `contenido.txt` la lista de capítulos de
+  `_quarto-publica.yml`. La configuración base no contiene listas de capítulos: así cada
+  perfil tiene su propio contenido, sin arrastrar páginas de otro.
 - `scripts/enlaces-publicados.lua` desactiva los enlaces a páginas todavía sin renderizar.
   Sin él no solo quedarían 404: Quarto trata ese `.qmd` como un recurso y **copia el fuente**
   a `docs/`, que es la vía por la que se publicaría un solucionario.
@@ -74,11 +74,32 @@ sostienen:
 `scripts/crear-ipynb.py` genera cuaderno solo de los capítulos renderizados, porque
 `docs/live-notebooks/` se publica con el sitio.
 
+### Revisar en local desde el editor
+
+El perfil predeterminado es `revision`. Abre `capitulos/03-modelos-lineales.qmd` y usa
+el botón de vista previa o render del editor. También puedes ejecutar:
+
+```bash
+quarto preview capitulos/03-modelos-lineales.qmd
+```
+
+La salida queda en `_completo/local/`, fuera de Git y de la web. Incluye el material
+público y las rutas de `revision.txt`: ahora, las soluciones de la hoja 3.
+Si cambias esa lista, ejecuta `make revision`. Para previsualizar el libro local completo,
+usa `make preview`.
+
+`make sitio` sigue usando el perfil `publica` y escribe únicamente el contenido público
+en `docs/`. No desactiva el perfil predeterminado del editor. Añadir algo a `revision.txt`
+no lo publica; los solucionarios siguen siendo privados.
+
+Esta separación usa los [perfiles de proyecto de Quarto](https://quarto.org/docs/projects/profiles.html),
+sin listas de capítulos compartidas en `_quarto.yml`.
+
 ### Los PDF salen del libro completo
 
 `make pdfs` no imprime del sitio, sino de un render aparte con **todo** el libro, en
-`_completo/`, para poder subir al Campus Virtual capítulos y solucionarios que aún no están
-en la web.
+`_completo/`, mediante el perfil `completo`. Permite subir al Campus Virtual capítulos y
+solucionarios que aún no están en la web.
 
 ### Por qué los PDF salen de imprimir el HTML
 

@@ -1,16 +1,11 @@
-# Perfil publico. La lista se genera exclusivamente desde contenido.txt.
+# Perfil privado por defecto para el boton Render y quarto preview.
 project:
-  output-dir: docs
-  render:
-    - "*.qmd"
-    - "!problemas/*-soluciones.qmd"
+  output-dir: _completo/local
 
 format:
   html:
     filters:
       - scripts/strip-delims.lua
-      # Desactiva los enlaces a lo que todavia no se publica. Sin el, Quarto copia el .qmd
-      # fuente de esos capitulos a docs/ y los publicaria.
       - scripts/enlaces-publicados.lua
 
 book:
@@ -27,6 +22,7 @@ book:
         - problemas/hoja-01.qmd
         - problemas/hoja-02.qmd
         - problemas/hoja-03.qmd
+        - problemas/hoja-03-soluciones.qmd
   appendices:
     - curso/colab.qmd
     - curso/evaluacion.qmd

@@ -1,6 +1,7 @@
 ---
 title: 'Modelos lineales con muchas variables'
 subtitle: 'Matrices, gradientes y una implementación reutilizable'
+cuaderno: 03-modelos-lineales.ipynb
 ---
 
 ::: {.content-hidden}
@@ -14,17 +15,19 @@ import style
 ```
 :::
 
+{{< include ../assets/includes/_colab-link.qmd >}}
+
 ## De una recta a muchas variables predictoras
 
 
-El capítulo anterior terminó con un algoritmo de aprendizaje completo para una recta: un
-modelo probabilístico produce una pérdida, la pérdida produce un riesgo empírico y el
-gradiente de ese riesgo permite actualizar los parámetros para llegar a los valores que
-minimizan el riesgo. Usando este procedimiento, aprendimos a ajustar dos parámetros
-$\coefzero$ y $w_1$. No obstante, los modelos modernos cuentan con muchos parámetros a
-ajustar (algunos LLMs tienen hasta billones). Necesitamos pues aprender a trabajar con
-modelos con muchas variables predictoras (y por ende muchos parámetros). Empezaremos con el
-caso sencillo de un modelo lineal con varias variables predictoras.
+En el capítulo anterior aprendimos a ajustar una recta con una sola variable predictora.
+Pero para predecir el precio de una vivienda, por ejemplo, podemos disponer de su superficie,
+su antigüedad y su número de habitaciones. Queremos usar esa información conjuntamente.
+
+El criterio no cambia: seguiremos minimizando el riesgo cuadrático empírico. Lo que cambia
+es la forma de escribir las predicciones y el gradiente. Las matrices permitirán hacer los
+mismos cálculos con cualquier número de variables predictoras.
+
 
 ::: {#fig-plano-residuos}
 
@@ -77,9 +80,10 @@ ax.view_init(elev=16, azim=-62)
 plt.tight_layout()
 ```
 
-Un modelo lineal con dos variables predictoras. La señal ya no es una recta, sino un plano,
-y los residuos siguen siendo la distancia vertical de cada observación a la señal. Con tres
-variables predictoras o más no hay dibujo posible.
+Un modelo lineal con dos variables predictoras. El plano es la señal generadora y los
+segmentos grises muestran el ruido simulado. Con tres predictoras o más no podemos
+representar conjuntamente todas las entradas y la respuesta en una figura
+tridimensional.
 :::
 
 ### El modelo lineal-gaussiano múltiple
@@ -90,8 +94,7 @@ predictoras $x_1, x_2, \ldots, x_{\nfeat}$ es la siguiente.
 ::: {#def-lineal-gaussiano-multiple}
 ## Modelo lineal-gaussiano múltiple
 
-Dadas $\nfeat$ variables predictoras, el **modelo lineal-gaussiano múltiple** supone que
-cada respuesta se genera de forma independiente según
+Dadas $\nfeat$ variables predictoras, el **modelo lineal-gaussiano múltiple** supone que las respuestas son independientes y
 
 $$
 \yi\given\xv_i
@@ -102,7 +105,8 @@ $$
 \qquad i=1,\ldots,\nobs,
 $$ {#eq-lineal-gaussiano-multiple}
 
-donde $x_{ij}$ es el valor de la variable predictora $j$ en la observación $i$.
+donde $x_{ij}$ es el valor de la variable predictora $j$ en la observación $i$
+y $\noise>0$.
 :::
 
 Para escribir el modelo de forma más compacta introducimos la siguiente notación.
@@ -146,26 +150,39 @@ $\nfeat+1$ parámetros.
 Con $\nfeat=1$ el convenio devuelve la recta del capítulo anterior:
 $\xv_i\T\coef=\coefzero+w_1x_i$, que es @eq-senal-lineal-1d.
 
+Por ejemplo, con dos predictoras, $\xv_i=(1,2,3)\T$ y $\coef=(4,1,-1)\T$,
+la predicción es $4+1\cdot2-1\cdot3=3$. El primer uno de $\xv_i$ permite incluir el
+intercepto en la misma multiplicación.
+
 ### Log-verosimilitud y error cuadrático medio
 
 Habiendo definido el modelo, para aprender sus parámetros hace falta un criterio. Este se
 obtiene igual que en el capítulo anterior: se escribe la log-verosimilitud del modelo y se
 aisla la parte de ella que depende de $\coef$.
 
-::: {#exr-loglik-mse}
-Repite para @eq-lineal-gaussiano-multiple el razonamiento
-de @thm-loglik-mse y @cor-mle-minimos-cuadrados.
+El riesgo que vamos a minimizar es
 
-a. Escribe la log-verosimilitud $\loglik(\coef,\noise)$ de la muestra, usando que las
-   observaciones son independientes.
-b. Separa los términos que no dependen de $\coef$ y comprueba que el resto es
-   $-\frac{\nobs}{2\noise^2}\Riskh(\coef)$, donde
+$$
+\Riskh(\coef)
+=\frac{1}{\nobs}\sum_{i=1}^{\nobs}\bigl(\yi-\xv_i\T\coef\bigr)^2.
+$$ {#eq-riesgo-suma}
+
+::: {#exr-loglik-mse}
+## De la log-verosimilitud al riesgo cuadrático
+
+Fijados los vectores de predictoras $\xv_1,\ldots,\xv_{\nobs}$, las respuestas
+son independientes y $\yi\given\xv_i\sim\Normal(\xv_i\T\coef,\noise^2)$,
+con $\noise>0$ conocido.
+
+a. Escribe la log-verosimilitud de la muestra, partiendo de la densidad normal.
+b. Comprueba que
    $$
-   \Riskh(\coef)
-   =\frac{1}{\nobs}\sum_{i=1}^{\nobs}\bigl(\yi-\xv_i\T\coef\bigr)^2 .
-   $$ {#eq-riesgo-suma}
-c. Deduce que, para $\noise>0$ fijo, maximizar la log-verosimilitud equivale a
-   minimizar @eq-riesgo-suma.
+   \loglik(\coef,\noise)=C-\frac{\nobs}{2\noise^2}\Riskh(\coef),
+   \qquad C=-\nobs\log(\noise\sqrt{2\pi}),
+   $$
+   donde $\Riskh$ es el riesgo de @eq-riesgo-suma. ¿Depende $C$ de $\coef$?
+c. Deduce por qué maximizar la log-verosimilitud equivale a minimizar $\Riskh$.
+   Indica dónde se usa que $\noise$ es positivo y fijo.
 :::
 
 Nuestro objetivo será pues buscar:
@@ -341,10 +358,11 @@ $$
 \coefhat\in\argmin_{\coef}\norm{\X\coef-\yv}^2 .
 $$ {#eq-problema-optimizacion}
 
-Esta es la forma en la que el problema de mínimos cuadrados aparece en la bibliografía, y la
-que usaremos de aquí en adelante.
+Omitir el factor $1/\nobs$ no cambia el ajuste, pero sí el valor del criterio y de su
+gradiente. Para calcular riesgos y dar pasos de descenso seguiremos usando la media,
+como en @eq-riesgo-matricial.
 
-Para ilustrar la resolución de este problema,en lo que sigue; trabajaremos con datos
+Para ilustrar la resolución de este problema, trabajaremos con datos
 simulados de $\nfeat=5$ variables predictoras, donde conocemos los coeficientes que los han
 generado.
 
@@ -400,6 +418,7 @@ que guarda los parámetros y sabe predecir, y una función suelta para la pérdi
 escribe el producto matriz por vector con el operador `@`, de modo que @eq-predicciones se
 traduce literalmente.
 
+::: {.codigo-clave}
 ```{python}
 #---
 class LinearRegression:                 # <1>
@@ -416,10 +435,11 @@ def mse(y_pred, y):
 ```
 
 1. La clase y el método se llaman igual que en el capítulo anterior, y los nombres están
-   elegidos para coincidir con los de las bibliotecas que usaremos después. Volveremos sobre
+   elegidos para coincidir con los de las librerías que usaremos después. Volveremos sobre
    ello al final del capítulo.
 2. Es la única línea que cambia respecto al capítulo anterior, donde ponía
    `self.w[0] + self.w[1] * x`. Con $\nfeat=1$ y la columna de unos, las dos hacen lo mismo.
+:::
 
 ::: {.trampa}
 **Las formas tienen que casar.** En `torch`, un vector de $\nobs$ números y una matriz de
@@ -448,7 +468,11 @@ comprobar con `.shape` la forma de cada objeto antes de operar.
 
 Tenemos el criterio escrito como una función de $\nfeat+1$ variables, en la forma compacta
 de @eq-riesgo-matricial. Para minimizarlo con el algoritmo del capítulo anterior hace falta
-su gradiente, y lo vamos a obtener directamente en forma vectorial.
+su gradiente. Lo obtendremos desarrollando la expresión matricial del riesgo. Después,
+en @exr-gradiente-componentes, lo calcularemos derivando respecto de un parámetro cada
+vez, como hicimos para la recta.
+
+:::: {.callout-note title="Identidades para calcular el gradiente"}
 
 La derivación necesita dos identidades. Las dos se demuestran en el [repaso de
 álgebra](../curso/algebra.qmd) así que aquí basta con enunciarlas. La primera dice cómo se
@@ -468,6 +492,7 @@ $$ {#eq-grad-cuadratica}
 que es @lem-grad-cuadratica. Usaremos además que el gradiente es lineal, es decir, que el
 gradiente de una suma es la suma de los gradientes, lo cual se sigue de que la derivada
 parcial en cada coordenada lo es.
+::::
 
 
 ::: {#thm-gradiente-vectorial}
@@ -481,6 +506,7 @@ $$
 =-\frac{2}{\nobs}\Xt\resid(\coef).
 $$ {#eq-gradiente-matricial}
 :::
+
 
 ::: {.proof}
 Partimos de @eq-riesgo-matricial y desarrollamos la norma con @eq-norma, es decir, como el
@@ -513,36 +539,48 @@ $$
 $$
 :::
 
-El mismo gradiente se puede obtener derivando parcial a parcial, sin notación matricial, y
-conviene hacerlo una vez.
+Comprueba las dimensiones: $\Xt$ tiene $\nfeat+1$ filas y $\nobs$ columnas; el vector
+de residuos tiene $\nobs$ componentes. Su producto devuelve $\nfeat+1$ números,
+uno por parámetro. En general, si falta la traspuesta, ni siquiera coinciden las dimensiones.
 
 
 ::: {#exr-gradiente-componentes}
-Obtén el gradiente componente a componente y comprueba que coincide
-con @eq-gradiente-matricial.
+## Obtener el gradiente por componentes
 
-a. Escribe $\Riskh$ sin notación matricial, desarrollando el producto escalar dentro de cada
-   sumando.
-b. Deriva respecto de $w_k$, según @def-parcial, y comprueba que
+Escribimos el riesgo sin notación matricial:
+
+$$
+\Riskh(\coef)=\frac{1}{\nobs}\sum_{i=1}^{\nobs}
+\left(\yi-\sum_{j=0}^{\nfeat}\coefj x_{ij}\right)^2.
+$$
+
+a. Fija una coordenada $k$ y calcula
+   $\pd{}{w_k}\left(\yi-\sum_{j=0}^{\nfeat}\coefj x_{ij}\right)$.
+   Recuerda que los datos y los demás parámetros se tratan como constantes.
+b. Aplica la regla de la cadena al cuadrado y deriva la suma. Comprueba que
    $$
    \pd{\Riskh}{w_k}(\coef)
-   =\frac{2}{\nobs}\sum_{i=1}^{\nobs}x_{ik}\bigl(\xv_i\T\coef-\yi\bigr).
-   $$ {#eq-gradiente-componentes}
-c. Comprueba que la componente $k$ de @eq-gradiente-matricial es @eq-gradiente-componentes.
+   =-\frac{2}{\nobs}\sum_{i=1}^{\nobs}x_{ik}\residi(\coef).
+   $$
+c. La componente $k$ de $\Xt\resid(\coef)$ es
+   $\sum_i x_{ik}\residi(\coef)$. Utiliza esta igualdad para reunir las parciales
+   en un vector y obtener @eq-gradiente-matricial.
 :::
 
 
 ::: {#exr-recupera-gradiente-recta}
-Comprueba que el capítulo anterior es un caso particular de este. Sea $\nfeat=1$, de modo
-que $\X=(\onesv\;\;\mathbf a)$ con $\mathbf a=(x_1,\ldots,x_{\nobs})\T$ la columna del único
-predictor.
+## Recuperar el gradiente de la recta
 
-a. Escribe las dos componentes de $\Xt\resid(\coef)$ en forma de suma.
-b. Deduce que @eq-gradiente-matricial es exactamente @eq-gradiente-riesgo-1d.
+Sea $\nfeat=1$, de modo que $\X=(\onesv\;\;\mathbf a)$ con
+$\mathbf a=(x_1,\ldots,x_{\nobs})\T$ la columna del único predictor.
+
+a. **Escribe** las dos componentes de $\Xt\resid(\coef)$ en forma de suma.
+b. **Deduce** que @eq-gradiente-matricial es exactamente @eq-gradiente-riesgo-1d.
 :::
 
 La traducción de @eq-gradiente-matricial a código es una línea.
 
+::: {.codigo-clave}
 ```{python}
 #---
 def grad_mse(modelo, X, y):
@@ -550,31 +588,21 @@ def grad_mse(modelo, X, y):
     return -2 * (X.T @ residuos) / y.shape[0]
 #---
 ```
+:::
 
-Recordemos, en cualquier caso, que no hace falta derivar nada a mano: la diferenciación
-automática de @sec-autodiff calcula el gradiente respecto de todos los parámetros a la vez,
-independientemente de cuántos haya.
 
 ```{python}
-#---
+#| code-fold: true
 modelo_auto = LinearRegression(n_parametros=p + 1)
 modelo_auto.w = torch.zeros(p + 1, requires_grad=True)
 
 mse(modelo_auto.predict(X), y).backward()
 
 print("gradiente automático:", modelo_auto.w.grad)
-#---
+print("coinciden:", torch.allclose(
+    grad_mse(modelo_auto, X, y), modelo_auto.w.grad
+))
 ```
-
-::: {#exr-autodiff-coincide}
-Comprueba que las dos formas de obtener el gradiente dan lo mismo.
-
-a. Evalúa `grad_mse` en unos parámetros cualesquiera y compáralo con el `.grad` que
-   deja `backward()` en los mismos parámetros, usando `torch.allclose`.
-b. Repite la comprobación en otros dos puntos del espacio de parámetros.
-c. Explica por qué la comprobación no serviría de nada si `grad_mse` y la pérdida
-   que derivamos con `backward()` no fuesen la misma función.
-:::
 
 
 ## Ajustar un modelo lineal
@@ -585,11 +613,10 @@ la actualización $\coef^{(t+1)}=\coef^{(t)}-\lr\grad\Riskh(\coef^{(t)})$ no dep
 número de componentes que tiene $\coef$.
 
 
-Nos faltan las dos piezas que completan la interfaz del capítulo anterior: el optimizador,
-que guarda la tasa y sabe dar un paso, y el bucle, que vive fuera de las clases. Las dos se
-copian del capítulo anterior sin tocar una letra, porque ninguna de sus firmas menciona
-cuántos parámetros hay.
+Reutilizamos el optimizador y el bucle del capítulo anterior. El optimizador llama a
+la nueva función `grad_mse`; `train` sigue guardando los parámetros y los riesgos.
 
+::: {.codigo-clave}
 ```{python}
 #---
 class GradientDescentOptimizer:
@@ -603,54 +630,61 @@ class GradientDescentOptimizer:
 
 
 def train(modelo, optimizador, X, y, n_iter):
-    historia = [mse(modelo.predict(X), y).item()]
+    historia_w = [modelo.w.detach().clone()]
+    historia_riesgo = [mse(modelo.predict(X), y).item()]
+
     for _ in range(n_iter):
         optimizador.step(X, y)
-        historia.append(mse(modelo.predict(X), y).item())
-    return torch.tensor(historia)
+        historia_w.append(modelo.w.detach().clone())
+        historia_riesgo.append(mse(modelo.predict(X), y).item())
+
+    return torch.stack(historia_w), torch.tensor(historia_riesgo)
 #---
 ```
+:::
 
-Con eso, ajustar el modelo son tres líneas.
+Con eso podemos ajustar el modelo.
 
 ```{python}
+#| code-fold: true
 modelo = LinearRegression(n_parametros=p + 1)
-historia_riesgo = train(modelo, GradientDescentOptimizer(modelo, lr=0.1),
-                        X, y, n_iter=150)
+historia_w, historia_riesgo = train(
+    modelo, GradientDescentOptimizer(modelo, lr=0.1), X, y, n_iter=150
+)
 
 print("riesgo inicial:", round(historia_riesgo[0].item(), 4))
 print("riesgo final:  ", round(historia_riesgo[-1].item(), 6))
 ```
 
 Con dos parámetros pudimos además resolver a mano el sistema $\grad\Riskh(\coef)=\zerov$.
-Con $\nfeat+1$ parámetros ese sistema sigue siendo lineal, y resoluble de forma analítica.
+Con $\nfeat+1$ parámetros ese sistema sigue siendo lineal y puede resolverse de forma analítica. Al anular el gradiente obtenemos las **ecuaciones normales**:
+
+$$
+\Xt\X\coef^\star=\Xt\yv.
+$$ {#eq-ecuaciones-normales}
+
 
 ::: {#exr-ecuaciones-normales}
-Iguala el gradiente a cero y obtén el sistema que cumple cualquier punto crítico.
+## Obtener las ecuaciones normales
 
-a. Parte de @eq-gradiente-matricial, impón $\grad\Riskh(\coef^\star)=\zerov$ y comprueba que
-   la condición equivale a
-   $$
-   \Xt\X\coef^\star=\Xt\yv .
-   $$ {#eq-ecuaciones-normales}
-   Este sistema se conoce como el de las **ecuaciones normales**.
-b. Di cuántas ecuaciones y cuántas incógnitas tiene, y comprueba que con $\nfeat=1$ es el
-   sistema de dos ecuaciones de @exr-ecuaciones-normales-1d.
-c. Recordando @thm-condicion-primer-orden, di qué relación hay entre las soluciones
-   de @eq-ecuaciones-normales y los mínimos de $\Riskh$.
+a. Parte de @eq-gradiente-matricial y demuestra que
+   $\grad\Riskh(\coef^\star)=\zerov$ equivale a
+   $\Xt\X\coef^\star=\Xt\yv$.
+b. Di cuántas ecuaciones y cuántas incógnitas tiene este sistema. Para una sola
+   variable predictora, escribe sus dos ecuaciones en forma de sumas.
+c. Por la condición de primer orden, ¿debe cumplir este sistema cualquier mínimo?
+   ¿Basta esa condición general, por sí sola, para afirmar el recíproco?
 :::
 
-Resolver @eq-ecuaciones-normales da el ajuste sin iterar, y sirve de referencia para
-comprobar el descenso.
+Resolver estas ecuaciones normales permite obtener el ajuste de forma analítica. El siguiente código compara la solución anaítica con la obtenida con descenso por el gradiente.
 
 ```{python}
-#---
+#| code-fold: true
 w_exacto = torch.linalg.solve(X.T @ X, X.T @ y)
 
 print("descenso:", modelo.w)
 print("exacto:  ", w_exacto)
 print("coinciden:", torch.allclose(modelo.w, w_exacto, atol=1e-6))
-#---
 ```
 
 ::: {#fig-descenso-riesgo}
@@ -688,238 +722,247 @@ cero, se estima cerca de cero pero no en cero.
 :::
 
 Cabe entonces preguntarse para qué sirve el descenso de gradiente, si el sistema se puede
-resolver. Aquí se puede porque la señal es lineal en los parámetros, y eso hace que el
-gradiente también lo sea. En cuanto la señal deje de serlo, igualar el gradiente a cero
-producirá un sistema no lineal que no sabremos resolver, mientras que el descenso seguirá
-funcionando sin cambios. Por eso el descenso es el método general del curso, y resolver el
-sistema una particularidad de este capítulo.
+resolver. Aquí se puede porque la señal es lineal **en los parámetros**, y eso hace que el
+gradiente también lo sea. Para otras señales, anular el gradiente puede producir un
+sistema no lineal imposible de resolver de forma analítica. La actualización del descenso sigue siendo
+aplicable.
 
 
 ## Existencia, unicidad y colinealidad
 
 
-Queda una pregunta pendiente: si el sistema @eq-ecuaciones-normales tiene solución, y si es
-única. La respuesta depende de una sola propiedad de la matriz de diseño, su rango, que es
-el número de columnas linealmente independientes que tiene, en el sentido de @def-nucleo.
+¿Tienen siempre solución las ecuaciones normales? ¿Puede haber más de un ajuste?
+Respondemos a estas cuestiones con el siguiente teorema. Recuerda que el rango de $\X$ es el
+número máximo de columnas linealmente independientes.
 
 ::: {#thm-existencia-unicidad}
 ## Existencia y unicidad del ajuste
 
 El sistema @eq-ecuaciones-normales tiene siempre al menos una solución, y toda solución es
-un mínimo global de $\Riskh$. Si además $\rank\X=\nfeat+1$, la solución es única.
+un mínimo global de $\Riskh$. La solución es única si y solo si
+$\rank\X=\nfeat+1$.
 
 En cualquier caso, y aunque $\coefhat$ no sea única, el vector de predicciones $\X\coefhat$
 es el mismo para todas las soluciones.
 :::
 
 
-::: {.cajanegra}
-**La demostración queda fuera de alcance.** La de la unicidad es corta y se puede seguir con
-lo que ya tenemos; la de la existencia necesita proyecciones ortogonales sobre subespacios,
-un aparato que no se usa en ningún otro punto del curso. Lo que hay que retener es la
-condición: el rango tiene que ser completo por columnas, y para eso hace falta como mínimo
-$\nobs\geq\nfeat+1$, porque una matriz no puede tener más columnas independientes que filas.
+:::: {.callout-note collapse="true" title="Demostración no exigible"}
+::: {.proof}
+La existencia general se admite sin prueba: su justificación mediante proyecciones
+queda fuera del alcance del curso. Demostramos las afirmaciones sobre el mínimo y
+su unicidad a partir de una solución de las ecuaciones normales.
+
+Sea $\coef^\star$ una solución de las ecuaciones normales y sea $\mathbf d$ cualquier
+desplazamiento. Al desarrollar el cuadrado,
+
+$$
+\begin{aligned}
+\Riskh(\coef^\star+\mathbf d)
+&=\frac1{\nobs}\norm{\resid(\coef^\star)-\X\mathbf d}^2\\
+&=\Riskh(\coef^\star)
+-\frac2{\nobs}\mathbf d\T\Xt\resid(\coef^\star)
++\frac1{\nobs}\norm{\X\mathbf d}^2\\
+&=\Riskh(\coef^\star)+\frac1{\nobs}\norm{\X\mathbf d}^2.
+\end{aligned}
+$$
+
+El término cruzado es cero porque $\Xt\resid(\coef^\star)=\zerov$. El último
+término es no negativo, así que $\coef^\star$ es un mínimo global.
+
+Otro vector $\coef^\star+\mathbf d$ alcanza ese mismo mínimo exactamente cuando
+$\X\mathbf d=\zerov$. Con columnas independientes esto solo ocurre si
+$\mathbf d=\zerov$, y los coeficientes son únicos. Con columnas dependientes existe
+un $\mathbf d$ no nulo que cumple esa igualdad, y todos los vectores
+$\coef^\star+t\mathbf d$ son mínimos, para cualquier $t\in\Real$.
+En ambos casos las predicciones sobre la muestra son las mismas, pues
+$\X(\coef^\star+\mathbf d)=\X\coef^\star$.
+:::
+::::
+
+El fenómeno de **colinealidad exacta** se da cuando una columna de $\X$ es combinación lineal de
+las demás. El caso más sencillo es incluir dos veces una misma variable: si
+$x_{i2}=x_{i1}$ para todas las observaciones, entonces
+
+$$
+w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
+$$
+
+Los datos permiten ajustar la suma $w_1+w_2$, pero no repartirla entre los dos
+coeficientes. Por ejemplo, $(w_1,w_2)=(2,0)$ y $(0,2)$ producen las mismas predicciones.
+
+Esto también ocurre con datos reales, por ejemplo al incluir una altura en centímetros
+y la misma altura en metros. Si las columnas son casi dependientes, aunque el rango
+sea completo, los coeficientes pueden ser sensibles a pequeños cambios en los datos.
+
+La unicidad de $\X\coefhat$ se refiere a las **filas observadas**. Si dos columnas
+coinciden en la muestra pero no en una entrada nueva, distintos ajustes pueden predecir
+cosas distintas para esa entrada. Lo comprobaremos en @exr-columna-redundante.
+
+::: {#exr-mas-variables-que-observaciones}
+## Más parámetros no garantizan ajuste exacto
+
+Considera dos observaciones y tres parámetros:
+
+$$
+\X=\begin{pmatrix}1&1&1\\1&1&1\end{pmatrix},
+\qquad
+\yv=\begin{pmatrix}0\\1\end{pmatrix}.
+$$
+
+a. Escribe $\X\coef$ en función de $s=w_0+w_1+w_2$. Explica por qué ninguna
+   elección de los parámetros puede dar riesgo cero.
+b. Comprueba que
+   $$
+   \Riskh(\coef)=\frac{s^2+(1-s)^2}{2}
+   =\left(s-\frac12\right)^2+\frac14.
+   $$
+   Deduce el riesgo mínimo y da dos vectores de parámetros distintos que lo alcancen.
+c. ¿Garantiza tener más parámetros que observaciones un riesgo de entrenamiento nulo?
+   Si en otra muestra se consiguiera riesgo cero, ¿garantizaría eso buenas predicciones
+   sobre datos nuevos?
 :::
 
 
-La última frase del teorema es la que tiene consecuencias prácticas. La
-forma más directa de que el rango no sea completo es que una variable predictora aparezca
-dos veces, que es lo que ocurre cuando la misma medida entra en dos variables.
+::: {#exr-columna-redundante}
+## Una columna repetida
 
-```{python}
-#---
-X_colineal = torch.cat([X, X[:, 1:2]], dim=1)          # <1>
+Considera
 
-print("columnas:", X_colineal.shape[1])
-print("rango:   ", torch.linalg.matrix_rank(X_colineal).item())
-#---
-```
+$$
+\X=\begin{pmatrix}1&0&0\\1&1&1\\1&2&2\end{pmatrix},
+\qquad
+\yv=\begin{pmatrix}1\\3\\5\end{pmatrix}.
+$$
 
-1. Se añade una copia de la columna de $x_1$ al final, así que la matriz tiene siete
-   columnas y dos de ellas son iguales.
-
-Siete columnas y rango seis. Ajustemos dos veces, desde puntos de partida distintos, y
-comparemos.
-
-```{python}
-#---
-def ajusta_desde(X_ajuste, w_inicial, n_iter=4000):
-    modelo_local = LinearRegression(n_parametros=X_ajuste.shape[1])
-    modelo_local.w = w_inicial.clone()
-    train(modelo_local, GradientDescentOptimizer(modelo_local, lr=0.05),
-          X_ajuste, y, n_iter)
-    return modelo_local
-
-
-modelo_a = ajusta_desde(X_colineal, torch.zeros(7))
-modelo_b = ajusta_desde(
-    X_colineal, torch.tensor([0.0, 10.0, 0.0, 0.0, 0.0, 0.0, -10.0])
-)
-
-print(f"a: w1 = {modelo_a.w[1]:.4f}, w6 = {modelo_a.w[6]:.4f}, "
-      f"suma = {modelo_a.w[1] + modelo_a.w[6]:.4f}")
-print(f"b: w1 = {modelo_b.w[1]:.4f}, w6 = {modelo_b.w[6]:.4f}, "
-      f"suma = {modelo_b.w[1] + modelo_b.w[6]:.4f}")
-print("riesgos:", mse(modelo_a.predict(X_colineal), y).item(),
-      mse(modelo_b.predict(X_colineal), y).item())
-print("mayor diferencia entre predicciones:",
-      (modelo_a.predict(X_colineal)
-       - modelo_b.predict(X_colineal)).abs().max().item())
-#---
-```
-
-Los dos ajustes dan coeficientes muy distintos para $x_1$ y para su copia, y sin embargo el
-mismo riesgo y las mismas predicciones, tal como anuncia @thm-existencia-unicidad. Lo que
-coincide es la suma de los dos coeficientes, y coincide con el coeficiente único que $x_1$
-recibía cuando la copia no estaba.
-
-La colinealidad exacta es un caso de laboratorio. Con datos reales lo que ocurre es que dos
-columnas son casi iguales, y entonces el ajuste es único pero inestable: hay coeficientes
-muy distintos con un riesgo casi idéntico, y basta cambiar unas pocas observaciones para
-pasar de unos a otros.
-
-
-
-::: {#exr-mas-variables-que-observaciones}
-Cuando hay más variables predictoras que observaciones.
-
-a. Explica por qué con $\nobs<\nfeat+1$ el rango de $\X$ no puede ser completo, y qué dice
-   entonces @thm-existencia-unicidad sobre el ajuste.
-b. Construye con `torch` una matriz de diseño con $\nobs=5$ y $\nfeat=8$, ajusta con
-   `torch.linalg.lstsq` y comprueba que el riesgo del ajuste es cero. Explica por qué eso no
-   es una buena noticia, citando el capítulo 1.
+a. Calcula las predicciones y el riesgo para $\coef_a=(1,2,0)\T$ y
+   $\coef_b=(1,0,2)\T$. ¿Son ambos mínimos globales?
+b. Comprueba que $\mathbf d=(0,1,-1)\T$ cumple $\X\mathbf d=\zerov$.
+   Explica por qué $\coef_a+t\mathbf d$ produce las mismas predicciones para todo
+   $t\in\Real$ y calcula el rango de $\X$.
+c. Para una observación nueva con $x_1=1$ y $x_2=0$, compara las predicciones de
+   $\coef_a$ y $\coef_b$. Explica por qué no contradice la unicidad del vector
+   $\X\coefhat$ de @thm-existencia-unicidad.
 :::
 
 
 ## Una interfaz común para entrenar modelos
 
-Reunimos aquí todas las clases y funciones que hacen falta para entrenar el modelo. Son las
-del capítulo anterior con dos cambios: `predict` multiplica por la matriz de diseño, y el
-optimizador obtiene el gradiente por diferenciación automática, sin usar la fórmula
-de @eq-gradiente-matricial.
+Para ajustar modelos lineales con varias variables, organizamos el código como en el capítulo anterior: `predict` produce
+predicciones, `mse` mide el error, el optimizador actualiza los parámetros y `train`
+repite esos pasos. Para pasar a varias variables hemos cambiado la predicción y la
+fórmula de `grad_mse`, no el proceso de entrenamiento.
 
+Con diferenciación automática, cambiamos cómo se obtiene el gradiente, pero no el
+bucle de entrenamiento. Recuperamos las tres operaciones del capítulo 2:
+calcular las derivadas, actualizar los parámetros sin registrar esa operación y
+vaciar los gradientes antes del siguiente paso.
+
+::: {.codigo-clave}
 ```{python}
 #---
-class LinearRegression:
-    def __init__(self, n_parametros):
-        self.w = torch.zeros(n_parametros)
-
-    def predict(self, X):
-        return X @ self.w
-
-
-def mse(y_pred, y):
-    return ((y_pred - y) ** 2).mean()
-
-
-class AutogradOptimizer:
-    def __init__(self, modelo, lr):
-        self.modelo = modelo
-        self.lr = lr
-        self.modelo.w.requires_grad_()                  # <1>
-
+class AutogradOptimizer(GradientDescentOptimizer):
     def step(self, X, y):
-        mse(self.modelo.predict(X), y).backward()       # <2>
+        mse(self.modelo.predict(X), y).backward()    # <1>
 
-        with torch.no_grad():                           # <3>
+        with torch.no_grad():                     # <2>
             self.modelo.w -= self.lr * self.modelo.w.grad
 
-        self.modelo.w.grad.zero_()                      # <4>
+        self.modelo.w.grad.zero_()                 # <3>
 
 
-def train(modelo, optimizador, X, y, n_iter):
-    historia = [mse(modelo.predict(X), y).item()]
-    for _ in range(n_iter):
-        optimizador.step(X, y)
-        historia.append(mse(modelo.predict(X), y).item())
-    return torch.tensor(historia)
+modelo_auto = LinearRegression(n_parametros=p + 1)
+modelo_auto.w = torch.zeros(p + 1, requires_grad=True)
+_, historia_auto = train(
+    modelo_auto, AutogradOptimizer(modelo_auto, lr=0.1), X, y, n_iter=150
+)
 #---
 ```
 
-1. El optimizador marca los parámetros respecto a los que se va a derivar. Así el modelo
-   queda idéntico al de antes y no tiene que saber cómo se obtiene el gradiente.
-2. La pasada hacia atrás deja las derivadas parciales en `self.modelo.w.grad`. La fórmula
-   analítica no aparece.
-3. La actualización no debe formar parte del cálculo que se está derivando.
-4. `torch` acumula gradientes, así que hay que ponerlos a cero antes de la iteración
-   siguiente.
-
-Comprobemos que el ajuste es el mismo.
+1. `backward()` calcula el gradiente del riesgo y lo acumula en `modelo.w.grad`.
+   Por eso los parámetros se crean con `requires_grad=True`.
+2. La actualización cambia los parámetros, pero no forma parte del cálculo que
+   queremos derivar.
+3. La siguiente iteración debe usar su propio gradiente, no la suma de los anteriores.
+:::
 
 ```{python}
-modelo_auto = LinearRegression(n_parametros=p + 1)
-train(modelo_auto, AutogradOptimizer(modelo_auto, lr=0.1), X, y, n_iter=150)
-
+#| code-fold: true
 print("coincide con la solución exacta:",
       torch.allclose(modelo_auto.w.detach(), w_exacto, atol=1e-6))
 ```
 
-PyTorch trae además sus propios optimizadores. El descenso de gradiente es
-`torch.optim.SGD`, y encaja en esta interfaz sin más que envolverlo en una clase con el
-mismo método `step`.
-
-```{python}
-#---
-class SGDOptimizer:
-    def __init__(self, modelo, lr):
-        self.modelo = modelo
-        modelo.w.requires_grad_()
-        self.optimizador = torch.optim.SGD([modelo.w], lr=lr)   # <1>
-
-    def step(self, X, y):
-        self.optimizador.zero_grad()
-        mse(self.modelo.predict(X), y).backward()
-        self.optimizador.step()                                 # <2>
-
-
-modelo_sgd = LinearRegression(n_parametros=p + 1)
-train(modelo_sgd, SGDOptimizer(modelo_sgd, lr=0.1), X, y, n_iter=150)
-
-print("coincide con la solución exacta:",
-      torch.allclose(modelo_sgd.w.detach(), w_exacto, atol=1e-6))
-#---
-```
-
-1. Se le pasa la lista de tensores que tiene que actualizar.
-2. Hace exactamente lo que hacía `AutogradOptimizer.step`, incluida la puesta a cero.
-
-Esta última es la que usaremos a partir de aquí. `torch.optim` ofrece muchos optimizadores
-con esta misma interfaz, de modo que cambiar de algoritmo será cambiar una línea.
-
 ### La misma interfaz en scikit-learn
 
-Hemos construido esta interfaz a mano para ver por dentro qué hace cada pieza. En la
-práctica no se escribe a mano, porque existe [scikit-learn](https://scikit-learn.org), la
-biblioteca de aprendizaje automático estándar en Python. Trae implementados los modelos que
-veremos en el curso, y también las herramientas para preparar los datos, repartir la muestra
-y validar, que son las que usaremos a partir del capítulo siguiente.
+Hasta aquí hemos programado el ajuste para entender qué hace. Para trabajar con
+otros modelos y preparar o evaluar los datos usaremos
+[**scikit-learn**](https://scikit-learn.org/stable/getting_started.html), una librería
+que ofrece esas herramientas con una interfaz común. En Python se importa como `sklearn`.
+Sus objetos de aprendizaje se llaman *estimadores*.
 
-Su convenio es el que hemos imitado, y es el mismo para todos los modelos que ofrece: cada
-modelo es un objeto con un método `fit`, que estima los parámetros a partir de unos datos, y
-un método `predict`, que aplica el modelo estimado a observaciones nuevas. Los parámetros
-estimados quedan guardados en atributos del objeto, con un guion bajo al final del nombre.
-La ventaja de que el convenio sea único es que cambiar de modelo no obliga a cambiar el
-resto del código.
+Un modelo de predicción se usa en tres pasos: crearlo, ajustarlo con `fit(X, y)` y
+predecir con `predict(X_nueva)`. Crear el objeto no aprende los coeficientes; `fit`
+los estima y los guarda. `predict` utiliza los coeficientes ya guardados: no vuelve
+a entrenar ni necesita las respuestas de las observaciones nuevas.
 
+Empezamos con `LinearRegression`, que resuelve el mismo problema de mínimos cuadrados
+que hemos estudiado. Usamos el alias `SkLinearRegression` para distinguirla de nuestra
+clase. Convertimos los tensores a arrays de NumPy, el formato que usaremos con la
+librería. Nuestra matriz ya incluye la columna de unos.
+
+::: {.codigo-clave}
 ```{python}
 from sklearn.linear_model import LinearRegression as SkLinearRegression
 
-ajuste_sk = SkLinearRegression(fit_intercept=False).fit(   # <1>
-    X.numpy(), y.numpy())
+X_numpy = X.numpy()
+y_numpy = y.numpy()
+#---
+ajuste_sk = SkLinearRegression(fit_intercept=False)    # <1>
+ajuste_sk.fit(X_numpy, y_numpy)                       # <2>
+predicciones_sk = ajuste_sk.predict(X_numpy)          # <3>
+#---
+```
 
+1. No añadimos un intercepto aparte: la primera columna de `X_numpy` ya lo representa.
+2. Se aprende un coeficiente por columna de `X_numpy`.
+3. La salida tiene forma `(n,)`. Aquí predecimos las observaciones de entrenamiento
+   para comprobar el ajuste, no para evaluar su capacidad de generalización.
+:::
+
+Para predecir una observación nueva conservamos el orden y el número de columnas,
+incluida la constante. Por ejemplo, con las cinco predictoras de nuestros datos:
+
+::: {.codigo-clave}
+```{python}
+X_nueva = [[1.0, 2.0, 0.0, 0.0, 0.0, 0.0]]
+ajuste_sk.predict(X_nueva)
+```
+:::
+
+Aunque haya una sola observación, la entrada es una matriz con una fila; por eso
+hay dos pares de corchetes. No llamamos de nuevo a `fit`.
+
+Los coeficientes aprendidos están en `ajuste_sk.coef_`. En este caso hay $\nfeat+1$,
+y el primero es $\widehat w_0$, porque multiplica la columna de unos.
+
+```{python}
+#| code-fold: true
 print("nuestro ajuste :", [round(v, 4) for v in w_exacto.tolist()])
 print("scikit-learn   :", [round(v, 4) for v in ajuste_sk.coef_.tolist()])
 ```
 
-1. `fit_intercept=False` porque nuestra $\X$ ya trae la columna de unos. Con el valor por
-   defecto, `scikit-learn` añadiría su propio intercepto y estimaría un parámetro de más.
+Por defecto, `fit_intercept=True`: la librería estima un intercepto separado,
+guardado en `intercept_`, y recibe las predictoras **sin** la columna de unos.
+Así, `SkLinearRegression().fit(X_numpy[:, 1:], y_numpy)` representa el mismo modelo
+con otro convenio. También habría que quitar esa columna al predecir. Con
+`fit_intercept=False` no renunciamos aquí al intercepto: ya está incluido en la matriz.
 
-Los dos ajustes coinciden, y tienen que coincidir: `scikit-learn` resuelve el mismo problema
-de mínimos cuadrados con la misma descomposición numérica que `torch.linalg.lstsq`. Lo que
-aporta la biblioteca no es un algoritmo distinto, sino todo lo que rodea al ajuste, que es
-donde se va el trabajo de un proyecto real: transformar las variables, encadenar pasos,
-repartir la muestra y validar. Usaremos `torch` para lo que tiene que ver con optimización y
-`scikit-learn` para el flujo de trabajo, empezando por el capítulo siguiente.
+Los resultados coinciden salvo redondeo porque estamos minimizando el mismo riesgo.
+No hace falta que ambas implementaciones usen el mismo algoritmo numérico.
+Para la sintaxis completa queda como consulta la
+[documentación de `LinearRegression`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html).
+En papel trabajaremos las llamadas básicas, las dimensiones y el convenio de la
+constante; las figuras y los detalles internos del algoritmo no se piden.
 
 
 ## Ejemplo con datos reales
@@ -949,6 +992,7 @@ Ajustaremos un modelo lineal que prediga `lpsa` a partir de las ocho.
 
 
 ```{python}
+#| code-fold: true
 import pandas as pd
 
 prostata = pd.read_csv("../datos/prostate.data")     # <1>
@@ -956,7 +1000,6 @@ prostata = pd.read_csv("../datos/prostate.data")     # <1>
 predictoras = ["lcavol", "lweight", "age", "lbph",
                "svi", "lcp", "gleason", "pgg45"]
 
-#---
 X_prostata = torch.cat([
     torch.ones(len(prostata), 1),
     torch.tensor(prostata[predictoras].values, dtype=torch.float64),
@@ -965,7 +1008,6 @@ y_prostata = torch.tensor(prostata["lpsa"].values, dtype=torch.float64)
 
 print("matriz de diseño:", tuple(X_prostata.shape))
 print("rango:", torch.linalg.matrix_rank(X_prostata).item())
-#---
 ```
 
 1. El fichero está en `datos/` y se lee por ruta relativa.
@@ -978,20 +1020,23 @@ La tabla trae además una columna `train`, con la partición en *train* y *test*
 libro. No la vamos a utilizar todavía: separar datos para evaluar es el asunto del capítulo
 siguiente, y aquí ajustamos con las 97 observaciones.
 
+En el ordenador podemos resolver directamente el problema de mínimos cuadrados con
+`torch.linalg.lstsq(X, y).solution`, sin formar $\Xt\X$ ni calcular su inversa.
+Esta llamada queda como herramienta de consulta.
+
 ```{python}
-#---
-w_prostata = torch.linalg.solve(X_prostata.T @ X_prostata,
-                                X_prostata.T @ y_prostata)
+#| code-fold: true
+w_prostata = torch.linalg.lstsq(X_prostata, y_prostata).solution
 
 for nombre, valor in zip(["intercepto"] + predictoras, w_prostata):
     print(f"{nombre:>10}: {valor:+.4f}")
-#---
 ```
 
 Para saber si el ajuste sirve de algo hace falta algo con lo que compararlo. Lo más sencillo
 posible es un modelo que ignore las variables predictoras.
 
 ```{python}
+#| code-fold: true
 residuos_prostata = y_prostata - X_prostata @ w_prostata
 
 riesgo_ajuste = mse(X_prostata @ w_prostata, y_prostata)
@@ -1005,64 +1050,12 @@ print(f"riesgo de predecir siempre la media: {riesgo_media:.4f}")
 
 El riesgo del ajuste es $0.4439$ y el de predecir siempre la media, $1.3187$. Las ocho
 variables reducen el error cuadrático medio a la tercera parte del que se obtiene sin
-mirarlas. Sobre si eso es mucho o poco, este capítulo no tiene nada que decir: no hemos
-definido ninguna escala para juzgarlo, ni ninguna referencia con la que comparar más allá de
-la media. De esto hablaremos en el capítulo siguiente.
+mirarlas. Esta comparación se refiere a los datos de entrenamiento. No dice todavía
+cuál de los dos modelos predice mejor observaciones nuevas.
 
-Queda una sorpresa. Si intentamos ajustar el modelo por descenso de gradiente, con la misma
-interfaz que ha funcionado en las secciones anteriores, no converge.
-
-```{python}
-modelo_crudo = LinearRegression(n_parametros=9)
-historia_crudo = train(
-    modelo_crudo, SGDOptimizer(modelo_crudo, lr=1e-3),
-    X_prostata, y_prostata, n_iter=200,
-)
-
-print("riesgo tras 200 iteraciones:", historia_crudo[-1].item())
-```
-
-El riesgo no baja, crece sin límite. Y con una tasa mucho menor baja, pero tan despacio que
-no llega: con $\lr=10^{-4}$ y veinte mil iteraciones el riesgo se queda en $0.4825$, frente
-al mínimo $0.4439$, y el intercepto en $0.037$ frente a $0.182$.
-
-La causa está en las escalas de las columnas. La media de `age` es 63.9 y su máximo 79; la
-de `svi` es 0.22 y su máximo 1. Mover un parámetro cuya variable toma valores en torno a 70
-y mover otro cuya variable vale 0 o 1 tienen efectos muy distintos sobre el riesgo, y eso
-deforma la superficie que el algoritmo tiene que recorrer: el paso que resulta razonable en
-una dirección es enorme en la otra.
-
-La solución completa es materia del capítulo dedicado a preparar los datos. Su forma más
-simple consiste en restar a cada columna su media y dividirla por su desviación típica, de
-modo que todas queden en la misma escala.
-
-```{python}
-#---
-Z_prostata = torch.cat([
-    torch.ones(len(prostata), 1),
-    (X_prostata[:, 1:] - X_prostata[:, 1:].mean(0))
-    / X_prostata[:, 1:].std(0),
-], dim=1)
-
-modelo_escalado = LinearRegression(n_parametros=9)
-historia_escalado = train(
-    modelo_escalado, SGDOptimizer(modelo_escalado, lr=0.1),
-    Z_prostata, y_prostata, n_iter=2000,
-)
-
-w_escalado_exacto = torch.linalg.solve(Z_prostata.T @ Z_prostata,
-                                       Z_prostata.T @ y_prostata)
-
-print("riesgo por descenso:", historia_escalado[-1].item())
-print("riesgo exacto:      ",
-      mse(Z_prostata @ w_escalado_exacto, y_prostata).item())
-#---
-```
-
-Con las columnas escaladas la tasa $\lr=0.1$ es estable y el descenso alcanza el mínimo. El
-riesgo mínimo es el mismo $0.4439$ de antes, porque escalar las columnas no cambia el
-conjunto de predicciones que el modelo puede producir: solo cambia qué coeficientes las
-producen.
+Las escalas de las variables pueden hacer que el descenso necesite tasas muy distintas
+de las usadas con datos simulados. Estudiaremos cómo tratarlo en el capítulo de
+preparación de datos. Aquí nos basta con interpretar el ajuste obtenido.
 
 ::: {#fig-caso-prostata}
 
@@ -1090,76 +1083,29 @@ plt.tight_layout()
 
 El ajuste sobre los datos de próstata. A la izquierda, lo observado frente a lo predicho,
 con la diagonal como acierto perfecto. A la derecha, los residuos frente a los valores
-ajustados: están repartidos alrededor de cero, sin curvatura ni ensanchamiento evidentes,
-que es lo que cabe esperar si el modelo lineal-gaussiano no va muy desencaminado. Los dos
-paneles usan las mismas 97 observaciones con las que se ha ajustado el modelo.
+ajustados. Los dos paneles usan las mismas 97 observaciones con las que se ha ajustado
+el modelo: no son una evaluación sobre datos nuevos ni una comprobación de todas las
+hipótesis del modelo gaussiano.
 :::
 
 Esa última frase del pie de la figura es el problema que queda abierto. Hemos ajustado un
 modelo con ocho variables predictoras, hemos comprobado que el mínimo es único, y hemos
 medido lo bueno que es sobre las mismas 97 observaciones que hemos usado para elegirlo. El
-capítulo anterior ya avisó de que esa medida es demasiado favorable. Con los datos simulados
-podemos ver exactamente cuánto, porque ahí sí conocemos los coeficientes que generaron la
-respuesta.
+capítulo anterior ya avisó de que esa medida tiende a ser demasiado favorable. Los datos
+simulados permiten ver cómo el ajuste aprovecha la muestra concreta que recibe.
 
 ```{python}
+#| code-fold: true
 print("riesgo del ajuste:              ",
       mse(X @ w_exacto, y).item())
 print("riesgo de los coeficientes verdaderos:",
       mse(X @ w_verdadero, y).item())
 ```
 
-El ajuste tiene menos riesgo que la verdad. No es un error de cálculo: $\coefhat$ se ha
-elegido para minimizar el riesgo sobre esta muestra concreta, y la verdad no compite en eso.
-La diferencia es exactamente lo que el ajuste ha aprendido del ruido de estas cien
-observaciones, y no se repetirá en observaciones nuevas.
+El ajuste obtiene menos riesgo **empírico** que los coeficientes verdaderos. No es un
+error de cálculo: $\coefhat$ se ha elegido para minimizar ese criterio en esta muestra,
+con su realización concreta del ruido. Esa ventaja en entrenamiento no garantiza una
+ventaja al predecir observaciones nuevas.
 
 Antes de añadir más variables hace falta poder estimar el error sobre observaciones que el
 modelo no haya visto. A esto dedicaremos el capítulo siguiente.
-
-## Ejercicios
-
-::: {#exr-recuperar-recta}
-## Comprobar que el capítulo 2 es un caso particular
-
-Genera los datos del capítulo anterior, construye la matriz de diseño $\X=(\onesv\;\;\mathbf
-a)$ de dos columnas y ajusta con `LinearRegression` y `GradientDescentOptimizer` de este
-capítulo. Comprueba que obtienes los mismos coeficientes que allí y relaciona el resultado
-con @exr-recupera-gradiente-recta.
-:::
-
-::: {#exr-columna-redundante}
-## Una variable predictora que no aporta nada
-
-a. Añade a `X` una columna igual a la suma de dos de las que ya tiene. Comprueba con
-   `torch.linalg.matrix_rank` que el rango no ha subido.
-b. Encuentra un vector no nulo del núcleo de la matriz nueva y verifica numéricamente que
-   $\X\mathbf d=\zerov$.
-c. Ajusta desde dos puntos de partida distintos y comprueba las tres afirmaciones
-   de @thm-existencia-unicidad: coeficientes distintos, predicciones iguales, riesgo igual.
-:::
-
-::: {#exr-norma-del-gradiente}
-## El gradiente como diagnóstico de convergencia
-
-Ajusta el modelo de próstata por descenso de gradiente sobre las columnas escaladas y, cada
-cien iteraciones, registra $\norm{\grad\Riskh(\coef)}$. Represéntalo en escala logarítmica
-frente a la iteración.
-
-a. Explica, usando @eq-gradiente-matricial, qué significa que esa norma sea pequeña en
-   términos de las variables predictoras y de los residuos.
-b. Di por qué esa cantidad es mejor criterio de parada que un número fijo de iteraciones.
-:::
-
-::: {#exr-escala-y-coeficientes}
-## Qué cambia al escalar las columnas
-
-Ajusta el modelo de próstata dos veces, con las columnas crudas y con las columnas
-escaladas, usando en los dos casos las ecuaciones normales.
-
-a. Comprueba que el riesgo mínimo es el mismo y que las predicciones coinciden.
-b. Comprueba que los coeficientes no coinciden, y deduce la relación exacta entre los
-   coeficientes de las dos versiones para las columnas que no son el intercepto.
-c. Explica cuál de las dos colecciones de coeficientes permite comparar la importancia de
-   dos variables predictoras entre sí, y por qué.
-:::

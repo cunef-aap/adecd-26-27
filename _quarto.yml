@@ -1,27 +1,14 @@
 project:
   type: book
-  output-dir: docs
+  output-dir: _completo/local
+
+profile:
+  default: revision
 
 book:
   title: "Aprendizaje Automático: Predicción"
   subtitle: "G244 · Doble Grado ADE + Ciencia de Datos · CUNEF Universidad"
-  # <<< generado por scripts/publicado.py a partir de contenido.txt
-  chapters:
-    - index.qmd
-    - part: "Fundamentos del aprendizaje predictivo"
-      chapters:
-        - capitulos/01-senal-ruido.qmd
-        - capitulos/02-aprender-minimizando.qmd
-    - part: "Hojas de problemas"
-      chapters:
-        - problemas/hoja-01.qmd
-        - problemas/hoja-02.qmd
-  appendices:
-    - curso/colab.qmd
-    - curso/evaluacion.qmd
-    - curso/algebra.qmd
-    - curso/probabilidad.qmd
-  # >>> fin del bloque generado
+  # Cada perfil declara su lista; no poner chapters/appendices en esta base.
 format:
   html:
     # MathJax 4 reparte su tipografia en un fichero por variante y los carga por separado:

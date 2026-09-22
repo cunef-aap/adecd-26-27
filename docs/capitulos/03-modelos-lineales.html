@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Modelos lineales con muchas variables – Aprendizaje Automático: Predicción</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../problemas/hoja-01.html" rel="next">
+<link href="../capitulos/02-aprender-minimizando.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos del aprendizaje predictivo</a></li><li class="breadcrumb-item"><a href="../capitulos/03-modelos-lineales.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Aprendizaje Automático: Predicción</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación de la asignatura</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hojas de problemas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/colab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ejecutar código: Python y Colab</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Evaluación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#de-una-recta-a-muchas-variables-predictoras" id="toc-de-una-recta-a-muchas-variables-predictoras" class="nav-link active" data-scroll-target="#de-una-recta-a-muchas-variables-predictoras">De una recta a muchas variables predictoras</a>
+  <ul class="collapse">
+  <li><a href="#el-modelo-lineal-gaussiano-múltiple" id="toc-el-modelo-lineal-gaussiano-múltiple" class="nav-link" data-scroll-target="#el-modelo-lineal-gaussiano-múltiple">El modelo lineal-gaussiano múltiple</a></li>
+  <li><a href="#log-verosimilitud-y-error-cuadrático-medio" id="toc-log-verosimilitud-y-error-cuadrático-medio" class="nav-link" data-scroll-target="#log-verosimilitud-y-error-cuadrático-medio">Log-verosimilitud y error cuadrático medio</a></li>
+  </ul></li>
+  <li><a href="#la-matriz-de-diseño" id="toc-la-matriz-de-diseño" class="nav-link" data-scroll-target="#la-matriz-de-diseño">La matriz de diseño</a></li>
+  <li><a href="#el-gradiente-del-riesgo-cuadrático" id="toc-el-gradiente-del-riesgo-cuadrático" class="nav-link" data-scroll-target="#el-gradiente-del-riesgo-cuadrático">El gradiente del riesgo cuadrático</a></li>
+  <li><a href="#ajustar-un-modelo-lineal" id="toc-ajustar-un-modelo-lineal" class="nav-link" data-scroll-target="#ajustar-un-modelo-lineal">Ajustar un modelo lineal</a></li>
+  <li><a href="#existencia-unicidad-y-colinealidad" id="toc-existencia-unicidad-y-colinealidad" class="nav-link" data-scroll-target="#existencia-unicidad-y-colinealidad">Existencia, unicidad y colinealidad</a></li>
+  <li><a href="#una-interfaz-común-para-entrenar-modelos" id="toc-una-interfaz-común-para-entrenar-modelos" class="nav-link" data-scroll-target="#una-interfaz-común-para-entrenar-modelos">Una interfaz común para entrenar modelos</a>
+  <ul class="collapse">
+  <li><a href="#la-misma-interfaz-en-scikit-learn" id="toc-la-misma-interfaz-en-scikit-learn" class="nav-link" data-scroll-target="#la-misma-interfaz-en-scikit-learn">La misma interfaz en scikit-learn</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-con-datos-reales" id="toc-ejemplo-con-datos-reales" class="nav-link" data-scroll-target="#ejemplo-con-datos-reales">Ejemplo con datos reales</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+<!-- Membrete de los PDF. El logo va incrustado porque este fragmento se incluye en
+     paginas a distinta profundidad y una ruta relativa no valdria para todas.
+     En pantalla no se ve: lo oculta .logo-impresion en assets/styles.css.
+     Se regenera con scripts/logo-impresion.py. -->
+<img class="logo-impresion" alt="" aria-hidden="true" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAACcCAYAAAAwEt9BAAAMbWlDQ1BJQ0MgUHJvZmlsZQAAeJyVVwdYU8kWnluSkJDQAghICb0jUgNICaEFkF4EGyEJJJQYE4KKvSwquHYRxYquiii2lWYBsSuLYu+LBRVlXdTFhsqbkICu+8r3zvfNvX/OnPlPuTO59wCg+YErkeShWgDkiwukCeHBjDFp6QzSU0AECNAF+oDC5ckkrLi4aABl8P53eXcD2kK56qzg+uf8fxUdvkDGAwAZB3EmX8bLh7gZAHwDTyItAICo0FtOKZAo8ByIdaUwQIhXK3C2Eu9S4EwlPjpgk5TAhvgyAGpULleaDYDGPahnFPKyIY/GZ4hdxXyRGABNJ4gDeEIuH2JF7E75+ZMUuBxiO2gvgRjGA5iZ33Fm/40/c4ify80ewsq8BkQtRCST5HGn/Z+l+d+Snycf9GEDB1UojUhQ5A9reCt3UpQCUyHuFmfGxCpqDfEHEV9ZdwBQilAekay0R415MjasH3ziAHXlc0OiIDaGOEycFxOt0mdmicI4EMPdgk4VFXCSIDaAeJFAFpqostkinZSg8oXWZknZLJX+HFc64Ffh64E8N5ml4n8jFHBU/JhGkTApFWIKxFaFopQYiDUgdpHlJkapbEYVCdkxgzZSeYIifiuIEwTi8GAlP1aYJQ1LUNmX5MsG88W2CEWcGBU+WCBMilDWBzvF4w7ED3PBLgvErORBHoFsTPRgLnxBSKgyd+y5QJycqOL5ICkITlCuxSmSvDiVPW4hyAtX6C0g9pAVJqrW4ikFcHMq+fEsSUFckjJOvCiHGxmnjAdfDqIBG4QABpDDkQkmgRwgauuu64a/lDNhgAukIBsIgLNKM7gidWBGDK+JoAj8AZEAyIbWBQ/MCkAh1H8Z0iqvziBrYLZwYEUueApxPogCefC3fGCVeMhbCngCNaJ/eOfCwYPx5sGhmP/3+kHtNw0LaqJVGvmgR4bmoCUxlBhCjCCGEe1xIzwA98Oj4TUIDjecifsM5vHNnvCU0E54RLhO6CDcniiaJ/0hytGgA/KHqWqR+X0tcBvI6YkH4/6QHTLj+rgRcMY9oB8WHgg9e0ItWxW3oiqMH7j/lsF3T0NlR3Ylo+Rh5CCy3Y8rNRw0PIdYFLX+vj7KWDOH6s0emvnRP/u76vPhPepHS2wRdgg7i53AzmNHsTrAwJqweqwVO6bAQ7vrycDuGvSWMBBPLuQR/cPf4JNVVFLmWu3a5fpZOVcgmFqgOHjsSZJpUlG2sIDBgm8HAYMj5rk4Mdxc3dwAULxrlH9fb+MH3iGIfus33fzfAfBv6u/vP/JNF9kEwAFvePwbvunsmABoqwNwroEnlxYqdbjiQoD/EprwpBkCU2AJ7GA+bsAL+IEgEAoiQSxIAmlgAoxeCPe5FEwBM8BcUAxKwXKwBqwHm8E2sAvsBQdBHTgKToAz4CK4DK6Du3D3dIKXoAe8A30IgpAQGkJHDBEzxBpxRNwQJhKAhCLRSAKShmQg2YgYkSMzkPlIKbISWY9sRaqQA0gDcgI5j7Qjt5GHSBfyBvmEYigV1UVNUBt0BMpEWWgUmoSOR7PRyWgRugBdipajlegetBY9gV5Er6Md6Eu0FwOYOqaPmWPOGBNjY7FYOpaFSbFZWAlWhlViNVgjfM5XsQ6sG/uIE3E6zsCd4Q6OwJNxHj4Zn4Uvwdfju/Ba/BR+FX+I9+BfCTSCMcGR4EvgEMYQsglTCMWEMsIOwmHCaXiWOgnviESiPtGW6A3PYhoxhziduIS4kbiP2ExsJz4m9pJIJEOSI8mfFEvikgpIxaR1pD2kJtIVUifpg5q6mpmam1qYWrqaWG2eWpnabrXjalfUnqn1kbXI1mRfciyZT55GXkbeTm4kXyJ3kvso2hRbij8liZJDmUspp9RQTlPuUd6qq6tbqPuox6uL1Oeol6vvVz+n/lD9I1WH6kBlU8dR5dSl1J3UZupt6lsajWZDC6Kl0wpoS2lVtJO0B7QPGnQNFw2OBl9jtkaFRq3GFY1XmmRNa02W5gTNIs0yzUOalzS7tchaNlpsLa7WLK0KrQatm1q92nTtkdqx2vnaS7R3a5/Xfq5D0rHRCdXh6yzQ2aZzUucxHaNb0tl0Hn0+fTv9NL1Tl6hrq8vRzdEt1d2r26bbo6ej56GXojdVr0LvmF6HPqZvo8/Rz9Nfpn9Q/4b+p2Emw1jDBMMWD6sZdmXYe4PhBkEGAoMSg30G1w0+GTIMQw1zDVcY1hneN8KNHIzijaYYbTI6bdQ9XHe433De8JLhB4ffMUaNHYwTjKcbbzNuNe41MTUJN5GYrDM5adJtqm8aZJpjutr0uGmXGd0swExkttqsyewFQ4/BYuQxyhmnGD3mxuYR5nLzreZt5n0WthbJFvMs9lnct6RYMi2zLFdbtlj2WJlZjbaaYVVtdceabM20FlqvtT5r/d7G1ibVZqFNnc1zWwNbjm2RbbXtPTuaXaDdZLtKu2v2RHumfa79RvvLDqiDp4PQocLhkiPq6OUoctzo2O5EcPJxEjtVOt10pjqznAudq50fuui7RLvMc6lzeTXCakT6iBUjzo746urpmue63fXuSJ2RkSPnjWwc+cbNwY3nVuF2zZ3mHuY+273e/bWHo4fAY5PHLU+652jPhZ4tnl+8vL2kXjVeXd5W3hneG7xvMnWZccwlzHM+BJ9gn9k+R30++nr5Fvge9P3Tz9kv12+33/NRtqMEo7aPeuxv4c/13+rfEcAIyAjYEtARaB7IDawMfBRkGcQP2hH0jGXPymHtYb0Kdg2WBh8Ofs/2Zc9kN4dgIeEhJSFtoTqhyaHrQx+EWYRlh1WH9YR7hk8Pb44gRERFrIi4yTHh8DhVnJ5I78iZkaeiqFGJUeujHkU7REujG0ejoyNHrxp9L8Y6RhxTFwtiObGrYu/H2cZNjjsST4yPi6+If5owMmFGwtlEeuLExN2J75KCk5Yl3U22S5Ynt6RopoxLqUp5nxqSujK1Y8yIMTPHXEwzShOl1aeT0lPSd6T3jg0du2Zs5zjPccXjboy3HT91/PkJRhPyJhybqDmRO/FQBiEjNWN3xmduLLeS25vJydyQ2cNj89byXvKD+Kv5XQJ/wUrBsyz/rJVZz7P9s1dldwkDhWXCbhFbtF70OiciZ3PO+9zY3J25/Xmpefvy1fIz8hvEOuJc8alJppOmTmqXOEqKJR2TfSevmdwjjZLukCGy8bL6Al34Ud8qt5P/JH9YGFBYUfhhSsqUQ1O1p4qntk5zmLZ42rOisKJfpuPTedNbZpjPmDvj4UzWzK2zkFmZs1pmW85eMLtzTvicXXMpc3Pn/jbPdd7KeX/NT53fuMBkwZwFj38K/6m6WKNYWnxzod/CzYvwRaJFbYvdF69b/LWEX3Kh1LW0rPTzEt6SCz+P/Ln85/6lWUvblnkt27ScuFy8/MaKwBW7VmqvLFr5eNXoVbWrGatLVv+1ZuKa82UeZZvXUtbK13aUR5fXr7Nat3zd5/XC9dcrgiv2bTDesHjD+438jVc2BW2q2WyyuXTzpy2iLbe2hm+trbSpLNtG3Fa47en2lO1nf2H+UrXDaEfpji87xTs7diXsOlXlXVW123j3smq0Wl7dtWfcnst7Q/bW1zjXbN2nv690P9gv3//iQMaBGwejDrYcYh6q+dX61w2H6YdLapHaabU9dcK6jvq0+vaGyIaWRr/Gw0dcjuw8an604pjesWXHKccXHO9vKmrqbZY0d5/IPvG4ZWLL3ZNjTl47FX+q7XTU6XNnws6cPMs623TO/9zR877nGy4wL9Rd9LpY2+rZevg3z98Ot3m11V7yvlR/2edyY/uo9uNXAq+cuBpy9cw1zrWL12Out99IvnHr5ribHbf4t57fzrv9+k7hnb67c+4R7pXc17pf9sD4QeXv9r/v6/DqOPYw5GHro8RHdx/zHr98InvyuXPBU9rTsmdmz6qeuz0/2hXWdfnF2BedLyUv+7qL/9D+Y8Mru1e//hn0Z2vPmJ7O19LX/W+WvDV8u/Mvj79aeuN6H7zLf9f3vuSD4YddH5kfz35K/fSsb8pn0ufyL/ZfGr9Gfb3Xn9/fL+FKuQOfAhgcaFYWAG92AkBLA4AO+zbKWGUvOCCIsn8dQOA/YWW/OCBeANTA7/f4bvh1cxOA/dth+wX5NWGvGkcDIMkHoO7uQ0Mlsix3NyUXFfYphAf9/W9hz0ZaBcCX5f39fZX9/V+2wWBh79gsVvagCiHCnmFL3JfM/Ezwb0TZn36X4493oIjAA/x4/xe1SpDLFz0MBwAATtBJREFUeNrtvXecXdd13/vd+5Tbp2CAQe+9EgTA3kWxSCRFFctyZCex7CfHLZEdO/bzs+PycRw7jh2XvGc/x3l2HDuOJZsqFCmJIiX2ToAESfTeMRhMn1tO2/v9cc4UdMzcM4OZwf59PldDDebee/bae6/fWmuvvZbQWmsMDAwMDAyuMaQRgYGBgYGBISQDAwMDAwNDSAYGBgYGhpAMDAwMDAwMIRkYGBgYTETYU29Il0oaFGa2DQwMDAwhpUg2+jLEI+SliUfri7xHDPthCMvAwMDgWkJM6HtIgyQiQIir+3MVXfxPpTWC7+OqvzP9saY6vWYM4/KMl3v8cYyKa5Xic4t0jbQ0n21iqtLJvU4niIwmGCENeED6go2stUZHAaraS9hzmrD3DFF/J1G5C13tQQpQ1R5Q4UU2kkZkS2jpgFvAKrRgN8zAbmzFbpqNzJYQlo04X3kMbiJhvCgDAwODMcbECNlpNcSeieLXWhN2n0L1nsFvP0jt+A789sOIahdEHsqvogIPHQYIFcbEKy8XslOgNQqJsF2Ek0W6WaSTRWUbsZvnkZ29gszslYh8M3ZDK1a+8dKWXsoWZO34h4Tth0DaKVhGAlSEzDeSW3YrwnLGZRq9U3vwT+9FpDUGHSEyRXLLbkU62XTkfOwDwrOHU5Lz5Z9dZorklt+OsN2xNeIQRH1nqe5/vf5xCYEOfNw5q8jMXjkUoagDYW871UPvIAY/aypZ/gJUiNU0h9zizenMaFCjvPtFiMLEMNdTQkYyW4r10WX28rUlJK1igSeeiY4Caqf34x3eimrfT/XUHnTXcYQKUUqj0SAEQljxT2khXBstYgK7GsFIoWN3OPKJKh6R7gJ9gujUToJdz9EnBFGmgdzMpditS5Eti8nOW4s7fSHSyaQfgtHxmCrvPUX57a8g3Ry63vCGkIjQx5q1gsz8DTGxJt8zlvNY2fk9yi//fwgnm84YIh/RNJ/MnDXIxmx9Y0jeW373SarbnkA4Kcj5soSkkZYFn/198stvH1rrqcs+Hldw5gC9T/02SjhAHeMSFtLvo3TfT8WEVJfM4zEHbfvoeep3EDpCTzVCEhL8KpnV95NbtKm+PZbIOqr2Un32D/H6u0HWOZ8TREYi9HBmLMaduxbbufRevgaElITlhAAh0RqCM/upHHiL6p4XoecUQW8bQkVgu2hhgXCSJ40X8yD3DMRZ9cjmPIaMP27Y2ZJKHk/6/XhHtlI78DrayVNtmI7ONWPPXk1x+a1Y0xbgNM1KzWoHwHLQlkskUliAQiAshWW7iHE8QxLSRlsOSqTgfQiBkGDZbqqRUmE5KOmCsMdWMUqJjqqU3/4ncktvQUg59orRdlCqXg9JgnQQ0klVFsLOoMJgahKSFYKV3joVgLZclOUkKnqSy0sIhFBoy7kiYY8vIQ16RKBVRP+eV6jtfQl//2tQ6SZSCiwL7GwyBfo80klzYvQ5P879FxkvMDuD1Jqg5wx0nSQ6vZvg/SdRmUaKGx6m6d6fQDiZVMIa54w1jXFqPZx9x9HYSHkMaW9GnfIzXmata+ngH91Gde+r5FfdPXZe0gXy0inNYZqPlkQ4gKkVstNju07FVEluuDp9ND6ENPAgQqKjgP5dL9C79euoUzvRtd44fGI5YA3sJzUBhBc/twaw7NiDQRMBVv8ZwpM7UJGP5WTS4SODKQYNwkJ5ZcrvPRl7SbaLWSwGBteSkIZZhX37Xqe67Wv4B95ABzWwXXCL8fnPRO6CMdwCEhItJFbTbKSbG/KxDQwu5iXZObyDb1E9vHXYWZJZMAYG40tIWseKWkiC3na6X/orajueQdf6wcmAk0vc0sl3YCdQ2LmGYdlkRsEYXGqxCHRYo3/rE2SX3oKU0qwZA4NxJaRhGRR9u1+i/MJ/w2/bg7AHiEgxqTNHtMYqTLtgrAYGF40QWA7B4W1U979BYcUdxksyMBg3QhpIXfSr9L32d/S98ffgV8HJJ6G5yX9jW2nQTu5cT9DA4FJbQlgor4/Ke0+SW3IT0naMl2RgcBGkm/KTWH5+zxk6vvYb9L3839FRgLYzCRFN/mwRoTXYGUS2IfmFUSoGV7EvnBzegdepHdrKwD0lAwODsSKkJHmhfHIvHU/8Gv6eF9BWJv6KKVPHSoBWyEwBebEqDgYGl9oeiPgG/tYn0FE0vjXuDAyuK0IaIKNT++h68rcJj7+HsnNTtECgiksODXhIJuxicHWMBJaLd/gdKgfeGNo3BgYGKRLSQNmYUwfo+vpvwZl9aDs3QTabGPZK6eO0xnLzxkMyGDEjaWGhamUq7z6JCnymXl03A4P6UF9Sg46rcvu9Z+n97h/CmT0oJz/+ZDR4jiPO9coGC6EO92TiIq7xkfIoKkBohXRzyFyDWT0GIzbehJvFO/gGtSPbyC+71WTc1WshXmvRCTH0MvKqW0Z1Z9mpKKDn2T8lPPL2+JJRUm1ba42IQqSOAIWQdlx0NXnFvKnRURhbqSpERyFCCCIkCAst7WSernRBd+AMKT9ESEaZGIzITxKIoEb/O18lt+SmpMadybgbnfIJETq6trITEkIfHXgTfxp1hIiia0JIIvIh8q+YzDN6QkpCdf1vfhlv57PJmZEal8GhgSjCIsC2bWTDTERTKyLbiNU4G6vYgsw2YBemxRWdtSLsOoHWEarSRdjTBn4/ur8TVe4k7O9AaREXBZXWEMlcRHga0FbGqA+D0TIS2nIIjrxN5eBbFJbdlpKXdJ2F/rQi0zQTu9gUt2m4VjtSCHToYTW2TnB5aex8I5nG1msTwQp9ZNOcoSLDIk1CSkJ11UNb6X/1b1BCjv1+SIhIRD4ScJpm4SzaArPXkpu1FNm8CJFrQMqLnxypYdtWKdCBh+g7jdd1AtVxGDoO4R9/n6DrJFHgx0UkLCe2gM6ZQAkDl2KNZWswCuKIz5L6qWz9OrlFW5B2/RU/hJ1BCRd0NPVFKCRWVKOw+dPkNz6G8vpBWNd0TqWbn7jREiEgCnCX3ELTAz8be3Pjrbe0BsvGKjRzOUayRyN8hED7Ffpe+Auiai/Y2bFl3aQ3jiUFztxV5Fbdi7P8XuzmeQjbvkjawoWVvOXgHwgsCWQykFmIPX0hYvntcS+m7jOo9gME+18kOLWH4OyRuBGglRn8ACElckCoho8MRmndazuLf+hNaofeIb+8fi9JZAqQKUClO1HOU9djGjj/tXKNyHwTMt9k1tTlV0fcnysTd8ueyLBHuRroe+sf8Y+/jx5LMhKJIMMamdZF5G54FHvdo2RKzUM8MNhtdjjrisu6hUOxkySxgbhPTq5lLrTMJVxxN6q/Hf/AawT7X8U/upWwUiYSNkLaWDmTYWdQv5GlvArl7U/FZ0lWCl7SdXaeqXUYW94qOqev2bXS+RPeOk26Zl+zcmdXISN7xAMSEv/sUcrbvhr3DRorS0zEbbgtNLn1D1G868dxpi8clnzAYPHWUUvnHAENNfqzpYCGGbg3Pk645gEqR98n+uBJgkNvE1W7sUqtGBjUa+dr2yU8/Dbeqb1k560xHveo9vBkynKbCCIT5/6c1B5SMojytq8SdZ8au/tGSYjOyTeQv/1HKN30ubiXzKA3NBbpi+d9ZpI+bmfyNCy/FW/RFsLDb1Lb/k2cxhlmYRvUa96DsAgrPVTe/TqZeWuMTjW47mGPbAMJvLNHqO14Fi2dsfGOkhTBTOMMSg/9ApmV98Q8kSRSjK8lIQY9p4xj4y6/g8zCzVhCT2grw2ASkZK08fa9jHdiJ9m5a8a+q6yBwQTGCFZ+rISr258m6u9ASyv9ApFCIKIQt9RC42O/Rm7lPciBi67XTPkPhAM0QitsN4sYqPRtYFAfI6GlTdh3lvJ7T8ZXFIyRY2AI6Wq8I0nYc5ravlcG0gDSV/xa4WSzlB74EpnFNw/LPJoIm1Qklqsp9WKQspdkZ/B2PY93ai+mEriBIaSr9I68I9sI2w+iLTf9syMBIvTJ3vx5cmsfmMChC2PBGqTsJQlJVO6ivPWrxtwxMIR0RTISEq1CqvteGxvrTUhk6FFYfTel23447jlkQhcGExwirb2gAcvB2xufJcXXHUwlcANDSJdyjoh6zxAe345K+0a0EKACZGkGpXv+FZabw+S/Gkz8jaNxZq3AdjIpGGnxWZLqP0tl+1ND2aQGBoaQLg7vyLuoSi/I9MsECRWS3/RJ7JnLxz+bzsBg5CsWoUNyK+/Cnb8eofz6PXqtUVYGb/f38U7vG7wUbmBgCOkShBR65XTLkiRZdc70xRQ3PjpYNcHAYGLzkUCHAVZhGsUtn0mpSoAGKYn6uyhv+1q8E4yTZGAI6VyrDSGIqn2ormPDSuWnZ2kS+eRW34fdOCuJ1JldaDAZdo5F2Hkcd/HN5BduQgS1VDx7JS28vS/jn9zFQOapgYEhpAGrDQi7jhN0nwLppMhHAqECnOY5ZFd/xMyEwaSCRhCVO5G2S27zp8B26icPrUE6hL1nKL/7TXOWdDVe5UAPs2v9mjTRnYktoyt7SEDUc5qw90x8GTbFcJ2OAqyZK8jMWjH4OwODyQABYNmgNZmV95JbdhsySucsSVvueWdJxku6uAqR8UxY1rk17a7FazIYDgPPKeWEldHlSwcJiQaCjqNYOiIcKKWTClErbCdDbsUdQ+RnCMlgkpGS1grLsslv+QGCw++gwnr7EcXlhMJyJ5V3v447+5evuyreV4sgCBB+BEHlGvdDAmlbuG5m4vrzAlSkqHk+RME1IFCNEBI3m73seravxKhCK3TvaRQy3a2sI3DzZBfcOMz9NhvPYLJZ6XE2XG7RJqpLbiHa+X2Uk6/Pq0lCd7U9L+FvfJzMnFXGYBsuc61R0qX8wXeonNgNoXdNS4vp0CO3YAPu7Z+fmDpMg5Y23pGtRN/6j+hx77Aby8hunEnLfV9EZEuX1Pf2ZUeBQIc+Qc8ZtEjROxIgVITVshgx2H3VbDaDyeongbBcchs/gXfwLVQQ1FlmKqlx13uGyvancGevNLvjPPkoYcGpXYhTO67x9EsIqkRCgf78BFVj8VUa1XWCsOvotbDaEKEPrUvQwT+HbOmS/od9BT5Chx5Rf0fqm1hoRXb2MqwBtjQ7zmDyukmAJrPkVjKLNhPteRltZ+q03xRYLrVd38e/8RPxOaupBH6uhIQ9AeZegoxQ0p34/fmERYg1/o8pBEKAJRz0Fb79iqtbBR66fDZuxpdiIonQCtk8b9gFQMNIBpPZaNdYlkV+82ewnGz9l1o1aGkR9Z+l8u43kntJZo9caDVPgNekybLTyV3Pa/miPkJCa6QKUt0MAk0kLESuyewpg6niJgGa7KJNuEtuRoYp3EvSoKRNddfz+Kf2YCqBG0x1yMtbHxBW+1GRStd/0Rrh5JCZgpkBgynCRzFZCDtD8ZbPIfONoOo9PI6TG1RfO+V3nzRkNMHNEYMxJaTksLbWjdZhktSQ0tTpCDvfgFWcbqbTYAppJQlak120hezKu9OJLGiNsly83c/jnd5r7iVNUGitTKu0q1zPoySkq3p/HXvXii8WGhhMrR0HQGHTp5C5RoRK416SRdQXVwIfm+aYBnXNjxCIbNGc8V1R50uE7dRHSGO29gfLSRgYTGKP6ILfxWdJ7pw1ZFfeDWFKNe4sB2/39/Hb9hsvaYJBSonbPOccg8TgPBLREbglZK5x2D4ZDSGN2cJPSlgYGExCq1gDyq8O2x962ObTCGmR3/gYVnFafJZUj/Wsk+oNPe1U3v0GF73EobUhqWumbgX27NVD82BwwX6R0sKdt27wIvmoPSRhuWPgJgl05KP9qpkrg0mLqLcdHQWX8Jw02QUbyS67HaHSKNWi0ZaDt/t5/HNq3A1czLXAckwwb5w9ZBl6uPPWkZmzZsggMbjAqZHZEoV1D1zZ27zSH1ilGUjLSZH541vDYa2MrnQbN9dgktp8AlR06X2R/L6w5dNYuRJCR/UpKx1Xbwh62qi8980Lwh4y14BdmhGHRoxOHAcySirXSIvSTZ/GyjcmF5eN8M9lGAsZ1siteyBuwMrlS2BdxRmSTF3GWgjwK0S1XsNHBpNcKV1634AmM2ct2VUfSafemtZguVR3fS8+SzrnXpJRhOM979Ivk133MNaKj5hagxeTkbAQXj/ZhTfQcNePJtXZ6/SQhO0QOYWE/VN7WiQKyh1mL42xHW9wLcUfW9DFmz+H0zw7hSrLSY27vrOUB6s3DHyVTk62riutN+4tFDQCwgCLiOINDzPtgZ/FcdzJYxSMl4xUhBVWyC3ZRPGhX0IWW6+qIs8V866F7WIVphF1n0x1uWshCc4eRasQIW1Mte+xcJft8RWptEyttYt4Se7MZWRW3kvw5pfRwq7TTtBoYVPb/QLBxk/gzlp+HRN+hFDj1cRQI1A4joXVPAe57hGyN/0gMlecPN6R1gg1lpW+49JEjiMgPx1n+Z003vmjWKWZXClUd2VCEgOElMVunEVw/MP0CCmJh1dP7KRU6cYuTjd8NBZLo9qflJofp++sJd9nucY7G+6kCk1x86eo7vweYbk7Ju7RnslqDZZN2HOayvtP48z6EuK62zhxGrHb1IpTbEKrsW+nIKSFLM2k3LCQpvX3Y89cgSW4akU7EcjIyjeQbW6NL/GOhcaRDqI4nZ7sbFrX34s9Zz2WY4+IsG2uwEjCdnCa5+ChUSk26NNIRF8bYXdbTEiGkVJWgjKushF44+cg1XoQRIaKzg+RoHFaFpFf+wB9r/0d2i3UvY+05VLd8Rz5jY/hti69rgwALQSO8nHWPYKz/hFUrT8m+TFU5lJaFJpbKTh5XHnORpsUa1CoAGfhFpy7fwIVjEH/KK2xLJtc43RydoHsQHBmhN7j5UN2SoGUWC0LUKmyqgYpUUENf+9LZOetNWQ0JutQjKv1JoRAJPWEDc43EASFjY9Q3fk9gr6Owfbno/aSpE3U105l29dxHv6Foe+5bmSqyTe1kmuZPa5fa52jZCeLzhJopbHzDTTMmDfm32YPyogR6x95Jc8YQJZmQKaISJWUBJFSlA+8SVDtHUqjNEgrqIFSEUGtPC4WmNKawKuYTKNLeUla47QuJ7vqXqROI8QUN6mr7Po+YftBpJ297i5lahXGY47CocovY/ka0E+TdY1rFY9DqXGS0cjlJK+s1sCdvojsjAWQZhsKHTcgi84eJDz01pDld11TSLphDR2FiErneJj/EFTB64/7Zk1guVxrFLd8GtnQWv/hstZgOUQ9bZS3fytpgiauM5tunLPspsJanOAykldj2cmGmcimubElkuakCInyq1R2PJucdVzHXpJKM/kgaT+vIsLeM2PPR4Cq9BBVe5NyUCnOoY6mhqEy4CVNX0zxhsfSMe60Rlsu3s7nqJ3eh3CygCkfZDB5cRXmbNx0Vk5fllRqTVPZKLCz1Pa9RmXvy8O6x16H/pGbjS3cFMk+CjyCtv3j4CFB2H0Kv/tUnGqeXjom0snGleGnRpAJgPzGR3BaFiAiv05Siu85BX3t1LZ9FZMYZHAdEFK8wAsr78DKNcblUlL1kgQqCuh7/X9R6+sc7ClzvcFqnIOw7HQLZKqIqOv48GkcM0S9Z9CVHrSwUjNaBAqroRWRyY/LGEbl9YzQSEBr7OZ55NZ89JxadHVNsxaU972G334ILW1T4NNgChNSsl/s6QuxZyyJ+7ukqRiSsEN4ahfBm387TJldX5vKKU5DWml6Ahph2aje00R9Zxiz9tdJMkp4Zl/KZ71JiKvQFB/YT0BG0pWOoeKqIxRt8cbHsZtmx4VX6xWcEOjQR1X7zMVkg+vAQ9I6viC7/K76i0ReIvKgpE3fO1+l8sG3ia6r0F0yzsY56Vas0HH7a6/9CLUTu8aG5JNSIGG1n+qhd9Ai3fMjgUKXZqKlnHitFYRAhrXkUuYICVxrrKbZFDY+ioiC9PaTyXA0mPqENKTIistuwWqem+4mGvx8SRSGdDzzX+ne+VIS3rgeDmhjOTqlafGFSZVezUAtJCKoUjv0Tnw7e4wUVu34DqKOI8n5kU5NKpGW2KXWiXsqUmdWUX7dwzjTF47BfjIwmMqElMS+nRlLyK64E3Q4BsotrtElql3oV/6czr1vogYs7uvAW5KZAnbLfESaWVJaoyyHYN9LhJ0nkt+ptGcNf+czKK+SeEgpQUVYhSacptlTb7KTXkb2tHlk13y0/gZ+BgbXl4c0hMLGR7ELzUmactqbSKEsl2rbEfzv/C6n3/kOXiQmVsvm4Ze/UlNOGpkpkJmzCpmqXAc6jZ6m8v5TSemnFO+RCYF37AO8/a+jLSc9sQgBKsRpaMVuXXqOJznVPOPi5sfJzloCdWfcGRhcT4Q0UJNr5kpyq+9L5zD2EgpfS5uw9wzq+T+g+vr/wK9VEm+Ja+MtaT1UkFAIVNrlcZJsKzljOUpY6X66BiUsyu89RXhqV6Lso/pJWQhQAeU3/zdhf2ccrkuPkdA6gsY5WKWkzuFUU9YDZ0kNs3FueBzL3B8yMBihh6Q1QggKN/0gdkPr2JESmkjY4FfxXv0rzn7t1+nb/w5BNFwxafQYkZO+SBkMISReBNXOU9SOvEtU7U9ROcXTkJ2zErdlQcohnDi5QfWdpe+5P6Ha2xEXolSjVIBJX6xAC7pf+9/4e19CO9mUPViNtBxyizczUFB56kJTWHM/VusyROibLDkDQ0gjUpxa4cxYQsMtn00y7sYqoKFRWNRCDQdexv/Wb9H/4p9RPrmHSMWVxwcvkuphtZlGo7B1Qm6JUh0oSholvkq1t5ND771Cz4v/jZ4nfpnas3+I7mtLz2NLxuG0LMKZuQQd+qQaotIKZWWoHn6P9qf/kN7OM0MVFbS6Oo0/IB8hCbWg/fUn6HvlfxCqtMvVCFAKmS2SXbxlau++xEuyG1rJrX84nhJTz3HEe3dCvMy8pQJ7VJsITebGz+DufQPvyDa0nR2jM564SkQoM4S9ndiv/y+CvS9SW3gTYvEd6JZl5Jumk3PkxRfrlRTfwE8x2GwDP4Leni4Kqp/+k/sQpz/E6tiPc3ofYa0PHQZ4xenkvTLO4PeklKYtBM7SO7H3vkaYujw1ynKxDz5P+J0+qnf/K8SstWRteQWZicF5VwhqPWdR7/0T4q1/RET+UOJJikpaRj7uwjuxm+efO1VTk5UQQG79I3jvfwvVfjg5jzMK7sr2sR3rI8s2wrhuCYkkQyhbpPn+n6TzK7+EX+lH19N07GqUtbQINYRnj2OdPYaz93l6c3MQyzejZq+my55By6x5uPmG2HuS4qJH+ANPqBRYElTg0XP2NN0d7WRqZ2monqDn4Ad45TYyQRdeXw9Kxw26QiwQGktaCCkZC23pLr0D0TgH0Xk0fcWkNaFwqB58m9rZY2TXPkj3vFtonLcSt1BEa4EU58pKaZBa0X7sAJmzuwh2PkNwdBuRtgY7oqZuhFg2zop7wXYHvbKp7iW5pWlkbniM8Lk/JTR66ar0ULWvB6+nG13rG9t+SFexr9xMnkJjs5mW8SckhkqgzLuB7O1fIHjuv8Zhr7EsjjqgmKVNpCHq66FY7sLr2I1nu1jF6fitC2m3ptEe5miaNh07kyffNCM+A0IQhT7lrjaIIrq7zjLd8Zkmy4Ttx8j0noFambLyKRIRKkFZCYR0YLCakUYISVQrE5W7hqltkZpiyjRMo7jx43R/7/8BxqDzqtZE0kX0nsF78+/QH34Lf8F6jtsz0dkWGqbPxMmWiKKAcmcblZ6zzBKdyFO7qHYcRUcBIU4SZUz52YSEoIq76EYaVt0RB0yvm8wzTX7tA9Tef4qo7SDazlwn9/BGsUy0IhIu/odPYR97K66Wcc3WiUCHHtbCLXDfT2Luk10LQkoUqECT3/wDhB2HqW59Am3nxj6UOkBMwsLTsVcmfR/ZeYLes0dxLMl8W8IBgbZscAuDwT+hQwpeBbSiKDRRqOiO1GDSghYSXwtIgnFxWTZ9wZh05KP96pgNMbfuISrvfwv/7BG05abveer4zpevwervou/D5ynZFtKS4ORRtovQirzXT0FF1IIobokuLBTOGLbg09iOQ2HjY4hMacTdJie3l6RwGmaQ2/gJwmf/hMiE7C6/UqQk6DhO2HH0Gs+dBL+KzDab2rbXlJASA9lxbFo++jN01brp3/H8GJ4nXSS0M/hfkgjAsgg0BEF8YZMgRNS6zn2XkMn7ZPxKaoFqQOiBz9Tnxvcu0Od69FlqV+El2Y2zKGz6JP4zfzzm8lNYYFn4KonP+WWgf1BWIOPw5ICHOFZklHhHzqJN5Fbfx/V3SJwUMd74KLWdz6GOfYi2XXOWdLkVLCw017gSvJAgQ7AzhoxSQH3B+YGac5kSjQ//IoWlWxBB5RrE/JMsl8FsFz3UPVdY57zEJd5ztYpWJ4pTV7vP9dhS1UuazA2Pk1t6CzL0xlie56e4y3NkJRiPLKL4bpRTaCR3x4/FXq1m4npHeuCZFTryUzVGrEyR/KZPIaTRble97yfASxvDYQIQ0rBwgyxMp+nRX6Ow8k5EWEs0q5iAizYFoQlSbud+nnLW4GTzNN3/U7hNM+LuouOmnNOV1dWuIZuQ0i0/RHHZzYjJEKoTgijwUX0dqcs/t+Iu3LnrIKiZe0kGhpBG5bZqhWycTfPjv0lp/UdxRAhM1Qyp+CBzkJDHQNmhNXLWasRN/wK0GkxLn3qilMiggl50G87mz02qEFXqUz/gJeUaKGx8DMs26d8GhpDqIiWRa6T48P+J2PJ53IwLU/H2uRBE/R1D4x6j75BoGrd8mtItn0NGfsJHU4iUkvBnZt4amh/6OTL54tiR/GRhpeTzcmvux5mzOukqa7wkA0NIoyQljZ0r0fyRn6bw0X9LfvocLDWG3sQ1gr7If40FXMem6f6fpnTLD8akNFVSoYVEhFVyc1cx7RO/Tn7Gwusnq+4K3vdAsd38pk8mTRuNl2RgCKkOC0+TsSWljY+SefS3sJbdRcaWiCiI0w0mudLRCFS1N+kWOoZ3rwa6vFouDff/LA23fg5b6rhk06S1muOzRSuqkZu/jmmP/wbWjKWD1cMNhlZZbsXdOHNWw5gnthgYTFVCGlQ6cXZWYcE6Wj75m+Q/8rO4rUvIimCwdYWelOGn2IqPqj1JzbkxNmDFECm5d/8M6uYfw82XENGAkppM4S2J0BGOUIhl9yAf+vfDyMgo3PPn3Mo1kN/yOaSTSZJoDGEbGEIaPSkJgdQaJ1sgd9NnKX36d4k2fpZc8yxsHWIRJhm0k2yj6YEKZOP03ImCymZcZt77BQqP/jr5eavjUKiO6u5cOi7PD4jQwy0UKd71BZo/8WtMm7M4CdMZMrqUzIpr7yW7cKPpl2RwXcAel42lNbYAe8YC3Id+np6jD2LveZZo/yvY/W0EQQDSQQsR66cxdzvqI1olLIL+TnRQgUx+HBWUxrHAWX47YcM8nHe/hrvnWbzes2hho6VM5KcnhJw0IIWGKMBxXZyltxOu/zSFtXfGlpA5M7q8Qafj1iHFLT9A7fC7Qz25DAwMIdVv7aE1tiVoWbwOb/4avPWP4O99EffIG/hnDhL51biIqRZo5IAOvrbkJOJ7QUqDEBqhFI5UiGoXKvTH+Z74ULuNppkLUA99iery25HvP0l0dCthfzcaQahlUg6J8U0bHpSVxhYKSYSwMrjzVmOteojS+gexciWGSmMYMrrydGsyi28ht3gLlb2vop2cqXFnYAgpbWLK2JLM3BWEc1YQ9DxO345XaejaTd+hrbi1TkRYww8VWiRVpRNlp89RzSl2KB1WiGowu1priCIsqcnaoLHQdhbPbqGw9GbsbOkaKao4m1EKQX7pTeQXbuTYh68jD7+CPL6VbOUsKvQJIhFXQT5HdjoJN9YnO51IakhWxLISEVnbJnCKiFmrqMy7naYb7iXT1Jp4Rcl50TWrhRn30arv/DIOkYoxJ9T40rlwMuRvfJza4XdQWqOFGEMbLR5XumMb+kytp14r+vTlxZC8UtkoYrDHmyGkK3lMQmA3tbLwjk9R83z8kwcplI9xdvdrlConUb1thOUOVBjEEQwRK9kw6R6rR0hP4jy1KhIl6VgCoSOUUkmoSYDt4BaaqWVaaLdbmL5oFc3zV9NltZBpmY0YIKRrMdED5zJag+2wYOPdVFffRu3MQfSJ7XTveY1G7wx+zymUX0tyMQZkp2Kldl4hpauR2QB12wKkUKgoiufFtnCbZuDlZuK1rqJ5zd2EzYuZ3Tzt3G+4xudFMvKQIkTU1dpDJE0hg/gMbxyMj+yy28kv2Ux17yvg5sbO8xVAGKB0ek0whAqQ2puqd+TRUYSIaqmGoJX2sUQ01Eiz7mcM4zJkFypBQ0gXIyaAbMYlu3gVilXMXHYPGVWh68R+Og/upDlsJ1c+RV/7CVS5k5wdxtl6WiFUONiq4PKWikarxE8QEoRESwshbSoqrnSdbWyl0DKHNtlCmGthxrwlTJ+9lAarQDaXw7EEsybUhhCDIbBcxiE3fyX+3JXkNjwC/Wc4u+MdCuVjFGpt9LUdIervJGdHoAJQEUIrYuPp0tpioKW7RiTycvCx8Jw8xZa5WNPm0yamM3P5jbTOXU7gFMi79jlze82ts+T7++bdzlm/hFVP4VIBWmmEbVPKz8Adh00ubJdg449wxl6MHMsGflIS1sqIlvWUhvnTo/Oi4/cGDfNpX/15tFJ1fNpEJaS4rU3TvOW01LvGk7crJ0/bkk+jw2BYYeP6n3H6vA00TXBGEnqCVQXUOlm0QlwQIir3dtPX1Y7u72CG61PuPE2t9yzVjtMoFeL1dxPUylwseVCjcNwc2VJssWdK03CLjWQbppNrmk5bzUG7BQpN0yg0tOBmsxefNq2S4N7EdIG1Vgkpn+v9VPp66O1oI+rrYIbr0d9+jFpPO15vJyrwqPR2olV0ER9Sky004OaK2NkimcbpNLTOp2I10C9LNE2fSaF5BrYlL5ATE/jOmekUYHC9rKPJtNYnHCGdI0Z9EW9qGEIgCiLCwEdrTRT6RGF4CfFrpGVjOxkALNuO/78tLp6YcJ5Y4jP4SaTChj//RUoOBQrCMCAKQ7RShL6XkO2FPXYtx8WybKRlYdsuti0upPxzvk9M7O2Z3tHjOG91PX75PWmPbarX5JsM8poEpccmMCFdfJKGDuZJ6f6NHva58YSJqVYz7qKyk3V+1rC0BpMtZ2BgcN0R0hWsiRElNUxF0qnD4tZXLTdDPgYGBoaQDAwMDAymMEzNFgMDAwMDQ0gGBgYGBgaGkAwMDAwMDCEZGBgYGBgYQjIwMDAwMIRkYGBgYGBgCMnAwMDAwBCSgYGBgYGBISQDAwMDA0NIBgYGBgYGhpAMDAwMDAwhGRgYGBgYGEIyMDAwMDCEZGBgYGBgYAjJwMDAwMAQkoGBgYGBgSEkAwMDAwNDSAYGBgYGBmnBNiIwMJh60Fojzv+lGPwfg2s3M8Mnw+D8Jaq11tfnohBmzEaWYytvPc5EoPXVfdfAlhdTcN7OV2fCrM261+84ruG6CSk677ktkc5jp/25oR5ar7YEkZIiVRqiYZ9U73PqZOzD14E1ig+MlEYJMfgsUoAcA/LQQKiG9r1EI0eoBM4fc5qIx53OGhwJLlgHekBIY7CptR6cAAV4foTnB2S0h6OqlK0GQOA4Dq5rY4uxIaboPA62RLo64Gpgi0so1mtMTBqoBVHyOBrXtrDl+D3TSGUpBFgXDELFMzuGsqw7ZOft/j7BmX0gbGS2QGHDo4hssQ7LOX6ff/A1/BM7AIGVbyK/9kFErmGEnxv/rQ48KlufQAdVUCGZOWvJLL8TMWwjj1YJBMfeo3rgdYSdQdguhRsewco3j2L88d+rnjbKH3wbtEJHAdlFW7AWbb76zxt4rlO78fa9CE4WQh935nJyq+5Ld5NFAdUd3yXoPgnCAiEobvwEFFuu8nmTMVe6qe74LqraC9K60ModvblAfs0DyJaFo1qO3u7nCM4cBMsZ2TMJyDS2UsvNIspPp9QyEyeTi7++njV3mfmONPjth1DH36V67H38chdeUEOGHkG2ISaIbJH87BXoWWsR0xZTbJp+AaGNdr/qoEZt53OEPacAcKYvIr/mo/XrgOM7wLKvSv7Cssk0z6aWaSHINFFqmo5daBgixrRlP4L5Cc/sp/zG36OVQgUVims+ir32wfF5Jq3xdj6L334IYWcSYrnM4kUhnSyZ5jmE+Rn4bhOllplYtjPmJF8XIWml8Hc/T/XDb4N0sRpnkVt+NzJbrJePqO15mco7T2DZFrJ5PpnFNyNzDaPhI1RQxX/nK/jdp0FalDNFSo//NqVlNyeWqxzN4EFYhCc+oPbSX6KcHHa+iezS22JCGh0fEfacwn/jbwl8DxHVkFqTXbR5BJ8X/6HUIdV3EhKOAsLWZbhz1mE1zKg/zJaEhoKOo/Q/96eEtX5QEfbM5ZQ2f+bqI3kD81PuovLWV4i6j4N0UgsDSjTu9GU4LQsT30GOaIyV95/B3/MCOLlhHs7VoSxsLNdGZotU5mxALr2D7LLbcXLF+gyh855RCUH17HHU+9+gsuNZonInRAFSaEIVe/C2BCEEodL07HkZ23VxZi6lb/WDZFbei1OaPnppD8yhX6P67pMEJ95HKUVm+V3kV98/unEO6IDdL1Hd+sQI5C/olzbSsbGyeaqtywlmbaC49Bbc2SuwhGD8Q8zx91W2fxtv6xPg5hGhR//ZI2QXbsIqtoxeB12tkasivJ3fo7brObRTuDpZCkGfdLBsC6vUQnneBpi9AXfRFpymmTHJjwGZ1uchCYEWkkhbKC2RwkKn9IBaOERItJI4wq57wrSwCbUAHES5G++F/0puxu9jN86uT7BCEmERKYklLES9C0tIlLAJdYClbbS0Rvx+tMaduxZ3+Z2U3/0mOlsiOr0fZ/eLNNz8AyktJEFt9/MElV4iK4NUIflNn06MhpF9vhYSLWwiFa8nVIjQYSqLXde5BkMkaIlWCqnDISPyCl8qpSKshahKFa/jGZy9L+DP30Txzi+Qnb+h/jlIlJh/ZCvl7/4Rwel9KOkgBURh/G/CckBCqDQq9BFCYEnwPZ/gyIeIox+S2/Ed7Bs/TX79x7DreR4h0NIm0hKlQUunbsWvpR3rAC1AiXhNXEH+UkVEUYBfKVPrbMPd9zL9H3wde8kdFG/6AaxpC5LQNYw5MWkNQhJ2Hqe690WUU4zl4mTQHUep7H2F0qZPjjklCiFAWIN6Gq0QUXjp4SdHkUJG+IGASpna6UNY9tP4s1birvko2XUfxy00pk6mKWXZ6Tq3/sVjmPWrlIupJoW2s9RO7qH3u39M8yd/E+FkUwhb6BSfV9cp03gj5NY+RG3PS4RBgAb8vS+gbvgYMlOoY7zx+1S5g9ruF4kUCHycGUvILrutbmsOrZGFFqzG2Wgd1Rmxi5Iwb33KR6CQmTyyaS5I+8rzIgReVxuifBZHaiJh4wUaue9VotN74GP/juyq+0Y/B4miqx19n+6v/yZhbxvKzsfhuUwDxeWbqORnI/LNSCkJA4+w5wyl2hkqJ3Zie90gbSJhUT7yIfbpfXBqB6X7fgbh5uv0IlLUA3pg3jTScZFNS8DOJN7uxeXi97ZDuQNHarQW1JSD6DiNdfbLBAdeJ3Prj9Cw6fFkdOPjLVX3vkTUcRTt5ECFsdGpNJV3v0lhzQPIbGEcw4kR0s0nYWx9yRWvwwC/9wy214NEEYmYzMLjO/FP7cbf9woN9/4r3HkbUpXj9Zn2rTXKzlHe9QI0/xVN9//0mBz4XzMkFktm0WacWSuJjmxDWxn84x8StO0ns+CG0S+iZOOU97+Jf+YAwsmAX8FdcgtW46z6LCYBQgVkl99B/s4fR4d+3ZvULTWfb+GM6HlAIFRIZvoi8g//EmRKoKPLyk4IQbWrDVFuJzjwOhx4FV3rQzkF/L5Our71n2gqzSI3d/UoFFFiEFR76X3+z/C7TkGmhBXVsBbdRPamH6Z52Ram2xd61n61jH18N+HRrXgffhvZdwrtZAlrFSpnjlJQEdbg+cAE2aqAUBF281yKD/8iomFmrNTPf0AhQCtqPWeRlQ5U+376dr6I23ecMAiI7BxRxwmi7/4BovsYpbu/GJ+njNVg9cA89VDZ/jRK2KAirGwRHQUorQjb9lHb/yr5dQ+OPTmKWEYiCnBnLqfwqd8BFV1y/aowwO89S8broP/Qe4iDr6F629DCIsQmOvAW4dnDlD76r8mvezi1JLHrlJAiQKItl+rbXyY3axm5dQ+NYSz3WoxRIW0HZ/WDeEfejUOrfpXye0/GhDSqccabTAc1/D0volWEFiFOsYXCDR9PYTkKtFbY2QL5gQP3iaIWLZvctFnITPGq3pGfNiu2R9fcS/nIdrq/+0eIswfQTo6wr5PKa39F7tP/MU6YGMlmThRddd+rBMe3g1tERh724ttoeuxXyTS0DIX0zvlMjZsrMG35ZqLlmwk2PEzlzb+j/N7TOK2LaHnkl7GypWtz8H818pcWuaYZWI2tl/3LQsucxA+4j9KWz9C39zXktn8iOr0LZeXwo4jo5f+BrpVp/NgvJvtgLMgg/szyrheJOo6AtLAsm9LdX8R7/ymqJ3ah0FR3v0Bu1b0I22FcLAGtkbZLobn1yn/bOh+A7KqPEHb/EOUPn6H67pOovja0WyTo66Tv2/8ZoTT5DR9LRX9ed5UaBAq7oRVh2UlUJ6T3+T8jOLVr8PxlqowUoLTqdpzWJQjlo4VFcPQ9gs7jQ8ptpFYfgqD9ELXD76AtFxmFuAs34c5cfo53Vh+XhvF3KRX/rOeV4kbWYXDVz6W1Aq2wbJuGpZtpeexXsZvnIiIfbWcIj7yHd3LnCKNccagOFeEffhutNOgQmStRuu8nYzIasHqFjIll8BUrXq0VFprsjAU0fvxXKD70izQ+8PM40+ZNUDIaFtW4CvlrrdBKYQFuaRotmx9l+uf+M9b6T4AKkFKgnAJ9W79G9yt/i0Kkfdow5B15/VTf/xZRGKIjn8ycVZQ2fxJr4U2xR2Fn8A69FeueJFw9XrKM185VrmFLkmmZx7R7fpzSp/4DzoLNyLCCtrMEXpW+Z/8Y//A7qejP64yQBDL0Ka57kNKmTyKCahzK6jpF59P/ibC3PXH9pwApJSEMq9RKbsUdEAVgZ/A7j1Pd/QIj1ITnhL0qH3wb7ZWTg3OLwoaHB78vNTIVKb3SlulVvoSQQ9a3iijMW03xph9ARAFIC7/aR/XAmyObh+TPVFDFazuARiJUhDN7DbnWBfG6lfKyco2TbuI1bklB802fIrfstolNRiOQvxASMSADrUEr7IYZtHz832Fv+ixEUZzYLGwqr/9PgsNvp7x2h7wj7/A7BCd3guVi2w7ZdQ8hpEVh7f1YhfhqSFTto3/r11Mz5tKW5eAzJbJsWLiels/8B9wltyODcqw/y110fvdPCfs769af1x0hDRwIN9z3k2SX3oLwy2ingHd8Bz0v/EVsnY9Bksa1RGb1g9iNMyGKz2T8/a+gav0js2gS7yjsacM/+CYKiYg8rNmrseeuP8crM7gIuWqNO289sqEVoSJ0GKB720an7gIfWe1CIxDoOLNxpBcWB/5W68FQ7NQTfeIZaoXjusx48GfIrH0QwhpYDqrWT9/r/4AKaikaoklYW0VUdjyHCj3QEVbLguQeoCYzcxm5FXeCX0VbDt7ht/Hb9o4uajHeslQKp9hM6aFfQLSuQIRVtJMnPL2H2rtPjM7QvZ5DdgiJDmpIJ0PxgX+L1bIQEdYgk8f74NtU3v7HqRO6S6wbd9Yy7AWbECpEWxm84zvwj78/wsUT/11lz4t47UcQtgsacivuxi40jfiezvVISnbTHJyGGaBCpBRIRmmVWzbKjS+fawRh31nUYBhrFIpmqhsSCSnZtsO0+38qDmFHHsrO4h1+C//I1vRkkGQG+id34h14C+xMnKiz9mGsfGMcbpQWubUPYuWbEEIS9pym8sEzdSvzcYGMQ8a56fNouveLSCeH0AotLfq3P4PfdaIu/Xl9VvuWcSglN2sp0x78EtLNgVKESHpe+AvKe18ZXMSTHlohgNzahxBOJg5XhD59734z2TtXsQQSr1J5Zfy9L8eJuFGA0zybwroHjXd0tQg9dBTEFvRojrgGyjM5GayGViQaLW3C07vxj384FHq6HstTXi0pNbRSuvXzSBXFazrw6X/3qWQvpLeGK+99k6jSHScXNc8nt/LuczzTzOKbcOatg9AHK4u350XCzuOTwxhOqqnkV96Fu/SWeF1bLkHnUfxDb9VFrNdx+wkBOiK74k6Kd34BqeLYfuh78SFd+8GpQUrJBigsuoHMvPWIsIaWDuHxDwjb9l1lmCD+9+D0Hrxj21G2i1QhmWV3YjfNOjcElB6TToxkhtTMZk3QfYqgtx2kHZ/NS2cUa1Yj7AzO3HXxRVFpo7wK5Rf+HO/0vlhZDA/HTUh5XNu5cBfdhDVjMSIK0EKi2vejek7XHzJLogRe2368A2+C7UIUkF12G86MRYOGHVohhCC34VGkJdHSIug4SnX385NKjkJIcusfQdpuvC6FpLbv1cTokqMipeswZHfhBi/e8kO4ax9GBBVwsgQdR+l79o/RXv8UCN/FVrPIFMmuvCc+8LVswt4zVPe8eHXWTOJF9b/3NDrwEIDMFslveHhoI6ZOoiL2ZCdCMkPde3fgkHsrqtyJFgI7m8Ods2a0MSFyK+5CF6YjIx9tu1RP7qLna/8Xfa/8NcHZo3Gx2vPlcb17T0KCBrtxJpl5N8Shetsl6OvAO7krhZBZLGdvzwtE3SfQSGS+kcKG869ExP8vt3gL1syVyMhHCSs+c6r1J/OlJ4Uizc1fi9U8D6EClJAEbftRXnnUorzOG/TFE2/ZDs0f/dl4kXoVtFOgsv8Nel7873Hq4xRh4ezKe7Fb5idhApvq7hcJ+85ennST3wdnDxEcfhslbQiquItuwmldRtoH4kIIVOAT+VXCcg9hpXdEryB5qdAfM0/niq9zvLX4zMA/tp3qtq+i7SxEIVZhGtmlt17MSroKpapxZ62k4c4fjfseRSFaZvA6TtD7/F/Q9ZVfpPdrv0r1/aepnNqP39eJ1jouyzQ4V9er56QRQmDPXIa2XASCqNpL1H2yfqNDCMKeM3Gqt5VFRjUyi2/Cnb3y3GkeyIAtNJFf+wBaRQjbJWw/RHXPS/V7auNo2MtsA+6c1QgVgbAQQZVolMk6YBr0DWXhNEyn6aGf5+xXfomo3Im2c/S//Y9YLQspbf7U5L40m2QQOY2t2ItvIzj7ZZTMEJ45gH/0Xey1D3DpS3nx72t7XiboaUPYWYRlkVt9H9LJpCsXrdDCwj/4Bn3faENHISM9mxICdBSR2/QpsqvuTTedWVhcVTbbsH+OEAQHXqfnmT/C7+sCJ4v0+8ne8Fgc7hzN84m4fUrpps/i+T7eG3+LqPagpIuyM9Q6juOdPUx1z0vY2QJ2y0KsmStg+lKyc1bhtC5DWHZiiOvrMhnFbpqNnS0SBB5SgA69VD63uus5gq6TCMtFOgUKGz+BkNaF+ySReX7NR6i89w38jmMoFVHb8Uy8t9zsBJ+bJHxs2fH9uiRcqaKAsKcNd9ZKQ0j1kpI7dw3F+36Gnm/9LgKN1lB56S/JzFwa12ya1Js3JpbihofxPvgWyvdQSlHZ/i1yqz8Sb5rzSWmgOGS5Ow7vSYkOPTJzV5Nfedc5Gys1SEnYfYq+rhOjJl8LhbX4FrKpRt0UkVeJzwVUdMlxC+JNqfwquvMo1R3PUNv7CkGlF+FmEbUesqs+QunWf1aHFSySZSuYcdc/pzJ/Pd2v/R2ceJ+o3IW0LISTJdQQlvsR/R8gj7yHZUn8xjlY0xfjLrkFd8U9OI2tY9MWYzLs+cHxCnSle+Te6vC9JUB5Zaq7nkchEKGHs/j2oTJdF8g2js7YjbPILr+LoP1vwc5SO/Iu/pF3yS6/nbhm3wSek6TjgZVvGnxWHUWoWp/xkNIipeIND+Of2U/t9f+Jcov4fR10Pf37tHzuP2M3zZ68Gzc5ZHRnLiOz9FaiD55B2xmCU7sITu7CnbfuImNLKjMc305wajdaulj4ZFd/NC7COUayGKTF0YTSk3s1Qsp0HgSNEg5B5zH6n/kDpO0kYdxLeJNComt9RF0niWq9RLUyivgyqvLKZNc+RMMDX4oL3KZSKkaTX7SR7Px1VI5sp2/Xi+i2XXhtB7Cj8qBVHgmHCAvR3QYdx/EOvoGz7atkt/wghU2PJxdmr5/uv8NvGopEnY569APFbve9in9qN8JyEGgyK+9DOtlLRxGSNi75DR+n8v63CGt96DCg/90nySy7bdLMibCs82zC0e89Q0jnWS1SQMs9P0Zn5xEqe15AZ0p4p/bQ9d0/oeVTvzWYUTI5d6FGWA65VfcNxqrD/g4qu74fE9JFSQyqHz4bx7mlQJRaya2653zqSE3+QinsmSuwF2xCR/7oPl9F2K3LUyXzqNpLZe9r6CsxZLI2dGLgaBViZQrYTbNxNnyCxi2fws7kUiTz+DxCWjbFJZspLtmM19eBf+YQdB+n78h21Jn92NVOgnI3OgoQTg5fQ3DmMMF3fp/o1E4aHvz5MTUyJtxOH3Y2rFE4heZRVgDXg3cbqx9+B8K4RJfTupj8yruHdMVFdUYSSm9ZQGb5nUTbvoqyc/hHthGc+BB33vqJzUcDxs7AOTRxCC9u0HqtCGkqHYyKgYy0Ao0f+yWCntMEbfvRmQL+3hepvPUPFO/4l5M3FXzgDsTSW3FmLsM7vgNhudT2vUqw+TM40+YOKaTEqgtO7cE/+h5K2oiwRmb5ndjNc4ZSWNN+PhWSXbSJpgf+NTq5KzL6oFaKIUUdK64h+ZwffUmSBuxMovBCnKb52PM2YM27gdKqO7EL04ZZxiJlxaAHPbpMqYVMqQXYQv6GRyCoEXSfonfPq0THtxOe+ADpldFOlkAr+t95AiUsmh7+xSR0O/URdJ0kqvYh7AxKS5SVGb3+EwLv2Ha8w9tQdgYZ+RRv/ER8YfyKYUCBsCS5tQ9Q2/V9VOgTVboov/fNmJAmuD7ROiLsPYNGJgavi9U4+xoQko6zVQZ766RMUPr8zxkv4hu4QNfYSsODP0fXP/0KkVdFSZu+l/8Ka9p8cqs/AirgIl3nJ7wHiNZYmTzZ1Q8QntxJJB3Cs4fwjmyNCek8k6yy63sEvW0IO4cstFBYe3/skuuxiW/HOlUl1fLltbXWB9pP6Ai7aRa5DY8gM3mIzmseqDU4GfwTH1Lb8WzSaiDuu9X0kZ/GLrWcE6IZmzGJoTinHgpIWbYDtoOVK5GdvYIo8Kkc2kr17X+gduANcLJETpHK9qfILrs9vsB5HXhJuusoOvQRloNVaMJpWVCXkdf/7lNEfhVhOcim2cg56wkrPXFlBnHljo5W6zKs2WuIDr2BsDPUDrxFcOYgTuuSiZlQpYfaoNRO7EQLK+6ikG3ALs24FoSUHGhlS0MZFkENVe2B5jn1j7fSBSpCSwsh5fhabonCzS/eQnjPF+l95o9QwiUMfLqe+WNk0zwys1dM1q0ICApr7qPy9pdRfe1oLKo7nqOw/uGkJFC8AcKe01T3vhq3SIh8MnO3kF1w4znu+vUAoSPshpk03PpDcVWPS0l242OcrfZQ2/tKXJ7/9G66n/kvtDz+60l7gXEq03NOOaDh5YQ0luNSWnEbhYXr6Xrq96js+C7ayaOCGpUPvxsT0lQlo0RPhb3t1I5sRziZuOJI0yyc2auuwpu52OdJ/GPvExx5By1tQKCqfVSe/PfUpLjQsL7UlFk2qrcLpIuWFlH3Car7XokJaQKfIQVt+9GdR9HSwlIB7tw1cRsTRvfYdWiVJOKabYzDOcIirPQQdhwdbuuOzg2MQqh2xwfTOsIqNCMG3N/xmpvkvkfp5h8kv+UzSD8utx71ttH77H8h6u9INvskC98l47IbWsmvuQ8RemjLITz5Id7R7ed4p96RdwnbD6CljWU75Dc+OgaVkSePMtNBLR77xdofqAjhZGj46Jewps1HhB44ebzdz1N+5x9HfXM9Hc/p3BYUqAiZKdJwz09gNc5J2llL6DkeX8wcz4jEuLu8gtrel/Hb9sb3kLTCnrMWuzT9HI9nJJ5CZcf3CHvbQDoIKdGhT7WrjXLHaSqdbVf1KrcfJ/JrcVscDdpyqG5/OtYzE7gDQWX700SBB9JCa8gs2hJfaB9lBEXWNbeA1TIfK9eAFhr8MsHpPfVZMGj8tgP4ncfAciEKkQ0zsQYOXMfZWhBoGu7+IvaiLUll8Dze4W30vvgXDJXzZ5IlJ8XudmblfcjSDASaoNpPZedzgyVAdBRQ+eA7aARSRcjpi8gs3MQkHGy6noe4RPWI5K5JZsYiGu//WaRtg1ZEQtLz8l9TPfBGylU/RnuxdehZ7WlzycxbF/doQqKihHSnpEGRXFwtd9H/zj/FrVO0QrpZcus/Nkz/jMw7CjuPUdnzAtg5QBHVyoTVfkKvOsJXjbDaj6r2xtXgpU3YdZzKrufrM/DH0NOsHXoHb/9rMbGHHk7rYrKLb6pLR9SR1BB/oTNrJXa+kbDzJNhZvINvEfWdxSq2jDz2mZQ7CU68T9h1EtwCws5gTV96TrhpXBWQVtiFRlo+9ou0f/mXCLtPopwc/Vu/gTN/81Bm0mQyKAdanM9dizt3HZXdLyJsF+/gmwTtB3Fal+Id/4Dw1M44DBF65Fbdh5VrvG4vUl6996korPkI/uk9lF/5a5RTIKqV6f3e/40zfXHcBqReGQ68XwwLyY3i84S04grUw6qO66k4tQNnd1rT/9J/J2w/iLZzyKBMZuW9ZBbeMArdEv9teef3UT1taNtFCEHhjh/Fapod9x8byZzoZP2ENWpbnyDsaydSIbUdz1JY/xAyW2JCpNzpuCJDVO6k9/k/I6z0gpNFRD75DR9P1vfoz7xGT0iJsJ2GmYgZyxAdx9BWluDMAaq7n6d402eTA70RsK6UROUuyu89DZaDjkLs4rTkktg1sswHKjm0LqXpgS/R9Y3fRCVFGfte+kucaXNRlsuk65+k47s6ufUP4x14nQhJ1H0S78g2nNalVHd+n6Dcg7Dd+EB/1T1Tp3nhWIeFtKbhjn+Bf2oP3v7XIFMgOL2Xvu//GU2f+DWEtEevXBIyqux7DSpdcRadYIRKIP5uHdSIek6jhYVAx2n9ljN1pmKw11NSi/GNv6O87esoy0VEPiLfTOn2H0HaI6w4ksxBVOnG2/UsSkhE6JNdtInp9//kYDfq0aKz93Qc5nXyeMc/pHbgTfJrP3ptjcFBWVqoai+dT/4OtWMfgFtE+GXc+RvI3/jJuklT1v2QAgo3Po5wMoBGSUnvy38dP+xAyYwrKTEdDca3+17+K4JTu2I3MPJxl9+F27Lg2k7GQJLDqrsp3PbPIfQRlkvU20bt0Dto6cRpv5Nwz+YWb8GanlQ+RlLZ9TzBmQP4h95BWDY6Csgs2oLbupQp28gtba8asDIFmh/8EnbzHETgoZw8/R8+Q99bXx49sSd7IDh7mN7v/hd6nvodep//c6KBZouDYacrfHZSacJv2xfvUzsTp9jnW2IveFLO83n1Awf6cwlJWO2l57t/TO/z/y+RsBAIhFaU7voxMvM3jOIKQyzf2u4XCNqPxCSe9DgSloWOArSKRv6Kwvhy/o2PYeUak9+HlLc/hQ68cSz0fL4s9aAsg/bDdDzxq1T3voTIFBGRhyy2UProv8HKlUbtradDSIkbnFu8hczyu+Jq2ZZLVO6k++nfwzv63rASHRdrEZAIV1iooEbP9/6M/rf/CWVnEVGAVZpOcfMnJ0b120SJNNz+eXLrHoSgihIyuYU/SRWnVshcA4V1DyFUgJY20dnDdL/wlwTdJ9DCwnJz5DY8OsxKGkcFM5lJSSvcGYtpvP9fD54naWnT/+r/xDv0zsiVyzCrvOfp3yPsOEYoHfpe+Ru6/vGX8Q5vG2blD+yXS+w5aROVu+h54b+hqr1oBJbtkF39kQktenGlfx2evCEkqtpDddcLdP/Dv6X/zS8TDVzTCMrkb/4cpZt/cOSG7rDeYOUPv4tSAToKcFuXkFt9LyAQ0kZIa+QvywIhcWYuJ7P0NqzIR9sZ/GPv4R3/cHwlfY4sBWHPafpe/3s6/vfPUTv4JmSKEHoIO0vDAz9HbsGGVJp02vUvEY2wHZru+T9oP72HqPMY2s0TtB/k7D/+CsVNj5Nb9yDOjCUXPKsGiEJqh9+m8vYTVPe9ErvTgFAhpTv+JZlZKyZIHn48VmlnaH7w5wg7jxOe3Imys5NYeSYXZVfcib3tawRdJwhq/YR7X0ZLGxHVcBbeQmbe6nOs/zGXspColMKz16wfakJKhbX345/aTf+rfwNugajSS/ezf8L0z/0B1kjOk8RA/Toba9ZKxLEPUFFAZOeoHnoH/+RO8qvuJbP6fjILb0xKE104eK013sE36H/1b/AOb0M7eURQxp6/kdzKeyYwxwuUtJPTrovIy6+hvDLaKxN2HCY8exjvwOt4R7cTJT2kdOghpaBw9xdpvPNHEaMydJNiw4fewT/2PtrOIsMa2TX3xzXd6orkJBfzpUVh3YN4e19EaFC1CpX3v0V28ebU1qYWlx65rvWBXyWqdBN2HiU4uYva3pcJOo6ihAVOHrx+ZHE6DQ/8HKUND6V2Ud5OZ+NpnBmLmfbor9Dxtd8g6m1Du0VUrY/el/4Kb+ez2DOWYM9ahXALcS0wrQg7T6C7juCf3ktY6UW7eYQKECqkeNcXKG759MQ6RB8oG19sofnhX6DjK7+ErnTHIbtJa8lr3OkLcRdtIug4ClZ8D2IgVJlf+wDSyY2TUaDRloO/5wV6Og+DGnm173M2XehhL9hCw90/dg3teU3jXV8gPLWL2qG30E4B/9Qeur7/57R84teSStBXv8ZltkjzQz+PPWMJvS/8JaqvDZw8YRTR/95TVPa8RGbGIkTTPKyWhchcA3bDTKLeM4TdJ4na9+Gf2EVQ7UU4eWRQQRRn0Hj/zyQhl4kVrhNotLAJe9ro++ZvJbXh9AWiVl4VHdTQoYff246u9qClk6R2R+CXsafNp3TXFyhtfOwcchl5+F5TefcbaBXGvcEaZ5Nf9ZHRf+ZF1o27eAvughuo7n8T7AzewTfwTu0mM3vV6Paijr07bWfwzx6m58s/D0pfdN+oWh868Ij8CmFvOzqooqWLtjLx2Vvo4S6+iYb7fors/PWprhk7TUWdXbSZls/+J7q/84dEJz8kkjbCyeF1t+F1HEfue/2cB1dREPdzsTNoO4MIKshcI6U7/iWl2z5fV5G+i1lYQggEdTZwS86TMvPWUbrvp+j51u8lYRCJTGlSBp9VjJ99X7jhUbxd3yfwPUjKBGVnLSe3/I6rCpiksYYEoKUk6D5N2Hmszs+TEFTJ5qbV/1yjbfqXEL7M5Gm4/2cJvvzviMqdkMnj7XyW8pw1FG/5wVGFQkubHseds5q+1/8eb++LaL+CsjLowKNyfCf62A4s2wYhkdJCqwgVhSgVISwXIR3w+7FnLqN0/78hu+CG+hXL4LpNa70MpNTHl+6rh7ddRlZiqN+TELHy1AoZ1hANreTXPkhx86dwps0byrob6TMmRFA7sg3/eHz2hlcmt/IenJb56XgJA2vGyeKuuBfv0FaUtIn6zuDtfj4mJMQo54Y4XFvrp7zn1cvuHc1QyE4LJ5Zl5OPMXEb+hkco3PgJpJtP3VBNr7hqoqiz89Yy45/9AeX3v0PlvScJe06hah5CSpSKLrAEhFboKMDKNeAsuofG2z5PZu6alKyNIYSBh458oiTmmwYBl258jLD9IH2v/13c6Cvwrvpm9uUWfRR46CggCmtoFY6LIe/OXok9dy1RcqdChB7OsjuwitPG3mrWGh366KSpntbU73UKgRY2jDbjSRB7aKGPkiJu+KdHv1Yyc1bRcN9P0PXU76IDD6UV3d//s7gU1fLbRnGWocjMWoH7yd/AP7KNvu1P4x96G1XtRYUeUghUGJc4UgSDe00kSQ9OsQl35b2Ubv8RnMZZKcxxPIcq8OM9oIIU1kUYrwkh4waDWCDFJdfQgB6y3DzSzSFaFlBYfgeZxTfjti45h1RG7a+piPK7TxL2nkG4OaxSC/l1Dw27MJ7ePimsuo/KW18hOrMfpE3ftifJrf84zvSFI54vFfrxGpZxtfrL7q+BivmWg+VkEdkS9qxV5FfeRWbR5qFLxGMQNUm32ndCSlZhGg23fZ7Cho9RPfg2wbH3UL1thJXuuFtpAivfiFWagZy2kOzSW3Bnr0zqpOnzyp/Up2ylmyN/yw+TC2roKIwza+oy4sTge5vu/SJ20xyiSi8yW4jvX9UBq2kO+Tt+fHCDZxdvGvvQUuKlFm/5Z7HSsl2QNoUbHmE8zsfsYjPFW3+YqNqbaokoHQW4dZR4Kmz4WFxSJml7Ld3s6NZNkkFavOFR0IKwpy0uW+NX48Zwo2rSJwfrSWYWbSazaDNB14m4usbpvahKB1G5B1XtTTx4C7s4DZlrxJq1mtyyW4fqt9WjWAb2mJMjv+lTuEtuAyFwpy8c/f5K3pdbdQ+yOOPq06i1RrhZnJaFODMWxxVebPcCwhot4SIE2qvizr8Be/oitFLYDTOGDOi0lPNApmaxmcaHfh7v2Idx6SkVjrBKSmL0C0l23cNYM1cgrvbMW0VYpRbs5vk4rUuQ2dJQS5dhGYypayOtxyB1anDyxTBjJ0BVe2LvJPm9zBSR55cqn8ydWacABlJPEVPsTsqUnrSL7xlV60d5/fF+lBYy1xh3+T1/r07lVP7z7iIZ1LnO6j3yuCaEdP5iuJz1MPg3YozDQuo8Dyet7zqvhEsaC3/MnnWiL/Yx8gBHKz99Xhu3NObhgnGmOL/Xer+lLa9zPm8ULlZqZ1lXeK6xJLu0vqtuWY6PDhpbQrpAcV/aPTWYMMxw4WI0mMTewfnTaebUYOJiHAnJwMDAwMDg0jCBVQMDAwMDQ0gGBgYGBgYD+P8BP+CZW6Ns45UAAAAASUVORK5CYII=">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capitulos/01-senal-ruido.html">Fundamentos del aprendizaje predictivo</a></li><li class="breadcrumb-item"><a href="../capitulos/03-modelos-lineales.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></h1>
+<p class="subtitle lead">Matrices, gradientes y una implementación reutilizable</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em><a href="https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/03-modelos-lineales.ipynb">Abre el cuaderno de esta página en Google Colab</a>.</em> Lo primero, <strong>Archivo → Guardar una copia en Drive</strong>.</p>
+<section id="de-una-recta-a-muchas-variables-predictoras" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="de-una-recta-a-muchas-variables-predictoras">De una recta a muchas variables predictoras</h2>
+<p>En el capítulo anterior aprendimos a ajustar una recta con una sola variable predictora. Pero para predecir el precio de una vivienda, por ejemplo, podemos disponer de su superficie, su antigüedad y su número de habitaciones. Queremos usar esa información conjuntamente.</p>
+<p>El criterio no cambia: seguiremos minimizando el riesgo cuadrático empírico. Lo que cambia es la forma de escribir las predicciones y el gradiente. Las matrices permitirán hacer los mismos cálculos con cualquier número de variables predictoras.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_plano <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X_plano <span class="op">=</span> torch.randn(n_plano, <span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>w_plano <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.8</span>])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ajuste_plano <span class="op">=</span> w_plano[<span class="dv">0</span>] <span class="op">+</span> X_plano <span class="op">@</span> w_plano[<span class="dv">1</span>:]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y_plano <span class="op">=</span> ajuste_plano <span class="op">+</span> <span class="fl">0.9</span> <span class="op">*</span> torch.randn(n_plano)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">4.4</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">"3d"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> eje <span class="kw">in</span> (ax.xaxis, ax.yaxis, ax.zaxis):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    eje.pane.set_facecolor(<span class="st">"white"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    eje.pane.set_edgecolor(<span class="st">"#dcdcd8"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>rejilla_1, rejilla_2 <span class="op">=</span> torch.meshgrid(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    torch.linspace(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">2.6</span>, <span class="dv">9</span>), torch.linspace(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">2.6</span>, <span class="dv">9</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    indexing<span class="op">=</span><span class="st">"ij"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax.plot_wireframe(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    rejilla_1.numpy(), rejilla_2.numpy(),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    (w_plano[<span class="dv">0</span>] <span class="op">+</span> w_plano[<span class="dv">1</span>] <span class="op">*</span> rejilla_1 <span class="op">+</span> w_plano[<span class="dv">2</span>] <span class="op">*</span> rejilla_2).numpy(),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#ff5700"</span>, lw<span class="op">=</span><span class="fl">0.6</span>, alpha<span class="op">=</span><span class="fl">0.75</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_plano):</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        [X_plano[i, <span class="dv">0</span>].item()] <span class="op">*</span> <span class="dv">2</span>, [X_plano[i, <span class="dv">1</span>].item()] <span class="op">*</span> <span class="dv">2</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        [y_plano[i].item(), ajuste_plano[i].item()],</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>ax.scatter(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    X_plano[:, <span class="dv">0</span>].numpy(), X_plano[:, <span class="dv">1</span>].numpy(), y_plano.numpy(),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span>, s<span class="op">=</span><span class="dv">16</span>, depthshade<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"$x_1$"</span>, labelpad<span class="op">=-</span><span class="dv">4</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"$x_2$"</span>, labelpad<span class="op">=-</span><span class="dv">4</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">"$y$"</span>, labelpad<span class="op">=-</span><span class="dv">6</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>ax.tick_params(labelsize<span class="op">=</span><span class="dv">7</span>, pad<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ax.view_init(elev<span class="op">=</span><span class="dv">16</span>, azim<span class="op">=-</span><span class="dv">62</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-plano-residuos" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-plano-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="5d9043a7" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-3-output-1.png" class="figure-img" width="574" height="559"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-plano-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Un modelo lineal con dos variables predictoras. El plano es la señal generadora y los segmentos grises muestran el ruido simulado. Con tres predictoras o más no podemos representar conjuntamente todas las entradas y la respuesta en una figura tridimensional.
+</figcaption>
+</figure>
+</div>
+<section id="el-modelo-lineal-gaussiano-múltiple" class="level3">
+<h3 class="anchored" data-anchor-id="el-modelo-lineal-gaussiano-múltiple">El modelo lineal-gaussiano múltiple</h3>
+<p>La extensión natural del modelo con el que hemos trabajado al caso con <span class="math inline">\(p\)</span> variables predictoras <span class="math inline">\(x_1, x_2, \ldots, x_{p}\)</span> es la siguiente.</p>
+<div id="def-lineal-gaussiano-multiple" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.1 (Modelo lineal-gaussiano múltiple)</strong></span> Dadas <span class="math inline">\(p\)</span> variables predictoras, el <strong>modelo lineal-gaussiano múltiple</strong> supone que las respuestas son independientes y</p>
+<p><span id="eq-lineal-gaussiano-multiple"><span class="math display">\[
+y_i\,\vert\,\mathbf{x}_i
+\sim\mathcal{N}\Bigl(
+w_0+\sum_{j=1}^{p}w_jx_{ij},\;
+\sigma^2
+\Bigr),
+\qquad i=1,\ldots,n,
+\tag{3.1}\]</span></span></p>
+<p>donde <span class="math inline">\(x_{ij}\)</span> es el valor de la variable predictora <span class="math inline">\(j\)</span> en la observación <span class="math inline">\(i\)</span> y <span class="math inline">\(\sigma&gt;0\)</span>.</p>
+</div>
+<p>Para escribir el modelo de forma más compacta introducimos la siguiente notación.</p>
+<div id="def-notacion-vectorial" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.2 (Vector de variables predictoras, vector de coeficientes y convenio de la constante)</strong></span> El <strong>vector de variables predictoras</strong> de la observación <span class="math inline">\(i\)</span> y el <strong>vector de coeficientes</strong> son</p>
+<p><span class="math display">\[
+\mathbf{x}_i=(x_{i0},x_{i1},\ldots,x_{ip})^{\mathsf{T}}\in\mathbb{R}^{p+1},
+\qquad
+\boldsymbol{w}=(w_0,w_1,\ldots,w_{p})^{\mathsf{T}}\in\mathbb{R}^{p+1},
+\]</span></p>
+<p>donde se toma <span class="math inline">\(x_{i0}=1\)</span> para toda observación. Con ese convenio, la media de <a href="#eq-lineal-gaussiano-multiple" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> es el producto escalar de los dos vectores:</p>
+<p><span id="eq-producto-interno"><span class="math display">\[
+\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}
+=\left\langle \mathbf{x}_i, \boldsymbol{w} \right\rangle
+=\sum_{j=0}^{p}w_jx_{ij}
+=w_0+\sum_{j=1}^{p}w_jx_{ij}
+=\hat{y}_i.
+\tag{3.2}\]</span></span></p>
+</div>
+<p>El modelo entero se escribe entonces <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i\sim\mathcal{N}\bigl(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w},\sigma^2\bigr)\)</span>, con independencia de cuántas variables predictoras haya.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="El convenio de la constante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El convenio de la constante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Meter una primera coordenada constante igual a uno simplifica la notación, y es lo que haremos a partir de aquí y hasta el final del curso. Cuando digamos que hay <span class="math inline">\(p\)</span> variables predictoras, el vector <span class="math inline">\(\mathbf{x}_i\)</span> tendrá <span class="math inline">\(p+1\)</span> componentes y el modelo tendrá <span class="math inline">\(p+1\)</span> parámetros.</p>
+</div>
+</div>
+<p>Con <span class="math inline">\(p=1\)</span> el convenio devuelve la recta del capítulo anterior: <span class="math inline">\(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}=w_0+w_1x_i\)</span>, que es <a href="01-senal-ruido.html#eq-senal-lineal-1d" class="quarto-xref">Ecuación&nbsp;<span>1.4</span></a>.</p>
+<p>Por ejemplo, con dos predictoras, <span class="math inline">\(\mathbf{x}_i=(1,2,3)^{\mathsf{T}}\)</span> y <span class="math inline">\(\boldsymbol{w}=(4,1,-1)^{\mathsf{T}}\)</span>, la predicción es <span class="math inline">\(4+1\cdot2-1\cdot3=3\)</span>. El primer uno de <span class="math inline">\(\mathbf{x}_i\)</span> permite incluir el intercepto en la misma multiplicación.</p>
+</section>
+<section id="log-verosimilitud-y-error-cuadrático-medio" class="level3">
+<h3 class="anchored" data-anchor-id="log-verosimilitud-y-error-cuadrático-medio">Log-verosimilitud y error cuadrático medio</h3>
+<p>Habiendo definido el modelo, para aprender sus parámetros hace falta un criterio. Este se obtiene igual que en el capítulo anterior: se escribe la log-verosimilitud del modelo y se aisla la parte de ella que depende de <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p>El riesgo que vamos a minimizar es</p>
+<p><span id="eq-riesgo-suma"><span class="math display">\[
+\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2.
+\tag{3.3}\]</span></span></p>
+<div id="exr-loglik-mse" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.1 (De la log-verosimilitud al riesgo cuadrático)</strong></span> Fijados los vectores de predictoras <span class="math inline">\(\mathbf{x}_1,\ldots,\mathbf{x}_{n}\)</span>, las respuestas son independientes y <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i\sim\mathcal{N}(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w},\sigma^2)\)</span>, con <span class="math inline">\(\sigma&gt;0\)</span> conocido.</p>
+<ol type="a">
+<li>Escribe la log-verosimilitud de la muestra, partiendo de la densidad normal.</li>
+<li>Comprueba que <span class="math display">\[
+\ell(\boldsymbol{w},\sigma)=C-\frac{n}{2\sigma^2}\hat{R}(\boldsymbol{w}),
+\qquad C=-n\log(\sigma\sqrt{2\pi}),
+\]</span> donde <span class="math inline">\(\hat{R}\)</span> es el riesgo de <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a>. ¿Depende <span class="math inline">\(C\)</span> de <span class="math inline">\(\boldsymbol{w}\)</span>?</li>
+<li>Deduce por qué maximizar la log-verosimilitud equivale a minimizar <span class="math inline">\(\hat{R}\)</span>. Indica dónde se usa que <span class="math inline">\(\sigma\)</span> es positivo y fijo.</li>
+</ol>
+</div>
+<p>Nuestro objetivo será pues buscar:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{w}}\in\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}\hat{R}(\boldsymbol{w}),
+\]</span></p>
+<p>con <span class="math inline">\(\hat{R}\)</span> dado por <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a>, que es el riesgo empírico de <a href="02-aprender-minimizando.html#def-riesgo-empirico" class="quarto-xref">Definición&nbsp;<span>2.4</span></a> con pérdida cuadrática.</p>
+<p>Todavía se puede simplificar más la notación. En <a href="#eq-riesgo-suma" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a> quedan un sumatorio sobre las <span class="math inline">\(n\)</span> observaciones y, dentro de cada sumando, un producto escalar sobre las <span class="math inline">\(p+1\)</span> coordenadas. Los dos desaparecen si reunimos las observaciones en una matriz.</p>
+</section>
+</section>
+<section id="la-matriz-de-diseño" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="la-matriz-de-diseño">La matriz de diseño</h2>
+<p>Empecemos por recordar cómo se mide el tamaño de un vector.</p>
+<div id="def-norma-euclidea" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.3 (Norma euclídea)</strong></span> La <strong>norma euclídea</strong> de un vector <span class="math inline">\(\mathbf v=(v_1,\ldots,v_d)^{\mathsf{T}}\in\mathbb{R}^d\)</span> es el número no negativo <span class="math inline">\(\left\lVert \mathbf v \right\rVert\)</span> definido por</p>
+<p><span id="eq-norma"><span class="math display">\[
+\left\lVert \mathbf v \right\rVert^2
+=\mathbf v^{\mathsf{T}}\mathbf v
+=\sum_{j=1}^{d}v_j^2 .
+\tag{3.4}\]</span></span></p>
+</div>
+<p>La norma al cuadrado de un vector es, por tanto, la suma de los cuadrados de sus componentes. Escribiremos siempre <span class="math inline">\(\left\lVert \mathbf v \right\rVert\)</span> sin subíndice, y siempre significará esto.</p>
+<p>Reunimos ahora las <span class="math inline">\(n\)</span> observaciones en un único objeto.</p>
+<div id="def-matriz-diseno" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.4 (Matriz de diseño)</strong></span> La <strong>matriz de diseño</strong> de la muestra es la matriz que tiene por filas los vectores de predictoras traspuestos:</p>
+<p><span class="math display">\[
+\mathbf{X}=\begin{pmatrix}\mathbf{x}_1^{\mathsf{T}}\\ \mathbf{x}_2^{\mathsf{T}}\\ \vdots\\ \mathbf{x}_{n}^{\mathsf{T}}\end{pmatrix}
+=\begin{pmatrix}
+1 &amp; x_{11} &amp; \cdots &amp; x_{1p}\\
+1 &amp; x_{21} &amp; \cdots &amp; x_{2p}\\
+\vdots &amp; \vdots &amp; &amp; \vdots\\
+1 &amp; x_{n1} &amp; \cdots &amp; x_{np}
+\end{pmatrix}
+\in\mathbb{R}^{n\times(p+1)} .
+\]</span></p>
+</div>
+<p>Cada fila es una observación y cada columna una variable predictora. La primera columna es de unos, por el convenio de <a href="#def-notacion-vectorial" class="quarto-xref">Definición&nbsp;<span>3.2</span></a>, y es la que representa el intercepto.</p>
+<p>El producto de una matriz por un vector se define de modo que la componente <span class="math inline">\(i\)</span> del resultado es el producto escalar de la fila <span class="math inline">\(i\)</span> por el vector. Aplicado a <span class="math inline">\(\mathbf{X}\)</span> y a <span class="math inline">\(\boldsymbol{w}\)</span>, eso da</p>
+<p><span id="eq-predicciones"><span class="math display">\[
+\mathbf{X}\boldsymbol{w}
+=\begin{pmatrix}\mathbf{x}_1^{\mathsf{T}}\boldsymbol{w}\\ \mathbf{x}_2^{\mathsf{T}}\boldsymbol{w}\\ \vdots\\ \mathbf{x}_{n}^{\mathsf{T}}\boldsymbol{w}\end{pmatrix}
+=\begin{pmatrix}\hat{y}_1\\ \hat{y}_2\\ \vdots\\ \hat{y}_{n}\end{pmatrix}
+\in\mathbb{R}^{n}.
+\tag{3.5}\]</span></span></p>
+<p>El objeto <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span> es el vector de las <span class="math inline">\(n\)</span> predicciones del modelo.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>AZUL, GRIS, NARANJA <span class="op">=</span> <span class="st">"#151f6c"</span>, <span class="st">"#8b8e95"</span>, <span class="st">"#ff5700"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> celda(ax, columna, fila, texto, color<span class="op">=</span>GRIS, relleno<span class="op">=</span><span class="st">"white"</span>):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ax.add_patch(plt.Rectangle(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        (columna, <span class="op">-</span>fila <span class="op">-</span> <span class="dv">1</span>), <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        facecolor<span class="op">=</span>relleno, edgecolor<span class="op">=</span>color, lw<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ax.text(columna <span class="op">+</span> <span class="fl">0.5</span>, <span class="op">-</span>fila <span class="op">-</span> <span class="fl">0.5</span>, texto, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">8</span>, color<span class="op">=</span>color)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># En las etiquetas de figura solo cabe LaTeX corriente: matplotlib no conoce</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># las macros de _macros.tex.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>diseno <span class="op">=</span> [</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{11}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{12}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{1p}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{21}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_</span><span class="op">{22}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{2p}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    [<span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"1"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{n1}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{n2}</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">cdots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">x_{np}</span><span class="dv">$</span><span class="vs">"</span>],</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, fila <span class="kw">in</span> <span class="bu">enumerate</span>(diseno):</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c, texto <span class="kw">in</span> <span class="bu">enumerate</span>(fila):</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            celda(ax, c, f, texto, NARANJA, <span class="st">"#fff1ea"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            celda(ax, c, f, texto)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">2.5</span>, <span class="fl">0.6</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{X} </span><span class="er">\</span><span class="vs">in </span><span class="dv">\m</span><span class="vs">athbb{R}</span><span class="dv">^</span><span class="vs">{n</span><span class="ch">\t</span><span class="vs">imes</span><span class="kw">(</span><span class="vs">p</span><span class="op">+</span><span class="vs">1</span><span class="kw">)</span><span class="vs">}</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.1</span>), xytext<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.7</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-|&gt;"</span>, color<span class="op">=</span>NARANJA, lw<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                            mutation_scale<span class="op">=</span><span class="dv">8</span>))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">4.8</span>, <span class="st">"columna</span><span class="ch">\n</span><span class="st">de unos"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"top"</span>, fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>NARANJA)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">6.0</span>, <span class="op">-</span><span class="fl">2.2</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">imes</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, texto <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="vs">r"</span><span class="dv">$</span><span class="vs">w_0</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">w_1</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">w_p</span><span class="dv">$</span><span class="vs">"</span>]):</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    celda(ax, <span class="fl">6.6</span>, f, texto, AZUL)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.1</span>, <span class="fl">0.6</span>, <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{w}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">8.4</span>, <span class="op">-</span><span class="fl">2.2</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">=</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, color<span class="op">=</span>AZUL)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, texto <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_1</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_2</span><span class="dv">$</span><span class="vs">"</span>, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">dots</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>                           <span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_n</span><span class="dv">$</span><span class="vs">"</span>]):</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    celda(ax, <span class="fl">9.0</span>, f, texto, NARANJA)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">9.5</span>, <span class="fl">0.6</span>, <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athbf{X}</span><span class="dv">\m</span><span class="vs">athbf{w}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>NARANJA)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">10.5</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">1.3</span>))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>, adjustable<span class="op">=</span><span class="st">"box"</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-matriz-diseno" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-matriz-diseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="d874cb97" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-4-output-1.png" class="figure-img" width="672" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-matriz-diseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: La matriz de diseño y el producto que produce las predicciones. Cada fila de <span class="math inline">\(\mathbf{X}\)</span> es una observación y cada columna una variable predictora; la primera, en naranja, es la columna de unos que representa el intercepto. El producto <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span> devuelve un valor por observación.
+</figcaption>
+</figure>
+</div>
+<p>Con esto, podemos simplificar la notación.</p>
+<div id="prp-riesgo-matricial" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposición 3.1 (El riesgo cuadrático empírico en forma matricial)</strong></span> Para el modelo lineal con matriz de diseño <span class="math inline">\(\mathbf{X}\)</span>,</p>
+<p><span id="eq-riesgo-matricial"><span class="math display">\[
+\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2
+=\frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2 .
+\tag{3.6}\]</span></span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>Por <a href="#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a>, la componente <span class="math inline">\(i\)</span> del vector <span class="math inline">\(\mathbf{X}\boldsymbol{w}-\mathbf{y}\)</span> es <span class="math inline">\(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}-y_i\)</span>. Por <a href="#eq-norma" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a>, su norma al cuadrado es la suma de los cuadrados de esas componentes,</p>
+<p><span class="math display">\[
+\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2
+=\sum_{i=1}^{n}\bigl(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}-y_i\bigr)^2
+=\sum_{i=1}^{n}\bigl(y_i-\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w}\bigr)^2 ,
+\]</span></p>
+<p>donde la última igualdad se debe a que un cuadrado no distingue el signo. Dividiendo por <span class="math inline">\(n\)</span> se obtiene <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>.</p>
+</div>
+<p>Como <span class="math inline">\(1/n\)</span> es una constante positiva, por <a href="02-aprender-minimizando.html#lem-invarianza-afin" class="quarto-xref">Lema&nbsp;<span>2.1</span></a> no cambia dónde está el mínimo, y se puede omitir. El problema de aprendizaje es, por tanto, el siguiente:</p>
+<p><span id="eq-problema-optimizacion"><span class="math display">\[
+\hat{\boldsymbol{w}}\in\mathop{\mathrm{arg\,min}}_{\boldsymbol{w}}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2 .
+\tag{3.7}\]</span></span></p>
+<p>Omitir el factor <span class="math inline">\(1/n\)</span> no cambia el ajuste, pero sí el valor del criterio y de su gradiente. Para calcular riesgos y dar pasos de descenso seguiremos usando la media, como en <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>.</p>
+<p>Para ilustrar la resolución de este problema, trabajaremos con datos simulados de <span class="math inline">\(p=5\)</span> variables predictoras, donde conocemos los coeficientes que los han generado.</p>
+<div id="bb84cc79" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comprobaremos igualdades numéricas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>torch.set_default_dtype(torch.float64)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">42</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>w_verdadero <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">3.0</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># con la columna de unos</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.cat([torch.ones(n, <span class="dv">1</span>), torch.randn(n, p)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">@</span> w_verdadero <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> torch.randn(n)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Estilo de los puntos de datos, reutilizado en todas las figuras</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># del capitulo: circulos negros sin relleno y algo transparentes.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>El tercer coeficiente verdadero es cero: la variable predictora <span class="math inline">\(x_3\)</span> no influye en la respuesta. La hemos puesto para tener a mano el caso de una variable que no aporta nada.</p>
+<div id="130dbcb6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"X:    "</span>, <span class="bu">tuple</span>(X.shape))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"XtX:  "</span>, <span class="bu">tuple</span>((X.T <span class="op">@</span> X).shape))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Xw:   "</span>, <span class="bu">tuple</span>((X <span class="op">@</span> w_verdadero).shape))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X:     (100, 6)
+XtX:   (6, 6)
+Xw:    (100,)</code></pre>
+</div>
+</div>
+<p>Conviene además dar nombre al vector que aparece dentro de la norma.</p>
+<div id="def-vector-residuos" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.5 (Vector de residuos)</strong></span> El <strong>vector de residuos</strong> de los parámetros <span class="math inline">\(\boldsymbol{w}\)</span> es</p>
+<p><span class="math display">\[
+\mathbf{r}(\boldsymbol{w})=\mathbf{y}-\mathbf{X}\boldsymbol{w}\in\mathbb{R}^{n},
+\]</span></p>
+<p>cuya componente <span class="math inline">\(i\)</span> es el residuo <span class="math inline">\(r_i(\boldsymbol{w})\)</span> de <a href="02-aprender-minimizando.html#def-residuo" class="quarto-xref">Definición&nbsp;<span>2.1</span></a>. Con esto, <span class="math inline">\(\hat{R}(\boldsymbol{w})=\frac{1}{n}\left\lVert \mathbf{r}(\boldsymbol{w}) \right\rVert^2\)</span>.</p>
+</div>
+<p>Pasemos al código. Recordemos del capítulo anterior el reparto en una clase para el modelo, que guarda los parámetros y sabe predecir, y una función suelta para la pérdida. <code>torch</code> escribe el producto matriz por vector con el operador <code>@</code>, de modo que <a href="#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> se traduce literalmente.</p>
+<div class="codigo-clave">
+<div id="4200a90f" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros):</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-6" class="code-annotation-target"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X <span class="op">@</span> <span class="va">self</span>.w</span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
+<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="1" data-code-annotation="1">La clase y el método se llaman igual que en el capítulo anterior, y los nombres están elegidos para coincidir con los de las librerías que usaremos después. Volveremos sobre ello al final del capítulo.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="6" data-code-annotation="2">Es la única línea que cambia respecto al capítulo anterior, donde ponía <code>self.w[0] + self.w[1] * x</code>. Con <span class="math inline">\(p=1\)</span> y la columna de unos, las dos hacen lo mismo.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="trampa">
+<p><strong>Las formas tienen que casar.</strong> En <code>torch</code>, un vector de <span class="math inline">\(n\)</span> números y una matriz de <span class="math inline">\(n\times1\)</span> son objetos distintos, aunque contengan lo mismo. Si <code>y</code> tiene forma <code>(n,)</code> y las predicciones forma <code>(n, 1)</code>, la resta <code>y - y_pred</code> no da error: <code>torch</code> estira las dos formas hasta hacerlas compatibles y devuelve una matriz <code>(n, n)</code> con todas las diferencias cruzadas, la de cada respuesta con cada predicción. Al promediar esa matriz sale un número perfectamente plausible, calculado con <span class="math inline">\(n^2\)</span> diferencias en lugar de <span class="math inline">\(n\)</span>, y sin ningún aviso.</p>
+<div id="9d9c5d97" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>modelo.w <span class="op">=</span> w_verdadero.clone()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"correcta:"</span>, (y <span class="op">-</span> modelo.predict(X)).shape)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mal:     "</span>, (y.reshape(n, <span class="dv">1</span>) <span class="op">-</span> modelo.predict(X)).shape)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>correcta: torch.Size([100])
+mal:      torch.Size([100, 100])</code></pre>
+</div>
+</div>
+<p>La costumbre que evita el problema es mantener la respuesta como vector de forma <code>(n,)</code> y comprobar con <code>.shape</code> la forma de cada objeto antes de operar.</p>
+</div>
+</section>
+<section id="el-gradiente-del-riesgo-cuadrático" class="level2">
+<h2 class="anchored" data-anchor-id="el-gradiente-del-riesgo-cuadrático">El gradiente del riesgo cuadrático</h2>
+<p>Tenemos el criterio escrito como una función de <span class="math inline">\(p+1\)</span> variables, en la forma compacta de <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>. Para minimizarlo con el algoritmo del capítulo anterior hace falta su gradiente. Lo obtendremos desarrollando la expresión matricial del riesgo. Después, en <a href="#exr-gradiente-componentes" class="quarto-xref">Ejercicio&nbsp;<span>3.2</span></a>, lo calcularemos derivando respecto de un parámetro cada vez, como hicimos para la recta.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Identidades para calcular el gradiente">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Identidades para calcular el gradiente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La derivación necesita dos identidades. Las dos se demuestran en el <a href="../curso/algebra.html">repaso de álgebra</a> así que aquí basta con enunciarlas. La primera dice cómo se deriva una forma lineal: para <span class="math inline">\(\mathbf a\in\mathbb{R}^{p+1}\)</span> fijo,</p>
+<p><span id="eq-grad-lineal"><span class="math display">\[
+\nabla\bigl(\mathbf a^{\mathsf{T}}\boldsymbol{w}\bigr)=\mathbf a ,
+\tag{3.8}\]</span></span></p>
+<p>que es <a href="../curso/algebra.html#lem-grad-lineal" class="quarto-xref">Lema&nbsp;<span>2</span></a>. La segunda dice cómo se deriva una forma cuadrática: para <span class="math inline">\(\mathbf A\)</span> simétrica,</p>
+<p><span id="eq-grad-cuadratica"><span class="math display">\[
+\nabla\bigl(\boldsymbol{w}^{\mathsf{T}}\mathbf A\boldsymbol{w}\bigr)=2\mathbf A\boldsymbol{w},
+\tag{3.9}\]</span></span></p>
+<p>que es <a href="../curso/algebra.html#lem-grad-cuadratica" class="quarto-xref">Lema&nbsp;<span>3</span></a>. Usaremos además que el gradiente es lineal, es decir, que el gradiente de una suma es la suma de los gradientes, lo cual se sigue de que la derivada parcial en cada coordenada lo es.</p>
+</div>
+</div>
+<div id="thm-gradiente-vectorial" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.1 (Gradiente del riesgo cuadrático)</strong></span> Para el modelo lineal con matriz de diseño <span class="math inline">\(\mathbf{X}\)</span>,</p>
+<p><span id="eq-gradiente-matricial"><span class="math display">\[
+\nabla\hat{R}(\boldsymbol{w})
+=\frac{2}{n}\mathbf{X}^{\mathsf{T}}\bigl(\mathbf{X}\boldsymbol{w}-\mathbf{y}\bigr)
+=-\frac{2}{n}\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w}).
+\tag{3.10}\]</span></span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>Partimos de <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a> y desarrollamos la norma con <a href="#eq-norma" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a>, es decir, como el producto del vector por sí mismo traspuesto:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2
+&amp;=(\mathbf{X}\boldsymbol{w}-\mathbf{y})^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}-\mathbf{y}) \\
+&amp;=\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{y}-\mathbf{y}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}+\mathbf{y}^{\mathsf{T}}\mathbf{y}\\
+&amp;=\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-2\bigl(\mathbf{X}^{\mathsf{T}}\mathbf{y}\bigr)^{\mathsf{T}}\boldsymbol{w}+\mathbf{y}^{\mathsf{T}}\mathbf{y}.
+\end{aligned}
+\]</span></p>
+<p>En el segundo paso se usa la regla de la traspuesta de un producto, <span class="math inline">\((\mathbf A\mathbf
+B)^{\mathsf{T}}=\mathbf B^{\mathsf{T}}\mathbf A^{\mathsf{T}}\)</span>. En el tercero, que los dos términos cruzados son el mismo número, porque cada uno es el traspuesto del otro y ambos son escalares: <span class="math inline">\(\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{y}=(\mathbf{X}^{\mathsf{T}}\mathbf{y})^{\mathsf{T}}\boldsymbol{w}=\mathbf{y}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}\)</span>.</p>
+<p>Ahora derivamos los tres sumandos por separado. Al primero le aplicamos <a href="#eq-grad-cuadratica" class="quarto-xref">Ecuación&nbsp;<span>3.9</span></a> con <span class="math inline">\(\mathbf A=\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span>, que es simétrica por <a href="../curso/algebra.html#exr-xtx-simetrica" class="quarto-xref">Ejercicio&nbsp;<span>1</span></a>, y queda <span class="math inline">\(2\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}\)</span>. Al segundo le aplicamos <a href="#eq-grad-lineal" class="quarto-xref">Ecuación&nbsp;<span>3.8</span></a> con <span class="math inline">\(\mathbf a=\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>, y queda <span class="math inline">\(-2\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>. El tercero no depende de <span class="math inline">\(\boldsymbol{w}\)</span>, así que su gradiente es <span class="math inline">\(\mathbf{0}\)</span>. Reuniendo los tres y dividiendo por <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[
+\nabla\hat{R}(\boldsymbol{w})
+=\frac{1}{n}\bigl(2\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}-2\mathbf{X}^{\mathsf{T}}\mathbf{y}\bigr)
+=\frac{2}{n}\mathbf{X}^{\mathsf{T}}(\mathbf{X}\boldsymbol{w}-\mathbf{y}).
+\]</span></p>
+</div>
+<p>Comprueba las dimensiones: <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\)</span> tiene <span class="math inline">\(p+1\)</span> filas y <span class="math inline">\(n\)</span> columnas; el vector de residuos tiene <span class="math inline">\(n\)</span> componentes. Su producto devuelve <span class="math inline">\(p+1\)</span> números, uno por parámetro. En general, si falta la traspuesta, ni siquiera coinciden las dimensiones.</p>
+<div id="exr-gradiente-componentes" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.2 (Obtener el gradiente por componentes)</strong></span> Escribimos el riesgo sin notación matricial:</p>
+<p><span class="math display">\[
+\hat{R}(\boldsymbol{w})=\frac{1}{n}\sum_{i=1}^{n}
+\left(y_i-\sum_{j=0}^{p}w_jx_{ij}\right)^2.
+\]</span></p>
+<ol type="a">
+<li>Fija una coordenada <span class="math inline">\(k\)</span> y calcula <span class="math inline">\(\frac{\partial }{\partial w_k}\left(y_i-\sum_{j=0}^{p}w_jx_{ij}\right)\)</span>. Recuerda que los datos y los demás parámetros se tratan como constantes.</li>
+<li>Aplica la regla de la cadena al cuadrado y deriva la suma. Comprueba que <span class="math display">\[
+\frac{\partial \hat{R}}{\partial w_k}(\boldsymbol{w})
+=-\frac{2}{n}\sum_{i=1}^{n}x_{ik}r_i(\boldsymbol{w}).
+\]</span></li>
+<li>La componente <span class="math inline">\(k\)</span> de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w})\)</span> es <span class="math inline">\(\sum_i x_{ik}r_i(\boldsymbol{w})\)</span>. Utiliza esta igualdad para reunir las parciales en un vector y obtener <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a>.</li>
+</ol>
+</div>
+<div id="exr-recupera-gradiente-recta" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.3 (Recuperar el gradiente de la recta)</strong></span> Sea <span class="math inline">\(p=1\)</span>, de modo que <span class="math inline">\(\mathbf{X}=(\mathbf{1}\;\;\mathbf a)\)</span> con <span class="math inline">\(\mathbf a=(x_1,\ldots,x_{n})^{\mathsf{T}}\)</span> la columna del único predictor.</p>
+<ol type="a">
+<li><strong>Escribe</strong> las dos componentes de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w})\)</span> en forma de suma.</li>
+<li><strong>Deduce</strong> que <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> es exactamente <a href="02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</li>
+</ol>
+</div>
+<p>La traducción de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> a código es una línea.</p>
+<div class="codigo-clave">
+<div id="b587d1ee" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_mse(modelo, X, y):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> modelo.predict(X)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> (X.T <span class="op">@</span> residuos) <span class="op">/</span> y.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="cd818474" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>modelo_auto.w <span class="op">=</span> torch.zeros(p <span class="op">+</span> <span class="dv">1</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>mse(modelo_auto.predict(X), y).backward()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"gradiente automático:"</span>, modelo_auto.w.grad)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coinciden:"</span>, torch.allclose(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    grad_mse(modelo_auto, X, y), modelo_auto.w.grad</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>gradiente automático: tensor([-2.3998, -3.0575,  1.3289, -0.4038, -1.3572, -5.8615])
+coinciden: True</code></pre>
+</div>
+</div>
+</section>
+<section id="ajustar-un-modelo-lineal" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ajustar-un-modelo-lineal">Ajustar un modelo lineal</h2>
+<p>Con lo visto, el descenso de gradiente de <a href="02-aprender-minimizando.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>2.8</span></a> se aplica sin ningún cambio, porque la actualización <span class="math inline">\(\boldsymbol{w}^{(t+1)}=\boldsymbol{w}^{(t)}-\alpha\nabla\hat{R}(\boldsymbol{w}^{(t)})\)</span> no depende del número de componentes que tiene <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p>Reutilizamos el optimizador y el bucle del capítulo anterior. El optimizador llama a la nueva función <code>grad_mse</code>; <code>train</code> sigue guardando los parámetros y los riesgos.</p>
+<div class="codigo-clave">
+<div id="c4685c17" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        gradiente <span class="op">=</span> grad_mse(<span class="va">self</span>.modelo, X, y)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w <span class="op">=</span> <span class="va">self</span>.modelo.w <span class="op">-</span> <span class="va">self</span>.lr <span class="op">*</span> gradiente</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(modelo, optimizador, X, y, n_iter):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    historia_w <span class="op">=</span> [modelo.w.detach().clone()]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    historia_riesgo <span class="op">=</span> [mse(modelo.predict(X), y).item()]</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_iter):</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        optimizador.step(X, y)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        historia_w.append(modelo.w.detach().clone())</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        historia_riesgo.append(mse(modelo.predict(X), y).item())</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.stack(historia_w), torch.tensor(historia_riesgo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Con eso podemos ajustar el modelo.</p>
+<div id="3d99a580" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>historia_w, historia_riesgo <span class="op">=</span> train(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    modelo, GradientDescentOptimizer(modelo, lr<span class="op">=</span><span class="fl">0.1</span>), X, y, n_iter<span class="op">=</span><span class="dv">150</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo inicial:"</span>, <span class="bu">round</span>(historia_riesgo[<span class="dv">0</span>].item(), <span class="dv">4</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo final:  "</span>, <span class="bu">round</span>(historia_riesgo[<span class="op">-</span><span class="dv">1</span>].item(), <span class="dv">6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo inicial: 14.7766
+riesgo final:   0.247588</code></pre>
+</div>
+</div>
+<p>Con dos parámetros pudimos además resolver a mano el sistema <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w})=\mathbf{0}\)</span>. Con <span class="math inline">\(p+1\)</span> parámetros ese sistema sigue siendo lineal y puede resolverse de forma analítica. Al anular el gradiente obtenemos las <strong>ecuaciones normales</strong>:</p>
+<p><span id="eq-ecuaciones-normales"><span class="math display">\[
+\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}^\star=\mathbf{X}^{\mathsf{T}}\mathbf{y}.
+\tag{3.11}\]</span></span></p>
+<div id="exr-ecuaciones-normales" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.4 (Obtener las ecuaciones normales)</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Parte de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> y demuestra que <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star)=\mathbf{0}\)</span> equivale a <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}^\star=\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</li>
+<li>Di cuántas ecuaciones y cuántas incógnitas tiene este sistema. Para una sola variable predictora, escribe sus dos ecuaciones en forma de sumas.</li>
+<li>Por la condición de primer orden, ¿debe cumplir este sistema cualquier mínimo? ¿Basta esa condición general, por sí sola, para afirmar el recíproco?</li>
+</ol>
+</div>
+<p>Resolver estas ecuaciones normales permite obtener el ajuste de forma analítica. El siguiente código compara la solución anaítica con la obtenida con descenso por el gradiente.</p>
+<div id="40afe3ed" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>w_exacto <span class="op">=</span> torch.linalg.solve(X.T <span class="op">@</span> X, X.T <span class="op">@</span> y)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"descenso:"</span>, modelo.w)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exacto:  "</span>, w_exacto)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coinciden:"</span>, torch.allclose(modelo.w, w_exacto, atol<span class="op">=</span><span class="fl">1e-6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>descenso: tensor([ 0.9738,  1.9926, -1.5636,  0.0651,  0.5637,  3.0299])
+exacto:   tensor([ 0.9738,  1.9926, -1.5636,  0.0651,  0.5637,  3.0299])
+coinciden: True</code></pre>
+</div>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(historia_riesgo, color<span class="op">=</span><span class="st">"#ff5700"</span>, lw<span class="op">=</span><span class="fl">1.4</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].axhline(mse(X <span class="op">@</span> w_exacto, y).item(), color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>              linestyle<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"mínimo exacto"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_yscale(<span class="st">"log"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"iteración"</span>, ylabel<span class="op">=</span><span class="vs">r"riesgo </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat R</span><span class="kw">(</span><span class="dv">\m</span><span class="vs">athbf{w}</span><span class="dv">^</span><span class="vs">{</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="vs">}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"el descenso llega al mínimo"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>limites <span class="op">=</span> [<span class="op">-</span><span class="fl">2.0</span>, <span class="fl">3.5</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(limites, limites, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(w_verdadero.numpy(), w_exacto.numpy(), color<span class="op">=</span><span class="st">"#ff5700"</span>, s<span class="op">=</span><span class="dv">45</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>              zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(p <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].annotate(<span class="vs">fr"</span><span class="dv">$</span><span class="vs">w_</span><span class="sc">{</span>j<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                   (w_verdadero[j].item(), w_exacto[j].item()),</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                   xytext<span class="op">=</span>(<span class="dv">6</span>, <span class="op">-</span><span class="dv">3</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>, fontsize<span class="op">=</span><span class="fl">8.5</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"coeficiente verdadero"</span>, ylabel<span class="op">=</span><span class="st">"coeficiente estimado"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"qué coeficientes hemos recuperado"</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-descenso-riesgo" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-descenso-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="76d3c9d3" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-14-output-1.png" class="figure-img" width="1156" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-descenso-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Izquierda: el riesgo a lo largo de las iteraciones, en escala logarítmica, con el mínimo exacto como referencia. Derecha: los seis coeficientes estimados frente a los que generaron los datos; la diagonal es el acierto perfecto. El coeficiente <span class="math inline">\(w_3\)</span>, cuyo valor verdadero es cero, se estima cerca de cero pero no en cero.
+</figcaption>
+</figure>
+</div>
+<p>Cabe entonces preguntarse para qué sirve el descenso de gradiente, si el sistema se puede resolver. Aquí se puede porque la señal es lineal <strong>en los parámetros</strong>, y eso hace que el gradiente también lo sea. Para otras señales, anular el gradiente puede producir un sistema no lineal imposible de resolver de forma analítica. La actualización del descenso sigue siendo aplicable.</p>
+</section>
+<section id="existencia-unicidad-y-colinealidad" class="level2">
+<h2 class="anchored" data-anchor-id="existencia-unicidad-y-colinealidad">Existencia, unicidad y colinealidad</h2>
+<p>¿Tienen siempre solución las ecuaciones normales? ¿Puede haber más de un ajuste? Respondemos a estas cuestiones con el siguiente teorema. Recuerda que el rango de <span class="math inline">\(\mathbf{X}\)</span> es el número máximo de columnas linealmente independientes.</p>
+<div id="thm-existencia-unicidad" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.2 (Existencia y unicidad del ajuste)</strong></span> El sistema <a href="#eq-ecuaciones-normales" class="quarto-xref">Ecuación&nbsp;<span>3.11</span></a> tiene siempre al menos una solución, y toda solución es un mínimo global de <span class="math inline">\(\hat{R}\)</span>. La solución es única si y solo si <span class="math inline">\(\mathop{\mathrm{rank}}\mathbf{X}=p+1\)</span>.</p>
+<p>En cualquier caso, y aunque <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> no sea única, el vector de predicciones <span class="math inline">\(\mathbf{X}\hat{\boldsymbol{w}}\)</span> es el mismo para todas las soluciones.</p>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Demostración no exigible">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Demostración no exigible
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="proof">
+<p><span class="proof-title"><em>Demostración</em>. </span>La existencia general se admite sin prueba: su justificación mediante proyecciones queda fuera del alcance del curso. Demostramos las afirmaciones sobre el mínimo y su unicidad a partir de una solución de las ecuaciones normales.</p>
+<p>Sea <span class="math inline">\(\boldsymbol{w}^\star\)</span> una solución de las ecuaciones normales y sea <span class="math inline">\(\mathbf d\)</span> cualquier desplazamiento. Al desarrollar el cuadrado,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{R}(\boldsymbol{w}^\star+\mathbf d)
+&amp;=\frac1{n}\left\lVert \mathbf{r}(\boldsymbol{w}^\star)-\mathbf{X}\mathbf d \right\rVert^2\\
+&amp;=\hat{R}(\boldsymbol{w}^\star)
+-\frac2{n}\mathbf d^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w}^\star)
++\frac1{n}\left\lVert \mathbf{X}\mathbf d \right\rVert^2\\
+&amp;=\hat{R}(\boldsymbol{w}^\star)+\frac1{n}\left\lVert \mathbf{X}\mathbf d \right\rVert^2.
+\end{aligned}
+\]</span></p>
+<p>El término cruzado es cero porque <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w}^\star)=\mathbf{0}\)</span>. El último término es no negativo, así que <span class="math inline">\(\boldsymbol{w}^\star\)</span> es un mínimo global.</p>
+<p>Otro vector <span class="math inline">\(\boldsymbol{w}^\star+\mathbf d\)</span> alcanza ese mismo mínimo exactamente cuando <span class="math inline">\(\mathbf{X}\mathbf d=\mathbf{0}\)</span>. Con columnas independientes esto solo ocurre si <span class="math inline">\(\mathbf d=\mathbf{0}\)</span>, y los coeficientes son únicos. Con columnas dependientes existe un <span class="math inline">\(\mathbf d\)</span> no nulo que cumple esa igualdad, y todos los vectores <span class="math inline">\(\boldsymbol{w}^\star+t\mathbf d\)</span> son mínimos, para cualquier <span class="math inline">\(t\in\mathbb{R}\)</span>. En ambos casos las predicciones sobre la muestra son las mismas, pues <span class="math inline">\(\mathbf{X}(\boldsymbol{w}^\star+\mathbf d)=\mathbf{X}\boldsymbol{w}^\star\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>El fenómeno de <strong>colinealidad exacta</strong> se da cuando una columna de <span class="math inline">\(\mathbf{X}\)</span> es combinación lineal de las demás. El caso más sencillo es incluir dos veces una misma variable: si <span class="math inline">\(x_{i2}=x_{i1}\)</span> para todas las observaciones, entonces</p>
+<p><span class="math display">\[
+w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
+\]</span></p>
+<p>Los datos permiten ajustar la suma <span class="math inline">\(w_1+w_2\)</span>, pero no repartirla entre los dos coeficientes. Por ejemplo, <span class="math inline">\((w_1,w_2)=(2,0)\)</span> y <span class="math inline">\((0,2)\)</span> producen las mismas predicciones.</p>
+<p>Esto también ocurre con datos reales, por ejemplo al incluir una altura en centímetros y la misma altura en metros. Si las columnas son casi dependientes, aunque el rango sea completo, los coeficientes pueden ser sensibles a pequeños cambios en los datos.</p>
+<p>La unicidad de <span class="math inline">\(\mathbf{X}\hat{\boldsymbol{w}}\)</span> se refiere a las <strong>filas observadas</strong>. Si dos columnas coinciden en la muestra pero no en una entrada nueva, distintos ajustes pueden predecir cosas distintas para esa entrada. Lo comprobaremos en <a href="#exr-columna-redundante" class="quarto-xref">Ejercicio&nbsp;<span>3.6</span></a>.</p>
+<div id="exr-mas-variables-que-observaciones" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.5 (Más parámetros no garantizan ajuste exacto)</strong></span> Considera dos observaciones y tres parámetros:</p>
+<p><span class="math display">\[
+\mathbf{X}=\begin{pmatrix}1&amp;1&amp;1\\1&amp;1&amp;1\end{pmatrix},
+\qquad
+\mathbf{y}=\begin{pmatrix}0\\1\end{pmatrix}.
+\]</span></p>
+<ol type="a">
+<li>Escribe <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span> en función de <span class="math inline">\(s=w_0+w_1+w_2\)</span>. Explica por qué ninguna elección de los parámetros puede dar riesgo cero.</li>
+<li>Comprueba que <span class="math display">\[
+\hat{R}(\boldsymbol{w})=\frac{s^2+(1-s)^2}{2}
+=\left(s-\frac12\right)^2+\frac14.
+\]</span> Deduce el riesgo mínimo y da dos vectores de parámetros distintos que lo alcancen.</li>
+<li>¿Garantiza tener más parámetros que observaciones un riesgo de entrenamiento nulo? Si en otra muestra se consiguiera riesgo cero, ¿garantizaría eso buenas predicciones sobre datos nuevos?</li>
+</ol>
+</div>
+<div id="exr-columna-redundante" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3.6 (Una columna repetida)</strong></span> Considera</p>
+<p><span class="math display">\[
+\mathbf{X}=\begin{pmatrix}1&amp;0&amp;0\\1&amp;1&amp;1\\1&amp;2&amp;2\end{pmatrix},
+\qquad
+\mathbf{y}=\begin{pmatrix}1\\3\\5\end{pmatrix}.
+\]</span></p>
+<ol type="a">
+<li>Calcula las predicciones y el riesgo para <span class="math inline">\(\boldsymbol{w}_a=(1,2,0)^{\mathsf{T}}\)</span> y <span class="math inline">\(\boldsymbol{w}_b=(1,0,2)^{\mathsf{T}}\)</span>. ¿Son ambos mínimos globales?</li>
+<li>Comprueba que <span class="math inline">\(\mathbf d=(0,1,-1)^{\mathsf{T}}\)</span> cumple <span class="math inline">\(\mathbf{X}\mathbf d=\mathbf{0}\)</span>. Explica por qué <span class="math inline">\(\boldsymbol{w}_a+t\mathbf d\)</span> produce las mismas predicciones para todo <span class="math inline">\(t\in\mathbb{R}\)</span> y calcula el rango de <span class="math inline">\(\mathbf{X}\)</span>.</li>
+<li>Para una observación nueva con <span class="math inline">\(x_1=1\)</span> y <span class="math inline">\(x_2=0\)</span>, compara las predicciones de <span class="math inline">\(\boldsymbol{w}_a\)</span> y <span class="math inline">\(\boldsymbol{w}_b\)</span>. Explica por qué no contradice la unicidad del vector <span class="math inline">\(\mathbf{X}\hat{\boldsymbol{w}}\)</span> de <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>.</li>
+</ol>
+</div>
+</section>
+<section id="una-interfaz-común-para-entrenar-modelos" class="level2">
+<h2 class="anchored" data-anchor-id="una-interfaz-común-para-entrenar-modelos">Una interfaz común para entrenar modelos</h2>
+<p>Para ajustar modelos lineales con varias variables, organizamos el código como en el capítulo anterior: <code>predict</code> produce predicciones, <code>mse</code> mide el error, el optimizador actualiza los parámetros y <code>train</code> repite esos pasos. Para pasar a varias variables hemos cambiado la predicción y la fórmula de <code>grad_mse</code>, no el proceso de entrenamiento.</p>
+<p>Con diferenciación automática, cambiamos cómo se obtiene el gradiente, pero no el bucle de entrenamiento. Recuperamos las tres operaciones del capítulo 2: calcular las derivadas, actualizar los parámetros sin registrar esa operación y vaciar los gradientes antes del siguiente paso.</p>
+<div class="codigo-clave">
+<div id="cca95231" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer(GradientDescentOptimizer):</span>
+<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-24-3" class="code-annotation-target"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>        mse(<span class="va">self</span>.modelo.predict(X), y).backward()</span>
+<span id="annotated-cell-24-4"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-24-5" class="code-annotation-target"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad():</span>
+<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.modelo.w <span class="op">-=</span> <span class="va">self</span>.lr <span class="op">*</span> <span class="va">self</span>.modelo.w.grad</span>
+<span id="annotated-cell-24-7"><a href="#annotated-cell-24-7" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-24-8" class="code-annotation-target"><a href="#annotated-cell-24-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w.grad.zero_()</span>
+<span id="annotated-cell-24-9"><a href="#annotated-cell-24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-10"><a href="#annotated-cell-24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-11"><a href="#annotated-cell-24-11" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="annotated-cell-24-12"><a href="#annotated-cell-24-12" aria-hidden="true" tabindex="-1"></a>modelo_auto.w <span class="op">=</span> torch.zeros(p <span class="op">+</span> <span class="dv">1</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="annotated-cell-24-13"><a href="#annotated-cell-24-13" aria-hidden="true" tabindex="-1"></a>_, historia_auto <span class="op">=</span> train(</span>
+<span id="annotated-cell-24-14"><a href="#annotated-cell-24-14" aria-hidden="true" tabindex="-1"></a>    modelo_auto, AutogradOptimizer(modelo_auto, lr<span class="op">=</span><span class="fl">0.1</span>), X, y, n_iter<span class="op">=</span><span class="dv">150</span></span>
+<span id="annotated-cell-24-15"><a href="#annotated-cell-24-15" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-24" data-code-lines="3" data-code-annotation="1"><code>backward()</code> calcula el gradiente del riesgo y lo acumula en <code>modelo.w.grad</code>. Por eso los parámetros se crean con <code>requires_grad=True</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-24" data-code-lines="5" data-code-annotation="2">La actualización cambia los parámetros, pero no forma parte del cálculo que queremos derivar.</span>
+</dd>
+<dt data-target-cell="annotated-cell-24" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-24" data-code-lines="8" data-code-annotation="3">La siguiente iteración debe usar su propio gradiente, no la suma de los anteriores.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="21dc2459" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coincide con la solución exacta:"</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>      torch.allclose(modelo_auto.w.detach(), w_exacto, atol<span class="op">=</span><span class="fl">1e-6</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>coincide con la solución exacta: True</code></pre>
+</div>
+</div>
+<section id="la-misma-interfaz-en-scikit-learn" class="level3">
+<h3 class="anchored" data-anchor-id="la-misma-interfaz-en-scikit-learn">La misma interfaz en scikit-learn</h3>
+<p>Hasta aquí hemos programado el ajuste para entender qué hace. Para trabajar con otros modelos y preparar o evaluar los datos usaremos <a href="https://scikit-learn.org/stable/getting_started.html"><strong>scikit-learn</strong></a>, una librería que ofrece esas herramientas con una interfaz común. En Python se importa como <code>sklearn</code>. Sus objetos de aprendizaje se llaman <em>estimadores</em>.</p>
+<p>Un modelo de predicción se usa en tres pasos: crearlo, ajustarlo con <code>fit(X, y)</code> y predecir con <code>predict(X_nueva)</code>. Crear el objeto no aprende los coeficientes; <code>fit</code> los estima y los guarda. <code>predict</code> utiliza los coeficientes ya guardados: no vuelve a entrenar ni necesita las respuestas de las observaciones nuevas.</p>
+<p>Empezamos con <code>LinearRegression</code>, que resuelve el mismo problema de mínimos cuadrados que hemos estudiado. Usamos el alias <code>SkLinearRegression</code> para distinguirla de nuestra clase. Convertimos los tensores a arrays de NumPy, el formato que usaremos con la librería. Nuestra matriz ya incluye la columna de unos.</p>
+<div class="codigo-clave">
+<div id="d15578c5" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression <span class="im">as</span> SkLinearRegression</span>
+<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-26-3"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>X_numpy <span class="op">=</span> X.numpy()</span>
+<span id="annotated-cell-26-4"><a href="#annotated-cell-26-4" aria-hidden="true" tabindex="-1"></a>y_numpy <span class="op">=</span> y.numpy()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-26-5" class="code-annotation-target"><a href="#annotated-cell-26-5" aria-hidden="true" tabindex="-1"></a>ajuste_sk <span class="op">=</span> SkLinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-26-6" class="code-annotation-target"><a href="#annotated-cell-26-6" aria-hidden="true" tabindex="-1"></a>ajuste_sk.fit(X_numpy, y_numpy)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-26-7" class="code-annotation-target"><a href="#annotated-cell-26-7" aria-hidden="true" tabindex="-1"></a>predicciones_sk <span class="op">=</span> ajuste_sk.predict(X_numpy)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-26" data-code-lines="5" data-code-annotation="1">No añadimos un intercepto aparte: la primera columna de <code>X_numpy</code> ya lo representa.</span>
+</dd>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-26" data-code-lines="6" data-code-annotation="2">Se aprende un coeficiente por columna de <code>X_numpy</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-26" data-code-lines="7" data-code-annotation="3">La salida tiene forma <code>(n,)</code>. Aquí predecimos las observaciones de entrenamiento para comprobar el ajuste, no para evaluar su capacidad de generalización.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<p>Para predecir una observación nueva conservamos el orden y el número de columnas, incluida la constante. Por ejemplo, con las cinco predictoras de nuestros datos:</p>
+<div class="codigo-clave">
+<div id="0885ce14" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X_nueva <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ajuste_sk.predict(X_nueva)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>array([4.95890252])</code></pre>
+</div>
+</div>
+</div>
+<p>Aunque haya una sola observación, la entrada es una matriz con una fila; por eso hay dos pares de corchetes. No llamamos de nuevo a <code>fit</code>.</p>
+<p>Los coeficientes aprendidos están en <code>ajuste_sk.coef_</code>. En este caso hay <span class="math inline">\(p+1\)</span>, y el primero es <span class="math inline">\(\widehat w_0\)</span>, porque multiplica la columna de unos.</p>
+<div id="4da086d0" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"nuestro ajuste :"</span>, [<span class="bu">round</span>(v, <span class="dv">4</span>) <span class="cf">for</span> v <span class="kw">in</span> w_exacto.tolist()])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"scikit-learn   :"</span>, [<span class="bu">round</span>(v, <span class="dv">4</span>) <span class="cf">for</span> v <span class="kw">in</span> ajuste_sk.coef_.tolist()])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>nuestro ajuste : [0.9738, 1.9926, -1.5636, 0.0651, 0.5637, 3.0299]
+scikit-learn   : [0.9738, 1.9926, -1.5636, 0.0651, 0.5637, 3.0299]</code></pre>
+</div>
+</div>
+<p>Por defecto, <code>fit_intercept=True</code>: la librería estima un intercepto separado, guardado en <code>intercept_</code>, y recibe las predictoras <strong>sin</strong> la columna de unos. Así, <code>SkLinearRegression().fit(X_numpy[:, 1:], y_numpy)</code> representa el mismo modelo con otro convenio. También habría que quitar esa columna al predecir. Con <code>fit_intercept=False</code> no renunciamos aquí al intercepto: ya está incluido en la matriz.</p>
+<p>Los resultados coinciden salvo redondeo porque estamos minimizando el mismo riesgo. No hace falta que ambas implementaciones usen el mismo algoritmo numérico. Para la sintaxis completa queda como consulta la <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">documentación de <code>LinearRegression</code></a>. En papel trabajaremos las llamadas básicas, las dimensiones y el convenio de la constante; las figuras y los detalles internos del algoritmo no se piden.</p>
+</section>
+</section>
+<section id="ejemplo-con-datos-reales" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ejemplo-con-datos-reales">Ejemplo con datos reales</h2>
+<p>Todo lo anterior se ha comprobado sobre datos que hemos simulado nosotros, con la ventaja de conocer los coeficientes verdaderos. Vamos a aplicarlo a un caso donde no los conocemos.</p>
+<p>Usaremos los datos de próstata de <em>The Elements of Statistical Learning</em> <span class="citation" data-cites="hastie2009elements">(<a href="../index.html#ref-hastie2009elements" role="doc-biblioref">Hastie et&nbsp;al. 2009</a>)</span>. Son 97 pacientes con cáncer de próstata. La respuesta es <code>lpsa</code>, el logaritmo del antígeno prostático específico en suero, que es un marcador que se usa para seguir la enfermedad, y las ocho variables predictoras son medidas clínicas tomadas al mismo paciente:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Qué mide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lcavol</code></td>
+<td>logaritmo del volumen del tumor</td>
+</tr>
+<tr class="even">
+<td><code>lweight</code></td>
+<td>logaritmo del peso de la próstata</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>edad del paciente, en años</td>
+</tr>
+<tr class="even">
+<td><code>lbph</code></td>
+<td>logaritmo de la cantidad de hiperplasia benigna</td>
+</tr>
+<tr class="odd">
+<td><code>svi</code></td>
+<td>invasión de las vesículas seminales, 0 o 1</td>
+</tr>
+<tr class="even">
+<td><code>lcp</code></td>
+<td>logaritmo de la penetración capsular</td>
+</tr>
+<tr class="odd">
+<td><code>gleason</code></td>
+<td>puntuación de Gleason, un grado histológico de 6 a 9</td>
+</tr>
+<tr class="even">
+<td><code>pgg45</code></td>
+<td>porcentaje de la muestra con puntuación de Gleason 4 o 5</td>
+</tr>
+</tbody>
+</table>
+<p>Ajustaremos un modelo lineal que prediga <code>lpsa</code> a partir de las ocho.</p>
+<div id="cb9cbdf6" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>prostata <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>predictoras <span class="op">=</span> [<span class="st">"lcavol"</span>, <span class="st">"lweight"</span>, <span class="st">"age"</span>, <span class="st">"lbph"</span>,</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"svi"</span>, <span class="st">"lcp"</span>, <span class="st">"gleason"</span>, <span class="st">"pgg45"</span>]</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>X_prostata <span class="op">=</span> torch.cat([</span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>    torch.ones(<span class="bu">len</span>(prostata), <span class="dv">1</span>),</span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>    torch.tensor(prostata[predictoras].values, dtype<span class="op">=</span>torch.float64),</span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>y_prostata <span class="op">=</span> torch.tensor(prostata[<span class="st">"lpsa"</span>].values, dtype<span class="op">=</span>torch.float64)</span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"matriz de diseño:"</span>, <span class="bu">tuple</span>(X_prostata.shape))</span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"rango:"</span>, torch.linalg.matrix_rank(X_prostata).item())</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="1">El fichero está en <code>datos/</code> y se lee por ruta relativa.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>matriz de diseño: (97, 9)
+rango: 9</code></pre>
+</div>
+</div>
+<p>La matriz es de <span class="math inline">\(97\times9\)</span>: 97 observaciones, ocho variables predictoras y la columna de unos. Su rango es 9, es decir completo, así que por <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> hay un único mínimo y lo podemos calcular resolviendo las ecuaciones normales.</p>
+<p>La tabla trae además una columna <code>train</code>, con la partición en <em>train</em> y <em>test</em> que usa el libro. No la vamos a utilizar todavía: separar datos para evaluar es el asunto del capítulo siguiente, y aquí ajustamos con las 97 observaciones.</p>
+<p>En el ordenador podemos resolver directamente el problema de mínimos cuadrados con <code>torch.linalg.lstsq(X, y).solution</code>, sin formar <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> ni calcular su inversa. Esta llamada queda como herramienta de consulta.</p>
+<div id="bdf2a17d" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>w_prostata <span class="op">=</span> torch.linalg.lstsq(X_prostata, y_prostata).solution</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, valor <span class="kw">in</span> <span class="bu">zip</span>([<span class="st">"intercepto"</span>] <span class="op">+</span> predictoras, w_prostata):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:&gt;10}</span><span class="ss">: </span><span class="sc">{</span>valor<span class="sc">:+.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercepto: +0.1816
+    lcavol: +0.5643
+   lweight: +0.6220
+       age: -0.0212
+      lbph: +0.0967
+       svi: +0.7617
+       lcp: -0.1061
+   gleason: +0.0492
+     pgg45: +0.0045</code></pre>
+</div>
+</div>
+<p>Para saber si el ajuste sirve de algo hace falta algo con lo que compararlo. Lo más sencillo posible es un modelo que ignore las variables predictoras.</p>
+<div id="03d61d9b" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>residuos_prostata <span class="op">=</span> y_prostata <span class="op">-</span> X_prostata <span class="op">@</span> w_prostata</span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>riesgo_ajuste <span class="op">=</span> mse(X_prostata <span class="op">@</span> w_prostata, y_prostata)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-4" class="code-annotation-target"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>riesgo_media <span class="op">=</span> mse(y_prostata.mean(), y_prostata)</span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"riesgo del ajuste: </span><span class="sc">{</span>riesgo_ajuste<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"riesgo de predecir siempre la media: </span><span class="sc">{</span>riesgo_media<span class="sc">:.4f}</span><span class="ss">"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="4" data-code-annotation="1">El modelo que predice siempre el mismo valor, la media de las respuestas observadas.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo del ajuste: 0.4439
+riesgo de predecir siempre la media: 1.3187</code></pre>
+</div>
+</div>
+<p>El riesgo del ajuste es <span class="math inline">\(0.4439\)</span> y el de predecir siempre la media, <span class="math inline">\(1.3187\)</span>. Las ocho variables reducen el error cuadrático medio a la tercera parte del que se obtiene sin mirarlas. Esta comparación se refiere a los datos de entrenamiento. No dice todavía cuál de los dos modelos predice mejor observaciones nuevas.</p>
+<p>Las escalas de las variables pueden hacer que el descenso necesite tasas muy distintas de las usadas con datos simulados. Estudiaremos cómo tratarlo en el capítulo de preparación de datos. Aquí nos basta con interpretar el ajuste obtenido.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ajuste_prostata <span class="op">=</span> X_prostata <span class="op">@</span> w_prostata</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">3.6</span>))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>limites <span class="op">=</span> [y_prostata.<span class="bu">min</span>().item() <span class="op">-</span> <span class="fl">0.3</span>, y_prostata.<span class="bu">max</span>().item() <span class="op">+</span> <span class="fl">0.3</span>]</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(limites, limites, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].scatter(y_prostata.numpy(), ajuste_prostata.numpy(), <span class="op">**</span>kw_puntos,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>              zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"lpsa observado"</span>, ylabel<span class="op">=</span><span class="st">"lpsa predicho"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"observado frente a predicho"</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].axhline(<span class="fl">0.0</span>, color<span class="op">=</span><span class="st">"#8b8e95"</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(ajuste_prostata.numpy(), residuos_prostata.numpy(),</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>              <span class="op">**</span>kw_puntos, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"lpsa predicho"</span>, ylabel<span class="op">=</span><span class="st">"residuo"</span>,</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">"residuos frente a valores ajustados"</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-caso-prostata" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-caso-prostata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="a6581fa3" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03-modelos-lineales_files/figure-html/cell-23-output-1.png" class="figure-img" width="1157" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-caso-prostata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: El ajuste sobre los datos de próstata. A la izquierda, lo observado frente a lo predicho, con la diagonal como acierto perfecto. A la derecha, los residuos frente a los valores ajustados. Los dos paneles usan las mismas 97 observaciones con las que se ha ajustado el modelo: no son una evaluación sobre datos nuevos ni una comprobación de todas las hipótesis del modelo gaussiano.
+</figcaption>
+</figure>
+</div>
+<p>Esa última frase del pie de la figura es el problema que queda abierto. Hemos ajustado un modelo con ocho variables predictoras, hemos comprobado que el mínimo es único, y hemos medido lo bueno que es sobre las mismas 97 observaciones que hemos usado para elegirlo. El capítulo anterior ya avisó de que esa medida tiende a ser demasiado favorable. Los datos simulados permiten ver cómo el ajuste aprovecha la muestra concreta que recibe.</p>
+<div id="ca5a48ee" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo del ajuste:              "</span>,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>      mse(X <span class="op">@</span> w_exacto, y).item())</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo de los coeficientes verdaderos:"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      mse(X <span class="op">@</span> w_verdadero, y).item())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo del ajuste:               0.24758781367707222
+riesgo de los coeficientes verdaderos: 0.25879278680197343</code></pre>
+</div>
+</div>
+<p>El ajuste obtiene menos riesgo <strong>empírico</strong> que los coeficientes verdaderos. No es un error de cálculo: <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> se ha elegido para minimizar ese criterio en esta muestra, con su realización concreta del ruido. Esa ventaja en entrenamiento no garantiza una ventaja al predecir observaciones nuevas.</p>
+<p>Antes de añadir más variables hace falta poder estimar el error sobre observaciones que el modelo no haya visto. A esto dedicaremos el capítulo siguiente.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-hastie2009elements" class="csl-entry" role="listitem">
+Hastie, Trevor, Robert Tibshirani, y Jerome Friedman. 2009. <em>The Elements of Statistical Learning</em>. 2nd ed. Springer.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../capitulos/02-aprender-minimizando.html" class="pagination-link" aria-label="Aprender minimizando">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../problemas/hoja-01.html" class="pagination-link" aria-label="Hoja 1">
+        <span class="nav-page-text">Hoja 1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
