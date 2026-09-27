@@ -139,7 +139,7 @@ borraría en silencio el código de un capítulo entero.
 capitulos/     los 11 capítulos (+ style.py, figuras)
 problemas/     hojas para las sesiones de lápiz y papel
 evaluacion/    parcial, simulacro, banco de preguntas, proyecto
-curso/         evaluación, anexos de repaso (Colab y Python, álgebra, probabilidad),
+curso/         evaluación, anexos (Colab, clases de Python, álgebra, probabilidad),
                proyecto, glosario
 assets/        _macros.tex (contrato de notación), estilos, fuentes, logo
 scripts/       filtros Lua + utilidades de construcción

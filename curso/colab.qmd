@@ -20,6 +20,9 @@ import style
 Este anexo contiene una introducción a Python. Su objetivo no es enseñar a programar sino
 asegurar que sabéis ejecutar código desde Google Colab.
 
+Las clases, los atributos y los métodos se explican desde cero en el anexo de
+[clases en Python](../curso/clases-python.qmd), como preparación para el capítulo 2.
+
 {{< include ../assets/includes/_colab-link.qmd >}}
 
 ## Google Colab
@@ -270,16 +273,17 @@ print(f"error cuadrático medio: {error.item():.4f}")
 
 ## Leer datos con pandas
 
-Los conjuntos de datos del curso están publicados, así que se leen directamente desde su
-dirección, sin descargar nada a mano. La librería que usaremos para la lectura es `pandas`.
+Los conjuntos de datos del curso están en la carpeta `datos/` del repositorio. El cuaderno
+de Colab adapta la ruta a su copia publicada, para leerlos sin descargar nada a mano.
+La librería que usaremos para la lectura es `pandas`.
 Los objetos con los que trabaja se denominan **DataFrame**: una tabla con nombres de
 columna.
 
 ```{python}
 import pandas as pd
 
-url = "https://cunef-aap.github.io/adecd-26-27/datos/airbnb_madrid.csv"
-datos = pd.read_csv(url)
+ruta = "../datos/airbnb_madrid.csv"
+datos = pd.read_csv(ruta)
 datos.shape
 ```
 
@@ -399,7 +403,7 @@ Ejercicios de práctica.
    `torch.linspace(1, 4, 4)`. Di su `.shape` y calcula su producto por
    `torch.tensor([2.0, 3.0])`.
 8. Muestra la media de ese producto con dos decimales, usando `print` y una `f`.
-9. Lee el fichero `airbnb_madrid.csv` desde su dirección, di cuántas filas tiene y calcula
+9. Lee el fichero `airbnb_madrid.csv`, di cuántas filas tiene y calcula
    la media de la columna `bedrooms`.
 10. Dibuja los puntos $(x_i, y_i)$ con `x = torch.linspace(0, 5, 30)` e
     `y = x ** 2 + torch.randn(30)`, con etiquetas en los dos ejes.
@@ -427,7 +431,7 @@ Ejercicios de práctica.
    `.shape` igual a `torch.Size([4, 2])`, cuatro filas y dos columnas.
    `X @ torch.tensor([2.0, 3.0])` da `tensor([ 5.,  8., 11., 14.])`.
 8. `print(f"{(X @ torch.tensor([2.0, 3.0])).mean().item():.2f}")` da `9.50`.
-9. `pd.read_csv(url).shape` da `(15000, 17)`, quince mil filas. La media de `bedrooms` sale
+9. `pd.read_csv(ruta).shape` da `(15000, 17)`, quince mil filas. La media de `bedrooms` sale
    cerca de $1.4$. Si te sale `nan`, es porque la columna tiene valores ausentes: `.mean()`
    de pandas los ignora, y el capítulo 5 trata precisamente de qué hacer con ellos.
 10. `fig, ax = plt.subplots()`, `ax.scatter(x.numpy(), y.numpy())` y

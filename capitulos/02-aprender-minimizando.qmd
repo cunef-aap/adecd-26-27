@@ -483,6 +483,9 @@ La fórmula se traduce a código con las tres piezas que reutilizaremos durante 
 curso: una clase que guarda los parámetros y sabe predecir, una función que mide el error, y
 una función que calcula el gradiente.
 
+Si no has trabajado con clases, el anexo de [clases en Python](../curso/clases-python.qmd)
+explica `class`, `self`, los atributos y los métodos con una versión sencilla de esta recta.
+
 ::: {.codigo-clave}
 ```{python}
 #---

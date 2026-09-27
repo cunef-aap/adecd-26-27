@@ -46,10 +46,10 @@ def publicados() -> set[str]:
 DENTRO = publicados()
 capitulos = [q for q in sorted((RAIZ / "capitulos").glob("*.qmd"))
              if f"capitulos/{q.name}" in DENTRO]
-# El anexo de Colab no es un capitulo, pero es el cuaderno con el que se aprende a usar
-# la herramienta, asi que se genera igual.
-if "curso/colab.qmd" in DENTRO:
-    capitulos.append(RAIZ / "curso" / "colab.qmd")
+# Los anexos de Python se siguen ejecutando sus ejemplos, igual que los capitulos.
+for anexo in ("curso/colab.qmd", "curso/clases-python.qmd"):
+    if anexo in DENTRO:
+        capitulos.append(RAIZ / anexo)
 def notacion_al_principio(ruta: Path) -> None:
     """Mete la celda de notación como primera celda, y sin duplicarla."""
     nb = json.loads(ruta.read_text(encoding="utf-8"))

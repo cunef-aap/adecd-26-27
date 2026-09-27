@@ -212,6 +212,10 @@ Antes de comenzar se recomienda:
    termina con un diagnóstico;
 3. leer la [sección de evaluación](curso/evaluacion.qmd).
 
+Para el código, el anexo de [Python y Colab](curso/colab.qmd) recoge lo básico para
+ejecutar los ejemplos. Antes del capítulo 2, conviene leer también el de
+[clases en Python](curso/clases-python.qmd) y hacer su diagnóstico.
+
 ## Fuentes
 
 La bibliografía de la asignatura es la que recoge la guía docente:

@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs/live-notebooks
-  # Solo los capítulos generan cuaderno. Sin esta lista, Quarto recorre el
+  # Solo los capítulos y anexos de Python generan cuaderno. Sin esta lista, Quarto recorre el
   # árbol entero, entra en docs/ y falla al resolver los include relativos de
   # cualquier .qmd que haya quedado allí.
   render:
@@ -9,6 +9,7 @@ project:
     # El anexo de Colab tambien genera cuaderno: es el primer contacto con la herramienta
     # y se sigue ejecutandolo.
     - curso/colab.qmd
+    - curso/clases-python.qmd
 
 format:
   ipynb:

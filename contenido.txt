@@ -59,6 +59,7 @@ problemas/hoja-03.qmd
 
 {apéndices}
 curso/colab.qmd
+curso/clases-python.qmd
 curso/evaluacion.qmd
 - curso/proyecto.qmd
 curso/algebra.qmd

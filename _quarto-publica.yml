@@ -29,6 +29,7 @@ book:
         - problemas/hoja-03.qmd
   appendices:
     - curso/colab.qmd
+    - curso/clases-python.qmd
     - curso/evaluacion.qmd
     - curso/algebra.qmd
     - curso/probabilidad.qmd

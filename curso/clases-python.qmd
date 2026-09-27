@@ -1,0 +1,229 @@
+---
+cuaderno: clases-python.ipynb
+---
+
+# Clases en Python {.unnumbered}
+
+Lo necesario para leer y modificar las clases que aparecen en el curso. Partimos de
+variables, listas y funciones; no hace falta haber visto programación orientada a objetos.
+Si necesitas repasar esas tres piezas o cómo ejecutar una celda, están en el anexo de
+[Python y Colab](../curso/colab.qmd).
+
+Los ejemplos usan solo Python, sin librerías ni datos externos. Ejecútalos de arriba
+abajo. Al final hay un diagnóstico breve, sin nota, como en los repasos de álgebra y
+probabilidad.
+
+{{< include ../assets/includes/_colab-link.qmd >}}
+
+## De una función a una clase
+
+Para calcular el valor de una recta necesitamos dos coeficientes y un valor de entrada.
+Podemos guardar los coeficientes en una lista y pasárselos a una función:
+
+```{python}
+def predict(w, x):
+    return w[0] + w[1] * x
+
+w = [1.0, 2.0]
+print(predict(w, 3.0))
+```
+
+`w[0]` es el intercepto y `w[1]` la pendiente: las posiciones de una lista empiezan en
+cero. `return` devuelve el resultado, que aquí es `7.0`.
+
+Si trabajamos con varias rectas, cada una tendrá sus coeficientes. Una **clase** permite
+reunir los datos que describen cada recta y las operaciones que hacemos con ella. Cada
+recta que creemos con esa clase será un **objeto**, también llamado **instancia** de la
+clase. En esto consiste la idea de programación orientada a objetos que necesitamos aquí:
+organizar el código alrededor de objetos que guardan datos y tienen operaciones asociadas.
+
+```{python}
+class LinearRegression:
+    def __init__(self, w0=0.0, w1=0.0):
+        self.w = [w0, w1]
+
+    def predict(self, x):
+        return self.w[0] + self.w[1] * x
+```
+
+`class` introduce la clase, y los `def` de dentro definen sus **métodos**. Un método es
+una función asociada a los objetos de la clase. Aquí hay dos: `__init__` prepara los datos
+iniciales y `predict` calcula una predicción. La indentación importa: los métodos van
+dentro de la clase, y el cuerpo de cada método, un nivel más adentro.
+
+Al ejecutar esta definición todavía no hemos creado ninguna recta. La creamos llamando
+a la clase con los coeficientes que queremos guardar:
+
+```{python}
+recta = LinearRegression(w0=1.0, w1=2.0)
+print(recta.predict(3.0))
+```
+
+`LinearRegression` es la clase; `recta` es un objeto creado con ella. Usamos el nombre
+inglés porque es el que aparece en los capítulos, pero esta versión es deliberadamente
+pequeña: no ajusta nada a los datos, solo guarda los coeficientes que le damos y predice.
+
+## Atributos, `__init__` y `self`
+
+Los datos guardados en un objeto se llaman **atributos**. En el ejemplo, `w` es un
+atributo de `recta`. Se accede a él con un punto:
+
+```{python}
+print(recta.w)
+print(recta.w[1])
+```
+
+El resultado es la lista `[1.0, 2.0]` y, después, la pendiente `2.0`.
+
+El método `__init__`, con dos guiones bajos a cada lado, se ejecuta automáticamente para
+inicializar cada objeto nuevo. Al escribir `LinearRegression(w0=1.0, w1=2.0)`, Python
+crea el objeto y llama a `__init__` con esos valores. Los valores `0.0` de la definición
+son los que se usarían si no pasáramos los argumentos.
+
+Dentro del método, **`self` es el objeto concreto sobre el que estamos trabajando**.
+Por eso `self.w = [w0, w1]` guarda la lista en ese objeto. `w0` y `w1` son argumentos de
+la llamada; `self.w` permanece guardado después de que `__init__` termine. Escribir solo
+`w = [w0, w1]` crearía una variable local del método, no el atributo que necesita
+`predict`. `__init__` no lleva `return`: su tarea aquí es inicializar los atributos.
+
+Podemos crear otra instancia de la misma clase:
+
+```{python}
+otra_recta = LinearRegression(w0=-1.0, w1=0.5)
+print(recta.predict(3.0))
+print(otra_recta.predict(3.0))
+```
+
+Las predicciones son `7.0` y `0.5`. El código de `predict` es el mismo, pero en la
+primera llamada `self` es `recta`, y en la segunda es `otra_recta`. Cada una tiene su
+propia lista `w`, creada al ejecutar su `__init__`.
+
+## Llamar a un método y cambiar un atributo
+
+En `recta.predict(3.0)` solo pasamos `x`: Python pasa `recta` como primer argumento de
+forma automática. Para esta clase, la llamada equivale a:
+
+```{python}
+print(LinearRegression.predict(recta, 3.0))
+```
+
+Esta segunda forma ayuda a entender `self`; normalmente escribiremos la primera.
+`self` es un nombre convencional, no una palabra reservada, pero lo usaremos siempre.
+
+El punto permite acceder tanto a datos como a métodos. Los paréntesis indican que
+estamos haciendo una llamada:
+
+| Expresión | Qué hace |
+|---|---|
+| `LinearRegression()` | crea un objeto con los valores iniciales por defecto |
+| `recta.w` | accede a los coeficientes guardados |
+| `recta.predict` | accede al método, sin ejecutarlo |
+| `recta.predict(3.0)` | ejecuta el método y devuelve una predicción |
+
+También podemos modificar los coeficientes. El siguiente cálculo usará los nuevos:
+
+```{python}
+recta.w[1] = 4.0
+print(recta.predict(3.0))
+print(otra_recta.predict(3.0))
+```
+
+Ahora salen `13.0` y `0.5`. Hemos cambiado la pendiente de `recta`, no la de
+`otra_recta`. Llamar a `predict`, en cambio, no modifica los coeficientes: devuelve un
+valor. Conviene distinguir las dos cosas: un método puede devolver un resultado,
+modificar el objeto o hacer ambas.
+
+::: {.trampa}
+**Asignar otro nombre no crea una copia.**
+
+Si escribimos `misma_recta = recta`, los dos nombres se refieren al mismo objeto.
+Por tanto, `misma_recta.w[1] = 8.0` cambiaría también lo que leemos con `recta.w[1]`.
+Para crear otro objeto hemos llamado de nuevo a la clase, como al definir `otra_recta`.
+:::
+
+## Herencia: reutilizar una clase
+
+Supongamos que queremos conservar el cálculo de la recta y contar cuántas veces se
+llama a `predict`. La **herencia** permite definir una clase a partir de otra, reutilizar
+sus métodos y cambiar solo lo necesario. A la original la llamamos **clase base**, y a
+la nueva, **clase derivada** o **subclase**.
+
+```{python}
+class CountingRegression(LinearRegression):
+    def __init__(self, w0=0.0, w1=0.0):
+        super().__init__(w0, w1)
+        self.n_predicciones = 0
+
+    def predict(self, x):
+        self.n_predicciones += 1
+        return super().predict(x)
+```
+
+Los paréntesis en `class CountingRegression(LinearRegression)` indican de qué clase
+heredamos. Aquí redefinimos dos métodos:
+
+- En `__init__`, `super().__init__(w0, w1)` ejecuta la inicialización de la clase base
+  **sobre el mismo objeto**: guarda su lista `w`. Después añadimos el contador.
+- En `predict`, sumamos uno al contador con `+= 1` y usamos `super().predict(x)` para
+  ejecutar el cálculo de la clase base. Devolvemos su resultado con `return`.
+
+En esta herencia sencilla, `super()` permite acceder a los métodos de la clase base
+sin copiar su código ni crear otro objeto. Si no redefinimos un método, se usa el
+heredado. Si definimos nuestro propio `__init__`, el de la base no se ejecuta por sí
+solo: por eso lo llamamos expresamente.
+
+```{python}
+recta_contada = CountingRegression(w0=1.0, w1=2.0)
+print(recta_contada.predict(3.0))
+print(recta_contada.predict(4.0))
+print(recta_contada.w)
+print(recta_contada.n_predicciones)
+```
+
+Obtenemos `7.0`, `9.0`, `[1.0, 2.0]` y `2`. La forma de llamar a `predict` no ha
+cambiado; la subclase añade el registro de llamadas. Eso es **sobrescribir un método**:
+definir en la subclase una versión con el mismo nombre. La versión de la clase base
+sigue existiendo y podemos reutilizarla con `super()`.
+
+## Cómo leer las clases del curso
+
+En el [capítulo 2](../capitulos/02-aprender-minimizando.qmd), `LinearRegression` guarda
+`w` en un tensor de PyTorch en lugar de en una lista. La organización es la misma:
+`__init__` prepara los coeficientes y `predict` los usa para calcular predicciones.
+
+Un objeto también puede guardar otro objeto como atributo. Así, un optimizador guarda
+la recta que debe actualizar en `self.modelo`: `self.modelo.w` significa "los
+coeficientes del objeto guardado en `self.modelo`". No es una copia de ese objeto, de
+modo que los cambios del optimizador se ven después al predecir.
+
+Por último, `AutogradOptimizer(GradientDescentOptimizer)` hereda la inicialización del
+optimizador original y sobrescribe su método `step`. El bucle de entrenamiento sigue
+llamando a `step` de la misma forma. No hace falta conocer aún cómo calcula cada paso
+para entender esta organización.
+
+Para consultar la sintaxis con más detalle está el
+[tutorial oficial de clases de Python](https://docs.python.org/es/3/tutorial/classes.html).
+
+## Diagnóstico
+
+Diez minutos, primero sin ejecutar el código y después comprobándolo en el cuaderno.
+No cuenta para la nota. Cada apartado parte de la clase `LinearRegression` de este anexo,
+sin depender de los cambios de los apartados anteriores.
+
+1. En `a = LinearRegression(w0=2.0, w1=-1.0)`, identifica la clase, el objeto y el
+   método que se ejecuta automáticamente. ¿Qué guarda `a.w`?
+2. Tras esa misma asignación, ¿qué devuelve `a.predict(3.0)`? ¿Y después de ejecutar
+   `a.w[0] = 5.0`?
+3. `predict` se define con dos argumentos, `self` y `x`. Explica por qué en
+   `a.predict(3.0)` solo escribimos uno. ¿Qué ocurriría si quitásemos los paréntesis
+   y escribiésemos `a.predict`?
+4. Creamos `a = LinearRegression(1.0, 2.0)` y escribimos `b = a`. Después ejecutamos
+   `b.w[1] = 5.0`. ¿Cuánto devuelve `a.predict(2.0)`? ¿Cambiaría la respuesta si
+   hubiéramos escrito `b = LinearRegression(1.0, 2.0)`?
+5. Creamos `c = CountingRegression(1.0, 2.0)` y llamamos una vez a `c.predict(0.0)`.
+   ¿Qué devuelve y cuánto vale `c.n_predicciones`? Explica qué aporta cada una de
+   las dos llamadas a `super()` de la clase.
+
+Puedes comprobar los valores ejecutando los fragmentos. Para revisar las explicaciones,
+vuelve a la sección correspondiente: lo importante es identificar qué objeto recibe
+cada llamada y qué atributos cambian.
