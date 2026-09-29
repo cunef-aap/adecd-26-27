@@ -522,13 +522,17 @@ window.Quarto = {
 </div>
 <div id="exr-h3-autograd" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 14 (Entrenar con diferenciación automática)</strong></span> Los parámetros se han creado con <code>requires_grad=True</code>. Completa el método:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer(GradientDescentOptimizer):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        riesgo <span class="op">=</span> mse(<span class="va">self</span>.modelo.predict(X), y)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        riesgo.______()                     <span class="co"># (1)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.______():                <span class="co"># (2)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.modelo.w <span class="op">-=</span> <span class="va">self</span>.lr <span class="op">*</span> <span class="va">self</span>.modelo.w.grad</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w.grad.______()         <span class="co"># (3)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lr <span class="op">=</span> lr</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, X, y):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        riesgo <span class="op">=</span> mse(<span class="va">self</span>.modelo.predict(X), y)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        riesgo.______()                     <span class="co"># (1)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.______():                <span class="co"># (2)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.modelo.w <span class="op">-=</span> <span class="va">self</span>.lr <span class="op">*</span> <span class="va">self</span>.modelo.w.grad</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo.w.grad.______()         <span class="co"># (3)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>Completa los tres huecos y explica para qué sirve cada operación.</li>
 <li>Antes del paso, <code>modelo.w</code> vale <span class="math inline">\((1,2)^{\mathsf{T}}\)</span> y el gradiente calculado es <span class="math inline">\((4,-2)^{\mathsf{T}}\)</span>. Con <code>lr=1/4</code>, ¿qué parámetros quedan guardados? ¿Qué contiene <code>modelo.w.grad</code> después de la última línea?</li>

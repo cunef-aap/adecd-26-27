@@ -858,10 +858,19 @@ bucle de entrenamiento. Recuperamos las tres operaciones del capítulo 2:
 calcular las derivadas, actualizar los parámetros sin registrar esa operación y
 vaciar los gradientes antes del siguiente paso.
 
+Definimos `AutogradOptimizer` como una clase independiente, con su propio `__init__`
+para guardar `modelo` y `lr`. El bucle `train` puede usar cualquiera de los dos
+optimizadores porque ambos tienen un método `step(X, y)`; no hace falta que una clase
+herede de la otra.
+
 ::: {.codigo-clave}
 ```{python}
 #---
-class AutogradOptimizer(GradientDescentOptimizer):
+class AutogradOptimizer:
+    def __init__(self, modelo, lr):
+        self.modelo = modelo
+        self.lr = lr
+
     def step(self, X, y):
         mse(self.modelo.predict(X), y).backward()    # <1>
 

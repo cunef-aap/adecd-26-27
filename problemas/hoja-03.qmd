@@ -18,6 +18,7 @@ capítulo anterior; 12–15 sirven para comprobar que distingues las ideas y las
 No se pide programar figuras ni reproducir las demostraciones no exigibles del capítulo.
 
 ## Ejercicios del capítulo
+
 ::: {#exr-h3-loglik-mse}
 ## De la log-verosimilitud al riesgo cuadrático
 
@@ -127,6 +128,7 @@ c. Para una observación nueva con $x_1=1$ y $x_2=0$, compara las predicciones d
 :::
 
 ## Práctica básica y cálculo a mano
+
 ::: {#exr-h3-fila-diseno}
 ## De una observación a su predicción
 
@@ -200,6 +202,7 @@ c. **Explica** por qué da lo mismo escribir $\norm{\X\coef-\yv}^2$ que
 :::
 
 ## Interpretación y código
+
 ::: {#exr-h3-interpretar}
 ## Interpretar y corregir afirmaciones
 
@@ -267,7 +270,11 @@ c. Se parte de parámetros nulos y se llama una vez a `step` con `lr=1/4`.
 Los parámetros se han creado con `requires_grad=True`. Completa el método:
 
 ```python
-class AutogradOptimizer(GradientDescentOptimizer):
+class AutogradOptimizer:
+    def __init__(self, modelo, lr):
+        self.modelo = modelo
+        self.lr = lr
+
     def step(self, X, y):
         riesgo = mse(self.modelo.predict(X), y)
         riesgo.______()                     # (1)

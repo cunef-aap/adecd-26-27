@@ -196,10 +196,10 @@ la recta que debe actualizar en `self.modelo`: `self.modelo.w` significa "los
 coeficientes del objeto guardado en `self.modelo`". No es una copia de ese objeto, de
 modo que los cambios del optimizador se ven después al predecir.
 
-Por último, `AutogradOptimizer(GradientDescentOptimizer)` hereda la inicialización del
-optimizador original y sobrescribe su método `step`. El bucle de entrenamiento sigue
-llamando a `step` de la misma forma. No hace falta conocer aún cómo calcula cada paso
-para entender esta organización.
+En el [capítulo 3](../capitulos/03-modelos-lineales.qmd), `GradientDescentOptimizer` y
+`AutogradOptimizer` son clases independientes. Cada una guarda `modelo` y `lr` en su
+propio `__init__` y define su método `step`. El bucle de entrenamiento puede usar ambas
+porque llama a `step` de la misma forma, sin necesitar herencia.
 
 Para consultar la sintaxis con más detalle está el
 [tutorial oficial de clases de Python](https://docs.python.org/es/3/tutorial/classes.html).
