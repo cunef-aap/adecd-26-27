@@ -413,7 +413,7 @@ window.Quarto = {
 <div id="fig-plano-residuos" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-plano-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="7698196c" class="cell" data-execution_count="2">
+<div id="bdfc57b5" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -600,7 +600,7 @@ w_0+\sum_{j=1}^{p}w_jx_{ij},\;
 <div id="fig-matriz-diseno" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-matriz-diseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="baa890ff" class="cell" data-execution_count="3">
+<div id="089d2e9c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -639,7 +639,7 @@ Figura&nbsp;3.2: La matriz de diseño y el producto que produce las predicciones
 \tag{3.7}\]</span></span></p>
 <p>Omitir el factor <span class="math inline">\(1/n\)</span> no cambia el ajuste, pero sí el valor del criterio y de su gradiente. Para calcular riesgos y dar pasos de descenso seguiremos usando la media, como en <a href="#eq-riesgo-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a>.</p>
 <p>Para ilustrar la resolución de este problema, trabajaremos con datos simulados de <span class="math inline">\(p=5\)</span> variables predictoras, donde conocemos los coeficientes que los han generado.</p>
-<div id="ef99a171" class="cell" data-execution_count="4">
+<div id="35ee4140" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comprobaremos igualdades numéricas</span></span>
@@ -660,7 +660,7 @@ Figura&nbsp;3.2: La matriz de diseño y el producto que produce las predicciones
 </details>
 </div>
 <p>El tercer coeficiente verdadero es cero: la variable predictora <span class="math inline">\(x_3\)</span> no influye en la respuesta. La hemos puesto para tener a mano el caso de una variable que no aporta nada.</p>
-<div id="34e0f0bf" class="cell" data-execution_count="5">
+<div id="33323173" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"X:    "</span>, <span class="bu">tuple</span>(X.shape))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"XtX:  "</span>, <span class="bu">tuple</span>((X.T <span class="op">@</span> X).shape))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Xw:   "</span>, <span class="bu">tuple</span>((X <span class="op">@</span> w_verdadero).shape))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -680,7 +680,7 @@ Xw:    (100,)</code></pre>
 </div>
 <p>Pasemos al código. Recordemos del capítulo anterior el reparto en una clase para el modelo, que guarda los parámetros y sabe predecir, y una función suelta para la pérdida. <code>torch</code> escribe el producto matriz por vector con el operador <code>@</code>, de modo que <a href="#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> se traduce literalmente.</p>
 <div class="codigo-clave">
-<div id="afde325b" class="cell" data-execution_count="6">
+<div id="0cdcdda8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
 <span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_parametros):</span>
 <span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.zeros(n_parametros)</span>
@@ -707,7 +707,7 @@ Xw:    (100,)</code></pre>
 </div>
 <div class="trampa">
 <p><strong>Las formas tienen que casar.</strong> En <code>torch</code>, un vector de <span class="math inline">\(n\)</span> números y una matriz de <span class="math inline">\(n\times1\)</span> son objetos distintos, aunque contengan lo mismo. Si <code>y</code> tiene forma <code>(n,)</code> y las predicciones forma <code>(n, 1)</code>, la resta <code>y - y_pred</code> no da error: <code>torch</code> estira las dos formas hasta hacerlas compatibles y devuelve una matriz <code>(n, n)</code> con todas las diferencias cruzadas, la de cada respuesta con cada predicción. Al promediar esa matriz sale un número perfectamente plausible, calculado con <span class="math inline">\(n^2\)</span> diferencias en lugar de <span class="math inline">\(n\)</span>, y sin ningún aviso.</p>
-<div id="341d4173" class="cell" data-execution_count="7">
+<div id="f7c29e49" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
@@ -800,13 +800,13 @@ B)^{\mathsf{T}}=\mathbf B^{\mathsf{T}}\mathbf A^{\mathsf{T}}\)</span>. En el ter
 </div>
 <p>La traducción de <a href="#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> a código es una línea.</p>
 <div class="codigo-clave">
-<div id="ff2d32fb" class="cell" data-execution_count="8">
+<div id="8e2efa05" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_mse(modelo, X, y):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> modelo.predict(X)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> (X.T <span class="op">@</span> residuos) <span class="op">/</span> y.shape[<span class="dv">0</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<div id="e2db0a17" class="cell" data-execution_count="9">
+<div id="e97fe592" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelo_auto <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
@@ -830,7 +830,7 @@ coinciden: True</code></pre>
 <p>Con lo visto, el descenso de gradiente de <a href="02-aprender-minimizando.html#def-descenso" class="quarto-xref">Definición&nbsp;<span>2.8</span></a> se aplica sin ningún cambio, porque la actualización <span class="math inline">\(\boldsymbol{w}^{(t+1)}=\boldsymbol{w}^{(t)}-\alpha\nabla\hat{R}(\boldsymbol{w}^{(t)})\)</span> no depende del número de componentes que tiene <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 <p>Reutilizamos el optimizador y el bucle del capítulo anterior. El optimizador llama a la nueva función <code>grad_mse</code>; <code>train</code> sigue guardando los parámetros y los riesgos.</p>
 <div class="codigo-clave">
-<div id="3f55ecd9" class="cell" data-execution_count="10">
+<div id="3d61a4d3" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GradientDescentOptimizer:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
@@ -854,7 +854,7 @@ coinciden: True</code></pre>
 </div>
 </div>
 <p>Con eso podemos ajustar el modelo.</p>
-<div id="b80a9687" class="cell" data-execution_count="11">
+<div id="acc2664d" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(n_parametros<span class="op">=</span>p <span class="op">+</span> <span class="dv">1</span>)</span>
@@ -883,7 +883,7 @@ riesgo final:   0.247588</code></pre>
 </ol>
 </div>
 <p>Resolver estas ecuaciones normales permite obtener el ajuste de forma analítica. El siguiente código compara la solución anaítica con la obtenida con descenso por el gradiente.</p>
-<div id="872614ff" class="cell" data-execution_count="12">
+<div id="1b53c5f7" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>w_exacto <span class="op">=</span> torch.linalg.solve(X.T <span class="op">@</span> X, X.T <span class="op">@</span> y)</span>
@@ -926,7 +926,7 @@ coinciden: True</code></pre>
 <div id="fig-descenso-riesgo" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-descenso-riesgo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="14d4505c" class="cell" data-execution_count="13">
+<div id="2300a840" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1001,7 +1001,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 \hat{R}(\boldsymbol{w})=\frac{s^2+(1-s)^2}{2}
 =\left(s-\frac12\right)^2+\frac14.
 \]</span> Deduce el riesgo mínimo y da dos vectores de parámetros distintos que lo alcancen.</li>
-<li>¿Garantiza tener más parámetros que observaciones un riesgo de entrenamiento nulo? Si en otra muestra se consiguiera riesgo cero, ¿garantizaría eso buenas predicciones sobre datos nuevos?</li>
+<li>¿Basta con tener más parámetros que observaciones para que el riesgo mínimo de entrenamiento sea cero? Si en otra muestra se consiguiera riesgo cero, ¿garantizaría eso buenas predicciones sobre datos nuevos?</li>
 </ol>
 </div>
 <div id="exr-columna-redundante" class="theorem exercise">
@@ -1024,7 +1024,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 <p>Con diferenciación automática, cambiamos cómo se obtiene el gradiente, pero no el bucle de entrenamiento. Recuperamos las tres operaciones del capítulo 2: calcular las derivadas, actualizar los parámetros sin registrar esa operación y vaciar los gradientes antes del siguiente paso.</p>
 <p>Definimos <code>AutogradOptimizer</code> como una clase independiente, con su propio <code>__init__</code> para guardar <code>modelo</code> y <code>lr</code>. El bucle <code>train</code> puede usar cualquiera de los dos optimizadores porque ambos tienen un método <code>step(X, y)</code>; no hace falta que una clase herede de la otra.</p>
 <div class="codigo-clave">
-<div id="8a2c13e8" class="cell" data-execution_count="14">
+<div id="25afb010" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer:</span>
 <span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
 <span id="annotated-cell-24-3"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
@@ -1062,7 +1062,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 </div>
 </div>
 </div>
-<div id="eac47cc2" class="cell" data-execution_count="15">
+<div id="041be150" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coincide con la solución exacta:"</span>,</span>
@@ -1078,7 +1078,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 <p>Un modelo de predicción se usa en tres pasos: crearlo, ajustarlo con <code>fit(X, y)</code> y predecir con <code>predict(X_nueva)</code>. Crear el objeto no aprende los coeficientes; <code>fit</code> los estima y los guarda. <code>predict</code> utiliza los coeficientes ya guardados: no vuelve a entrenar ni necesita las respuestas de las observaciones nuevas.</p>
 <p>Empezamos con <code>LinearRegression</code>, que resuelve el mismo problema de mínimos cuadrados que hemos estudiado. Usamos el alias <code>SkLinearRegression</code> para distinguirla de nuestra clase. Convertimos los tensores a arrays de NumPy, el formato que usaremos con la librería. Nuestra matriz ya incluye la columna de unos.</p>
 <div class="codigo-clave">
-<div id="fa59adf5" class="cell" data-execution_count="16">
+<div id="55b964fa" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression <span class="im">as</span> SkLinearRegression</span>
 <span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-26-3"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>X_numpy <span class="op">=</span> X.numpy()</span>
@@ -1106,7 +1106,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 </div>
 <p>Para predecir una observación nueva conservamos el orden y el número de columnas, incluida la constante. Por ejemplo, con las cinco predictoras de nuestros datos:</p>
 <div class="codigo-clave">
-<div id="5564d792" class="cell" data-execution_count="17">
+<div id="6ef5f86b" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X_nueva <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ajuste_sk.predict(X_nueva)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -1116,7 +1116,7 @@ w_0+w_1x_{i1}+w_2x_{i2}=w_0+(w_1+w_2)x_{i1}.
 </div>
 <p>Aunque haya una sola observación, la entrada es una matriz con una fila; por eso hay dos pares de corchetes. No llamamos de nuevo a <code>fit</code>.</p>
 <p>Los coeficientes aprendidos están en <code>ajuste_sk.coef_</code>. En este caso hay <span class="math inline">\(p+1\)</span>, y el primero es <span class="math inline">\(\widehat w_0\)</span>, porque multiplica la columna de unos.</p>
-<div id="1f5754d8" class="cell" data-execution_count="18">
+<div id="72bdfd86" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"nuestro ajuste :"</span>, [<span class="bu">round</span>(v, <span class="dv">4</span>) <span class="cf">for</span> v <span class="kw">in</span> w_exacto.tolist()])</span>
@@ -1178,7 +1178,7 @@ scikit-learn   : [0.9738, 1.9926, -1.5636, 0.0651, 0.5637, 3.0299]</code></pre>
 </tbody>
 </table>
 <p>Ajustaremos un modelo lineal que prediga <code>lpsa</code> a partir de las ocho.</p>
-<div id="f013c61e" class="cell" data-execution_count="19">
+<div id="5d6efc6b" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1213,7 +1213,7 @@ rango: 9</code></pre>
 <p>La matriz es de <span class="math inline">\(97\times9\)</span>: 97 observaciones, ocho variables predictoras y la columna de unos. Su rango es 9, es decir completo, así que por <a href="#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> hay un único mínimo y lo podemos calcular resolviendo las ecuaciones normales.</p>
 <p>La tabla trae además una columna <code>train</code>, con la partición en <em>train</em> y <em>test</em> que usa el libro. No la vamos a utilizar todavía: separar datos para evaluar es el asunto del capítulo siguiente, y aquí ajustamos con las 97 observaciones.</p>
 <p>En el ordenador podemos resolver directamente el problema de mínimos cuadrados con <code>torch.linalg.lstsq(X, y).solution</code>, sin formar <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> ni calcular su inversa. Esta llamada queda como herramienta de consulta.</p>
-<div id="5d666615" class="cell" data-execution_count="20">
+<div id="575706d1" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>w_prostata <span class="op">=</span> torch.linalg.lstsq(X_prostata, y_prostata).solution</span>
@@ -1234,7 +1234,7 @@ rango: 9</code></pre>
 </div>
 </div>
 <p>Para saber si el ajuste sirve de algo hace falta algo con lo que compararlo. Lo más sencillo posible es un modelo que ignore las variables predictoras.</p>
-<div id="766d440a" class="cell" data-execution_count="21">
+<div id="4aa42b5a" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>residuos_prostata <span class="op">=</span> y_prostata <span class="op">-</span> X_prostata <span class="op">@</span> w_prostata</span>
@@ -1284,7 +1284,7 @@ riesgo de predecir siempre la media: 1.3187</code></pre>
 <div id="fig-caso-prostata" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-caso-prostata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="371d3aeb" class="cell" data-execution_count="22">
+<div id="df9e5dc5" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1300,7 +1300,7 @@ Figura&nbsp;3.4: El ajuste sobre los datos de próstata. A la izquierda, lo obse
 </figure>
 </div>
 <p>Esa última frase del pie de la figura es el problema que queda abierto. Hemos ajustado un modelo con ocho variables predictoras, hemos comprobado que el mínimo es único, y hemos medido lo bueno que es sobre las mismas 97 observaciones que hemos usado para elegirlo. El capítulo anterior ya avisó de que esa medida tiende a ser demasiado favorable. Los datos simulados permiten ver cómo el ajuste aprovecha la muestra concreta que recibe.</p>
-<div id="0207a5d9" class="cell" data-execution_count="23">
+<div id="a36e224a" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"riesgo del ajuste:              "</span>,</span>

@@ -101,7 +101,8 @@ b. Comprueba que
    =\left(s-\frac12\right)^2+\frac14.
    $$
    Deduce el riesgo mínimo y da dos vectores de parámetros distintos que lo alcancen.
-c. ¿Garantiza tener más parámetros que observaciones un riesgo de entrenamiento nulo?
+c. ¿Basta con tener más parámetros que observaciones para que el riesgo mínimo de
+   entrenamiento sea cero?
    Si en otra muestra se consiguiera riesgo cero, ¿garantizaría eso buenas predicciones
    sobre datos nuevos?
 :::
