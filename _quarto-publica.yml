@@ -22,11 +22,15 @@ book:
         - capitulos/01-senal-ruido.qmd
         - capitulos/02-aprender-minimizando.qmd
         - capitulos/03-modelos-lineales.qmd
+    - part: "Evaluación y datos"
+      chapters:
+        - capitulos/04-evaluacion.qmd
     - part: "Hojas de problemas"
       chapters:
         - problemas/hoja-01.qmd
         - problemas/hoja-02.qmd
         - problemas/hoja-03.qmd
+        - problemas/hoja-04.qmd
   appendices:
     - curso/colab.qmd
     - curso/clases-python.qmd

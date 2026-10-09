@@ -8,10 +8,12 @@ check:                       ## centinelas, estilo y correspondencia de ejercici
 	python scripts/check-estilo.py
 	python scripts/comprueba-ejercicios-capitulo.py capitulos/02-aprender-minimizando.qmd problemas/hoja-02.qmd
 	python scripts/comprueba-ejercicios-capitulo.py capitulos/03-modelos-lineales.qmd problemas/hoja-03.qmd
+	python scripts/comprueba-ejercicios-capitulo.py capitulos/04-evaluacion.qmd problemas/hoja-04.qmd
 	python scripts/test-comprueba-ejercicios-capitulo.py
 	python scripts/test-publicado.py
 	python scripts/test-enlaces-publicados.py
 	python scripts/test-crear-ipynb.py
+	python scripts/test-aceptar-marcas.py
 
 marcas:                      ## marcas de revisión .nuevo sin aceptar
 	python scripts/aceptar-marcas.py --listar

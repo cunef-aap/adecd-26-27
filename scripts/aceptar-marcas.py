@@ -35,11 +35,12 @@ RAIZ = Path(__file__).resolve().parent.parent
 DIRECTORIOS = ("capitulos", "problemas", "evaluacion", "curso")
 
 SPAN = re.compile(r"\[([^\[\]]*)\]\{\.nuevo\}", re.S)
-ABRE = re.compile(r"^\s*:::+\s*\{\.nuevo\}\s*$")
+ABRE = re.compile(r"^(\s*:::+\s*)\{([^{}]*)\}(\s*)$")
+CLASE_NUEVO = re.compile(r"(?<!\S)\.nuevo(?!\S)")
 CIERRA = re.compile(r"^\s*:::+\s*$")
 # Un encabezado no es span ni div: lleva la clase en su bloque de atributos, que puede
 # traer otras (`{.nuevo .unnumbered}`). Solo se quita `.nuevo`; el resto se conserva.
-ENCABEZADO = re.compile(r"^(#{1,6} .*?)\s*\{([^{}]*\.nuevo[^{}]*)\}\s*$", re.M)
+ENCABEZADO = re.compile(r"^(#{1,6} .*?)[ \t]*\{([^{}]*\.nuevo[^{}]*)\}[ \t]*$", re.M)
 
 
 def _sin_nuevo(m: re.Match) -> str:
@@ -62,7 +63,8 @@ def marcas(texto: str):
     for m in SPAN.finditer(texto):
         encontradas.append((texto[: m.start()].count("\n") + 1, "span"))
     for i, linea in enumerate(texto.splitlines(), 1):
-        if ABRE.match(linea):
+        apertura = ABRE.match(linea)
+        if apertura and CLASE_NUEVO.search(apertura.group(2)):
             encontradas.append((i, "div"))
         elif ENCABEZADO.match(linea):
             encontradas.append((i, "encabezado"))
@@ -80,8 +82,13 @@ def acepta(texto: str) -> tuple[str, int]:
     profundidad = 0
     n_divs = 0
     for linea in lineas:
-        if ABRE.match(linea):
-            pila.append(profundidad)
+        apertura = ABRE.match(linea)
+        if apertura and CLASE_NUEVO.search(apertura.group(2)):
+            resto = CLASE_NUEVO.sub("", apertura.group(2)).strip()
+            if resto:
+                salida.append(f"{apertura.group(1)}{{{resto}}}{apertura.group(3)}")
+            else:
+                pila.append(profundidad)
             profundidad += 1
             n_divs += 1
             continue

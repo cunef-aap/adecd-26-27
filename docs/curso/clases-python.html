@@ -187,12 +187,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Hojas de problemas</span></a>
+ <span class="menu-text">Evaluación y datos</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hojas de problemas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../problemas/hoja-01.html" class="sidebar-item-text sidebar-link">
@@ -211,17 +228,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Hoja 3</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 4</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Apéndices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../curso/colab.html" class="sidebar-item-text sidebar-link">
@@ -306,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="de-una-función-a-una-clase" class="level2">
 <h2 class="anchored" data-anchor-id="de-una-función-a-una-clase">De una función a una clase</h2>
 <p>Para calcular el valor de una recta necesitamos dos coeficientes y un valor de entrada. Podemos guardar los coeficientes en una lista y pasárselos a una función:</p>
-<div id="93de6995" class="cell" data-execution_count="1">
+<div id="7a98b6c3" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(w, x):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w[<span class="dv">0</span>] <span class="op">+</span> w[<span class="dv">1</span>] <span class="op">*</span> x</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -318,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>w[0]</code> es el intercepto y <code>w[1]</code> la pendiente: las posiciones de una lista empiezan en cero. <code>return</code> devuelve el resultado, que aquí es <code>7.0</code>.</p>
 <p>Si trabajamos con varias rectas, cada una tendrá sus coeficientes. Una <strong>clase</strong> permite reunir los datos que describen cada recta y las operaciones que hacemos con ella. Cada recta que creemos con esa clase será un <strong>objeto</strong>, también llamado <strong>instancia</strong> de la clase. En esto consiste la idea de programación orientada a objetos que necesitamos aquí: organizar el código alrededor de objetos que guardan datos y tienen operaciones asociadas.</p>
-<div id="07512950" class="cell" data-execution_count="2">
+<div id="01fd98eb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LinearRegression:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0<span class="op">=</span><span class="fl">0.0</span>, w1<span class="op">=</span><span class="fl">0.0</span>):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> [w0, w1]</span>
@@ -328,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>class</code> introduce la clase, y los <code>def</code> de dentro definen sus <strong>métodos</strong>. Un método es una función asociada a los objetos de la clase. Aquí hay dos: <code>__init__</code> prepara los datos iniciales y <code>predict</code> calcula una predicción. La indentación importa: los métodos van dentro de la clase, y el cuerpo de cada método, un nivel más adentro.</p>
 <p>Al ejecutar esta definición todavía no hemos creado ninguna recta. La creamos llamando a la clase con los coeficientes que queremos guardar:</p>
-<div id="c0a4a4be" class="cell" data-execution_count="3">
+<div id="01deb5ef" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>recta <span class="op">=</span> LinearRegression(w0<span class="op">=</span><span class="fl">1.0</span>, w1<span class="op">=</span><span class="fl">2.0</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta.predict(<span class="fl">3.0</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -340,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="atributos-__init__-y-self" class="level2">
 <h2 class="anchored" data-anchor-id="atributos-__init__-y-self">Atributos, <code>__init__</code> y <code>self</code></h2>
 <p>Los datos guardados en un objeto se llaman <strong>atributos</strong>. En el ejemplo, <code>w</code> es un atributo de <code>recta</code>. Se accede a él con un punto:</p>
-<div id="eec11fcb" class="cell" data-execution_count="4">
+<div id="0e40d305" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta.w)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta.w[<span class="dv">1</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -352,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>El método <code>__init__</code>, con dos guiones bajos a cada lado, se ejecuta automáticamente para inicializar cada objeto nuevo. Al escribir <code>LinearRegression(w0=1.0, w1=2.0)</code>, Python crea el objeto y llama a <code>__init__</code> con esos valores. Los valores <code>0.0</code> de la definición son los que se usarían si no pasáramos los argumentos.</p>
 <p>Dentro del método, <strong><code>self</code> es el objeto concreto sobre el que estamos trabajando</strong>. Por eso <code>self.w = [w0, w1]</code> guarda la lista en ese objeto. <code>w0</code> y <code>w1</code> son argumentos de la llamada; <code>self.w</code> permanece guardado después de que <code>__init__</code> termine. Escribir solo <code>w = [w0, w1]</code> crearía una variable local del método, no el atributo que necesita <code>predict</code>. <code>__init__</code> no lleva <code>return</code>: su tarea aquí es inicializar los atributos.</p>
 <p>Podemos crear otra instancia de la misma clase:</p>
-<div id="6ccc32b0" class="cell" data-execution_count="5">
+<div id="a6b393b0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>otra_recta <span class="op">=</span> LinearRegression(w0<span class="op">=-</span><span class="fl">1.0</span>, w1<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta.predict(<span class="fl">3.0</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(otra_recta.predict(<span class="fl">3.0</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -366,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="llamar-a-un-método-y-cambiar-un-atributo" class="level2">
 <h2 class="anchored" data-anchor-id="llamar-a-un-método-y-cambiar-un-atributo">Llamar a un método y cambiar un atributo</h2>
 <p>En <code>recta.predict(3.0)</code> solo pasamos <code>x</code>: Python pasa <code>recta</code> como primer argumento de forma automática. Para esta clase, la llamada equivale a:</p>
-<div id="a315b7cb" class="cell" data-execution_count="6">
+<div id="e6900ef4" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LinearRegression.predict(recta, <span class="fl">3.0</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>7.0</code></pre>
@@ -405,7 +428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>También podemos modificar los coeficientes. El siguiente cálculo usará los nuevos:</p>
-<div id="2ac69d5c" class="cell" data-execution_count="7">
+<div id="ba6d11b9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>recta.w[<span class="dv">1</span>] <span class="op">=</span> <span class="fl">4.0</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta.predict(<span class="fl">3.0</span>))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(otra_recta.predict(<span class="fl">3.0</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -423,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="herencia-reutilizar-una-clase" class="level2">
 <h2 class="anchored" data-anchor-id="herencia-reutilizar-una-clase">Herencia: reutilizar una clase</h2>
 <p>Supongamos que queremos conservar el cálculo de la recta y contar cuántas veces se llama a <code>predict</code>. La <strong>herencia</strong> permite definir una clase a partir de otra, reutilizar sus métodos y cambiar solo lo necesario. A la original la llamamos <strong>clase base</strong>, y a la nueva, <strong>clase derivada</strong> o <strong>subclase</strong>.</p>
-<div id="00273441" class="cell" data-execution_count="8">
+<div id="a5364485" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CountingRegression(LinearRegression):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, w0<span class="op">=</span><span class="fl">0.0</span>, w1<span class="op">=</span><span class="fl">0.0</span>):</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(w0, w1)</span>
@@ -439,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>En <code>predict</code>, sumamos uno al contador con <code>+= 1</code> y usamos <code>super().predict(x)</code> para ejecutar el cálculo de la clase base. Devolvemos su resultado con <code>return</code>.</li>
 </ul>
 <p>En esta herencia sencilla, <code>super()</code> permite acceder a los métodos de la clase base sin copiar su código ni crear otro objeto. Si no redefinimos un método, se usa el heredado. Si definimos nuestro propio <code>__init__</code>, el de la base no se ejecuta por sí solo: por eso lo llamamos expresamente.</p>
-<div id="abbc37c2" class="cell" data-execution_count="9">
+<div id="7bbf27e6" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>recta_contada <span class="op">=</span> CountingRegression(w0<span class="op">=</span><span class="fl">1.0</span>, w1<span class="op">=</span><span class="fl">2.0</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta_contada.predict(<span class="fl">3.0</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recta_contada.predict(<span class="fl">4.0</span>))</span>

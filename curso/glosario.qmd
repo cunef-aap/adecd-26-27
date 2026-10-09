@@ -35,21 +35,24 @@ $$
 
 ## Notación de la evaluación
 
-Del capítulo 4 en adelante hay tres subconjuntos de datos y hay que decir siempre sobre cuál
-se ha medido un riesgo.
+Desde el capítulo 4 distinguimos train y test. La selección subdivide train en ajuste y
+validación; después se reajusta con todo train. Al informar de un riesgo, hay que decir
+siempre sobre qué datos se ha medido.
 
 | Objeto | Símbolo | Nota |
 |---|---|---|
-| particiones | $\Dtrain$, $\Dval$, $\Dtest$ | disjuntas, y su unión son las $n$ observaciones |
-| sus tamaños | $\ntrain$, $\nval$, $\ntest$ | $\ntrain+\nval+\ntest=n$ |
+| particiones | $\Dtrain$, $\Dtest$ | disjuntas; validación simple divide $\Dtrain=\Dajuste\cup\Dval$ |
+| sus tamaños | $\ntrain$, $\nval$, $\ntest$ | $\ntrain+\ntest=\nobs$; ajuste interno tiene $\ntrain-\nval$ datos |
 | riesgo medido en una partición | $\Riskh_{\Dtest}(\coef)$ | el subíndice **nunca se omite** al comparar |
-| media de la respuesta | $\ybar$ | la predicción del modelo nulo |
+| media de la respuesta | $\ybar$ | la de train fija el modelo nulo; la de la muestra evaluada se usa en $\SST$ |
 | suma de cuadrados del modelo y total | $\SSE$, $\SST$ | numerador y denominador de $\Rsq$ |
 | coeficiente de determinación | $\Rsq$ | puede ser negativo fuera de la muestra |
 | bloque $k$ de la validación cruzada | $\fold{k}$ | los $K$ bloques particionan $\Dtrain$ |
 | estimación por validación cruzada | $\CV$ | media de los $K$ riesgos de bloque |
 | diferencia emparejada | $\bar d$ | media de las $K$ diferencias medidas sobre las **mismas** unidades |
-| error típico emparejado | $s_d/\sqrt{K}$ | el único que juzga una diferencia; el de cada media no sirve |
+| error típico emparejado | $s_d/\sqrt{K}$ | escala aproximada para la diferencia; en CV los bloques no son independientes |
+| sesgo al estimar una cantidad fija $q$ con $Z$ | $\E{Z}-q$ | acertar en promedio no implica acertar en cada muestra |
+| error típico de una media | $s/\sqrt{\nobs}$ | estimación de su desviación típica con observaciones independientes |
 
 ## $\mathbf{w}$ frente a $\boldsymbol{\beta}$
 

@@ -84,13 +84,23 @@ quarto preview capitulos/03-modelos-lineales.qmd
 ```
 
 La salida queda en `_completo/local/`, fuera de Git y de la web. Incluye el material
-público y las rutas de `revision.txt`: ahora, las soluciones de la hoja 3.
+público y las rutas de `revision.txt`: las soluciones de las hojas 3 y 4.
 Si cambias esa lista, ejecuta `make revision`. Para previsualizar el libro local completo,
 usa `make preview`.
 
 `make sitio` sigue usando el perfil `publica` y escribe únicamente el contenido público
 en `docs/`. No desactiva el perfil predeterminado del editor. Añadir algo a `revision.txt`
 no lo publica; los solucionarios siguen siendo privados.
+
+Para revisar el cuaderno de un capítulo aún no publicado:
+
+```bash
+python scripts/crear-ipynb.py --revision capitulos/05-preparacion-datos.qmd
+```
+
+Se guarda en `_completo/live-notebooks/`, sin modificar los cuadernos públicos. Puedes
+abrir ese `.ipynb` en Colab con **Archivo → Subir cuaderno**. El enlace directo desde
+GitHub se activa al publicar el capítulo.
 
 Esta separación usa los [perfiles de proyecto de Quarto](https://quarto.org/docs/projects/profiles.html),
 sin listas de capítulos compartidas en `_quarto.yml`.
@@ -116,7 +126,7 @@ Cada capítulo es **un solo fichero** `.qmd` del que salen dos artefactos:
 | Perfil | Salida | Qué hace con los bloques `#---` |
 |---|---|---|
 | `publica` | `docs/` (el sitio) | borra solo las líneas marcadoras; **el código se ve entero** |
-| `notebooks`| `docs/live-notebooks/` (`.ipynb`) | sustituye el bloque por `# TODO: completar en clase` |
+| `notebooks`| `docs/live-notebooks/` (`.ipynb`) | borra solo las líneas marcadoras; **el código se conserva entero** |
 
 Así, lo que se completa en directo en el laboratorio y lo que queda publicado como
 referencia **no pueden desincronizarse**: son el mismo fichero.
@@ -124,7 +134,7 @@ referencia **no pueden desincronizarse**: son el mismo fichero.
 ```python
 ```{python}
 #---
-# esto es un hueco en el cuaderno y código completo en el sitio
+# este código se explica en clase y se conserva completo en ambos formatos
 w = np.linalg.solve(X.T @ X, X.T @ y)
 #---
 ```

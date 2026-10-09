@@ -54,5 +54,18 @@ class DatosColabTest(unittest.TestCase):
         ast.parse(nuevo)
 
 
+class RevisionPrivadaTest(unittest.TestCase):
+    def test_acepta_capitulo_inedito(self):
+        fuente = Path("capitulos/04-evaluacion.qmd")
+        self.assertEqual(cuadernos.seleccion_revision([fuente]),
+                         [(cuadernos.RAIZ / fuente).resolve()])
+
+    def test_rechaza_material_privado_y_rutas_externas(self):
+        for fuente in ("problemas/hoja-04-soluciones.qmd", "evaluacion/examen.qmd",
+                       "../fuera.qmd", "capitulos/inexistente.qmd", "README.md"):
+            with self.subTest(fuente=fuente), self.assertRaises(ValueError):
+                cuadernos.seleccion_revision([Path(fuente)])
+
+
 if __name__ == "__main__":
     unittest.main()

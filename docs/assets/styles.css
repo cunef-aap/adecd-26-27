@@ -309,6 +309,13 @@ img.sidebar-logo.dark-content { display: none; }
 }
 .sidebar-title a:hover { color: var(--naranja); }
 
+/* Figuras anchas dentro de un div numerado: conservar la proporcion y evitar
+   que el panel derecho quede recortado por la columna del texto. */
+.figura-ajustada .figure-img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ===========================================================================
    Pie
    =========================================================================== */
@@ -432,6 +439,7 @@ div.nuevo .proof {
   .sol,
   .cajanegra,
   .callout,
+  table,
   .quarto-figure,
   figure,
   div.sourceCode,

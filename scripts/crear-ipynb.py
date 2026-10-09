@@ -8,6 +8,7 @@ Adaptado de PhilChodrow/ml-notes-update (scripts/create-ipynb.py), sin la
 importacion de dotenv que alli sobra y no esta en requirements.txt.
 """
 import ast
+import argparse
 import importlib.util
 import io
 import json
@@ -219,31 +220,57 @@ def macros_sin_expandir(ruta: Path) -> list[str]:
                    if m in nombres_definidos()})
 
 
+def seleccion_revision(rutas: list[Path]) -> list[Path]:
+    """Solo fuentes docentes; nunca soluciones, exámenes ni rutas externas."""
+    fuentes = []
+    for ruta in rutas:
+        ruta = (RAIZ / ruta).resolve()
+        if (not ruta.is_relative_to(RAIZ)
+                or ruta.relative_to(RAIZ).parts[0] not in {"capitulos", "curso"}
+                or ruta.suffix != ".qmd" or not ruta.is_file()):
+            raise ValueError(f"fuente de cuaderno no válida: {ruta}")
+        fuentes.append(ruta)
+    return fuentes
+
+
 def main() -> int:
-    SALIDA.mkdir(parents=True, exist_ok=True)
-    if not capitulos:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--revision", nargs="+", type=Path, metavar="FUENTE",
+                        help="genera solo estas fuentes en _completo/live-notebooks, "
+                             "sin publicar ni cambiar los cuadernos públicos")
+    args = parser.parse_args()
+    try:
+        fuentes = seleccion_revision(args.revision) if args.revision else capitulos
+    except ValueError as exc:
+        parser.error(str(exc))
+    salida = RAIZ / "_completo" / "live-notebooks" if args.revision else SALIDA
+    salida.mkdir(parents=True, exist_ok=True)
+    if not fuentes:
         print("ningun capitulo publicado en contenido.txt: no hay cuadernos que generar")
     fallos = []
-    for qmd in capitulos:
+    for qmd in fuentes:
         print(f"-> {qmd.name}", flush=True)
+        comando = ["quarto", "render", str(qmd), "--profile", "notebooks",
+                   "--to", "ipynb", "--output", f"{qmd.stem}.ipynb", "--no-execute"]
+        if args.revision:
+            comando += ["--output-dir", str(salida.relative_to(RAIZ))]
         r = subprocess.run(
-            ["quarto", "render", str(qmd), "--profile", "notebooks",
-             "--to", "ipynb", "--output", f"{qmd.stem}.ipynb", "--no-execute"],
+            comando,
             cwd=RAIZ,
         )
         if r.returncode:
             fallos.append(qmd.name)
 
     # Quarto crea un redirect cuyo destino no existe dentro de los cuadernos.
-    (SALIDA / "index.html").unlink(missing_ok=True)
+    (salida / "index.html").unlink(missing_ok=True)
     if fallos:
         print("FALLARON: " + ", ".join(fallos), file=sys.stderr)
         return 1
 
     sucios = {}
     indice = indice_etiquetas()
-    for qmd in capitulos:
-        ruta = SALIDA / f"{qmd.stem}.ipynb"
+    for qmd in fuentes:
+        ruta = salida / f"{qmd.stem}.ipynb"
         limpiado = limpia_para_colab(ruta, indice)
         if limpiado:
             print(f"   {ruta.name}: " + ", ".join(f"{v} {k}" for k, v in limpiado.items()))
@@ -258,10 +285,11 @@ def main() -> int:
         return 1
 
     # Solo artefactos generados: retira cuadernos de capítulos que ya no se publican.
-    esperados = {f"{qmd.stem}.ipynb" for qmd in capitulos}
-    for notebook in SALIDA.glob("*.ipynb"):
-        if notebook.name not in esperados:
-            notebook.unlink()
+    if not args.revision:
+        esperados = {f"{qmd.stem}.ipynb" for qmd in fuentes}
+        for notebook in salida.glob("*.ipynb"):
+            if notebook.name not in esperados:
+                notebook.unlink()
     return 0
 
 
