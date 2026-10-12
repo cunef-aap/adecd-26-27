@@ -25,41 +25,107 @@ $\coefhat$. El resultado es el modelo concreto $f_{\coefhat}$: una ecuación cuy
 están fijados.
 
 Al final del capítulo 3 vimos que el ajuste podía conseguir menos error que los coeficientes reales (que, en general, no son conocidos).
-Como hemos visto, un error de entrenamiento pequeño no basta para afirmar que el modelo predecirá
-bien datos nuevos. Predecir bien en la muestra de entrenamiento no implica predecir bien en nuevas muestras, no implica que el modelo **generalice**. La generalización es la capacidad de un modelo de predecir correctamente datos que no ha visto antes.
+Un error de entrenamiento pequeño no basta para afirmar que el modelo **generalice**:
+que prediga bien datos nuevos, ajenos al ajuste.
 
-Dado un modelo ajustado $f_{\coefhat}$, la medida más razonable de rendimiento no es el riesgo de
-entrenamiento, sino el **riesgo verdadero** de @def-riesgo-verdadero,
+Recordemos el ejemplo del capítulo 1, ahora que sabemos ajustar una recta. Simulamos
+$Y=1+2X+\varepsilon$, con ruido normal de media cero y desviación típica $0.5$.
+Ajustamos una recta y una curva interpoladora a las mismas doce observaciones. La curva
+pasa por todos los puntos: su error de entrenamiento es cero. Después mantenemos ambos
+modelos fijos y predecimos cien observaciones nuevas.
+
+::: {#fig-recordatorio-sobreajuste .figura-ajustada}
+```{python}
+#| code-fold: true
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy.interpolate import CubicSpline
+from sklearn.linear_model import LinearRegression
+
+rng_ejemplo = np.random.default_rng(11)
+x_ajuste = np.linspace(0, 1, 12)
+y_ajuste = 1 + 2 * x_ajuste + rng_ejemplo.normal(0, 0.5, len(x_ajuste))
+x_nuevo = rng_ejemplo.uniform(0, 1, 100)
+y_nuevo = 1 + 2 * x_nuevo + rng_ejemplo.normal(0, 0.5, len(x_nuevo))
+
+recta = LinearRegression().fit(x_ajuste[:, None], y_ajuste)
+curva = CubicSpline(x_ajuste, y_ajuste)
+rejilla = np.linspace(0, 1, 300)
+
+fig, ejes = plt.subplots(1, 2, figsize=(8.4, 3.5), sharex=True, sharey=True)
+for ax, xx, yy, titulo in zip(
+    ejes, [x_ajuste, x_nuevo], [y_ajuste, y_nuevo],
+    ["Datos de entrenamiento", "Datos nuevos"],
+):
+    error_recta = np.mean((yy - recta.predict(xx[:, None])) ** 2)
+    error_curva = np.mean((yy - curva(xx)) ** 2)
+    ax.scatter(xx, yy, facecolors="none", edgecolors="#8b8e95", s=25)
+    ax.plot(rejilla, recta.predict(rejilla[:, None]), color="#151f6c",
+            label=f"Recta: MSE = {error_recta:.2f}")
+    ax.plot(rejilla, curva(rejilla), color="#ff5700",
+            label=f"Interpoladora: MSE = {error_curva:.2f}")
+    ax.set(title=titulo, xlabel="x")
+    ax.legend(fontsize=8)
+ejes[0].set_ylabel("y")
+plt.tight_layout()
+```
+
+La interpoladora encaja también el ruido de entrenamiento: en los datos nuevos su
+error cuadrático medio (MSE) es mayor que el de la recta. Las dos curvas son las mismas
+en ambos paneles; no se han reajustado. El código de la figura es de consulta.
+:::
+
+¿Qué error nos interesa medir? Recordemos que $\loss(y,\yhat)$ es la **pérdida de una
+predicción**: con pérdida cuadrática, observar $y=3$ y predecir $\yhat=2$ cuesta
+$(3-2)^2=1$. El riesgo promedia esas pérdidas. La diferencia está en qué promediamos:
 
 $$
-\Risk(\coefhat)
-=\Esub{P^\star}{\loss\bigl(Y,f_{\coefhat}(X)\bigr)},
+\underbrace{\Riskh_{\Dtrain}(\coefhat)
+=\frac{1}{\ntrain}\sum_{i\in\Dtrain}\loss\bigl(\yi,f_{\coefhat}(\xv_i)\bigr)}_{\text{promedio en la muestra que sirvió para ajustar}},
+$$
+$$
+\underbrace{\Risk(\coefhat)
+=\Esub{P^\star}{\loss\bigl(Y,f_{\coefhat}(X)\bigr)}}_{\text{promedio en la población, con el modelo ya fijado}}.
 $$
 
-es decir, la pérdida media sobre observaciones nuevas de la misma población. No conocemos
-$P^\star$, así que no podemos calcular esta esperanza: tendremos que aproximarla con datos.
+La **esperanza** $\Esub{P^\star}{\cdot}$ es un promedio ponderado por las probabilidades
+de la población: las pérdidas más probables pesan más. Por ejemplo, si una pérdida vale
+$0$ o $4$, cada una con probabilidad $1/2$, su esperanza es $0\cdot\tfrac12+4\cdot\tfrac12=2$.
+También podemos imaginarla como el promedio al evaluar el mismo modelo en muchísimas
+observaciones nuevas e independientes. La *ley de los grandes números* justifica esta
+intuición cuando la pérdida tiene esperanza finita; su demostración queda fuera del curso.
+
+La segunda expresión es el **riesgo verdadero** de @def-riesgo-verdadero: nuestro objetivo
+es predecir datos nuevos, no reproducir los de entrenamiento. No conocemos $P^\star$, así
+que no podemos calcular ese promedio poblacional. Tendremos que aproximarlo con datos.
 
 ## Dos tareas
 
-No poder calcular ese riesgo nos plantea dos preguntas distintas: cómo evaluar una
-ecuación que ya hemos ajustado y cómo decidir qué variables incluir antes de ajustarla.
+Esto plantea dos preguntas distintas: cómo evaluar el rendimiento de un modelo que ya hemos ajustado y cómo
+elegir el procedimiento que usaremos para obtenerlo.
 
 **Tarea 1: estimar el riesgo de un modelo ya ajustado.** Sus parámetros no van a cambiar.
-Queremos aproximar $\Risk(\coefhat)$ y saber con qué precisión lo hemos medido.
+Queremos aproximar $\Risk(\coefhat)$ y saber qué precisión tiene esa aproximación.
 
-**Tarea 2: elegir cómo vamos a ajustar.** En próstata, ¿usamos solo `lcavol`, añadimos
-`lweight` o incluimos las ocho variables? Cada opción es un **procedimiento**: unas
-variables y una regla para calcular los coeficientes con los datos que reciba. Queremos
-comparar $M$ opciones y elegir una que prediga bien datos nuevos. Después la aplicaremos
-a todos los datos de entrenamiento para obtener el **modelo final**, con sus coeficientes
-ya fijados.
+**Tarea 2: elegir cómo vamos a ajustar.** Un **procedimiento** es una regla que recibe
+datos de entrenamiento y devuelve un modelo con parámetros fijados. Especifica, por
+ejemplo, qué variables utiliza, qué familia de funciones considera y cómo elige sus
+parámetros. **Ajustar** consiste en determinar esos parámetros con los datos, siguiendo
+la regla elegida; escoger la regla es una decisión distinta.
 
-Empezaremos por una referencia sencilla, el modelo nulo. Después resolveremos las dos tareas
-y veremos otras formas de resumir los errores. El capítulo termina aplicando todo el
-protocolo a los datos de próstata.
+En próstata, usar regresión lineal por mínimos cuadrados con solo `lcavol`, con `lcavol`
+y `lweight` o con las ocho variables define tres procedimientos. También lo son ajustar
+una recta e interpolar, como en la figura anterior. Queremos comparar $M$ procedimientos
+y elegir uno que produzca modelos con poco error en datos nuevos. Después lo aplicaremos
+a todo el entrenamiento para obtener el **modelo final**.
 
 
-### Empezar por una referencia sencilla
+Antes de resolver estas tareas, necesitamos un modelo sencillo cuyo riesgo sirva como
+referencia. Lo más fácil es considerar uno que siempre predice lo mismo, sin usar
+variables predictoras. A este se le conoce como modelo nulo.
+
+
+### Modelo nulo
 
 La elección natural contra la que comparar el riesgo de un modelo dado es evaluar el riesgo de un modelo que ignora por completo las variables predictoras. Consideremos la familia de funciones constantes, $\{f_c(\xv)=c:c\in\Real\}$, y el procedimiento que elige el valor de $c$ minimizando el riesgo empírico.
 
@@ -182,59 +248,72 @@ c. Para las respuestas $(1,2,9)$, calcula la media y la mediana y comprueba cuá
 
 ## Tarea 1: estimar el riesgo de un modelo ya ajustado
 
-Comenzamos por la primera tarea. Fijemos un modelo $f_{\coefhat}$, obtenido al ajustar
-sus parámetros con $\Dtrain$. Queremos conocer su riesgo verdadero:
+Consideremos que ya tenemos un modelo ajustado y queremos aproximar su pérdida media en datos nuevos. ¿Por qué no basta con promediar las pérdidas de entrenamiento? Veámoslo con un ejemplo
+en el que conocemos la población y podemos hacer todas las cuentas.
+
+### Un ejemplo con dos respuestas posibles
+
+Supongamos que $Y$ vale $0$ o $2$, cada uno con probabilidad $1/2$, y que predecimos
+una constante $c$, es decir, no usamos variables predictoras. Con pérdida cuadrática, su riesgo verdadero es
 
 $$
-\Risk(\coefhat)
-=\Esub{P^\star}{\loss\bigl(Y,f_{\coefhat}(X)\bigr)} .
+\Risk(c)=\Esub{P^\star}{(Y-c)^2}
+=\tfrac12(0-c)^2+\tfrac12(2-c)^2.
 $$
 
-En esta esperanza, $\Esub{P^\star}{\cdot}$, **el modelo se mantiene fijo**. Lo que cambia
-es la observación nueva $(X,Y)$: imaginamos muchas observaciones de la población y
-promediamos las pérdidas que produce esa misma ecuación.
+Por ejemplo, el modelo $f_0(\xv)=0$ tiene riesgo $\Risk(0)=2$: la mitad de las veces
+su pérdida es $0$ y la otra mitad es $4$. **Para calcular esta esperanza no reajustamos
+nada**. Mantenemos $c=0$ y promediamos las pérdidas de las respuestas que podría recibir.
 
-Como no conocemos la población, podríamos intentar sustituir ese promedio por el de las
-observaciones que ya tenemos, las de $\Dtrain$:
+Ahora supongamos que ese modelo se obtuvo de un train con dos respuestas, $y_1 = 0$ e $y_2 = 0$ (no hay variables predictoras).
+La constante ajustada es su media, $c=0$, y su riesgo en train es $0$. Si usamos ese
+número para aproximar el riesgo verdadero, obtenemos $0$ cuando en realidad vale $2$.
+Pero una muestra desafortunada no basta para concluir que medir en train falla
+sistemáticamente. Tenemos que examinar qué ocurriría con las demás muestras posibles.
+
+### Qué ocurre al repetir el entrenamiento
+
+Tomamos dos respuestas independientes de esa población y ajustamos su media. Hay cuatro
+muestras ordenadas posibles, todas con probabilidad $1/4$. En cada fila calculamos el
+error en la muestra que sirvió para ajustar y el riesgo verdadero del modelo obtenido:
+
+| Respuestas de train | Constante ajustada $c$ | Riesgo en train $\Riskh_{\Dtrain}(c)$ | Riesgo verdadero $\Risk(c)$ |
+|:--|--:|--:|--:|
+| $(0,0)$ | $0$ | $0$ | $2$ |
+| $(0,2)$ | $1$ | $1$ | $1$ |
+| $(2,0)$ | $1$ | $1$ | $1$ |
+| $(2,2)$ | $2$ | $0$ | $2$ |
+| **Promedio de las cuatro filas** | | **$0.5$** | **$1.5$** |
+
+Leamos, por ejemplo, la segunda fila. Ajustamos $c=1$; las dos pérdidas de train son
+$(0-1)^2=(2-1)^2=1$, de modo que su media es $1$. En la población, las dos respuestas
+posibles también dan pérdida $1$, así que el riesgo verdadero es $1$.
+
+La última fila promedia sobre **muestras de entrenamiento**. Aquí $c$ es la media de
+cada muestra: al cambiar train, también puede cambiar $c$. El subíndice de
+$\Esub{\Dtrain}{\cdot}$ indica que promediamos esos resultados:
 
 $$
-\Riskh_{\Dtrain}(\coefhat)
-=\frac{1}{\ntrain}\sum_{i\in\Dtrain}
-  \loss\bigl(\yi,f_{\coefhat}(\xv_i)\bigr).
+\Esub{\Dtrain}{\Riskh_{\Dtrain}(c)}
+=\frac{0+1+1+0}{4}=0.5,
+\qquad
+\Esub{\Dtrain}{\Risk(c)}
+=\frac{2+1+1+2}{4}=1.5.
 $$
 
-El problema es que $\coefhat$ se obtuvo minimizando precisamente esa media. Para entender
-qué falla, necesitamos distinguir dos cosas: equivocarse por azar y equivocarse
-sistemáticamente en una dirección.
+Hay dos promedios distintos: $\Risk(c)$ promedia pérdidas en la población **para una
+fila**, manteniendo su modelo fijo; $\Esub{\Dtrain}{\Risk(c)}$ promedia esa última
+columna **entre filas**, cada una con su modelo ajustado.
 
-Un **estimador** es una regla que calcula, a partir de una muestra, una aproximación a una
-cantidad desconocida. El número que obtenemos al aplicarla es la **estimación**. Al cambiar
-la muestra, cambia ese número. Si queremos estimar una cantidad fija $q$ con un estimador
-$Z$, su **sesgo** es
+Medir en train da, en promedio, $0.5$, mientras que los modelos obtenidos tienen riesgo
+verdadero medio $1.5$. La medición subestima el riesgo en una unidad. A esta tendencia
+a presentar un error menor que el real la llamamos **sesgo optimista**. Aparece porque
+hemos elegido la constante para que funcione bien precisamente en la muestra donde la medimos.
 
-$$
-\E{Z}-q.
-$$
-
-La esperanza representa el promedio que obtendríamos al repetir el muestreo muchas veces.
-Si el sesgo vale cero, decimos que el estimador es **insesgado**: acierta en promedio (no en cada
-muestra!). Al estimar un riesgo, un sesgo negativo es **optimista** porque hace parecer el
-error menor de lo que es; uno positivo es **pesimista**.
-
-Ahora imaginemos otro experimento: recibimos un train nuevo, volvemos a ajustar y repetimos
-esto muchas veces. Cada muestra produce un modelo distinto. **Promediar sobre
-$\Dtrain$**, escrito $\Esub{\Dtrain}{\cdot}$, significa promediar los resultados de
-esas repeticiones. En cada una podemos anotar dos números:
-
-- $\Riskh_{\Dtrain}(\coefhat)$: el error del modelo en la propia muestra que lo ajustó.
-- $\Risk(\coefhat)$: el error que tendría ese mismo modelo, en promedio, sobre datos
-  nuevos de la población. Este segundo número no podemos calcularlo con datos reales,
-  pero sí definirlo.
-
-La diferencia entre $\Esub{\Dtrain}{\Riskh_{\Dtrain}(\coefhat)}$ y
-$\Esub{\Dtrain}{\Risk(\coefhat)}$ no está en los modelos: son los mismos. Está en
-**dónde los evaluamos**. El resultado siguiente dice que la primera media no supera a
-la segunda: evaluar donde hemos ajustado favorece al modelo.
+El resultado siguiente generaliza esta comparación. En él, $\coefhat$ ocupa el lugar de
+la constante ajustada $c$. El término central, $\Risk(\coef^\star)$, es el menor riesgo
+verdadero alcanzable en la familia de funciones considerada. En nuestro ejemplo, la mejor
+constante poblacional es $c^\star=1$, con riesgo $1$, y la cadena se lee $0.5\leq1\leq1.5$.
 
 ::: {#prp-train-optimista}
 ## El riesgo en train es optimista en media
@@ -270,10 +349,44 @@ esperanzas.
 :::
 ::::
 
-La conclusión se lee de izquierda a derecha: en promedio, medir en train da un error no mayor
-que el riesgo verdadero del modelo ajustado. No afirma que esto ocurra en todas las muestras.
-Para evitar ese optimismo necesitamos observaciones ajenas al ajuste. Llamaremos
-$\Dtest$ a ese conjunto, con $\ntest$ observaciones.
+El resultado compara promedios: no afirma que el riesgo de entrenamiento sea menor que el verdadero en todas las muestras.
+Como vemos, el optimismo en promedio viene de evaluar el modelo en los mismos datos que se usaron para ajustarlo. Para evitarlo, necesitamos evaluar el modelo en un conjunto de observaciones
+ajenas al ajuste. Llamaremos $\Dtest$ a ese conjunto, con $\ntest$ observaciones.
+
+### Qué ocurre al repetir solo el test
+
+Volvamos al modelo $f_0(\xv)=0$, cuyo riesgo verdadero es $2$. **Ahora queda fijo**:
+no volvemos a entrenar. Recogemos dos respuestas nuevas e independientes y promediamos
+sus pérdidas. Según el test que salga, obtenemos:
+
+| Respuestas de test | Pérdidas del modelo fijo $c=0$ | Riesgo medido en test |
+|:--|:--|--:|
+| $(0,0)$ | $0,0$ | $0$ |
+| $(0,2)$ | $0,4$ | $2$ |
+| $(2,0)$ | $4,0$ | $2$ |
+| $(2,2)$ | $4,4$ | $4$ |
+
+La regla "promediar las pérdidas de test" es un **estimador** del riesgo verdadero:
+usa una muestra para aproximar esa cantidad poblacional. El número obtenido en una
+muestra concreta, por ejemplo $4$, es la **estimación**. Distintos tests pueden dar
+estimaciones distintas aunque el modelo no cambie.
+
+Los cuatro tests son equiprobables. Por tanto, el promedio de sus estimaciones es
+
+$$
+\Esub{\Dtest}{\Riskh_{\Dtest}(0)}
+=\frac{0+2+2+4}{4}=2=\Risk(0).
+$$
+
+El subíndice $\Dtest$ indica que promediamos sobre los tests posibles, **siempre para
+el mismo modelo**. El estimador es **insesgado** porque ese promedio coincide con la
+cantidad que queremos estimar; no porque acierte en cada test. Su **sesgo** es el
+promedio de las estimaciones menos la cantidad que queremos estimar: aquí, $2-2=0$.
+Si la diferencia fuera negativa,
+hablaríamos de sesgo optimista; si fuera positiva, de sesgo pesimista.
+
+Esta conclusión vale para cualquier modelo fijado sin consultar el test, no solo para
+una constante. La independencia es lo que permite pasar del ejemplo al teorema.
 
 
 ::: {#thm-test-insesgado}
@@ -286,7 +399,7 @@ $$
 \Esub{\Dtest}{\Riskh_{\Dtest}(\coefhat)}=\Risk(\coefhat),
 $$
 
-donde la esperanza se toma sobre las muestras posibles de ese tamaño. 
+donde la esperanza se toma sobre las muestras posibles de ese tamaño.
 :::
 
 
@@ -324,10 +437,13 @@ $$
 =1+(2-c)^2.
 $$
 
-En cada repetición generamos diez respuestas de train, ajustamos $c$ y medimos su error
-tanto en esas diez respuestas como en otras diez nuevas de test. Restamos a ambas
-mediciones el riesgo verdadero del modelo de esa repetición: un resultado negativo
-significa que hemos subestimado el riesgo.
+En cada repetición generamos diez respuestas de train, ajustamos $c$ y, sin cambiarla,
+medimos su error en esas diez respuestas y en otras diez nuevas de test. Solo al comenzar
+la repetición siguiente volvemos a ajustar. Restamos a cada medición el riesgo verdadero
+de la constante de esa repetición: un resultado negativo significa que lo hemos subestimado.
+El teorema asegura que test acierta en promedio para cada modelo fijo. La simulación
+muestra que también lo hace al reunir repeticiones con modelos distintos, mientras que
+train tiende a subestimar.
 
 ::: {#fig-train-test-simulado .figura-ajustada}
 ```{python}
@@ -365,8 +481,10 @@ Ambas mediciones varían de una muestra a otra: ninguna tiene por qué acertar e
 repetición concreta. El código de la simulación es de consulta.
 :::
 
-En suma, si conociéramos $P^\star$, dado un modelo ajustado con parámetros $\coefhat$, podríamos calcular $\Risk(\coefhat)$ integrando directamente. Como $P^\star$ es desconocida, la única aproximación disponible es otra media empírica; @prp-train-optimista obliga a calcularla sobre observaciones que no hayan intervenido en el ajuste. Esto motiva la primera
-partición.
+En los ejemplos conocíamos la población y podíamos calcular el riesgo verdadero para
+comprobar nuestras mediciones. En un problema real no lo conocemos: reservamos parte de
+los datos antes de ajustar y usamos su pérdida media para estimarlo. Esta es la razón
+de separar entrenamiento y test.
 
 ::: {#def-train-test}
 ## Entrenamiento y test
@@ -422,14 +540,17 @@ $$
 
 Con pérdida cuadrática, una vez fijadas las predicciones de test, se hace así:
 
+
+::: {.codigo-clave}
 ```python
 perdidas = (y_test - pred_test) ** 2
 riesgo = perdidas.mean()
 s = perdidas.std(ddof=1)
 ee = s / np.sqrt(len(perdidas))
 ```
+:::
 
-`ddof=1` usa el divisor $\ntest-1$ de la desviación típica muestral. No confundamos
+En este código, `pred_test` representa las predicciones de un modelo ya fijado. `ddof=1` usa el divisor $\ntest-1$ de la desviación típica muestral. No confundamos
 $s$, que describe la dispersión de las pérdidas individuales, con `ee`, que describe
 la precisión de su **media**. Por ejemplo, con 100 pérdidas, media $0.5$ y $s=1$,
 informamos de $0.5\pm0.1$ (media $\pm$ un error típico), no de $0.5\pm1$.
@@ -489,32 +610,42 @@ d. Escribe el intervalo media $\pm$ dos errores típicos. Si la aproximación no
 
 ## Tarea 2: elegir el mejor procedimiento entre $M$ alternativas
 
-Ya sabemos cómo evaluar un modelo fijo. No obstante, en muchas ocasiones, necesitamos escoger entre modelos. Por ejemplo ¿usamos una variable, dos, todas? Cada elección define un procedimiento distinto. Podríamos ajustar las $M$ alternativas en train, medir el rendimiento de los correspondientes modelos en test y quedarnos con el de menor error. El problema es que cada una de estas mediciones de rendimiento tiene azar. El menor valor puede señalar un buen candidato o uno al que esa muestra de test le ha resultado favorable.
+Ya sabemos evaluar en test un modelo que se ha fijado sin usarlo. Ahora queremos elegir entre
+$M$ procedimientos, por ejemplo regresiones que usan distintas variables. Ajustamos
+cada uno con train y obtenemos $M$ modelos. Tenemos dos opciones inmediatas:
 
-Veamos un ejemplo. Fijamos dos modelos, A y B, ya ajustados con train. Al evaluarlos
-en el mismo test obtenemos **dos errores medios, uno por modelo**: cada uno estima el
-riesgo verdadero del modelo correspondiente. Si repitiéramos la evaluación con otro test,
-sin reajustar los modelos, esos dos errores podrían cambiar.
+1. **Elegir el menor riesgo de train.** Es optimista porque hemos usado esas mismas
+   respuestas para ajustar los parámetros (@prp-train-optimista). Además, añadir
+   variables a una regresión no puede empeorar su mínimo: siempre podríamos poner a
+   cero los nuevos coeficientes. Ganar en train no demuestra que predigamos mejor.
+2. **Elegir el menor riesgo de test.** Cada medición por separado evalúa un modelo
+   fijado sin usar test. Sin embargo, al escoger el mínimo favorecemos también al
+   candidato que haya tenido suerte en esa muestra. Si informamos de ese mismo error
+   como rendimiento final, la medición vuelve a ser optimista.
 
-Supongamos que ambos riesgos verdaderos valen 1. Para simplificar las cuentas,
-imaginemos que, al cambiar test, solo pueden darse estas cuatro parejas de errores,
-todas con la misma probabilidad:
+Si usamos una muestra para elegir entre procedimientos, su error mínimo ya no sirve como
+evaluación independiente. Aunque la evaluación de cada modelo fijado sea insesgada, el mínimo
+de esas estimaciones es, en general, optimista. Para evaluar sin ese sesgo el modelo obtenido
+con el procedimiento elegido, necesitamos otra muestra que no haya intervenido en la elección.
 
-| Error en test de A | Error en test de B | Mínimo |
-|---:|---:|---:|
-| 0.8 | 0.8 | 0.8 |
-| 0.8 | 1.2 | 0.8 |
-| 1.2 | 0.8 | 0.8 |
-| 1.2 | 1.2 | 1.2 |
+Para ilustrarlo, volvamos a la población de Tarea 1: $Y$ vale $0$ o $2$ con igual probabilidad.
+Tenemos dos modelos fijados de antemano: $A$ predice siempre $0$ y $B$ siempre $2$.
+Ambos tienen riesgo verdadero $2$. Para ver el problema con las cuentas más sencillas,
+usamos un test de una sola observación; su error medio es la pérdida de esa observación:
 
-Si miramos solo A, su error vale $0.8$ la mitad de las veces y $1.2$ la otra mitad:
-promedia 1, su riesgo verdadero. Lo mismo ocurre con B. Pero, si en cada evaluación
-elegimos el modelo de menor error e informamos de ese mínimo, el promedio es
-$(0.8+0.8+0.8+1.2)/4=0.9$. El riesgo verdadero del elegido sigue siendo 1.
-**Ese es el sesgo de selección:** escoger la medición más favorable hace parecer mejor
-al modelo, aunque ninguno haya mejorado. La prueba siguiente generaliza la idea;
-no exige que las cuatro situaciones sean igual de probables ni que las estimaciones
-sean independientes.
+| Respuesta de test | Pérdida de $A$: $(Y-0)^2$ | Pérdida de $B$: $(Y-2)^2$ | Elegido | Error que publicaríamos |
+|:--|--:|--:|:--|--:|
+| $0$ | $0$ | $4$ | $A$ | $0$ |
+| $2$ | $4$ | $0$ | $B$ | $0$ |
+
+Si evaluamos siempre $A$, obtenemos $0$ o $4$, cuyo promedio es $2$: la evaluación es
+insesgada. Lo mismo ocurre con $B$. Pero, si elegimos según test, **siempre informamos
+de error cero**, aunque el riesgo verdadero del elegido sigue siendo $2$. No ha mejorado
+ningún modelo: hemos elegido el que acertaba la respuesta que tocó en esa muestra.
+
+Esto es el **sesgo de selección**. Usamos un test diminuto para hacer visible el mecanismo;
+el resultado siguiente muestra que el optimismo del mínimo no depende de ese tamaño
+ni de que los candidatos tengan el mismo riesgo.
 
 ::: {#prp-minimo-sesgado}
 ## El mínimo de varias estimaciones insesgadas es optimista
@@ -534,46 +665,31 @@ $\E{\min_k Z_k}\leq\E{Z_j}=q_j$. Como esto vale para todo $j$, vale también par
 hace $q_j$ más pequeño.
 :::
 
-En este caso, $Z_k$ es el error de test del modelo $k$ y $q_k$ su riesgo verdadero.
-El mínimo observado es optimista en promedio, no necesariamente en cada muestra.
-Lo que está sucediendo es que al usar el conjunto de test para elegir el mejor modelo, este ya depende del conjunto de test y por tanto, deja de cumplirse la condición
-de @thm-test-insesgado. **Necesitamos unos datos para elegir entre procedimientos y otros, no consultados, para informar del resultado final.**
+Aquí $Z_k$ es el error de test del modelo $k$ y $q_k$ su riesgo verdadero. Antes de
+elegir, cada modelo está fijado sin usar test y su medición es insesgada. Después de
+elegir, la identidad del ganador depende de test: con otros datos podríamos entregar
+otro modelo. Aunque no hayamos cambiado los coeficientes de ningún candidato, hemos
+usado test para decidir **qué modelo entregar**. Ya no se cumple la condición
+de @thm-test-insesgado para el modelo seleccionado.
 
-::: {#fig-sesgo-seleccion .figura-ajustada}
+La proposición dice que el mínimo medido no supera, en promedio, al menor riesgo
+verdadero de los candidatos. El riesgo del candidato que elijamos nunca puede ser
+menor que ese mínimo verdadero. Por tanto, el valor que publicaríamos también es
+optimista respecto al riesgo del elegido, en promedio, no necesariamente en cada muestra.
 
-```{python}
-#| code-fold: true
-rng = np.random.default_rng(42)
-# Simulamos estimaciones, todas con media 1; no son ajustes de próstata.
-estimaciones = rng.uniform(0.8, 1.2, size=(5000, 50))
-Ms = [1, 2, 5, 10, 20, 50]
-minimos_medios = [
-    estimaciones[:, :M].min(axis=1).mean() for M in Ms
-]
-
-fig, ax = plt.subplots(figsize=(6.4, 4.0))
-ax.plot(Ms, minimos_medios, marker="o", color=NARANJA,
-        label="media del mínimo estimado")
-ax.axhline(1, color=TINTA, linestyle="--",
-           label="riesgo verdadero de todos los candidatos")
-ax.set(xlabel="número de candidatos probados",
-       ylabel="riesgo", ylim=(0.78, 1.03))
-ax.legend()
-plt.tight_layout()
-```
-
-Promedio de 5000 repeticiones. Todos los candidatos tienen riesgo 1 y cada estimación
-individual acierta en promedio. Probar más candidatos reduce el mínimo que informamos,
-sin mejorar ninguno de ellos. El código de esta simulación es de consulta.
-:::
-
+Podemos usar una muestra para elegir, pero entonces cumple el papel de **validación**,
+no el de test final. **Necesitamos unos datos para elegir entre procedimientos y otros,
+no consultados, para informar del resultado final.** Conservaremos el nombre test para
+esta segunda función y lo separaremos antes de empezar a comparar.
 
 ### Validación simple
-Esta es la opción más natural. Reservamos el conjunto de test para el final. Tampoco podemos elegir entre procedimientos usando el error de entrenamiento.  Esto es fácil de entender: por ejemplo, añadir variables no puede empeorar el mínimo en train, porque siempre podríamos poner a cero
-sus coeficientes. Eligiendo el procedimiento con menor error de train, el riesgo del modelo elegido es optimista en promedio.
 
-La solución es separar temporalmente train en dos partes: $\Dajuste$ y $\Dval$. Con $\Dajuste$ ajustamos cada candidato; con $\Dval$ evaluamos los modelos obtenidos y elegimos el mejor procedimiento. Medimos el riesgo del modelo elegido en $\Dtest$, que no ha intervenido en ninguna decisión.
-Este procedimiento se conoce como **validación simple**.
+Reservamos test para la medición final. La comparación debe hacerse dentro de train,
+pero sobre observaciones que no hayan intervenido en el ajuste de los modelos evaluados. La solución natural consiste en separar temporalmente train en dos partes: $\Dajuste$ y $\Dval$. Con $\Dajuste$
+ajustamos los candidatos; con $\Dval$ comparamos los modelos obtenidos y elegimos el
+procedimiento. Este esquema se llama **validación simple**. Una vez elegido el
+procedimiento, lo reajustaremos con todo train y mediremos el modelo final en test,
+que no habrá intervenido en ninguna decisión.
 
 ::: {#def-particiones}
 ## Entrenamiento, validación y test
@@ -585,9 +701,7 @@ subconjuntos disjuntos y tres papeles distintos:
 - $\Dajuste$, con $\ntrain-\nval$ observaciones, fija los parámetros de cada
   modelo provisional, y por eso el riesgo medido sobre él es optimista
   según @prp-train-optimista;
-- $\Dval$, con $\nval$ observaciones, compara los procedimientos candidatos y queda consumido
-  por esa elección, de modo que el riesgo del ganador medido en él es optimista
-  según @prp-minimo-sesgado;
+- $\Dval$, con $\nval$ observaciones, compara los procedimientos candidatos para elegir el mejor;
 - $\Dtest$, con $\ntest$ observaciones, mide una sola vez el modelo final y no interviene en
   ninguna decisión, que es lo que hace insesgada esa medición por @thm-test-insesgado.
 :::
@@ -704,8 +818,15 @@ print(f"mínimo de validación simple: {m_simple} variables")
 ```
 :::
 
-En este reparto se eligen cinco variables. Nótese que el mínimo sirve para **elegir**, pero no para informar del rendimiento final del modelo, pues el mínimo está afectado por el sesgo de selección. Lo que tendríamos que hacer sería entrenar el procedimiento elegido con todo train y medir el rendimiento el modelo resultante una sola vez en test. Volver a calcular los coeficientes con todo train se llama
-**reajustar**; recupera los datos que habíamos reservado para validar.
+En este reparto, el menor error de validación corresponde a cinco variables. Si
+eligiéramos solo por el mínimo, ese sería el procedimiento elegido; más adelante
+matizaremos esta decisión con la regla de un error típico.
+
+El mínimo sirve para
+comparar, pero no para informar del rendimiento final: está afectado por el sesgo
+de selección. Tras elegir el procedimiento, volveríamos a calcular sus coeficientes con todo train
+y mediríamos el modelo resultante una sola vez en test. Volver a ajustar con todo
+train se llama **reajustar**; recupera los datos que habíamos reservado para validar.
 
 Antes de hacerlo, veremos una alternativa a la validación simple que depende menos de una única partición.
 Usaremos esa alternativa, la validación cruzada, para cerrar el ejemplo del capítulo.
@@ -738,7 +859,7 @@ datos. El ejercicio siguiente precisa qué estima antes de seleccionar: el riesg
 esperado a tamaño $\ntrain-\nval$, no a tamaño completo.
 
 ::: {#exr-validacion-insesgada}
-## La validación simple es insesgada (opcional)
+## La validación simple es insesgada
 
 Sea $\Dtrain$ una muestra de $\ntrain$ extracciones independientes de $P^\star$, repartida **al
 azar y sin mirar los datos** en $\Dajuste$, con $\ntrain-\nval$ observaciones, y $\Dval$, con
@@ -848,12 +969,23 @@ d. **Explica** por qué nada de esto dice que $\CV$ sea insesgada para $\Riskpro
 :::
 ::::
 
-Así usamos todo train para evaluar, en lugar de depender de un único subconjunto pequeño.
-Esto suele estabilizar la comparación, aunque no garantiza menor variabilidad en todos
-los problemas. Con cinco bloques seguimos ajustando con aproximadamente el 80 % de train;
-con diez usaríamos el 90 %, más cerca del tamaño final. Acercarnos a ese tamaño reduce
-el posible pesimismo por ajustar con menos datos, si el procedimiento mejora con ellos.
-Usaremos cinco: aumentar $K$ cuesta más ajustes y no asegura más precisión.
+El reparto tiene un compromiso: con 67 observaciones de train, pasar de 53 a 60 para
+ajustar deja solo 7, en lugar de 14, para validar. Ajustamos con más datos y nos acercamos
+al tamaño del ajuste final, pero medimos el error con menos observaciones. Hacer lo
+contrario deja más datos para medir el error, a costa de ajustar con menos datos.
+
+CV reutiliza los datos cambiando sus papeles. Con cinco bloques, cada ajuste usa 53 o 54
+observaciones, casi lo mismo que en nuestra validación simple, pero al completar las
+cinco vueltas las 67 han servido para evaluar. La comparación ya no depende solo de
+los 14 pacientes de un único reparto. Esto suele estabilizarla, aunque no garantiza
+menor variabilidad en todos los problemas.
+
+Aumentar $K$ cambia de nuevo el compromiso. Con diez bloques, cada ajuste usaría 60 o 61
+observaciones, más cerca de las 67 finales; si el procedimiento mejora con más datos,
+eso reduce el posible pesimismo de la evaluación. Pero cada bloque evaluaría solo
+6 o 7 pacientes, por lo que su error podría variar más entre bloques. Además, los ajustes de las
+distintas vueltas comparten muchos datos: sus errores no son mediciones independientes.
+Más bloques no garantiza una media más precisa y exige más ajustes. Aquí usaremos cinco.
 
 La implementación reutiliza `riesgo_validacion`; solo cambia quién organiza las filas.
 De ello se ocupa
@@ -961,45 +1093,208 @@ c. Con $K=60$, cada bloque contiene una observación. Este caso se llama *leave-
 :::
 
 ### Elegir entre candidatos: regla de un error típico {#sec-comparar}
-Ya tenemos los resultados de CV. El menor error medio, $0.5966$, corresponde a dos
-variables: `lcavol` y `lweight`. Usando solo `lcavol` obtenemos $0.6853$.
-Añadir la segunda variable mejora el error estimado en $0.0887$, pero esa mejora puede
-depender del reparto en bloques. Nos falta decidir si justifica usar una variable más.
 
-Usaremos una regla práctica: tomar como referencia el candidato de menor CV, pero
-preferir uno más sencillo si su desventaja no supera **un error típico de la diferencia**.
-Es una forma de evitar añadir variables por mejoras pequeñas respecto a la incertidumbre
-de la comparación. Aquí, más sencillo significa usar menos variables.
+Con lo visto hasta ahora, si nuestras estimaciones de riesgo fueran perfectas, elegiríamos el procedimiento con
+menor riesgo y ahí terminaríamos. Pero nuestras estimaciones tienen incertidumbre: con otra
+muestra o con otro reparto, los errores medidos cambiarían. Una pequeña ventaja puede
+deberse al azar y no justificar que usemos más variables. Necesitamos una regla práctica
+que tenga en cuenta esa incertidumbre al elegir.
 
-Para aplicarla necesitamos medir esa desventaja y su incertidumbre. Restamos los errores
-**bloque a bloque**: el de una variable en el primer bloque menos el de dos variables
-en ese mismo bloque, y así con los cinco. De esta forma comparamos sobre los mismos
-pacientes; si un bloque resulta difícil para ambos, parte de esa dificultad común se
-elimina al restar. A esto lo llamamos comparación emparejada.
+Usaremos la **regla de un error típico (1EE)**. Su idea es preferir un candidato más
+sencillo cuando su desventaja frente al de menor error sea pequeña comparada con la
+incertidumbre de esa diferencia. En este caso, el error típico nos dará una idea de la precisión de una **diferencia de riesgos**.
+
+::: {#def-regla-un-error-tipico}
+## Regla de un error típico
+
+Antes de comparar procedimientos, fijamos su orden de complejidad. En este caso,
+consideramos más complejo el que utiliza más variables predictoras. La regla se aplica
+como sigue:
+
+1. Identificamos al **campeón**, el candidato de menor error medio de validación.
+2. Comparamos con él los candidatos más sencillos, empezando por el más sencillo de
+   todos. Elegimos el primero cuya **desventaja estimada no supere un error típico
+   de esa diferencia** y paramos.
+3. Si ninguno cumple, elegimos al campeón. El campeón de referencia no cambia durante
+   las comparaciones.
+:::
+
+La regla requiere, por tanto, varias comparaciones de dos candidatos: cada candidato
+sencillo frente al mismo campeón. Veamos cómo se hacen, centrándonos en una de ellas.
+Llamaremos $A$ al candidato sencillo y $B$ al campeón. Nos interesa cuánto más riesgo
+tendría elegir $A$ en lugar de $B$.
+No conocemos esa diferencia, pero podemos estimarla restando los errores medios:
+
+$$
+\bar d=\text{error medio de }A-\text{error medio de }B.
+$$
+
+Por ejemplo, errores $2.6$ y $2.5$ dan una desventaja estimada de $0.1$ para $A$.
+Falta saber si ese $0.1$ es grande o pequeño respecto a su incertidumbre. Necesitamos
+dos números: **la diferencia estimada** $\bar d$ y **su error típico**,
+$\text{EE}_{\text{dif}}$. La condición de la regla se escribe
+
+$$
+\bar d\leq\text{EE}_{\text{dif}}.
+$$
+
+Las dos medias bastan para calcular $\bar d$, pero no su error típico: para eso
+necesitamos conservar las evaluaciones que las forman y cómo se corresponden.
 
 ::: {#def-diferencia-emparejada}
 ## Diferencia emparejada
 
-Para comparar dos procedimientos $A$ y $B$ evaluados sobre los mismos $K$ bloques,
-calculamos las diferencias y su media:
-
-$$
-d_k=\Riskh_{A,\fold{k}}-\Riskh_{B,\fold{k}},
-\qquad
-\bar d=\frac{1}{K}\sum_{k=1}^K d_k=\CV_A-\CV_B.
-$$
-
-Una diferencia media positiva indica cuánto más error tiene $A$; una negativa favorece
-a $A$. Calculamos la desviación típica muestral $s_d$ de las diferencias y usamos
-$\text{EE}_{\text{dif}}=s_d/\sqrt K$ como **escala aproximada** de incertidumbre.
-No usamos la dispersión de los errores de $A$ o de $B$ por separado, sino la de sus restas.
+Comparamos los dos procedimientos usando los mismos datos para ajustarlos y las
+mismas observaciones para evaluar los modelos obtenidos. Restamos sus errores sobre
+los mismos datos, siempre en el orden **$A$ menos $B$**.
+Así obtenemos diferencias **emparejadas**: una positiva favorece a $B$ y una negativa,
+a $A$.
 :::
 
-En nuestro ejemplo, `bloques_de[1] - bloques_de[2]` resta los cinco errores de una
-variable menos los de dos, posición a posición. La media de esas restas vale $0.0887$;
-su desviación típica dividida por $\sqrt{5}$ da $0.0964$. Como
-$0.0887\leq0.0964$, **la regla permite quedarnos con una variable**. Antes de elegirla,
-comprobaremos también el candidato aún más sencillo: el nulo.
+La forma de construir esas diferencias y estimar su incertidumbre cambia según
+usemos validación simple o CV. Veamos el protocolo completo en cada caso, siempre
+sin consultar test.
+
+#### Validación simple
+
+En validación simple ajustamos una vez y evaluamos muchas observaciones. Para una
+pareja de candidatos, hacemos lo siguiente:
+
+1. **Ajustar y fijar los modelos.** Aplicamos ambos procedimientos a $\Dajuste$ y
+   predecimos $\Dval$ con los modelos obtenidos, sin reajustarlos.
+2. **Restar las pérdidas sobre cada observación.** Para cada fila $i$ de $\Dval$, calculamos la pérdida de ambos modelos y guardamos
+
+   $$
+   d_i=\text{pérdida de }A\text{ en }i-\text{pérdida de }B\text{ en }i.
+   $$
+
+   Cada fila da una comparación de la misma pareja de modelos. No restamos pérdidas
+   de observaciones distintas: una podría ser más difícil de predecir que la otra.
+3. **Resumir las diferencias.** Promediamos las $\nval$ restas y calculamos el error
+   típico de esa media:
+
+   $$
+   \bar d=\frac{1}{\nval}\sum_{i=1}^{\nval}d_i,
+   $$
+
+   $$
+   s_d^2=\frac{1}{\nval-1}\sum_{i=1}^{\nval}(d_i-\bar d)^2,
+   \qquad
+   \text{EE}_{\text{dif}}=\frac{s_d}{\sqrt{\nval}}.
+   $$
+
+La media $\bar d$ coincide con la diferencia entre los dos errores medios de
+validación. La desviación típica $s_d$ mide cuánto varían las **diferencias individuales**.
+Como los modelos están fijos y las observaciones de validación son independientes,
+dividir por $\sqrt{\nval}$ estima la incertidumbre de **su media**, igual que en Tarea 1.
+Necesitamos al menos dos observaciones. Con estos dos números ya podemos aplicar la
+regla: aceptar $A$ si $\bar d\leq\text{EE}_{\text{dif}}$.
+
+**Ejemplo.** Comparamos solo dos procedimientos, con $A$ más sencillo. Tras ajustarlos
+con $\Dajuste$, obtenemos estas pérdidas cuadráticas en cuatro observaciones de $\Dval$:
+
+| Observación | Pérdida de $A$ | Pérdida de $B$ | Diferencia $A-B$ |
+|--:|--:|--:|--:|
+| 1 | $1.4$ | $1.0$ | $0.4$ |
+| 2 | $0.8$ | $1.0$ | $-0.2$ |
+| 3 | $4.4$ | $4.0$ | $0.4$ |
+| 4 | $3.8$ | $4.0$ | $-0.2$ |
+
+Los errores medios son $2.6$ y $2.5$, así que $B$ es el campeón. Para decidir si
+aceptamos $A$, usamos la última columna, no la dispersión de cada columna por separado.
+La observación 3 da tres unidades más de pérdida que la 1 a ambos modelos, pero la
+desventaja de $A$ sigue siendo $0.4$. En este ejemplo, restar sobre la misma observación
+elimina esa dificultad compartida y deja la diferencia que nos interesa comparar.
+
+$$
+\bar d=\frac{0.4-0.2+0.4-0.2}{4}=0.1,
+\qquad
+s_d=\sqrt{\frac{0.3^2+(-0.3)^2+0.3^2+(-0.3)^2}{3}}
+\approx0.3464.
+$$
+
+$$
+\text{EE}_{\text{dif}}=\frac{0.3464}{\sqrt4}\approx0.1732.
+$$
+
+Como $0.1\leq0.1732$, elegimos $A$: su desventaja estimada queda dentro del margen
+que admite la regla. Hemos usado cuatro diferencias porque evaluábamos **dos modelos
+fijos sobre cuatro observaciones**, no porque hubiéramos repetido cuatro ajustes.
+
+#### Validación cruzada
+
+En CV repetimos tanto el ajuste como la evaluación. No conservamos una única pareja
+de modelos: los procedimientos siguen siendo los mismos, pero **los parámetros de
+los modelos se vuelven a calcular en cada vuelta**. El protocolo para comparar $A$ y $B$ es:
+
+1. **Fijar los mismos bloques.** Usamos para ambos procedimientos la misma partición
+   de train en $K$ bloques de tamaño aproximadamente igual.
+2. **Ajustar, evaluar y restar en cada vuelta.** Aplicamos ambos procedimientos a
+   todos los datos de train excepto los de $\fold{k}$. Evaluamos los dos modelos obtenidos
+   sobre $\fold{k}$ y restamos los riesgos medidos en ese bloque:
+
+   $$
+   d_k=\Riskh_{A,\fold{k}}-\Riskh_{B,\fold{k}}.
+   $$
+
+   Pasamos al bloque siguiente y volvemos a aplicar los procedimientos desde cero.
+   Al terminar tenemos $K$ diferencias, cada una obtenida tras un ajuste y una evaluación.
+3. **Resumir las diferencias.** Promediamos las $K$ restas y calculamos un error típico
+   aproximado a partir de su dispersión:
+
+   $$
+   \bar d=\frac{1}{K}\sum_{k=1}^K d_k=\CV_A-\CV_B,
+   $$
+
+   $$
+   s_d^2=\frac{1}{K-1}\sum_{k=1}^K(d_k-\bar d)^2,
+   \qquad
+   \text{EE}_{\text{dif}}\approx\frac{s_d}{\sqrt K}.
+   $$
+
+En cada bloque podríamos restar primero las pérdidas observación a observación y
+promediar después: obtendríamos el mismo $d_k$. Pero aquí resumimos cada vuelta completa
+de ajuste y evaluación en una diferencia. Con cinco bloques calculamos la dispersión
+de **cinco diferencias de bloque** y la dividimos por $\sqrt5$, no por $\sqrt{67}$.
+Las 67 pérdidas individuales no son evaluaciones independientes de una misma pareja
+de modelos fijos. En general, tampoco las vueltas son independientes: sus ajustes comparten
+datos; por eso este error típico es solo aproximado.
+
+**Ejemplo.** Volvamos a los nueve procedimientos de próstata. El campeón usa dos
+variables, con $\CV=0.5966$. Para ilustrar una comparación, tomemos como $A$ el
+procedimiento de una variable y como $B$ el campeón. Estos son sus cinco resultados:
+
+| Bloque | Riesgo de $A$: una variable | Riesgo de $B$: dos variables | Diferencia $A-B$ |
+|--:|--:|--:|--:|
+| 1 | $0.9470$ | $0.7090$ | $0.2381$ |
+| 2 | $0.6178$ | $0.4853$ | $0.1326$ |
+| 3 | $0.7766$ | $1.0659$ | $-0.2892$ |
+| 4 | $0.7075$ | $0.4982$ | $0.2093$ |
+| 5 | $0.3775$ | $0.2245$ | $0.1530$ |
+
+Las cifras están redondeadas; las diferencias se calculan antes del redondeo.
+
+Cada fila compara **dos modelos ajustados sin ese bloque**. Por ejemplo, la primera
+resta evalúa los dos ajustes hechos sin el bloque 1; la segunda, otros dos ajustes,
+hechos sin el bloque 2. El procedimiento de una variable pierde en cuatro vueltas
+y gana en la tercera.
+
+Con las diferencias sin redondear obtenemos
+
+$$
+\bar d=\CV_A-\CV_B\approx0.0887,
+\qquad
+s_d\approx0.2155,
+$$
+
+$$
+\text{EE}_{\text{dif}}\approx\frac{0.2155}{\sqrt5}\approx0.0964.
+$$
+
+Como $0.0887\leq0.0964$, el candidato de una variable cumple la regla. Esto no cierra
+la elección: aún debemos comprobar el nulo, que la regla obliga a examinar primero.
+La figura muestra esas mismas restas; el código `bloques_de[1] - bloques_de[2]` las
+calcula posición a posición.
 
 
 ::: {#fig-emparejar .figura-ajustada}
@@ -1044,24 +1339,9 @@ el margen de un error típico alrededor de su media alcanza el cero.
 
 
 
-#### Aplicar la regla en próstata
-Esta es la versión **emparejada** de la regla de un error típico. La aplicamos ordenando
-los candidatos por número de variables, de menor a mayor. La referencia no cambia durante
-la comparación: siempre es el candidato que obtuvo la menor CV.
-
-::: {#def-regla-un-error-tipico}
-## Regla de un error típico
-
-1. Localizar el **campeón**, el candidato de menor CV.
-2. Empezando por el más sencillo, restar sus errores menos los del campeón bloque a
-   bloque. Calcular la media $\bar d$ y el error típico aproximado
-   $\text{EE}_{\text{dif}}$ de esas diferencias.
-3. Si $\bar d\leq\text{EE}_{\text{dif}}$, elegir ese candidato y parar. Si no, pasar
-   al siguiente de la lista. Si ninguno de los más sencillos que el campeón cumple
-   la condición, elegir al campeón.
-:::
-
-El campeón usa dos variables, de modo que solo hay que examinar el nulo y el de una:
+Para completar la selección, debemos empezar por el candidato más sencillo, el nulo.
+El campeón usa dos variables, así que solo hay dos comparaciones posibles antes de
+quedarnos con él: nulo frente a dos variables y una frente a dos variables.
 
 | Candidato | Desventaja frente a dos variables | Error típico de la diferencia | Decisión |
 |---|---:|---:|---|
@@ -1099,10 +1379,106 @@ print(f"número de variables elegido: {m_elegido}")
 :::
 
 El margen de un error típico es un **criterio práctico de selección**, no una prueba
-de que ambos procedimientos rindan igual ni de que el elegido sea el mejor. Además,
-los ajustes de CV comparten datos, por lo que ese error típico es solo aproximado.
+de que ambos procedimientos rindan igual ni de que el elegido sea el mejor. El campeón
+tampoco estaba fijado de antemano: lo hemos elegido con estos mismos errores. La regla
+no garantiza eliminar el sesgo de selección ni convierte la validación en una evaluación final.
+Esto vale tanto para validación simple como para CV, donde además el error típico
+ignora la dependencia entre bloques.
+
 La decisión puede cambiar con otro reparto; no buscaremos una semilla favorable.
-Queda aplicar el procedimiento elegido a todo train y medir el modelo resultante en test.
+Tras elegir, reajustamos con todo train y medimos el modelo resultante en test.
+
+:::: {.callout-note collapse="true" title="Ampliación no exigible: por qué emparejamos y qué aproxima el error típico"}
+
+Los protocolos anteriores bastan para aplicar la regla. Aquí justificamos qué
+diferencia estima cada uno, por qué emparejamos y qué significa su error típico.
+Fijamos dos procedimientos $A$ y $B$ antes de observar los resultados y suponemos
+varianzas finitas para las pérdidas que aparecen a continuación.
+
+**1. Qué estimamos en validación simple.** Mantengamos fijos los modelos
+$\modelh_A$ y $\modelh_B$ obtenidos con $\Dajuste$. Llamemos $U$ y $V$ a sus pérdidas
+sobre una misma observación nueva de $P^\star$. La diferencia de riesgos que queremos
+conocer es
+
+$$
+\Delta=\Risk(\modelh_A)-\Risk(\modelh_B)=\Esub{P^\star}{U-V}.
+$$
+
+Cada $d_i$ de validación es una realización de esa pérdida diferencial $U-V$.
+Por linealidad de la esperanza, promediarlas estima $\Delta$ sin sesgo. Además, como
+las observaciones de $\Dval$ son independientes, la varianza de su suma es la suma
+de sus varianzas:
+
+$$
+\Esub{\Dval}{\bar d}
+=\frac{1}{\nval}\sum_{i=1}^{\nval}\Esub{P^\star}{U-V}=\Delta,
+$$
+
+$$
+\Varsub{\Dval}{\bar d}
+=\frac{1}{\nval^2}\sum_{i=1}^{\nval}\Varsub{P^\star}{U-V}
+=\frac{\Varsub{P^\star}{U-V}}{\nval}.
+$$
+
+Estimamos la varianza de $U-V$ con $s_d^2$ y tomamos la raíz: obtenemos
+$s_d/\sqrt{\nval}$. Esta incertidumbre se refiere a cambiar la muestra de validación
+**manteniendo fijos los modelos**, no a volver a ajustar con otra muestra.
+
+**2. Por qué conservamos las parejas.** Las pérdidas $U$ y $V$ no tienen por qué ser independientes:
+se calculan sobre la misma observación. Escribiendo $\mu_U=\Esub{P^\star}{U}$ y
+$\mu_V=\Esub{P^\star}{V}$, desarrollamos el cuadrado
+
+$$
+\begin{aligned}
+\Varsub{P^\star}{U-V}
+&=\Esub{P^\star}{\bigl[(U-\mu_U)-(V-\mu_V)\bigr]^2}\\
+&=\Varsub{P^\star}{U}+\Varsub{P^\star}{V}-2\Cov{U}{V}.
+\end{aligned}
+$$
+
+La covarianza $\Cov{U}{V}=\Esub{P^\star}{(U-\mu_U)(V-\mu_V)}$ recoge si las dos
+pérdidas tienden a subir y bajar juntas. Cuando es positiva, restar reduce la variación
+compartida. Calcular $s_d$ a partir de las diferencias incorpora esa relación; combinar
+dos errores típicos como si las pérdidas fueran independientes la omitiría. La
+identidad siempre vale, aunque la covarianza no tiene por qué ser positiva.
+
+**3. Qué cambia en CV.** Ahora no mantenemos fijos los modelos: repetimos el ajuste.
+Con bloques del mismo tamaño, cada ajuste usa $n_a=\ntrain(K-1)/K$ observaciones.
+Por @exr-cv-insesgada y la linealidad de la esperanza,
+
+$$
+\Esub{\Dtrain}{\bar d}
+=\Esub{\Dtrain}{\CV_A-\CV_B}
+=\Riskproc{n_a}^{(A)}-\Riskproc{n_a}^{(B)}.
+$$
+
+Estimamos una diferencia entre **riesgos esperados de procedimientos** a ese tamaño
+de ajuste, no entre los riesgos de dos modelos finales. Si los bloques no son iguales,
+como ocurre con las 67 observaciones, promediamos diferencias correspondientes a los
+distintos tamaños de ajuste: aquí, 53 o 54. Esta propiedad de la esperanza no necesita
+independencia entre vueltas.
+
+Para la varianza sí importa esa dependencia. Al repetir train con el mismo esquema
+de reparto y desarrollar el cuadrado de la suma de las diferencias centradas,
+
+$$
+\Varsub{\Dtrain}{\bar d}
+=\frac{1}{K^2}\left[
+\sum_{k=1}^K\Varsub{\Dtrain}{d_k}
++2\sum_{k<r}\Cov{d_k}{d_r}\right].
+$$
+
+Una observación evalúa en una vuelta y entrena en las demás: cambiarla puede modificar
+varios $d_k$. Por eso aparecen las covarianzas **entre vueltas distintas**. Si fueran
+cero y las diferencias tuvieran varianza común $v$, quedaría $v/K$; estimar $v$ con
+$s_d^2$ daría $s_d/\sqrt K$. En CV esas covarianzas no tienen por qué ser cero y la
+fórmula no las estima. Agrupar por bloques no elimina la dependencia.
+
+Por último, los resultados anteriores se refieren a dos procedimientos fijados antes
+de comparar. El campeón de la regla 1EE se escoge con los propios errores de validación:
+la selección también introduce incertidumbre. Por eso la regla es un criterio práctico,
+no un contraste de igualdad ni una garantía de elegir el menor riesgo verdadero.
+::::
 
 ## Métricas de regresión
 
@@ -1213,8 +1589,9 @@ por construcción.
 ::: {.trampa}
 **El $\Rsq$ puede ser negativo fuera de entrenamiento.** Por @eq-r2, $\Rsq<0$ significa
 $\SSE>\SST$, es decir, que el modelo predice peor que la media de la muestra sobre la que se
-mide. En train eso no puede pasar con una arquitectura lineal que incluya el intercepto, porque
-la familia contiene las funciones constantes y el procedimiento no devuelve una ecuación peor. En
+mide. En train eso no puede pasar con una arquitectura lineal con intercepto ajustada por
+mínimos cuadrados: la familia contiene las constantes y minimizar el error no puede dar
+un resultado peor que el de la mejor constante. En
 test sí puede ocurrir: los parámetros se fijaron con $\Dtrain$, mientras que $\SST$ usa la media
 de las respuestas de $\Dtest$.
 :::
@@ -1311,13 +1688,21 @@ la selección; su riesgo es $0.6646$ en train y $0.4797$ en test.
 
 ## El protocolo reproducible {#sec-protocolo}
 
+El protocolo admite las dos formas de validar. La **validación simple** requiere un
+solo ajuste por candidato y es útil cuando hay datos suficientes para dejar una
+validación amplia, o cuando ajustar resulta costoso. **CV** aprovecha mejor una muestra
+pequeña para comparar, a cambio de $K$ ajustes por candidato; por eso la hemos usado
+con las 67 observaciones de próstata. Ninguna evita reservar test. Elegimos el esquema
+y fijamos el reparto antes de comparar, no después de ver cuál da cifras más favorables.
+
 1. **Separar test y aislarlo.** Repartir al azar bajo la hipótesis de observaciones
    independientes de la misma población; fijar y guardar el reparto.
 2. **Fijar la referencia nula y las métricas.** Calcular la constante solo con train
    y decidir qué pérdida usaremos para comparar.
-3. **Elegir el procedimiento en train.** Comparar los candidatos sobre los mismos bloques
-   de CV y aplicar la regla emparejada de un error típico. Todo lo que se aprenda de los
-   datos debe recalcularse dentro de cada ajuste, sin usar su bloque de validación.
+3. **Elegir el procedimiento en train.** Usar la misma partición de validación simple
+   o los mismos bloques de CV para todos los candidatos y aplicar la regla emparejada
+   de un error típico. Todo lo que se aprenda de los datos se calcula dentro de cada
+   ajuste, sin utilizar las observaciones que lo evalúan.
 4. **Reajustar con todo train.** Aplicar el procedimiento elegido de nuevo para obtener
    el modelo definitivo.
 5. **Medir una sola vez en test.** Informar del riesgo, su error típico y la referencia
@@ -1327,5 +1712,5 @@ Con este protocolo ya se puede informar de un resultado sin engañarse. Queda un
 sin examinar: hemos trabajado con una tabla de números limpia, donde lo único que se aprendía de
 los datos eran los coeficientes. En una tabla real hay que imputar ausencias, escalar columnas y
 codificar categorías, y todas esas transformaciones se aprenden también de los datos. Si se
-aprenden antes de separar, el test deja de ser test y ninguno de los resultados de este capítulo
-se aplica. Ese es el asunto del capítulo siguiente.
+aprenden antes de separar, el test interviene en el ajuste y perdemos la garantía de una
+evaluación independiente e insesgada. Ese es el asunto del capítulo siguiente.

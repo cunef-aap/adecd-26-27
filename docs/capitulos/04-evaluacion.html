@@ -322,10 +322,13 @@ window.Quarto = {
   <li><a href="#el-problema-de-la-generalización" id="toc-el-problema-de-la-generalización" class="nav-link active" data-scroll-target="#el-problema-de-la-generalización">El problema de la generalización</a></li>
   <li><a href="#dos-tareas" id="toc-dos-tareas" class="nav-link" data-scroll-target="#dos-tareas">Dos tareas</a>
   <ul class="collapse">
-  <li><a href="#empezar-por-una-referencia-sencilla" id="toc-empezar-por-una-referencia-sencilla" class="nav-link" data-scroll-target="#empezar-por-una-referencia-sencilla">Empezar por una referencia sencilla</a></li>
+  <li><a href="#modelo-nulo" id="toc-modelo-nulo" class="nav-link" data-scroll-target="#modelo-nulo">Modelo nulo</a></li>
   </ul></li>
   <li><a href="#tarea-1-estimar-el-riesgo-de-un-modelo-ya-ajustado" id="toc-tarea-1-estimar-el-riesgo-de-un-modelo-ya-ajustado" class="nav-link" data-scroll-target="#tarea-1-estimar-el-riesgo-de-un-modelo-ya-ajustado">Tarea 1: estimar el riesgo de un modelo ya ajustado</a>
   <ul class="collapse">
+  <li><a href="#un-ejemplo-con-dos-respuestas-posibles" id="toc-un-ejemplo-con-dos-respuestas-posibles" class="nav-link" data-scroll-target="#un-ejemplo-con-dos-respuestas-posibles">Un ejemplo con dos respuestas posibles</a></li>
+  <li><a href="#qué-ocurre-al-repetir-el-entrenamiento" id="toc-qué-ocurre-al-repetir-el-entrenamiento" class="nav-link" data-scroll-target="#qué-ocurre-al-repetir-el-entrenamiento">Qué ocurre al repetir el entrenamiento</a></li>
+  <li><a href="#qué-ocurre-al-repetir-solo-el-test" id="toc-qué-ocurre-al-repetir-solo-el-test" class="nav-link" data-scroll-target="#qué-ocurre-al-repetir-solo-el-test">Qué ocurre al repetir solo el test</a></li>
   <li><a href="#sec-precision" id="toc-sec-precision" class="nav-link" data-scroll-target="#sec-precision">Con qué precisión se mide</a></li>
   </ul></li>
   <li><a href="#tarea-2-elegir-el-mejor-procedimiento-entre-m-alternativas" id="toc-tarea-2-elegir-el-mejor-procedimiento-entre-m-alternativas" class="nav-link" data-scroll-target="#tarea-2-elegir-el-mejor-procedimiento-entre-m-alternativas">Tarea 2: elegir el mejor procedimiento entre <span class="math inline">\(M\)</span> alternativas</a>
@@ -369,25 +372,83 @@ window.Quarto = {
 
 
 <p><em><a href="https://colab.research.google.com/github/cunef-aap/adecd-26-27/blob/main/docs/live-notebooks/04-evaluacion.ipynb">Abre el cuaderno de esta página en Google Colab</a>.</em> Lo primero, <strong>Archivo → Guardar una copia en Drive</strong>.</p>
-<section id="el-problema-de-la-generalización" class="level2">
+<section id="el-problema-de-la-generalización" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="el-problema-de-la-generalización">El problema de la generalización</h2>
 <p>Los capítulos anteriores resolvieron el problema de <strong>ajuste</strong>. Fijada una clase de hipótesis, construimos el riesgo empírico sobre la muestra disponible y lo minimizamos para obtener <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>. El resultado es el modelo concreto <span class="math inline">\(f_{\hat{\boldsymbol{w}}}\)</span>: una ecuación cuyos parámetros ya están fijados.</p>
-<p>Al final del capítulo 3 vimos que el ajuste podía conseguir menos error que los coeficientes reales (que, en general, no son conocidos). Como hemos visto, un error de entrenamiento pequeño no basta para afirmar que el modelo predecirá bien datos nuevos. Predecir bien en la muestra de entrenamiento no implica predecir bien en nuevas muestras, no implica que el modelo <strong>generalice</strong>. La generalización es la capacidad de un modelo de predecir correctamente datos que no ha visto antes.</p>
-<p>Dado un modelo ajustado <span class="math inline">\(f_{\hat{\boldsymbol{w}}}\)</span>, la medida más razonable de rendimiento no es el riesgo de entrenamiento, sino el <strong>riesgo verdadero</strong> de <a href="02-aprender-minimizando.html#def-riesgo-verdadero" class="quarto-xref">Definición&nbsp;<span>2.3</span></a>,</p>
+<p>Al final del capítulo 3 vimos que el ajuste podía conseguir menos error que los coeficientes reales (que, en general, no son conocidos). Un error de entrenamiento pequeño no basta para afirmar que el modelo <strong>generalice</strong>: que prediga bien datos nuevos, ajenos al ajuste.</p>
+<p>Recordemos el ejemplo del capítulo 1, ahora que sabemos ajustar una recta. Simulamos <span class="math inline">\(Y=1+2X+\varepsilon\)</span>, con ruido normal de media cero y desviación típica <span class="math inline">\(0.5\)</span>. Ajustamos una recta y una curva interpoladora a las mismas doce observaciones. La curva pasa por todos los puntos: su error de entrenamiento es cero. Después mantenemos ambos modelos fijos y predecimos cien observaciones nuevas.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> CubicSpline</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>rng_ejemplo <span class="op">=</span> np.random.default_rng(<span class="dv">11</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x_ajuste <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y_ajuste <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x_ajuste <span class="op">+</span> rng_ejemplo.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="bu">len</span>(x_ajuste))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>x_nuevo <span class="op">=</span> rng_ejemplo.uniform(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y_nuevo <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x_nuevo <span class="op">+</span> rng_ejemplo.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="bu">len</span>(x_nuevo))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>recta <span class="op">=</span> LinearRegression().fit(x_ajuste[:, <span class="va">None</span>], y_ajuste)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>curva <span class="op">=</span> CubicSpline(x_ajuste, y_ajuste)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>rejilla <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">300</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>fig, ejes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">8.4</span>, <span class="fl">3.5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, xx, yy, titulo <span class="kw">in</span> <span class="bu">zip</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ejes, [x_ajuste, x_nuevo], [y_ajuste, y_nuevo],</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"Datos de entrenamiento"</span>, <span class="st">"Datos nuevos"</span>],</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    error_recta <span class="op">=</span> np.mean((yy <span class="op">-</span> recta.predict(xx[:, <span class="va">None</span>])) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    error_curva <span class="op">=</span> np.mean((yy <span class="op">-</span> curva(xx)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    ax.scatter(xx, yy, facecolors<span class="op">=</span><span class="st">"none"</span>, edgecolors<span class="op">=</span><span class="st">"#8b8e95"</span>, s<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    ax.plot(rejilla, recta.predict(rejilla[:, <span class="va">None</span>]), color<span class="op">=</span><span class="st">"#151f6c"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f"Recta: MSE = </span><span class="sc">{</span>error_recta<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    ax.plot(rejilla, curva(rejilla), color<span class="op">=</span><span class="st">"#ff5700"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f"Interpoladora: MSE = </span><span class="sc">{</span>error_curva<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span>titulo, xlabel<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ejes[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-recordatorio-sobreajuste" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-recordatorio-sobreajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="e1eb90e8" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-evaluacion_files/figure-html/cell-3-output-1.png" class="figure-img" width="1079" height="442"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-recordatorio-sobreajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: La interpoladora encaja también el ruido de entrenamiento: en los datos nuevos su error cuadrático medio (MSE) es mayor que el de la recta. Las dos curvas son las mismas en ambos paneles; no se han reajustado. El código de la figura es de consulta.
+</figcaption>
+</figure>
+</div>
+<p>¿Qué error nos interesa medir? Recordemos que <span class="math inline">\(\ell(y,\hat{y})\)</span> es la <strong>pérdida de una predicción</strong>: con pérdida cuadrática, observar <span class="math inline">\(y=3\)</span> y predecir <span class="math inline">\(\hat{y}=2\)</span> cuesta <span class="math inline">\((3-2)^2=1\)</span>. El riesgo promedia esas pérdidas. La diferencia está en qué promediamos:</p>
 <p><span class="math display">\[
-R(\hat{\boldsymbol{w}})
-=\mathbb{E}_{P^\star}\!\left[ \ell\bigl(Y,f_{\hat{\boldsymbol{w}}}(X)\bigr) \right],
+\underbrace{\hat{R}_{\mathcal{D}_{\mathrm{train}}}(\hat{\boldsymbol{w}})
+=\frac{1}{n_{\mathrm{train}}}\sum_{i\in\mathcal{D}_{\mathrm{train}}}\ell\bigl(y_i,f_{\hat{\boldsymbol{w}}}(\mathbf{x}_i)\bigr)}_{\text{promedio en la muestra que sirvió para ajustar}},
+\]</span> <span class="math display">\[
+\underbrace{R(\hat{\boldsymbol{w}})
+=\mathbb{E}_{P^\star}\!\left[ \ell\bigl(Y,f_{\hat{\boldsymbol{w}}}(X)\bigr) \right]}_{\text{promedio en la población, con el modelo ya fijado}}.
 \]</span></p>
-<p>es decir, la pérdida media sobre observaciones nuevas de la misma población. No conocemos <span class="math inline">\(P^\star\)</span>, así que no podemos calcular esta esperanza: tendremos que aproximarla con datos.</p>
+<p>La <strong>esperanza</strong> <span class="math inline">\(\mathbb{E}_{P^\star}\!\left[ \cdot \right]\)</span> es un promedio ponderado por las probabilidades de la población: las pérdidas más probables pesan más. Por ejemplo, si una pérdida vale <span class="math inline">\(0\)</span> o <span class="math inline">\(4\)</span>, cada una con probabilidad <span class="math inline">\(1/2\)</span>, su esperanza es <span class="math inline">\(0\cdot\tfrac12+4\cdot\tfrac12=2\)</span>. También podemos imaginarla como el promedio al evaluar el mismo modelo en muchísimas observaciones nuevas e independientes. La <em>ley de los grandes números</em> justifica esta intuición cuando la pérdida tiene esperanza finita; su demostración queda fuera del curso.</p>
+<p>La segunda expresión es el <strong>riesgo verdadero</strong> de <a href="02-aprender-minimizando.html#def-riesgo-verdadero" class="quarto-xref">Definición&nbsp;<span>2.3</span></a>: nuestro objetivo es predecir datos nuevos, no reproducir los de entrenamiento. No conocemos <span class="math inline">\(P^\star\)</span>, así que no podemos calcular ese promedio poblacional. Tendremos que aproximarlo con datos.</p>
 </section>
 <section id="dos-tareas" class="level2">
 <h2 class="anchored" data-anchor-id="dos-tareas">Dos tareas</h2>
-<p>No poder calcular ese riesgo nos plantea dos preguntas distintas: cómo evaluar una ecuación que ya hemos ajustado y cómo decidir qué variables incluir antes de ajustarla.</p>
-<p><strong>Tarea 1: estimar el riesgo de un modelo ya ajustado.</strong> Sus parámetros no van a cambiar. Queremos aproximar <span class="math inline">\(R(\hat{\boldsymbol{w}})\)</span> y saber con qué precisión lo hemos medido.</p>
-<p><strong>Tarea 2: elegir cómo vamos a ajustar.</strong> En próstata, ¿usamos solo <code>lcavol</code>, añadimos <code>lweight</code> o incluimos las ocho variables? Cada opción es un <strong>procedimiento</strong>: unas variables y una regla para calcular los coeficientes con los datos que reciba. Queremos comparar <span class="math inline">\(M\)</span> opciones y elegir una que prediga bien datos nuevos. Después la aplicaremos a todos los datos de entrenamiento para obtener el <strong>modelo final</strong>, con sus coeficientes ya fijados.</p>
-<p>Empezaremos por una referencia sencilla, el modelo nulo. Después resolveremos las dos tareas y veremos otras formas de resumir los errores. El capítulo termina aplicando todo el protocolo a los datos de próstata.</p>
-<section id="empezar-por-una-referencia-sencilla" class="level3">
-<h3 class="anchored" data-anchor-id="empezar-por-una-referencia-sencilla">Empezar por una referencia sencilla</h3>
+<p>Esto plantea dos preguntas distintas: cómo evaluar el rendimiento de un modelo que ya hemos ajustado y cómo elegir el procedimiento que usaremos para obtenerlo.</p>
+<p><strong>Tarea 1: estimar el riesgo de un modelo ya ajustado.</strong> Sus parámetros no van a cambiar. Queremos aproximar <span class="math inline">\(R(\hat{\boldsymbol{w}})\)</span> y saber qué precisión tiene esa aproximación.</p>
+<p><strong>Tarea 2: elegir cómo vamos a ajustar.</strong> Un <strong>procedimiento</strong> es una regla que recibe datos de entrenamiento y devuelve un modelo con parámetros fijados. Especifica, por ejemplo, qué variables utiliza, qué familia de funciones considera y cómo elige sus parámetros. <strong>Ajustar</strong> consiste en determinar esos parámetros con los datos, siguiendo la regla elegida; escoger la regla es una decisión distinta.</p>
+<p>En próstata, usar regresión lineal por mínimos cuadrados con solo <code>lcavol</code>, con <code>lcavol</code> y <code>lweight</code> o con las ocho variables define tres procedimientos. También lo son ajustar una recta e interpolar, como en la figura anterior. Queremos comparar <span class="math inline">\(M\)</span> procedimientos y elegir uno que produzca modelos con poco error en datos nuevos. Después lo aplicaremos a todo el entrenamiento para obtener el <strong>modelo final</strong>.</p>
+<p>Antes de resolver estas tareas, necesitamos un modelo sencillo cuyo riesgo sirva como referencia. Lo más fácil es considerar uno que siempre predice lo mismo, sin usar variables predictoras. A este se le conoce como modelo nulo.</p>
+<section id="modelo-nulo" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-nulo">Modelo nulo</h3>
 <p>La elección natural contra la que comparar el riesgo de un modelo dado es evaluar el riesgo de un modelo que ignora por completo las variables predictoras. Consideremos la familia de funciones constantes, <span class="math inline">\(\{f_c(\mathbf{x})=c:c\in\mathbb{R}\}\)</span>, y el procedimiento que elige el valor de <span class="math inline">\(c\)</span> minimizando el riesgo empírico.</p>
 <div id="def-modelo-nulo" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 4.1 (Modelo nulo)</strong></span> El modelo nulo <span class="math inline">\(\bar{f}\)</span> es el modelo que predice exactamente el mismo valor para todas las observaciones, sin utilizar <span class="math inline">\(\mathbf{x}\)</span>.</p>
@@ -411,41 +472,41 @@ R(\hat{\boldsymbol{w}})
 </div>
 <p>Reutilizamos los datos de próstata del capítulo 3. El fichero trae una partición en 67 observaciones de entrenamiento (<em>train</em>) y 30 de evaluación final (<em>test</em>). De momento dejamos estas últimas aparte; enseguida justificaremos por qué.</p>
 <p>Usaremos arrays de NumPy, como al introducir scikit-learn en el capítulo anterior. Esta vez <code>X</code> contiene solo las ocho predictoras: <code>LinearRegression()</code> calcula también el intercepto sin que añadamos una columna de unos. <code>es_train</code> es un array de valores verdaderos o falsos; <code>X[es_train]</code> selecciona las filas verdaderas y <code>X[~es_train]</code>, las restantes. La respuesta se separa con la misma selección de filas.</p>
-<div id="cba2f2f1" class="cell" data-execution_count="2">
+<div id="55a5a82d" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>prostata <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>predictoras <span class="op">=</span> [</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcavol"</span>, <span class="st">"lweight"</span>, <span class="st">"age"</span>, <span class="st">"lbph"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"svi"</span>, <span class="st">"lcp"</span>, <span class="st">"gleason"</span>, <span class="st">"pgg45"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> prostata[predictoras].to_numpy()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> prostata[<span class="st">"lpsa"</span>].to_numpy()</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>es_train <span class="op">=</span> (prostata[<span class="st">"train"</span>].<span class="bu">str</span>.strip() <span class="op">==</span> <span class="st">"T"</span>).to_numpy()</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> X[es_train], y[es_train]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> X[<span class="op">~</span>es_train], y[<span class="op">~</span>es_train]</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>AZUL, GRIS, NARANJA, TINTA <span class="op">=</span> <span class="st">"#151f6c"</span>, <span class="st">"#8b8e95"</span>, <span class="st">"#ff5700"</span>, <span class="st">"#1b1d21"</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>prostata <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>predictoras <span class="op">=</span> [</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcavol"</span>, <span class="st">"lweight"</span>, <span class="st">"age"</span>, <span class="st">"lbph"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"svi"</span>, <span class="st">"lcp"</span>, <span class="st">"gleason"</span>, <span class="st">"pgg45"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> prostata[predictoras].to_numpy()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> prostata[<span class="st">"lpsa"</span>].to_numpy()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>es_train <span class="op">=</span> (prostata[<span class="st">"train"</span>].<span class="bu">str</span>.strip() <span class="op">==</span> <span class="st">"T"</span>).to_numpy()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> X[es_train], y[es_train]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> X[<span class="op">~</span>es_train], y[<span class="op">~</span>es_train]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>AZUL, GRIS, NARANJA, TINTA <span class="op">=</span> <span class="st">"#151f6c"</span>, <span class="st">"#8b8e95"</span>, <span class="st">"#ff5700"</span>, <span class="st">"#1b1d21"</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>kw_puntos <span class="op">=</span> <span class="bu">dict</span>(facecolors<span class="op">=</span><span class="st">"none"</span>, s<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Repetimos las operaciones del capítulo 3: <code>LinearRegression()</code> crea el objeto y <code>fit</code> calcula los coeficientes. Después, <code>predict</code> usará esos coeficientes sin volver a ajustar. Definimos también <code>mse</code> para calcular el error cuadrático medio.</p>
 <div class="codigo-clave">
-<div id="9481190f" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>modelo_ocho <span class="op">=</span> LinearRegression()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>modelo_ocho.fit(X_train, y_train)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div id="7d30cc8d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>modelo_ocho <span class="op">=</span> LinearRegression()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>modelo_ocho.fit(X_train, y_train)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
 <style>.sk-global {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -1457,7 +1518,7 @@ forceTheme('sk-container-id-1');</script>
 </div>
 <p>Con esto ya podemos fijar la referencia nula y compararla, más adelante, con el modelo de ocho variables.</p>
 <div class="codigo-clave">
-<div id="8a7331cc" class="cell" data-execution_count="4">
+<div id="9bcaeea3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>media_train <span class="op">=</span> y_train.mean()</span>
 <span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"constante ajustada: </span><span class="sc">{</span>media_train<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
@@ -1489,30 +1550,80 @@ modelo nulo, riesgo en train: 1.4370</code></pre>
 </section>
 <section id="tarea-1-estimar-el-riesgo-de-un-modelo-ya-ajustado" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="tarea-1-estimar-el-riesgo-de-un-modelo-ya-ajustado">Tarea 1: estimar el riesgo de un modelo ya ajustado</h2>
-<p>Comenzamos por la primera tarea. Fijemos un modelo <span class="math inline">\(f_{\hat{\boldsymbol{w}}}\)</span>, obtenido al ajustar sus parámetros con <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>. Queremos conocer su riesgo verdadero:</p>
+<p>Consideremos que ya tenemos un modelo ajustado y queremos aproximar su pérdida media en datos nuevos. ¿Por qué no basta con promediar las pérdidas de entrenamiento? Veámoslo con un ejemplo en el que conocemos la población y podemos hacer todas las cuentas.</p>
+<section id="un-ejemplo-con-dos-respuestas-posibles" class="level3">
+<h3 class="anchored" data-anchor-id="un-ejemplo-con-dos-respuestas-posibles">Un ejemplo con dos respuestas posibles</h3>
+<p>Supongamos que <span class="math inline">\(Y\)</span> vale <span class="math inline">\(0\)</span> o <span class="math inline">\(2\)</span>, cada uno con probabilidad <span class="math inline">\(1/2\)</span>, y que predecimos una constante <span class="math inline">\(c\)</span>, es decir, no usamos variables predictoras. Con pérdida cuadrática, su riesgo verdadero es</p>
 <p><span class="math display">\[
-R(\hat{\boldsymbol{w}})
-=\mathbb{E}_{P^\star}\!\left[ \ell\bigl(Y,f_{\hat{\boldsymbol{w}}}(X)\bigr) \right] .
+R(c)=\mathbb{E}_{P^\star}\!\left[ (Y-c)^2 \right]
+=\tfrac12(0-c)^2+\tfrac12(2-c)^2.
 \]</span></p>
-<p>En esta esperanza, <span class="math inline">\(\mathbb{E}_{P^\star}\!\left[ \cdot \right]\)</span>, <strong>el modelo se mantiene fijo</strong>. Lo que cambia es la observación nueva <span class="math inline">\((X,Y)\)</span>: imaginamos muchas observaciones de la población y promediamos las pérdidas que produce esa misma ecuación.</p>
-<p>Como no conocemos la población, podríamos intentar sustituir ese promedio por el de las observaciones que ya tenemos, las de <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>:</p>
+<p>Por ejemplo, el modelo <span class="math inline">\(f_0(\mathbf{x})=0\)</span> tiene riesgo <span class="math inline">\(R(0)=2\)</span>: la mitad de las veces su pérdida es <span class="math inline">\(0\)</span> y la otra mitad es <span class="math inline">\(4\)</span>. <strong>Para calcular esta esperanza no reajustamos nada</strong>. Mantenemos <span class="math inline">\(c=0\)</span> y promediamos las pérdidas de las respuestas que podría recibir.</p>
+<p>Ahora supongamos que ese modelo se obtuvo de un train con dos respuestas, <span class="math inline">\(y_1 = 0\)</span> e <span class="math inline">\(y_2 = 0\)</span> (no hay variables predictoras). La constante ajustada es su media, <span class="math inline">\(c=0\)</span>, y su riesgo en train es <span class="math inline">\(0\)</span>. Si usamos ese número para aproximar el riesgo verdadero, obtenemos <span class="math inline">\(0\)</span> cuando en realidad vale <span class="math inline">\(2\)</span>. Pero una muestra desafortunada no basta para concluir que medir en train falla sistemáticamente. Tenemos que examinar qué ocurriría con las demás muestras posibles.</p>
+</section>
+<section id="qué-ocurre-al-repetir-el-entrenamiento" class="level3">
+<h3 class="anchored" data-anchor-id="qué-ocurre-al-repetir-el-entrenamiento">Qué ocurre al repetir el entrenamiento</h3>
+<p>Tomamos dos respuestas independientes de esa población y ajustamos su media. Hay cuatro muestras ordenadas posibles, todas con probabilidad <span class="math inline">\(1/4\)</span>. En cada fila calculamos el error en la muestra que sirvió para ajustar y el riesgo verdadero del modelo obtenido:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Respuestas de train</th>
+<th style="text-align: right;">Constante ajustada <span class="math inline">\(c\)</span></th>
+<th style="text-align: right;">Riesgo en train <span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{train}}}(c)\)</span></th>
+<th style="text-align: right;">Riesgo verdadero <span class="math inline">\(R(c)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((0,0)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((0,2)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((2,0)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((2,2)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Promedio de las cuatro filas</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong><span class="math inline">\(0.5\)</span></strong></td>
+<td style="text-align: right;"><strong><span class="math inline">\(1.5\)</span></strong></td>
+</tr>
+</tbody>
+</table>
+<p>Leamos, por ejemplo, la segunda fila. Ajustamos <span class="math inline">\(c=1\)</span>; las dos pérdidas de train son <span class="math inline">\((0-1)^2=(2-1)^2=1\)</span>, de modo que su media es <span class="math inline">\(1\)</span>. En la población, las dos respuestas posibles también dan pérdida <span class="math inline">\(1\)</span>, así que el riesgo verdadero es <span class="math inline">\(1\)</span>.</p>
+<p>La última fila promedia sobre <strong>muestras de entrenamiento</strong>. Aquí <span class="math inline">\(c\)</span> es la media de cada muestra: al cambiar train, también puede cambiar <span class="math inline">\(c\)</span>. El subíndice de <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \cdot \right]\)</span> indica que promediamos esos resultados:</p>
 <p><span class="math display">\[
-\hat{R}_{\mathcal{D}_{\mathrm{train}}}(\hat{\boldsymbol{w}})
-=\frac{1}{n_{\mathrm{train}}}\sum_{i\in\mathcal{D}_{\mathrm{train}}}
-  \ell\bigl(y_i,f_{\hat{\boldsymbol{w}}}(\mathbf{x}_i)\bigr).
+\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{train}}}(c) \right]
+=\frac{0+1+1+0}{4}=0.5,
+\qquad
+\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ R(c) \right]
+=\frac{2+1+1+2}{4}=1.5.
 \]</span></p>
-<p>El problema es que <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> se obtuvo minimizando precisamente esa media. Para entender qué falla, necesitamos distinguir dos cosas: equivocarse por azar y equivocarse sistemáticamente en una dirección.</p>
-<p>Un <strong>estimador</strong> es una regla que calcula, a partir de una muestra, una aproximación a una cantidad desconocida. El número que obtenemos al aplicarla es la <strong>estimación</strong>. Al cambiar la muestra, cambia ese número. Si queremos estimar una cantidad fija <span class="math inline">\(q\)</span> con un estimador <span class="math inline">\(Z\)</span>, su <strong>sesgo</strong> es</p>
-<p><span class="math display">\[
-\mathbb{E}\!\left[ Z \right]-q.
-\]</span></p>
-<p>La esperanza representa el promedio que obtendríamos al repetir el muestreo muchas veces. Si el sesgo vale cero, decimos que el estimador es <strong>insesgado</strong>: acierta en promedio (no en cada muestra!). Al estimar un riesgo, un sesgo negativo es <strong>optimista</strong> porque hace parecer el error menor de lo que es; uno positivo es <strong>pesimista</strong>.</p>
-<p>Ahora imaginemos otro experimento: recibimos un train nuevo, volvemos a ajustar y repetimos esto muchas veces. Cada muestra produce un modelo distinto. <strong>Promediar sobre <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span></strong>, escrito <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \cdot \right]\)</span>, significa promediar los resultados de esas repeticiones. En cada una podemos anotar dos números:</p>
-<ul>
-<li><span class="math inline">\(\hat{R}_{\mathcal{D}_{\mathrm{train}}}(\hat{\boldsymbol{w}})\)</span>: el error del modelo en la propia muestra que lo ajustó.</li>
-<li><span class="math inline">\(R(\hat{\boldsymbol{w}})\)</span>: el error que tendría ese mismo modelo, en promedio, sobre datos nuevos de la población. Este segundo número no podemos calcularlo con datos reales, pero sí definirlo.</li>
-</ul>
-<p>La diferencia entre <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{train}}}(\hat{\boldsymbol{w}}) \right]\)</span> y <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ R(\hat{\boldsymbol{w}}) \right]\)</span> no está en los modelos: son los mismos. Está en <strong>dónde los evaluamos</strong>. El resultado siguiente dice que la primera media no supera a la segunda: evaluar donde hemos ajustado favorece al modelo.</p>
+<p>Hay dos promedios distintos: <span class="math inline">\(R(c)\)</span> promedia pérdidas en la población <strong>para una fila</strong>, manteniendo su modelo fijo; <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ R(c) \right]\)</span> promedia esa última columna <strong>entre filas</strong>, cada una con su modelo ajustado.</p>
+<p>Medir en train da, en promedio, <span class="math inline">\(0.5\)</span>, mientras que los modelos obtenidos tienen riesgo verdadero medio <span class="math inline">\(1.5\)</span>. La medición subestima el riesgo en una unidad. A esta tendencia a presentar un error menor que el real la llamamos <strong>sesgo optimista</strong>. Aparece porque hemos elegido la constante para que funcione bien precisamente en la muestra donde la medimos.</p>
+<p>El resultado siguiente generaliza esta comparación. En él, <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> ocupa el lugar de la constante ajustada <span class="math inline">\(c\)</span>. El término central, <span class="math inline">\(R(\boldsymbol{w}^\star)\)</span>, es el menor riesgo verdadero alcanzable en la familia de funciones considerada. En nuestro ejemplo, la mejor constante poblacional es <span class="math inline">\(c^\star=1\)</span>, con riesgo <span class="math inline">\(1\)</span>, y la cadena se lee <span class="math inline">\(0.5\leq1\leq1.5\)</span>.</p>
 <div id="prp-train-optimista" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposición 4.1 (El riesgo en train es optimista en media)</strong></span> Sean las observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span>. Sea <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> el minimizador del riesgo empírico sobre <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> y sea <span class="math inline">\(\boldsymbol{w}^\star\)</span> un minimizador del riesgo verdadero <span class="math inline">\(R(\boldsymbol{w})=\mathbb{E}_{P^\star}\!\left[ \ell(Y,f_{\boldsymbol{w}}(X)) \right]\)</span> de <a href="02-aprender-minimizando.html#eq-riesgo-verdadero" class="quarto-xref">Ecuación&nbsp;<span>2.3</span></a>. Con las dos esperanzas tomadas sobre muestras de entrenamiento de tamaño <span class="math inline">\(n_{\mathrm{train}}\)</span>,</p>
 <p><span class="math display">\[
@@ -1543,7 +1654,55 @@ R(\hat{\boldsymbol{w}})
 </div>
 </div>
 </div>
-<p>La conclusión se lee de izquierda a derecha: en promedio, medir en train da un error no mayor que el riesgo verdadero del modelo ajustado. No afirma que esto ocurra en todas las muestras. Para evitar ese optimismo necesitamos observaciones ajenas al ajuste. Llamaremos <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> a ese conjunto, con <span class="math inline">\(n_{\mathrm{test}}\)</span> observaciones.</p>
+<p>El resultado compara promedios: no afirma que el riesgo de entrenamiento sea menor que el verdadero en todas las muestras. Como vemos, el optimismo en promedio viene de evaluar el modelo en los mismos datos que se usaron para ajustarlo. Para evitarlo, necesitamos evaluar el modelo en un conjunto de observaciones ajenas al ajuste. Llamaremos <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> a ese conjunto, con <span class="math inline">\(n_{\mathrm{test}}\)</span> observaciones.</p>
+</section>
+<section id="qué-ocurre-al-repetir-solo-el-test" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="qué-ocurre-al-repetir-solo-el-test">Qué ocurre al repetir solo el test</h3>
+<p>Volvamos al modelo <span class="math inline">\(f_0(\mathbf{x})=0\)</span>, cuyo riesgo verdadero es <span class="math inline">\(2\)</span>. <strong>Ahora queda fijo</strong>: no volvemos a entrenar. Recogemos dos respuestas nuevas e independientes y promediamos sus pérdidas. Según el test que salga, obtenemos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Respuestas de test</th>
+<th style="text-align: left;">Pérdidas del modelo fijo <span class="math inline">\(c=0\)</span></th>
+<th style="text-align: right;">Riesgo medido en test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((0,0)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0,0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((0,2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0,4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((2,0)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(4,0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((2,2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(4,4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La regla “promediar las pérdidas de test” es un <strong>estimador</strong> del riesgo verdadero: usa una muestra para aproximar esa cantidad poblacional. El número obtenido en una muestra concreta, por ejemplo <span class="math inline">\(4\)</span>, es la <strong>estimación</strong>. Distintos tests pueden dar estimaciones distintas aunque el modelo no cambie.</p>
+<p>Los cuatro tests son equiprobables. Por tanto, el promedio de sus estimaciones es</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}_{\mathrm{test}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{test}}}(0) \right]
+=\frac{0+2+2+4}{4}=2=R(0).
+\]</span></p>
+<p>El subíndice <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> indica que promediamos sobre los tests posibles, <strong>siempre para el mismo modelo</strong>. El estimador es <strong>insesgado</strong> porque ese promedio coincide con la cantidad que queremos estimar; no porque acierte en cada test. Su <strong>sesgo</strong> es el promedio de las estimaciones menos la cantidad que queremos estimar: aquí, <span class="math inline">\(2-2=0\)</span>. Si la diferencia fuera negativa, hablaríamos de sesgo optimista; si fuera positiva, de sesgo pesimista.</p>
+<p>Esta conclusión vale para cualquier modelo fijado sin consultar el test, no solo para una constante. La independencia es lo que permite pasar del ejemplo al teorema.</p>
 <div id="thm-test-insesgado" class="theorem">
 <p><span class="theorem-title"><strong>Teorema 4.1 (El error de test es insesgado para un modelo fijo)</strong></span> Sea <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> un vector de parámetros <strong>fijado sin usar la muestra <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span></strong>, y sean las observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span>. Entonces</p>
 <p><span class="math display">\[
@@ -1570,55 +1729,55 @@ R(c)=\mathbb{E}\!\left[ (2+\varepsilon-c)^2 \right]
 =(2-c)^2+2(2-c)\mathbb{E}\!\left[ \varepsilon \right]+\mathbb{E}\!\left[ \varepsilon^2 \right]
 =1+(2-c)^2.
 \]</span></p>
-<p>En cada repetición generamos diez respuestas de train, ajustamos <span class="math inline">\(c\)</span> y medimos su error tanto en esas diez respuestas como en otras diez nuevas de test. Restamos a ambas mediciones el riesgo verdadero del modelo de esa repetición: un resultado negativo significa que hemos subestimado el riesgo.</p>
+<p>En cada repetición generamos diez respuestas de train, ajustamos <span class="math inline">\(c\)</span> y, sin cambiarla, medimos su error en esas diez respuestas y en otras diez nuevas de test. Solo al comenzar la repetición siguiente volvemos a ajustar. Restamos a cada medición el riesgo verdadero de la constante de esa repetición: un resultado negativo significa que lo hemos subestimado. El teorema asegura que test acierta en promedio para cada modelo fijo. La simulación muestra que también lo hace al reunir repeticiones con modelos distintos, mientras que train tiende a subestimar.</p>
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rng_sim <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>errores_train, errores_test <span class="op">=</span> [], []</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> repeticion <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4000</span>):</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    y_train_sim <span class="op">=</span> rng_sim.normal(<span class="dv">2</span>, <span class="dv">1</span>, size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    y_test_sim <span class="op">=</span> rng_sim.normal(<span class="dv">2</span>, <span class="dv">1</span>, size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> y_train_sim.mean()</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    riesgo_real <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (<span class="dv">2</span> <span class="op">-</span> c) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    errores_train.append(mse(c, y_train_sim) <span class="op">-</span> riesgo_real)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    errores_test.append(mse(c, y_test_sim) <span class="op">-</span> riesgo_real)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> np.histogram_bin_edges(errores_train <span class="op">+</span> errores_test, bins<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>fig, ejes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">8.4</span>, <span class="fl">3.5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, errores, nombre, color <span class="kw">in</span> <span class="bu">zip</span>(</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    ejes, [errores_train, errores_test], [<span class="st">"train"</span>, <span class="st">"test"</span>], [AZUL, NARANJA]</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    promedio <span class="op">=</span> np.mean(errores)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ax.hist(errores, bins<span class="op">=</span>bins, color<span class="op">=</span>color, alpha<span class="op">=</span><span class="fl">0.65</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span>TINTA, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"error cero"</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    ax.axvline(promedio, color<span class="op">=</span>color, linewidth<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>               label<span class="op">=</span><span class="ss">f"error medio: </span><span class="sc">{</span>promedio<span class="sc">:+.2f}</span><span class="ss">"</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"Medición sobre </span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>           xlabel<span class="op">=</span><span class="st">"riesgo medido − riesgo verdadero"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ejes[<span class="dv">0</span>].set_ylabel(<span class="st">"número de repeticiones"</span>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rng_sim <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>errores_train, errores_test <span class="op">=</span> [], []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> repeticion <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4000</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    y_train_sim <span class="op">=</span> rng_sim.normal(<span class="dv">2</span>, <span class="dv">1</span>, size<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    y_test_sim <span class="op">=</span> rng_sim.normal(<span class="dv">2</span>, <span class="dv">1</span>, size<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> y_train_sim.mean()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    riesgo_real <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (<span class="dv">2</span> <span class="op">-</span> c) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    errores_train.append(mse(c, y_train_sim) <span class="op">-</span> riesgo_real)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    errores_test.append(mse(c, y_test_sim) <span class="op">-</span> riesgo_real)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> np.histogram_bin_edges(errores_train <span class="op">+</span> errores_test, bins<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>fig, ejes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">8.4</span>, <span class="fl">3.5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, errores, nombre, color <span class="kw">in</span> <span class="bu">zip</span>(</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    ejes, [errores_train, errores_test], [<span class="st">"train"</span>, <span class="st">"test"</span>], [AZUL, NARANJA]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    promedio <span class="op">=</span> np.mean(errores)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    ax.hist(errores, bins<span class="op">=</span>bins, color<span class="op">=</span>color, alpha<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span>TINTA, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"error cero"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    ax.axvline(promedio, color<span class="op">=</span>color, linewidth<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>               label<span class="op">=</span><span class="ss">f"error medio: </span><span class="sc">{</span>promedio<span class="sc">:+.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"Medición sobre </span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>           xlabel<span class="op">=</span><span class="st">"riesgo medido − riesgo verdadero"</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>ejes[<span class="dv">0</span>].set_ylabel(<span class="st">"número de repeticiones"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-train-test-simulado" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-train-test-simulado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="65c2159f" class="cell" data-execution_count="5">
+<div id="d3cf10e7" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04-evaluacion_files/figure-html/cell-6-output-1.png" class="figure-img" width="1079" height="442"></p>
+<p><img src="04-evaluacion_files/figure-html/cell-7-output-1.png" class="figure-img" width="1079" height="442"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-train-test-simulado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4.1: Medir en train subestima el riesgo en promedio; medir en test acierta en promedio. Ambas mediciones varían de una muestra a otra: ninguna tiene por qué acertar en una repetición concreta. El código de la simulación es de consulta.
+Figura&nbsp;4.2: Medir en train subestima el riesgo en promedio; medir en test acierta en promedio. Ambas mediciones varían de una muestra a otra: ninguna tiene por qué acertar en una repetición concreta. El código de la simulación es de consulta.
 </figcaption>
 </figure>
 </div>
-<p>En suma, si conociéramos <span class="math inline">\(P^\star\)</span>, dado un modelo ajustado con parámetros <span class="math inline">\(\hat{\boldsymbol{w}}\)</span>, podríamos calcular <span class="math inline">\(R(\hat{\boldsymbol{w}})\)</span> integrando directamente. Como <span class="math inline">\(P^\star\)</span> es desconocida, la única aproximación disponible es otra media empírica; <a href="#prp-train-optimista" class="quarto-xref">Proposición&nbsp;<span>4.1</span></a> obliga a calcularla sobre observaciones que no hayan intervenido en el ajuste. Esto motiva la primera partición.</p>
+<p>En los ejemplos conocíamos la población y podíamos calcular el riesgo verdadero para comprobar nuestras mediciones. En un problema real no lo conocemos: reservamos parte de los datos antes de ajustar y usamos su pérdida media para estimarlo. Esta es la razón de separar entrenamiento y test.</p>
 <div id="def-train-test" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 4.2 (Entrenamiento y test)</strong></span> Para poder ajustar un modelo predictivo y estimar su riesgo de generalización, la muestra <span class="math inline">\(\mathcal{D}\)</span> debe repartirse <strong>al azar</strong> en dos partes disjuntas:</p>
 <ul>
@@ -1629,13 +1788,14 @@ Figura&nbsp;4.1: Medir en train subestima el riesgo en promedio; medir en test a
 </div>
 <p>Suponemos que las observaciones originales son independientes y proceden de la misma <span class="math inline">\(P^\star\)</span>. Repartirlas sin mirar sus valores conserva esas condiciones; no garantiza que las dos muestras concretas sean idénticas ni igual de fáciles.</p>
 <p>Si el fichero no trajera una partición, podríamos obtenerla con <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html"><code>train_test_split</code></a>. La llamada siguiente queda como referencia; no sustituye el reparto que estamos usando.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="dv">30</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="dv">30</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p>La función separa las mismas filas de <code>X</code> e <code>y</code>. <code>test_size=30</code> reserva 30 observaciones (con <code>0.3</code> reservaría el 30 %); <code>random_state=42</code> permite repetir el mismo reparto. No se prueban semillas hasta encontrar una con buen test.</p>
 <p>Una vez fijado el modelo, el teorema dice que el test acierta en promedio. Pero una muestra pequeña todavía puede dar una cifra lejos de su riesgo verdadero. Falta medir esa precisión.</p>
+</section>
 <section id="sec-precision" class="level3">
 <h3 class="anchored" data-anchor-id="sec-precision">Con qué precisión se mide</h3>
 <p>Aunque el modelo no cambie, otro test daría otro error medio. Toda estimación lleva incertidumbre. El <strong>sesgo</strong> describe si se desvía sistemáticamente; la <strong>varianza</strong>, cuánto cambia entre muestras. Usar test independiente elimina el sesgo, no la variabilidad.</p>
@@ -1649,11 +1809,13 @@ Figura&nbsp;4.1: Medir en train subestima el riesgo en promedio; medir en test a
 \widehat{\mathrm{EE}}=\frac{s}{\sqrt{n_{\mathrm{test}}}}.
 \]</span></p>
 <p>Con pérdida cuadrática, una vez fijadas las predicciones de test, se hace así:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>perdidas <span class="op">=</span> (y_test <span class="op">-</span> pred_test) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>riesgo <span class="op">=</span> perdidas.mean()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> perdidas.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ee <span class="op">=</span> s <span class="op">/</span> np.sqrt(<span class="bu">len</span>(perdidas))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>ddof=1</code> usa el divisor <span class="math inline">\(n_{\mathrm{test}}-1\)</span> de la desviación típica muestral. No confundamos <span class="math inline">\(s\)</span>, que describe la dispersión de las pérdidas individuales, con <code>ee</code>, que describe la precisión de su <strong>media</strong>. Por ejemplo, con 100 pérdidas, media <span class="math inline">\(0.5\)</span> y <span class="math inline">\(s=1\)</span>, informamos de <span class="math inline">\(0.5\pm0.1\)</span> (media <span class="math inline">\(\pm\)</span> un error típico), no de <span class="math inline">\(0.5\pm1\)</span>.</p>
+<div class="codigo-clave">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>perdidas <span class="op">=</span> (y_test <span class="op">-</span> pred_test) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>riesgo <span class="op">=</span> perdidas.mean()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> perdidas.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ee <span class="op">=</span> s <span class="op">/</span> np.sqrt(<span class="bu">len</span>(perdidas))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>En este código, <code>pred_test</code> representa las predicciones de un modelo ya fijado. <code>ddof=1</code> usa el divisor <span class="math inline">\(n_{\mathrm{test}}-1\)</span> de la desviación típica muestral. No confundamos <span class="math inline">\(s\)</span>, que describe la dispersión de las pérdidas individuales, con <code>ee</code>, que describe la precisión de su <strong>media</strong>. Por ejemplo, con 100 pérdidas, media <span class="math inline">\(0.5\)</span> y <span class="math inline">\(s=1\)</span>, informamos de <span class="math inline">\(0.5\pm0.1\)</span> (media <span class="math inline">\(\pm\)</span> un error típico), no de <span class="math inline">\(0.5\pm1\)</span>.</p>
 <p><strong>Cómo leer el margen.</strong> Por el <em>teorema central del límite</em>, si las pérdidas son independientes, tienen varianza finita y el test es suficientemente grande, la media tiene una distribución aproximadamente normal. Al repetir la evaluación con tests nuevos, los intervalos media <span class="math inline">\(\pm\)</span> un error típico contendrían el riesgo verdadero aproximadamente el 68 % de las veces; con dos errores típicos, aproximadamente el 95 %.</p>
 <p>No es una garantía para nuestro intervalo concreto. Con pocas observaciones o pérdidas muy asimétricas, la aproximación puede ser mala. La demostración del teorema central del límite queda fuera del curso: aquí solo usaremos esta interpretación aproximada.</p>
 <p>Como el error típico es inversamente proporcional a <span class="math inline">\(\sqrt{n_{\mathrm{test}}}\)</span>, para reducirlo a la mitad necesitamos aproximadamente cuatro veces más observaciones de test. Eso deja menos datos para ajustar: no hay un porcentaje óptimo para todos los problemas.</p>
@@ -1696,41 +1858,49 @@ Figura&nbsp;4.1: Medir en train subestima el riesgo en promedio; medir en test a
 </section>
 <section id="tarea-2-elegir-el-mejor-procedimiento-entre-m-alternativas" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="tarea-2-elegir-el-mejor-procedimiento-entre-m-alternativas">Tarea 2: elegir el mejor procedimiento entre <span class="math inline">\(M\)</span> alternativas</h2>
-<p>Ya sabemos cómo evaluar un modelo fijo. No obstante, en muchas ocasiones, necesitamos escoger entre modelos. Por ejemplo ¿usamos una variable, dos, todas? Cada elección define un procedimiento distinto. Podríamos ajustar las <span class="math inline">\(M\)</span> alternativas en train, medir el rendimiento de los correspondientes modelos en test y quedarnos con el de menor error. El problema es que cada una de estas mediciones de rendimiento tiene azar. El menor valor puede señalar un buen candidato o uno al que esa muestra de test le ha resultado favorable.</p>
-<p>Veamos un ejemplo. Fijamos dos modelos, A y B, ya ajustados con train. Al evaluarlos en el mismo test obtenemos <strong>dos errores medios, uno por modelo</strong>: cada uno estima el riesgo verdadero del modelo correspondiente. Si repitiéramos la evaluación con otro test, sin reajustar los modelos, esos dos errores podrían cambiar.</p>
-<p>Supongamos que ambos riesgos verdaderos valen 1. Para simplificar las cuentas, imaginemos que, al cambiar test, solo pueden darse estas cuatro parejas de errores, todas con la misma probabilidad:</p>
+<p>Ya sabemos evaluar en test un modelo que se ha fijado sin usarlo. Ahora queremos elegir entre <span class="math inline">\(M\)</span> procedimientos, por ejemplo regresiones que usan distintas variables. Ajustamos cada uno con train y obtenemos <span class="math inline">\(M\)</span> modelos. Tenemos dos opciones inmediatas:</p>
+<ol type="1">
+<li><strong>Elegir el menor riesgo de train.</strong> Es optimista porque hemos usado esas mismas respuestas para ajustar los parámetros (<a href="#prp-train-optimista" class="quarto-xref">Proposición&nbsp;<span>4.1</span></a>). Además, añadir variables a una regresión no puede empeorar su mínimo: siempre podríamos poner a cero los nuevos coeficientes. Ganar en train no demuestra que predigamos mejor.</li>
+<li><strong>Elegir el menor riesgo de test.</strong> Cada medición por separado evalúa un modelo fijado sin usar test. Sin embargo, al escoger el mínimo favorecemos también al candidato que haya tenido suerte en esa muestra. Si informamos de ese mismo error como rendimiento final, la medición vuelve a ser optimista.</li>
+</ol>
+<p>Si usamos una muestra para elegir entre procedimientos, su error mínimo ya no sirve como evaluación independiente. Aunque la evaluación de cada modelo fijado sea insesgada, el mínimo de esas estimaciones es, en general, optimista. Para evaluar sin ese sesgo el modelo obtenido con el procedimiento elegido, necesitamos otra muestra que no haya intervenido en la elección.</p>
+<p>Para ilustrarlo, volvamos a la población de Tarea 1: <span class="math inline">\(Y\)</span> vale <span class="math inline">\(0\)</span> o <span class="math inline">\(2\)</span> con igual probabilidad. Tenemos dos modelos fijados de antemano: <span class="math inline">\(A\)</span> predice siempre <span class="math inline">\(0\)</span> y <span class="math inline">\(B\)</span> siempre <span class="math inline">\(2\)</span>. Ambos tienen riesgo verdadero <span class="math inline">\(2\)</span>. Para ver el problema con las cuentas más sencillas, usamos un test de una sola observación; su error medio es la pérdida de esa observación:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Error en test de A</th>
-<th style="text-align: right;">Error en test de B</th>
-<th style="text-align: right;">Mínimo</th>
+<th style="text-align: left;">Respuesta de test</th>
+<th style="text-align: right;">Pérdida de <span class="math inline">\(A\)</span>: <span class="math inline">\((Y-0)^2\)</span></th>
+<th style="text-align: right;">Pérdida de <span class="math inline">\(B\)</span>: <span class="math inline">\((Y-2)^2\)</span></th>
+<th style="text-align: left;">Elegido</th>
+<th style="text-align: right;">Error que publicaríamos</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">0.8</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(A\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">0.8</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">0.8</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">1.2</td>
+<td style="text-align: left;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(B\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>Si miramos solo A, su error vale <span class="math inline">\(0.8\)</span> la mitad de las veces y <span class="math inline">\(1.2\)</span> la otra mitad: promedia 1, su riesgo verdadero. Lo mismo ocurre con B. Pero, si en cada evaluación elegimos el modelo de menor error e informamos de ese mínimo, el promedio es <span class="math inline">\((0.8+0.8+0.8+1.2)/4=0.9\)</span>. El riesgo verdadero del elegido sigue siendo 1. <strong>Ese es el sesgo de selección:</strong> escoger la medición más favorable hace parecer mejor al modelo, aunque ninguno haya mejorado. La prueba siguiente generaliza la idea; no exige que las cuatro situaciones sean igual de probables ni que las estimaciones sean independientes.</p>
+<p>Si evaluamos siempre <span class="math inline">\(A\)</span>, obtenemos <span class="math inline">\(0\)</span> o <span class="math inline">\(4\)</span>, cuyo promedio es <span class="math inline">\(2\)</span>: la evaluación es insesgada. Lo mismo ocurre con <span class="math inline">\(B\)</span>. Pero, si elegimos según test, <strong>siempre informamos de error cero</strong>, aunque el riesgo verdadero del elegido sigue siendo <span class="math inline">\(2\)</span>. No ha mejorado ningún modelo: hemos elegido el que acertaba la respuesta que tocó en esa muestra.</p>
+<p>Esto es el <strong>sesgo de selección</strong>. Usamos un test diminuto para hacer visible el mecanismo; el resultado siguiente muestra que el optimismo del mínimo no depende de ese tamaño ni de que los candidatos tengan el mismo riesgo.</p>
 <div id="prp-minimo-sesgado" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposición 4.3 (El mínimo de varias estimaciones insesgadas es optimista)</strong></span> Sean <span class="math inline">\(Z_1,\ldots,Z_M\)</span> estimaciones y <span class="math inline">\(q_1,\ldots,q_M\)</span> las cantidades que estiman, cada una sin sesgo: <span class="math inline">\(\mathbb{E}\!\left[ Z_k \right]=q_k\)</span> para todo <span class="math inline">\(k\)</span>. Entonces</p>
 <p><span class="math display">\[
@@ -1740,54 +1910,17 @@ Figura&nbsp;4.1: Medir en train subestima el riesgo en promedio; medir en test a
 <div class="proof">
 <p><span class="proof-title"><em>Demostración</em>. </span>Para cada <span class="math inline">\(j\)</span> se cumple <span class="math inline">\(\min_k Z_k\leq Z_j\)</span>, porque el mínimo de un conjunto es menor o igual que cualquiera de sus elementos. Tomando esperanzas, que conservan las desigualdades, <span class="math inline">\(\mathbb{E}\!\left[ \min_k Z_k \right]\leq\mathbb{E}\!\left[ Z_j \right]=q_j\)</span>. Como esto vale para todo <span class="math inline">\(j\)</span>, vale también para el <span class="math inline">\(j\)</span> que hace <span class="math inline">\(q_j\)</span> más pequeño.</p>
 </div>
-<p>En este caso, <span class="math inline">\(Z_k\)</span> es el error de test del modelo <span class="math inline">\(k\)</span> y <span class="math inline">\(q_k\)</span> su riesgo verdadero. El mínimo observado es optimista en promedio, no necesariamente en cada muestra. Lo que está sucediendo es que al usar el conjunto de test para elegir el mejor modelo, este ya depende del conjunto de test y por tanto, deja de cumplirse la condición de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a>. <strong>Necesitamos unos datos para elegir entre procedimientos y otros, no consultados, para informar del resultado final.</strong></p>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulamos estimaciones, todas con media 1; no son ajustes de próstata.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>estimaciones <span class="op">=</span> rng.uniform(<span class="fl">0.8</span>, <span class="fl">1.2</span>, size<span class="op">=</span>(<span class="dv">5000</span>, <span class="dv">50</span>))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Ms <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>minimos_medios <span class="op">=</span> [</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    estimaciones[:, :M].<span class="bu">min</span>(axis<span class="op">=</span><span class="dv">1</span>).mean() <span class="cf">for</span> M <span class="kw">in</span> Ms</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">6.4</span>, <span class="fl">4.0</span>))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.plot(Ms, minimos_medios, marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span>NARANJA,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">"media del mínimo estimado"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">1</span>, color<span class="op">=</span>TINTA, linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="st">"riesgo verdadero de todos los candidatos"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"número de candidatos probados"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       ylabel<span class="op">=</span><span class="st">"riesgo"</span>, ylim<span class="op">=</span>(<span class="fl">0.78</span>, <span class="fl">1.03</span>))</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div id="fig-sesgo-seleccion" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
-<div aria-describedby="fig-sesgo-seleccion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="7c1d3490" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04-evaluacion_files/figure-html/cell-7-output-1.png" class="figure-img" width="819" height="507"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-sesgo-seleccion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4.2: Promedio de 5000 repeticiones. Todos los candidatos tienen riesgo 1 y cada estimación individual acierta en promedio. Probar más candidatos reduce el mínimo que informamos, sin mejorar ninguno de ellos. El código de esta simulación es de consulta.
-</figcaption>
-</figure>
-</div>
+<p>Aquí <span class="math inline">\(Z_k\)</span> es el error de test del modelo <span class="math inline">\(k\)</span> y <span class="math inline">\(q_k\)</span> su riesgo verdadero. Antes de elegir, cada modelo está fijado sin usar test y su medición es insesgada. Después de elegir, la identidad del ganador depende de test: con otros datos podríamos entregar otro modelo. Aunque no hayamos cambiado los coeficientes de ningún candidato, hemos usado test para decidir <strong>qué modelo entregar</strong>. Ya no se cumple la condición de <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> para el modelo seleccionado.</p>
+<p>La proposición dice que el mínimo medido no supera, en promedio, al menor riesgo verdadero de los candidatos. El riesgo del candidato que elijamos nunca puede ser menor que ese mínimo verdadero. Por tanto, el valor que publicaríamos también es optimista respecto al riesgo del elegido, en promedio, no necesariamente en cada muestra.</p>
+<p>Podemos usar una muestra para elegir, pero entonces cumple el papel de <strong>validación</strong>, no el de test final. <strong>Necesitamos unos datos para elegir entre procedimientos y otros, no consultados, para informar del resultado final.</strong> Conservaremos el nombre test para esta segunda función y lo separaremos antes de empezar a comparar.</p>
 <section id="validación-simple" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="validación-simple">Validación simple</h3>
-<p>Esta es la opción más natural. Reservamos el conjunto de test para el final. Tampoco podemos elegir entre procedimientos usando el error de entrenamiento. Esto es fácil de entender: por ejemplo, añadir variables no puede empeorar el mínimo en train, porque siempre podríamos poner a cero sus coeficientes. Eligiendo el procedimiento con menor error de train, el riesgo del modelo elegido es optimista en promedio.</p>
-<p>La solución es separar temporalmente train en dos partes: <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>. Con <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> ajustamos cada candidato; con <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> evaluamos los modelos obtenidos y elegimos el mejor procedimiento. Medimos el riesgo del modelo elegido en <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>, que no ha intervenido en ninguna decisión. Este procedimiento se conoce como <strong>validación simple</strong>.</p>
+<p>Reservamos test para la medición final. La comparación debe hacerse dentro de train, pero sobre observaciones que no hayan intervenido en el ajuste de los modelos evaluados. La solución natural consiste en separar temporalmente train en dos partes: <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>. Con <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> ajustamos los candidatos; con <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> comparamos los modelos obtenidos y elegimos el procedimiento. Este esquema se llama <strong>validación simple</strong>. Una vez elegido el procedimiento, lo reajustaremos con todo train y mediremos el modelo final en test, que no habrá intervenido en ninguna decisión.</p>
 <div id="def-particiones" class="theorem definition">
 <p><span class="theorem-title"><strong>Definición 4.3 (Entrenamiento, validación y test)</strong></span> Primero se separa <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> al azar y se denomina <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> al resto de los datos. Una validación simple parte a su vez <span class="math inline">\(\mathcal{D}_{\mathrm{train}}=\mathcal{D}_{\mathrm{ajuste}}\cup\mathcal{D}_{\mathrm{val}}\)</span>, con lo que quedan tres subconjuntos disjuntos y tres papeles distintos:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, con <span class="math inline">\(n_{\mathrm{train}}-n_{\mathrm{val}}\)</span> observaciones, fija los parámetros de cada modelo provisional, y por eso el riesgo medido sobre él es optimista según <a href="#prp-train-optimista" class="quarto-xref">Proposición&nbsp;<span>4.1</span></a>;</li>
-<li><span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, con <span class="math inline">\(n_{\mathrm{val}}\)</span> observaciones, compara los procedimientos candidatos y queda consumido por esa elección, de modo que el riesgo del ganador medido en él es optimista según <a href="#prp-minimo-sesgado" class="quarto-xref">Proposición&nbsp;<span>4.3</span></a>;</li>
+<li><span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, con <span class="math inline">\(n_{\mathrm{val}}\)</span> observaciones, compara los procedimientos candidatos para elegir el mejor;</li>
 <li><span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>, con <span class="math inline">\(n_{\mathrm{test}}\)</span> observaciones, mide una sola vez el modelo final y no interviene en ninguna decisión, que es lo que hace insesgada esa medición por <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a>.</li>
 </ul>
 </div>
@@ -1828,7 +1961,7 @@ Figura&nbsp;4.2: Promedio de 5000 repeticiones. Todos los candidatos tienen ries
 <div id="fig-particiones" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-particiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e15ea1e6" class="cell" data-execution_count="7">
+<div id="5314073e" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1846,7 +1979,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 <p>Las proporciones del dibujo son ilustrativas. Vamos a aplicar la validación simple a los datos de próstata. Como en el capítulo 3, queremos predecir <code>lpsa</code>; ahora debemos decidir <strong>qué variables predictoras utilizar</strong>. Compararemos nueve procedimientos: el nulo y ocho ajustes lineales que incorporan las variables una a una.</p>
 <p>Para compararlos, reservamos el 20 % de train para validar. De las 67 observaciones, 53 ajustarán y 14 validarán; las 30 de test siguen aparte. La función de separación es la misma que vimos antes, pero ahora recibe <strong>solo train</strong>.</p>
 <div class="codigo-clave">
-<div id="4d604449" class="cell" data-execution_count="8">
+<div id="f47c1b5c" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>X_ajuste, X_val, y_ajuste, y_val <span class="op">=</span> train_test_split(</span>
@@ -1857,7 +1990,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 <p>El número <span class="math inline">\(m\)</span> indica cuántas variables usa cada candidato. Con <span class="math inline">\(m=0\)</span> ajustamos una constante, la media de <code>y_ajuste</code>. Con <span class="math inline">\(m=1\)</span> ajustamos una recta que usa <code>lcavol</code>; con <span class="math inline">\(m=2\)</span> añadimos <code>lweight</code>, y así hasta <span class="math inline">\(m=8\)</span>, que usa todas las predictoras. Todos los ajustes minimizan el error cuadrático e incluyen un intercepto: lo que cambia entre procedimientos es qué variables utilizan. Fijamos la lista de variables antes de mirar los errores, siguiendo el orden de <code>predictoras</code>. No buscamos entre todos los subconjuntos posibles. Cada procedimiento recibe las mismas 53 observaciones de ajuste; los modelos obtenidos se comparan sobre las mismas 14 de validación.</p>
 <p>En NumPy, <code>X[:, :m]</code> toma todas las filas y las primeras <span class="math inline">\(m\)</span> columnas. La función siguiente ajusta con una parte y evalúa con la otra:</p>
 <div class="codigo-clave">
-<div id="3efb975c" class="cell" data-execution_count="9">
+<div id="94686c9a" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo_validacion(m, X_ajuste, y_ajuste, X_val, y_val):</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> m <span class="op">==</span> <span class="dv">0</span>:</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>        pred_val <span class="op">=</span> y_ajuste.mean()</span>
@@ -1886,7 +2019,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 </div>
 <p>Evaluamos los nueve candidatos sobre <strong>la misma partición</strong> y buscamos el menor error. <code>np.argmin</code> devuelve la posición del mínimo; como empezamos en <span class="math inline">\(m=0\)</span>, coincide con el número de variables.</p>
 <div class="codigo-clave">
-<div id="f7221000" class="cell" data-execution_count="10">
+<div id="8cc2fa22" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>riesgos_val <span class="op">=</span> []</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(predictoras) <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    riesgo <span class="op">=</span> riesgo_validacion(m, X_ajuste, y_ajuste, X_val, y_val)</span>
@@ -1909,7 +2042,8 @@ mínimo de validación simple: 5 variables</code></pre>
 </div>
 </div>
 </div>
-<p>En este reparto se eligen cinco variables. Nótese que el mínimo sirve para <strong>elegir</strong>, pero no para informar del rendimiento final del modelo, pues el mínimo está afectado por el sesgo de selección. Lo que tendríamos que hacer sería entrenar el procedimiento elegido con todo train y medir el rendimiento el modelo resultante una sola vez en test. Volver a calcular los coeficientes con todo train se llama <strong>reajustar</strong>; recupera los datos que habíamos reservado para validar.</p>
+<p>En este reparto, el menor error de validación corresponde a cinco variables. Si eligiéramos solo por el mínimo, ese sería el procedimiento elegido; más adelante matizaremos esta decisión con la regla de un error típico.</p>
+<p>El mínimo sirve para comparar, pero no para informar del rendimiento final: está afectado por el sesgo de selección. Tras elegir el procedimiento, volveríamos a calcular sus coeficientes con todo train y mediríamos el modelo resultante una sola vez en test. Volver a ajustar con todo train se llama <strong>reajustar</strong>; recupera los datos que habíamos reservado para validar.</p>
 <p>Antes de hacerlo, veremos una alternativa a la validación simple que depende menos de una única partición. Usaremos esa alternativa, la validación cruzada, para cerrar el ejemplo del capítulo.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Ampliación no exigible: qué riesgo aproxima la validación">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -1934,7 +2068,7 @@ mínimo de validación simple: 5 variables</code></pre>
 </div>
 <p>Lo ideal sería elegir el menor <span class="math inline">\(\bar{R}_{n_{\mathrm{train}}}\)</span>, pero no conocemos <span class="math inline">\(P^\star\)</span> ni disponemos de muestras nuevas ilimitadas. La validación lo aproxima con nuestros datos. El ejercicio siguiente precisa qué estima antes de seleccionar: el riesgo esperado a tamaño <span class="math inline">\(n_{\mathrm{train}}-n_{\mathrm{val}}\)</span>, no a tamaño completo.</p>
 <div id="exr-validacion-insesgada" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4.3 (La validación simple es insesgada (opcional))</strong></span> Sea <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> una muestra de <span class="math inline">\(n_{\mathrm{train}}\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span>, repartida <strong>al azar y sin mirar los datos</strong> en <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, con <span class="math inline">\(n_{\mathrm{train}}-n_{\mathrm{val}}\)</span> observaciones, y <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, con <span class="math inline">\(n_{\mathrm{val}}\)</span>. El procedimiento <span class="math inline">\(m\)</span> recibe <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y devuelve <span class="math inline">\(\hat{f}^{(m)}_{\mathcal{D}_{\mathrm{ajuste}}}\)</span>, que se mide sobre <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4.3 (La validación simple es insesgada)</strong></span> Sea <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> una muestra de <span class="math inline">\(n_{\mathrm{train}}\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span>, repartida <strong>al azar y sin mirar los datos</strong> en <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, con <span class="math inline">\(n_{\mathrm{train}}-n_{\mathrm{val}}\)</span> observaciones, y <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, con <span class="math inline">\(n_{\mathrm{val}}\)</span>. El procedimiento <span class="math inline">\(m\)</span> recibe <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y devuelve <span class="math inline">\(\hat{f}^{(m)}_{\mathcal{D}_{\mathrm{ajuste}}}\)</span>, que se mide sobre <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>.</p>
 <ol type="a">
 <li><strong>Razona</strong> que, fijado <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, el modelo es un objeto fijo y las observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> le son ajenas, de modo que <a href="#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> se aplica tomando <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> como muestra de evaluación, y <strong>escribe</strong> la esperanza condicional que resulta.</li>
 <li><strong>Toma</strong> esperanzas sobre <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y <strong>concluye</strong>, con <a href="#def-riesgo-procedimiento" class="quarto-xref">Definición&nbsp;<span>4.4</span></a>, que <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{val}}}(\hat{f}^{(m)}_{\mathcal{D}_{\mathrm{ajuste}}}) \right]
@@ -1998,7 +2132,7 @@ mínimo de validación simple: 5 variables</code></pre>
 <div id="fig-validacion-cruzada" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-validacion-cruzada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="f7268cc0" class="cell" data-execution_count="11">
+<div id="68788747" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2038,7 +2172,9 @@ Figura&nbsp;4.4: K-fold cross validation con <span class="math inline">\(K=5\)</
 </div>
 </div>
 </div>
-<p>Así usamos todo train para evaluar, en lugar de depender de un único subconjunto pequeño. Esto suele estabilizar la comparación, aunque no garantiza menor variabilidad en todos los problemas. Con cinco bloques seguimos ajustando con aproximadamente el 80 % de train; con diez usaríamos el 90 %, más cerca del tamaño final. Acercarnos a ese tamaño reduce el posible pesimismo por ajustar con menos datos, si el procedimiento mejora con ellos. Usaremos cinco: aumentar <span class="math inline">\(K\)</span> cuesta más ajustes y no asegura más precisión.</p>
+<p>El reparto tiene un compromiso: con 67 observaciones de train, pasar de 53 a 60 para ajustar deja solo 7, en lugar de 14, para validar. Ajustamos con más datos y nos acercamos al tamaño del ajuste final, pero medimos el error con menos observaciones. Hacer lo contrario deja más datos para medir el error, a costa de ajustar con menos datos.</p>
+<p>CV reutiliza los datos cambiando sus papeles. Con cinco bloques, cada ajuste usa 53 o 54 observaciones, casi lo mismo que en nuestra validación simple, pero al completar las cinco vueltas las 67 han servido para evaluar. La comparación ya no depende solo de los 14 pacientes de un único reparto. Esto suele estabilizarla, aunque no garantiza menor variabilidad en todos los problemas.</p>
+<p>Aumentar <span class="math inline">\(K\)</span> cambia de nuevo el compromiso. Con diez bloques, cada ajuste usaría 60 o 61 observaciones, más cerca de las 67 finales; si el procedimiento mejora con más datos, eso reduce el posible pesimismo de la evaluación. Pero cada bloque evaluaría solo 6 o 7 pacientes, por lo que su error podría variar más entre bloques. Además, los ajustes de las distintas vueltas comparten muchos datos: sus errores no son mediciones independientes. Más bloques no garantiza una media más precisa y exige más ajustes. Aquí usaremos cinco.</p>
 <p>La implementación reutiliza <code>riesgo_validacion</code>; solo cambia quién organiza las filas. De ello se ocupa <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html"><code>KFold</code></a>. Este objeto <strong>no ajusta ni evalúa</strong>:</p>
 <ul>
 <li><code>n_splits=5</code> pide cinco bloques.</li>
@@ -2047,7 +2183,7 @@ Figura&nbsp;4.4: K-fold cross validation con <span class="math inline">\(K=5\)</
 <li><code>split(X_train)</code> proporciona los índices de ajuste y validación de cada vuelta. <code>X_train[indices_ajuste]</code> selecciona esas filas; hacemos lo mismo con <code>y_train</code>.</li>
 </ul>
 <div class="codigo-clave">
-<div id="b3d73247" class="cell" data-execution_count="12">
+<div id="75d60559" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
 <span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cv_riesgo(m, n_bloques<span class="op">=</span><span class="dv">5</span>, semilla<span class="op">=</span><span class="dv">42</span>):</span>
@@ -2074,7 +2210,7 @@ Figura&nbsp;4.4: K-fold cross validation con <span class="math inline">\(K=5\)</
 </div>
 <p>Recorremos los nueve candidatos, del nulo al de ocho variables. La lista <code>bloques_de[m]</code> guardará los cinco riesgos del candidato <span class="math inline">\(m\)</span>. <code>np.argmin</code> devuelve la posición del menor valor; como los candidatos empiezan en cero, esa posición coincide aquí con <span class="math inline">\(m\)</span>.</p>
 <div class="codigo-clave">
-<div id="995929f0" class="cell" data-execution_count="13">
+<div id="e507e60a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bloques_de <span class="op">=</span> []</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(predictoras) <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    bloques_de.append(cv_riesgo(m))</span>
@@ -2126,7 +2262,7 @@ candidato de menor CV: 2</code></pre>
 <div id="fig-cv-curva" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cv-curva-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="817060fa" class="cell" data-execution_count="14">
+<div id="10035118" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2152,19 +2288,181 @@ Figura&nbsp;4.5: La estimación por K-fold cross validation frente al número de
 </section>
 <section id="sec-comparar" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="sec-comparar">Elegir entre candidatos: regla de un error típico</h3>
-<p>Ya tenemos los resultados de CV. El menor error medio, <span class="math inline">\(0.5966\)</span>, corresponde a dos variables: <code>lcavol</code> y <code>lweight</code>. Usando solo <code>lcavol</code> obtenemos <span class="math inline">\(0.6853\)</span>. Añadir la segunda variable mejora el error estimado en <span class="math inline">\(0.0887\)</span>, pero esa mejora puede depender del reparto en bloques. Nos falta decidir si justifica usar una variable más.</p>
-<p>Usaremos una regla práctica: tomar como referencia el candidato de menor CV, pero preferir uno más sencillo si su desventaja no supera <strong>un error típico de la diferencia</strong>. Es una forma de evitar añadir variables por mejoras pequeñas respecto a la incertidumbre de la comparación. Aquí, más sencillo significa usar menos variables.</p>
-<p>Para aplicarla necesitamos medir esa desventaja y su incertidumbre. Restamos los errores <strong>bloque a bloque</strong>: el de una variable en el primer bloque menos el de dos variables en ese mismo bloque, y así con los cinco. De esta forma comparamos sobre los mismos pacientes; si un bloque resulta difícil para ambos, parte de esa dificultad común se elimina al restar. A esto lo llamamos comparación emparejada.</p>
-<div id="def-diferencia-emparejada" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 4.6 (Diferencia emparejada)</strong></span> Para comparar dos procedimientos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> evaluados sobre los mismos <span class="math inline">\(K\)</span> bloques, calculamos las diferencias y su media:</p>
-<p><span class="math display">\[
-d_k=\hat{R}_{A,\mathcal{F}_{k}}-\hat{R}_{B,\mathcal{F}_{k}},
-\qquad
-\bar d=\frac{1}{K}\sum_{k=1}^K d_k=\mathrm{CV}_A-\mathrm{CV}_B.
-\]</span></p>
-<p>Una diferencia media positiva indica cuánto más error tiene <span class="math inline">\(A\)</span>; una negativa favorece a <span class="math inline">\(A\)</span>. Calculamos la desviación típica muestral <span class="math inline">\(s_d\)</span> de las diferencias y usamos <span class="math inline">\(\text{EE}_{\text{dif}}=s_d/\sqrt K\)</span> como <strong>escala aproximada</strong> de incertidumbre. No usamos la dispersión de los errores de <span class="math inline">\(A\)</span> o de <span class="math inline">\(B\)</span> por separado, sino la de sus restas.</p>
+<p>Con lo visto hasta ahora, si nuestras estimaciones de riesgo fueran perfectas, elegiríamos el procedimiento con menor riesgo y ahí terminaríamos. Pero nuestras estimaciones tienen incertidumbre: con otra muestra o con otro reparto, los errores medidos cambiarían. Una pequeña ventaja puede deberse al azar y no justificar que usemos más variables. Necesitamos una regla práctica que tenga en cuenta esa incertidumbre al elegir.</p>
+<p>Usaremos la <strong>regla de un error típico (1EE)</strong>. Su idea es preferir un candidato más sencillo cuando su desventaja frente al de menor error sea pequeña comparada con la incertidumbre de esa diferencia. En este caso, el error típico nos dará una idea de la precisión de una <strong>diferencia de riesgos</strong>.</p>
+<div id="def-regla-un-error-tipico" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.6 (Regla de un error típico)</strong></span> Antes de comparar procedimientos, fijamos su orden de complejidad. En este caso, consideramos más complejo el que utiliza más variables predictoras. La regla se aplica como sigue:</p>
+<ol type="1">
+<li>Identificamos al <strong>campeón</strong>, el candidato de menor error medio de validación.</li>
+<li>Comparamos con él los candidatos más sencillos, empezando por el más sencillo de todos. Elegimos el primero cuya <strong>desventaja estimada no supere un error típico de esa diferencia</strong> y paramos.</li>
+<li>Si ninguno cumple, elegimos al campeón. El campeón de referencia no cambia durante las comparaciones.</li>
+</ol>
 </div>
-<p>En nuestro ejemplo, <code>bloques_de[1] - bloques_de[2]</code> resta los cinco errores de una variable menos los de dos, posición a posición. La media de esas restas vale <span class="math inline">\(0.0887\)</span>; su desviación típica dividida por <span class="math inline">\(\sqrt{5}\)</span> da <span class="math inline">\(0.0964\)</span>. Como <span class="math inline">\(0.0887\leq0.0964\)</span>, <strong>la regla permite quedarnos con una variable</strong>. Antes de elegirla, comprobaremos también el candidato aún más sencillo: el nulo.</p>
+<p>La regla requiere, por tanto, varias comparaciones de dos candidatos: cada candidato sencillo frente al mismo campeón. Veamos cómo se hacen, centrándonos en una de ellas. Llamaremos <span class="math inline">\(A\)</span> al candidato sencillo y <span class="math inline">\(B\)</span> al campeón. Nos interesa cuánto más riesgo tendría elegir <span class="math inline">\(A\)</span> en lugar de <span class="math inline">\(B\)</span>. No conocemos esa diferencia, pero podemos estimarla restando los errores medios:</p>
+<p><span class="math display">\[
+\bar d=\text{error medio de }A-\text{error medio de }B.
+\]</span></p>
+<p>Por ejemplo, errores <span class="math inline">\(2.6\)</span> y <span class="math inline">\(2.5\)</span> dan una desventaja estimada de <span class="math inline">\(0.1\)</span> para <span class="math inline">\(A\)</span>. Falta saber si ese <span class="math inline">\(0.1\)</span> es grande o pequeño respecto a su incertidumbre. Necesitamos dos números: <strong>la diferencia estimada</strong> <span class="math inline">\(\bar d\)</span> y <strong>su error típico</strong>, <span class="math inline">\(\text{EE}_{\text{dif}}\)</span>. La condición de la regla se escribe</p>
+<p><span class="math display">\[
+\bar d\leq\text{EE}_{\text{dif}}.
+\]</span></p>
+<p>Las dos medias bastan para calcular <span class="math inline">\(\bar d\)</span>, pero no su error típico: para eso necesitamos conservar las evaluaciones que las forman y cómo se corresponden.</p>
+<div id="def-diferencia-emparejada" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.7 (Diferencia emparejada)</strong></span> Comparamos los dos procedimientos usando los mismos datos para ajustarlos y las mismas observaciones para evaluar los modelos obtenidos. Restamos sus errores sobre los mismos datos, siempre en el orden <strong><span class="math inline">\(A\)</span> menos <span class="math inline">\(B\)</span></strong>. Así obtenemos diferencias <strong>emparejadas</strong>: una positiva favorece a <span class="math inline">\(B\)</span> y una negativa, a <span class="math inline">\(A\)</span>.</p>
+</div>
+<p>La forma de construir esas diferencias y estimar su incertidumbre cambia según usemos validación simple o CV. Veamos el protocolo completo en cada caso, siempre sin consultar test.</p>
+<section id="validación-simple-1" class="level4">
+<h4 class="anchored" data-anchor-id="validación-simple-1">Validación simple</h4>
+<p>En validación simple ajustamos una vez y evaluamos muchas observaciones. Para una pareja de candidatos, hacemos lo siguiente:</p>
+<ol type="1">
+<li><p><strong>Ajustar y fijar los modelos.</strong> Aplicamos ambos procedimientos a <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y predecimos <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> con los modelos obtenidos, sin reajustarlos.</p></li>
+<li><p><strong>Restar las pérdidas sobre cada observación.</strong> Para cada fila <span class="math inline">\(i\)</span> de <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, calculamos la pérdida de ambos modelos y guardamos</p>
+<p><span class="math display">\[
+d_i=\text{pérdida de }A\text{ en }i-\text{pérdida de }B\text{ en }i.
+\]</span></p>
+<p>Cada fila da una comparación de la misma pareja de modelos. No restamos pérdidas de observaciones distintas: una podría ser más difícil de predecir que la otra.</p></li>
+<li><p><strong>Resumir las diferencias.</strong> Promediamos las <span class="math inline">\(n_{\mathrm{val}}\)</span> restas y calculamos el error típico de esa media:</p>
+<p><span class="math display">\[
+\bar d=\frac{1}{n_{\mathrm{val}}}\sum_{i=1}^{n_{\mathrm{val}}}d_i,
+\]</span></p>
+<p><span class="math display">\[
+s_d^2=\frac{1}{n_{\mathrm{val}}-1}\sum_{i=1}^{n_{\mathrm{val}}}(d_i-\bar d)^2,
+\qquad
+\text{EE}_{\text{dif}}=\frac{s_d}{\sqrt{n_{\mathrm{val}}}}.
+\]</span></p></li>
+</ol>
+<p>La media <span class="math inline">\(\bar d\)</span> coincide con la diferencia entre los dos errores medios de validación. La desviación típica <span class="math inline">\(s_d\)</span> mide cuánto varían las <strong>diferencias individuales</strong>. Como los modelos están fijos y las observaciones de validación son independientes, dividir por <span class="math inline">\(\sqrt{n_{\mathrm{val}}}\)</span> estima la incertidumbre de <strong>su media</strong>, igual que en Tarea 1. Necesitamos al menos dos observaciones. Con estos dos números ya podemos aplicar la regla: aceptar <span class="math inline">\(A\)</span> si <span class="math inline">\(\bar d\leq\text{EE}_{\text{dif}}\)</span>.</p>
+<p><strong>Ejemplo.</strong> Comparamos solo dos procedimientos, con <span class="math inline">\(A\)</span> más sencillo. Tras ajustarlos con <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, obtenemos estas pérdidas cuadráticas en cuatro observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Observación</th>
+<th style="text-align: right;">Pérdida de <span class="math inline">\(A\)</span></th>
+<th style="text-align: right;">Pérdida de <span class="math inline">\(B\)</span></th>
+<th style="text-align: right;">Diferencia <span class="math inline">\(A-B\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><span class="math inline">\(1.4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"><span class="math inline">\(0.8\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"><span class="math inline">\(4.4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4.0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><span class="math inline">\(3.8\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4.0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Los errores medios son <span class="math inline">\(2.6\)</span> y <span class="math inline">\(2.5\)</span>, así que <span class="math inline">\(B\)</span> es el campeón. Para decidir si aceptamos <span class="math inline">\(A\)</span>, usamos la última columna, no la dispersión de cada columna por separado. La observación 3 da tres unidades más de pérdida que la 1 a ambos modelos, pero la desventaja de <span class="math inline">\(A\)</span> sigue siendo <span class="math inline">\(0.4\)</span>. En este ejemplo, restar sobre la misma observación elimina esa dificultad compartida y deja la diferencia que nos interesa comparar.</p>
+<p><span class="math display">\[
+\bar d=\frac{0.4-0.2+0.4-0.2}{4}=0.1,
+\qquad
+s_d=\sqrt{\frac{0.3^2+(-0.3)^2+0.3^2+(-0.3)^2}{3}}
+\approx0.3464.
+\]</span></p>
+<p><span class="math display">\[
+\text{EE}_{\text{dif}}=\frac{0.3464}{\sqrt4}\approx0.1732.
+\]</span></p>
+<p>Como <span class="math inline">\(0.1\leq0.1732\)</span>, elegimos <span class="math inline">\(A\)</span>: su desventaja estimada queda dentro del margen que admite la regla. Hemos usado cuatro diferencias porque evaluábamos <strong>dos modelos fijos sobre cuatro observaciones</strong>, no porque hubiéramos repetido cuatro ajustes.</p>
+</section>
+<section id="validación-cruzada" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="validación-cruzada">Validación cruzada</h4>
+<p>En CV repetimos tanto el ajuste como la evaluación. No conservamos una única pareja de modelos: los procedimientos siguen siendo los mismos, pero <strong>los parámetros de los modelos se vuelven a calcular en cada vuelta</strong>. El protocolo para comparar <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> es:</p>
+<ol type="1">
+<li><p><strong>Fijar los mismos bloques.</strong> Usamos para ambos procedimientos la misma partición de train en <span class="math inline">\(K\)</span> bloques de tamaño aproximadamente igual.</p></li>
+<li><p><strong>Ajustar, evaluar y restar en cada vuelta.</strong> Aplicamos ambos procedimientos a todos los datos de train excepto los de <span class="math inline">\(\mathcal{F}_{k}\)</span>. Evaluamos los dos modelos obtenidos sobre <span class="math inline">\(\mathcal{F}_{k}\)</span> y restamos los riesgos medidos en ese bloque:</p>
+<p><span class="math display">\[
+d_k=\hat{R}_{A,\mathcal{F}_{k}}-\hat{R}_{B,\mathcal{F}_{k}}.
+\]</span></p>
+<p>Pasamos al bloque siguiente y volvemos a aplicar los procedimientos desde cero. Al terminar tenemos <span class="math inline">\(K\)</span> diferencias, cada una obtenida tras un ajuste y una evaluación.</p></li>
+<li><p><strong>Resumir las diferencias.</strong> Promediamos las <span class="math inline">\(K\)</span> restas y calculamos un error típico aproximado a partir de su dispersión:</p>
+<p><span class="math display">\[
+\bar d=\frac{1}{K}\sum_{k=1}^K d_k=\mathrm{CV}_A-\mathrm{CV}_B,
+\]</span></p>
+<p><span class="math display">\[
+s_d^2=\frac{1}{K-1}\sum_{k=1}^K(d_k-\bar d)^2,
+\qquad
+\text{EE}_{\text{dif}}\approx\frac{s_d}{\sqrt K}.
+\]</span></p></li>
+</ol>
+<p>En cada bloque podríamos restar primero las pérdidas observación a observación y promediar después: obtendríamos el mismo <span class="math inline">\(d_k\)</span>. Pero aquí resumimos cada vuelta completa de ajuste y evaluación en una diferencia. Con cinco bloques calculamos la dispersión de <strong>cinco diferencias de bloque</strong> y la dividimos por <span class="math inline">\(\sqrt5\)</span>, no por <span class="math inline">\(\sqrt{67}\)</span>. Las 67 pérdidas individuales no son evaluaciones independientes de una misma pareja de modelos fijos. En general, tampoco las vueltas son independientes: sus ajustes comparten datos; por eso este error típico es solo aproximado.</p>
+<p><strong>Ejemplo.</strong> Volvamos a los nueve procedimientos de próstata. El campeón usa dos variables, con <span class="math inline">\(\mathrm{CV}=0.5966\)</span>. Para ilustrar una comparación, tomemos como <span class="math inline">\(A\)</span> el procedimiento de una variable y como <span class="math inline">\(B\)</span> el campeón. Estos son sus cinco resultados:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Bloque</th>
+<th style="text-align: right;">Riesgo de <span class="math inline">\(A\)</span>: una variable</th>
+<th style="text-align: right;">Riesgo de <span class="math inline">\(B\)</span>: dos variables</th>
+<th style="text-align: right;">Diferencia <span class="math inline">\(A-B\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><span class="math inline">\(0.9470\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.7090\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.2381\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"><span class="math inline">\(0.6178\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.4853\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.1326\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"><span class="math inline">\(0.7766\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.0659\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.2892\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><span class="math inline">\(0.7075\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.4982\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.2093\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;"><span class="math inline">\(0.3775\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.2245\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.1530\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Las cifras están redondeadas; las diferencias se calculan antes del redondeo.</p>
+<p>Cada fila compara <strong>dos modelos ajustados sin ese bloque</strong>. Por ejemplo, la primera resta evalúa los dos ajustes hechos sin el bloque 1; la segunda, otros dos ajustes, hechos sin el bloque 2. El procedimiento de una variable pierde en cuatro vueltas y gana en la tercera.</p>
+<p>Con las diferencias sin redondear obtenemos</p>
+<p><span class="math display">\[
+\bar d=\mathrm{CV}_A-\mathrm{CV}_B\approx0.0887,
+\qquad
+s_d\approx0.2155,
+\]</span></p>
+<p><span class="math display">\[
+\text{EE}_{\text{dif}}\approx\frac{0.2155}{\sqrt5}\approx0.0964.
+\]</span></p>
+<p>Como <span class="math inline">\(0.0887\leq0.0964\)</span>, el candidato de una variable cumple la regla. Esto no cierra la elección: aún debemos comprobar el nulo, que la regla obliga a examinar primero. La figura muestra esas mismas restas; el código <code>bloques_de[1] - bloques_de[2]</code> las calcula posición a posición.</p>
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m_sencillo <span class="op">=</span> <span class="dv">1</span></span>
@@ -2201,7 +2499,7 @@ d_k=\hat{R}_{A,\mathcal{F}_{k}}-\hat{R}_{B,\mathcal{F}_{k}},
 <div id="fig-emparejar" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-emparejar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="f3efcd24" class="cell" data-execution_count="15">
+<div id="364d780f" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2216,18 +2514,7 @@ Figura&nbsp;4.6: Una y dos variables sobre los mismos bloques. A la derecha, las
 </figcaption>
 </figure>
 </div>
-<section id="aplicar-la-regla-en-próstata" class="level4">
-<h4 class="anchored" data-anchor-id="aplicar-la-regla-en-próstata">Aplicar la regla en próstata</h4>
-<p>Esta es la versión <strong>emparejada</strong> de la regla de un error típico. La aplicamos ordenando los candidatos por número de variables, de menor a mayor. La referencia no cambia durante la comparación: siempre es el candidato que obtuvo la menor CV.</p>
-<div id="def-regla-un-error-tipico" class="theorem definition">
-<p><span class="theorem-title"><strong>Definición 4.7 (Regla de un error típico)</strong></span> &nbsp;</p>
-<ol type="1">
-<li>Localizar el <strong>campeón</strong>, el candidato de menor CV.</li>
-<li>Empezando por el más sencillo, restar sus errores menos los del campeón bloque a bloque. Calcular la media <span class="math inline">\(\bar d\)</span> y el error típico aproximado <span class="math inline">\(\text{EE}_{\text{dif}}\)</span> de esas diferencias.</li>
-<li>Si <span class="math inline">\(\bar d\leq\text{EE}_{\text{dif}}\)</span>, elegir ese candidato y parar. Si no, pasar al siguiente de la lista. Si ninguno de los más sencillos que el campeón cumple la condición, elegir al campeón.</li>
-</ol>
-</div>
-<p>El campeón usa dos variables, de modo que solo hay que examinar el nulo y el de una:</p>
+<p>Para completar la selección, debemos empezar por el candidato más sencillo, el nulo. El campeón usa dos variables, así que solo hay dos comparaciones posibles antes de quedarnos con él: nulo frente a dos variables y una frente a dos variables.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -2260,7 +2547,7 @@ Figura&nbsp;4.6: Una y dos variables sobre los mismos bloques. A la derecha, las
 </table>
 <p>Por tanto, elegimos el procedimiento que usa solo <code>lcavol</code>. No tiene la menor CV: aceptamos su pequeña desventaja estimada a cambio de usar una variable menos. El siguiente bucle reproduce exactamente estas dos comparaciones.</p>
 <div class="codigo-clave">
-<div id="99034a5a" class="cell" data-execution_count="16">
+<div id="9047e7ec" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a>m_elegido <span class="op">=</span> m_campeon</span>
 <span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" m   diferencia   EE de la diferencia"</span>)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-22-3" class="code-annotation-target"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(m_campeon):</span>
@@ -2297,7 +2584,64 @@ número de variables elegido: 1</code></pre>
 </div>
 </div>
 </div>
-<p>El margen de un error típico es un <strong>criterio práctico de selección</strong>, no una prueba de que ambos procedimientos rindan igual ni de que el elegido sea el mejor. Además, los ajustes de CV comparten datos, por lo que ese error típico es solo aproximado. La decisión puede cambiar con otro reparto; no buscaremos una semilla favorable. Queda aplicar el procedimiento elegido a todo train y medir el modelo resultante en test.</p>
+<p>El margen de un error típico es un <strong>criterio práctico de selección</strong>, no una prueba de que ambos procedimientos rindan igual ni de que el elegido sea el mejor. El campeón tampoco estaba fijado de antemano: lo hemos elegido con estos mismos errores. La regla no garantiza eliminar el sesgo de selección ni convierte la validación en una evaluación final. Esto vale tanto para validación simple como para CV, donde además el error típico ignora la dependencia entre bloques.</p>
+<p>La decisión puede cambiar con otro reparto; no buscaremos una semilla favorable. Tras elegir, reajustamos con todo train y medimos el modelo resultante en test.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Ampliación no exigible: por qué emparejamos y qué aproxima el error típico">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ampliación no exigible: por qué emparejamos y qué aproxima el error típico
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los protocolos anteriores bastan para aplicar la regla. Aquí justificamos qué diferencia estima cada uno, por qué emparejamos y qué significa su error típico. Fijamos dos procedimientos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> antes de observar los resultados y suponemos varianzas finitas para las pérdidas que aparecen a continuación.</p>
+<p><strong>1. Qué estimamos en validación simple.</strong> Mantengamos fijos los modelos <span class="math inline">\(\hat{f}_A\)</span> y <span class="math inline">\(\hat{f}_B\)</span> obtenidos con <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>. Llamemos <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span> a sus pérdidas sobre una misma observación nueva de <span class="math inline">\(P^\star\)</span>. La diferencia de riesgos que queremos conocer es</p>
+<p><span class="math display">\[
+\Delta=R(\hat{f}_A)-R(\hat{f}_B)=\mathbb{E}_{P^\star}\!\left[ U-V \right].
+\]</span></p>
+<p>Cada <span class="math inline">\(d_i\)</span> de validación es una realización de esa pérdida diferencial <span class="math inline">\(U-V\)</span>. Por linealidad de la esperanza, promediarlas estima <span class="math inline">\(\Delta\)</span> sin sesgo. Además, como las observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> son independientes, la varianza de su suma es la suma de sus varianzas:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}_{\mathrm{val}}}\!\left[ \bar d \right]
+=\frac{1}{n_{\mathrm{val}}}\sum_{i=1}^{n_{\mathrm{val}}}\mathbb{E}_{P^\star}\!\left[ U-V \right]=\Delta,
+\]</span></p>
+<p><span class="math display">\[
+\mathrm{Var}_{\mathcal{D}_{\mathrm{val}}}\!\left( \bar d \right)
+=\frac{1}{n_{\mathrm{val}}^2}\sum_{i=1}^{n_{\mathrm{val}}}\mathrm{Var}_{P^\star}\!\left( U-V \right)
+=\frac{\mathrm{Var}_{P^\star}\!\left( U-V \right)}{n_{\mathrm{val}}}.
+\]</span></p>
+<p>Estimamos la varianza de <span class="math inline">\(U-V\)</span> con <span class="math inline">\(s_d^2\)</span> y tomamos la raíz: obtenemos <span class="math inline">\(s_d/\sqrt{n_{\mathrm{val}}}\)</span>. Esta incertidumbre se refiere a cambiar la muestra de validación <strong>manteniendo fijos los modelos</strong>, no a volver a ajustar con otra muestra.</p>
+<p><strong>2. Por qué conservamos las parejas.</strong> Las pérdidas <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span> no tienen por qué ser independientes: se calculan sobre la misma observación. Escribiendo <span class="math inline">\(\mu_U=\mathbb{E}_{P^\star}\!\left[ U \right]\)</span> y <span class="math inline">\(\mu_V=\mathbb{E}_{P^\star}\!\left[ V \right]\)</span>, desarrollamos el cuadrado</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathrm{Var}_{P^\star}\!\left( U-V \right)
+&amp;=\mathbb{E}_{P^\star}\!\left[ \bigl[(U-\mu_U)-(V-\mu_V)\bigr]^2 \right]\\
+&amp;=\mathrm{Var}_{P^\star}\!\left( U \right)+\mathrm{Var}_{P^\star}\!\left( V \right)-2\mathrm{Cov}\!\left( U, V \right).
+\end{aligned}
+\]</span></p>
+<p>La covarianza <span class="math inline">\(\mathrm{Cov}\!\left( U, V \right)=\mathbb{E}_{P^\star}\!\left[ (U-\mu_U)(V-\mu_V) \right]\)</span> recoge si las dos pérdidas tienden a subir y bajar juntas. Cuando es positiva, restar reduce la variación compartida. Calcular <span class="math inline">\(s_d\)</span> a partir de las diferencias incorpora esa relación; combinar dos errores típicos como si las pérdidas fueran independientes la omitiría. La identidad siempre vale, aunque la covarianza no tiene por qué ser positiva.</p>
+<p><strong>3. Qué cambia en CV.</strong> Ahora no mantenemos fijos los modelos: repetimos el ajuste. Con bloques del mismo tamaño, cada ajuste usa <span class="math inline">\(n_a=n_{\mathrm{train}}(K-1)/K\)</span> observaciones. Por <a href="#exr-cv-insesgada" class="quarto-xref">Ejercicio&nbsp;<span>4.4</span></a> y la linealidad de la esperanza,</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \bar d \right]
+=\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \mathrm{CV}_A-\mathrm{CV}_B \right]
+=\bar{R}_{n_a}^{(A)}-\bar{R}_{n_a}^{(B)}.
+\]</span></p>
+<p>Estimamos una diferencia entre <strong>riesgos esperados de procedimientos</strong> a ese tamaño de ajuste, no entre los riesgos de dos modelos finales. Si los bloques no son iguales, como ocurre con las 67 observaciones, promediamos diferencias correspondientes a los distintos tamaños de ajuste: aquí, 53 o 54. Esta propiedad de la esperanza no necesita independencia entre vueltas.</p>
+<p>Para la varianza sí importa esa dependencia. Al repetir train con el mismo esquema de reparto y desarrollar el cuadrado de la suma de las diferencias centradas,</p>
+<p><span class="math display">\[
+\mathrm{Var}_{\mathcal{D}_{\mathrm{train}}}\!\left( \bar d \right)
+=\frac{1}{K^2}\left[
+\sum_{k=1}^K\mathrm{Var}_{\mathcal{D}_{\mathrm{train}}}\!\left( d_k \right)
++2\sum_{k&lt;r}\mathrm{Cov}\!\left( d_k, d_r \right)\right].
+\]</span></p>
+<p>Una observación evalúa en una vuelta y entrena en las demás: cambiarla puede modificar varios <span class="math inline">\(d_k\)</span>. Por eso aparecen las covarianzas <strong>entre vueltas distintas</strong>. Si fueran cero y las diferencias tuvieran varianza común <span class="math inline">\(v\)</span>, quedaría <span class="math inline">\(v/K\)</span>; estimar <span class="math inline">\(v\)</span> con <span class="math inline">\(s_d^2\)</span> daría <span class="math inline">\(s_d/\sqrt K\)</span>. En CV esas covarianzas no tienen por qué ser cero y la fórmula no las estima. Agrupar por bloques no elimina la dependencia.</p>
+<p>Por último, los resultados anteriores se refieren a dos procedimientos fijados antes de comparar. El campeón de la regla 1EE se escoge con los propios errores de validación: la selección también introduce incertidumbre. Por eso la regla es un criterio práctico, no un contraste de igualdad ni una garantía de elegir el menor riesgo verdadero.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -2334,7 +2678,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 </div>
 <p>Calculemos las cuatro métricas sobre <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> para ilustrar sus escalas. Estos valores no son estimaciones finales de generalización.</p>
 <div class="codigo-clave">
-<div id="98c951fb" class="cell" data-execution_count="17">
+<div id="86f9d7c1" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> metricas(y_pred, y):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> y_pred</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> (residuos <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>()</span>
@@ -2349,7 +2693,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 <p><code>np.abs</code> toma el valor absoluto; <code>np.nan</code> indica que el <span class="math inline">\(R^2\)</span> no está definido cuando todas las respuestas son iguales. El resto traduce las fórmulas anteriores.</p>
 <p>Aquí <span class="math inline">\(\bar{y}\)</span> es la media de la muestra sobre la que se mide, no la del ajuste.</p>
 </div>
-<div id="3dac796f" class="cell" data-execution_count="18">
+<div id="ecdd8e53" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, y_ref, pred <span class="kw">in</span> [</span>
@@ -2367,7 +2711,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 </div>
 <p>En entrenamiento, el modelo lineal tiene <span class="math inline">\(\mathrm{RMSE}=0.6627\)</span> y <span class="math inline">\(\mathrm{MAE}=0.4986\)</span>, de modo que la desigualdad de <a href="#exr-rmse-mae" class="quarto-xref">Ejercicio&nbsp;<span>4.6</span></a> se cumple con holgura. Además, el <span class="math inline">\(R^2\)</span> del modelo nulo es cero por construcción.</p>
 <div class="trampa">
-<p><strong>El <span class="math inline">\(R^2\)</span> puede ser negativo fuera de entrenamiento.</strong> Por <a href="#eq-r2" class="quarto-xref">Ecuación&nbsp;<span>4.3</span></a>, <span class="math inline">\(R^2&lt;0\)</span> significa <span class="math inline">\(\mathrm{SSE}&gt;\mathrm{SST}\)</span>, es decir, que el modelo predice peor que la media de la muestra sobre la que se mide. En train eso no puede pasar con una arquitectura lineal que incluya el intercepto, porque la familia contiene las funciones constantes y el procedimiento no devuelve una ecuación peor. En test sí puede ocurrir: los parámetros se fijaron con <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>, mientras que <span class="math inline">\(\mathrm{SST}\)</span> usa la media de las respuestas de <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>.</p>
+<p><strong>El <span class="math inline">\(R^2\)</span> puede ser negativo fuera de entrenamiento.</strong> Por <a href="#eq-r2" class="quarto-xref">Ecuación&nbsp;<span>4.3</span></a>, <span class="math inline">\(R^2&lt;0\)</span> significa <span class="math inline">\(\mathrm{SSE}&gt;\mathrm{SST}\)</span>, es decir, que el modelo predice peor que la media de la muestra sobre la que se mide. En train eso no puede pasar con una arquitectura lineal con intercepto ajustada por mínimos cuadrados: la familia contiene las constantes y minimizar el error no puede dar un resultado peor que el de la mejor constante. En test sí puede ocurrir: los parámetros se fijaron con <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>, mientras que <span class="math inline">\(\mathrm{SST}\)</span> usa la media de las respuestas de <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>.</p>
 </div>
 <div id="exr-leer-metricas" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 4.7 (Leer las cuatro métricas)</strong></span> &nbsp;</p>
@@ -2381,7 +2725,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 <h2 class="anchored" data-anchor-id="caso-práctico-abrir-el-test-una-sola-vez">Caso práctico: abrir el test una sola vez</h2>
 <p>Ya hemos elegido el procedimiento de una variable sin consultar test. Lo aplicamos a las 67 observaciones de train y fijamos los coeficientes definitivos. Solo ahora predecimos las 30 de test. En esta misma evaluación final medimos la referencia nula, fijada al principio; no la usamos para volver a elegir.</p>
 <div class="codigo-clave">
-<div id="ec208075" class="cell" data-execution_count="19">
+<div id="f5cedc7d" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> m_elegido <span class="op">==</span> <span class="dv">0</span>:</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    pred_train <span class="op">=</span> np.full(<span class="bu">len</span>(y_train), media_train)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    pred_test <span class="op">=</span> np.full(<span class="bu">len</span>(y_test), media_train)</span>
@@ -2443,7 +2787,7 @@ nulo en test      : 1.0567</code></pre>
 </tbody>
 </table>
 <p>Aquí test da menos error que train. No contradice el optimismo del entrenamiento: el resultado <a href="#prp-train-optimista" class="quarto-xref">Proposición&nbsp;<span>4.1</span></a> habla de promedios sobre muestras, no de un orden obligatorio en cada partición. El modelo nulo da <span class="math inline">\(1.0567\)</span> en este test. Informamos de ambos resultados, sin cambiar ahora el procedimiento ni la métrica para mejorar la comparación.</p>
-<div id="a191c904" class="cell" data-execution_count="20">
+<div id="e9c98544" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, valor <span class="kw">in</span> metricas(pred_test, y_test).items():</span>
@@ -2478,7 +2822,7 @@ R2: 0.5430</code></pre>
 <div id="fig-optimismo" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-optimismo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="4f4128ea" class="cell" data-execution_count="21">
+<div id="6f314be3" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2496,14 +2840,15 @@ Figura&nbsp;4.7: El modelo entregado usa una variable. Las predicciones se calcu
 </section>
 <section id="sec-protocolo" class="level2">
 <h2 class="anchored" data-anchor-id="sec-protocolo">El protocolo reproducible</h2>
+<p>El protocolo admite las dos formas de validar. La <strong>validación simple</strong> requiere un solo ajuste por candidato y es útil cuando hay datos suficientes para dejar una validación amplia, o cuando ajustar resulta costoso. <strong>CV</strong> aprovecha mejor una muestra pequeña para comparar, a cambio de <span class="math inline">\(K\)</span> ajustes por candidato; por eso la hemos usado con las 67 observaciones de próstata. Ninguna evita reservar test. Elegimos el esquema y fijamos el reparto antes de comparar, no después de ver cuál da cifras más favorables.</p>
 <ol type="1">
 <li><strong>Separar test y aislarlo.</strong> Repartir al azar bajo la hipótesis de observaciones independientes de la misma población; fijar y guardar el reparto.</li>
 <li><strong>Fijar la referencia nula y las métricas.</strong> Calcular la constante solo con train y decidir qué pérdida usaremos para comparar.</li>
-<li><strong>Elegir el procedimiento en train.</strong> Comparar los candidatos sobre los mismos bloques de CV y aplicar la regla emparejada de un error típico. Todo lo que se aprenda de los datos debe recalcularse dentro de cada ajuste, sin usar su bloque de validación.</li>
+<li><strong>Elegir el procedimiento en train.</strong> Usar la misma partición de validación simple o los mismos bloques de CV para todos los candidatos y aplicar la regla emparejada de un error típico. Todo lo que se aprenda de los datos se calcula dentro de cada ajuste, sin utilizar las observaciones que lo evalúan.</li>
 <li><strong>Reajustar con todo train.</strong> Aplicar el procedimiento elegido de nuevo para obtener el modelo definitivo.</li>
 <li><strong>Medir una sola vez en test.</strong> Informar del riesgo, su error típico y la referencia nula; no cambiar decisiones a partir de ese resultado.</li>
 </ol>
-<p>Con este protocolo ya se puede informar de un resultado sin engañarse. Queda un supuesto grande sin examinar: hemos trabajado con una tabla de números limpia, donde lo único que se aprendía de los datos eran los coeficientes. En una tabla real hay que imputar ausencias, escalar columnas y codificar categorías, y todas esas transformaciones se aprenden también de los datos. Si se aprenden antes de separar, el test deja de ser test y ninguno de los resultados de este capítulo se aplica. Ese es el asunto del capítulo siguiente.</p>
+<p>Con este protocolo ya se puede informar de un resultado sin engañarse. Queda un supuesto grande sin examinar: hemos trabajado con una tabla de números limpia, donde lo único que se aprendía de los datos eran los coeficientes. En una tabla real hay que imputar ausencias, escalar columnas y codificar categorías, y todas esas transformaciones se aprenden también de los datos. Si se aprenden antes de separar, el test interviene en el ajuste y perdemos la garantía de una evaluación independiente e insesgada. Ese es el asunto del capítulo siguiente.</p>
 
 
 </section>

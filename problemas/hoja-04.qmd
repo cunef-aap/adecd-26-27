@@ -50,7 +50,7 @@ d. Escribe el intervalo media $\pm$ dos errores típicos. Si la aproximación no
 :::
 
 ::: {#exr-h4-validacion-insesgada}
-## La validación simple es insesgada (opcional)
+## La validación simple es insesgada
 
 Sea $\Dtrain$ una muestra de $\ntrain$ extracciones independientes de $P^\star$, repartida **al
 azar y sin mirar los datos** en $\Dajuste$, con $\ntrain-\nval$ observaciones, y $\Dval$, con
@@ -233,6 +233,9 @@ c. Aplica la regla emparejada de un error típico. ¿Qué candidato se elige? ¿
    la mayor desventaja admisible para elegir $A$ con ese mismo error típico?
 d. ¿Por qué se restan errores del mismo bloque? ¿Por qué el error típico usado es
    solo aproximado? ¿Demuestra esta regla que el elegido tendrá menor riesgo verdadero?
+e. Si las cinco columnas fueran pérdidas individuales de cinco pacientes de validación
+   simple, ¿cuántas diferencias promediaríamos y por qué número dividiríamos su desviación
+   típica? ¿Cambiarían las cuentas o la elección? ¿Qué modelos se mantendrían fijos?
 :::
 
 ## Leer y completar código
