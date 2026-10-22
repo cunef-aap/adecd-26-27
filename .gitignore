@@ -5,6 +5,9 @@ _referencia/
 **/__pycache__
 **/*.pyc
 **/*.quarto_ipynb
+# Stray local render outputs; the published equivalents under docs/ stay visible.
+/site_libs/
+/capitulos/*_files/
 .DS_Store
 .vscode/*
 !.vscode/settings.json
