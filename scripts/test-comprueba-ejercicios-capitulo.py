@@ -42,6 +42,17 @@ class AlineacionTest(unittest.TestCase):
         texto = ejercicio("exr-h-a-sol", cuerpo if cuerpo is not None else self.cuerpo)
         self.sol.write_text(texto + cajas, encoding="utf-8")
 
+    def prepara_seleccion(self, cabecera):
+        cuerpos = [self.cuerpo, "## Segundo\n\nEnunciado B.",
+                   "## Tercero\n\nEnunciado C."]
+        self.capitulo.write_text("".join(
+            ejercicio(f"exr-{clave}", cuerpo)
+            for clave, cuerpo in zip("abc", cuerpos)
+        ), encoding="utf-8")
+        self.hoja.write_text(f"---\n{cabecera}\n---\n" +
+                             ejercicio("exr-h-a", "Enunciado con $x^2$.") +
+                             ejercicio("exr-h-c", "Enunciado C."), encoding="utf-8")
+
     def test_admite_ids_exteriores_distintos_y_ejercicios_adicionales(self):
         self.hoja.write_text(ejercicio("exr-h-a", self.cuerpo) +
                              ejercicio("exr-h-b", "## Otro\nEnunciado."), encoding="utf-8")
@@ -65,6 +76,92 @@ class AlineacionTest(unittest.TestCase):
         self.assertNotEqual(COMPRUEBA.normaliza("    x = 1"),
                             COMPRUEBA.normaliza("x = 1"))
 
+    def test_hoja_sin_titulo_descriptivo(self):
+        cuerpo = "Enunciado con $x^2$."
+        self.hoja.write_text(ejercicio("exr-h-a", cuerpo), encoding="utf-8")
+        self.solucionario(cuerpo)
+        self.assertEqual(self.ejecuta()[0], 0)
+
+    def test_solo_ignora_el_primer_heading_inicial(self):
+        cuerpo = "## Título\n\n## Apartado\n\nEnunciado con $x^2$."
+        self.capitulo.write_text(ejercicio("exr-a", cuerpo), encoding="utf-8")
+        self.hoja.write_text(ejercicio("exr-h-a", cuerpo.replace("Apartado", "Otro")),
+                             encoding="utf-8")
+        self.assertEqual(self.ejecuta()[0], 1)
+
+    def test_no_ignora_headings_tras_prosa_divs_o_fences(self):
+        for prefijo in ["Introducción.\n\n", "::: {.nuevo}\n", "```python\n", "    "]:
+            with self.subTest(prefijo=prefijo):
+                original = prefijo + "## Contenido\nOtra línea."
+                distinto = prefijo + "## Cambiado\nOtra línea."
+                self.assertNotEqual(COMPRUEBA.normaliza_sin_titulo(original),
+                                    COMPRUEBA.normaliza_sin_titulo(distinto))
+
+    def test_sin_titulo_no_relaja_formulas_codigo_ni_marcas(self):
+        for original, distinto in [
+            ("Enunciado con $x^2$.", "Enunciado con $x^3$."),
+            ("```python\n    x = 1\n```", "```python\nx = 1\n```"),
+            ("Texto.", "::: {.nuevo}\nTexto.\n:::"),
+        ]:
+            with self.subTest(original=original):
+                self.capitulo.write_text(ejercicio("exr-a", "## Título\n\n" + original),
+                                         encoding="utf-8")
+                self.hoja.write_text(ejercicio("exr-h-a", distinto), encoding="utf-8")
+                self.assertEqual(self.ejecuta()[0], 1)
+
+    def test_seleccion_explicita_en_lista_y_en_bloque(self):
+        for cabecera in ["ejercicios-capitulo: [exr-a, exr-c]",
+                         "title: Hoja\nejercicios-capitulo:\n  - exr-a\n  - exr-c"]:
+            with self.subTest(cabecera=cabecera):
+                self.prepara_seleccion(cabecera)
+                estado, salida, errores = self.ejecuta()
+                self.assertEqual((estado, errores), (0, ""))
+                self.assertIn("primeros 2 enunciados", salida)
+
+    def test_sin_seleccion_exige_todos_los_ejercicios(self):
+        self.prepara_seleccion("title: Hoja")
+        estado, _, errores = self.ejecuta()
+        self.assertEqual(estado, 1)
+        self.assertIn("falta ejercicio 3", errores)
+
+    def test_seleccion_valida_no_admite_otro_orden_en_la_hoja(self):
+        self.prepara_seleccion("ejercicios-capitulo: [exr-a, exr-c]")
+        texto = self.hoja.read_text(encoding="utf-8")
+        texto = texto.replace("Enunciado con $x^2$.", "TEMPORAL")
+        texto = texto.replace("Enunciado C.", "Enunciado con $x^2$.")
+        self.hoja.write_text(texto.replace("TEMPORAL", "Enunciado C."), encoding="utf-8")
+        self.assertEqual(self.ejecuta()[0], 1)
+
+    def test_seleccion_con_ids_desconocidos_repetidos_o_desordenados(self):
+        for seleccion, esperado in [
+            ("[exr-a, exr-inexistente]", "ausentes del capítulo"),
+            ("[exr-a, exr-a]", "identificadores repetidos"),
+            ("[exr-c, exr-a]", "conservar el orden"),
+        ]:
+            with self.subTest(seleccion=seleccion):
+                self.prepara_seleccion(f"ejercicios-capitulo: {seleccion}")
+                estado, _, errores = self.ejecuta()
+                self.assertEqual(estado, 1)
+                self.assertIn(esperado, errores)
+
+    def test_seleccion_requiere_lista_no_vacia_de_ids(self):
+        for seleccion in ["[]", "null", "exr-a", "{exr-a: true}",
+                          "[exr-a, 2]", "[exr-a, false]", "[no-es-un-id]"]:
+            with self.subTest(seleccion=seleccion):
+                self.prepara_seleccion(f"ejercicios-capitulo: {seleccion}")
+                estado, _, errores = self.ejecuta()
+                self.assertEqual(estado, 1)
+                self.assertIn("lista no vacía de identificadores", errores)
+
+    def test_cabecera_yaml_invalida(self):
+        self.prepara_seleccion("ejercicios-capitulo: [exr-a,")
+        self.assertIn("cabecera YAML inválida", self.ejecuta()[2])
+
+    def test_cabecera_yaml_sin_cerrar(self):
+        self.hoja.write_text("---\ntitle: Hoja\n" + ejercicio("exr-h-a", self.cuerpo),
+                             encoding="utf-8")
+        self.assertIn("cabecera YAML sin cerrar", self.ejecuta()[2])
+
     def test_desorden_del_capitulo(self):
         otro = "## Otro\nEnunciado distinto."
         self.capitulo.write_text(ejercicio("exr-a", self.cuerpo) +
@@ -80,6 +177,10 @@ class AlineacionTest(unittest.TestCase):
         self.hoja.write_text(ejercicio("exr-h-a", self.cuerpo) * 2, encoding="utf-8")
         self.assertIn("identificadores repetidos", self.ejecuta()[2])
 
+    def test_identificadores_repetidos_en_capitulo(self):
+        self.capitulo.write_text(ejercicio("exr-a", self.cuerpo) * 2, encoding="utf-8")
+        self.assertIn("identificadores repetidos", self.ejecuta()[2])
+
     def test_solucionario_alineado(self):
         self.solucionario()
         self.assertEqual(self.ejecuta()[0], 0)
@@ -91,6 +192,17 @@ class AlineacionTest(unittest.TestCase):
 
     def test_solucionario_con_enunciado_distinto(self):
         self.solucionario(self.cuerpo.replace("x^2", "x^3"))
+        self.assertIn("título o enunciado distintos", self.ejecuta()[2])
+
+    def test_solucionario_no_puede_conservar_un_titulo_ausente_en_hoja(self):
+        self.hoja.write_text(ejercicio("exr-h-a", "Enunciado con $x^2$."), encoding="utf-8")
+        self.solucionario()
+        estado, _, errores = self.ejecuta()
+        self.assertEqual(estado, 1)
+        self.assertIn("título o enunciado distintos", errores)
+
+    def test_solucionario_no_puede_cambiar_solo_el_titulo(self):
+        self.solucionario(self.cuerpo.replace("Título", "Otro título"))
         self.assertIn("título o enunciado distintos", self.ejecuta()[2])
 
     def test_solucion_ausente_duplicada_o_vacia(self):

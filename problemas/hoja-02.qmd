@@ -17,7 +17,6 @@ bases, empieza por los ejercicios 7 y 8 antes de volver a las derivadas de los e
 ## Ejercicios del capítulo
 
 ::: {#exr-h2-coste-rejilla}
-## El coste de buscar por rejilla
 
 Supón que pruebas $m$ valores distintos de cada parámetro y evalúas la verosimilitud en
 todas las combinaciones.
@@ -31,7 +30,6 @@ c. Con $m=10$ y $q=20$, calcula el número de evaluaciones. Compáralo con el n�
 Recuerda que $a>0$ y $b$ son constantes que no dependen de $\coef$.
 
 ::: {#exr-h2-invarianza}
-## Demostración de la invarianza afín
 
 Demuestra @lem-invarianza-afin. Toma dos valores cualesquiera $\coef_1$ y $\coef_2$ y
 comprueba que la transformación conserva el orden entre $h(\coef_1)$ y $h(\coef_2)$.
@@ -39,7 +37,6 @@ Explica después por qué la hipótesis $a>0$ es necesaria, dando un contraejemp
 :::
 
 ::: {#exr-h2-parciales}
-## Practicar derivadas parciales
 
 Calcula el gradiente de cada función.
 
@@ -48,7 +45,6 @@ b. $h(w_0,w_1)=(w_0+2w_1-5)^2$.
 :::
 
 ::: {#exr-h2-gradiente}
-## Demostración del gradiente
 
 Demuestra @eq-gradiente-riesgo-1d.
 
@@ -63,7 +59,6 @@ El ejercicio 5 queda como ampliación: anticipa el sistema de ecuaciones del tem
 no es exigible en este capítulo. Puedes pasar directamente al 6.
 
 ::: {#exr-h2-ecuaciones}
-## Resolver el sistema exactamente
 
 Iguala a cero las dos componentes de @eq-gradiente-riesgo-1d.
 
@@ -89,7 +84,6 @@ c. Como comprobación opcional con código, calcula $\widehat w_0$ y $\widehat w
 :::
 
 ::: {#exr-h2-tasa}
-## El efecto de la tasa de aprendizaje
 
 Sea $h(w)=w^2$ y partamos de $w^{(0)}=1$.
 
@@ -101,7 +95,6 @@ b. Compara los valores de $h$ y la distancia al mínimo. ¿Cambiar de lado respe
 ## Práctica básica
 
 ::: {#exr-h2-predicciones}
-## De las predicciones al riesgo
 
 Considera las cuatro observaciones
 
@@ -121,7 +114,6 @@ c. Repite los cálculos con $\coef=(2,1)\T$. ¿Qué recta tiene menor riesgo? Ba
 :::
 
 ::: {#exr-h2-parciales-basicas}
-## Derivar una coordenada cada vez
 
 a. Para $h(w_0,w_1)=w_0^2+3w_1$, calcula las dos derivadas parciales.
    ¿Por qué desaparece $3w_1$ al derivar respecto de $w_0$?
@@ -136,7 +128,6 @@ d. Escribe el gradiente de cada una de las tres funciones en $(w_0,w_1)=(1,0)$.
 :::
 
 ::: {#exr-h2-perdidas}
-## Comparar dos formas de medir el error
 
 Dos modelos producen los siguientes residuos sobre las mismas cuatro observaciones:
 
@@ -156,7 +147,6 @@ d. Si usas la suma de cuadrados en vez de su media, ¿cambia la recta que minimi
 :::
 
 ::: {#exr-h2-calculo}
-## Dos pasos para ajustar una recta
 
 Usa los datos del ejercicio 7. Partimos de $\coef^{(0)}=(0,0)\T$, donde el gradiente
 del riesgo cuadrático es $(-4,-2)\T$, y tomamos $\lr=1/4$.
@@ -183,7 +173,6 @@ d. Sabemos por el ejercicio 7 que $\Riskh(\coefhat)=1$. Calcula
 :::
 
 ::: {#exr-h2-punto-critico}
-## Derivada cero no siempre significa mínimo
 
 Considera $h(w)=w^2$ y $g(w)=w^3$.
 
@@ -200,7 +189,6 @@ En los ejercicios de código se pide completar o interpretar las operaciones del
 capítulo en papel, no escribir programas de memoria. No se evalúa cómo hacer gráficos.
 
 ::: {#exr-h2-retropropagacion}
-## La regla de la cadena, paso a paso
 
 Para una observación, $h(\coef)=(y-\coefzero-w_1x)^2$.
 Toma $\coef=(1,2)\T$, $x=3$ e $y=4$.
@@ -225,7 +213,6 @@ c. Deriva directamente $(4-\coefzero-3w_1)^2$ respecto de cada parámetro y eval
 :::
 
 ::: {#exr-h2-completar}
-## Modelo, pérdida y gradiente
 
 Completa las cuatro operaciones señaladas.
 
@@ -260,7 +247,6 @@ c. Si sustituimos `mse` por el error absoluto medio, ¿podemos seguir usando
 :::
 
 ::: {#exr-h2-train}
-## Un paso y un bucle de entrenamiento
 
 Usa las funciones del ejercicio anterior para completar el optimizador y el entrenamiento.
 
@@ -297,7 +283,6 @@ c. Dentro del bucle, ¿se guarda el riesgo antes o después de actualizar los pa
 :::
 
 ::: {#exr-h2-errores-autodiff}
-## Tres errores de diferenciación automática
 
 Este fragmento pretende ajustar una recta por descenso de gradiente con diferenciación
 automática. Contiene tres errores. Los datos `x` e `y` son tensores de números reales

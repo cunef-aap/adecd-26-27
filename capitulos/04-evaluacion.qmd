@@ -237,8 +237,8 @@ El modelo nulo predice la constante $2.4523$ y tiene riesgo $1.4370$ en train.
 
 El resultado de @lem-media-optima depende de la pérdida cuadrática.
 
-a. Escribe el riesgo empírico de una constante $c$ con la pérdida absoluta,
-   $\frac{1}{\nobs}\sum_i\abs{\yi-c}$, y explica por qué no se puede derivar en todo punto.
+a. El riesgo empírico de una constante $c$ con la pérdida absoluta es
+   $\frac{1}{\nobs}\sum_i\abs{\yi-c}$. Explica por qué no se puede derivar en todo punto.
 b. Argumenta, moviendo $c$ un poco a la derecha y contando cuántas observaciones quedan a
    cada lado, que el mínimo se alcanza en la mediana de la muestra.
 c. Para las respuestas $(1,2,9)$, calcula la media y la mediana y comprueba cuál
@@ -598,13 +598,14 @@ Un modelo ya fijado se evalúa con 25 observaciones independientes de la misma p
 La media de las pérdidas es 3 y su desviación típica muestral es $s=2$.
 
 a. Calcula el error típico estimado e informa del riesgo como media $\pm$ error típico.
-b. Suponiendo que la dispersión de las pérdidas se mantiene, ¿cuántas observaciones
-   necesitaríamos para reducir el error típico a la mitad?
-c. Explica por qué "insesgado" no significa "exacto" y por qué $s$ y el error típico
-   son cantidades distintas.
-d. Escribe el intervalo media $\pm$ dos errores típicos. Si la aproximación normal es
-   adecuada, ¿qué significa la cobertura aproximada del 95 %? ¿Garantiza que este
-   intervalo concreto contenga el riesgo verdadero?
+b. Suponiendo que $s$ se mantiene en 2, ¿cuántas observaciones de test necesitaríamos
+   en total para reducir el error típico a la mitad?
+c. Evaluamos el mismo modelo, sin reajustarlo, sobre muchos tests nuevos de 25
+   observaciones. ¿Qué se dispersa con desviación típica estimada $s=2$: las pérdidas
+   individuales o las medias de cada test? ¿Qué dispersión mide el error típico de a?
+   Que la media de test sea insesgada, ¿implica que el riesgo verdadero sea exactamente 3?
+d. Suponiendo que la aproximación normal es adecuada, calcula un intervalo de confianza
+   aproximado del 95 % para el riesgo verdadero del modelo e interpreta su significado.
 :::
 
 
@@ -1081,15 +1082,19 @@ van de $0.22$ a $1.07$, de modo que el número promediado lleva bastante incerti
 ::: {#exr-cv-bloques}
 ## Cuántos bloques
 
-Tenemos 60 observaciones de train y cuatro procedimientos candidatos.
+Tenemos 60 observaciones de train y comparamos cuatro procedimientos mediante validación
+cruzada de $K$ bloques del mismo tamaño (*K-fold cross validation*).
 
 a. Con $K=5$, ¿cuántas observaciones evalúan y cuántas ajustan en cada vuelta?
    ¿Cuántos ajustes hacen falta para comparar los cuatro procedimientos?
-b. Repite las cuentas con $K=10$. ¿Con cuál de los dos valores usa cada ajuste una
-   muestra más parecida a train completo?
+b. Repite el apartado a con $K=10$. El modelo final se ajustará con todo train.
+   ¿Qué opción, $K=5$ o $K=10$, deja fuera menos observaciones en cada ajuste de CV?
+   ¿Cuál aproxima mejor el tamaño de muestra con el que se ajustará el modelo final?
 c. Con $K=60$, cada bloque contiene una observación. Este caso se llama *leave-one-out*.
-   ¿Cuántos ajustes requiere? Explica por qué usar más bloques no garantiza una
-   comparación más precisa.
+   ¿Cuántos ajustes requiere comparar los cuatro procedimientos? Para un mismo
+   procedimiento, ¿cuántas observaciones comparten dos conjuntos de ajuste distintos?
+   ¿Podemos tratar los 60 errores como mediciones independientes y asegurar que la
+   comparación será más precisa que con $K=10$? Justifica la respuesta.
 :::
 
 ### Elegir entre candidatos: regla de un error típico {#sec-comparar}
@@ -1532,13 +1537,10 @@ siguiente lo demuestra.
 ::: {#exr-rmse-mae}
 ## El RMSE nunca es menor que el MAE
 
-Sean $a_i=\abs{\residi}$ los residuos en valor absoluto y sea $\bar a$ su media, que es el
-$\MAE$.
+Sean $r_1,\ldots,r_{\nobs}$ los residuos de un modelo sobre una muestra.
 
-a. Desarrolla el cuadrado y **comprueba** que
-   $\frac{1}{\nobs}\sum_i(a_i-\bar a)^2=\MSE-\MAE^2$, usando que $a_i^2=\residi^2$.
-b. **Deduce** que $\RMSE\geq\MAE$ para cualquier vector de residuos, y **di** en qué caso se
-   da la igualdad.
+a. Demuestra, a partir de las definiciones, que $\RMSE\geq\MAE$.
+b. ¿Qué condición sobre los residuos hace que se alcance la igualdad?
 c. **Explica** qué indica, sobre el reparto de los residuos, que el $\RMSE$ sea mucho mayor
    que el $\MAE$.
 :::

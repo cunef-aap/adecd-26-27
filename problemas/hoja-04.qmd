@@ -1,3 +1,12 @@
+---
+ejercicios-capitulo:
+  - exr-mejor-constante-mae
+  - exr-tamano-test
+  - exr-cv-bloques
+  - exr-rmse-mae
+  - exr-leer-metricas
+---
+
 # Hoja 4 {.unnumbered}
 
 ::: {.content-hidden}
@@ -6,27 +15,15 @@ $$
 $$
 :::
 
-Hoja del capítulo 4, Evaluar para generalizar. Los ejercicios 1–7 reproducen los del
-capítulo en el mismo orden. Los ejercicios 1, 3 y 4 son ampliación opcional, no exigible;
-los restantes se resuelven en papel, incluido el código.
-
-Empieza por 8–10 para afianzar referencia y métricas. Continúa con 2, 11–14 y 18 para
-trabajar precisión, selección y validación. Los ejercicios 15–17 practican las operaciones
-del protocolo. Los ejercicios 6–7 justifican relaciones entre métricas.
-
-No se pretende resolver toda la hoja en clase. Selección propuesta para las cinco horas
-del tema: 8 y 9 guiados; 12 y 18 integrados en la explicación; 2, 11, 13, 14 y 17 para
-intentar y corregir. El código del 16 se recorre al explicar CV; el resto sirve de práctica.
 
 ## Ejercicios del capítulo
 
 ::: {#exr-h4-mediana}
-## La mejor constante con otra pérdida (opcional)
 
 El resultado de @lem-media-optima depende de la pérdida cuadrática.
 
-a. Escribe el riesgo empírico de una constante $c$ con la pérdida absoluta,
-   $\frac{1}{\nobs}\sum_i\abs{\yi-c}$, y explica por qué no se puede derivar en todo punto.
+a. El riesgo empírico de una constante $c$ con la pérdida absoluta es
+   $\frac{1}{\nobs}\sum_i\abs{\yi-c}$. Explica por qué no se puede derivar en todo punto.
 b. Argumenta, moviendo $c$ un poco a la derecha y contando cuántas observaciones quedan a
    cada lado, que el mínimo se alcanza en la mediana de la muestra.
 c. Para las respuestas $(1,2,9)$, calcula la media y la mediana y comprueba cuál
@@ -34,85 +31,48 @@ c. Para las respuestas $(1,2,9)$, calcula la media y la mediana y comprueba cuá
 :::
 
 ::: {#exr-h4-precision-test}
-## Cuánto test hace falta
 
 Un modelo ya fijado se evalúa con 25 observaciones independientes de la misma población.
 La media de las pérdidas es 3 y su desviación típica muestral es $s=2$.
 
 a. Calcula el error típico estimado e informa del riesgo como media $\pm$ error típico.
-b. Suponiendo que la dispersión de las pérdidas se mantiene, ¿cuántas observaciones
-   necesitaríamos para reducir el error típico a la mitad?
-c. Explica por qué "insesgado" no significa "exacto" y por qué $s$ y el error típico
-   son cantidades distintas.
-d. Escribe el intervalo media $\pm$ dos errores típicos. Si la aproximación normal es
-   adecuada, ¿qué significa la cobertura aproximada del 95 %? ¿Garantiza que este
-   intervalo concreto contenga el riesgo verdadero?
-:::
-
-::: {#exr-h4-validacion-insesgada}
-## La validación simple es insesgada
-
-Sea $\Dtrain$ una muestra de $\ntrain$ extracciones independientes de $P^\star$, repartida **al
-azar y sin mirar los datos** en $\Dajuste$, con $\ntrain-\nval$ observaciones, y $\Dval$, con
-$\nval$. El procedimiento $m$ recibe $\Dajuste$ y devuelve $\modelh^{(m)}_{\Dajuste}$, que se
-mide sobre $\Dval$.
-
-a. **Razona** que, fijado $\Dajuste$, el modelo es un objeto fijo y las observaciones de $\Dval$
-   le son ajenas, de modo que @thm-test-insesgado se aplica tomando $\Dval$ como muestra de
-   evaluación, y **escribe** la esperanza condicional que resulta.
-b. **Toma** esperanzas sobre $\Dajuste$ y **concluye**, con @def-riesgo-procedimiento, que
-   $\Esub{\Dtrain}{\Riskh_{\Dval}(\modelh^{(m)}_{\Dajuste})}
-   =\Riskproc{\ntrain-\nval}^{(m)}$.
-c. **Di** qué paso deja de valer si el reparto se hace mirando los datos, por ejemplo enviando
-   a $\Dval$ las observaciones peor predichas por un ajuste previo.
-:::
-
-::: {#exr-h4-cv-insesgada}
-## Qué estima exactamente la validación cruzada (opcional)
-
-Con las hipótesis de @exr-validacion-insesgada, reparte $\Dtrain$ al azar en $K$ bloques del
-mismo tamaño y llama $n_a=\ntrain(K-1)/K$ al número de observaciones de cada conjunto de ajuste.
-
-a. **Aplica** el apartado b de @exr-validacion-insesgada a un bloque cualquiera $\fold{k}$ y
-   **deduce** que $\Esub{\Dtrain}{\Riskh_{\fold{k}}}=\Riskproc{n_a}^{(m)}$ para todo $k$.
-b. **Concluye** que $\Esub{\Dtrain}{\CV}=\Riskproc{n_a}^{(m)}$ y **di** qué propiedad de la
-   esperanza usas. **Observa** que no hace falta que los $K$ riesgos sean independientes.
-c. Con $\ntrain=67$ y $K=5$ los bloques no pueden ser iguales, y los ajustes usan 53 o 54
-   observaciones. **Di** de qué es media entonces $\Esub{\Dtrain}{\CV}$.
-d. **Explica** por qué nada de esto dice que $\CV$ sea insesgada para $\Riskproc{\ntrain}$, ni
-   para el riesgo verdadero del modelo concreto que se acabará entregando.
+b. Suponiendo que $s$ se mantiene en 2, ¿cuántas observaciones de test necesitaríamos
+   en total para reducir el error típico a la mitad?
+c. Evaluamos el mismo modelo, sin reajustarlo, sobre muchos tests nuevos de 25
+   observaciones. ¿Qué se dispersa con desviación típica estimada $s=2$: las pérdidas
+   individuales o las medias de cada test? ¿Qué dispersión mide el error típico de a?
+   Que la media de test sea insesgada, ¿implica que el riesgo verdadero sea exactamente 3?
+d. Suponiendo que la aproximación normal es adecuada, calcula un intervalo de confianza
+   aproximado del 95 % para el riesgo verdadero del modelo e interpreta su significado.
 :::
 
 ::: {#exr-h4-cv-bloques}
-## Cuántos bloques
 
-Tenemos 60 observaciones de train y cuatro procedimientos candidatos.
+Tenemos 60 observaciones de train y comparamos cuatro procedimientos mediante validación
+cruzada de $K$ bloques del mismo tamaño (*K-fold cross validation*).
 
 a. Con $K=5$, ¿cuántas observaciones evalúan y cuántas ajustan en cada vuelta?
    ¿Cuántos ajustes hacen falta para comparar los cuatro procedimientos?
-b. Repite las cuentas con $K=10$. ¿Con cuál de los dos valores usa cada ajuste una
-   muestra más parecida a train completo?
+b. Repite el apartado a con $K=10$. El modelo final se ajustará con todo train.
+   ¿Qué opción, $K=5$ o $K=10$, deja fuera menos observaciones en cada ajuste de CV?
+   ¿Cuál aproxima mejor el tamaño de muestra con el que se ajustará el modelo final?
 c. Con $K=60$, cada bloque contiene una observación. Este caso se llama *leave-one-out*.
-   ¿Cuántos ajustes requiere? Explica por qué usar más bloques no garantiza una
-   comparación más precisa.
+   ¿Cuántos ajustes requiere comparar los cuatro procedimientos? Para un mismo
+   procedimiento, ¿cuántas observaciones comparten dos conjuntos de ajuste distintos?
+   ¿Podemos tratar los 60 errores como mediciones independientes y asegurar que la
+   comparación será más precisa que con $K=10$? Justifica la respuesta.
 :::
 
 ::: {#exr-h4-rmse-mae}
-## El RMSE nunca es menor que el MAE
+Sean $r_1,\ldots,r_{\nobs}$ los residuos de un modelo sobre una muestra.
 
-Sean $a_i=\abs{\residi}$ los residuos en valor absoluto y sea $\bar a$ su media, que es el
-$\MAE$.
-
-a. Desarrolla el cuadrado y **comprueba** que
-   $\frac{1}{\nobs}\sum_i(a_i-\bar a)^2=\MSE-\MAE^2$, usando que $a_i^2=\residi^2$.
-b. **Deduce** que $\RMSE\geq\MAE$ para cualquier vector de residuos, y **di** en qué caso se
-   da la igualdad.
+a. Demuestra, a partir de las definiciones, que $\RMSE\geq\MAE$.
+b. ¿Qué condición sobre los residuos hace que se alcance la igualdad?
 c. **Explica** qué indica, sobre el reparto de los residuos, que el $\RMSE$ sea mucho mayor
    que el $\MAE$.
 :::
 
 ::: {#exr-h4-r2-orden}
-## Leer las cuatro métricas
 
 a. En una muestra de train con $\SST>0$, el modelo nulo predice la media $\ybar$.
    **Comprueba** que $\SSE=\SST$ y deduce que su $\Rsq$ es cero.
@@ -124,18 +84,18 @@ b. **Demuestra** que, sobre una muestra fija con $\SST>0$, ordenar varios modelo
 ## Práctica en papel
 
 ::: {#exr-h4-media-optima}
-## La referencia nula
 
 Sea $\Riskh(c)=\frac{1}{\nobs}\sum_i(\yi-c)^2$.
 
 a. Deriva respecto de $c$ y demuestra que el mínimo único se alcanza en $c=\ybar$.
 b. Si las respuestas de train son $(1,3,5)$, escribe el modelo nulo ajustado y calcula
    su riesgo en train.
-c. ¿Se cambia esa constante al predecir test? Explica por qué.
+c. Las respuestas de test son $(4,8)$. Para evaluar el modelo nulo ajustado en b,
+   ¿debemos mantener la constante obtenida con train o recalcularla con test?
+   Escribe qué constante usaría cada opción y justifica cuál es correcta.
 :::
 
 ::: {#exr-h4-metricas-mano}
-## Calcular e interpretar métricas
 
 Dos modelos ya ajustados se evalúan sobre estas cuatro observaciones de validación.
 
@@ -153,7 +113,6 @@ d. Si estos datos fueran test, ¿podrías usarlos para elegir cuál entregar y c
 :::
 
 ::: {#exr-h4-nulo-mano}
-## Dos medias con papeles distintos
 
 Las respuestas de train son $(1,2,3,10)$ y las de test, $(5,6)$. Usamos pérdida cuadrática.
 
@@ -165,40 +124,51 @@ d. Explica por qué ese $\Rsq$ no es cero. ¿Usar la media de test para calcular
 :::
 
 ::: {#exr-h4-sesgo-mano}
-## Acertar en promedio y elegir el mínimo
+Dos modelos ya ajustados, $A$ y $B$, tienen riesgo verdadero 2. Llamamos $Z_A$ y $Z_B$
+a sus riesgos empíricos sobre un mismo test. Suponemos que solo pueden darse los cuatro
+resultados de la tabla, todos con la misma probabilidad:
 
-Fijamos dos modelos, $A$ y $B$, ambos con riesgo verdadero 2. Un test produce dos
-errores medios, uno por modelo. Al repetir la evaluación con otro test, sin reajustar,
-supongamos que las parejas de errores posibles son $(1,1)$, $(1,3)$, $(3,1)$ y $(3,3)$,
-todas con probabilidad $1/4$.
+| Resultado de la evaluación | Probabilidad | $Z_A$ | $Z_B$ |
+|---|---:|---:|---:|
+| 1 | $1/4$ | 1 | 1 |
+| 2 | $1/4$ | 1 | 3 |
+| 3 | $1/4$ | 3 | 1 |
+| 4 | $1/4$ | 3 | 3 |
 
-a. Calcula la esperanza y el sesgo de cada estimador.
-b. Calcula el mínimo de cada pareja y las probabilidades de que valga 1 o 3.
-c. Calcula la esperanza de ese mínimo y su sesgo como estimador del riesgo del modelo
-   elegido. ¿Ha mejorado algún modelo?
-d. Explica por qué el sesgo de selección puede aparecer aunque los datos usados para
-   elegir no hayan intervenido en el ajuste de los coeficientes.
+Cada fila representa una evaluación posible del test completo, no una observación.
+
+a. Calcula $\E{Z_A}$ y $\E{Z_B}$. Compara cada resultado con el riesgo verdadero 2:
+   ¿alguna de las dos estimaciones tiende a quedarse corta al repetir la evaluación?
+b. Ahora elegimos el modelo con menor error de test e informamos de ese mínimo.
+   En caso de empate, elegimos $A$. Añade a la tabla el modelo elegido y el error informado.
+c. El test no ha intervenido en el ajuste de ningún coeficiente. Calcula la esperanza
+   del error informado y compárala con el riesgo verdadero 2 del modelo elegido:
+   ¿cuánto lo subestima, en promedio?
+d. ¿Qué decisión ha usado el test y ha creado el optimismo del apartado c?
 :::
 
 ::: {#exr-h4-test-insesgado}
-## Evaluar con datos independientes
 
-Un modelo tiene parámetros $\coefhat$ fijados sin usar $\Dtest$. Las $\ntest$
-observaciones de test son independientes y proceden de $P^\star$.
+En una población, $Y$ vale 1 o 3, cada valor con probabilidad $1/2$. El modelo
+$\model_0(\xv)=0$ predice siempre cero y se ha fijado sin consultar test. Usamos pérdida
+cuadrática y un test de dos observaciones independientes de esa población.
 
-a. Explica por qué cada pérdida de test tiene esperanza $\Risk(\coefhat)$.
-b. Usa que la esperanza de una suma es la suma de las esperanzas para demostrar
-   $\Esub{\Dtest}{\Riskh_{\Dtest}(\coefhat)}=\Risk(\coefhat)$.
-c. Di qué condición falla si medimos sobre train después de minimizar su error.
-d. Un compañero cambia las variables porque no le gusta el resultado de test. ¿Por qué
-   el nuevo modelo ya no cumple las condiciones, aunque su llamada a `fit` solo use train?
+a. Calcula el riesgo verdadero de $\model_0$.
+b. Enumera los cuatro posibles pares de respuestas de test, indica sus probabilidades
+   y calcula el MSE de $\model_0$ en cada uno. Obtén la esperanza de ese MSE.
+c. Tras ver las pérdidas, un compañero elimina la observación con mayor pérdida
+   e informa del error de la que queda. Si empatan, conserva la primera.
+   Calcula qué error informaría en cada caso y su esperanza. Compárala con el riesgo verdadero.
+d. El modelo no ha cambiado. ¿Qué hipótesis de @thm-test-insesgado deja de cumplirse
+   al descartar esa observación? ¿Basta con no usar test para ajustar los coeficientes?
 :::
 
 ::: {#exr-h4-cv-mano}
-## Leer una tabla de validación cruzada
-
 Se reservan 20 de las 100 observaciones para test. Las otras 80 se reparten en cuatro
-bloques de CV. Los candidatos $A$, $B$ y $C$ usan una, dos y tres variables, respectivamente.
+bloques de CV del mismo tamaño. Los procedimientos $A$, $B$ y $C$ usan una, dos y tres
+variables, respectivamente. Cada celda de la tabla es el MSE sobre el bloque de su
+columna, calculado con un modelo ajustado en los otros tres bloques. Los tres
+procedimientos usan el mismo reparto.
 
 | Procedimiento | $\fold{1}$ | $\fold{2}$ | $\fold{3}$ | $\fold{4}$ |
 |---|---:|---:|---:|---:|
@@ -217,9 +187,9 @@ d. ¿Con cuántos datos se reajusta el modelo final? ¿Dónde se calcula su eval
 :::
 
 ::: {#exr-h4-emparejar-mano}
-## Comparar bloque a bloque
-
-$A$ usa dos variables y $B$, tres. Se han evaluado sobre los mismos cinco bloques.
+El procedimiento $A$ usa dos variables y $B$, tres. Los comparamos mediante CV sobre
+los mismos cinco bloques, de igual tamaño. Cada celda es el MSE sobre el bloque de
+su columna, calculado con un modelo ajustado en los otros cuatro bloques.
 
 | Procedimiento | $\fold{1}$ | $\fold{2}$ | $\fold{3}$ | $\fold{4}$ | $\fold{5}$ |
 |---|---:|---:|---:|---:|---:|
@@ -227,8 +197,8 @@ $A$ usa dos variables y $B$, tres. Se han evaluado sobre los mismos cinco bloque
 | $B$ | 1.6 | 1.2 | 0.8 | 0.4 | 1.0 |
 
 a. Calcula $\CV_A$, $\CV_B$ y las diferencias $d_k=A-B$.
-b. Calcula $\bar d$ y comprueba que $\sum_k(d_k-\bar d)^2=0.2$.
-   Usa $\text{EE}_{\text{dif}}=\sqrt{0.2/(5\cdot4)}$.
+b. Calcula la media de las diferencias, su desviación típica muestral y el error
+   típico aproximado de su media.
 c. Aplica la regla emparejada de un error típico. ¿Qué candidato se elige? ¿Cuál sería
    la mayor desventaja admisible para elegir $A$ con ese mismo error típico?
 d. ¿Por qué se restan errores del mismo bloque? ¿Por qué el error típico usado es
@@ -244,7 +214,6 @@ separar, ajustar, predecir, calcular pérdidas y promediar. Puedes ejecutar las 
 después para comprobarlas.
 
 ::: {#exr-h4-completar-metricas}
-## De los residuos a las métricas
 
 `y` y `pred` son arrays de NumPy de forma `(n,)`, con `n > 1`. Completa:
 
@@ -265,7 +234,6 @@ c. Si `y` viene de test, ¿puede `pred` provenir de un ajuste que haya utilizado
 :::
 
 ::: {#exr-h4-completar-cv}
-## Qué filas se usan en cada paso
 
 `X_train` contiene solo las variables predictoras, sin columna de unos. Usamos
 `LinearRegression()` y la función `mse` del capítulo. El reparto de cinco bloques
@@ -292,7 +260,6 @@ d. Tras elegir este procedimiento, escribe las dos llamadas que reajustan con
 :::
 
 ::: {#exr-h4-errores}
-## Tres errores en un protocolo
 
 La matriz `X` tiene ocho predictoras y no lleva columna de unos. `separar` devuelve
 un reparto aleatorio correcto; `cargar_datos` no consulta ningún resultado.
@@ -319,20 +286,18 @@ b. Describe el protocolo correcto en cinco pasos, sin escribir más código.
 
 ## Una justificación breve
 
-::: {#exr-h4-minimo-sesgado}
-## Por qué el mínimo es optimista
+::: {#exr-h4-promedio-predicciones}
+Dos modelos ya ajustados producen las predicciones $\hat y_{A,i}$ y $\hat y_{B,i}$
+sobre una misma muestra. Construimos un tercer modelo que predice su promedio:
+$\hat y_{C,i}=(\hat y_{A,i}+\hat y_{B,i})/2$.
 
-Sean $Z_1,\ldots,Z_M$ estimaciones con $\E{Z_k}=q_k$.
-
-a. Para cualquier $j$, $\min_k Z_k\leq Z_j$. Toma esperanzas y usa esa desigualdad
-   para demostrar $\E{\min_k Z_k}\leq\min_k q_k$.
-b. Si $\hat k$ es el índice elegido por el menor $Z_k$, explica por qué
-   $\min_k q_k\leq\E{q_{\hat k}}$. Relaciona ambas desigualdades con informar del
-   riesgo del modelo seleccionado.
-c. ¿Hay igualdad si $M=1$? ¿Dice el resultado que el error informado es demasiado
-   pequeño en todas las muestras?
-:::
-
-::: {.callout-note appearance="simple"}
-Las soluciones se distribuyen por el Campus Virtual; no forman parte del sitio público.
+a. Demuestra la identidad
+   $$
+   (y_i-\hat y_{C,i})^2
+   =\frac{(y_i-\hat y_{A,i})^2+(y_i-\hat y_{B,i})^2}{2}
+   -\frac{(\hat y_{A,i}-\hat y_{B,i})^2}{4}.
+   $$
+b. Deduce que $\MSE_C\leq(\MSE_A+\MSE_B)/2$. ¿Cuándo se alcanza la igualdad?
+c. ¿Garantiza esta desigualdad que $C$ tenga un MSE menor o igual que el mejor de
+   los otros dos modelos? Justifica la respuesta con una muestra de una observación.
 :::

@@ -350,64 +350,43 @@ window.Quarto = {
 </header>
 
 
-<p>Hoja del capítulo 4, Evaluar para generalizar. Los ejercicios 1–7 reproducen los del capítulo en el mismo orden. Los ejercicios 1, 3 y 4 son ampliación opcional, no exigible; los restantes se resuelven en papel, incluido el código.</p>
-<p>Empieza por 8–10 para afianzar referencia y métricas. Continúa con 2, 11–14 y 18 para trabajar precisión, selección y validación. Los ejercicios 15–17 practican las operaciones del protocolo. Los ejercicios 6–7 justifican relaciones entre métricas.</p>
-<p>No se pretende resolver toda la hoja en clase. Selección propuesta para las cinco horas del tema: 8 y 9 guiados; 12 y 18 integrados en la explicación; 2, 11, 13, 14 y 17 para intentar y corregir. El código del 16 se recorre al explicar CV; el resto sirve de práctica.</p>
 <section id="ejercicios-del-capítulo" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios-del-capítulo">Ejercicios del capítulo</h2>
 <div id="exr-h4-mediana" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1 (La mejor constante con otra pérdida (opcional))</strong></span> El resultado de <a href="../capitulos/04-evaluacion.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>4.1</span></a> depende de la pérdida cuadrática.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> El resultado de <a href="../capitulos/04-evaluacion.html#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>4.1</span></a> depende de la pérdida cuadrática.</p>
 <ol type="a">
-<li>Escribe el riesgo empírico de una constante <span class="math inline">\(c\)</span> con la pérdida absoluta, <span class="math inline">\(\frac{1}{n}\sum_i\left\lvert y_i-c \right\rvert\)</span>, y explica por qué no se puede derivar en todo punto.</li>
+<li>El riesgo empírico de una constante <span class="math inline">\(c\)</span> con la pérdida absoluta es <span class="math inline">\(\frac{1}{n}\sum_i\left\lvert y_i-c \right\rvert\)</span>. Explica por qué no se puede derivar en todo punto.</li>
 <li>Argumenta, moviendo <span class="math inline">\(c\)</span> un poco a la derecha y contando cuántas observaciones quedan a cada lado, que el mínimo se alcanza en la mediana de la muestra.</li>
 <li>Para las respuestas <span class="math inline">\((1,2,9)\)</span>, calcula la media y la mediana y comprueba cuál da menor error absoluto medio. No hace falta usar Python.</li>
 </ol>
 </div>
 <div id="exr-h4-precision-test" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2 (Cuánto test hace falta)</strong></span> Un modelo ya fijado se evalúa con 25 observaciones independientes de la misma población. La media de las pérdidas es 3 y su desviación típica muestral es <span class="math inline">\(s=2\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> Un modelo ya fijado se evalúa con 25 observaciones independientes de la misma población. La media de las pérdidas es 3 y su desviación típica muestral es <span class="math inline">\(s=2\)</span>.</p>
 <ol type="a">
 <li>Calcula el error típico estimado e informa del riesgo como media <span class="math inline">\(\pm\)</span> error típico.</li>
-<li>Suponiendo que la dispersión de las pérdidas se mantiene, ¿cuántas observaciones necesitaríamos para reducir el error típico a la mitad?</li>
-<li>Explica por qué “insesgado” no significa “exacto” y por qué <span class="math inline">\(s\)</span> y el error típico son cantidades distintas.</li>
-<li>Escribe el intervalo media <span class="math inline">\(\pm\)</span> dos errores típicos. Si la aproximación normal es adecuada, ¿qué significa la cobertura aproximada del 95 %? ¿Garantiza que este intervalo concreto contenga el riesgo verdadero?</li>
-</ol>
-</div>
-<div id="exr-h4-validacion-insesgada" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3 (La validación simple es insesgada)</strong></span> Sea <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> una muestra de <span class="math inline">\(n_{\mathrm{train}}\)</span> extracciones independientes de <span class="math inline">\(P^\star\)</span>, repartida <strong>al azar y sin mirar los datos</strong> en <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, con <span class="math inline">\(n_{\mathrm{train}}-n_{\mathrm{val}}\)</span> observaciones, y <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>, con <span class="math inline">\(n_{\mathrm{val}}\)</span>. El procedimiento <span class="math inline">\(m\)</span> recibe <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y devuelve <span class="math inline">\(\hat{f}^{(m)}_{\mathcal{D}_{\mathrm{ajuste}}}\)</span>, que se mide sobre <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span>.</p>
-<ol type="a">
-<li><strong>Razona</strong> que, fijado <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span>, el modelo es un objeto fijo y las observaciones de <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> le son ajenas, de modo que <a href="../capitulos/04-evaluacion.html#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> se aplica tomando <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> como muestra de evaluación, y <strong>escribe</strong> la esperanza condicional que resulta.</li>
-<li><strong>Toma</strong> esperanzas sobre <span class="math inline">\(\mathcal{D}_{\mathrm{ajuste}}\)</span> y <strong>concluye</strong>, con <a href="../capitulos/04-evaluacion.html#def-riesgo-procedimiento" class="quarto-xref">Definición&nbsp;<span>4.4</span></a>, que <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{val}}}(\hat{f}^{(m)}_{\mathcal{D}_{\mathrm{ajuste}}}) \right]
-=\bar{R}_{n_{\mathrm{train}}-n_{\mathrm{val}}}^{(m)}\)</span>.</li>
-<li><strong>Di</strong> qué paso deja de valer si el reparto se hace mirando los datos, por ejemplo enviando a <span class="math inline">\(\mathcal{D}_{\mathrm{val}}\)</span> las observaciones peor predichas por un ajuste previo.</li>
-</ol>
-</div>
-<div id="exr-h4-cv-insesgada" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4 (Qué estima exactamente la validación cruzada (opcional))</strong></span> Con las hipótesis de <a href="../capitulos/04-evaluacion.html#exr-validacion-insesgada" class="quarto-xref">Ejercicio&nbsp;<span>4.3</span></a>, reparte <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> al azar en <span class="math inline">\(K\)</span> bloques del mismo tamaño y llama <span class="math inline">\(n_a=n_{\mathrm{train}}(K-1)/K\)</span> al número de observaciones de cada conjunto de ajuste.</p>
-<ol type="a">
-<li><strong>Aplica</strong> el apartado b de <a href="../capitulos/04-evaluacion.html#exr-validacion-insesgada" class="quarto-xref">Ejercicio&nbsp;<span>4.3</span></a> a un bloque cualquiera <span class="math inline">\(\mathcal{F}_{k}\)</span> y <strong>deduce</strong> que <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \hat{R}_{\mathcal{F}_{k}} \right]=\bar{R}_{n_a}^{(m)}\)</span> para todo <span class="math inline">\(k\)</span>.</li>
-<li><strong>Concluye</strong> que <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \mathrm{CV} \right]=\bar{R}_{n_a}^{(m)}\)</span> y <strong>di</strong> qué propiedad de la esperanza usas. <strong>Observa</strong> que no hace falta que los <span class="math inline">\(K\)</span> riesgos sean independientes.</li>
-<li>Con <span class="math inline">\(n_{\mathrm{train}}=67\)</span> y <span class="math inline">\(K=5\)</span> los bloques no pueden ser iguales, y los ajustes usan 53 o 54 observaciones. <strong>Di</strong> de qué es media entonces <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{train}}}\!\left[ \mathrm{CV} \right]\)</span>.</li>
-<li><strong>Explica</strong> por qué nada de esto dice que <span class="math inline">\(\mathrm{CV}\)</span> sea insesgada para <span class="math inline">\(\bar{R}_{n_{\mathrm{train}}}\)</span>, ni para el riesgo verdadero del modelo concreto que se acabará entregando.</li>
+<li>Suponiendo que <span class="math inline">\(s\)</span> se mantiene en 2, ¿cuántas observaciones de test necesitaríamos en total para reducir el error típico a la mitad?</li>
+<li>Evaluamos el mismo modelo, sin reajustarlo, sobre muchos tests nuevos de 25 observaciones. ¿Qué se dispersa con desviación típica estimada <span class="math inline">\(s=2\)</span>: las pérdidas individuales o las medias de cada test? ¿Qué dispersión mide el error típico de a? Que la media de test sea insesgada, ¿implica que el riesgo verdadero sea exactamente 3?</li>
+<li>Suponiendo que la aproximación normal es adecuada, calcula un intervalo de confianza aproximado del 95 % para el riesgo verdadero del modelo e interpreta su significado.</li>
 </ol>
 </div>
 <div id="exr-h4-cv-bloques" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5 (Cuántos bloques)</strong></span> Tenemos 60 observaciones de train y cuatro procedimientos candidatos.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Tenemos 60 observaciones de train y comparamos cuatro procedimientos mediante validación cruzada de <span class="math inline">\(K\)</span> bloques del mismo tamaño (<em>K-fold cross validation</em>).</p>
 <ol type="a">
 <li>Con <span class="math inline">\(K=5\)</span>, ¿cuántas observaciones evalúan y cuántas ajustan en cada vuelta? ¿Cuántos ajustes hacen falta para comparar los cuatro procedimientos?</li>
-<li>Repite las cuentas con <span class="math inline">\(K=10\)</span>. ¿Con cuál de los dos valores usa cada ajuste una muestra más parecida a train completo?</li>
-<li>Con <span class="math inline">\(K=60\)</span>, cada bloque contiene una observación. Este caso se llama <em>leave-one-out</em>. ¿Cuántos ajustes requiere? Explica por qué usar más bloques no garantiza una comparación más precisa.</li>
+<li>Repite el apartado a con <span class="math inline">\(K=10\)</span>. El modelo final se ajustará con todo train. ¿Qué opción, <span class="math inline">\(K=5\)</span> o <span class="math inline">\(K=10\)</span>, deja fuera menos observaciones en cada ajuste de CV? ¿Cuál aproxima mejor el tamaño de muestra con el que se ajustará el modelo final?</li>
+<li>Con <span class="math inline">\(K=60\)</span>, cada bloque contiene una observación. Este caso se llama <em>leave-one-out</em>. ¿Cuántos ajustes requiere comparar los cuatro procedimientos? Para un mismo procedimiento, ¿cuántas observaciones comparten dos conjuntos de ajuste distintos? ¿Podemos tratar los 60 errores como mediciones independientes y asegurar que la comparación será más precisa que con <span class="math inline">\(K=10\)</span>? Justifica la respuesta.</li>
 </ol>
 </div>
 <div id="exr-h4-rmse-mae" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6 (El RMSE nunca es menor que el MAE)</strong></span> Sean <span class="math inline">\(a_i=\left\lvert r_i \right\rvert\)</span> los residuos en valor absoluto y sea <span class="math inline">\(\bar a\)</span> su media, que es el <span class="math inline">\(\mathrm{MAE}\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Sean <span class="math inline">\(r_1,\ldots,r_{n}\)</span> los residuos de un modelo sobre una muestra.</p>
 <ol type="a">
-<li>Desarrolla el cuadrado y <strong>comprueba</strong> que <span class="math inline">\(\frac{1}{n}\sum_i(a_i-\bar a)^2=\mathrm{MSE}-\mathrm{MAE}^2\)</span>, usando que <span class="math inline">\(a_i^2=r_i^2\)</span>.</li>
-<li><strong>Deduce</strong> que <span class="math inline">\(\mathrm{RMSE}\geq\mathrm{MAE}\)</span> para cualquier vector de residuos, y <strong>di</strong> en qué caso se da la igualdad.</li>
+<li>Demuestra, a partir de las definiciones, que <span class="math inline">\(\mathrm{RMSE}\geq\mathrm{MAE}\)</span>.</li>
+<li>¿Qué condición sobre los residuos hace que se alcance la igualdad?</li>
 <li><strong>Explica</strong> qué indica, sobre el reparto de los residuos, que el <span class="math inline">\(\mathrm{RMSE}\)</span> sea mucho mayor que el <span class="math inline">\(\mathrm{MAE}\)</span>.</li>
 </ol>
 </div>
 <div id="exr-h4-r2-orden" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 7 (Leer las cuatro métricas)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> &nbsp;</p>
 <ol type="a">
 <li>En una muestra de train con <span class="math inline">\(\mathrm{SST}&gt;0\)</span>, el modelo nulo predice la media <span class="math inline">\(\bar{y}\)</span>. <strong>Comprueba</strong> que <span class="math inline">\(\mathrm{SSE}=\mathrm{SST}\)</span> y deduce que su <span class="math inline">\(R^2\)</span> es cero.</li>
 <li><strong>Demuestra</strong> que, sobre una muestra fija con <span class="math inline">\(\mathrm{SST}&gt;0\)</span>, ordenar varios modelos de menor a mayor <span class="math inline">\(\mathrm{MSE}\)</span> equivale a ordenarlos de mayor a menor <span class="math inline">\(R^2\)</span>. <strong>Di</strong> qué deja de valer si se miden sobre muestras distintas.</li>
@@ -417,15 +396,15 @@ window.Quarto = {
 <section id="práctica-en-papel" class="level2">
 <h2 class="anchored" data-anchor-id="práctica-en-papel">Práctica en papel</h2>
 <div id="exr-h4-media-optima" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8 (La referencia nula)</strong></span> Sea <span class="math inline">\(\hat{R}(c)=\frac{1}{n}\sum_i(y_i-c)^2\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Sea <span class="math inline">\(\hat{R}(c)=\frac{1}{n}\sum_i(y_i-c)^2\)</span>.</p>
 <ol type="a">
 <li>Deriva respecto de <span class="math inline">\(c\)</span> y demuestra que el mínimo único se alcanza en <span class="math inline">\(c=\bar{y}\)</span>.</li>
 <li>Si las respuestas de train son <span class="math inline">\((1,3,5)\)</span>, escribe el modelo nulo ajustado y calcula su riesgo en train.</li>
-<li>¿Se cambia esa constante al predecir test? Explica por qué.</li>
+<li>Las respuestas de test son <span class="math inline">\((4,8)\)</span>. Para evaluar el modelo nulo ajustado en b, ¿debemos mantener la constante obtenida con train o recalcularla con test? Escribe qué constante usaría cada opción y justifica cuál es correcta.</li>
 </ol>
 </div>
 <div id="exr-h4-metricas-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 9 (Calcular e interpretar métricas)</strong></span> Dos modelos ya ajustados se evalúan sobre estas cuatro observaciones de validación.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Dos modelos ya ajustados se evalúan sobre estas cuatro observaciones de validación.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -461,7 +440,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h4-nulo-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 10 (Dos medias con papeles distintos)</strong></span> Las respuestas de train son <span class="math inline">\((1,2,3,10)\)</span> y las de test, <span class="math inline">\((5,6)\)</span>. Usamos pérdida cuadrática.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Las respuestas de train son <span class="math inline">\((1,2,3,10)\)</span> y las de test, <span class="math inline">\((5,6)\)</span>. Usamos pérdida cuadrática.</p>
 <ol type="a">
 <li>Ajusta el modelo nulo con train.</li>
 <li>Calcula su <span class="math inline">\(\mathrm{MSE}\)</span> en test.</li>
@@ -470,25 +449,62 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h4-sesgo-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 11 (Acertar en promedio y elegir el mínimo)</strong></span> Fijamos dos modelos, <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, ambos con riesgo verdadero 2. Un test produce dos errores medios, uno por modelo. Al repetir la evaluación con otro test, sin reajustar, supongamos que las parejas de errores posibles son <span class="math inline">\((1,1)\)</span>, <span class="math inline">\((1,3)\)</span>, <span class="math inline">\((3,1)\)</span> y <span class="math inline">\((3,3)\)</span>, todas con probabilidad <span class="math inline">\(1/4\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Dos modelos ya ajustados, <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, tienen riesgo verdadero 2. Llamamos <span class="math inline">\(Z_A\)</span> y <span class="math inline">\(Z_B\)</span> a sus riesgos empíricos sobre un mismo test. Suponemos que solo pueden darse los cuatro resultados de la tabla, todos con la misma probabilidad:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resultado de la evaluación</th>
+<th style="text-align: right;">Probabilidad</th>
+<th style="text-align: right;"><span class="math inline">\(Z_A\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(Z_B\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: right;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: right;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: right;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: right;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>Cada fila representa una evaluación posible del test completo, no una observación.</p>
 <ol type="a">
-<li>Calcula la esperanza y el sesgo de cada estimador.</li>
-<li>Calcula el mínimo de cada pareja y las probabilidades de que valga 1 o 3.</li>
-<li>Calcula la esperanza de ese mínimo y su sesgo como estimador del riesgo del modelo elegido. ¿Ha mejorado algún modelo?</li>
-<li>Explica por qué el sesgo de selección puede aparecer aunque los datos usados para elegir no hayan intervenido en el ajuste de los coeficientes.</li>
+<li>Calcula <span class="math inline">\(\mathbb{E}\!\left[ Z_A \right]\)</span> y <span class="math inline">\(\mathbb{E}\!\left[ Z_B \right]\)</span>. Compara cada resultado con el riesgo verdadero 2: ¿alguna de las dos estimaciones tiende a quedarse corta al repetir la evaluación?</li>
+<li>Ahora elegimos el modelo con menor error de test e informamos de ese mínimo. En caso de empate, elegimos <span class="math inline">\(A\)</span>. Añade a la tabla el modelo elegido y el error informado.</li>
+<li>El test no ha intervenido en el ajuste de ningún coeficiente. Calcula la esperanza del error informado y compárala con el riesgo verdadero 2 del modelo elegido: ¿cuánto lo subestima, en promedio?</li>
+<li>¿Qué decisión ha usado el test y ha creado el optimismo del apartado c?</li>
 </ol>
 </div>
 <div id="exr-h4-test-insesgado" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 12 (Evaluar con datos independientes)</strong></span> Un modelo tiene parámetros <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> fijados sin usar <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>. Las <span class="math inline">\(n_{\mathrm{test}}\)</span> observaciones de test son independientes y proceden de <span class="math inline">\(P^\star\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> En una población, <span class="math inline">\(Y\)</span> vale 1 o 3, cada valor con probabilidad <span class="math inline">\(1/2\)</span>. El modelo <span class="math inline">\(f_0(\mathbf{x})=0\)</span> predice siempre cero y se ha fijado sin consultar test. Usamos pérdida cuadrática y un test de dos observaciones independientes de esa población.</p>
 <ol type="a">
-<li>Explica por qué cada pérdida de test tiene esperanza <span class="math inline">\(R(\hat{\boldsymbol{w}})\)</span>.</li>
-<li>Usa que la esperanza de una suma es la suma de las esperanzas para demostrar <span class="math inline">\(\mathbb{E}_{\mathcal{D}_{\mathrm{test}}}\!\left[ \hat{R}_{\mathcal{D}_{\mathrm{test}}}(\hat{\boldsymbol{w}}) \right]=R(\hat{\boldsymbol{w}})\)</span>.</li>
-<li>Di qué condición falla si medimos sobre train después de minimizar su error.</li>
-<li>Un compañero cambia las variables porque no le gusta el resultado de test. ¿Por qué el nuevo modelo ya no cumple las condiciones, aunque su llamada a <code>fit</code> solo use train?</li>
+<li>Calcula el riesgo verdadero de <span class="math inline">\(f_0\)</span>.</li>
+<li>Enumera los cuatro posibles pares de respuestas de test, indica sus probabilidades y calcula el MSE de <span class="math inline">\(f_0\)</span> en cada uno. Obtén la esperanza de ese MSE.</li>
+<li>Tras ver las pérdidas, un compañero elimina la observación con mayor pérdida e informa del error de la que queda. Si empatan, conserva la primera. Calcula qué error informaría en cada caso y su esperanza. Compárala con el riesgo verdadero.</li>
+<li>El modelo no ha cambiado. ¿Qué hipótesis de <a href="../capitulos/04-evaluacion.html#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> deja de cumplirse al descartar esa observación? ¿Basta con no usar test para ajustar los coeficientes?</li>
 </ol>
 </div>
 <div id="exr-h4-cv-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 13 (Leer una tabla de validación cruzada)</strong></span> Se reservan 20 de las 100 observaciones para test. Las otras 80 se reparten en cuatro bloques de CV. Los candidatos <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> y <span class="math inline">\(C\)</span> usan una, dos y tres variables, respectivamente.</p>
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> Se reservan 20 de las 100 observaciones para test. Las otras 80 se reparten en cuatro bloques de CV del mismo tamaño. Los procedimientos <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> y <span class="math inline">\(C\)</span> usan una, dos y tres variables, respectivamente. Cada celda de la tabla es el MSE sobre el bloque de su columna, calculado con un modelo ajustado en los otros tres bloques. Los tres procedimientos usan el mismo reparto.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -531,7 +547,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h4-emparejar-mano" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 14 (Comparar bloque a bloque)</strong></span> <span class="math inline">\(A\)</span> usa dos variables y <span class="math inline">\(B\)</span>, tres. Se han evaluado sobre los mismos cinco bloques.</p>
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> El procedimiento <span class="math inline">\(A\)</span> usa dos variables y <span class="math inline">\(B\)</span>, tres. Los comparamos mediante CV sobre los mismos cinco bloques, de igual tamaño. Cada celda es el MSE sobre el bloque de su columna, calculado con un modelo ajustado en los otros cuatro bloques.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 13%">
@@ -572,7 +588,7 @@ window.Quarto = {
 </table>
 <ol type="a">
 <li>Calcula <span class="math inline">\(\mathrm{CV}_A\)</span>, <span class="math inline">\(\mathrm{CV}_B\)</span> y las diferencias <span class="math inline">\(d_k=A-B\)</span>.</li>
-<li>Calcula <span class="math inline">\(\bar d\)</span> y comprueba que <span class="math inline">\(\sum_k(d_k-\bar d)^2=0.2\)</span>. Usa <span class="math inline">\(\text{EE}_{\text{dif}}=\sqrt{0.2/(5\cdot4)}\)</span>.</li>
+<li>Calcula la media de las diferencias, su desviación típica muestral y el error típico aproximado de su media.</li>
 <li>Aplica la regla emparejada de un error típico. ¿Qué candidato se elige? ¿Cuál sería la mayor desventaja admisible para elegir <span class="math inline">\(A\)</span> con ese mismo error típico?</li>
 <li>¿Por qué se restan errores del mismo bloque? ¿Por qué el error típico usado es solo aproximado? ¿Demuestra esta regla que el elegido tendrá menor riesgo verdadero?</li>
 <li>Si las cinco columnas fueran pérdidas individuales de cinco pacientes de validación simple, ¿cuántas diferencias promediaríamos y por qué número dividiríamos su desviación típica? ¿Cambiarían las cuentas o la elección? ¿Qué modelos se mantendrían fijos?</li>
@@ -583,7 +599,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="leer-y-completar-código">Leer y completar código</h2>
 <p>Estos ejercicios se resuelven en papel. Solo se piden las operaciones del capítulo: separar, ajustar, predecir, calcular pérdidas y promediar. Puedes ejecutar las soluciones después para comprobarlas.</p>
 <div id="exr-h4-completar-metricas" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 15 (De los residuos a las métricas)</strong></span> <code>y</code> y <code>pred</code> son arrays de NumPy de forma <code>(n,)</code>, con <code>n &gt; 1</code>. Completa:</p>
+<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> <code>y</code> y <code>pred</code> son arrays de NumPy de forma <code>(n,)</code>, con <code>n &gt; 1</code>. Completa:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>residuos <span class="op">=</span> ...                                      <span class="co"># (1)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> ...                                           <span class="co"># (2)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> ...                                          <span class="co"># (3)</span></span>
@@ -597,7 +613,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h4-completar-cv" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 16 (Qué filas se usan en cada paso)</strong></span> <code>X_train</code> contiene solo las variables predictoras, sin columna de unos. Usamos <code>LinearRegression()</code> y la función <code>mse</code> del capítulo. El reparto de cinco bloques ya está fijado.</p>
+<p><span class="theorem-title"><strong>Ejercicio 14</strong></span> <code>X_train</code> contiene solo las variables predictoras, sin columna de unos. Usamos <code>LinearRegression()</code> y la función <code>mse</code> del capítulo. El reparto de cinco bloques ya está fijado.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>riesgos <span class="op">=</span> []</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> indices_ajuste, indices_val <span class="kw">in</span> particion.split(X_train):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    modelo <span class="op">=</span> LinearRegression().fit(</span>
@@ -614,7 +630,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h4-errores" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 17 (Tres errores en un protocolo)</strong></span> La matriz <code>X</code> tiene ocho predictoras y no lleva columna de unos. <code>separar</code> devuelve un reparto aleatorio correcto; <code>cargar_datos</code> no consulta ningún resultado.</p>
+<p><span class="theorem-title"><strong>Ejercicio 15</strong></span> La matriz <code>X</code> tiene ocho predictoras y no lleva columna de unos. <code>separar</code> devuelve un reparto aleatorio correcto; <code>cargar_datos</code> no consulta ningún resultado.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> cargar_datos()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> separar(X, y)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -635,23 +651,17 @@ window.Quarto = {
 </section>
 <section id="una-justificación-breve" class="level2">
 <h2 class="anchored" data-anchor-id="una-justificación-breve">Una justificación breve</h2>
-<div id="exr-h4-minimo-sesgado" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 18 (Por qué el mínimo es optimista)</strong></span> Sean <span class="math inline">\(Z_1,\ldots,Z_M\)</span> estimaciones con <span class="math inline">\(\mathbb{E}\!\left[ Z_k \right]=q_k\)</span>.</p>
+<div id="exr-h4-promedio-predicciones" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 16</strong></span> Dos modelos ya ajustados producen las predicciones <span class="math inline">\(\hat y_{A,i}\)</span> y <span class="math inline">\(\hat y_{B,i}\)</span> sobre una misma muestra. Construimos un tercer modelo que predice su promedio: <span class="math inline">\(\hat y_{C,i}=(\hat y_{A,i}+\hat y_{B,i})/2\)</span>.</p>
 <ol type="a">
-<li>Para cualquier <span class="math inline">\(j\)</span>, <span class="math inline">\(\min_k Z_k\leq Z_j\)</span>. Toma esperanzas y usa esa desigualdad para demostrar <span class="math inline">\(\mathbb{E}\!\left[ \min_k Z_k \right]\leq\min_k q_k\)</span>.</li>
-<li>Si <span class="math inline">\(\hat k\)</span> es el índice elegido por el menor <span class="math inline">\(Z_k\)</span>, explica por qué <span class="math inline">\(\min_k q_k\leq\mathbb{E}\!\left[ q_{\hat k} \right]\)</span>. Relaciona ambas desigualdades con informar del riesgo del modelo seleccionado.</li>
-<li>¿Hay igualdad si <span class="math inline">\(M=1\)</span>? ¿Dice el resultado que el error informado es demasiado pequeño en todas las muestras?</li>
+<li>Demuestra la identidad <span class="math display">\[
+(y_i-\hat y_{C,i})^2
+=\frac{(y_i-\hat y_{A,i})^2+(y_i-\hat y_{B,i})^2}{2}
+-\frac{(\hat y_{A,i}-\hat y_{B,i})^2}{4}.
+\]</span></li>
+<li>Deduce que <span class="math inline">\(\mathrm{MSE}_C\leq(\mathrm{MSE}_A+\mathrm{MSE}_B)/2\)</span>. ¿Cuándo se alcanza la igualdad?</li>
+<li>¿Garantiza esta desigualdad que <span class="math inline">\(C\)</span> tenga un MSE menor o igual que el mejor de los otros dos modelos? Justifica la respuesta con una muestra de una observación.</li>
 </ol>
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Las soluciones se distribuyen por el Campus Virtual; no forman parte del sitio público.</p>
-</div>
-</div>
 </div>
 
 

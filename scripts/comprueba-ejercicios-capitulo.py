@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Comprueba la correspondencia entre capítulo, hoja y solucionario sin modificarlos.
 
-Los primeros N ejercicios de la hoja deben repetir los N ejercicios del capítulo,
-incluidos sus títulos y en el mismo orden. La hoja puede añadir ejercicios después.
-Si existe un solucionario junto a la hoja, también se comprueba su correspondencia.
+Los primeros N ejercicios de la hoja deben repetir los enunciados del capítulo,
+en el mismo orden; el título inicial puede omitirse. La clave YAML opcional
+`ejercicios-capitulo` selecciona qué ejercicios del capítulo se reproducen. Sin
+esa clave se exigen todos. La hoja puede añadir ejercicios después.
+Si existe un solucionario junto a la hoja, se compara estrictamente con la hoja,
+incluidos los títulos que esta conserve.
 
     python scripts/comprueba-ejercicios-capitulo.py \\
         capitulos/02-aprender-minimizando.qmd problemas/hoja-02.qmd
@@ -16,6 +19,8 @@ import importlib.util
 from pathlib import Path
 import re
 import sys
+
+import yaml
 
 
 def carga_extractor():
@@ -42,6 +47,20 @@ def normaliza(cuerpo: str) -> str:
     return "\n".join(linea.rstrip() for linea in cuerpo.splitlines()).strip("\n")
 
 
+def normaliza_sin_titulo(cuerpo: str) -> str:
+    """Omite solo un heading inicial; conserva los apartados y el resto del cuerpo.
+
+    No busca headings tras párrafos, divs o fences de código. Una línea indentada
+    tampoco se interpreta como título: puede formar parte de un bloque de código.
+    Esta excepción solo se usa entre capítulo y hoja, nunca en el solucionario.
+    """
+    limpio = normaliza(cuerpo)
+    lineas = limpio.splitlines()
+    if lineas and re.fullmatch(r"#{1,6}(?:[ \t]+.*)?", lineas[0]):
+        return normaliza("\n".join(lineas[1:]))
+    return limpio
+
+
 def titulo(cuerpo: str) -> str:
     for linea in cuerpo.splitlines():
         if linea.strip():
@@ -62,6 +81,48 @@ def lee_ejercicios(ruta: Path) -> tuple[str, list[tuple[str, str]]]:
     return texto, ejercicios
 
 
+def selecciona_capitulo(hoja: Path, texto: str,
+                       ejercicios: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Valida la selección explícita de la hoja sin alterar el orden del capítulo."""
+    lineas = texto.splitlines()
+    if not lineas or lineas[0].strip() != "---":
+        return ejercicios
+    cierre = next((i for i in range(1, len(lineas))
+                   if lineas[i].strip() in {"---", "..."}), None)
+    if cierre is None:
+        raise ValueError(f"{hoja}: cabecera YAML sin cerrar")
+    try:
+        cabecera = yaml.safe_load("\n".join(lineas[1:cierre]))
+    except yaml.YAMLError as exc:
+        raise ValueError(f"{hoja}: cabecera YAML inválida: {exc}") from exc
+    if cabecera is None:
+        return ejercicios
+    if not isinstance(cabecera, dict):
+        raise ValueError(f"{hoja}: la cabecera YAML debe ser un mapa de claves")
+    if "ejercicios-capitulo" not in cabecera:
+        return ejercicios
+    seleccion = cabecera["ejercicios-capitulo"]
+    if (not isinstance(seleccion, list) or not seleccion
+            or any(not isinstance(clave, str)
+                   or not re.fullmatch(r"exr-[\w-]+", clave) for clave in seleccion)):
+        raise ValueError(f"{hoja}: ejercicios-capitulo debe ser una lista no vacía "
+                         "de identificadores exr-")
+    repetidos = [clave for clave, n in Counter(seleccion).items() if n > 1]
+    if repetidos:
+        raise ValueError(f"{hoja}: ejercicios-capitulo contiene identificadores "
+                         f"repetidos: {', '.join(repetidos)}")
+    posiciones = {clave: i for i, (clave, _) in enumerate(ejercicios)}
+    desconocidos = [clave for clave in seleccion if clave not in posiciones]
+    if desconocidos:
+        raise ValueError(f"{hoja}: ejercicios-capitulo contiene identificadores "
+                         f"ausentes del capítulo: {', '.join(desconocidos)}")
+    indices = [posiciones[clave] for clave in seleccion]
+    if indices != sorted(indices):
+        raise ValueError(f"{hoja}: ejercicios-capitulo debe conservar el orden "
+                         "de los ejercicios del capítulo")
+    return [ejercicios[i] for i in indices]
+
+
 def compara_capitulo(capitulo: Path, hoja: Path,
                      origen: list[tuple[str, str]],
                      destino: list[tuple[str, str]]) -> list[str]:
@@ -72,11 +133,12 @@ def compara_capitulo(capitulo: Path, hoja: Path,
             fallos.append(f"{hoja}: falta {etiqueta} de {capitulo.name}")
             continue
         destino_id, destino_cuerpo = destino[numero - 1]
-        if normaliza(cuerpo) != normaliza(destino_cuerpo):
+        if normaliza_sin_titulo(cuerpo) != normaliza_sin_titulo(destino_cuerpo):
             fallos.append(
                 f"{hoja}: {etiqueta} no coincide con el capítulo; en esa posición "
                 f"figura «{titulo(destino_cuerpo)}» ({destino_id}). "
-                "Deben coincidir título y enunciado, no solo el tema.")
+                "Debe coincidir todo el enunciado, salvo el título inicial; "
+                "no basta con que trate el mismo tema.")
     return fallos
 
 
@@ -160,7 +222,8 @@ def main() -> int:
     args = parser.parse_args()
     try:
         _, capitulo = lee_ejercicios(args.capitulo)
-        _, hoja = lee_ejercicios(args.hoja)
+        texto_hoja, hoja = lee_ejercicios(args.hoja)
+        capitulo = selecciona_capitulo(args.hoja, texto_hoja, capitulo)
         fallos = compara_capitulo(args.capitulo, args.hoja, capitulo, hoja)
         fallos.extend(compara_solucionario(args.hoja, hoja))
     except (OSError, ValueError) as exc:
@@ -172,8 +235,9 @@ def main() -> int:
         return 1
     sol = args.hoja.with_name(args.hoja.stem + "-soluciones.qmd")
     detalle_sol = "; solucionario alineado y una solución por ejercicio" if sol.exists() else ""
-    print(f"{args.hoja}: primeros {len(capitulo)} ejercicios idénticos al capítulo "
-          f"y en el mismo orden ({len(hoja)} en total){detalle_sol}")
+    print(f"{args.hoja}: primeros {len(capitulo)} enunciados idénticos a los del capítulo "
+          f"exigidos por la hoja, salvo títulos, y en el mismo orden "
+          f"({len(hoja)} en total){detalle_sol}")
     return 0
 
 

@@ -20,7 +20,6 @@ No se pide programar figuras ni reproducir las demostraciones no exigibles del c
 ## Ejercicios del capítulo
 
 ::: {#exr-h3-loglik-mse}
-## De la log-verosimilitud al riesgo cuadrático
 
 Fijados los vectores de predictoras $\xv_1,\ldots,\xv_{\nobs}$, las respuestas
 son independientes y $\yi\given\xv_i\sim\Normal(\xv_i\T\coef,\noise^2)$,
@@ -38,7 +37,6 @@ c. Deduce por qué maximizar la log-verosimilitud equivale a minimizar $\Riskh$.
 :::
 
 ::: {#exr-h3-gradiente-componentes}
-## Obtener el gradiente por componentes
 
 Escribimos el riesgo sin notación matricial:
 
@@ -61,7 +59,6 @@ c. La componente $k$ de $\Xt\resid(\coef)$ es
 :::
 
 ::: {#exr-h3-recupera-recta}
-## Recuperar el gradiente de la recta
 
 Sea $\nfeat=1$, de modo que $\X=(\onesv\;\;\mathbf a)$ con
 $\mathbf a=(x_1,\ldots,x_{\nobs})\T$ la columna del único predictor.
@@ -71,7 +68,6 @@ b. **Deduce** que @eq-gradiente-matricial es exactamente @eq-gradiente-riesgo-1d
 :::
 
 ::: {#exr-h3-ecuaciones-normales}
-## Obtener las ecuaciones normales
 
 a. Parte de @eq-gradiente-matricial y demuestra que
    $\grad\Riskh(\coef^\star)=\zerov$ equivale a
@@ -83,7 +79,6 @@ c. Por la condición de primer orden, ¿debe cumplir este sistema cualquier mín
 :::
 
 ::: {#exr-h3-mas-variables}
-## Más parámetros no garantizan ajuste exacto
 
 Considera dos observaciones y tres parámetros:
 
@@ -108,7 +103,6 @@ c. ¿Basta con tener más parámetros que observaciones para que el riesgo míni
 :::
 
 ::: {#exr-h3-columna-redundante}
-## Una columna repetida
 
 Considera
 
@@ -131,7 +125,6 @@ c. Para una observación nueva con $x_1=1$ y $x_2=0$, compara las predicciones d
 ## Práctica básica y cálculo a mano
 
 ::: {#exr-h3-fila-diseno}
-## De una observación a su predicción
 
 Un modelo usa dos variables predictoras y tiene coeficientes
 $\coef=(3,4,-2)\T$.
@@ -145,7 +138,6 @@ c. ¿Qué predice el modelo cuando las dos variables predictoras valen cero?
 :::
 
 ::: {#exr-h3-dimensiones}
-## Comprobar dimensiones
 
 Una muestra tiene $\nobs=200$ observaciones y $\nfeat=7$ variables predictoras.
 
@@ -158,7 +150,6 @@ c. El sistema de ecuaciones normales, ¿de qué tamaño es? **Compáralo** con e
 :::
 
 ::: {#exr-h3-predicciones-residuos}
-## Predicciones, residuos y riesgo
 
 Considera estas cuatro observaciones con dos variables predictoras.
 
@@ -175,7 +166,6 @@ c. Calcula el riesgo en $\coef=\zerov$ y compara los dos valores. ¿Permite esta
 :::
 
 ::: {#exr-h3-calculo}
-## Ajustar los mismos datos
 
 Usa la matriz y las respuestas del ejercicio 9.
 
@@ -190,7 +180,6 @@ d. Calcula las predicciones y el riesgo después de ese paso. Compáralo con el
 :::
 
 ::: {#exr-h3-riesgo-matricial}
-## Escribir el riesgo con una norma
 
 **Demuestra** @prp-riesgo-matricial, es decir, que
 $\Riskh(\coef)=\frac{1}{\nobs}\norm{\X\coef-\yv}^2$.
@@ -205,7 +194,6 @@ c. **Explica** por qué da lo mismo escribir $\norm{\X\coef-\yv}^2$ que
 ## Interpretación y código
 
 ::: {#exr-h3-interpretar}
-## Interpretar y corregir afirmaciones
 
 Explica qué falla en cada afirmación y escribe una versión correcta.
 
@@ -220,7 +208,6 @@ d. "El riesgo sobre los datos usados para ajustar es pequeño. No hace falta com
 :::
 
 ::: {#exr-h3-completar}
-## Traducir las operaciones a código
 
 La matriz `X` ya incluye la columna de unos. Su forma es `(n, p + 1)` y la de
 `y` es `(n,)`. Completa únicamente las cuatro operaciones indicadas.
@@ -266,7 +253,6 @@ c. Se parte de parámetros nulos y se llama una vez a `step` con `lr=1/4`.
 :::
 
 ::: {#exr-h3-autograd}
-## Entrenar con diferenciación automática
 
 Los parámetros se han creado con `requires_grad=True`. Completa el método:
 
@@ -293,7 +279,6 @@ c. Si usamos el `train` del capítulo con `n_iter=2`, ¿cuántos vectores de par
 :::
 
 ::: {#exr-h3-sklearn}
-## Ajustar y predecir con scikit-learn
 
 `X` es una matriz de NumPy de forma `(8, 3)`, con primera columna de unos, e
 `y` tiene forma `(8,)`. Las dos filas de `X_nueva` siguen el mismo convenio:

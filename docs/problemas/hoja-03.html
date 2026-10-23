@@ -355,7 +355,7 @@ window.Quarto = {
 <section id="ejercicios-del-capítulo" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios-del-capítulo">Ejercicios del capítulo</h2>
 <div id="exr-h3-loglik-mse" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 1 (De la log-verosimilitud al riesgo cuadrático)</strong></span> Fijados los vectores de predictoras <span class="math inline">\(\mathbf{x}_1,\ldots,\mathbf{x}_{n}\)</span>, las respuestas son independientes y <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i\sim\mathcal{N}(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w},\sigma^2)\)</span>, con <span class="math inline">\(\sigma&gt;0\)</span> conocido.</p>
+<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> Fijados los vectores de predictoras <span class="math inline">\(\mathbf{x}_1,\ldots,\mathbf{x}_{n}\)</span>, las respuestas son independientes y <span class="math inline">\(y_i\,\vert\,\mathbf{x}_i\sim\mathcal{N}(\mathbf{x}_i^{\mathsf{T}}\boldsymbol{w},\sigma^2)\)</span>, con <span class="math inline">\(\sigma&gt;0\)</span> conocido.</p>
 <ol type="a">
 <li>Escribe la log-verosimilitud de la muestra, partiendo de la densidad normal.</li>
 <li>Comprueba que <span class="math display">\[
@@ -366,7 +366,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-gradiente-componentes" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2 (Obtener el gradiente por componentes)</strong></span> Escribimos el riesgo sin notación matricial:</p>
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> Escribimos el riesgo sin notación matricial:</p>
 <p><span class="math display">\[
 \hat{R}(\boldsymbol{w})=\frac{1}{n}\sum_{i=1}^{n}
 \left(y_i-\sum_{j=0}^{p}w_jx_{ij}\right)^2.
@@ -381,14 +381,14 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-recupera-recta" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3 (Recuperar el gradiente de la recta)</strong></span> Sea <span class="math inline">\(p=1\)</span>, de modo que <span class="math inline">\(\mathbf{X}=(\mathbf{1}\;\;\mathbf a)\)</span> con <span class="math inline">\(\mathbf a=(x_1,\ldots,x_{n})^{\mathsf{T}}\)</span> la columna del único predictor.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Sea <span class="math inline">\(p=1\)</span>, de modo que <span class="math inline">\(\mathbf{X}=(\mathbf{1}\;\;\mathbf a)\)</span> con <span class="math inline">\(\mathbf a=(x_1,\ldots,x_{n})^{\mathsf{T}}\)</span> la columna del único predictor.</p>
 <ol type="a">
 <li><strong>Escribe</strong> las dos componentes de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{r}(\boldsymbol{w})\)</span> en forma de suma.</li>
 <li><strong>Deduce</strong> que <a href="../capitulos/03-modelos-lineales.html#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> es exactamente <a href="../capitulos/02-aprender-minimizando.html#eq-gradiente-riesgo-1d" class="quarto-xref">Ecuación&nbsp;<span>2.6</span></a>.</li>
 </ol>
 </div>
 <div id="exr-h3-ecuaciones-normales" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4 (Obtener las ecuaciones normales)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> &nbsp;</p>
 <ol type="a">
 <li>Parte de <a href="../capitulos/03-modelos-lineales.html#eq-gradiente-matricial" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> y demuestra que <span class="math inline">\(\nabla\hat{R}(\boldsymbol{w}^\star)=\mathbf{0}\)</span> equivale a <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}^\star=\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</li>
 <li>Di cuántas ecuaciones y cuántas incógnitas tiene este sistema. Para una sola variable predictora, escribe sus dos ecuaciones en forma de sumas.</li>
@@ -396,7 +396,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-mas-variables" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 5 (Más parámetros no garantizan ajuste exacto)</strong></span> Considera dos observaciones y tres parámetros:</p>
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> Considera dos observaciones y tres parámetros:</p>
 <p><span class="math display">\[
 \mathbf{X}=\begin{pmatrix}1&amp;1&amp;1\\1&amp;1&amp;1\end{pmatrix},
 \qquad
@@ -412,7 +412,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-columna-redundante" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6 (Una columna repetida)</strong></span> Considera</p>
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Considera</p>
 <p><span class="math display">\[
 \mathbf{X}=\begin{pmatrix}1&amp;0&amp;0\\1&amp;1&amp;1\\1&amp;2&amp;2\end{pmatrix},
 \qquad
@@ -428,7 +428,7 @@ window.Quarto = {
 <section id="práctica-básica-y-cálculo-a-mano" class="level2">
 <h2 class="anchored" data-anchor-id="práctica-básica-y-cálculo-a-mano">Práctica básica y cálculo a mano</h2>
 <div id="exr-h3-fila-diseno" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 7 (De una observación a su predicción)</strong></span> Un modelo usa dos variables predictoras y tiene coeficientes <span class="math inline">\(\boldsymbol{w}=(3,4,-2)^{\mathsf{T}}\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Un modelo usa dos variables predictoras y tiene coeficientes <span class="math inline">\(\boldsymbol{w}=(3,4,-2)^{\mathsf{T}}\)</span>.</p>
 <ol type="a">
 <li>Para una observación con <span class="math inline">\(x_1=2\)</span> y <span class="math inline">\(x_2=-1\)</span>, escribe el vector <span class="math inline">\(\mathbf{x}\)</span> incluyendo la constante, y calcula <span class="math inline">\(\mathbf{x}^{\mathsf{T}}\boldsymbol{w}\)</span>.</li>
 <li>Si aumenta <span class="math inline">\(x_1\)</span> de <span class="math inline">\(2\)</span> a <span class="math inline">\(3\)</span> y <span class="math inline">\(x_2\)</span> no cambia, calcula la nueva predicción. Relaciona la diferencia con el coeficiente de <span class="math inline">\(x_1\)</span>.</li>
@@ -436,7 +436,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-dimensiones" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8 (Comprobar dimensiones)</strong></span> Una muestra tiene <span class="math inline">\(n=200\)</span> observaciones y <span class="math inline">\(p=7\)</span> variables predictoras.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Una muestra tiene <span class="math inline">\(n=200\)</span> observaciones y <span class="math inline">\(p=7\)</span> variables predictoras.</p>
 <ol type="a">
 <li><strong>Calcula</strong> el tamaño de <span class="math inline">\(\mathbf{X}\)</span>, de <span class="math inline">\(\boldsymbol{w}\)</span>, de <span class="math inline">\(\mathbf{X}\boldsymbol{w}\)</span>, de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\)</span>, de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> y de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>.</li>
 <li><strong>Di</strong> cuáles de esos productos están definidos y cuáles no: <span class="math inline">\(\mathbf{X}\mathbf{X}^{\mathsf{T}}\)</span>, <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}\mathbf{X}\boldsymbol{w}\)</span>, <span class="math inline">\(\mathbf{X}\mathbf{y}\)</span>.</li>
@@ -444,7 +444,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-predicciones-residuos" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 9 (Predicciones, residuos y riesgo)</strong></span> Considera estas cuatro observaciones con dos variables predictoras.</p>
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Considera estas cuatro observaciones con dos variables predictoras.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -479,7 +479,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-calculo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 10 (Ajustar los mismos datos)</strong></span> Usa la matriz y las respuestas del ejercicio 9.</p>
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Usa la matriz y las respuestas del ejercicio 9.</p>
 <ol type="a">
 <li>Calcula <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> y <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{y}\)</span>. Como guía, cada entrada de <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\mathbf{X}\)</span> es el producto escalar de dos columnas de <span class="math inline">\(\mathbf{X}\)</span>.</li>
 <li>Resuelve las ecuaciones normales. Comprueba que obtienes <span class="math inline">\((4,2,2)^{\mathsf{T}}\)</span> y explica por qué el ajuste es único.</li>
@@ -488,7 +488,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-riesgo-matricial" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 11 (Escribir el riesgo con una norma)</strong></span> <strong>Demuestra</strong> <a href="../capitulos/03-modelos-lineales.html#prp-riesgo-matricial" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>, es decir, que <span class="math inline">\(\hat{R}(\boldsymbol{w})=\frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> <strong>Demuestra</strong> <a href="../capitulos/03-modelos-lineales.html#prp-riesgo-matricial" class="quarto-xref">Proposición&nbsp;<span>3.1</span></a>, es decir, que <span class="math inline">\(\hat{R}(\boldsymbol{w})=\frac{1}{n}\left\lVert \mathbf{X}\boldsymbol{w}-\mathbf{y} \right\rVert^2\)</span>.</p>
 <ol type="a">
 <li><strong>Escribe</strong> la componente <span class="math inline">\(i\)</span> del vector <span class="math inline">\(\mathbf{X}\boldsymbol{w}-\mathbf{y}\)</span> usando <a href="../capitulos/03-modelos-lineales.html#eq-predicciones" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a>.</li>
 <li><strong>Aplica</strong> <a href="../capitulos/03-modelos-lineales.html#eq-norma" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a> y <strong>comprueba</strong> que se obtiene la suma de los cuadrados de los residuos.</li>
@@ -499,7 +499,7 @@ window.Quarto = {
 <section id="interpretación-y-código" class="level2">
 <h2 class="anchored" data-anchor-id="interpretación-y-código">Interpretación y código</h2>
 <div id="exr-h3-interpretar" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 12 (Interpretar y corregir afirmaciones)</strong></span> Explica qué falla en cada afirmación y escribe una versión correcta.</p>
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> Explica qué falla en cada afirmación y escribe una versión correcta.</p>
 <ol type="a">
 <li>“He obtenido gradiente cero al ajustar un modelo lineal por mínimos cuadrados. Por tanto, todos los residuos son cero”.</li>
 <li>“Hay más observaciones que parámetros. Por tanto, los coeficientes que minimizan el riesgo son únicos”.</li>
@@ -508,7 +508,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-completar" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 13 (Traducir las operaciones a código)</strong></span> La matriz <code>X</code> ya incluye la columna de unos. Su forma es <code>(n, p + 1)</code> y la de <code>y</code> es <code>(n,)</code>. Completa únicamente las cuatro operaciones indicadas.</p>
+<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> La matriz <code>X</code> ya incluye la columna de unos. Su forma es <code>(n, p + 1)</code> y la de <code>y</code> es <code>(n,)</code>. Completa únicamente las cuatro operaciones indicadas.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -544,7 +544,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-autograd" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 14 (Entrenar con diferenciación automática)</strong></span> Los parámetros se han creado con <code>requires_grad=True</code>. Completa el método:</p>
+<p><span class="theorem-title"><strong>Ejercicio 14</strong></span> Los parámetros se han creado con <code>requires_grad=True</code>. Completa el método:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AutogradOptimizer:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, modelo, lr):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.modelo <span class="op">=</span> modelo</span>
@@ -563,7 +563,7 @@ window.Quarto = {
 </ol>
 </div>
 <div id="exr-h3-sklearn" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 15 (Ajustar y predecir con scikit-learn)</strong></span> <code>X</code> es una matriz de NumPy de forma <code>(8, 3)</code>, con primera columna de unos, e <code>y</code> tiene forma <code>(8,)</code>. Las dos filas de <code>X_nueva</code> siguen el mismo convenio:</p>
+<p><span class="theorem-title"><strong>Ejercicio 15</strong></span> <code>X</code> es una matriz de NumPy de forma <code>(8, 3)</code>, con primera columna de unos, e <code>y</code> tiene forma <code>(8,)</code>. Las dos filas de <code>X_nueva</code> siguen el mismo convenio:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression(fit_intercept<span class="op">=</span>______)   <span class="co"># (1)</span></span>

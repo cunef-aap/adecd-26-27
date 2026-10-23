@@ -414,7 +414,7 @@ window.Quarto = {
 <div id="fig-recordatorio-sobreajuste" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-recordatorio-sobreajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e1eb90e8" class="cell" data-execution_count="2">
+<div id="b8b1a8e7" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -472,7 +472,7 @@ Figura&nbsp;4.1: La interpoladora encaja también el ruido de entrenamiento: en 
 </div>
 <p>Reutilizamos los datos de próstata del capítulo 3. El fichero trae una partición en 67 observaciones de entrenamiento (<em>train</em>) y 30 de evaluación final (<em>test</em>). De momento dejamos estas últimas aparte; enseguida justificaremos por qué.</p>
 <p>Usaremos arrays de NumPy, como al introducir scikit-learn en el capítulo anterior. Esta vez <code>X</code> contiene solo las ocho predictoras: <code>LinearRegression()</code> calcula también el intercepto sin que añadamos una columna de unos. <code>es_train</code> es un array de valores verdaderos o falsos; <code>X[es_train]</code> selecciona las filas verdaderas y <code>X[~es_train]</code>, las restantes. La respuesta se separa con la misma selección de filas.</p>
-<div id="55a5a82d" class="cell" data-execution_count="3">
+<div id="2c3c8656" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -499,7 +499,7 @@ Figura&nbsp;4.1: La interpoladora encaja también el ruido de entrenamiento: en 
 </div>
 <p>Repetimos las operaciones del capítulo 3: <code>LinearRegression()</code> crea el objeto y <code>fit</code> calcula los coeficientes. Después, <code>predict</code> usará esos coeficientes sin volver a ajustar. Definimos también <code>mse</code> para calcular el error cuadrático medio.</p>
 <div class="codigo-clave">
-<div id="7d30cc8d" class="cell" data-execution_count="4">
+<div id="90118d74" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mse(y_pred, y):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ((y_pred <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>).mean()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1518,7 +1518,7 @@ forceTheme('sk-container-id-1');</script>
 </div>
 <p>Con esto ya podemos fijar la referencia nula y compararla, más adelante, con el modelo de ocho variables.</p>
 <div class="codigo-clave">
-<div id="9bcaeea3" class="cell" data-execution_count="5">
+<div id="94308cbd" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>media_train <span class="op">=</span> y_train.mean()</span>
 <span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"constante ajustada: </span><span class="sc">{</span>media_train<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
@@ -1541,7 +1541,7 @@ modelo nulo, riesgo en train: 1.4370</code></pre>
 <div id="exr-mejor-constante-mae" class="theorem exercise">
 <p><span class="theorem-title"><strong>Ejercicio 4.1 (La mejor constante con otra pérdida (opcional))</strong></span> El resultado de <a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>4.1</span></a> depende de la pérdida cuadrática.</p>
 <ol type="a">
-<li>Escribe el riesgo empírico de una constante <span class="math inline">\(c\)</span> con la pérdida absoluta, <span class="math inline">\(\frac{1}{n}\sum_i\left\lvert y_i-c \right\rvert\)</span>, y explica por qué no se puede derivar en todo punto.</li>
+<li>El riesgo empírico de una constante <span class="math inline">\(c\)</span> con la pérdida absoluta es <span class="math inline">\(\frac{1}{n}\sum_i\left\lvert y_i-c \right\rvert\)</span>. Explica por qué no se puede derivar en todo punto.</li>
 <li>Argumenta, moviendo <span class="math inline">\(c\)</span> un poco a la derecha y contando cuántas observaciones quedan a cada lado, que el mínimo se alcanza en la mediana de la muestra.</li>
 <li>Para las respuestas <span class="math inline">\((1,2,9)\)</span>, calcula la media y la mediana y comprueba cuál da menor error absoluto medio. No hace falta usar Python.</li>
 </ol>
@@ -1762,7 +1762,7 @@ R(c)=\mathbb{E}\!\left[ (2+\varepsilon-c)^2 \right]
 <div id="fig-train-test-simulado" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-train-test-simulado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="d3cf10e7" class="cell" data-execution_count="6">
+<div id="74af92af" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1849,9 +1849,9 @@ Figura&nbsp;4.2: Medir en train subestima el riesgo en promedio; medir en test a
 <p><span class="theorem-title"><strong>Ejercicio 4.2 (Cuánto test hace falta)</strong></span> Un modelo ya fijado se evalúa con 25 observaciones independientes de la misma población. La media de las pérdidas es 3 y su desviación típica muestral es <span class="math inline">\(s=2\)</span>.</p>
 <ol type="a">
 <li>Calcula el error típico estimado e informa del riesgo como media <span class="math inline">\(\pm\)</span> error típico.</li>
-<li>Suponiendo que la dispersión de las pérdidas se mantiene, ¿cuántas observaciones necesitaríamos para reducir el error típico a la mitad?</li>
-<li>Explica por qué “insesgado” no significa “exacto” y por qué <span class="math inline">\(s\)</span> y el error típico son cantidades distintas.</li>
-<li>Escribe el intervalo media <span class="math inline">\(\pm\)</span> dos errores típicos. Si la aproximación normal es adecuada, ¿qué significa la cobertura aproximada del 95 %? ¿Garantiza que este intervalo concreto contenga el riesgo verdadero?</li>
+<li>Suponiendo que <span class="math inline">\(s\)</span> se mantiene en 2, ¿cuántas observaciones de test necesitaríamos en total para reducir el error típico a la mitad?</li>
+<li>Evaluamos el mismo modelo, sin reajustarlo, sobre muchos tests nuevos de 25 observaciones. ¿Qué se dispersa con desviación típica estimada <span class="math inline">\(s=2\)</span>: las pérdidas individuales o las medias de cada test? ¿Qué dispersión mide el error típico de a? Que la media de test sea insesgada, ¿implica que el riesgo verdadero sea exactamente 3?</li>
+<li>Suponiendo que la aproximación normal es adecuada, calcula un intervalo de confianza aproximado del 95 % para el riesgo verdadero del modelo e interpreta su significado.</li>
 </ol>
 </div>
 </section>
@@ -1961,7 +1961,7 @@ Figura&nbsp;4.2: Medir en train subestima el riesgo en promedio; medir en test a
 <div id="fig-particiones" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-particiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="5314073e" class="cell" data-execution_count="7">
+<div id="32964167" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1979,7 +1979,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 <p>Las proporciones del dibujo son ilustrativas. Vamos a aplicar la validación simple a los datos de próstata. Como en el capítulo 3, queremos predecir <code>lpsa</code>; ahora debemos decidir <strong>qué variables predictoras utilizar</strong>. Compararemos nueve procedimientos: el nulo y ocho ajustes lineales que incorporan las variables una a una.</p>
 <p>Para compararlos, reservamos el 20 % de train para validar. De las 67 observaciones, 53 ajustarán y 14 validarán; las 30 de test siguen aparte. La función de separación es la misma que vimos antes, pero ahora recibe <strong>solo train</strong>.</p>
 <div class="codigo-clave">
-<div id="f47c1b5c" class="cell" data-execution_count="8">
+<div id="5c638909" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>X_ajuste, X_val, y_ajuste, y_val <span class="op">=</span> train_test_split(</span>
@@ -1990,7 +1990,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 <p>El número <span class="math inline">\(m\)</span> indica cuántas variables usa cada candidato. Con <span class="math inline">\(m=0\)</span> ajustamos una constante, la media de <code>y_ajuste</code>. Con <span class="math inline">\(m=1\)</span> ajustamos una recta que usa <code>lcavol</code>; con <span class="math inline">\(m=2\)</span> añadimos <code>lweight</code>, y así hasta <span class="math inline">\(m=8\)</span>, que usa todas las predictoras. Todos los ajustes minimizan el error cuadrático e incluyen un intercepto: lo que cambia entre procedimientos es qué variables utilizan. Fijamos la lista de variables antes de mirar los errores, siguiendo el orden de <code>predictoras</code>. No buscamos entre todos los subconjuntos posibles. Cada procedimiento recibe las mismas 53 observaciones de ajuste; los modelos obtenidos se comparan sobre las mismas 14 de validación.</p>
 <p>En NumPy, <code>X[:, :m]</code> toma todas las filas y las primeras <span class="math inline">\(m\)</span> columnas. La función siguiente ajusta con una parte y evalúa con la otra:</p>
 <div class="codigo-clave">
-<div id="94686c9a" class="cell" data-execution_count="9">
+<div id="4ee13213" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgo_validacion(m, X_ajuste, y_ajuste, X_val, y_val):</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> m <span class="op">==</span> <span class="dv">0</span>:</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>        pred_val <span class="op">=</span> y_ajuste.mean()</span>
@@ -2019,7 +2019,7 @@ Figura&nbsp;4.3: La validación simple dentro de <span class="math inline">\(\ma
 </div>
 <p>Evaluamos los nueve candidatos sobre <strong>la misma partición</strong> y buscamos el menor error. <code>np.argmin</code> devuelve la posición del mínimo; como empezamos en <span class="math inline">\(m=0\)</span>, coincide con el número de variables.</p>
 <div class="codigo-clave">
-<div id="8cc2fa22" class="cell" data-execution_count="10">
+<div id="f9f43859" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>riesgos_val <span class="op">=</span> []</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(predictoras) <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    riesgo <span class="op">=</span> riesgo_validacion(m, X_ajuste, y_ajuste, X_val, y_val)</span>
@@ -2132,7 +2132,7 @@ mínimo de validación simple: 5 variables</code></pre>
 <div id="fig-validacion-cruzada" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-validacion-cruzada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="68788747" class="cell" data-execution_count="11">
+<div id="3ae625d9" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2183,7 +2183,7 @@ Figura&nbsp;4.4: K-fold cross validation con <span class="math inline">\(K=5\)</
 <li><code>split(X_train)</code> proporciona los índices de ajuste y validación de cada vuelta. <code>X_train[indices_ajuste]</code> selecciona esas filas; hacemos lo mismo con <code>y_train</code>.</li>
 </ul>
 <div class="codigo-clave">
-<div id="75d60559" class="cell" data-execution_count="12">
+<div id="c8b4231e" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
 <span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cv_riesgo(m, n_bloques<span class="op">=</span><span class="dv">5</span>, semilla<span class="op">=</span><span class="dv">42</span>):</span>
@@ -2210,7 +2210,7 @@ Figura&nbsp;4.4: K-fold cross validation con <span class="math inline">\(K=5\)</
 </div>
 <p>Recorremos los nueve candidatos, del nulo al de ocho variables. La lista <code>bloques_de[m]</code> guardará los cinco riesgos del candidato <span class="math inline">\(m\)</span>. <code>np.argmin</code> devuelve la posición del menor valor; como los candidatos empiezan en cero, esa posición coincide aquí con <span class="math inline">\(m\)</span>.</p>
 <div class="codigo-clave">
-<div id="e507e60a" class="cell" data-execution_count="13">
+<div id="a5f2d522" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bloques_de <span class="op">=</span> []</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(predictoras) <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    bloques_de.append(cv_riesgo(m))</span>
@@ -2262,7 +2262,7 @@ candidato de menor CV: 2</code></pre>
 <div id="fig-cv-curva" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cv-curva-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="10035118" class="cell" data-execution_count="14">
+<div id="e95a7de0" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2278,11 +2278,11 @@ Figura&nbsp;4.5: La estimación por K-fold cross validation frente al número de
 </figure>
 </div>
 <div id="exr-cv-bloques" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4.5 (Cuántos bloques)</strong></span> Tenemos 60 observaciones de train y cuatro procedimientos candidatos.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4.5 (Cuántos bloques)</strong></span> Tenemos 60 observaciones de train y comparamos cuatro procedimientos mediante validación cruzada de <span class="math inline">\(K\)</span> bloques del mismo tamaño (<em>K-fold cross validation</em>).</p>
 <ol type="a">
 <li>Con <span class="math inline">\(K=5\)</span>, ¿cuántas observaciones evalúan y cuántas ajustan en cada vuelta? ¿Cuántos ajustes hacen falta para comparar los cuatro procedimientos?</li>
-<li>Repite las cuentas con <span class="math inline">\(K=10\)</span>. ¿Con cuál de los dos valores usa cada ajuste una muestra más parecida a train completo?</li>
-<li>Con <span class="math inline">\(K=60\)</span>, cada bloque contiene una observación. Este caso se llama <em>leave-one-out</em>. ¿Cuántos ajustes requiere? Explica por qué usar más bloques no garantiza una comparación más precisa.</li>
+<li>Repite el apartado a con <span class="math inline">\(K=10\)</span>. El modelo final se ajustará con todo train. ¿Qué opción, <span class="math inline">\(K=5\)</span> o <span class="math inline">\(K=10\)</span>, deja fuera menos observaciones en cada ajuste de CV? ¿Cuál aproxima mejor el tamaño de muestra con el que se ajustará el modelo final?</li>
+<li>Con <span class="math inline">\(K=60\)</span>, cada bloque contiene una observación. Este caso se llama <em>leave-one-out</em>. ¿Cuántos ajustes requiere comparar los cuatro procedimientos? Para un mismo procedimiento, ¿cuántas observaciones comparten dos conjuntos de ajuste distintos? ¿Podemos tratar los 60 errores como mediciones independientes y asegurar que la comparación será más precisa que con <span class="math inline">\(K=10\)</span>? Justifica la respuesta.</li>
 </ol>
 </div>
 </section>
@@ -2499,7 +2499,7 @@ s_d\approx0.2155,
 <div id="fig-emparejar" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-emparejar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="364d780f" class="cell" data-execution_count="15">
+<div id="1519563c" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2547,7 +2547,7 @@ Figura&nbsp;4.6: Una y dos variables sobre los mismos bloques. A la derecha, las
 </table>
 <p>Por tanto, elegimos el procedimiento que usa solo <code>lcavol</code>. No tiene la menor CV: aceptamos su pequeña desventaja estimada a cambio de usar una variable menos. El siguiente bucle reproduce exactamente estas dos comparaciones.</p>
 <div class="codigo-clave">
-<div id="9047e7ec" class="cell" data-execution_count="16">
+<div id="bef0d4bb" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a>m_elegido <span class="op">=</span> m_campeon</span>
 <span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" m   diferencia   EE de la diferencia"</span>)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-22-3" class="code-annotation-target"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(m_campeon):</span>
@@ -2669,16 +2669,16 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 <p>Las cuatro cantidades dicen cosas distintas. El <span class="math inline">\(\mathrm{MSE}\)</span> está en unidades de la respuesta <strong>al cuadrado</strong>, de modo que su valor no se puede comparar con el rango de <span class="math inline">\(y\)</span>. El <span class="math inline">\(\mathrm{RMSE}\)</span> y el <span class="math inline">\(\mathrm{MAE}\)</span> están en las unidades de la respuesta y sí se pueden comparar con ese rango. Los dos resumen el tamaño típico de un residuo, pero el <span class="math inline">\(\mathrm{RMSE}\)</span> eleva al cuadrado antes de promediar, así que una sola observación con residuo grande lo mueve mucho más que al <span class="math inline">\(\mathrm{MAE}\)</span>. Y el <span class="math inline">\(R^2\)</span> no tiene unidades. Por <a href="#eq-r2" class="quarto-xref">Ecuación&nbsp;<span>4.3</span></a> y <a href="#lem-media-optima" class="quarto-xref">Lema&nbsp;<span>4.1</span></a>, mide la fracción del error cuadrático de la mejor constante <strong>sobre la muestra evaluada</strong> que elimina el modelo. En <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> esa constante coincide con el modelo nulo; en <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span> no tiene por qué coincidir, porque el modelo nulo se fijó sin usar las respuestas de test. Un ajuste perfecto da <span class="math inline">\(R^2=1\)</span>.</p>
 <p>Las dos métricas en unidades de la respuesta están además ordenadas, y el ejercicio siguiente lo demuestra.</p>
 <div id="exr-rmse-mae" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 4.6 (El RMSE nunca es menor que el MAE)</strong></span> Sean <span class="math inline">\(a_i=\left\lvert r_i \right\rvert\)</span> los residuos en valor absoluto y sea <span class="math inline">\(\bar a\)</span> su media, que es el <span class="math inline">\(\mathrm{MAE}\)</span>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 4.6 (El RMSE nunca es menor que el MAE)</strong></span> Sean <span class="math inline">\(r_1,\ldots,r_{n}\)</span> los residuos de un modelo sobre una muestra.</p>
 <ol type="a">
-<li>Desarrolla el cuadrado y <strong>comprueba</strong> que <span class="math inline">\(\frac{1}{n}\sum_i(a_i-\bar a)^2=\mathrm{MSE}-\mathrm{MAE}^2\)</span>, usando que <span class="math inline">\(a_i^2=r_i^2\)</span>.</li>
-<li><strong>Deduce</strong> que <span class="math inline">\(\mathrm{RMSE}\geq\mathrm{MAE}\)</span> para cualquier vector de residuos, y <strong>di</strong> en qué caso se da la igualdad.</li>
+<li>Demuestra, a partir de las definiciones, que <span class="math inline">\(\mathrm{RMSE}\geq\mathrm{MAE}\)</span>.</li>
+<li>¿Qué condición sobre los residuos hace que se alcance la igualdad?</li>
 <li><strong>Explica</strong> qué indica, sobre el reparto de los residuos, que el <span class="math inline">\(\mathrm{RMSE}\)</span> sea mucho mayor que el <span class="math inline">\(\mathrm{MAE}\)</span>.</li>
 </ol>
 </div>
 <p>Calculemos las cuatro métricas sobre <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span> para ilustrar sus escalas. Estos valores no son estimaciones finales de generalización.</p>
 <div class="codigo-clave">
-<div id="86f9d7c1" class="cell" data-execution_count="17">
+<div id="29a8e42e" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> metricas(y_pred, y):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    residuos <span class="op">=</span> y <span class="op">-</span> y_pred</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> (residuos <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>()</span>
@@ -2693,7 +2693,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 <p><code>np.abs</code> toma el valor absoluto; <code>np.nan</code> indica que el <span class="math inline">\(R^2\)</span> no está definido cuando todas las respuestas son iguales. El resto traduce las fórmulas anteriores.</p>
 <p>Aquí <span class="math inline">\(\bar{y}\)</span> es la media de la muestra sobre la que se mide, no la del ajuste.</p>
 </div>
-<div id="ecdd8e53" class="cell" data-execution_count="18">
+<div id="dd85316e" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, y_ref, pred <span class="kw">in</span> [</span>
@@ -2725,7 +2725,7 @@ R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},
 <h2 class="anchored" data-anchor-id="caso-práctico-abrir-el-test-una-sola-vez">Caso práctico: abrir el test una sola vez</h2>
 <p>Ya hemos elegido el procedimiento de una variable sin consultar test. Lo aplicamos a las 67 observaciones de train y fijamos los coeficientes definitivos. Solo ahora predecimos las 30 de test. En esta misma evaluación final medimos la referencia nula, fijada al principio; no la usamos para volver a elegir.</p>
 <div class="codigo-clave">
-<div id="f5cedc7d" class="cell" data-execution_count="19">
+<div id="5554ab07" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> m_elegido <span class="op">==</span> <span class="dv">0</span>:</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    pred_train <span class="op">=</span> np.full(<span class="bu">len</span>(y_train), media_train)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    pred_test <span class="op">=</span> np.full(<span class="bu">len</span>(y_test), media_train)</span>
@@ -2787,7 +2787,7 @@ nulo en test      : 1.0567</code></pre>
 </tbody>
 </table>
 <p>Aquí test da menos error que train. No contradice el optimismo del entrenamiento: el resultado <a href="#prp-train-optimista" class="quarto-xref">Proposición&nbsp;<span>4.1</span></a> habla de promedios sobre muestras, no de un orden obligatorio en cada partición. El modelo nulo da <span class="math inline">\(1.0567\)</span> en este test. Informamos de ambos resultados, sin cambiar ahora el procedimiento ni la métrica para mejorar la comparación.</p>
-<div id="e9c98544" class="cell" data-execution_count="20">
+<div id="9439ea20" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, valor <span class="kw">in</span> metricas(pred_test, y_test).items():</span>
@@ -2822,7 +2822,7 @@ R2: 0.5430</code></pre>
 <div id="fig-optimismo" class="figura-ajustada quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-optimismo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="6f314be3" class="cell" data-execution_count="21">
+<div id="f228f357" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
