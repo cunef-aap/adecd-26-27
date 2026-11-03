@@ -269,6 +269,12 @@ window.Quarto = {
  <span class="menu-text">Hoja 4</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 5</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -407,7 +413,7 @@ window.Quarto = {
 </div>
 <p>Un código postal, aunque se escriba con números, es una variable categórica.</p>
 <p>Siguiendo el primer paso del protocolo de <a href="04-evaluacion.html#sec-protocolo" class="quarto-xref"><span>Sección 4.7</span></a>, separamos test antes de explorar la tabla. Repartimos los anuncios al azar, como en el capítulo 4, y reservamos el 20 % para test.</p>
-<div id="6a6c120e" class="cell" data-execution_count="2">
+<div id="ce2f2839" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -422,7 +428,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="codigo-clave">
-<div id="8f56ea34" class="cell" data-execution_count="3">
+<div id="6d947fd1" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>NUMERICAS <span class="op">=</span> [<span class="st">"accommodates"</span>, <span class="st">"bedrooms"</span>, <span class="st">"number_of_reviews"</span>]</span>
@@ -437,7 +443,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Con una tabla de <code>pandas</code>, <code>train_test_split</code> devuelve dos tablas con las mismas columnas. Desde aquí hasta la evaluación final, todo se calcula solo con train.</p>
-<div id="1b7828b4" class="cell" data-execution_count="4">
+<div id="4ea1ed9e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train[NUMERICAS <span class="op">+</span> CATEGORICAS].head(<span class="dv">4</span>).to_string(index<span class="op">=</span><span class="va">False</span>))</span>
@@ -547,7 +553,7 @@ max            16      50.0               1433</code></pre>
 </tbody>
 </table>
 <p><strong>Imputar</strong> es sustituir cada valor ausente por un valor calculado con los valores observados de la misma columna.</p>
-<div id="5b3f4bc8" class="cell" data-execution_count="5">
+<div id="7fd0e5ae" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>completos <span class="op">=</span> train.dropna(subset<span class="op">=</span>NUMERICAS)</span>
@@ -582,7 +588,7 @@ Peso de las habitaciones privadas: 0.263 en train, 0.137 sin las filas incomplet
 </div>
 <p>El transformador que imputa es <code>SimpleImputer</code>. Su argumento <code>strategy</code> elige el valor imputado: <code>"median"</code> la mediana y <code>"mean"</code> la media. Con <code>add_indicator=True</code> añade, además, una indicadora por cada columna que tenga valores ausentes al hacer <code>fit</code>. Sobre una columna de cuatro valores:</p>
 <div class="codigo-clave">
-<div id="98285d11" class="cell" data-execution_count="6">
+<div id="01375728" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ejemplo_train <span class="op">=</span> pd.DataFrame({<span class="st">"x"</span>: [<span class="fl">2.0</span>, np.nan, <span class="fl">4.0</span>, <span class="fl">10.0</span>]})</span>
@@ -603,7 +609,7 @@ Nuevos: [ 4. 20.]</code></pre>
 <p><code>fit</code> calcula la mediana de los valores observados, <span class="math inline">\((2,4,10)\)</span>, que es <span class="math inline">\(4\)</span>, y la guarda en <code>statistics_</code>; el guion bajo final indica que se ha estimado a partir de los datos. <code>transform</code> imputa ese <span class="math inline">\(4\)</span> en los dos valores ausentes, el de train y el de los datos nuevos; el <span class="math inline">\(20\)</span> nuevo no interviene. Los dobles corchetes mantienen una tabla de una columna, que es lo que espera <code>scikit-learn</code>.</p>
 <p><strong>Aplicación a los datos.</strong></p>
 <div class="codigo-clave">
-<div id="c5ff513d" class="cell" data-execution_count="7">
+<div id="35c395ef" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>imputador <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>numericas_train <span class="op">=</span> imputador.fit_transform(train[NUMERICAS])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.Series(imputador.statistics_, index<span class="op">=</span>NUMERICAS).to_string())</span>
@@ -711,7 +717,7 @@ number_of_reviews    24.0
 <li><code>handle_unknown="ignore"</code> permite transformar una categoría que no apareció en <code>fit</code>: la codifica con ceros en todas las indicadoras, igual que la referencia. Esta convención permite predecir, pero no implica que ambas categorías tengan el mismo efecto sobre la respuesta.</li>
 </ul>
 <div class="codigo-clave">
-<div id="466cc3f6" class="cell" data-execution_count="8">
+<div id="1b349319" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>codificador <span class="op">=</span> OneHotEncoder(</span>
@@ -731,7 +737,7 @@ Primeras filas:
 </div>
 </div>
 <p><strong>Aplicación a los datos.</strong> La referencia es <code>Entire home/apt</code>, la primera en orden alfabético, y quedan tres indicadoras.</p>
-<div id="821feb54" class="cell" data-execution_count="9">
+<div id="134da644" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>completo <span class="op">=</span> OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>).fit(train[CATEGORICAS])</span>
@@ -817,7 +823,7 @@ a+bz=\Bigl(a-\frac{b\,\bar x}{s_x}\Bigr)+\frac{b}{s_x}\,x,
 <p>El argumento se repite columna a columna, siempre que el modelo tenga intercepto. Los coeficientes, en cambio, sí cambian: el de <span class="math inline">\(z\)</span> es <span class="math inline">\(b=w_1s_x\)</span>, el cambio de la predicción cuando <span class="math inline">\(x\)</span> aumenta una desviación típica. Para comparar los coeficientes de dos ajustes hay que expresarlos en la misma escala.</p>
 <p><strong>Implementación en <code>scikit-learn</code>.</strong> El transformador es <code>StandardScaler</code>. <code>fit</code> guarda la media y la desviación típica de cada columna en <code>mean_</code> y <code>scale_</code>, y <code>transform</code> calcula <span class="math inline">\((x-\bar x)/s_x\)</span> con esos valores, también para observaciones nuevas. Una columna constante solo se centra, para no dividir por cero.</p>
 <div class="codigo-clave">
-<div id="8d0234cc" class="cell" data-execution_count="10">
+<div id="7f243e77" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>escalador <span class="op">=</span> StandardScaler()</span>
@@ -836,7 +842,7 @@ Desviaciones después: [1. 1. 1.]</code></pre>
 </div>
 </div>
 <p><strong>Aplicación a los datos.</strong> Las columnas estandarizadas de train tienen desviación típica uno y media cero, salvo errores de redondeo del orden de <span class="math inline">\(10^{-17}\)</span>. Para medir el efecto sobre el descenso de gradiente, ajustamos la regresión de <code>price</code> sobre las tres columnas imputadas, con la columna de unos, mediante el descenso de gradiente del capítulo 3: una vez con las columnas originales y otra con las estandarizadas.</p>
-<div id="510f39f8" class="cell" data-execution_count="11">
+<div id="0680a4e6" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
@@ -901,7 +907,7 @@ Tras 50 iteraciones, estandarizadas con lr=0.1: 8476.4</code></pre>
 <div id="fig-escala-descenso" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-escala-descenso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="484a1279" class="cell" data-execution_count="12">
+<div id="109801d9" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -989,7 +995,7 @@ Figura&nbsp;5.1: Riesgo en train durante 200 iteraciones de descenso de gradient
 </div>
 <p>El preprocesamiento de las columnas numéricas es un pipeline de dos pasos:</p>
 <div class="codigo-clave">
-<div id="afbb045e" class="cell" data-execution_count="13">
+<div id="8f65cd7a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>preparacion_numerica <span class="op">=</span> Pipeline([</span>
@@ -1011,7 +1017,7 @@ Figura&nbsp;5.1: Riesgo en train durante 200 iteraciones de descenso de gradient
 <p><span class="theorem-title"><strong>Definición 5.9 (ColumnTransformer)</strong></span> Un <strong><code>ColumnTransformer</code></strong> aplica un tratamiento a cada grupo de columnas y concatena sus resultados. Cada tratamiento se indica con un triplete <code>(nombre, tratamiento, columnas)</code>. Las columnas que no aparecen en ningún triplete se descartan.</p>
 </div>
 <div class="codigo-clave">
-<div id="04d0f6a9" class="cell" data-execution_count="14">
+<div id="2f958f08" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>preparacion <span class="op">=</span> ColumnTransformer([</span>
@@ -1033,7 +1039,7 @@ Columnas: ['num__accommodates' 'num__bedrooms' 'num__number_of_reviews'
 <p>La matriz tiene seis columnas: las tres numéricas, imputadas y estandarizadas, y las tres indicadoras de <code>room_type</code>. <code>price</code> y el resto de columnas de la tabla se descartan. Tampoco hay columna de unos, porque <code>LinearRegression()</code> estima su propio intercepto.</p>
 <p>El procedimiento completo añade la regresión como último paso:</p>
 <div class="codigo-clave">
-<div id="077e72d5" class="cell" data-execution_count="15">
+<div id="8942ef26" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>procedimiento <span class="op">=</span> Pipeline([</span>
@@ -1087,7 +1093,7 @@ Columnas: ['num__accommodates' 'num__bedrooms' 'num__number_of_reviews'
 </ul>
 <p>La función siguiente construye un pipeline nuevo en cada llamada, de modo que ninguna vuelta reutiliza parámetros estimados en otra. La lista <code>categoricas</code> está vacía en A y contiene <code>room_type</code> en B; <code>ColumnTransformer</code> omite un tratamiento si su lista de columnas está vacía.</p>
 <div class="codigo-clave">
-<div id="fedcd094" class="cell" data-execution_count="16">
+<div id="95eb5711" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crear_procedimiento(categoricas):</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    numerico <span class="op">=</span> Pipeline([</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"imputar"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
@@ -1106,7 +1112,7 @@ Columnas: ['num__accommodates' 'num__bedrooms' 'num__number_of_reviews'
 </div>
 <p>Los bloques los fija <code>KFold</code>, como en el capítulo 4. Guardamos los cinco pares de índices para usar exactamente los mismos en A y B.</p>
 <div class="codigo-clave">
-<div id="833861df" class="cell" data-execution_count="17">
+<div id="17834242" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>particion <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
@@ -1138,7 +1144,7 @@ Medias: 8580.6 8448.7</code></pre>
 </div>
 <p>Respecto al bucle del capítulo 4 solo cambia el objeto que se ajusta en cada vuelta, que ahora es el pipeline completo. Las medias de CV son 8580.6 para A y 8448.7 para B, en euros al cuadrado. Para elegir aplicamos la regla emparejada de un error típico de <a href="04-evaluacion.html#def-regla-un-error-tipico" class="quarto-xref">Definición&nbsp;<span>4.6</span></a>: A es el procedimiento más sencillo, porque usa menos columnas.</p>
 <div class="codigo-clave">
-<div id="a26fbe7b" class="cell" data-execution_count="18">
+<div id="533d5470" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>diferencias <span class="op">=</span> riesgos_a <span class="op">-</span> riesgos_b</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>desventaja_a <span class="op">=</span> diferencias.mean()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ee_diferencia <span class="op">=</span> diferencias.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(<span class="bu">len</span>(diferencias))</span>
@@ -1191,7 +1197,7 @@ Procedimiento elegido: B</code></pre>
 <h2 class="anchored" data-anchor-id="evaluación-final">Evaluación final</h2>
 <p>Una vez elegido el procedimiento, se ajusta con todo train, lo que fija las medianas, las categorías, las medias, las desviaciones típicas y los coeficientes definitivos. Solo entonces se evalúa en test. El modelo nulo predice la media de <code>price</code> en train.</p>
 <div class="codigo-clave">
-<div id="36551b6e" class="cell" data-execution_count="19">
+<div id="80237304" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>modelo_final <span class="op">=</span> crear_procedimiento(categoricas_elegidas).fit(train, y_train)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">"price"</span>].to_numpy()</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>perdidas <span class="op">=</span> (y_test <span class="op">-</span> modelo_final.predict(test)) <span class="op">**</span> <span class="dv">2</span></span>

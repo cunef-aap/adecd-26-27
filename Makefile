@@ -9,6 +9,7 @@ check:                       ## centinelas, estilo y correspondencia de ejercici
 	python scripts/comprueba-ejercicios-capitulo.py capitulos/02-aprender-minimizando.qmd problemas/hoja-02.qmd
 	python scripts/comprueba-ejercicios-capitulo.py capitulos/03-modelos-lineales.qmd problemas/hoja-03.qmd
 	python scripts/comprueba-ejercicios-capitulo.py capitulos/04-evaluacion.qmd problemas/hoja-04.qmd
+	python scripts/comprueba-ejercicios-capitulo.py capitulos/05-preparacion-datos.qmd problemas/hoja-05.qmd
 	python scripts/test-comprueba-ejercicios-capitulo.py
 	python scripts/test-publicado.py
 	python scripts/test-enlaces-publicados.py

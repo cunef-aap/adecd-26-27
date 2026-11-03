@@ -76,20 +76,23 @@ qué valores predicen mejor fuera de la muestra.
 | sobreajuste | *overfitting* | usamos ambos |
 | validación cruzada de $K$ bloques | *K-fold cross validation* | decimos el nombre **en inglés** |
 | dejar uno fuera | *leave-one-out* | el caso $K=\ntrain$, también en inglés |
-| fuga de información | *data leakage* | @def-fuga del cap. 5 |
-| fuga temporal | *temporal leakage* | @def-fuga-temporal |
+| preprocesamiento | *preprocessing* | transformaciones de la tabla antes del ajuste; sus parámetros se estiman con train |
+| variable numérica / categórica | *numerical / categorical variable* | @def-tipos-variable; la categórica es ordinal o nominal |
 | valor ausente | *missing value* | @def-ausente |
-| valor extremo | *outlier* | @def-extremo; distinguir error de cola legítima |
+| imputación | *imputation* | sustituir un valor ausente por un valor calculado con los observados |
+| indicadora de valor ausente | *missingness indicator* | la columna que dice si el valor faltaba |
+| valor extremo | *outlier* | valor muy alejado del resto; no implica necesariamente un error |
+| codificación indicadora | *one-hot encoding* | una columna por categoría, @def-onehot |
 | categoría de referencia | *reference level*, *baseline category* | @def-referencia |
-| cardinalidad | *cardinality* | número de categorías distintas |
-| recortar, winsorizar | *clipping*, *winsorising* | sustituir la cola por un percentil |
-| imputación | *imputation* | rellenar un valor ausente |
-| indicador de ausencia | *missingness indicator* | la columna que dice si el valor faltaba |
-| codificación indicadora | *one-hot encoding* | una columna por categoría |
-| trampa de la variable ficticia | *dummy variable trap* | el rango deficiente de @prp-trampa-ficticia |
-| reparto por grupos | *group split* | separa grupos enteros, no filas |
+| trampa de la variable ficticia | *dummy variable trap* | la dependencia lineal de @prp-trampa-ficticia |
+| variable ficticia | *dummy variable* | en el curso, **variable indicadora** |
+| estandarización | *standardization* | restar la media y dividir por la desviación típica, ambas de train |
+| transformador | *transformer* | `fit` estima los valores del tratamiento; `transform` los aplica, @def-transformador |
+| pipeline | *pipeline* | decimos el nombre **en inglés**; preprocesamiento y regresión en un solo objeto, @def-pipeline |
+| transformador por columnas | *column transformer* | decimos `ColumnTransformer`; un tratamiento por grupo de columnas, @def-columntransformer |
+| fuga de información | *data leakage* | @def-fuga |
+| fuga temporal | *temporal leakage* | @def-fuga-temporal |
 | conjunto de entrenamiento / de test | *training / test set* | decimos **train** y **test**, también en el código: `X_train` |
-| variable ficticia | *dummy variable* | |
 | regresión contraída | *ridge regression* | decimos **ridge** |
 | variable predictora, predictor | *feature, predictor* | en el cap. 6, **característica** es una variable construida |
 | instancia, atributo | *instance, feature* | vocabulario del curso anterior |
