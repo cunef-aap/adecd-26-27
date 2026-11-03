@@ -19,7 +19,7 @@ capitulos/03-modelos-lineales.qmd
 
 [Evaluación y datos]
 capitulos/04-evaluacion.qmd
-- capitulos/05-preparacion-datos.qmd
+capitulos/05-preparacion-datos.qmd
 
 [Complejidad y generalización]
 - capitulos/06-complejidad.qmd
