@@ -32,6 +32,7 @@ book:
         - problemas/hoja-02.qmd
         - problemas/hoja-03.qmd
         - problemas/hoja-04.qmd
+        - problemas/hoja-05.qmd
   appendices:
     - curso/colab.qmd
     - curso/clases-python.qmd

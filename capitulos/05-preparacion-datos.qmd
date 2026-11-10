@@ -234,16 +234,17 @@ dato.
 ::: {#exr-preparacion-imputacion}
 
 Una variable numérica tiene estos valores en train: $(2,4,\mathrm{NaN},10,\mathrm{NaN})$.
-En validación toma los valores $(\mathrm{NaN},8)$. Vamos a imputar por la mediana de train
-y añadir una indicadora que valga uno cuando el dato original falte.
+En validación toma los valores $(\mathrm{NaN},8)$. Queremos imputar por la mediana y
+añadir una indicadora de valor ausente.
 
-a. Calcula la mediana que debe guardar el imputador. ¿Se incluyen los `NaN` al calcularla?
+a. Determina el valor de imputación.
 b. Escribe las dos columnas resultantes, valor imputado e indicadora, para train y para
    validación, manteniendo el orden de las filas.
 c. Para preparar validación, ¿debes llamar a `fit_transform` o a `transform` sobre el
    imputador ya ajustado? Explica la diferencia.
-d. ¿La imputación recupera el valor que faltaba? Explica qué permite distinguir la
-   indicadora entre una observación cuyo valor era 4 y otra rellenada con 4.
+d. Ajustamos una regresión lineal usando las dos columnas del apartado b. ¿Qué
+   restricción impondríamos a sus predicciones si eliminásemos la indicadora y
+   conservásemos solo la columna imputada? Razona usando los datos del ejercicio.
 :::
 
 ### Codificación de variables categóricas {#sec-categoricas}
@@ -370,21 +371,21 @@ rango 4, y el ajuste vuelve a ser único.
 
 ::: {#exr-preparacion-categorias}
 
-Una variable categórica toma los valores $(A,B,A,C)$ en train. Usamos $A$ como referencia
-y dos indicadoras, $d_B$ y $d_C$, que valen uno cuando la categoría es $B$ o $C$,
-respectivamente. Un modelo ya ajustado predice
+Una variable categórica toma los valores $(A,B,A,C)$ en train. Con $A$ como categoría de
+referencia, un modelo ya ajustado predice
 $$
 \modelh = 50+20d_B-10d_C.
 $$
 
-a. Escribe la matriz de diseño de las cuatro observaciones, con columnas
-   $(1,d_B,d_C)$, y calcula las predicciones.
+a. Escribe la matriz de diseño de las cuatro observaciones, incluyendo el intercepto,
+   y calcula las predicciones.
 b. Interpreta el intercepto y los dos coeficientes. ¿Qué predice para una observación
    de la categoría de referencia?
 c. El codificador se ajustó con esas tres categorías y usa
    `OneHotEncoder(drop="first", handle_unknown="ignore")`. Llega una observación de una
-   categoría nueva $D$. Se codifica con ceros en las dos indicadoras: calcula la predicción
-   y explica por qué eso no demuestra que $D$ se comporte como $A$.
+   categoría nueva $D$. Escribe su fila de la matriz de diseño y calcula la predicción.
+   ¿Podemos deducir de este resultado que la respuesta media de $D$ coincide con la de
+   $A$? Razona la respuesta.
 :::
 
 ### Escalado de variables numéricas

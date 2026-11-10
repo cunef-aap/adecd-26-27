@@ -23,35 +23,36 @@ soluciones después para comprobarlas.
 ::: {#exr-h5-imputacion}
 
 Una variable numérica tiene estos valores en train: $(2,4,\mathrm{NaN},10,\mathrm{NaN})$.
-En validación toma los valores $(\mathrm{NaN},8)$. Vamos a imputar por la mediana de train
-y añadir una indicadora que valga uno cuando el dato original falte.
+En validación toma los valores $(\mathrm{NaN},8)$. Queremos imputar por la mediana y
+añadir una indicadora de valor ausente.
 
-a. Calcula la mediana que debe guardar el imputador. ¿Se incluyen los `NaN` al calcularla?
+a. Determina el valor de imputación.
 b. Escribe las dos columnas resultantes, valor imputado e indicadora, para train y para
    validación, manteniendo el orden de las filas.
 c. Para preparar validación, ¿debes llamar a `fit_transform` o a `transform` sobre el
    imputador ya ajustado? Explica la diferencia.
-d. ¿La imputación recupera el valor que faltaba? Explica qué permite distinguir la
-   indicadora entre una observación cuyo valor era 4 y otra rellenada con 4.
+d. Ajustamos una regresión lineal usando las dos columnas del apartado b. ¿Qué
+   restricción impondríamos a sus predicciones si eliminásemos la indicadora y
+   conservásemos solo la columna imputada? Razona usando los datos del ejercicio.
 :::
 
 ::: {#exr-h5-categorias}
 
-Una variable categórica toma los valores $(A,B,A,C)$ en train. Usamos $A$ como referencia
-y dos indicadoras, $d_B$ y $d_C$, que valen uno cuando la categoría es $B$ o $C$,
-respectivamente. Un modelo ya ajustado predice
+Una variable categórica toma los valores $(A,B,A,C)$ en train. Con $A$ como categoría de
+referencia, un modelo ya ajustado predice
 $$
 \modelh = 50+20d_B-10d_C.
 $$
 
-a. Escribe la matriz de diseño de las cuatro observaciones, con columnas
-   $(1,d_B,d_C)$, y calcula las predicciones.
+a. Escribe la matriz de diseño de las cuatro observaciones, incluyendo el intercepto,
+   y calcula las predicciones.
 b. Interpreta el intercepto y los dos coeficientes. ¿Qué predice para una observación
    de la categoría de referencia?
 c. El codificador se ajustó con esas tres categorías y usa
    `OneHotEncoder(drop="first", handle_unknown="ignore")`. Llega una observación de una
-   categoría nueva $D$. Se codifica con ceros en las dos indicadoras: calcula la predicción
-   y explica por qué eso no demuestra que $D$ se comporte como $A$.
+   categoría nueva $D$. Escribe su fila de la matriz de diseño y calcula la predicción.
+   ¿Podemos deducir de este resultado que la respuesta media de $D$ coincide con la de
+   $A$? Razona la respuesta.
 :::
 
 ::: {#exr-h5-escalado}
@@ -95,44 +96,45 @@ c. ¿Cuántas veces se ajusta el imputador durante esta CV? Tras elegir el proce
 
 ::: {#exr-h5-valores-ausentes}
 
-Al explorar únicamente train, observas lo siguiente: la puntuación media de las reseñas
-falta en los anuncios que todavía no tienen reseñas; el número de dormitorios falta en
-un 30 % de las habitaciones privadas y en un 5 % de las viviendas completas.
+Queremos predecir el precio por noche de anuncios de Airbnb en Madrid que ya están
+activos. La base contiene el tipo de alojamiento, el número de dormitorios y la
+puntuación media de las reseñas. Al explorar solo train, vemos que la puntuación falta
+en los anuncios sin reseñas. El número de dormitorios falta en un 30 % de las
+habitaciones privadas y en un 5 % de las viviendas completas.
 
 a. Explica por qué un anuncio sin reseñas no debería interpretarse como un anuncio con
    puntuación cero. Propón una forma de conservarlo en el ajuste.
 b. ¿Qué información puede aportar una indicadora de valor ausente de dormitorios, además
-   de la columna imputada? ¿Su utilidad predictiva está garantizada?
-c. Un compañero afirma: "Borro todas las filas con algún valor ausente y así elimino el
-   problema". Explica qué pierde y por qué la muestra restante puede dejar de representar
-   los anuncios para los que queremos predecir.
-d. ¿Las diferencias del 30 % y el 5 % permiten saber cuál era el número de dormitorios
-   que faltaba en cada anuncio? Justifica la respuesta.
+   de la columna imputada?
+c. Se propone eliminar los anuncios sin número de dormitorios. Si train contiene
+   únicamente 100 habitaciones privadas y 100 viviendas completas, ¿cuántos anuncios de cada tipo
+   quedarían? ¿Se conservaría la proporción de ambos tipos en la muestra?
+d. Una compañera concluye que, como el 30 % y el 5 % son distintos, añadir la indicadora
+   reducirá el error de predicción del precio. ¿Es válida esa conclusión? Describe cómo
+   comprobarías la utilidad predictiva de la indicadora.
 :::
 
 ::: {#exr-h5-ficticia}
 
-Cada observación pertenece a una de $C$ categorías y todas aparecen en la muestra.
-Escribimos una matriz de diseño con una columna de unos y las $C$ indicadoras completas:
-$\X=(\onesv,D_1,\ldots,D_C)$.
+Una variable categórica toma los valores $(A,B,A,C,B,C)$ en seis observaciones, en ese
+orden. Queremos ajustar una regresión lineal con intercepto.
 
-a. Demuestra que $\onesv=D_1+\cdots+D_C$ y explica por qué las columnas no son
-   linealmente independientes.
-b. Comprueba que sumar una constante $t$ al intercepto y restarla de todos los
-   coeficientes de las indicadoras deja las predicciones iguales. ¿Pueden ser únicos
-   los coeficientes del ajuste por mínimos cuadrados?
-c. Quitamos $D_1$. Si
-   $a_0\onesv+a_2D_2+\cdots+a_CD_C=\zerov$, mira primero una fila de la categoría 1 y
-   después una de cada categoría restante. Demuestra que todos los $a_j$ son cero.
-d. Si añadimos otras predictoras numéricas, ¿garantiza el apartado c que toda la matriz
-   tenga rango completo? Explica qué has demostrado y qué no.
+a. Escribe la matriz de diseño que incluye una indicadora por categoría y demuestra
+   que sus columnas son linealmente dependientes.
+b. Demuestra que los coeficientes que minimizan el riesgo cuadrático empírico no pueden ser
+   únicos con esa matriz.
+c. Usamos ahora $A$ como categoría de referencia. Escribe la nueva matriz de diseño
+   y demuestra que sus columnas son linealmente independientes.
+d. A la matriz del apartado c añadimos una predictora numérica con valores
+   $(1,2,1,3,2,3)$. ¿Siguen siendo independientes sus columnas? Justifica la respuesta.
 :::
 
 ::: {#exr-h5-preparar-predecir}
 
-Un modelo ya ajustado usa un relleno de 4 para una predictora numérica $x$ y la estandariza
-con media 4 y desviación típica 2. Para una variable categórica usa $A$ como referencia
-y las indicadoras $d_B,d_C$. El modelo resultante es
+El preprocesamiento aprendido con train sustituye los valores ausentes de una predictora
+numérica $x$ por 4 y después la estandariza con media 4 y desviación típica 2. Estos tres
+valores quedan fijados al terminar el ajuste. Para una variable categórica usa $A$ como
+referencia y las indicadoras $d_B,d_C$. El modelo ajustado es
 $$
 \modelh=10+2z+3d_B-d_C,\qquad z=(x_{\mathrm{imputado}}-4)/2.
 $$
@@ -146,9 +148,10 @@ Evaluamos estas tres observaciones de test:
 
 a. Escribe la tabla preprocesada con columnas $(z,d_B,d_C)$ y calcula las predicciones.
 b. Calcula el vector de residuos $\resid=\yv-\widehat{\yv}$, el MSE y el RMSE.
-c. Para predecir el primer caso, un compañero propone sustituir 4 por la media de los
-   valores observados de test. Calcula ese relleno y la nueva predicción, y explica por
-   qué ya no estaría evaluando la transformación fijada con train.
+c. Para predecir el primer caso, una compañera propone imputar con la media de los
+   valores observados de test. Calcula ese valor de imputación y la nueva predicción,
+   manteniendo la media y la desviación típica usadas para estandarizar. Explica por
+   qué ya no estaría evaluando el preprocesamiento fijado con train.
 :::
 
 ::: {#exr-h5-elegir-preparacion}
@@ -162,10 +165,11 @@ de CV; todo el preprocesamiento se estima de nuevo dentro de cada vuelta. Obtene
 | $A$ | 10 | 12 | 8 | 14 | 11 |
 | $B$ | 9 | 13 | 7 | 15 | 10 |
 
-Cada celda es un MSE. El error típico aproximado de la diferencia media $A-B$ es $0.49$.
+Cada celda es un MSE.
 
 a. Calcula la media de CV de cada procedimiento y las cinco diferencias emparejadas.
-b. Aplica la regla de un error típico, prefiriendo $A$ por usar menos variables.
+b. Estima el error típico de la diferencia media y aplica la regla de un error típico
+   para elegir un procedimiento. Justifica la elección.
 c. ¿La elección demuestra que la variable categórica no contiene información útil?
 d. Tras elegir, se descubre que $B$ tiene menor MSE de test. Explica por qué cambiar a
    $B$ y seguir presentando ese mismo test como evaluación final rompería el protocolo.
@@ -240,12 +244,15 @@ d. Para repetir el ajuste en otra vuelta de CV, ¿con qué filas debe ajustarse 
 ::: {#exr-h5-fuga-temporal}
 
 Una tienda quiere predecir, al terminar cada mes, sus ventas del mes siguiente. Tiene
-datos de enero a junio, una fila por mes.
+datos de enero a junio, una fila por mes. La respuesta de cada fila son las ventas de
+ese mes, que se predicen antes de que empiece. Reservamos junio para test.
 
-a. Propón un reparto entre train y test que reproduzca ese uso. Explica por qué no
-   deberíamos entrenar con junio para evaluar predicciones de marzo.
-b. Dentro de train, ¿cómo deben formarse las vueltas de la validación cruzada? Escribe
-   las vueltas para tu reparto del apartado a.
+a. Indica qué meses forman train. Explica por qué entrenar con junio para evaluar una
+   predicción de marzo no reproduce el uso previsto.
+b. Dentro de train queremos evaluar tres predicciones: las ventas de marzo, abril y
+   mayo. Para cada una, indica qué meses usarías para ajustar el procedimiento y qué mes
+   usarías para validarlo. Utiliza en cada ajuste todos los meses anteriores disponibles
+   y presenta los tres repartos en una tabla.
 c. Una variable predictora es el número de reseñas que recibe la tienda **durante el mes
    que se quiere predecir**. ¿Basta con ordenar bien las filas por fecha para poder
    usarla?
