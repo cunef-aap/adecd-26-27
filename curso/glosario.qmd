@@ -15,14 +15,16 @@ $$
 | coeficientes | $\mathbf{w} = (w_0,\dots,w_p)^{\mathsf{T}}$ | |
 | característica | $\basis_j(\xv)$ | una columna construida por el mapa |
 | mapa de características | $\basisv$ | de $\Real^{\nfeat}$ a $\Real^{\nbasis}$, @def-mapa-caracteristicas |
-| matriz de características | $\Phimat$ | una fila por observación, $\nbasis$ columnas |
-| número de características | $\nbasis$ | frente a $\nfeat$, que cuenta variables predictoras |
+| matriz de características | $\Phimat$ | una fila por observación: la columna de unos y las $\nbasis$ características |
+| número de características | $\nbasis$ | frente a $\nfeat$, que cuenta variables predictoras; en el mapa polinómico de una variable, el grado |
+| modelo medio | $\bar{\modelh}(\xv)$ | esperanza de la predicción en $\xv$ sobre las muestras de train, @eq-modelo-medio |
+| ajuste ridge | $\coefridge$ | minimizador del riesgo penalizado de @def-ridge |
 | riesgo empírico | $\hat{R}(\mathbf{w})$ | **siempre** normalizado por $1/n$ |
 | riesgo verdadero | $R(f)$ | esperanza sobre datos nuevos |
 | riesgo esperado del procedimiento | $\bar{R}_n$ | esperanza del riesgo verdadero sobre muestras de entrenamiento de tamaño $n$ |
 | escala del ruido | $\sigma$ | se estima en el capítulo 2 |
 | tasa de aprendizaje | $\alpha$ | |
-| regularización | $\lambda$ | **scikit-learn la llama `alpha=`** |
+| regularización | $\lambda$ | **scikit-learn la llama `alpha=`**, en otra escala: `Ridge(alpha=n * lam)` y `Lasso(alpha=lam / 2)` |
 | vector de predictoras | $\mathbf{x}_i \in \mathbb{R}^{p+1}$ | fila $i$ de $\mathbf{X}$, con $x_{i0}=1$ |
 | producto escalar | $\langle \mathbf{x}_i, \mathbf{w} \rangle = \mathbf{x}_i^{\mathsf{T}}\mathbf{w}$ | la predicción de la observación $i$ |
 | predicciones ajustadas | $\mathbf{X}\mathbf{w}$ | un valor por observación |
@@ -76,6 +78,11 @@ qué valores predicen mejor fuera de la muestra.
 | sobreajuste | *overfitting* | usamos ambos |
 | validación cruzada de $K$ bloques | *K-fold cross validation* | decimos el nombre **en inglés** |
 | dejar uno fuera | *leave-one-out* | el caso $K=\ntrain$, también en inglés |
+| interacción | *interaction* | producto de variables predictoras, @fig-interaccion |
+| sesgo, varianza | *bias, variance* | los dos términos de @thm-descomposicion que dependen del procedimiento |
+| hiperparámetro | *hyperparameter* | se fija antes del ajuste y se elige con validación cruzada: el grado, $\lambda$ |
+| contracción | *shrinkage* | lo que hace ridge con los coeficientes, @prp-ridge-un-coeficiente |
+| lasso | *lasso* | decimos **lasso**; anula coeficientes, @def-lasso |
 | preprocesamiento | *preprocessing* | transformaciones de la tabla antes del ajuste; sus parámetros se estiman con train |
 | variable numérica / categórica | *numerical / categorical variable* | @def-tipos-variable; la categórica es ordinal o nominal |
 | valor ausente | *missing value* | @def-ausente |

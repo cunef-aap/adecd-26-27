@@ -169,7 +169,7 @@ _referencia/   material de consulta, no se publica (ignorado por git)
 
 ## Créditos
 
-La estructura y buena parte del enfoque de los capítulos 1-3 y 6-8 siguen las notas de
+La estructura y buena parte del enfoque de los capítulos 1-3 y 6 siguen las notas de
 [Phil Chodrow](https://www.philchodrow.prof/ml-notes-update/) (CSCI 0451, Middlebury
 College), usadas con agradecimiento para fines docentes.
 

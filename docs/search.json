@@ -54,7 +54,7 @@
     "href": "index.html#recorrido-del-curso",
     "title": "Aprendizaje Automático: Predicción",
     "section": "Recorrido del curso",
-    "text": "Recorrido del curso\nEl curso se estructura como sigue:\n\n\n\n\n\n\n\n\nBloque del curso\nCapítulos\nContenido principal\n\n\n\n\nFundamentos del aprendizaje predictivo\n1-3\nseñal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales\n\n\nEvaluación y datos\n4-5\nmétricas, validación cruzada, fugas y pipelines de preparación\n\n\nComplejidad y generalización\n6-7\ncaracterísticas, sesgo-varianza y regularización",
+    "text": "Recorrido del curso\nEl curso se estructura como sigue:\n\n\n\n\n\n\n\n\nBloque del curso\nCapítulos\nContenido principal\n\n\n\n\nFundamentos del aprendizaje predictivo\n1-3\nseñal y ruido, verosimilitud, pérdidas, gradientes y modelos lineales\n\n\nEvaluación y datos\n4-5\nmétricas, validación cruzada, fugas y pipelines de preprocesamiento\n\n\nComplejidad y generalización\n6\ncaracterísticas, sesgo y varianza, ridge y lasso",
     "crumbs": [
       "Presentación de la asignatura"
     ]

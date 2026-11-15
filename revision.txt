@@ -3,3 +3,6 @@
 problemas/hoja-03-soluciones.qmd
 problemas/hoja-04-soluciones.qmd
 problemas/hoja-05-soluciones.qmd
+capitulos/06-complejidad.qmd
+problemas/hoja-06.qmd
+problemas/hoja-06-soluciones.qmd
