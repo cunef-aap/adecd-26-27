@@ -26,6 +26,9 @@ book:
       chapters:
         - capitulos/04-evaluacion.qmd
         - capitulos/05-preparacion-datos.qmd
+    - part: "Complejidad y generalización"
+      chapters:
+        - capitulos/06-complejidad.qmd
     - part: "Hojas de problemas"
       chapters:
         - problemas/hoja-01.qmd

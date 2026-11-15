@@ -18,7 +18,7 @@ import style
 ```
 :::
 
-<!-- Activar el enlace a Colab cuando se publique este capítulo; cuaderno de revisión en _completo/live-notebooks/06-complejidad.ipynb. -->
+{{< include ../assets/includes/_colab-link.qmd >}}
 
 ## Introducción
 
