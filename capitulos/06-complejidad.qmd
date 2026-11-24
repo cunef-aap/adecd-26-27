@@ -582,27 +582,49 @@ varianza.
 
 En un punto $x_0$, la respuesta de una observación nueva es $Y=\model(x_0)+\varepsilon$, con
 $\model(x_0)=1$ y un ruido $\varepsilon$ de media cero y varianza $\noise^2=0.04$. Un
-procedimiento se ajusta con una muestra de entrenamiento y predice $\modelh$ en $x_0$.
-Supón que solo hay cuatro muestras posibles, igualmente probables, y que con ellas el
-procedimiento predice $0.6$, $0.8$, $1.0$ y $1.2$.
+procedimiento se ajusta con una muestra de entrenamiento $\data$ y predice
+$\modelh_{\data}(x_0)$ en $x_0$. Supón que solo hay cuatro muestras posibles, igualmente
+probables, y que con ellas el procedimiento predice $0.6$, $0.8$, $1.0$ y $1.2$.
 
-El error cuadrático esperado en $x_0$ es la media de $(Y-\modelh)^2$ sobre las cuatro
-muestras y sobre el ruido de $Y$. Se calcula como el error cuadrático medio de los capítulos
-anteriores, la media de los cuadrados de respuesta menos predicción, pero con todas las
-respuestas posibles en $x_0$, ponderadas por su probabilidad, en lugar de con una muestra de
-test. La predicción se compara con la respuesta $Y$, que incluye el ruido, y no con la
-señal; de ahí el término $\noise^2$ de @eq-descomposicion.
+Hay dos cantidades distintas, según se fije o no la muestra de entrenamiento:
 
-a. Calcula el modelo medio en $x_0$, el sesgo al cuadrado y la varianza, y el error
-   cuadrático esperado con @eq-descomposicion.
-b. Comprueba el resultado sin la descomposición. Demuestra que, para una predicción fija
-   $\modelh$, $\Esub{\varepsilon}{(Y-\modelh)^2}=(1-\modelh)^2+\noise^2$, y promedia esa
-   cantidad sobre las cuatro predicciones. ¿Por qué no es cero el error de la predicción
-   $1.0$, que coincide con la señal?
-c. Un procedimiento más rígido, ajustado con las mismas muestras, predice $0.7$, $0.8$,
+- **Error de un modelo fijo.** Fijada la muestra $\data$, el modelo ajustado es fijo, y su
+  error en $x_0$ es la esperanza sobre el ruido de la observación nueva,
+  $$
+  \Esub{\varepsilon}{\bigl(Y-\modelh_{\data}(x_0)\bigr)^2} .
+  $$
+  Es la cantidad que estima el error de test de los capítulos anteriores. Con $m$
+  observaciones nuevas en $x_0$, de respuestas $y_1,\ldots,y_m$, el error de test es
+  $$
+  \Riskh_{\Dtest}=\frac{1}{m}\sum_{i=1}^{m}\bigl(y_i-\modelh_{\data}(x_0)\bigr)^2 ,
+  $$
+  y, por el argumento de @thm-test-insesgado, su esperanza es el error del modelo fijo.
+- **Error esperado del procedimiento.** Es el error anterior promediado sobre las muestras
+  de entrenamiento,
+  $$
+  \Esub{\data,\varepsilon}{\bigl(Y-\modelh_{\data}(x_0)\bigr)^2}
+  =\Esub{\data}{\Esub{\varepsilon}{\bigl(Y-\modelh_{\data}(x_0)\bigr)^2}} ,
+  $$
+  el lado izquierdo de @eq-descomposicion. Para estimarlo hacen falta muchas muestras de
+  entrenamiento, como en la simulación del capítulo: se ajusta el procedimiento con cada
+  una, se calcula el error de test de cada modelo y se promedian. Con datos reales solo
+  hay una muestra, y la validación cruzada sustituye esas muestras por los bloques de
+  ajuste de cada vuelta.
+
+a. Demuestra que el error del modelo fijo es
+   $\bigl(\model(x_0)-\modelh_{\data}(x_0)\bigr)^2+\noise^2$ y calcúlalo para cada una de
+   las cuatro muestras. ¿Por qué no es cero para la muestra que predice $1.0$, que
+   coincide con la señal?
+b. Se observan cuatro respuestas nuevas en $x_0$: $1.2$, $0.8$, $1.1$ y $0.9$. Calcula el
+   error de test del modelo que predice $0.8$ y compáralo con su error del apartado a.
+   ¿Por qué no coinciden?
+c. Calcula el error esperado del procedimiento promediando los cuatro errores del
+   apartado a. Calcula después el modelo medio, el sesgo al cuadrado y la varianza, y
+   comprueba con @eq-descomposicion que su suma más $\noise^2$ da el mismo valor.
+d. Un procedimiento más rígido, ajustado con las mismas muestras, predice $0.7$, $0.8$,
    $0.8$ y $0.9$. Calcula sus tres términos y su error esperado. ¿Cuál de los dos
    procedimientos predice mejor en $x_0$ y qué término lo explica?
-d. Si las muestras de entrenamiento tuvieran el doble de observaciones, ¿qué término
+e. Si las muestras de entrenamiento tuvieran el doble de observaciones, ¿qué término
    esperarías que disminuyera en el primer procedimiento? Justifica la respuesta.
 :::
 
