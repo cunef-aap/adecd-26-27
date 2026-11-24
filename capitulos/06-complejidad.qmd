@@ -580,14 +580,25 @@ varianza.
 
 ::: {#exr-descomposicion-punto}
 
-En un punto $x_0$, la señal vale $\model(x_0)=1$ y el ruido tiene varianza $\noise^2=0.04$.
-Un procedimiento, ajustado con cuatro muestras de entrenamiento igualmente probables,
-predice en $x_0$ los valores $0.6$, $0.8$, $1.0$ y $1.2$. Supón que esas cuatro son todas
-las muestras posibles.
+En un punto $x_0$, la respuesta de una observación nueva es $Y=\model(x_0)+\varepsilon$, con
+$\model(x_0)=1$ y un ruido $\varepsilon$ de media cero y varianza $\noise^2=0.04$. Un
+procedimiento se ajusta con una muestra de entrenamiento y predice $\modelh$ en $x_0$.
+Supón que solo hay cuatro muestras posibles, igualmente probables, y que con ellas el
+procedimiento predice $0.6$, $0.8$, $1.0$ y $1.2$.
 
-a. Calcula el modelo medio en $x_0$, el sesgo al cuadrado y la varianza.
-b. Calcula el error cuadrático esperado en $x_0$ con @eq-descomposicion. Compruébalo
-   promediando $(\model(x_0)-\modelh)^2+\noise^2$ sobre las cuatro predicciones.
+El error cuadrático esperado en $x_0$ es la media de $(Y-\modelh)^2$ sobre las cuatro
+muestras y sobre el ruido de $Y$. Se calcula como el error cuadrático medio de los capítulos
+anteriores, la media de los cuadrados de respuesta menos predicción, pero con todas las
+respuestas posibles en $x_0$, ponderadas por su probabilidad, en lugar de con una muestra de
+test. La predicción se compara con la respuesta $Y$, que incluye el ruido, y no con la
+señal; de ahí el término $\noise^2$ de @eq-descomposicion.
+
+a. Calcula el modelo medio en $x_0$, el sesgo al cuadrado y la varianza, y el error
+   cuadrático esperado con @eq-descomposicion.
+b. Comprueba el resultado sin la descomposición. Demuestra que, para una predicción fija
+   $\modelh$, $\Esub{\varepsilon}{(Y-\modelh)^2}=(1-\modelh)^2+\noise^2$, y promedia esa
+   cantidad sobre las cuatro predicciones. ¿Por qué no es cero el error de la predicción
+   $1.0$, que coincide con la señal?
 c. Un procedimiento más rígido, ajustado con las mismas muestras, predice $0.7$, $0.8$,
    $0.8$ y $0.9$. Calcula sus tres términos y su error esperado. ¿Cuál de los dos
    procedimientos predice mejor en $x_0$ y qué término lo explica?
@@ -832,11 +843,11 @@ $$ {#eq-ridge-un-coeficiente}
 
 ::: {#exr-ridge-pendiente}
 
-Demuestra @prp-ridge-un-coeficiente.
+Demuestra @prp-ridge-un-coeficiente. Asume, como en su enunciado, que $x$ está
+estandarizada: $\frac{1}{\nobs}\sum_ix_i=0$ y $\frac{1}{\nobs}\sum_ix_i^2=1$.
 
 a. Calcula las derivadas parciales de $\Riskh_{\reg}(\coefzero,w)$ respecto de $\coefzero$ y
-   de $w$, y simplifícalas con $\frac{1}{\nobs}\sum_ix_i=0$ y
-   $\frac{1}{\nobs}\sum_ix_i^2=1$.
+   de $w$, y simplifícalas con esas dos igualdades.
 b. Iguálalas a cero y resuelve el sistema. Comprueba que se obtiene $\hat w_0=\ybar$ y
    $\hat w_{\reg}=c/(1+\reg)$.
 c. Comprueba que
@@ -987,16 +998,27 @@ $\reg>0$ la solución existe y es única siempre, también con más columnas que
 
 Mínimos cuadrados no depende de la unidad de las columnas: por @prp-estandarizar-ajuste,
 cambiar la escala de una columna cambia su coeficiente y deja las predicciones iguales.
-Ridge sí depende, porque penaliza los coeficientes. Si una longitud se mide en centímetros
-en lugar de en metros, su coeficiente de mínimos cuadrados se divide por 100, y su cuadrado,
-por $10^4$: medida en centímetros, la columna apenas paga penalización, y medida en
-kilómetros pagaría $10^6$ veces más que en metros. La penalización castigaría unas columnas
-más que otras por la unidad en que se miden, que no tiene que ver con su utilidad para
-predecir.
+Ridge sí depende, porque penaliza los coeficientes. Supongamos que el precio de una
+vivienda baja 2 unidades por cada kilómetro de distancia al centro. Con la distancia en
+metros, la misma relación tiene pendiente 0.002. Las predicciones no cambian, porque
+$2\cdot3=0.002\cdot3000$, pero la penalización $\reg w^2$ pasa de $4\reg$ a
+$4\cdot10^{-6}\reg$. Una columna con valores numéricos pequeños necesita un coeficiente
+grande para producir el mismo efecto sobre la predicción, y la penalización crece con el
+cuadrado del coeficiente.
 
-Estandarizar pone todas las columnas en la misma escala: cada coeficiente mide el cambio de
-la predicción cuando su columna aumenta una desviación típica, y la penalización compara los
-coeficientes en esos términos. En la práctica:
+Para una columna centrada con desviación típica $s_x$, es decir, con
+$\frac{1}{\nobs}\sum_ix_i^2=s_x^2$, el cálculo de @exr-ridge-pendiente con $s_x^2$ en
+lugar de 1 da $\hat w_{\reg}=\hat w_{\mathrm{OLS}}\,s_x^2/(s_x^2+\reg)$, y el caso
+$s_x^2=100$ se pide en @exr-escala-penalizacion. Si la distancia tiene una desviación
+típica de 2 km y $\reg=1$, en kilómetros $s_x^2=4$ y ridge conserva el 80 % de la
+pendiente de mínimos cuadrados; en metros, $s_x^2=4\cdot10^6$ y conserva más del 99.99 %.
+La penalización castigaría unas columnas más que otras por la unidad en que se miden, que
+no tiene que ver con su utilidad para predecir.
+
+Estandarizar pone todas las columnas en la misma escala, con $s_x=1$ sea cual sea la
+unidad original: cada coeficiente mide el cambio de la predicción cuando su columna
+aumenta una desviación típica, y la penalización compara los coeficientes en esos
+términos. En la práctica:
 
 1. se estandariza con `StandardScaler` dentro del pipeline, de modo que la media y la
    desviación típica se estiman solo con los datos de ajuste de cada vuelta, como en el

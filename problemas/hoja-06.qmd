@@ -22,6 +22,8 @@ soluciones después para comprobarlas.
 
 ## Ejercicios del capítulo
 
+Los ejercicios 1 a 6 son los ejercicios 6.1 a 6.6 del capítulo, en el mismo orden.
+
 ::: {#exr-h6-caracteristicas}
 
 
@@ -40,14 +42,25 @@ d. En el modelo $\coefzero+w_1x_1+w_2x_2+w_3x_1x_2$, calcula cuánto cambia la p
 ::: {#exr-h6-descomposicion-punto}
 
 
-En un punto $x_0$, la señal vale $\model(x_0)=1$ y el ruido tiene varianza $\noise^2=0.04$.
-Un procedimiento, ajustado con cuatro muestras de entrenamiento igualmente probables,
-predice en $x_0$ los valores $0.6$, $0.8$, $1.0$ y $1.2$. Supón que esas cuatro son todas
-las muestras posibles.
+En un punto $x_0$, la respuesta de una observación nueva es $Y=\model(x_0)+\varepsilon$, con
+$\model(x_0)=1$ y un ruido $\varepsilon$ de media cero y varianza $\noise^2=0.04$. Un
+procedimiento se ajusta con una muestra de entrenamiento y predice $\modelh$ en $x_0$.
+Supón que solo hay cuatro muestras posibles, igualmente probables, y que con ellas el
+procedimiento predice $0.6$, $0.8$, $1.0$ y $1.2$.
 
-a. Calcula el modelo medio en $x_0$, el sesgo al cuadrado y la varianza.
-b. Calcula el error cuadrático esperado en $x_0$ con @eq-descomposicion. Compruébalo
-   promediando $(\model(x_0)-\modelh)^2+\noise^2$ sobre las cuatro predicciones.
+El error cuadrático esperado en $x_0$ es la media de $(Y-\modelh)^2$ sobre las cuatro
+muestras y sobre el ruido de $Y$. Se calcula como el error cuadrático medio de los capítulos
+anteriores, la media de los cuadrados de respuesta menos predicción, pero con todas las
+respuestas posibles en $x_0$, ponderadas por su probabilidad, en lugar de con una muestra de
+test. La predicción se compara con la respuesta $Y$, que incluye el ruido, y no con la
+señal; de ahí el término $\noise^2$ de @eq-descomposicion.
+
+a. Calcula el modelo medio en $x_0$, el sesgo al cuadrado y la varianza, y el error
+   cuadrático esperado con @eq-descomposicion.
+b. Comprueba el resultado sin la descomposición. Demuestra que, para una predicción fija
+   $\modelh$, $\Esub{\varepsilon}{(Y-\modelh)^2}=(1-\modelh)^2+\noise^2$, y promedia esa
+   cantidad sobre las cuatro predicciones. ¿Por qué no es cero el error de la predicción
+   $1.0$, que coincide con la señal?
 c. Un procedimiento más rígido, ajustado con las mismas muestras, predice $0.7$, $0.8$,
    $0.8$ y $0.9$. Calcula sus tres términos y su error esperado. ¿Cuál de los dos
    procedimientos predice mejor en $x_0$ y qué término lo explica?
@@ -58,11 +71,11 @@ d. Si las muestras de entrenamiento tuvieran el doble de observaciones, ¿qué t
 ::: {#exr-h6-ridge-pendiente}
 
 
-Demuestra @prp-ridge-un-coeficiente.
+Demuestra @prp-ridge-un-coeficiente. Asume, como en su enunciado, que $x$ está
+estandarizada: $\frac{1}{\nobs}\sum_ix_i=0$ y $\frac{1}{\nobs}\sum_ix_i^2=1$.
 
 a. Calcula las derivadas parciales de $\Riskh_{\reg}(\coefzero,w)$ respecto de $\coefzero$ y
-   de $w$, y simplifícalas con $\frac{1}{\nobs}\sum_ix_i=0$ y
-   $\frac{1}{\nobs}\sum_ix_i^2=1$.
+   de $w$, y simplifícalas con esas dos igualdades.
 b. Iguálalas a cero y resuelve el sistema. Comprueba que se obtiene $\hat w_0=\ybar$ y
    $\hat w_{\reg}=c/(1+\reg)$.
 c. Comprueba que
@@ -163,7 +176,7 @@ d. Ajustamos ridge con el grado 10. Demuestra que, para cualquier $\reg>0$, su r
 Las respuestas siguen el modelo $y_i=\mu+\varepsilon_i$, sin variables predictoras, con
 ruidos independientes de media cero y varianza $\noise^2$. Con una muestra de tamaño
 $\nobs$, un procedimiento predice la constante $\modelh=a\,\ybar$ para cualquier
-observación nueva, con $0<a\leq1$ fijado de antemano. Usa que, sobre las muestras de
+observación nueva, con $0\leq a\leq1$ fijado de antemano. Usa que, sobre las muestras de
 entrenamiento $\data$, $\Esub{\data}{\ybar}=\mu$ y $\Varsub{\data}{\ybar}=\noise^2/\nobs$.
 
 a. Calcula el modelo medio, el sesgo al cuadrado y la varianza, y escribe el error

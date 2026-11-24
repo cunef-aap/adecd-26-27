@@ -311,6 +311,12 @@ window.Quarto = {
  <span class="menu-text">Hoja 5</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 6</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -439,7 +445,7 @@ R(g)=\sigma^2+\mathbb{E}_{P^\star}\!\left[ \bigl(f(X)-g(X)\bigr)^2 \right]\geq\s
 <p>El primer sumando no depende del modelo: ningún modelo tiene un riesgo verdadero menor que <span class="math inline">\(\sigma^2\)</span>, el suelo de ruido del capítulo 2, que en nuestro ejemplo vale 0.04. El segundo es la distancia media entre el modelo y la señal, y es la única parte del riesgo que un ajuste mejor puede reducir.</p>
 <p>En la simulación conocemos <span class="math inline">\(P^\star\)</span>, así que podemos generar tantas observaciones nuevas como queramos. Para estimar el riesgo verdadero de un modelo generamos un millón de observaciones nuevas y calculamos en ellas su error cuadrático medio: es un conjunto de test de un millón de observaciones, y por <a href="04-evaluacion.html#thm-test-insesgado" class="quarto-xref">Teorema&nbsp;<span>4.1</span></a> esa media estima el riesgo sin sesgo. Con un millón de observaciones, su error típico es muy pequeño: 0.0003 para la recta.</p>
 <p>Generamos 36 observaciones y ajustamos una recta por mínimos cuadrados.</p>
-<div id="3683d695" class="cell" data-execution_count="2">
+<div id="9b5d90b1" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -519,7 +525,7 @@ Riesgo verdadero de la recta, 36000 observaciones: 0.2360</code></pre>
 <div id="fig-senal-cruda" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-senal-cruda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="daf4d3f8" class="cell" data-execution_count="3">
+<div id="30713248" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -571,7 +577,7 @@ f_{\boldsymbol{w}}(x)=w_0+w_1x+w_2x^2+\cdots+w_{d}x^{d}.
 <p>El modelo es un polinomio de grado <span class="math inline">\(d\)</span>, con <span class="math inline">\(d+1\)</span> coeficientes. El grado mide la <strong>complejidad</strong> del modelo: todo polinomio de grado <span class="math inline">\(d\)</span> es un polinomio de grado <span class="math inline">\(d+1\)</span> con el último coeficiente nulo, así que al subir el grado la clase de hipótesis crece. En consecuencia, el riesgo en train del ajuste no puede aumentar al subir el grado, porque el mínimo sobre una clase es menor o igual que el mínimo sobre cualquier clase contenida en ella.</p>
 <p><strong>Implementación en <code>scikit-learn</code>.</strong> <code>PolynomialFeatures(grado, include_bias=False)</code> es un transformador (<a href="05-preparacion-datos.html#def-transformador" class="quarto-xref">Definición&nbsp;<span>5.3</span></a>) que construye las columnas <span class="math inline">\(x,x^2,\ldots,x^{d}\)</span>. Con <code>include_bias=False</code> no añade la columna de unos, porque <code>LinearRegression</code> estima el intercepto. Antes de elevar <span class="math inline">\(x\)</span> a potencias la estandarizamos: las potencias de un número entre 0 y 2 llegan a <span class="math inline">\(2^9=512\)</span>, sus columnas son casi proporcionales y el cálculo de los coeficientes pierde precisión. Estandarizar no cambia la clase de hipótesis, porque un polinomio de grado <span class="math inline">\(d\)</span> en <span class="math inline">\((x-\bar x)/s_x\)</span> es un polinomio del mismo grado en <span class="math inline">\(x\)</span>, y viceversa.</p>
 <div class="codigo-clave">
-<div id="194c1b3b" class="cell" data-execution_count="4">
+<div id="10e796a5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures, StandardScaler</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -585,7 +591,7 @@ f_{\boldsymbol{w}}(x)=w_0+w_1x+w_2x^2+\cdots+w_{d}x^{d}.
 </div>
 <p>Ajustamos los grados 1, 3 y 9 con las 36 observaciones y comparamos el riesgo en train con el riesgo verdadero:</p>
 <div class="codigo-clave">
-<div id="a69e3311" class="cell" data-execution_count="5">
+<div id="3b1f4e5a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'grado'</span><span class="sc">:&gt;5}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'riesgo en train'</span><span class="sc">:&gt;16}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'riesgo verdadero'</span><span class="sc">:&gt;17}</span><span class="ss">"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> grado <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">9</span>):</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    modelo <span class="op">=</span> crear_polinomio(grado).fit(x[:, <span class="va">None</span>], y)</span>
@@ -618,7 +624,7 @@ f_{\boldsymbol{w}}(x)=w_0+w_1x+w_2x^2+\cdots+w_{d}x^{d}.
 <div id="fig-tres-grados" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tres-grados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="a5c12b25" class="cell" data-execution_count="6">
+<div id="1f628566" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -660,7 +666,7 @@ Figura&nbsp;6.2: Polinomios de grado 1, 3 y 9 ajustados con las mismas 36 observ
 <div id="fig-interaccion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interaccion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="3463d0fc" class="cell" data-execution_count="7">
+<div id="a267b232" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -691,7 +697,7 @@ Figura&nbsp;6.3: Predicción de <span class="math inline">\(w_0+w_1x_1+w_2x_2+w_
 <h2 class="anchored" data-anchor-id="sesgo-varianza-y-ruido">Sesgo, varianza y ruido</h2>
 <p>El polinomio de grado 9 predice peor que el de grado 3, aunque su clase de hipótesis contiene a la del grado 3. Para entender por qué, hay que estudiar el procedimiento de ajuste y no un único modelo ajustado: con otra muestra de 36 observaciones, el mismo procedimiento produciría otro polinomio.</p>
 <p>Simulamos 2000 muestras de 36 observaciones del mismo modelo generador, ajustamos con cada una los polinomios de grado 1 a 9 y guardamos sus predicciones en una rejilla de valores de <span class="math inline">\(x\)</span>.</p>
-<div id="2fd83792" class="cell" data-execution_count="8">
+<div id="2263a779" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>rejilla <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">400</span>)</span>
@@ -744,7 +750,7 @@ Figura&nbsp;6.3: Predicción de <span class="math inline">\(w_0+w_1x_1+w_2x_2+w_
 <div id="fig-variabilidad" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-variabilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="14e4cfad" class="cell" data-execution_count="9">
+<div id="80b741ab" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -831,7 +837,7 @@ Y-\hat{f}=\varepsilon+(f-\bar{\hat{f}})+(\bar{\hat{f}}-\hat{f}).
 </div>
 <p>La función siguiente traduce <a href="#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> a código. Recibe la matriz <code>P</code> de predicciones, con una fila por muestra y una columna por punto de la rejilla, y devuelve el sesgo al cuadrado y la varianza promediados sobre la rejilla.</p>
 <div class="codigo-clave">
-<div id="9807c6fc" class="cell" data-execution_count="10">
+<div id="231f504f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> descompone(P):</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a>    modelo_medio <span class="op">=</span> P.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a>    sesgo2 <span class="op">=</span> np.mean((senal(rejilla) <span class="op">-</span> modelo_medio) <span class="op">**</span> <span class="dv">2</span>)</span>
@@ -874,10 +880,11 @@ Y-\hat{f}=\varepsilon+(f-\bar{\hat{f}})+(\bar{\hat{f}}-\hat{f}).
 </div>
 <p>El sesgo al cuadrado baja de 0.1980 con grado 1 a 0.0046 con grado 3, y entre los grados 5 y 8 es prácticamente nulo: un polinomio de grado 3 puede cambiar de tendencia dos veces, como la señal. El grado 2 no mejora al 1 porque la señal cumple <span class="math inline">\(f(2-x)=-f(x)\)</span>, y un término cuadrático en <span class="math inline">\(x-1\)</span> no ayuda a aproximar una función con esa simetría. La varianza crece de 0.0066 con grado 3 a 3.1114 con grado 9. El riesgo esperado, su suma más el ruido, es mínimo en el grado 3, con 0.0512, y su gráfica frente al grado tiene forma de U (<a href="#fig-curva-u" class="quarto-xref">Figura&nbsp;<span>6.5</span></a>, izquierda): a la izquierda del mínimo domina el sesgo y a la derecha, la varianza.</p>
 <div id="exr-descomposicion-punto" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6.2</strong></span> En un punto <span class="math inline">\(x_0\)</span>, la señal vale <span class="math inline">\(f(x_0)=1\)</span> y el ruido tiene varianza <span class="math inline">\(\sigma^2=0.04\)</span>. Un procedimiento, ajustado con cuatro muestras de entrenamiento igualmente probables, predice en <span class="math inline">\(x_0\)</span> los valores <span class="math inline">\(0.6\)</span>, <span class="math inline">\(0.8\)</span>, <span class="math inline">\(1.0\)</span> y <span class="math inline">\(1.2\)</span>. Supón que esas cuatro son todas las muestras posibles.</p>
+<p><span class="theorem-title"><strong>Ejercicio 6.2</strong></span> En un punto <span class="math inline">\(x_0\)</span>, la respuesta de una observación nueva es <span class="math inline">\(Y=f(x_0)+\varepsilon\)</span>, con <span class="math inline">\(f(x_0)=1\)</span> y un ruido <span class="math inline">\(\varepsilon\)</span> de media cero y varianza <span class="math inline">\(\sigma^2=0.04\)</span>. Un procedimiento se ajusta con una muestra de entrenamiento y predice <span class="math inline">\(\hat{f}\)</span> en <span class="math inline">\(x_0\)</span>. Supón que solo hay cuatro muestras posibles, igualmente probables, y que con ellas el procedimiento predice <span class="math inline">\(0.6\)</span>, <span class="math inline">\(0.8\)</span>, <span class="math inline">\(1.0\)</span> y <span class="math inline">\(1.2\)</span>.</p>
+<p>El error cuadrático esperado en <span class="math inline">\(x_0\)</span> es la media de <span class="math inline">\((Y-\hat{f})^2\)</span> sobre las cuatro muestras y sobre el ruido de <span class="math inline">\(Y\)</span>. Se calcula como el error cuadrático medio de los capítulos anteriores, la media de los cuadrados de respuesta menos predicción, pero con todas las respuestas posibles en <span class="math inline">\(x_0\)</span>, ponderadas por su probabilidad, en lugar de con una muestra de test. La predicción se compara con la respuesta <span class="math inline">\(Y\)</span>, que incluye el ruido, y no con la señal; de ahí el término <span class="math inline">\(\sigma^2\)</span> de <a href="#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a>.</p>
 <ol type="a">
-<li>Calcula el modelo medio en <span class="math inline">\(x_0\)</span>, el sesgo al cuadrado y la varianza.</li>
-<li>Calcula el error cuadrático esperado en <span class="math inline">\(x_0\)</span> con <a href="#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a>. Compruébalo promediando <span class="math inline">\((f(x_0)-\hat{f})^2+\sigma^2\)</span> sobre las cuatro predicciones.</li>
+<li>Calcula el modelo medio en <span class="math inline">\(x_0\)</span>, el sesgo al cuadrado y la varianza, y el error cuadrático esperado con <a href="#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a>.</li>
+<li>Comprueba el resultado sin la descomposición. Demuestra que, para una predicción fija <span class="math inline">\(\hat{f}\)</span>, <span class="math inline">\(\mathbb{E}_{\varepsilon}\!\left[ (Y-\hat{f})^2 \right]=(1-\hat{f})^2+\sigma^2\)</span>, y promedia esa cantidad sobre las cuatro predicciones. ¿Por qué no es cero el error de la predicción <span class="math inline">\(1.0\)</span>, que coincide con la señal?</li>
 <li>Un procedimiento más rígido, ajustado con las mismas muestras, predice <span class="math inline">\(0.7\)</span>, <span class="math inline">\(0.8\)</span>, <span class="math inline">\(0.8\)</span> y <span class="math inline">\(0.9\)</span>. Calcula sus tres términos y su error esperado. ¿Cuál de los dos procedimientos predice mejor en <span class="math inline">\(x_0\)</span> y qué término lo explica?</li>
 <li>Si las muestras de entrenamiento tuvieran el doble de observaciones, ¿qué término esperarías que disminuyera en el primer procedimiento? Justifica la respuesta.</li>
 </ol>
@@ -887,7 +894,7 @@ Y-\hat{f}=\varepsilon+(f-\bar{\hat{f}})+(\bar{\hat{f}}-\hat{f}).
 <h2 class="anchored" data-anchor-id="elegir-la-complejidad-con-validación-cruzada">Elegir la complejidad con validación cruzada</h2>
 <p>La tabla anterior requiere conocer la señal y dos mil muestras. Con datos reales tenemos una sola muestra. La validación cruzada de <a href="04-evaluacion.html#def-validacion-cruzada" class="quarto-xref">Definición&nbsp;<span>4.5</span></a> estima con ella el riesgo de cada grado: en cada vuelta ajusta el pipeline con cuatro bloques y lo evalúa en el quinto, como en el capítulo 5.</p>
 <div class="codigo-clave">
-<div id="08c48c3b" class="cell" data-execution_count="11">
+<div id="8ad2fc47" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>particion <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">9</span>)</span>
@@ -951,7 +958,7 @@ Y-\hat{f}=\varepsilon+(f-\bar{\hat{f}})+(\bar{\hat{f}}-\hat{f}).
 <div id="fig-curva-u" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-curva-u-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="82a16b13" class="cell" data-execution_count="12">
+<div id="d5f0bf00" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -968,7 +975,7 @@ Figura&nbsp;6.5: A la izquierda, la descomposición del riesgo esperado: a la iz
 </div>
 <p>La regla de un error típico de <a href="04-evaluacion.html#def-regla-un-error-tipico" class="quarto-xref">Definición&nbsp;<span>4.6</span></a> cambia la decisión. Ordenamos los candidatos de más sencillo a más complejo, aquí por grado, e identificamos al campeón, el de menor estimación. Después elegimos el candidato más sencillo cuya desventaja frente al campeón no supere un error típico de la diferencia emparejada.</p>
 <div class="codigo-clave">
-<div id="ef1a3d7b" class="cell" data-execution_count="13">
+<div id="12e15569" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><a class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-22-1" class="code-annotation-target"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regla_un_error_tipico(riesgos):</span>
 <span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>    campeon <span class="op">=</span> <span class="bu">int</span>(np.argmin([r.mean() <span class="cf">for</span> r <span class="kw">in</span> riesgos]))</span>
 <span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(campeon):</span>
@@ -1004,7 +1011,7 @@ Riesgo esperado del campeón y del elegido: 0.4239 y 0.0512</code></pre>
 </div>
 <p>El campeón es el grado 8. El grado 3 es el primero cuya desventaja, 0.0022, no supera su error típico, 0.0045, y la regla lo elige. Su riesgo esperado, 0.0512, es el menor de la tabla, frente a 0.4239 del campeón.</p>
 <p>La regla es una heurística, y ningún resultado garantiza que elija el candidato de menor riesgo esperado. Con otras 40 particiones en cinco bloques de las mismas 36 observaciones, elige el grado 3 en 27, el grado 4 en 10 y un grado mayor en las 3 restantes.</p>
-<div id="8d1a082f" class="cell" data-execution_count="14">
+<div id="19f38c0f" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>elecciones <span class="op">=</span> {}</span>
@@ -1042,7 +1049,7 @@ Riesgo esperado del campeón y del elegido: 0.4239 y 0.0512</code></pre>
 </div>
 <p>Con <span class="math inline">\(\lambda=0\)</span>, ridge es el ajuste por mínimos cuadrados. El intercepto <span class="math inline">\(w_0\)</span> no se penaliza, porque fija el nivel de las predicciones y no hay ningún motivo para acercarlo a cero. Si la respuesta fuera una temperatura y pasáramos de grados Celsius a kelvin, todas las respuestas aumentarían en 273.15, y las predicciones deberían aumentar en la misma cantidad. Con el intercepto penalizado aumentarían menos, como muestra el apartado d de <a href="#exr-ridge-pendiente" class="quarto-xref">Ejercicio&nbsp;<span>6.3</span></a>.</p>
 <p>Penalizar el tamaño de los coeficientes reduce la varianza porque, en un modelo demasiado flexible, la varianza procede de coeficientes grandes que se compensan entre sí. Con las nueve columnas del grado 9 estandarizadas, <span class="math inline">\(z^5\)</span>, <span class="math inline">\(z^7\)</span> y <span class="math inline">\(z^9\)</span> son casi proporcionales, con correlaciones entre 0.977 y 0.996, y mínimos cuadrados les asigna en la muestra del capítulo los coeficientes <span class="math inline">\(-10.7\)</span>, <span class="math inline">\(12.7\)</span> y <span class="math inline">\(-6.0\)</span>. Sus contribuciones casi se cancelan, y lo que queda sigue a cada observación. Con otra muestra, la cancelación es distinta y la curva cambia: es la varianza de <a href="#fig-variabilidad" class="quarto-xref">Figura&nbsp;<span>6.4</span></a>. En el riesgo penalizado, un coeficiente grande solo compensa si reduce mucho el riesgo en train, y esas cancelaciones no lo hacen. Con <span class="math inline">\(\lambda=0.01\)</span>, ningún coeficiente pasa de 0.98 en valor absoluto.</p>
-<div id="6d1d0f7e" class="cell" data-execution_count="15">
+<div id="f291da81" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1095,9 +1102,9 @@ Correlaciones de z^5, z^7 y z^9: [0.992 0.977 0.996]</code></pre>
 </div>
 <!-- demostracion: exr-ridge-pendiente -->
 <div id="exr-ridge-pendiente" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 6.3</strong></span> Demuestra <a href="#prp-ridge-un-coeficiente" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>.</p>
+<p><span class="theorem-title"><strong>Ejercicio 6.3</strong></span> Demuestra <a href="#prp-ridge-un-coeficiente" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>. Asume, como en su enunciado, que <span class="math inline">\(x\)</span> está estandarizada: <span class="math inline">\(\frac{1}{n}\sum_ix_i=0\)</span> y <span class="math inline">\(\frac{1}{n}\sum_ix_i^2=1\)</span>.</p>
 <ol type="a">
-<li>Calcula las derivadas parciales de <span class="math inline">\(\hat{R}_{\lambda}(w_0,w)\)</span> respecto de <span class="math inline">\(w_0\)</span> y de <span class="math inline">\(w\)</span>, y simplifícalas con <span class="math inline">\(\frac{1}{n}\sum_ix_i=0\)</span> y <span class="math inline">\(\frac{1}{n}\sum_ix_i^2=1\)</span>.</li>
+<li>Calcula las derivadas parciales de <span class="math inline">\(\hat{R}_{\lambda}(w_0,w)\)</span> respecto de <span class="math inline">\(w_0\)</span> y de <span class="math inline">\(w\)</span>, y simplifícalas con esas dos igualdades.</li>
 <li>Iguálalas a cero y resuelve el sistema. Comprueba que se obtiene <span class="math inline">\(\hat w_0=\bar{y}\)</span> y <span class="math inline">\(\hat w_{\lambda}=c/(1+\lambda)\)</span>.</li>
 <li>Comprueba que <span class="math display">\[
 \hat{R}_{\lambda}(w_0,w)=(\bar{y}-w_0)^2
@@ -1121,7 +1128,7 @@ Correlaciones de z^5, z^7 y z^9: [0.992 0.977 0.996]</code></pre>
 </div>
 <p>La penalización intercambia sesgo por varianza. Con <span class="math inline">\(\lambda=1\)</span>, la varianza de la pendiente se divide por cuatro y aparece un sesgo de la mitad de la pendiente. Es el intercambio de <a href="#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a>, controlado ahora por un número real en lugar de por el grado.</p>
 <p><strong>Implementación en <code>scikit-learn</code>.</strong> <code>Ridge(alpha=a)</code> minimiza la suma de los cuadrados de los residuos más <span class="math inline">\(a\)</span> veces la suma de los cuadrados de los coeficientes, sin el factor <span class="math inline">\(1/n\)</span> del riesgo empírico. Es <a href="#eq-ridge" class="quarto-xref">Ecuación&nbsp;<span>6.7</span></a> multiplicado por <span class="math inline">\(n\)</span>, con <span class="math inline">\(a=n\lambda\)</span>, y tiene el mismo minimizador. Lo comprobamos con la variable <code>lcavol</code> de los datos de próstata de los capítulos 3 y 4, estandarizada en train: por <a href="#eq-ridge-un-coeficiente" class="quarto-xref">Ecuación&nbsp;<span>6.8</span></a>, el cociente entre la pendiente de mínimos cuadrados y la de ridge debe ser <span class="math inline">\(1+\lambda\)</span>.</p>
-<div id="9c0ae9f1" class="cell" data-execution_count="16">
+<div id="c2345d78" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prostata <span class="op">=</span> pd.read_csv(<span class="st">"../datos/prostate.data"</span>)</span>
@@ -1139,7 +1146,7 @@ Correlaciones de z^5, z^7 y z^9: [0.992 0.977 0.996]</code></pre>
 </div>
 </div>
 <div class="codigo-clave">
-<div id="1d66b494" class="cell" data-execution_count="17">
+<div id="3f8e8e29" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> StandardScaler().fit_transform(X_train)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>n, lam <span class="op">=</span> <span class="bu">len</span>(y_train), <span class="fl">0.5</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1202,15 +1209,16 @@ Correlaciones de z^5, z^7 y z^9: [0.992 0.977 0.996]</code></pre>
 </section>
 <section id="la-escala-de-las-columnas" class="level3">
 <h3 class="anchored" data-anchor-id="la-escala-de-las-columnas">La escala de las columnas</h3>
-<p>Mínimos cuadrados no depende de la unidad de las columnas: por <a href="05-preparacion-datos.html#prp-estandarizar-ajuste" class="quarto-xref">Proposición&nbsp;<span>5.2</span></a>, cambiar la escala de una columna cambia su coeficiente y deja las predicciones iguales. Ridge sí depende, porque penaliza los coeficientes. Si una longitud se mide en centímetros en lugar de en metros, su coeficiente de mínimos cuadrados se divide por 100, y su cuadrado, por <span class="math inline">\(10^4\)</span>: medida en centímetros, la columna apenas paga penalización, y medida en kilómetros pagaría <span class="math inline">\(10^6\)</span> veces más que en metros. La penalización castigaría unas columnas más que otras por la unidad en que se miden, que no tiene que ver con su utilidad para predecir.</p>
-<p>Estandarizar pone todas las columnas en la misma escala: cada coeficiente mide el cambio de la predicción cuando su columna aumenta una desviación típica, y la penalización compara los coeficientes en esos términos. En la práctica:</p>
+<p>Mínimos cuadrados no depende de la unidad de las columnas: por <a href="05-preparacion-datos.html#prp-estandarizar-ajuste" class="quarto-xref">Proposición&nbsp;<span>5.2</span></a>, cambiar la escala de una columna cambia su coeficiente y deja las predicciones iguales. Ridge sí depende, porque penaliza los coeficientes. Supongamos que el precio de una vivienda baja 2 unidades por cada kilómetro de distancia al centro. Con la distancia en metros, la misma relación tiene pendiente 0.002. Las predicciones no cambian, porque <span class="math inline">\(2\cdot3=0.002\cdot3000\)</span>, pero la penalización <span class="math inline">\(\lambda w^2\)</span> pasa de <span class="math inline">\(4\lambda\)</span> a <span class="math inline">\(4\cdot10^{-6}\lambda\)</span>. Una columna con valores numéricos pequeños necesita un coeficiente grande para producir el mismo efecto sobre la predicción, y la penalización crece con el cuadrado del coeficiente.</p>
+<p>Para una columna centrada con desviación típica <span class="math inline">\(s_x\)</span>, es decir, con <span class="math inline">\(\frac{1}{n}\sum_ix_i^2=s_x^2\)</span>, el cálculo de <a href="#exr-ridge-pendiente" class="quarto-xref">Ejercicio&nbsp;<span>6.3</span></a> con <span class="math inline">\(s_x^2\)</span> en lugar de 1 da <span class="math inline">\(\hat w_{\lambda}=\hat w_{\mathrm{OLS}}\,s_x^2/(s_x^2+\lambda)\)</span>, y el caso <span class="math inline">\(s_x^2=100\)</span> se pide en <a href="#exr-escala-penalizacion" class="quarto-xref">Ejercicio&nbsp;<span>6.5</span></a>. Si la distancia tiene una desviación típica de 2 km y <span class="math inline">\(\lambda=1\)</span>, en kilómetros <span class="math inline">\(s_x^2=4\)</span> y ridge conserva el 80 % de la pendiente de mínimos cuadrados; en metros, <span class="math inline">\(s_x^2=4\cdot10^6\)</span> y conserva más del 99.99 %. La penalización castigaría unas columnas más que otras por la unidad en que se miden, que no tiene que ver con su utilidad para predecir.</p>
+<p>Estandarizar pone todas las columnas en la misma escala, con <span class="math inline">\(s_x=1\)</span> sea cual sea la unidad original: cada coeficiente mide el cambio de la predicción cuando su columna aumenta una desviación típica, y la penalización compara los coeficientes en esos términos. En la práctica:</p>
 <ol type="1">
 <li>se estandariza con <code>StandardScaler</code> dentro del pipeline, de modo que la media y la desviación típica se estiman solo con los datos de ajuste de cada vuelta, como en el capítulo 5;</li>
 <li>se estandarizan las columnas que recibe la penalización, es decir, las características y no solo las variables originales: con el mapa polinómico, las columnas <span class="math inline">\(z,z^2,\ldots,z^9\)</span> tienen escalas muy distintas aunque <span class="math inline">\(z\)</span> esté estandarizada.</li>
 </ol>
 <p>Por eso el pipeline de ridge estandariza dos veces: <span class="math inline">\(x\)</span> antes de elevarla a potencias, como en <code>crear_polinomio</code>, y las potencias antes de penalizar.</p>
 <div class="codigo-clave">
-<div id="b188f5cd" class="cell" data-execution_count="18">
+<div id="48303378" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-29"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-29-1"><a href="#annotated-cell-29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crear_ridge(grado, lam, n):</span>
 <span id="annotated-cell-29-2"><a href="#annotated-cell-29-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pipeline([</span>
 <span id="annotated-cell-29-3"><a href="#annotated-cell-29-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"estandarizar"</span>, StandardScaler()),</span>
@@ -1232,7 +1240,7 @@ Correlaciones de z^5, z^7 y z^9: [0.992 0.977 0.996]</code></pre>
 <p><strong>Penalizar columnas sin estandarizar.</strong> Si se omite el escalador, el código se ejecuta sin errores ni avisos, pero el ajuste depende de las unidades de cada columna, y la penalización recae sobre todo en las columnas con valores pequeños. Las columnas se estandarizan dentro del pipeline, para que su media y su desviación típica se estimen solo con los datos de ajuste.</p>
 </div>
 <p>Volvemos a la simulación. Repetimos el experimento de <a href="#fig-variabilidad" class="quarto-xref">Figura&nbsp;<span>6.4</span></a> con el polinomio de grado 9 penalizado con <span class="math inline">\(\lambda=0.01\)</span>, con las mismas 2000 muestras.</p>
-<div id="439903f9" class="cell" data-execution_count="19">
+<div id="5d8fbfe2" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> muchos_ajustes_ridge(grado, lam, n<span class="op">=</span><span class="dv">36</span>, semilla<span class="op">=</span><span class="dv">0</span>):</span>
@@ -1279,7 +1287,7 @@ Grado 9, ridge: sesgo^2 0.0082, varianza 0.0288, riesgo esperado 0.0770</code></
 <div id="fig-ridge-variabilidad" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ridge-variabilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="5550f65a" class="cell" data-execution_count="20">
+<div id="59b80136" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1372,7 +1380,7 @@ Figura&nbsp;6.6: Cien de los dos mil polinomios de grado 9 ajustados sin penaliz
 <div id="fig-geometria-penalizacion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-geometria-penalizacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="a5d28733" class="cell" data-execution_count="21">
+<div id="04a4801a" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1415,7 +1423,7 @@ Figura&nbsp;6.7: Curvas de nivel de un riesgo empírico de dos coeficientes, cen
 <p>En los dos casos, <code>n</code> es el número de observaciones con que se ajusta, el intercepto no se penaliza y las columnas se estandarizan antes, dentro del pipeline.</p>
 <p>El pipeline del lasso es el de ridge con otro último paso:</p>
 <div class="codigo-clave">
-<div id="9b157bcd" class="cell" data-execution_count="22">
+<div id="ec5f5c33" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-33"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-33-1"><a href="#annotated-cell-33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
 <span id="annotated-cell-33-2"><a href="#annotated-cell-33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-33-3"><a href="#annotated-cell-33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crear_lasso(grado, lam):</span>
@@ -1478,7 +1486,7 @@ Figura&nbsp;6.7: Curvas de nivel de un riesgo empírico de dos coeficientes, cen
 <div id="fig-trayectorias" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trayectorias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="e7c7ad46" class="cell" data-execution_count="23">
+<div id="b4f4409b" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-stdout">
 <pre><code>Lasso con lambda = 0.6 conserva: ['lcavol', 'lweight', 'svi']</code></pre>
 </div>
@@ -1510,7 +1518,7 @@ Figura&nbsp;6.8: Coeficientes de ridge y de lasso de las ocho variables estandar
 <section id="elegir-la-penalización-con-validación-cruzada" class="level2">
 <h2 class="anchored" data-anchor-id="elegir-la-penalización-con-validación-cruzada">Elegir la penalización con validación cruzada</h2>
 <p>Volvemos a los datos de próstata, con la partición del fichero: 67 observaciones de train y 30 de test. Comparamos primero mínimos cuadrados con las ocho variables y con su polinomio de grado 2, sobre los mismos cinco bloques de train.</p>
-<div id="3103328c" class="cell" data-execution_count="24">
+<div id="884274f8" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>particion <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
@@ -1539,7 +1547,7 @@ Grado 2: 44 columnas, riesgo en train 0.1676, CV 19.1768</code></pre>
 <p>Con grado 2 hay 44 columnas y 45 coeficientes, que en cada vuelta se estiman con 53 o 54 observaciones. El riesgo en train baja de 0.4392 a 0.1676, y la estimación de validación cruzada sube de 0.6144 a 19.1768: es la rama derecha de la curva en U, ahora con datos reales.</p>
 <p>La regresión ridge conserva las 44 columnas. Elegimos <span class="math inline">\(\lambda\)</span> entre 17 valores de 10 a 0.001 en escala logarítmica, con los mismos bloques y la regla de un error típico. El candidato más sencillo es aquí el más penalizado, de modo que la lista de valores va de <span class="math inline">\(\lambda=10\)</span> a <span class="math inline">\(\lambda=0.001\)</span>.</p>
 <div class="codigo-clave">
-<div id="ba3cdd4e" class="cell" data-execution_count="25">
+<div id="4e6dfd61" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> np.logspace(<span class="dv">1</span>, <span class="op">-</span><span class="dv">3</span>, <span class="dv">17</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgos_cv_ridge(lam, grado<span class="op">=</span><span class="dv">2</span>):</span>
@@ -1591,7 +1599,7 @@ Desventaja del elegido: 0.0535; error típico: 0.0646</code></pre>
 <div id="fig-cv-lambda" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cv-lambda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="51679d8a" class="cell" data-execution_count="26">
+<div id="030bbdca" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1608,7 +1616,7 @@ Figura&nbsp;6.9: Estimación de validación cruzada, con su error típico, del p
 </div>
 <p>Reajustamos con todo train el procedimiento elegido y lo evaluamos una vez en test, junto al modelo nulo.</p>
 <div class="codigo-clave">
-<div id="c96c8c5c" class="cell" data-execution_count="27">
+<div id="527c6fd0" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>modelo_final <span class="op">=</span> crear_ridge(<span class="dv">2</span>, lam_elegido, n<span class="op">=</span><span class="bu">len</span>(y_train))</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>modelo_final.fit(X_train, y_train)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>perdidas <span class="op">=</span> (y_test <span class="op">-</span> modelo_final.predict(X_test)) <span class="op">**</span> <span class="dv">2</span></span>
@@ -1625,7 +1633,7 @@ Ridge  MSE de test = 0.6103 ± 0.2323</code></pre>
 <p>El riesgo en test del modelo ridge es <span class="math inline">\(0.6103\pm0.2323\)</span>, frente a <span class="math inline">\(1.0567\pm0.3961\)</span> del modelo nulo.</p>
 <p>Que la penalización controle la varianza no significa que el grado 2 sea preferible al modelo lineal. La estimación de validación cruzada de mínimos cuadrados con las ocho variables, 0.6144, es menor que la del campeón de ridge, 0.7110, que además es optimista por <a href="04-evaluacion.html#prp-minimo-sesgado" class="quarto-xref">Proposición&nbsp;<span>4.3</span></a>. Con 67 observaciones, los términos de grado 2 no reducen el riesgo de forma detectable, y entre los dos procedimientos elegiríamos el lineal.</p>
 <p>La misma búsqueda con el lasso, que es otro procedimiento, da el resultado siguiente.</p>
-<div id="112eb7a2" class="cell" data-execution_count="28">
+<div id="ba98513b" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgos_cv_lasso(lam, grado<span class="op">=</span><span class="dv">2</span>):</span>

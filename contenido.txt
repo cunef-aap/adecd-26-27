@@ -36,7 +36,7 @@ problemas/hoja-04.qmd
 - problemas/hoja-04-soluciones.qmd
 problemas/hoja-05.qmd
 - problemas/hoja-05-soluciones.qmd
-- problemas/hoja-06.qmd
+problemas/hoja-06.qmd
 - problemas/hoja-06-soluciones.qmd
 
 [Banco de ejercicios]

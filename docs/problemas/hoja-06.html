@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Hoja 6 – Aprendizaje Automático: Predicción</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../curso/colab.html" rel="next">
+<link href="../problemas/hoja-05.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce76667f72787a46eecac846ed35d09d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dee1b86ca0bbb38d562930b9728b1e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/hoja-01.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Aprendizaje Automático: Predicción</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación de la asignatura</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fundamentos del aprendizaje predictivo</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/01-senal-ruido.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos = señal + ruido</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/02-aprender-minimizando.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprender minimizando</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/03-modelos-lineales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelos lineales con muchas variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Evaluación y datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/04-evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluar para generalizar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/05-preparacion-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preprocesamiento de datos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Complejidad y generalización</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../capitulos/06-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Complejidad y regularización</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hojas de problemas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja 5</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../problemas/hoja-06.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Hoja 6</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/colab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ejecutar código: Python y Colab</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/clases-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clases en Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/evaluacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Evaluación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cálculo y álgebra que vas a necesitar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../curso/probabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repaso de probabilidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#ejercicios-del-capítulo" id="toc-ejercicios-del-capítulo" class="nav-link active" data-scroll-target="#ejercicios-del-capítulo">Ejercicios del capítulo</a></li>
+  <li><a href="#sesgo-varianza-y-complejidad" id="toc-sesgo-varianza-y-complejidad" class="nav-link" data-scroll-target="#sesgo-varianza-y-complejidad">Sesgo, varianza y complejidad</a></li>
+  <li><a href="#ridge-y-lasso" id="toc-ridge-y-lasso" class="nav-link" data-scroll-target="#ridge-y-lasso">Ridge y lasso</a></li>
+  <li><a href="#leer-y-completar-código" id="toc-leer-y-completar-código" class="nav-link" data-scroll-target="#leer-y-completar-código">Leer y completar código</a></li>
+  <li><a href="#ampliación" id="toc-ampliación" class="nav-link" data-scroll-target="#ampliación">Ampliación</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<!-- Membrete de los PDF. El logo va incrustado porque este fragmento se incluye en
+     paginas a distinta profundidad y una ruta relativa no valdria para todas.
+     En pantalla no se ve: lo oculta .logo-impresion en assets/styles.css.
+     Se regenera con scripts/logo-impresion.py. -->
+<img class="logo-impresion" alt="" aria-hidden="true" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAACcCAYAAAAwEt9BAAAMbWlDQ1BJQ0MgUHJvZmlsZQAAeJyVVwdYU8kWnluSkJDQAghICb0jUgNICaEFkF4EGyEJJJQYE4KKvSwquHYRxYquiii2lWYBsSuLYu+LBRVlXdTFhsqbkICu+8r3zvfNvX/OnPlPuTO59wCg+YErkeShWgDkiwukCeHBjDFp6QzSU0AECNAF+oDC5ckkrLi4aABl8P53eXcD2kK56qzg+uf8fxUdvkDGAwAZB3EmX8bLh7gZAHwDTyItAICo0FtOKZAo8ByIdaUwQIhXK3C2Eu9S4EwlPjpgk5TAhvgyAGpULleaDYDGPahnFPKyIY/GZ4hdxXyRGABNJ4gDeEIuH2JF7E75+ZMUuBxiO2gvgRjGA5iZ33Fm/40/c4ify80ewsq8BkQtRCST5HGn/Z+l+d+Snycf9GEDB1UojUhQ5A9reCt3UpQCUyHuFmfGxCpqDfEHEV9ZdwBQilAekay0R415MjasH3ziAHXlc0OiIDaGOEycFxOt0mdmicI4EMPdgk4VFXCSIDaAeJFAFpqostkinZSg8oXWZknZLJX+HFc64Ffh64E8N5ml4n8jFHBU/JhGkTApFWIKxFaFopQYiDUgdpHlJkapbEYVCdkxgzZSeYIifiuIEwTi8GAlP1aYJQ1LUNmX5MsG88W2CEWcGBU+WCBMilDWBzvF4w7ED3PBLgvErORBHoFsTPRgLnxBSKgyd+y5QJycqOL5ICkITlCuxSmSvDiVPW4hyAtX6C0g9pAVJqrW4ikFcHMq+fEsSUFckjJOvCiHGxmnjAdfDqIBG4QABpDDkQkmgRwgauuu64a/lDNhgAukIBsIgLNKM7gidWBGDK+JoAj8AZEAyIbWBQ/MCkAh1H8Z0iqvziBrYLZwYEUueApxPogCefC3fGCVeMhbCngCNaJ/eOfCwYPx5sGhmP/3+kHtNw0LaqJVGvmgR4bmoCUxlBhCjCCGEe1xIzwA98Oj4TUIDjecifsM5vHNnvCU0E54RLhO6CDcniiaJ/0hytGgA/KHqWqR+X0tcBvI6YkH4/6QHTLj+rgRcMY9oB8WHgg9e0ItWxW3oiqMH7j/lsF3T0NlR3Ylo+Rh5CCy3Y8rNRw0PIdYFLX+vj7KWDOH6s0emvnRP/u76vPhPepHS2wRdgg7i53AzmNHsTrAwJqweqwVO6bAQ7vrycDuGvSWMBBPLuQR/cPf4JNVVFLmWu3a5fpZOVcgmFqgOHjsSZJpUlG2sIDBgm8HAYMj5rk4Mdxc3dwAULxrlH9fb+MH3iGIfus33fzfAfBv6u/vP/JNF9kEwAFvePwbvunsmABoqwNwroEnlxYqdbjiQoD/EprwpBkCU2AJ7GA+bsAL+IEgEAoiQSxIAmlgAoxeCPe5FEwBM8BcUAxKwXKwBqwHm8E2sAvsBQdBHTgKToAz4CK4DK6Du3D3dIKXoAe8A30IgpAQGkJHDBEzxBpxRNwQJhKAhCLRSAKShmQg2YgYkSMzkPlIKbISWY9sRaqQA0gDcgI5j7Qjt5GHSBfyBvmEYigV1UVNUBt0BMpEWWgUmoSOR7PRyWgRugBdipajlegetBY9gV5Er6Md6Eu0FwOYOqaPmWPOGBNjY7FYOpaFSbFZWAlWhlViNVgjfM5XsQ6sG/uIE3E6zsCd4Q6OwJNxHj4Zn4Uvwdfju/Ba/BR+FX+I9+BfCTSCMcGR4EvgEMYQsglTCMWEMsIOwmHCaXiWOgnviESiPtGW6A3PYhoxhziduIS4kbiP2ExsJz4m9pJIJEOSI8mfFEvikgpIxaR1pD2kJtIVUifpg5q6mpmam1qYWrqaWG2eWpnabrXjalfUnqn1kbXI1mRfciyZT55GXkbeTm4kXyJ3kvso2hRbij8liZJDmUspp9RQTlPuUd6qq6tbqPuox6uL1Oeol6vvVz+n/lD9I1WH6kBlU8dR5dSl1J3UZupt6lsajWZDC6Kl0wpoS2lVtJO0B7QPGnQNFw2OBl9jtkaFRq3GFY1XmmRNa02W5gTNIs0yzUOalzS7tchaNlpsLa7WLK0KrQatm1q92nTtkdqx2vnaS7R3a5/Xfq5D0rHRCdXh6yzQ2aZzUucxHaNb0tl0Hn0+fTv9NL1Tl6hrq8vRzdEt1d2r26bbo6ej56GXojdVr0LvmF6HPqZvo8/Rz9Nfpn9Q/4b+p2Emw1jDBMMWD6sZdmXYe4PhBkEGAoMSg30G1w0+GTIMQw1zDVcY1hneN8KNHIzijaYYbTI6bdQ9XHe433De8JLhB4ffMUaNHYwTjKcbbzNuNe41MTUJN5GYrDM5adJtqm8aZJpjutr0uGmXGd0swExkttqsyewFQ4/BYuQxyhmnGD3mxuYR5nLzreZt5n0WthbJFvMs9lnct6RYMi2zLFdbtlj2WJlZjbaaYVVtdceabM20FlqvtT5r/d7G1ibVZqFNnc1zWwNbjm2RbbXtPTuaXaDdZLtKu2v2RHumfa79RvvLDqiDp4PQocLhkiPq6OUoctzo2O5EcPJxEjtVOt10pjqznAudq50fuui7RLvMc6lzeTXCakT6iBUjzo746urpmue63fXuSJ2RkSPnjWwc+cbNwY3nVuF2zZ3mHuY+273e/bWHo4fAY5PHLU+652jPhZ4tnl+8vL2kXjVeXd5W3hneG7xvMnWZccwlzHM+BJ9gn9k+R30++nr5Fvge9P3Tz9kv12+33/NRtqMEo7aPeuxv4c/13+rfEcAIyAjYEtARaB7IDawMfBRkGcQP2hH0jGXPymHtYb0Kdg2WBh8Ofs/2Zc9kN4dgIeEhJSFtoTqhyaHrQx+EWYRlh1WH9YR7hk8Pb44gRERFrIi4yTHh8DhVnJ5I78iZkaeiqFGJUeujHkU7REujG0ejoyNHrxp9L8Y6RhxTFwtiObGrYu/H2cZNjjsST4yPi6+If5owMmFGwtlEeuLExN2J75KCk5Yl3U22S5Ynt6RopoxLqUp5nxqSujK1Y8yIMTPHXEwzShOl1aeT0lPSd6T3jg0du2Zs5zjPccXjboy3HT91/PkJRhPyJhybqDmRO/FQBiEjNWN3xmduLLeS25vJydyQ2cNj89byXvKD+Kv5XQJ/wUrBsyz/rJVZz7P9s1dldwkDhWXCbhFbtF70OiciZ3PO+9zY3J25/Xmpefvy1fIz8hvEOuJc8alJppOmTmqXOEqKJR2TfSevmdwjjZLukCGy8bL6Al34Ud8qt5P/JH9YGFBYUfhhSsqUQ1O1p4qntk5zmLZ42rOisKJfpuPTedNbZpjPmDvj4UzWzK2zkFmZs1pmW85eMLtzTvicXXMpc3Pn/jbPdd7KeX/NT53fuMBkwZwFj38K/6m6WKNYWnxzod/CzYvwRaJFbYvdF69b/LWEX3Kh1LW0rPTzEt6SCz+P/Ln85/6lWUvblnkt27ScuFy8/MaKwBW7VmqvLFr5eNXoVbWrGatLVv+1ZuKa82UeZZvXUtbK13aUR5fXr7Nat3zd5/XC9dcrgiv2bTDesHjD+438jVc2BW2q2WyyuXTzpy2iLbe2hm+trbSpLNtG3Fa47en2lO1nf2H+UrXDaEfpji87xTs7diXsOlXlXVW123j3smq0Wl7dtWfcnst7Q/bW1zjXbN2nv690P9gv3//iQMaBGwejDrYcYh6q+dX61w2H6YdLapHaabU9dcK6jvq0+vaGyIaWRr/Gw0dcjuw8an604pjesWXHKccXHO9vKmrqbZY0d5/IPvG4ZWLL3ZNjTl47FX+q7XTU6XNnws6cPMs623TO/9zR877nGy4wL9Rd9LpY2+rZevg3z98Ot3m11V7yvlR/2edyY/uo9uNXAq+cuBpy9cw1zrWL12Out99IvnHr5ribHbf4t57fzrv9+k7hnb67c+4R7pXc17pf9sD4QeXv9r/v6/DqOPYw5GHro8RHdx/zHr98InvyuXPBU9rTsmdmz6qeuz0/2hXWdfnF2BedLyUv+7qL/9D+Y8Mru1e//hn0Z2vPmJ7O19LX/W+WvDV8u/Mvj79aeuN6H7zLf9f3vuSD4YddH5kfz35K/fSsb8pn0ufyL/ZfGr9Gfb3Xn9/fL+FKuQOfAhgcaFYWAG92AkBLA4AO+zbKWGUvOCCIsn8dQOA/YWW/OCBeANTA7/f4bvh1cxOA/dth+wX5NWGvGkcDIMkHoO7uQ0Mlsix3NyUXFfYphAf9/W9hz0ZaBcCX5f39fZX9/V+2wWBh79gsVvagCiHCnmFL3JfM/Ezwb0TZn36X4493oIjAA/x4/xe1SpDLFz0MBwAATtBJREFUeNrtvXecXdd13/vd+5Tbp2CAQe+9EgTA3kWxSCRFFctyZCex7CfHLZEdO/bzs+PycRw7jh2XvGc/x3l2HDuOJZsqFCmJIiX2ToAESfTeMRhMn1tO2/v9cc4UdMzcM4OZwf59PldDDebee/bae6/fWmuvvZbQWmsMDAwMDAyuMaQRgYGBgYGBISQDAwMDAwNDSAYGBgYGhpAMDAwMDAwMIRkYGBgYTETYU29Il0oaFGa2DQwMDAwhpUg2+jLEI+SliUfri7xHDPthCMvAwMDgWkJM6HtIgyQiQIir+3MVXfxPpTWC7+OqvzP9saY6vWYM4/KMl3v8cYyKa5Xic4t0jbQ0n21iqtLJvU4niIwmGCENeED6go2stUZHAaraS9hzmrD3DFF/J1G5C13tQQpQ1R5Q4UU2kkZkS2jpgFvAKrRgN8zAbmzFbpqNzJYQlo04X3kMbiJhvCgDAwODMcbECNlpNcSeieLXWhN2n0L1nsFvP0jt+A789sOIahdEHsqvogIPHQYIFcbEKy8XslOgNQqJsF2Ek0W6WaSTRWUbsZvnkZ29gszslYh8M3ZDK1a+8dKWXsoWZO34h4Tth0DaKVhGAlSEzDeSW3YrwnLGZRq9U3vwT+9FpDUGHSEyRXLLbkU62XTkfOwDwrOHU5Lz5Z9dZorklt+OsN2xNeIQRH1nqe5/vf5xCYEOfNw5q8jMXjkUoagDYW871UPvIAY/aypZ/gJUiNU0h9zizenMaFCjvPtFiMLEMNdTQkYyW4r10WX28rUlJK1igSeeiY4Caqf34x3eimrfT/XUHnTXcYQKUUqj0SAEQljxT2khXBstYgK7GsFIoWN3OPKJKh6R7gJ9gujUToJdz9EnBFGmgdzMpditS5Eti8nOW4s7fSHSyaQfgtHxmCrvPUX57a8g3Ry63vCGkIjQx5q1gsz8DTGxJt8zlvNY2fk9yi//fwgnm84YIh/RNJ/MnDXIxmx9Y0jeW373SarbnkA4Kcj5soSkkZYFn/198stvH1rrqcs+Hldw5gC9T/02SjhAHeMSFtLvo3TfT8WEVJfM4zEHbfvoeep3EDpCTzVCEhL8KpnV95NbtKm+PZbIOqr2Un32D/H6u0HWOZ8TREYi9HBmLMaduxbbufRevgaElITlhAAh0RqCM/upHHiL6p4XoecUQW8bQkVgu2hhgXCSJ40X8yD3DMRZ9cjmPIaMP27Y2ZJKHk/6/XhHtlI78DrayVNtmI7ONWPPXk1x+a1Y0xbgNM1KzWoHwHLQlkskUliAQiAshWW7iHE8QxLSRlsOSqTgfQiBkGDZbqqRUmE5KOmCsMdWMUqJjqqU3/4ncktvQUg59orRdlCqXg9JgnQQ0klVFsLOoMJgahKSFYKV3joVgLZclOUkKnqSy0sIhFBoy7kiYY8vIQ16RKBVRP+eV6jtfQl//2tQ6SZSCiwL7GwyBfo80klzYvQ5P879FxkvMDuD1Jqg5wx0nSQ6vZvg/SdRmUaKGx6m6d6fQDiZVMIa54w1jXFqPZx9x9HYSHkMaW9GnfIzXmata+ngH91Gde+r5FfdPXZe0gXy0inNYZqPlkQ4gKkVstNju07FVEluuDp9ND6ENPAgQqKjgP5dL9C79euoUzvRtd44fGI5YA3sJzUBhBc/twaw7NiDQRMBVv8ZwpM7UJGP5WTS4SODKQYNwkJ5ZcrvPRl7SbaLWSwGBteSkIZZhX37Xqe67Wv4B95ABzWwXXCL8fnPRO6CMdwCEhItJFbTbKSbG/KxDQwu5iXZObyDb1E9vHXYWZJZMAYG40tIWseKWkiC3na6X/orajueQdf6wcmAk0vc0sl3YCdQ2LmGYdlkRsEYXGqxCHRYo3/rE2SX3oKU0qwZA4NxJaRhGRR9u1+i/MJ/w2/bg7AHiEgxqTNHtMYqTLtgrAYGF40QWA7B4W1U979BYcUdxksyMBg3QhpIXfSr9L32d/S98ffgV8HJJ6G5yX9jW2nQTu5cT9DA4FJbQlgor4/Ke0+SW3IT0naMl2RgcBGkm/KTWH5+zxk6vvYb9L3839FRgLYzCRFN/mwRoTXYGUS2IfmFUSoGV7EvnBzegdepHdrKwD0lAwODsSKkJHmhfHIvHU/8Gv6eF9BWJv6KKVPHSoBWyEwBebEqDgYGl9oeiPgG/tYn0FE0vjXuDAyuK0IaIKNT++h68rcJj7+HsnNTtECgiksODXhIJuxicHWMBJaLd/gdKgfeGNo3BgYGKRLSQNmYUwfo+vpvwZl9aDs3QTabGPZK6eO0xnLzxkMyGDEjaWGhamUq7z6JCnymXl03A4P6UF9Sg46rcvu9Z+n97h/CmT0oJz/+ZDR4jiPO9coGC6EO92TiIq7xkfIoKkBohXRzyFyDWT0GIzbehJvFO/gGtSPbyC+71WTc1WshXmvRCTH0MvKqW0Z1Z9mpKKDn2T8lPPL2+JJRUm1ba42IQqSOAIWQdlx0NXnFvKnRURhbqSpERyFCCCIkCAst7WSernRBd+AMKT9ESEaZGIzITxKIoEb/O18lt+SmpMadybgbnfIJETq6trITEkIfHXgTfxp1hIiia0JIIvIh8q+YzDN6QkpCdf1vfhlv57PJmZEal8GhgSjCIsC2bWTDTERTKyLbiNU4G6vYgsw2YBemxRWdtSLsOoHWEarSRdjTBn4/ur8TVe4k7O9AaREXBZXWEMlcRHga0FbGqA+D0TIS2nIIjrxN5eBbFJbdlpKXdJ2F/rQi0zQTu9gUt2m4VjtSCHToYTW2TnB5aex8I5nG1msTwQp9ZNOcoSLDIk1CSkJ11UNb6X/1b1BCjv1+SIhIRD4ScJpm4SzaArPXkpu1FNm8CJFrQMqLnxypYdtWKdCBh+g7jdd1AtVxGDoO4R9/n6DrJFHgx0UkLCe2gM6ZQAkDl2KNZWswCuKIz5L6qWz9OrlFW5B2/RU/hJ1BCRd0NPVFKCRWVKOw+dPkNz6G8vpBWNd0TqWbn7jREiEgCnCX3ELTAz8be3Pjrbe0BsvGKjRzOUayRyN8hED7Ffpe+Auiai/Y2bFl3aQ3jiUFztxV5Fbdi7P8XuzmeQjbvkjawoWVvOXgHwgsCWQykFmIPX0hYvntcS+m7jOo9gME+18kOLWH4OyRuBGglRn8ACElckCoho8MRmndazuLf+hNaofeIb+8fi9JZAqQKUClO1HOU9djGjj/tXKNyHwTMt9k1tTlV0fcnysTd8ueyLBHuRroe+sf8Y+/jx5LMhKJIMMamdZF5G54FHvdo2RKzUM8MNhtdjjrisu6hUOxkySxgbhPTq5lLrTMJVxxN6q/Hf/AawT7X8U/upWwUiYSNkLaWDmTYWdQv5GlvArl7U/FZ0lWCl7SdXaeqXUYW94qOqev2bXS+RPeOk26Zl+zcmdXISN7xAMSEv/sUcrbvhr3DRorS0zEbbgtNLn1D1G868dxpi8clnzAYPHWUUvnHAENNfqzpYCGGbg3Pk645gEqR98n+uBJgkNvE1W7sUqtGBjUa+dr2yU8/Dbeqb1k560xHveo9vBkynKbCCIT5/6c1B5SMojytq8SdZ8au/tGSYjOyTeQv/1HKN30ubiXzKA3NBbpi+d9ZpI+bmfyNCy/FW/RFsLDb1Lb/k2cxhlmYRvUa96DsAgrPVTe/TqZeWuMTjW47mGPbAMJvLNHqO14Fi2dsfGOkhTBTOMMSg/9ApmV98Q8kSRSjK8lIQY9p4xj4y6/g8zCzVhCT2grw2ASkZK08fa9jHdiJ9m5a8a+q6yBwQTGCFZ+rISr258m6u9ASyv9ApFCIKIQt9RC42O/Rm7lPciBi67XTPkPhAM0QitsN4sYqPRtYFAfI6GlTdh3lvJ7T8ZXFIyRY2AI6Wq8I0nYc5ravlcG0gDSV/xa4WSzlB74EpnFNw/LPJoIm1Qklqsp9WKQspdkZ/B2PY93ai+mEriBIaSr9I68I9sI2w+iLTf9syMBIvTJ3vx5cmsfmMChC2PBGqTsJQlJVO6ivPWrxtwxMIR0RTISEq1CqvteGxvrTUhk6FFYfTel23447jlkQhcGExwirb2gAcvB2xufJcXXHUwlcANDSJdyjoh6zxAe345K+0a0EKACZGkGpXv+FZabw+S/Gkz8jaNxZq3AdjIpGGnxWZLqP0tl+1ND2aQGBoaQLg7vyLuoSi/I9MsECRWS3/RJ7JnLxz+bzsBg5CsWoUNyK+/Cnb8eofz6PXqtUVYGb/f38U7vG7wUbmBgCOkShBR65XTLkiRZdc70xRQ3PjpYNcHAYGLzkUCHAVZhGsUtn0mpSoAGKYn6uyhv+1q8E4yTZGAI6VyrDSGIqn2ormPDSuWnZ2kS+eRW34fdOCuJ1JldaDAZdo5F2Hkcd/HN5BduQgS1VDx7JS28vS/jn9zFQOapgYEhpAGrDQi7jhN0nwLppMhHAqECnOY5ZFd/xMyEwaSCRhCVO5G2S27zp8B26icPrUE6hL1nKL/7TXOWdDVe5UAPs2v9mjTRnYktoyt7SEDUc5qw90x8GTbFcJ2OAqyZK8jMWjH4OwODyQABYNmgNZmV95JbdhsySucsSVvueWdJxku6uAqR8UxY1rk17a7FazIYDgPPKeWEldHlSwcJiQaCjqNYOiIcKKWTClErbCdDbsUdQ+RnCMlgkpGS1grLsslv+QGCw++gwnr7EcXlhMJyJ5V3v447+5evuyreV4sgCBB+BEHlGvdDAmlbuG5m4vrzAlSkqHk+RME1IFCNEBI3m73seravxKhCK3TvaRQy3a2sI3DzZBfcOMz9NhvPYLJZ6XE2XG7RJqpLbiHa+X2Uk6/Pq0lCd7U9L+FvfJzMnFXGYBsuc61R0qX8wXeonNgNoXdNS4vp0CO3YAPu7Z+fmDpMg5Y23pGtRN/6j+hx77Aby8hunEnLfV9EZEuX1Pf2ZUeBQIc+Qc8ZtEjROxIgVITVshgx2H3VbDaDyeongbBcchs/gXfwLVQQ1FlmKqlx13uGyvancGevNLvjPPkoYcGpXYhTO67x9EsIqkRCgf78BFVj8VUa1XWCsOvotbDaEKEPrUvQwT+HbOmS/od9BT5Chx5Rf0fqm1hoRXb2MqwBtjQ7zmDyukmAJrPkVjKLNhPteRltZ+q03xRYLrVd38e/8RPxOaupBH6uhIQ9AeZegoxQ0p34/fmERYg1/o8pBEKAJRz0Fb79iqtbBR66fDZuxpdiIonQCtk8b9gFQMNIBpPZaNdYlkV+82ewnGz9l1o1aGkR9Z+l8u43kntJZo9caDVPgNekybLTyV3Pa/miPkJCa6QKUt0MAk0kLESuyewpg6niJgGa7KJNuEtuRoYp3EvSoKRNddfz+Kf2YCqBG0x1yMtbHxBW+1GRStd/0Rrh5JCZgpkBgynCRzFZCDtD8ZbPIfONoOo9PI6TG1RfO+V3nzRkNMHNEYMxJaTksLbWjdZhktSQ0tTpCDvfgFWcbqbTYAppJQlak120hezKu9OJLGiNsly83c/jnd5r7iVNUGitTKu0q1zPoySkq3p/HXvXii8WGhhMrR0HQGHTp5C5RoRK416SRdQXVwIfm+aYBnXNjxCIbNGc8V1R50uE7dRHSGO29gfLSRgYTGKP6ILfxWdJ7pw1ZFfeDWFKNe4sB2/39/Hb9hsvaYJBSonbPOccg8TgPBLREbglZK5x2D4ZDSGN2cJPSlgYGExCq1gDyq8O2x962ObTCGmR3/gYVnFafJZUj/Wsk+oNPe1U3v0GF73EobUhqWumbgX27NVD82BwwX6R0sKdt27wIvmoPSRhuWPgJgl05KP9qpkrg0mLqLcdHQWX8Jw02QUbyS67HaHSKNWi0ZaDt/t5/HNq3A1czLXAckwwb5w9ZBl6uPPWkZmzZsggMbjAqZHZEoV1D1zZ27zSH1ilGUjLSZH541vDYa2MrnQbN9dgktp8AlR06X2R/L6w5dNYuRJCR/UpKx1Xbwh62qi8980Lwh4y14BdmhGHRoxOHAcySirXSIvSTZ/GyjcmF5eN8M9lGAsZ1siteyBuwMrlS2BdxRmSTF3GWgjwK0S1XsNHBpNcKV1634AmM2ct2VUfSafemtZguVR3fS8+SzrnXpJRhOM979Ivk133MNaKj5hagxeTkbAQXj/ZhTfQcNePJtXZ6/SQhO0QOYWE/VN7WiQKyh1mL42xHW9wLcUfW9DFmz+H0zw7hSrLSY27vrOUB6s3DHyVTk62riutN+4tFDQCwgCLiOINDzPtgZ/FcdzJYxSMl4xUhBVWyC3ZRPGhX0IWW6+qIs8V866F7WIVphF1n0x1uWshCc4eRasQIW1Mte+xcJft8RWptEyttYt4Se7MZWRW3kvw5pfRwq7TTtBoYVPb/QLBxk/gzlp+HRN+hFDj1cRQI1A4joXVPAe57hGyN/0gMlecPN6R1gg1lpW+49JEjiMgPx1n+Z003vmjWKWZXClUd2VCEgOElMVunEVw/MP0CCmJh1dP7KRU6cYuTjd8NBZLo9qflJofp++sJd9nucY7G+6kCk1x86eo7vweYbk7Ju7RnslqDZZN2HOayvtP48z6EuK62zhxGrHb1IpTbEKrsW+nIKSFLM2k3LCQpvX3Y89cgSW4akU7EcjIyjeQbW6NL/GOhcaRDqI4nZ7sbFrX34s9Zz2WY4+IsG2uwEjCdnCa5+ChUSk26NNIRF8bYXdbTEiGkVJWgjKushF44+cg1XoQRIaKzg+RoHFaFpFf+wB9r/0d2i3UvY+05VLd8Rz5jY/hti69rgwALQSO8nHWPYKz/hFUrT8m+TFU5lJaFJpbKTh5XHnORpsUa1CoAGfhFpy7fwIVjEH/KK2xLJtc43RydoHsQHBmhN7j5UN2SoGUWC0LUKmyqgYpUUENf+9LZOetNWQ0JutQjKv1JoRAJPWEDc43EASFjY9Q3fk9gr6Owfbno/aSpE3U105l29dxHv6Foe+5bmSqyTe1kmuZPa5fa52jZCeLzhJopbHzDTTMmDfm32YPyogR6x95Jc8YQJZmQKaISJWUBJFSlA+8SVDtHUqjNEgrqIFSEUGtPC4WmNKawKuYTKNLeUla47QuJ7vqXqROI8QUN6mr7Po+YftBpJ297i5lahXGY47CocovY/ka0E+TdY1rFY9DqXGS0cjlJK+s1sCdvojsjAWQZhsKHTcgi84eJDz01pDld11TSLphDR2FiErneJj/EFTB64/7Zk1guVxrFLd8GtnQWv/hstZgOUQ9bZS3fytpgiauM5tunLPspsJanOAykldj2cmGmcimubElkuakCInyq1R2PJucdVzHXpJKM/kgaT+vIsLeM2PPR4Cq9BBVe5NyUCnOoY6mhqEy4CVNX0zxhsfSMe60Rlsu3s7nqJ3eh3CygCkfZDB5cRXmbNx0Vk5fllRqTVPZKLCz1Pa9RmXvy8O6x16H/pGbjS3cFMk+CjyCtv3j4CFB2H0Kv/tUnGqeXjom0snGleGnRpAJgPzGR3BaFiAiv05Siu85BX3t1LZ9FZMYZHAdEFK8wAsr78DKNcblUlL1kgQqCuh7/X9R6+sc7ClzvcFqnIOw7HQLZKqIqOv48GkcM0S9Z9CVHrSwUjNaBAqroRWRyY/LGEbl9YzQSEBr7OZ55NZ89JxadHVNsxaU972G334ILW1T4NNgChNSsl/s6QuxZyyJ+7ukqRiSsEN4ahfBm387TJldX5vKKU5DWml6Ahph2aje00R9Zxiz9tdJMkp4Zl/KZ71JiKvQFB/YT0BG0pWOoeKqIxRt8cbHsZtmx4VX6xWcEOjQR1X7zMVkg+vAQ9I6viC7/K76i0ReIvKgpE3fO1+l8sG3ia6r0F0yzsY56Vas0HH7a6/9CLUTu8aG5JNSIGG1n+qhd9Ai3fMjgUKXZqKlnHitFYRAhrXkUuYICVxrrKbZFDY+ioiC9PaTyXA0mPqENKTIistuwWqem+4mGvx8SRSGdDzzX+ne+VIS3rgeDmhjOTqlafGFSZVezUAtJCKoUjv0Tnw7e4wUVu34DqKOI8n5kU5NKpGW2KXWiXsqUmdWUX7dwzjTF47BfjIwmMqElMS+nRlLyK64E3Q4BsotrtElql3oV/6czr1vogYs7uvAW5KZAnbLfESaWVJaoyyHYN9LhJ0nkt+ptGcNf+czKK+SeEgpQUVYhSacptlTb7KTXkb2tHlk13y0/gZ+BgbXl4c0hMLGR7ELzUmactqbSKEsl2rbEfzv/C6n3/kOXiQmVsvm4Ze/UlNOGpkpkJmzCpmqXAc6jZ6m8v5TSemnFO+RCYF37AO8/a+jLSc9sQgBKsRpaMVuXXqOJznVPOPi5sfJzloCdWfcGRhcT4Q0UJNr5kpyq+9L5zD2EgpfS5uw9wzq+T+g+vr/wK9VEm+Ja+MtaT1UkFAIVNrlcZJsKzljOUpY6X66BiUsyu89RXhqV6Lso/pJWQhQAeU3/zdhf2ccrkuPkdA6gsY5WKWkzuFUU9YDZ0kNs3FueBzL3B8yMBihh6Q1QggKN/0gdkPr2JESmkjY4FfxXv0rzn7t1+nb/w5BNFwxafQYkZO+SBkMISReBNXOU9SOvEtU7U9ROcXTkJ2zErdlQcohnDi5QfWdpe+5P6Ha2xEXolSjVIBJX6xAC7pf+9/4e19CO9mUPViNtBxyizczUFB56kJTWHM/VusyROibLDkDQ0gjUpxa4cxYQsMtn00y7sYqoKFRWNRCDQdexv/Wb9H/4p9RPrmHSMWVxwcvkuphtZlGo7B1Qm6JUh0oSholvkq1t5ND771Cz4v/jZ4nfpnas3+I7mtLz2NLxuG0LMKZuQQd+qQaotIKZWWoHn6P9qf/kN7OM0MVFbS6Oo0/IB8hCbWg/fUn6HvlfxCqtMvVCFAKmS2SXbxlau++xEuyG1rJrX84nhJTz3HEe3dCvMy8pQJ7VJsITebGz+DufQPvyDa0nR2jM564SkQoM4S9ndiv/y+CvS9SW3gTYvEd6JZl5Jumk3PkxRfrlRTfwE8x2GwDP4Leni4Kqp/+k/sQpz/E6tiPc3ofYa0PHQZ4xenkvTLO4PeklKYtBM7SO7H3vkaYujw1ynKxDz5P+J0+qnf/K8SstWRteQWZicF5VwhqPWdR7/0T4q1/RET+UOJJikpaRj7uwjuxm+efO1VTk5UQQG79I3jvfwvVfjg5jzMK7sr2sR3rI8s2wrhuCYkkQyhbpPn+n6TzK7+EX+lH19N07GqUtbQINYRnj2OdPYaz93l6c3MQyzejZq+my55By6x5uPmG2HuS4qJH+ANPqBRYElTg0XP2NN0d7WRqZ2monqDn4Ad45TYyQRdeXw9Kxw26QiwQGktaCCkZC23pLr0D0TgH0Xk0fcWkNaFwqB58m9rZY2TXPkj3vFtonLcSt1BEa4EU58pKaZBa0X7sAJmzuwh2PkNwdBuRtgY7oqZuhFg2zop7wXYHvbKp7iW5pWlkbniM8Lk/JTR66ar0ULWvB6+nG13rG9t+SFexr9xMnkJjs5mW8SckhkqgzLuB7O1fIHjuv8Zhr7EsjjqgmKVNpCHq66FY7sLr2I1nu1jF6fitC2m3ptEe5miaNh07kyffNCM+A0IQhT7lrjaIIrq7zjLd8Zkmy4Ttx8j0noFambLyKRIRKkFZCYR0YLCakUYISVQrE5W7hqltkZpiyjRMo7jx43R/7/8BxqDzqtZE0kX0nsF78+/QH34Lf8F6jtsz0dkWGqbPxMmWiKKAcmcblZ6zzBKdyFO7qHYcRUcBIU4SZUz52YSEoIq76EYaVt0RB0yvm8wzTX7tA9Tef4qo7SDazlwn9/BGsUy0IhIu/odPYR97K66Wcc3WiUCHHtbCLXDfT2Luk10LQkoUqECT3/wDhB2HqW59Am3nxj6UOkBMwsLTsVcmfR/ZeYLes0dxLMl8W8IBgbZscAuDwT+hQwpeBbSiKDRRqOiO1GDSghYSXwtIgnFxWTZ9wZh05KP96pgNMbfuISrvfwv/7BG05abveer4zpevwervou/D5ynZFtKS4ORRtovQirzXT0FF1IIobokuLBTOGLbg09iOQ2HjY4hMacTdJie3l6RwGmaQ2/gJwmf/hMiE7C6/UqQk6DhO2HH0Gs+dBL+KzDab2rbXlJASA9lxbFo++jN01brp3/H8GJ4nXSS0M/hfkgjAsgg0BEF8YZMgRNS6zn2XkMn7ZPxKaoFqQOiBz9Tnxvcu0Od69FlqV+El2Y2zKGz6JP4zfzzm8lNYYFn4KonP+WWgf1BWIOPw5ICHOFZklHhHzqJN5Fbfx/V3SJwUMd74KLWdz6GOfYi2XXOWdLkVLCw017gSvJAgQ7AzhoxSQH3B+YGac5kSjQ//IoWlWxBB5RrE/JMsl8FsFz3UPVdY57zEJd5ztYpWJ4pTV7vP9dhS1UuazA2Pk1t6CzL0xlie56e4y3NkJRiPLKL4bpRTaCR3x4/FXq1m4npHeuCZFTryUzVGrEyR/KZPIaTRble97yfASxvDYQIQ0rBwgyxMp+nRX6Ow8k5EWEs0q5iAizYFoQlSbud+nnLW4GTzNN3/U7hNM+LuouOmnNOV1dWuIZuQ0i0/RHHZzYjJEKoTgijwUX0dqcs/t+Iu3LnrIKiZe0kGhpBG5bZqhWycTfPjv0lp/UdxRAhM1Qyp+CBzkJDHQNmhNXLWasRN/wK0GkxLn3qilMiggl50G87mz02qEFXqUz/gJeUaKGx8DMs26d8GhpDqIiWRa6T48P+J2PJ53IwLU/H2uRBE/R1D4x6j75BoGrd8mtItn0NGfsJHU4iUkvBnZt4amh/6OTL54tiR/GRhpeTzcmvux5mzOukqa7wkA0NIoyQljZ0r0fyRn6bw0X9LfvocLDWG3sQ1gr7If40FXMem6f6fpnTLD8akNFVSoYVEhFVyc1cx7RO/Tn7Gwusnq+4K3vdAsd38pk8mTRuNl2RgCKkOC0+TsSWljY+SefS3sJbdRcaWiCiI0w0mudLRCFS1N+kWOoZ3rwa6vFouDff/LA23fg5b6rhk06S1muOzRSuqkZu/jmmP/wbWjKWD1cMNhlZZbsXdOHNWw5gnthgYTFVCGlQ6cXZWYcE6Wj75m+Q/8rO4rUvIimCwdYWelOGn2IqPqj1JzbkxNmDFECm5d/8M6uYfw82XENGAkppM4S2J0BGOUIhl9yAf+vfDyMgo3PPn3Mo1kN/yOaSTSZJoDGEbGEIaPSkJgdQaJ1sgd9NnKX36d4k2fpZc8yxsHWIRJhm0k2yj6YEKZOP03ImCymZcZt77BQqP/jr5eavjUKiO6u5cOi7PD4jQwy0UKd71BZo/8WtMm7M4CdMZMrqUzIpr7yW7cKPpl2RwXcAel42lNbYAe8YC3Id+np6jD2LveZZo/yvY/W0EQQDSQQsR66cxdzvqI1olLIL+TnRQgUx+HBWUxrHAWX47YcM8nHe/hrvnWbzes2hho6VM5KcnhJw0IIWGKMBxXZyltxOu/zSFtXfGlpA5M7q8Qafj1iHFLT9A7fC7Qz25DAwMIdVv7aE1tiVoWbwOb/4avPWP4O99EffIG/hnDhL51biIqRZo5IAOvrbkJOJ7QUqDEBqhFI5UiGoXKvTH+Z74ULuNppkLUA99iery25HvP0l0dCthfzcaQahlUg6J8U0bHpSVxhYKSYSwMrjzVmOteojS+gexciWGSmMYMrrydGsyi28ht3gLlb2vop2cqXFnYAgpbWLK2JLM3BWEc1YQ9DxO345XaejaTd+hrbi1TkRYww8VWiRVpRNlp89RzSl2KB1WiGowu1priCIsqcnaoLHQdhbPbqGw9GbsbOkaKao4m1EKQX7pTeQXbuTYh68jD7+CPL6VbOUsKvQJIhFXQT5HdjoJN9YnO51IakhWxLISEVnbJnCKiFmrqMy7naYb7iXT1Jp4Rcl50TWrhRn30arv/DIOkYoxJ9T40rlwMuRvfJza4XdQWqOFGEMbLR5XumMb+kytp14r+vTlxZC8UtkoYrDHmyGkK3lMQmA3tbLwjk9R83z8kwcplI9xdvdrlConUb1thOUOVBjEEQwRK9kw6R6rR0hP4jy1KhIl6VgCoSOUUkmoSYDt4BaaqWVaaLdbmL5oFc3zV9NltZBpmY0YIKRrMdED5zJag+2wYOPdVFffRu3MQfSJ7XTveY1G7wx+zymUX0tyMQZkp2Kldl4hpauR2QB12wKkUKgoiufFtnCbZuDlZuK1rqJ5zd2EzYuZ3Tzt3G+4xudFMvKQIkTU1dpDJE0hg/gMbxyMj+yy28kv2Ux17yvg5sbO8xVAGKB0ek0whAqQ2puqd+TRUYSIaqmGoJX2sUQ01Eiz7mcM4zJkFypBQ0gXIyaAbMYlu3gVilXMXHYPGVWh68R+Og/upDlsJ1c+RV/7CVS5k5wdxtl6WiFUONiq4PKWikarxE8QEoRESwshbSoqrnSdbWyl0DKHNtlCmGthxrwlTJ+9lAarQDaXw7EEsybUhhCDIbBcxiE3fyX+3JXkNjwC/Wc4u+MdCuVjFGpt9LUdIervJGdHoAJQEUIrYuPp0tpioKW7RiTycvCx8Jw8xZa5WNPm0yamM3P5jbTOXU7gFMi79jlze82ts+T7++bdzlm/hFVP4VIBWmmEbVPKz8Adh00ubJdg449wxl6MHMsGflIS1sqIlvWUhvnTo/Oi4/cGDfNpX/15tFJ1fNpEJaS4rU3TvOW01LvGk7crJ0/bkk+jw2BYYeP6n3H6vA00TXBGEnqCVQXUOlm0QlwQIir3dtPX1Y7u72CG61PuPE2t9yzVjtMoFeL1dxPUylwseVCjcNwc2VJssWdK03CLjWQbppNrmk5bzUG7BQpN0yg0tOBmsxefNq2S4N7EdIG1Vgkpn+v9VPp66O1oI+rrYIbr0d9+jFpPO15vJyrwqPR2olV0ER9Sky004OaK2NkimcbpNLTOp2I10C9LNE2fSaF5BrYlL5ATE/jOmekUYHC9rKPJtNYnHCGdI0Z9EW9qGEIgCiLCwEdrTRT6RGF4CfFrpGVjOxkALNuO/78tLp6YcJ5Y4jP4SaTChj//RUoOBQrCMCAKQ7RShL6XkO2FPXYtx8WybKRlYdsuti0upPxzvk9M7O2Z3tHjOG91PX75PWmPbarX5JsM8poEpccmMCFdfJKGDuZJ6f6NHva58YSJqVYz7qKyk3V+1rC0BpMtZ2BgcN0R0hWsiRElNUxF0qnD4tZXLTdDPgYGBoaQDAwMDAymMEzNFgMDAwMDQ0gGBgYGBgaGkAwMDAwMDCEZGBgYGBgYQjIwMDAwMIRkYGBgYGBgCMnAwMDAwBCSgYGBgYGBISQDAwMDA0NIBgYGBgYGhpAMDAwMDAwhGRgYGBgYGEIyMDAwMDCEZGBgYGBgYAjJwMDAwMAQkoGBgYGBgSEkAwMDAwNDSAYGBgYGBmnBNiIwMJh60Fojzv+lGPwfg2s3M8Mnw+D8Jaq11tfnohBmzEaWYytvPc5EoPXVfdfAlhdTcN7OV2fCrM261+84ruG6CSk677ktkc5jp/25oR5ar7YEkZIiVRqiYZ9U73PqZOzD14E1ig+MlEYJMfgsUoAcA/LQQKiG9r1EI0eoBM4fc5qIx53OGhwJLlgHekBIY7CptR6cAAV4foTnB2S0h6OqlK0GQOA4Dq5rY4uxIaboPA62RLo64Gpgi0so1mtMTBqoBVHyOBrXtrDl+D3TSGUpBFgXDELFMzuGsqw7ZOft/j7BmX0gbGS2QGHDo4hssQ7LOX6ff/A1/BM7AIGVbyK/9kFErmGEnxv/rQ48KlufQAdVUCGZOWvJLL8TMWwjj1YJBMfeo3rgdYSdQdguhRsewco3j2L88d+rnjbKH3wbtEJHAdlFW7AWbb76zxt4rlO78fa9CE4WQh935nJyq+5Ld5NFAdUd3yXoPgnCAiEobvwEFFuu8nmTMVe6qe74LqraC9K60ModvblAfs0DyJaFo1qO3u7nCM4cBMsZ2TMJyDS2UsvNIspPp9QyEyeTi7++njV3mfmONPjth1DH36V67H38chdeUEOGHkG2ISaIbJH87BXoWWsR0xZTbJp+AaGNdr/qoEZt53OEPacAcKYvIr/mo/XrgOM7wLKvSv7Cssk0z6aWaSHINFFqmo5daBgixrRlP4L5Cc/sp/zG36OVQgUVims+ir32wfF5Jq3xdj6L334IYWcSYrnM4kUhnSyZ5jmE+Rn4bhOllplYtjPmJF8XIWml8Hc/T/XDb4N0sRpnkVt+NzJbrJePqO15mco7T2DZFrJ5PpnFNyNzDaPhI1RQxX/nK/jdp0FalDNFSo//NqVlNyeWqxzN4EFYhCc+oPbSX6KcHHa+iezS22JCGh0fEfacwn/jbwl8DxHVkFqTXbR5BJ8X/6HUIdV3EhKOAsLWZbhz1mE1zKg/zJaEhoKOo/Q/96eEtX5QEfbM5ZQ2f+bqI3kD81PuovLWV4i6j4N0UgsDSjTu9GU4LQsT30GOaIyV95/B3/MCOLlhHs7VoSxsLNdGZotU5mxALr2D7LLbcXLF+gyh855RCUH17HHU+9+gsuNZonInRAFSaEIVe/C2BCEEodL07HkZ23VxZi6lb/WDZFbei1OaPnppD8yhX6P67pMEJ95HKUVm+V3kV98/unEO6IDdL1Hd+sQI5C/olzbSsbGyeaqtywlmbaC49Bbc2SuwhGD8Q8zx91W2fxtv6xPg5hGhR//ZI2QXbsIqtoxeB12tkasivJ3fo7brObRTuDpZCkGfdLBsC6vUQnneBpi9AXfRFpymmTHJjwGZ1uchCYEWkkhbKC2RwkKn9IBaOERItJI4wq57wrSwCbUAHES5G++F/0puxu9jN86uT7BCEmERKYklLES9C0tIlLAJdYClbbS0Rvx+tMaduxZ3+Z2U3/0mOlsiOr0fZ/eLNNz8AyktJEFt9/MElV4iK4NUIflNn06MhpF9vhYSLWwiFa8nVIjQYSqLXde5BkMkaIlWCqnDISPyCl8qpSKshahKFa/jGZy9L+DP30Txzi+Qnb+h/jlIlJh/ZCvl7/4Rwel9KOkgBURh/G/CckBCqDQq9BFCYEnwPZ/gyIeIox+S2/Ed7Bs/TX79x7DreR4h0NIm0hKlQUunbsWvpR3rAC1AiXhNXEH+UkVEUYBfKVPrbMPd9zL9H3wde8kdFG/6AaxpC5LQNYw5MWkNQhJ2Hqe690WUU4zl4mTQHUep7H2F0qZPjjklCiFAWIN6Gq0QUXjp4SdHkUJG+IGASpna6UNY9tP4s1birvko2XUfxy00pk6mKWXZ6Tq3/sVjmPWrlIupJoW2s9RO7qH3u39M8yd/E+FkUwhb6BSfV9cp03gj5NY+RG3PS4RBgAb8vS+gbvgYMlOoY7zx+1S5g9ruF4kUCHycGUvILrutbmsOrZGFFqzG2Wgd1Rmxi5Iwb33KR6CQmTyyaS5I+8rzIgReVxuifBZHaiJh4wUaue9VotN74GP/juyq+0Y/B4miqx19n+6v/yZhbxvKzsfhuUwDxeWbqORnI/LNSCkJA4+w5wyl2hkqJ3Zie90gbSJhUT7yIfbpfXBqB6X7fgbh5uv0IlLUA3pg3jTScZFNS8DOJN7uxeXi97ZDuQNHarQW1JSD6DiNdfbLBAdeJ3Prj9Cw6fFkdOPjLVX3vkTUcRTt5ECFsdGpNJV3v0lhzQPIbGEcw4kR0s0nYWx9yRWvwwC/9wy214NEEYmYzMLjO/FP7cbf9woN9/4r3HkbUpXj9Zn2rTXKzlHe9QI0/xVN9//0mBz4XzMkFktm0WacWSuJjmxDWxn84x8StO0ns+CG0S+iZOOU97+Jf+YAwsmAX8FdcgtW46z6LCYBQgVkl99B/s4fR4d+3ZvULTWfb+GM6HlAIFRIZvoi8g//EmRKoKPLyk4IQbWrDVFuJzjwOhx4FV3rQzkF/L5Our71n2gqzSI3d/UoFFFiEFR76X3+z/C7TkGmhBXVsBbdRPamH6Z52Ram2xd61n61jH18N+HRrXgffhvZdwrtZAlrFSpnjlJQEdbg+cAE2aqAUBF281yKD/8iomFmrNTPf0AhQCtqPWeRlQ5U+376dr6I23ecMAiI7BxRxwmi7/4BovsYpbu/GJ+njNVg9cA89VDZ/jRK2KAirGwRHQUorQjb9lHb/yr5dQ+OPTmKWEYiCnBnLqfwqd8BFV1y/aowwO89S8broP/Qe4iDr6F629DCIsQmOvAW4dnDlD76r8mvezi1JLHrlJAiQKItl+rbXyY3axm5dQ+NYSz3WoxRIW0HZ/WDeEfejUOrfpXye0/GhDSqccabTAc1/D0volWEFiFOsYXCDR9PYTkKtFbY2QL5gQP3iaIWLZvctFnITPGq3pGfNiu2R9fcS/nIdrq/+0eIswfQTo6wr5PKa39F7tP/MU6YGMlmThRddd+rBMe3g1tERh724ttoeuxXyTS0DIX0zvlMjZsrMG35ZqLlmwk2PEzlzb+j/N7TOK2LaHnkl7GypWtz8H818pcWuaYZWI2tl/3LQsucxA+4j9KWz9C39zXktn8iOr0LZeXwo4jo5f+BrpVp/NgvJvtgLMgg/szyrheJOo6AtLAsm9LdX8R7/ymqJ3ah0FR3v0Bu1b0I22FcLAGtkbZLobn1yn/bOh+A7KqPEHb/EOUPn6H67pOovja0WyTo66Tv2/8ZoTT5DR9LRX9ed5UaBAq7oRVh2UlUJ6T3+T8jOLVr8PxlqowUoLTqdpzWJQjlo4VFcPQ9gs7jQ8ptpFYfgqD9ELXD76AtFxmFuAs34c5cfo53Vh+XhvF3KRX/rOeV4kbWYXDVz6W1Aq2wbJuGpZtpeexXsZvnIiIfbWcIj7yHd3LnCKNccagOFeEffhutNOgQmStRuu8nYzIasHqFjIll8BUrXq0VFprsjAU0fvxXKD70izQ+8PM40+ZNUDIaFtW4CvlrrdBKYQFuaRotmx9l+uf+M9b6T4AKkFKgnAJ9W79G9yt/i0Kkfdow5B15/VTf/xZRGKIjn8ycVZQ2fxJr4U2xR2Fn8A69FeueJFw9XrKM185VrmFLkmmZx7R7fpzSp/4DzoLNyLCCtrMEXpW+Z/8Y//A7qejP64yQBDL0Ka57kNKmTyKCahzK6jpF59P/ibC3PXH9pwApJSEMq9RKbsUdEAVgZ/A7j1Pd/QIj1ITnhL0qH3wb7ZWTg3OLwoaHB78vNTIVKb3SlulVvoSQQ9a3iijMW03xph9ARAFIC7/aR/XAmyObh+TPVFDFazuARiJUhDN7DbnWBfG6lfKyco2TbuI1bklB802fIrfstolNRiOQvxASMSADrUEr7IYZtHz832Fv+ixEUZzYLGwqr/9PgsNvp7x2h7wj7/A7BCd3guVi2w7ZdQ8hpEVh7f1YhfhqSFTto3/r11Mz5tKW5eAzJbJsWLiels/8B9wltyODcqw/y110fvdPCfs769af1x0hDRwIN9z3k2SX3oLwy2ingHd8Bz0v/EVsnY9Bksa1RGb1g9iNMyGKz2T8/a+gav0js2gS7yjsacM/+CYKiYg8rNmrseeuP8crM7gIuWqNO289sqEVoSJ0GKB720an7gIfWe1CIxDoOLNxpBcWB/5W68FQ7NQTfeIZaoXjusx48GfIrH0QwhpYDqrWT9/r/4AKaikaoklYW0VUdjyHCj3QEVbLguQeoCYzcxm5FXeCX0VbDt7ht/Hb9o4uajHeslQKp9hM6aFfQLSuQIRVtJMnPL2H2rtPjM7QvZ5DdgiJDmpIJ0PxgX+L1bIQEdYgk8f74NtU3v7HqRO6S6wbd9Yy7AWbECpEWxm84zvwj78/wsUT/11lz4t47UcQtgsacivuxi40jfiezvVISnbTHJyGGaBCpBRIRmmVWzbKjS+fawRh31nUYBhrFIpmqhsSCSnZtsO0+38qDmFHHsrO4h1+C//I1vRkkGQG+id34h14C+xMnKiz9mGsfGMcbpQWubUPYuWbEEIS9pym8sEzdSvzcYGMQ8a56fNouveLSCeH0AotLfq3P4PfdaIu/Xl9VvuWcSglN2sp0x78EtLNgVKESHpe+AvKe18ZXMSTHlohgNzahxBOJg5XhD59734z2TtXsQQSr1J5Zfy9L8eJuFGA0zybwroHjXd0tQg9dBTEFvRojrgGyjM5GayGViQaLW3C07vxj384FHq6HstTXi0pNbRSuvXzSBXFazrw6X/3qWQvpLeGK+99k6jSHScXNc8nt/LuczzTzOKbcOatg9AHK4u350XCzuOTwxhOqqnkV96Fu/SWeF1bLkHnUfxDb9VFrNdx+wkBOiK74k6Kd34BqeLYfuh78SFd+8GpQUrJBigsuoHMvPWIsIaWDuHxDwjb9l1lmCD+9+D0Hrxj21G2i1QhmWV3YjfNOjcElB6TToxkhtTMZk3QfYqgtx2kHZ/NS2cUa1Yj7AzO3HXxRVFpo7wK5Rf+HO/0vlhZDA/HTUh5XNu5cBfdhDVjMSIK0EKi2vejek7XHzJLogRe2368A2+C7UIUkF12G86MRYOGHVohhCC34VGkJdHSIug4SnX385NKjkJIcusfQdpuvC6FpLbv1cTokqMipeswZHfhBi/e8kO4ax9GBBVwsgQdR+l79o/RXv8UCN/FVrPIFMmuvCc+8LVswt4zVPe8eHXWTOJF9b/3NDrwEIDMFslveHhoI6ZOoiL2ZCdCMkPde3fgkHsrqtyJFgI7m8Ods2a0MSFyK+5CF6YjIx9tu1RP7qLna/8Xfa/8NcHZo3Gx2vPlcb17T0KCBrtxJpl5N8Shetsl6OvAO7krhZBZLGdvzwtE3SfQSGS+kcKG869ExP8vt3gL1syVyMhHCSs+c6r1J/OlJ4Uizc1fi9U8D6EClJAEbftRXnnUorzOG/TFE2/ZDs0f/dl4kXoVtFOgsv8Nel7873Hq4xRh4ezKe7Fb5idhApvq7hcJ+85ennST3wdnDxEcfhslbQiquItuwmldRtoH4kIIVOAT+VXCcg9hpXdEryB5qdAfM0/niq9zvLX4zMA/tp3qtq+i7SxEIVZhGtmlt17MSroKpapxZ62k4c4fjfseRSFaZvA6TtD7/F/Q9ZVfpPdrv0r1/aepnNqP39eJ1jouyzQ4V9er56QRQmDPXIa2XASCqNpL1H2yfqNDCMKeM3Gqt5VFRjUyi2/Cnb3y3GkeyIAtNJFf+wBaRQjbJWw/RHXPS/V7auNo2MtsA+6c1QgVgbAQQZVolMk6YBr0DWXhNEyn6aGf5+xXfomo3Im2c/S//Y9YLQspbf7U5L40m2QQOY2t2ItvIzj7ZZTMEJ45gH/0Xey1D3DpS3nx72t7XiboaUPYWYRlkVt9H9LJpCsXrdDCwj/4Bn3faENHISM9mxICdBSR2/QpsqvuTTedWVhcVTbbsH+OEAQHXqfnmT/C7+sCJ4v0+8ne8Fgc7hzN84m4fUrpps/i+T7eG3+LqPagpIuyM9Q6juOdPUx1z0vY2QJ2y0KsmStg+lKyc1bhtC5DWHZiiOvrMhnFbpqNnS0SBB5SgA69VD63uus5gq6TCMtFOgUKGz+BkNaF+ySReX7NR6i89w38jmMoFVHb8Uy8t9zsBJ+bJHxs2fH9uiRcqaKAsKcNd9ZKQ0j1kpI7dw3F+36Gnm/9LgKN1lB56S/JzFwa12ya1Js3JpbihofxPvgWyvdQSlHZ/i1yqz8Sb5rzSWmgOGS5Ow7vSYkOPTJzV5Nfedc5Gys1SEnYfYq+rhOjJl8LhbX4FrKpRt0UkVeJzwVUdMlxC+JNqfwquvMo1R3PUNv7CkGlF+FmEbUesqs+QunWf1aHFSySZSuYcdc/pzJ/Pd2v/R2ceJ+o3IW0LISTJdQQlvsR/R8gj7yHZUn8xjlY0xfjLrkFd8U9OI2tY9MWYzLs+cHxCnSle+Te6vC9JUB5Zaq7nkchEKGHs/j2oTJdF8g2js7YjbPILr+LoP1vwc5SO/Iu/pF3yS6/nbhm3wSek6TjgZVvGnxWHUWoWp/xkNIipeIND+Of2U/t9f+Jcov4fR10Pf37tHzuP2M3zZ68Gzc5ZHRnLiOz9FaiD55B2xmCU7sITu7CnbfuImNLKjMc305wajdaulj4ZFd/NC7COUayGKTF0YTSk3s1Qsp0HgSNEg5B5zH6n/kDpO0kYdxLeJNComt9RF0niWq9RLUyivgyqvLKZNc+RMMDX4oL3KZSKkaTX7SR7Px1VI5sp2/Xi+i2XXhtB7Cj8qBVHgmHCAvR3QYdx/EOvoGz7atkt/wghU2PJxdmr5/uv8NvGopEnY569APFbve9in9qN8JyEGgyK+9DOtlLRxGSNi75DR+n8v63CGt96DCg/90nySy7bdLMibCs82zC0e89Q0jnWS1SQMs9P0Zn5xEqe15AZ0p4p/bQ9d0/oeVTvzWYUTI5d6FGWA65VfcNxqrD/g4qu74fE9JFSQyqHz4bx7mlQJRaya2653zqSE3+QinsmSuwF2xCR/7oPl9F2K3LUyXzqNpLZe9r6CsxZLI2dGLgaBViZQrYTbNxNnyCxi2fws7kUiTz+DxCWjbFJZspLtmM19eBf+YQdB+n78h21Jn92NVOgnI3OgoQTg5fQ3DmMMF3fp/o1E4aHvz5MTUyJtxOH3Y2rFE4heZRVgDXg3cbqx9+B8K4RJfTupj8yruHdMVFdUYSSm9ZQGb5nUTbvoqyc/hHthGc+BB33vqJzUcDxs7AOTRxCC9u0HqtCGkqHYyKgYy0Ao0f+yWCntMEbfvRmQL+3hepvPUPFO/4l5M3FXzgDsTSW3FmLsM7vgNhudT2vUqw+TM40+YOKaTEqgtO7cE/+h5K2oiwRmb5ndjNc4ZSWNN+PhWSXbSJpgf+NTq5KzL6oFaKIUUdK64h+ZwffUmSBuxMovBCnKb52PM2YM27gdKqO7EL04ZZxiJlxaAHPbpMqYVMqQXYQv6GRyCoEXSfonfPq0THtxOe+ADpldFOlkAr+t95AiUsmh7+xSR0O/URdJ0kqvYh7AxKS5SVGb3+EwLv2Ha8w9tQdgYZ+RRv/ER8YfyKYUCBsCS5tQ9Q2/V9VOgTVboov/fNmJAmuD7ROiLsPYNGJgavi9U4+xoQko6zVQZ766RMUPr8zxkv4hu4QNfYSsODP0fXP/0KkVdFSZu+l/8Ka9p8cqs/AirgIl3nJ7wHiNZYmTzZ1Q8QntxJJB3Cs4fwjmyNCek8k6yy63sEvW0IO4cstFBYe3/skuuxiW/HOlUl1fLltbXWB9pP6Ai7aRa5DY8gM3mIzmseqDU4GfwTH1Lb8WzSaiDuu9X0kZ/GLrWcE6IZmzGJoTinHgpIWbYDtoOVK5GdvYIo8Kkc2kr17X+gduANcLJETpHK9qfILrs9vsB5HXhJuusoOvQRloNVaMJpWVCXkdf/7lNEfhVhOcim2cg56wkrPXFlBnHljo5W6zKs2WuIDr2BsDPUDrxFcOYgTuuSiZlQpYfaoNRO7EQLK+6ikG3ALs24FoSUHGhlS0MZFkENVe2B5jn1j7fSBSpCSwsh5fhabonCzS/eQnjPF+l95o9QwiUMfLqe+WNk0zwys1dM1q0ICApr7qPy9pdRfe1oLKo7nqOw/uGkJFC8AcKe01T3vhq3SIh8MnO3kF1w4znu+vUAoSPshpk03PpDcVWPS0l242OcrfZQ2/tKXJ7/9G66n/kvtDz+60l7gXEq03NOOaDh5YQ0luNSWnEbhYXr6Xrq96js+C7ayaOCGpUPvxsT0lQlo0RPhb3t1I5sRziZuOJI0yyc2auuwpu52OdJ/GPvExx5By1tQKCqfVSe/PfUpLjQsL7UlFk2qrcLpIuWFlH3Car7XokJaQKfIQVt+9GdR9HSwlIB7tw1cRsTRvfYdWiVJOKabYzDOcIirPQQdhwdbuuOzg2MQqh2xwfTOsIqNCMG3N/xmpvkvkfp5h8kv+UzSD8utx71ttH77H8h6u9INvskC98l47IbWsmvuQ8RemjLITz5Id7R7ed4p96RdwnbD6CljWU75Dc+OgaVkSePMtNBLR77xdofqAjhZGj46Jewps1HhB44ebzdz1N+5x9HfXM9Hc/p3BYUqAiZKdJwz09gNc5J2llL6DkeX8wcz4jEuLu8gtrel/Hb9sb3kLTCnrMWuzT9HI9nJJ5CZcf3CHvbQDoIKdGhT7WrjXLHaSqdbVf1KrcfJ/JrcVscDdpyqG5/OtYzE7gDQWX700SBB9JCa8gs2hJfaB9lBEXWNbeA1TIfK9eAFhr8MsHpPfVZMGj8tgP4ncfAciEKkQ0zsQYOXMfZWhBoGu7+IvaiLUll8Dze4W30vvgXDJXzZ5IlJ8XudmblfcjSDASaoNpPZedzgyVAdBRQ+eA7aARSRcjpi8gs3MQkHGy6noe4RPWI5K5JZsYiGu//WaRtg1ZEQtLz8l9TPfBGylU/RnuxdehZ7WlzycxbF/doQqKihHSnpEGRXFwtd9H/zj/FrVO0QrpZcus/Nkz/jMw7CjuPUdnzAtg5QBHVyoTVfkKvOsJXjbDaj6r2xtXgpU3YdZzKrufrM/DH0NOsHXoHb/9rMbGHHk7rYrKLb6pLR9SR1BB/oTNrJXa+kbDzJNhZvINvEfWdxSq2jDz2mZQ7CU68T9h1EtwCws5gTV96TrhpXBWQVtiFRlo+9ou0f/mXCLtPopwc/Vu/gTN/81Bm0mQyKAdanM9dizt3HZXdLyJsF+/gmwTtB3Fal+Id/4Dw1M44DBF65Fbdh5VrvG4vUl6996korPkI/uk9lF/5a5RTIKqV6f3e/40zfXHcBqReGQ68XwwLyY3i84S04grUw6qO66k4tQNnd1rT/9J/J2w/iLZzyKBMZuW9ZBbeMArdEv9teef3UT1taNtFCEHhjh/Fapod9x8byZzoZP2ENWpbnyDsaydSIbUdz1JY/xAyW2JCpNzpuCJDVO6k9/k/I6z0gpNFRD75DR9P1vfoz7xGT0iJsJ2GmYgZyxAdx9BWluDMAaq7n6d402eTA70RsK6UROUuyu89DZaDjkLs4rTkktg1sswHKjm0LqXpgS/R9Y3fRCVFGfte+kucaXNRlsuk65+k47s6ufUP4x14nQhJ1H0S78g2nNalVHd+n6Dcg7Dd+EB/1T1Tp3nhWIeFtKbhjn+Bf2oP3v7XIFMgOL2Xvu//GU2f+DWEtEevXBIyqux7DSpdcRadYIRKIP5uHdSIek6jhYVAx2n9ljN1pmKw11NSi/GNv6O87esoy0VEPiLfTOn2H0HaI6w4ksxBVOnG2/UsSkhE6JNdtInp9//kYDfq0aKz93Qc5nXyeMc/pHbgTfJrP3ptjcFBWVqoai+dT/4OtWMfgFtE+GXc+RvI3/jJuklT1v2QAgo3Po5wMoBGSUnvy38dP+xAyYwrKTEdDca3+17+K4JTu2I3MPJxl9+F27Lg2k7GQJLDqrsp3PbPIfQRlkvU20bt0Dto6cRpv5Nwz+YWb8GanlQ+RlLZ9TzBmQP4h95BWDY6Csgs2oLbupQp28gtba8asDIFmh/8EnbzHETgoZw8/R8+Q99bXx49sSd7IDh7mN7v/hd6nvodep//c6KBZouDYacrfHZSacJv2xfvUzsTp9jnW2IveFLO83n1Awf6cwlJWO2l57t/TO/z/y+RsBAIhFaU7voxMvM3jOIKQyzf2u4XCNqPxCSe9DgSloWOArSKRv6Kwvhy/o2PYeUak9+HlLc/hQ68cSz0fL4s9aAsg/bDdDzxq1T3voTIFBGRhyy2UProv8HKlUbtradDSIkbnFu8hczyu+Jq2ZZLVO6k++nfwzv63rASHRdrEZAIV1iooEbP9/6M/rf/CWVnEVGAVZpOcfMnJ0b120SJNNz+eXLrHoSgihIyuYU/SRWnVshcA4V1DyFUgJY20dnDdL/wlwTdJ9DCwnJz5DY8OsxKGkcFM5lJSSvcGYtpvP9fD54naWnT/+r/xDv0zsiVyzCrvOfp3yPsOEYoHfpe+Ru6/vGX8Q5vG2blD+yXS+w5aROVu+h54b+hqr1oBJbtkF39kQktenGlfx2evCEkqtpDddcLdP/Dv6X/zS8TDVzTCMrkb/4cpZt/cOSG7rDeYOUPv4tSAToKcFuXkFt9LyAQ0kZIa+QvywIhcWYuJ7P0NqzIR9sZ/GPv4R3/cHwlfY4sBWHPafpe/3s6/vfPUTv4JmSKEHoIO0vDAz9HbsGGVJp02vUvEY2wHZru+T9oP72HqPMY2s0TtB/k7D/+CsVNj5Nb9yDOjCUXPKsGiEJqh9+m8vYTVPe9ErvTgFAhpTv+JZlZKyZIHn48VmlnaH7w5wg7jxOe3Imys5NYeSYXZVfcib3tawRdJwhq/YR7X0ZLGxHVcBbeQmbe6nOs/zGXspColMKz16wfakJKhbX345/aTf+rfwNugajSS/ezf8L0z/0B1kjOk8RA/Toba9ZKxLEPUFFAZOeoHnoH/+RO8qvuJbP6fjILb0xKE104eK013sE36H/1b/AOb0M7eURQxp6/kdzKeyYwxwuUtJPTrovIy6+hvDLaKxN2HCY8exjvwOt4R7cTJT2kdOghpaBw9xdpvPNHEaMydJNiw4fewT/2PtrOIsMa2TX3xzXd6orkJBfzpUVh3YN4e19EaFC1CpX3v0V28ebU1qYWlx65rvWBXyWqdBN2HiU4uYva3pcJOo6ihAVOHrx+ZHE6DQ/8HKUND6V2Ud5OZ+NpnBmLmfbor9Dxtd8g6m1Du0VUrY/el/4Kb+ez2DOWYM9ahXALcS0wrQg7T6C7juCf3ktY6UW7eYQKECqkeNcXKG759MQ6RB8oG19sofnhX6DjK7+ErnTHIbtJa8lr3OkLcRdtIug4ClZ8D2IgVJlf+wDSyY2TUaDRloO/5wV6Og+DGnm173M2XehhL9hCw90/dg3teU3jXV8gPLWL2qG30E4B/9Qeur7/57R84teSStBXv8ZltkjzQz+PPWMJvS/8JaqvDZw8YRTR/95TVPa8RGbGIkTTPKyWhchcA3bDTKLeM4TdJ4na9+Gf2EVQ7UU4eWRQQRRn0Hj/zyQhl4kVrhNotLAJe9ro++ZvJbXh9AWiVl4VHdTQoYff246u9qClk6R2R+CXsafNp3TXFyhtfOwcchl5+F5TefcbaBXGvcEaZ5Nf9ZHRf+ZF1o27eAvughuo7n8T7AzewTfwTu0mM3vV6Paijr07bWfwzx6m58s/D0pfdN+oWh868Ij8CmFvOzqooqWLtjLx2Vvo4S6+iYb7fors/PWprhk7TUWdXbSZls/+J7q/84dEJz8kkjbCyeF1t+F1HEfue/2cB1dREPdzsTNoO4MIKshcI6U7/iWl2z5fV5G+i1lYQggEdTZwS86TMvPWUbrvp+j51u8lYRCJTGlSBp9VjJ99X7jhUbxd3yfwPUjKBGVnLSe3/I6rCpiksYYEoKUk6D5N2Hmszs+TEFTJ5qbV/1yjbfqXEL7M5Gm4/2cJvvzviMqdkMnj7XyW8pw1FG/5wVGFQkubHseds5q+1/8eb++LaL+CsjLowKNyfCf62A4s2wYhkdJCqwgVhSgVISwXIR3w+7FnLqN0/78hu+CG+hXL4LpNa70MpNTHl+6rh7ddRlZiqN+TELHy1AoZ1hANreTXPkhx86dwps0byrob6TMmRFA7sg3/eHz2hlcmt/IenJb56XgJA2vGyeKuuBfv0FaUtIn6zuDtfj4mJMQo54Y4XFvrp7zn1cvuHc1QyE4LJ5Zl5OPMXEb+hkco3PgJpJtP3VBNr7hqoqiz89Yy45/9AeX3v0PlvScJe06hah5CSpSKLrAEhFboKMDKNeAsuofG2z5PZu6alKyNIYSBh458oiTmmwYBl258jLD9IH2v/13c6Cvwrvpm9uUWfRR46CggCmtoFY6LIe/OXok9dy1RcqdChB7OsjuwitPG3mrWGh366KSpntbU73UKgRY2jDbjSRB7aKGPkiJu+KdHv1Yyc1bRcN9P0PXU76IDD6UV3d//s7gU1fLbRnGWocjMWoH7yd/AP7KNvu1P4x96G1XtRYUeUghUGJc4UgSDe00kSQ9OsQl35b2Ubv8RnMZZKcxxPIcq8OM9oIIU1kUYrwkh4waDWCDFJdfQgB6y3DzSzSFaFlBYfgeZxTfjti45h1RG7a+piPK7TxL2nkG4OaxSC/l1Dw27MJ7ePimsuo/KW18hOrMfpE3ftifJrf84zvSFI54vFfrxGpZxtfrL7q+BivmWg+VkEdkS9qxV5FfeRWbR5qFLxGMQNUm32ndCSlZhGg23fZ7Cho9RPfg2wbH3UL1thJXuuFtpAivfiFWagZy2kOzSW3Bnr0zqpOnzyp/Up2ylmyN/yw+TC2roKIwza+oy4sTge5vu/SJ20xyiSi8yW4jvX9UBq2kO+Tt+fHCDZxdvGvvQUuKlFm/5Z7HSsl2QNoUbHmE8zsfsYjPFW3+YqNqbaokoHQW4dZR4Kmz4WFxSJml7Ld3s6NZNkkFavOFR0IKwpy0uW+NX48Zwo2rSJwfrSWYWbSazaDNB14m4usbpvahKB1G5B1XtTTx4C7s4DZlrxJq1mtyyW4fqt9WjWAb2mJMjv+lTuEtuAyFwpy8c/f5K3pdbdQ+yOOPq06i1RrhZnJaFODMWxxVebPcCwhot4SIE2qvizr8Be/oitFLYDTOGDOi0lPNApmaxmcaHfh7v2Idx6SkVjrBKSmL0C0l23cNYM1cgrvbMW0VYpRbs5vk4rUuQ2dJQS5dhGYypayOtxyB1anDyxTBjJ0BVe2LvJPm9zBSR55cqn8ydWacABlJPEVPsTsqUnrSL7xlV60d5/fF+lBYy1xh3+T1/r07lVP7z7iIZ1LnO6j3yuCaEdP5iuJz1MPg3YozDQuo8Dyet7zqvhEsaC3/MnnWiL/Yx8gBHKz99Xhu3NObhgnGmOL/Xer+lLa9zPm8ULlZqZ1lXeK6xJLu0vqtuWY6PDhpbQrpAcV/aPTWYMMxw4WI0mMTewfnTaebUYOJiHAnJwMDAwMDg0jCBVQMDAwMDQ0gGBgYGBgYD+P8BP+CZW6Ns45UAAAAASUVORK5CYII=">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../problemas/hoja-01.html">Hojas de problemas</a></li><li class="breadcrumb-item"><a href="../problemas/hoja-06.html">Hoja 6</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Hoja 6</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Todos los ejercicios se resuelven en papel. Los fragmentos de código solo requieren interpretar o completar las operaciones explicadas en el capítulo. Puedes ejecutar las soluciones después para comprobarlas.</p>
+<section id="ejercicios-del-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicios-del-capítulo">Ejercicios del capítulo</h2>
+<p>Los ejercicios 1 a 6 son los ejercicios 6.1 a 6.6 del capítulo, en el mismo orden.</p>
+<div id="exr-h6-caracteristicas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 1</strong></span> Tres observaciones tienen <span class="math inline">\(x=(-1,0,2)\)</span> e <span class="math inline">\(y=(2,0,2)\)</span>.</p>
+<ol type="a">
+<li>Escribe la matriz de diseño <span class="math inline">\(\boldsymbol{\Phi}\)</span> del modelo polinómico de grado 2, con la columna de unos.</li>
+<li>Resuelve <span class="math inline">\(\boldsymbol{\Phi}\boldsymbol{w}=\mathbf{y}\)</span> y calcula el riesgo en train de esos coeficientes. Justifica con <a href="../capitulos/06-complejidad.html#prp-todo-sirve" class="quarto-xref">Proposición&nbsp;<span>6.1</span></a> que son el ajuste por mínimos cuadrados.</li>
+<li>Añadimos una cuarta observación, <span class="math inline">\(x=1\)</span> e <span class="math inline">\(y=1\)</span>. Sin calcular el nuevo ajuste, razona si su riesgo en train puede ser cero con grado 2 y con grado 3.</li>
+<li>En el modelo <span class="math inline">\(w_0+w_1x_1+w_2x_2+w_3x_1x_2\)</span>, calcula cuánto cambia la predicción al pasar de <span class="math inline">\(x_1=0\)</span> a <span class="math inline">\(x_1=1\)</span> cuando <span class="math inline">\(x_2=0\)</span> y cuando <span class="math inline">\(x_2=2\)</span>.</li>
+</ol>
+</div>
+<div id="exr-h6-descomposicion-punto" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2</strong></span> En un punto <span class="math inline">\(x_0\)</span>, la respuesta de una observación nueva es <span class="math inline">\(Y=f(x_0)+\varepsilon\)</span>, con <span class="math inline">\(f(x_0)=1\)</span> y un ruido <span class="math inline">\(\varepsilon\)</span> de media cero y varianza <span class="math inline">\(\sigma^2=0.04\)</span>. Un procedimiento se ajusta con una muestra de entrenamiento y predice <span class="math inline">\(\hat{f}\)</span> en <span class="math inline">\(x_0\)</span>. Supón que solo hay cuatro muestras posibles, igualmente probables, y que con ellas el procedimiento predice <span class="math inline">\(0.6\)</span>, <span class="math inline">\(0.8\)</span>, <span class="math inline">\(1.0\)</span> y <span class="math inline">\(1.2\)</span>.</p>
+<p>El error cuadrático esperado en <span class="math inline">\(x_0\)</span> es la media de <span class="math inline">\((Y-\hat{f})^2\)</span> sobre las cuatro muestras y sobre el ruido de <span class="math inline">\(Y\)</span>. Se calcula como el error cuadrático medio de los capítulos anteriores, la media de los cuadrados de respuesta menos predicción, pero con todas las respuestas posibles en <span class="math inline">\(x_0\)</span>, ponderadas por su probabilidad, en lugar de con una muestra de test. La predicción se compara con la respuesta <span class="math inline">\(Y\)</span>, que incluye el ruido, y no con la señal; de ahí el término <span class="math inline">\(\sigma^2\)</span> de <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a>.</p>
+<ol type="a">
+<li>Calcula el modelo medio en <span class="math inline">\(x_0\)</span>, el sesgo al cuadrado y la varianza, y el error cuadrático esperado con <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a>.</li>
+<li>Comprueba el resultado sin la descomposición. Demuestra que, para una predicción fija <span class="math inline">\(\hat{f}\)</span>, <span class="math inline">\(\mathbb{E}_{\varepsilon}\!\left[ (Y-\hat{f})^2 \right]=(1-\hat{f})^2+\sigma^2\)</span>, y promedia esa cantidad sobre las cuatro predicciones. ¿Por qué no es cero el error de la predicción <span class="math inline">\(1.0\)</span>, que coincide con la señal?</li>
+<li>Un procedimiento más rígido, ajustado con las mismas muestras, predice <span class="math inline">\(0.7\)</span>, <span class="math inline">\(0.8\)</span>, <span class="math inline">\(0.8\)</span> y <span class="math inline">\(0.9\)</span>. Calcula sus tres términos y su error esperado. ¿Cuál de los dos procedimientos predice mejor en <span class="math inline">\(x_0\)</span> y qué término lo explica?</li>
+<li>Si las muestras de entrenamiento tuvieran el doble de observaciones, ¿qué término esperarías que disminuyera en el primer procedimiento? Justifica la respuesta.</li>
+</ol>
+</div>
+<div id="exr-h6-ridge-pendiente" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 3</strong></span> Demuestra <a href="../capitulos/06-complejidad.html#prp-ridge-un-coeficiente" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a>. Asume, como en su enunciado, que <span class="math inline">\(x\)</span> está estandarizada: <span class="math inline">\(\frac{1}{n}\sum_ix_i=0\)</span> y <span class="math inline">\(\frac{1}{n}\sum_ix_i^2=1\)</span>.</p>
+<ol type="a">
+<li>Calcula las derivadas parciales de <span class="math inline">\(\hat{R}_{\lambda}(w_0,w)\)</span> respecto de <span class="math inline">\(w_0\)</span> y de <span class="math inline">\(w\)</span>, y simplifícalas con esas dos igualdades.</li>
+<li>Iguálalas a cero y resuelve el sistema. Comprueba que se obtiene <span class="math inline">\(\hat w_0=\bar{y}\)</span> y <span class="math inline">\(\hat w_{\lambda}=c/(1+\lambda)\)</span>.</li>
+<li>Comprueba que <span class="math display">\[
+\hat{R}_{\lambda}(w_0,w)=(\bar{y}-w_0)^2
++\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar{y})^2-2cw+(1+\lambda)w^2
+\]</span> y deduce que el punto del apartado b es el único mínimo. Pista: escribe <span class="math inline">\(y_i-w_0-wx_i=(y_i-\bar{y}-wx_i)+(\bar{y}-w_0)\)</span>.</li>
+<li>Si también se penalizara el intercepto, con el criterio <span class="math inline">\(\frac{1}{n}\sum_i(y_i-w_0-wx_i)^2+\lambda(w_0^2+w^2)\)</span>, ¿cuánto valdría <span class="math inline">\(\hat w_0\)</span>? ¿Cuánto cambiaría la predicción en <span class="math inline">\(x=0\)</span> al sumar 10 a todas las respuestas?</li>
+</ol>
+</div>
+<div id="exr-h6-ridge-un-coeficiente" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 4</strong></span> Una variable estandarizada toma los valores <span class="math inline">\(x=(-1,-1,1,1)\)</span>, y la respuesta, <span class="math inline">\(y=(1,2,4,5)\)</span>.</p>
+<ol type="a">
+<li>Comprueba que <span class="math inline">\(x\)</span> está estandarizada y calcula <span class="math inline">\(\bar{y}\)</span> y la pendiente de mínimos cuadrados <span class="math inline">\(\hat w_{\mathrm{OLS}}\)</span>.</li>
+<li>Calcula la pendiente ridge con <span class="math inline">\(\lambda=0.5\)</span> y con <span class="math inline">\(\lambda=2\)</span>, y la predicción para <span class="math inline">\(x=1\)</span> con mínimos cuadrados y con los dos valores de <span class="math inline">\(\lambda\)</span>.</li>
+<li>Con la notación de <a href="../capitulos/06-complejidad.html#cor-ridge-sesgo-varianza" class="quarto-xref">Corolario&nbsp;<span>6.1</span></a>, el error cuadrático medio de <span class="math inline">\(\hat w_{\lambda}\)</span> es su sesgo al cuadrado más su varianza. Demuestra que, si <span class="math inline">\(w\neq0\)</span>, se minimiza en <span class="math inline">\(\lambda=v/w^2\)</span>. ¿Se puede calcular ese valor con los datos? Justifica la respuesta.</li>
+</ol>
+</div>
+<div id="exr-h6-escala-penalizacion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 5</strong></span> La pendiente de mínimos cuadrados de una variable estandarizada es <span class="math inline">\(\hat w_{\mathrm{OLS}}=1.5\)</span>.</p>
+<ol type="a">
+<li>Calcula la pendiente ridge con <span class="math inline">\(\lambda=1\)</span> y con <span class="math inline">\(\lambda=3\)</span>. ¿Hay algún valor de <span class="math inline">\(\lambda\)</span> que la anule?</li>
+<li>La variable se mide ahora en otra unidad y no se estandariza: sigue centrada, pero <span class="math inline">\(\frac{1}{n}\sum_ix_i^2=100\)</span>. Repite el cálculo de <a href="../capitulos/06-complejidad.html#exr-ridge-pendiente" class="quarto-xref">Ejercicio&nbsp;<span>6.3</span></a> y demuestra que <span class="math inline">\(\hat w_{\lambda}=\hat w_{\mathrm{OLS}}\cdot100/(100+\lambda)\)</span>. ¿Qué fracción de la pendiente de mínimos cuadrados conserva ridge con <span class="math inline">\(\lambda=1\)</span> en cada unidad?</li>
+<li>¿Qué paso del pipeline evita que la penalización dependa de la unidad? ¿Con qué observaciones se estiman sus parámetros dentro de la validación cruzada?</li>
+<li>En <a href="../capitulos/06-complejidad.html#fig-trayectorias" class="quarto-xref">Figura&nbsp;<span>6.8</span></a>, ¿qué variables conserva el lasso con <span class="math inline">\(\lambda=0.6\)</span>? Explica con <a href="../capitulos/06-complejidad.html#fig-geometria-penalizacion" class="quarto-xref">Figura&nbsp;<span>6.7</span></a> por qué el lasso puede anular coeficientes y ridge no.</li>
+</ol>
+</div>
+<div id="exr-h6-lambda-cv" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6</strong></span> Se comparan cuatro valores de <span class="math inline">\(\lambda\)</span> para un procedimiento ridge, con los mismos cinco bloques de validación cruzada. Cada celda es un MSE de validación:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(\lambda\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mathcal{F}_{1}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mathcal{F}_{2}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mathcal{F}_{3}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mathcal{F}_{4}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mathcal{F}_{5}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Ordena los candidatos de más sencillo a más complejo y justifica el orden.</li>
+<li>Calcula la estimación de validación cruzada de cada candidato e identifica al campeón.</li>
+<li>Los errores típicos de las diferencias emparejadas con el campeón son 0.055 para <span class="math inline">\(\lambda=10\)</span>, 0.058 para <span class="math inline">\(\lambda=1\)</span> y 0.17 para <span class="math inline">\(\lambda=0.001\)</span>. Aplica la regla de un error típico.</li>
+<li>Tras elegir <span class="math inline">\(\lambda\)</span>, ¿con qué observaciones se reajusta el procedimiento? Si train tiene 67 observaciones, ¿qué valor de <code>alpha</code> se pasa a <code>Ridge</code>? ¿Y a <code>Lasso</code>, si el procedimiento fuera un lasso con el mismo <span class="math inline">\(\lambda\)</span>?</li>
+</ol>
+</div>
+</section>
+<section id="sesgo-varianza-y-complejidad" class="level2">
+<h2 class="anchored" data-anchor-id="sesgo-varianza-y-complejidad">Sesgo, varianza y complejidad</h2>
+<div id="exr-h6-diagnostico" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7</strong></span> Ajustamos polinomios de grado 1, 4 y 10 con la misma muestra de 50 observaciones. El ruido tiene varianza <span class="math inline">\(\sigma^2=1\)</span>. Obtenemos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Grado</th>
+<th style="text-align: right;">Riesgo en train</th>
+<th style="text-align: right;">Estimación de CV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.10</td>
+<td style="text-align: right;">2.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1.05</td>
+<td style="text-align: right;">1.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">2.90</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Para cada grado, indica qué término de <a href="../capitulos/06-complejidad.html#thm-descomposicion" class="quarto-xref">Teorema&nbsp;<span>6.1</span></a> explica sobre todo su error, el sesgo o la varianza, y justifícalo con los números de la tabla.</li>
+<li>El riesgo en train del grado 10 es menor que <span class="math inline">\(\sigma^2\)</span>. Explica por qué el riesgo verdadero de un modelo no puede ser menor que <span class="math inline">\(\sigma^2\)</span> y qué indica entonces ese valor.</li>
+<li>Duplicamos el número de observaciones. ¿Qué estimación de CV esperas que baje más, la del grado 1 o la del grado 10? Justifica la respuesta.</li>
+<li>Ajustamos ridge con el grado 10. Demuestra que, para cualquier <span class="math inline">\(\lambda&gt;0\)</span>, su riesgo en train no puede ser menor que el de mínimos cuadrados con el mismo grado. ¿Por qué puede, aun así, tener una estimación de CV menor?</li>
+</ol>
+</div>
+<div id="exr-h6-media-contraida" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8</strong></span> Las respuestas siguen el modelo <span class="math inline">\(y_i=\mu+\varepsilon_i\)</span>, sin variables predictoras, con ruidos independientes de media cero y varianza <span class="math inline">\(\sigma^2\)</span>. Con una muestra de tamaño <span class="math inline">\(n\)</span>, un procedimiento predice la constante <span class="math inline">\(\hat{f}=a\,\bar{y}\)</span> para cualquier observación nueva, con <span class="math inline">\(0\leq a\leq1\)</span> fijado de antemano. Usa que, sobre las muestras de entrenamiento <span class="math inline">\(\mathcal{D}\)</span>, <span class="math inline">\(\mathbb{E}_{\mathcal{D}}\!\left[ \bar{y} \right]=\mu\)</span> y <span class="math inline">\(\mathrm{Var}_{\mathcal{D}}\!\left( \bar{y} \right)=\sigma^2/n\)</span>.</p>
+<ol type="a">
+<li>Calcula el modelo medio, el sesgo al cuadrado y la varianza, y escribe el error cuadrático esperado de <a href="../capitulos/06-complejidad.html#eq-descomposicion" class="quarto-xref">Ecuación&nbsp;<span>6.5</span></a> en función de <span class="math inline">\(a\)</span>.</li>
+<li>Con <span class="math inline">\(\mu=1\)</span>, <span class="math inline">\(\sigma^2=1\)</span> y <span class="math inline">\(n=4\)</span>, calcula el error esperado con <span class="math inline">\(a=1\)</span>, que corresponde a predecir la media muestral, y con <span class="math inline">\(a=0.8\)</span>.</li>
+<li>Demuestra que el error esperado es mínimo en <span class="math inline">\(a^\star=\mu^2/(\mu^2+\sigma^2/n)\)</span> y comprueba que, con los números del apartado b, <span class="math inline">\(a^\star=0.8\)</span>.</li>
+<li>Explica por qué <span class="math inline">\(a^\star\)</span> no se puede calcular con la muestra. ¿Qué valor de <span class="math inline">\(\lambda\)</span> hace que el factor <span class="math inline">\(1/(1+\lambda)\)</span> de <a href="../capitulos/06-complejidad.html#prp-ridge-un-coeficiente" class="quarto-xref">Proposición&nbsp;<span>6.2</span></a> sea <span class="math inline">\(0.8\)</span>?</li>
+</ol>
+</div>
+<div id="exr-h6-columnas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 9</strong></span> Los datos de próstata tienen ocho variables predictoras y 67 observaciones de train.</p>
+<ol type="a">
+<li>El mapa polinómico de grado 3 contiene las 44 columnas de grado 1 y 2, los cubos <span class="math inline">\(x_j^3\)</span>, los productos <span class="math inline">\(x_j^2x_k\)</span> con <span class="math inline">\(j\neq k\)</span> y los productos <span class="math inline">\(x_jx_kx_l\)</span> de tres variables distintas. Cuenta sus columnas.</li>
+<li>Con la columna de unos, ¿puede <span class="math inline">\(\boldsymbol{\Phi}\)</span> tener rango completo por columnas? ¿Es único el ajuste por mínimos cuadrados? Justifica la respuesta con <a href="../capitulos/06-complejidad.html#prp-todo-sirve" class="quarto-xref">Proposición&nbsp;<span>6.1</span></a>.</li>
+<li>¿Es único el ajuste ridge con <span class="math inline">\(\lambda&gt;0\)</span> y estas columnas? Indica qué resultado lo garantiza.</li>
+<li>En los anuncios de Airbnb del capítulo 5 hay tres variables numéricas y <code>room_type</code>, con cuatro categorías codificadas con tres indicadoras. Queremos que el efecto de cada variable numérica dependa del tipo de alojamiento. ¿Cuántas columnas de interacción hay que añadir? Escribe cuánto cambia la predicción con una plaza más en la categoría de referencia y en una habitación privada.</li>
+</ol>
+</div>
+</section>
+<section id="ridge-y-lasso" class="level2">
+<h2 class="anchored" data-anchor-id="ridge-y-lasso">Ridge y lasso</h2>
+<div id="exr-h6-ortogonales" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 10</strong></span> Dos variables predictoras toman los valores <span class="math inline">\(x_1=(1,1,-1,-1)\)</span> y <span class="math inline">\(x_2=(1,-1,1,-1)\)</span> en cuatro observaciones, con respuestas <span class="math inline">\(y=(5,0,2,1)\)</span>. <span class="math inline">\(\mathbf{Z}\)</span> es la matriz de columnas <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span>, y <span class="math inline">\(c_j=\frac{1}{n}\sum_ix_{ij}y_i\)</span>.</p>
+<ol type="a">
+<li>Comprueba que las dos columnas están estandarizadas y que <span class="math inline">\(\mathbf{Z}^{\mathsf{T}}\mathbf{Z}=n\mathbf{I}\)</span>.</li>
+<li>Calcula <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span>, y el ajuste por mínimos cuadrados con las ecuaciones normales.</li>
+<li>Demuestra que, con estas columnas, el riesgo penalizado de ridge es, salvo una constante, <span class="math inline">\(\sum_j\bigl((1+\lambda)w_j^2-2c_jw_j\bigr)\)</span>. Deduce que <span class="math inline">\(\hat w_j=c_j/(1+\lambda)\)</span> y calcula el ajuste con <span class="math inline">\(\lambda=1\)</span>.</li>
+<li>Con estas columnas, el lasso da <span class="math inline">\((0,0.5)\)</span> con <span class="math inline">\(\lambda=2\)</span> y <span class="math inline">\((0,0)\)</span> con <span class="math inline">\(\lambda=4\)</span>. ¿Qué variable descarta primero y por qué tiene sentido que sea esa? ¿Para qué valores de <span class="math inline">\(\lambda\)</span> conserva ridge las dos variables?</li>
+</ol>
+</div>
+<div id="exr-h6-geometria" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 11</strong></span> El riesgo empírico de dos coeficientes es <span class="math inline">\(\hat{R}(w_1,w_2)=(w_1-2.4)^2+(w_2-0.7)^2\)</span>. Su mínimo, el ajuste de mínimos cuadrados, está en <span class="math inline">\((2.4,0.7)\)</span>, y sus curvas de nivel son circunferencias centradas en ese punto.</p>
+<ol type="a">
+<li>Explica por qué el punto de una región que minimiza <span class="math inline">\(\hat{R}\)</span> es el punto de esa región más cercano a <span class="math inline">\((2.4,0.7)\)</span>.</li>
+<li>Calcula el punto que minimiza <span class="math inline">\(\hat{R}\)</span> en el círculo <span class="math inline">\(w_1^2+w_2^2\leq1\)</span>. Pista: está en el segmento que une el origen con <span class="math inline">\((2.4,0.7)\)</span>.</li>
+<li>En el rombo <span class="math inline">\(\left\lvert w_1 \right\rvert+\left\lvert w_2 \right\rvert\leq1\)</span>, comprueba que el vértice <span class="math inline">\((1,0)\)</span> está más cerca de <span class="math inline">\((2.4,0.7)\)</span> que cualquier otro punto de los dos lados que salen de él, <span class="math inline">\((1-s,s)\)</span> y <span class="math inline">\((1-s,-s)\)</span> con <span class="math inline">\(0&lt;s\leq1\)</span>. Admite que los otros dos lados están más lejos.</li>
+<li>El ajuste lasso con cierto <span class="math inline">\(\lambda\)</span> cumple <span class="math inline">\(\left\lvert \hat w_1 \right\rvert+\left\lvert \hat w_2 \right\rvert=1\)</span>, y el ajuste ridge con otro <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\hat w_1^2+\hat w_2^2=1\)</span>. Da los dos ajustes con ayuda de <a href="../capitulos/06-complejidad.html#prp-penalizacion-restriccion" class="quarto-xref">Proposición&nbsp;<span>6.4</span></a>. ¿Por qué el lasso anula un coeficiente y ridge no?</li>
+</ol>
+</div>
+</section>
+<section id="leer-y-completar-código" class="level2">
+<h2 class="anchored" data-anchor-id="leer-y-completar-código">Leer y completar código</h2>
+<div id="exr-h6-completar-descompone" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 12</strong></span> <code>P</code> es un array de forma <code>(R, M)</code>: la fila <span class="math inline">\(r\)</span> contiene las predicciones, en los <code>M</code> puntos de <code>rejilla</code>, del polinomio ajustado con la muestra simulada <span class="math inline">\(r\)</span>. <code>senal(rejilla)</code> devuelve la señal en esos puntos y <code>RUIDO</code> es <span class="math inline">\(\sigma\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>modelo_medio <span class="op">=</span> P.mean(axis<span class="op">=</span>...)                        <span class="co"># (1)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sesgo2 <span class="op">=</span> np.mean((senal(rejilla) <span class="op">-</span> ...) <span class="op">**</span> <span class="dv">2</span>)          <span class="co"># (2)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>varianza <span class="op">=</span> np.mean(P.var(axis<span class="op">=</span>...))                    <span class="co"># (3)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>riesgo_esperado <span class="op">=</span> ... <span class="op">+</span> sesgo2 <span class="op">+</span> varianza              <span class="co"># (4)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="a">
+<li>Completa los cuatro huecos.</li>
+<li>Con dos muestras y dos puntos, <span class="math display">\[
+P=\begin{pmatrix}1.0&amp;0.0\\0.6&amp;0.4\end{pmatrix},
+\]</span> la señal vale <span class="math inline">\((1,0)\)</span> en la rejilla y <span class="math inline">\(\sigma=0.2\)</span>. Calcula <code>modelo_medio</code>, <code>sesgo2</code>, <code>varianza</code> y <code>riesgo_esperado</code>.</li>
+<li>¿Qué calcularía <code>P.mean(axis=1)</code>? ¿Por qué no sirve como modelo medio?</li>
+<li><code>modelo_medio</code> promedia solo <span class="math inline">\(R\)</span> predicciones, y en cada punto su varianza es la de una predicción dividida por <span class="math inline">\(R\)</span>. Con la varianza <span class="math inline">\(3.11\)</span> del grado 9 del capítulo, ¿cuánto añade aproximadamente ese error al sesgo al cuadrado estimado con <span class="math inline">\(R=2000\)</span>? ¿Y con <span class="math inline">\(R=20\)</span>?</li>
+</ol>
+</div>
+<div id="exr-h6-errores" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 13</strong></span> <code>X_train</code> y <code>X_test</code> contienen las ocho variables de próstata, e <code>y_train</code> e <code>y_test</code>, la respuesta. <code>bloques</code> es una partición fija de train en cinco bloques, y <code>regla_un_error_tipico</code> es la función del capítulo, que recibe los riesgos por bloque de los candidatos ordenados del más sencillo al más complejo. El código toma <strong>tres decisiones incorrectas</strong> al construir, seleccionar o evaluar el procedimiento. Identifícalas, explica su consecuencia y di cómo corregir cada una.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crear(lam, n):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pipeline([</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"polinomio"</span>, PolynomialFeatures(<span class="dv">2</span>, include_bias<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"ridge"</span>, Ridge(alpha<span class="op">=</span>n <span class="op">*</span> lam)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>riesgos <span class="op">=</span> []</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> lam <span class="kw">in</span> lambdas:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    errores <span class="op">=</span> []</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ia, iv <span class="kw">in</span> bloques:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        modelo <span class="op">=</span> crear(lam, <span class="bu">len</span>(ia)).fit(X_train[ia], y_train[ia])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> modelo.predict(X_train[iv])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        errores.append(np.mean((y_train[iv] <span class="op">-</span> pred) <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    riesgos.append(np.array(errores))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>campeon, elegido <span class="op">=</span> regla_un_error_tipico(riesgos)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>finales <span class="op">=</span> [crear(lambdas[k], <span class="bu">len</span>(y_train)).fit(X_train, y_train)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> k <span class="kw">in</span> (campeon, elegido)]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>mse_test <span class="op">=</span> [np.mean((y_test <span class="op">-</span> m.predict(X_test)) <span class="op">**</span> <span class="dv">2</span>) <span class="cf">for</span> m <span class="kw">in</span> finales]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MSE de test del modelo entregado:"</span>, <span class="bu">min</span>(mse_test))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="exr-h6-completar-ridge" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 14</strong></span> <code>X_train</code> e <code>y_train</code> son los datos de train de próstata, con 67 observaciones, y <code>bloques</code> contiene los cinco pares de índices de ajuste y validación. Completa:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crear_ridge(lam, n):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pipeline([</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"estandarizar"</span>, ...),                            <span class="co"># (1)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"polinomio"</span>, PolynomialFeatures(<span class="dv">2</span>, include_bias<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"escalar"</span>, StandardScaler()),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"ridge"</span>, Ridge(alpha<span class="op">=</span>...)),                      <span class="co"># (2)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> riesgos_cv_ridge(lam):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    riesgos <span class="op">=</span> []</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i_ajuste, i_val <span class="kw">in</span> bloques:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        modelo <span class="op">=</span> crear_ridge(lam, n<span class="op">=</span>...)                  <span class="co"># (3)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        modelo.fit(...)                                   <span class="co"># (4)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        prediccion <span class="op">=</span> modelo.predict(X_train[i_val])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        riesgos.append(np.mean((y_train[i_val] <span class="op">-</span> prediccion) <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(riesgos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="a">
+<li>Completa los cuatro huecos.</li>
+<li>Explica para qué sirve cada uno de los dos escaladores.</li>
+<li>Los bloques de validación tienen 13 o 14 observaciones. ¿Qué valores toma <code>alpha</code> dentro de la validación cruzada con <span class="math inline">\(\lambda=0.5\)</span>? ¿Y al reajustar con todo train?</li>
+<li>Con 17 valores de <span class="math inline">\(\lambda\)</span>, ¿cuántas veces se ajusta el pipeline durante la búsqueda? Para buscar con el lasso, ¿qué línea cambia y cómo?</li>
+</ol>
+</div>
+</section>
+<section id="ampliación" class="level2">
+<h2 class="anchored" data-anchor-id="ampliación">Ampliación</h2>
+<p>Este ejercicio es opcional y no entra en el examen.</p>
+<div id="exr-h6-ridge-aumentado" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 15</strong></span> Sea <span class="math inline">\(\mathbf{Z}\)</span> una matriz <span class="math inline">\(n\times d\)</span> con columnas de media cero, sea <span class="math inline">\(\mathbf{y}_c=\mathbf{y}-\bar{y}\mathbf{1}\)</span> y sea <span class="math inline">\(\lambda&gt;0\)</span>. Formamos la matriz y el vector aumentados, con <span class="math inline">\(d\)</span> filas más:</p>
+<p><span class="math display">\[
+\tilde{\mathbf{Z}}=\begin{pmatrix}\mathbf{Z}\\ \sqrt{n\lambda}\,\mathbf{I}\end{pmatrix},
+\qquad
+\tilde{\mathbf{y}}=\begin{pmatrix}\mathbf{y}_c\\ \mathbf{0}\end{pmatrix}.
+\]</span></p>
+<ol type="a">
+<li>Demuestra que <span class="math display">\[
+\left\lVert \tilde{\mathbf{y}}-\tilde{\mathbf{Z}}\boldsymbol{w} \right\rVert^2=\left\lVert \mathbf{y}_c-\mathbf{Z}\boldsymbol{w} \right\rVert^2
++n\lambda\left\lVert \boldsymbol{w} \right\rVert^2,
+\]</span> y deduce que ridge es el ajuste por mínimos cuadrados, sin intercepto, de <span class="math inline">\(\tilde{\mathbf{y}}\)</span> sobre <span class="math inline">\(\tilde{\mathbf{Z}}\)</span>.</li>
+<li>Demuestra que <span class="math inline">\(\tilde{\mathbf{Z}}\)</span> tiene rango <span class="math inline">\(d\)</span> aunque <span class="math inline">\(n&lt;d\)</span>, y deduce con <a href="../capitulos/03-modelos-lineales.html#thm-existencia-unicidad" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a> que el ajuste ridge es único.</li>
+<li>Interpreta las <span class="math inline">\(d\)</span> filas añadidas como observaciones. ¿Qué respuesta tienen? ¿Por qué acercan los coeficientes a cero, y qué ocurre al aumentar <span class="math inline">\(\lambda\)</span>?</li>
+</ol>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Sangrado de las lineas de codigo que se parten.
+
+Con `code-overflow: wrap`, una linea mas larga que el bloque se parte en dos lineas
+visuales. La continuacion tiene que quedar a la derecha del comienzo de la sentencia
+que continua, y a que altura sea eso depende de la indentacion de esa linea, que CSS
+no puede leer. Este script la lee de cada linea y fija su sangria francesa en
+unidades `ch`, que en una fuente monoespaciada es exactamente un caracter: la
+continuacion cae cuatro caracteres a la derecha del comienzo de su propia sentencia.
+
+Sin JavaScript queda la sangria fija de `custom.scss`, que es el comportamiento
+anterior. -->
+<script>
+(function () {
+  var PASO = 4;      // caracteres que se sangra la continuacion
+  var TOPE = 24;     // sangria maxima, para que en una columna estrecha quede sitio
+  function sangra() {
+    document.querySelectorAll("pre.sourceCode code > span").forEach(function (linea) {
+      var blancos = /^[ \t]*/.exec(linea.textContent)[0].replace(/\t/g, "    ").length;
+      var sangria = Math.min(blancos + PASO, TOPE) + "ch";
+      linea.style.paddingLeft = sangria;
+      linea.style.textIndent = "-" + sangria;
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sangra);
+  } else {
+    sangra();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../problemas/hoja-05.html" class="pagination-link" aria-label="Hoja 5">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Hoja 5</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../curso/colab.html" class="pagination-link" aria-label="Ejecutar código: Python y Colab">
+        <span class="nav-page-text">Ejecutar código: Python y Colab</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
